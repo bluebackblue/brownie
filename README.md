@@ -18,6 +18,9 @@ mid-level library
 * ___ blib
 * ___ bsys
 * ___ premake.bat
+* _ premake
+* _ glew
+* _ glfw
 * sdk
 * _ glew-2.0.0
 * _ glfw-3.2.1
