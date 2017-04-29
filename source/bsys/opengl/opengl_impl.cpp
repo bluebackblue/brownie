@@ -23,8 +23,15 @@
 */
 #include "./opengl_impl.h"
 #include "./opengl.h"
+#include "./opengl_impl_vertexbuffer.h"
 //#include "./opengl_impl_actionbatching.h"
 //#include "./opengl_impl_font.h"
+
+
+/** include
+*/
+#include "./opengl_impl_actionbatching_vertexbuffer_create.h"
+#include "./opengl_impl_actionbatching_vertexbuffer_delete.h"
 
 
 /** lib
@@ -166,7 +173,6 @@ namespace NBsys{namespace NOpengl
 	/** constructor
 	*/
 	Opengl_Impl::Opengl_Impl() throw()
-
 		:
 		window(nullptr),
 		performance_counter_update(0ULL),
@@ -176,16 +182,19 @@ namespace NBsys{namespace NOpengl
 		mouse_r(false),
 		mouse_x(0),
 		mouse_y(0),
+		id_maker(),
+		actionbatching_lockobject(),
 		actionbatching(),
-		actionbatching_lockobject()
-
+		vertexbuffer_list()
+	{
 		#if(0)
+
 		current_shaderprogram_rawid(),
 		current_framebuffer_rawid(),
 		current_vertexarray_rawid(),
 		current_texture_rawid(),
+
 		#endif
-	{
 	}
 
 	/** destructor
@@ -462,6 +471,56 @@ namespace NBsys{namespace NOpengl
 		this->draw_proc = nullptr;
 	}
 
+	/** [スレッドセーフ]バーテックスバッファ作成。
+	*/
+	s32 Opengl_Impl::CreateVertexBuffer(const sharedptr< u8 >& a_data_byte,s32 a_size_byte,s32 a_stride_byte)
+	{
+		AutoLock t_autolock(this->actionbatching_lockobject);
+
+		{
+			//バーテックスバッファＩＤ。
+			s32 t_vertexbuffer_id = this->id_maker.MakeID();
+
+			//バーテックスバッファ。
+			sharedptr< Opengl_Impl_VertexBuffer > t_vertexbuffer(new Opengl_Impl_VertexBuffer(a_data_byte,a_size_byte,a_stride_byte));
+
+			//レンダーコマンド。
+			sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
+			{
+				t_actionlist->Add(new Opengl_Impl_ActionBatching_VertexBuffer_Create(*this,t_vertexbuffer));
+			}
+			this->actionbatching.StartBatching(t_actionlist);
+
+			//管理リスト。
+			this->vertexbuffer_list.insert(STLMap< s32 , sharedptr< Opengl_Impl_VertexBuffer > >::value_type(t_vertexbuffer_id,t_vertexbuffer));
+
+			return t_vertexbuffer_id;
+		}
+	}
+
+	/** [スレッドセーフ]バーテックスバッファ削除。
+	*/
+	void Opengl_Impl::DeleteVertexBuffer(s32 a_vertexbufferid)
+	{
+		AutoLock t_autolock(this->actionbatching_lockobject);
+
+		{
+			//バーテックスバッファ。
+			STLMap< s32 , sharedptr< Opengl_Impl_VertexBuffer > >::iterator t_it = this->vertexbuffer_list.find(a_vertexbufferid);
+			sharedptr< Opengl_Impl_VertexBuffer >& t_vertexbuffer = t_it->second;
+
+			//レンダーコマンド。
+			sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
+			{
+				t_actionlist->Add(new Opengl_Impl_ActionBatching_VertexBuffer_Delete(*this,t_vertexbuffer));
+			}
+			this->actionbatching.StartBatching(t_actionlist);
+
+			//管理リスト。
+			this->vertexbuffer_list.erase(t_it);
+		}
+	}
+
 	#if(0)
 
 	/** SetShadeModel
@@ -579,37 +638,6 @@ namespace NBsys{namespace NOpengl
 	}
 	*/
 
-	/** [メインスレッド]バーテックスバッファ作成。
-	*/
-	s32 Opengl_Impl::CreateVertexBuffer(const sharedptr< u8 >& a_data_byte,s32 a_size_byte,s32 a_stride_byte)
-	{
-		//フレームバッファ。
-		sharedptr< Opengl_Impl_VertexBuffer > t_vertexbuffer(new Opengl_Impl_VertexBuffer(a_data_byte,a_size_byte,a_stride_byte));
-
-		//レンダーコマンド作成。
-		sharedptr< NBsys::NActionBatching::ActionBatching_Batching > t_batching = new NBsys::NActionBatching::ActionBatching_Batching();
-		{
-			t_batching->Add(new Opengl_Impl_ActionBatching_CreateVertexBuffer(*this,t_vertexbuffer));
-		}
-		this->actionbatching.StartBatching(t_batching);
-
-		//バーテックスバッファＩＤ作成。
-		s32 t_vertexbuffer_id = this->id_maker.MakeID();
-
-		//管理リストに登録。
-		this->vertexbuffer_list.insert(STLMap< s32 , sharedptr< Opengl_Impl_VertexBuffer > >::value_type(t_vertexbuffer_id,t_vertexbuffer));
-
-		return t_vertexbuffer_id;
-	}
-
-	/** [メインスレッド]バーテックスバッファ削除。
-	*/
-	/*
-	void Opengl_Impl::DeleteVertexBuffer(s32 a_vertexbufferid)
-	{
-	}
-	*/
-
 	/** GetMouse
 	*/
 	void Opengl_Impl::GetMouse(s32& a_x,s32& a_y,bool& a_left,bool& a_right)
@@ -684,6 +712,138 @@ namespace NBsys{namespace NOpengl
 
 		if(t_mask > 0x00000000){
 			glClear(t_mask);
+		}
+	}
+
+	/** [描画命令]ワールドライン描画。
+
+	右手 : 親指 = X軸 / 人差し指 = Y軸 / 中指 = Z軸。
+
+	*/
+	#if(ROM_DEVELOP)
+	void Opengl_Impl::Render_DrawWorldLine()
+	{
+		glBegin(GL_LINES);
+		{
+			//x:blue.
+			{
+				glColor3f(1.0f,1.0f,1.0f);
+				glVertex3f(0.0f,0.0f,0.0f);
+				glColor3f(1.0f,1.0f,1.0f);
+				glVertex3f(-1000.0f,0.0f,0.0f);
+
+				glColor3f(0.0f,0.0f,1.0f);
+				glVertex3f(0.0f,0.0f,0.0f);
+				glColor3f(0.0f,0.0f,1.0f);
+				glVertex3f(1000.0f,0.0f,0.0f);
+			}
+
+			//y:green
+			{
+				glColor3f(1.0f,1.0f,1.0f);
+				glVertex3f(0.0f,0.0f,0.0f);
+				glColor3f(1.0f,1.0f,1.0f);
+				glVertex3f(0.0f,-1000.0f,0.0f);
+
+				glColor3f(0.0f,1.0f,0.0f);
+				glVertex3f(0.0f,0.0f,0.0f);
+				glColor3f(0.0f,1.0f,0.0f);
+				glVertex3f(0.0f,1000.0f,0.0f);
+			}
+
+			//z:red
+			{
+				glColor3f(1.0f,1.0f,1.0f);
+				glVertex3f(0.0f,0.0f,0.0f);
+				glColor3f(1.0f,1.0f,1.0f);
+				glVertex3f(0.0f,0.0f,-1000.0f);
+
+				glColor3f(1.0f,0.0f,0.0f);
+				glVertex3f(0.0f,0.0f,0.0f);
+				glColor3f(1.0f,0.0f,0.0f);
+				glVertex3f(0.0f,0.0f,1000.0f);
+			}
+		}
+		glEnd();
+	}
+	#endif
+
+	/** [描画命令]バーテックスバッファ作成。
+	*/
+	void Opengl_Impl::Render_CreateVertexBuffer(sharedptr< Opengl_Impl_VertexBuffer >& a_vertexbuffer)
+	{
+		RawID t_vertexbuffer_rawid;
+
+		{
+			glGenBuffers(1,&t_vertexbuffer_rawid.rawid);
+
+			#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+			{
+				TAGLOG("gl",VASTRING_DEBUG("glGenBuffers : vertexbuffer_rawid = %d",t_vertexbuffer_rawid.rawid));
+			}
+			#endif
+		}
+
+		if(t_vertexbuffer_rawid.IsInvalid() == false){
+			a_vertexbuffer->SetVertexBuffer_RawID(t_vertexbuffer_rawid);
+
+			#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+			{
+				TAGLOG("gl",VASTRING_DEBUG("glBindBuffer : GL_ARRAY_BUFFER : vertexbuffer_rawid = %d",t_vertexbuffer_rawid.rawid));
+			}
+			#endif
+			
+			glBindBuffer(GL_ARRAY_BUFFER,t_vertexbuffer_rawid.rawid);
+
+			{
+				//GL_DYNAMIC_DRAW : データ変更可能なバーテックスバッファ。
+				//GL_STATIC_DRAW : データ変更不可なバーテックスバッファ。
+
+				const u8* t_data_byte = a_vertexbuffer->GetDataByte().get();
+				s32 t_size_byte = a_vertexbuffer->GetSizeByte();
+
+				#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+				{
+					TAGLOG("gl",VASTRING_DEBUG("glBufferData : GL_ARRAY_BUFFER : t_size_byte = %d : data_byte = 0x%08x : GL_STATIC_DRAW",t_size_byte,t_data_byte));
+				}
+				#endif
+
+				glBufferData(GL_ARRAY_BUFFER,t_size_byte,t_data_byte,GL_STATIC_DRAW);
+			}
+
+			#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+			{
+				TAGLOG("gl",VASTRING_DEBUG("glBindBuffer : GL_ARRAY_BUFFER : 0"));
+			}
+			#endif
+
+			glBindBuffer(GL_ARRAY_BUFFER,0);
+		}else{
+			ASSERT(0);
+		}
+	}
+
+	/** [描画命令]バーテックスバッファ削除。
+	*/
+	void Opengl_Impl::Render_DeleteVertexBuffer(sharedptr< Opengl_Impl_VertexBuffer >& a_vertexbuffer)
+	{
+		if(a_vertexbuffer){
+			RawID t_vertexbuffer_rawid = a_vertexbuffer->GetVertexBuffer_RawID();
+
+			if(t_vertexbuffer_rawid.IsInvalid() == false){
+
+				#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+				{
+					TAGLOG("gl",VASTRING_DEBUG("glDeleteBuffers : vertexbuffer_rawid = %d",t_vertexbuffer_rawid.rawid));
+				}
+				#endif
+
+				glDeleteBuffers(1,&t_vertexbuffer_rawid.rawid);
+			}else{
+				ASSERT(0);
+			}
+		}else{
+			ASSERT(0);
 		}
 	}
 
@@ -961,62 +1121,7 @@ namespace NBsys{namespace NOpengl
 		}
 	}
 
-	/** Render_CreateVertexBuffer。
-	*/
-	void Opengl_Impl::Render_CreateVertexBuffer(sharedptr< Opengl_Impl_VertexBuffer >& a_vertexbuffer)
-	{
-		ASSERT(this->current_vertexarray_rawid.IsInvalid() == true);
 
-		RawID t_vertexbuffer_rawid;
-
-		{
-			glGenBuffers(1,&t_vertexbuffer_rawid.rawid);
-
-			#if(BSYS_OPENGL_DETAILLOG_ENABLE)
-			{
-				TAGLOG("gl",VASTRING_DEBUG("glGenBuffers : vertexbuffer_rawid = %d",t_vertexbuffer_rawid.rawid));
-			}
-			#endif
-		}
-
-		if(t_vertexbuffer_rawid.IsInvalid() == false){
-			a_vertexbuffer->SetVertexBuffer_RawID(t_vertexbuffer_rawid);
-
-			#if(BSYS_OPENGL_DETAILLOG_ENABLE)
-			{
-				TAGLOG("gl",VASTRING_DEBUG("glBindBuffer : GL_ARRAY_BUFFER : vertexbuffer_rawid = %d",t_vertexbuffer_rawid.rawid));
-			}
-			#endif
-			
-			glBindBuffer(GL_ARRAY_BUFFER,t_vertexbuffer_rawid.rawid);
-
-			{
-				//GL_DYNAMIC_DRAW : データ変更がある場合。
-				//GL_STATIC_DRAW : データ変更がない場合。
-
-				const u8* t_data_byte = a_vertexbuffer->GetDataByte().get();
-				s32 t_size_byte = a_vertexbuffer->GetSizeByte();
-
-				#if(BSYS_OPENGL_DETAILLOG_ENABLE)
-				{
-					TAGLOG("gl",VASTRING_DEBUG("glBufferData : GL_ARRAY_BUFFER : t_size_byte = %d : data_byte = 0x%08x : GL_STATIC_DRAW",t_size_byte,t_data_byte));
-				}
-				#endif
-
-				glBufferData(GL_ARRAY_BUFFER,t_size_byte,t_data_byte,GL_STATIC_DRAW);
-			}
-
-			#if(BSYS_OPENGL_DETAILLOG_ENABLE)
-			{
-				TAGLOG("gl",VASTRING_DEBUG("glBindBuffer : GL_ARRAY_BUFFER : 0"));
-			}
-			#endif
-
-			glBindBuffer(GL_ARRAY_BUFFER,0);
-		}else{
-			ASSERT(0);
-		}
-	}
 
 	/** Render_DeleteTexture。
 	*/
@@ -1255,57 +1360,6 @@ namespace NBsys{namespace NOpengl
 
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT,0);
 		this->current_framebuffer_rawid.SetInvalid();
-	}
-
-	/** Render_DrawWorldLine。
-
-	右手 : 親指 = X軸 / 人差し指 = Y軸 / 中指 = Z軸。
-
-	*/
-	void Opengl_Impl::Render_DrawWorldLine()
-	{
-		glBegin(GL_LINES);
-		{
-			//x:blue.
-			{
-				glColor3f(1.0f,1.0f,1.0f);
-				glVertex3f(0.0f,0.0f,0.0f);
-				glColor3f(1.0f,1.0f,1.0f);
-				glVertex3f(-1000.0f,0.0f,0.0f);
-
-				glColor3f(0.0f,0.0f,1.0f);
-				glVertex3f(0.0f,0.0f,0.0f);
-				glColor3f(0.0f,0.0f,1.0f);
-				glVertex3f(1000.0f,0.0f,0.0f);
-			}
-
-			//y:green
-			{
-				glColor3f(1.0f,1.0f,1.0f);
-				glVertex3f(0.0f,0.0f,0.0f);
-				glColor3f(1.0f,1.0f,1.0f);
-				glVertex3f(0.0f,-1000.0f,0.0f);
-
-				glColor3f(0.0f,1.0f,0.0f);
-				glVertex3f(0.0f,0.0f,0.0f);
-				glColor3f(0.0f,1.0f,0.0f);
-				glVertex3f(0.0f,1000.0f,0.0f);
-			}
-
-			//z:red
-			{
-				glColor3f(1.0f,1.0f,1.0f);
-				glVertex3f(0.0f,0.0f,0.0f);
-				glColor3f(1.0f,1.0f,1.0f);
-				glVertex3f(0.0f,0.0f,-1000.0f);
-
-				glColor3f(1.0f,0.0f,0.0f);
-				glVertex3f(0.0f,0.0f,0.0f);
-				glColor3f(1.0f,0.0f,0.0f);
-				glVertex3f(0.0f,0.0f,1000.0f);
-			}
-		}
-		glEnd();
 	}
 
 	/** Render_SetProjectionMatrix。

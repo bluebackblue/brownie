@@ -91,10 +91,10 @@ void opengl_draw()
 
 	{
 		//ビューポート。
-		//this->viewport.Set_ViewPortMatrix(BSYS_OPENGL_SCREEN_W,ASYS_OPENGL_SCREEN_H);
+		//this->viewport.Set_ViewPortMatrix(BSYS_OPENGL_SCREEN_W,BSYS_OPENGL_SCREEN_H);
 
 		//プロジェクション。
-		//this->projection.Set_PerspectiveProjectionMatrix(BSYS_OPENGL_SCREEN_W,ASYS_OPENGL_SCREEN_H,this->screen_fov_deg,this->screen_near,this->screen_far);
+		//this->projection.Set_PerspectiveProjectionMatrix(BSYS_OPENGL_SCREEN_W,BSYS_OPENGL_SCREEN_H,this->screen_fov_deg,this->screen_near,this->screen_far);
 
 		//ビュー。
 		//this->view.Set_ViewMatrix(this->camera_target,this->camera_position,this->camera_up);
@@ -102,16 +102,16 @@ void opengl_draw()
 
 	{
 		//ビューポート。
-		//GetOpengl()->Render_ViewPort(0,0,BSYS_OPENGL_SCREEN_W,ASYS_OPENGL_SCREEN_H);
+		//OpenGL()->Render_ViewPort(0,0,BSYS_OPENGL_SCREEN_W,BSYS_OPENGL_SCREEN_H);
 
 		//プロジェクション。
-		//GetOpengl()->Render_SetProjectionMatrix(this->projection);
+		//OpenGL()->Render_SetProjectionMatrix(this->projection);
 
 		//ビュー。
-		//GetOpengl()->Render_SetViewMatrix(this->view);
+		//OpenGL()->Render_SetViewMatrix(this->view);
 
 		//カラーマスク。
-		//GetOpengl()->Render_SetColorMask(true,true,true,true);
+		//OpenGL()->Render_SetColorMask(true,true,true,true);
 
 		//クリアカラー設定。
 		OpenGL()->Render_SetClearColor(NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f));
@@ -120,9 +120,10 @@ void opengl_draw()
 		OpenGL()->Render_ClearBuffer(true,true);
 
 		//デプステスト。
-		//GetOpengl()->Render_SetDepthTest(true);
+		//OpenGL()->Render_SetDepthTest(true);
 
-		//GetOpengl()->Render_DrawWorldLine();
+		//ワールドライン描画。
+		OpenGL()->Render_DrawWorldLine();
 	}
 
 

@@ -31,10 +31,10 @@
 /** include
 */
 #include "./opengl_impl_include.h"
+#include "./opengl_impl_vertexbuffer.h"
 //#include "./opengl_impl_rawid.h"
 //#include "./opengl_impl_texture.h"
 //#include "./opengl_impl_framebuffer.h"
-//#include "./opengl_impl_vertexbuffer.h"
 //#include "./opengl_impl_font_decl.h"
 
 
@@ -181,21 +181,23 @@ namespace NBsys{namespace NOpengl
 		*/
 		s32 mouse_y;
 
-		/** アクションバッチング。
+		/** id_maker
 		*/
-		NBsys::NActionBatching::ActionBatching actionbatching;
+		IDMaker id_maker;
 
 		/** アクションバッチング。ロックオブジェクト。
 		*/
 		LockObject actionbatching_lockobject;
 
-		#if(0)
-
-
-
-		/** id_maker
+		/** [actionbatching_lockobject]アクションバッチング。
 		*/
-		IDMaker id_maker;
+		NBsys::NActionBatching::ActionBatching actionbatching;
+
+		/** [actionbatching_lockobject]バーテックスバッファリスト。
+		*/
+		STLMap< s32 , sharedptr< Opengl_Impl_VertexBuffer > >::Type vertexbuffer_list;
+
+		#if(0)
 
 		/** rawtexture_list
 		*/
@@ -204,10 +206,6 @@ namespace NBsys{namespace NOpengl
 		/** framebuffer_list
 		*/
 		STLMap< s32 , sharedptr< Opengl_Impl_FrameBuffer > >::Type framebuffer_list;
-
-		/** vertexbuffer_list
-		*/
-		STLMap< s32 , sharedptr< Opengl_Impl_VertexBuffer > >::Type vertexbuffer_list;
 
 		/** shaderstate_list
 		*/
@@ -228,8 +226,6 @@ namespace NBsys{namespace NOpengl
 		/** current_texture_rawid
 		*/
 		RawID current_texture_rawid;
-
-
 
 		/** font
 		*/
@@ -256,6 +252,14 @@ namespace NBsys{namespace NOpengl
 		*/
 		void Main();
 
+		/** [スレッドセーフ]バーテックスバッファ作成。
+		*/
+		s32 CreateVertexBuffer(const sharedptr< u8 >& a_data_byte,s32 a_size_byte,s32 a_stride_byte);
+
+		/** [スレッドセーフ]バーテックスバッファ削除。
+		*/
+		void DeleteVertexBuffer(s32 a_vertexbufferid);
+
 		#if(0)
 		/** SetShadeModel
 		*/
@@ -276,14 +280,6 @@ namespace NBsys{namespace NOpengl
 		/** [メインスレッド]フレームバッファ削除。
 		*/
 		//void DeleteFrameBuffer(s32 a_framebufferid);
-
-		/** [メインスレッド]バーテックスバッファ作成。
-		*/
-		s32 CreateVertexBuffer(const sharedptr< u8 >& a_data_byte,s32 a_size_byte,s32 a_stride_byte);
-
-		/** [メインスレッド]バーテックスバッファ削除。
-		*/
-		//void DeleteVertexBuffer(s32 a_vertexbufferid);
 
 		/** GetMouse
 		*/
@@ -321,10 +317,6 @@ namespace NBsys{namespace NOpengl
 		*/
 		void Render_CreateTexture(sharedptr< Opengl_Impl_Texture >& a_texture);
 
-		/** Render_CreateVertexBuffer。
-		*/
-		void Render_CreateVertexBuffer(sharedptr< Opengl_Impl_VertexBuffer >& a_vertexbuffer);
-
 		/** Render_DeleteTexture。
 		*/
 		void Render_DeleteTexture(sharedptr< Opengl_Impl_Texture >& a_texture);
@@ -340,6 +332,20 @@ namespace NBsys{namespace NOpengl
 		/** [描画命令]クリアバッファ。
 		*/
 		void Render_ClearBuffer(bool a_depth,bool a_color);
+
+		/** [描画命令]ワールドライン描画。
+		*/
+		#if(ROM_DEVELOP)
+		void Render_DrawWorldLine();
+		#endif
+
+		/** [描画命令]バーテックスバッファ作成。
+		*/
+		void Render_CreateVertexBuffer(sharedptr< Opengl_Impl_VertexBuffer >& a_vertexbuffer);
+
+		/** [描画命令]バーテックスバッファ削除。
+		*/
+		void Render_DeleteVertexBuffer(sharedptr< Opengl_Impl_VertexBuffer >& a_vertexbuffer);
 
 		#if(0)
 
@@ -366,10 +372,6 @@ namespace NBsys{namespace NOpengl
 		/** Render_SetFrameBuffer。
 		*/
 		void Render_SetFrameBuffer(s32 a_framebufferid);
-
-		/** Render_DrawWorldLine。
-		*/
-		void Render_DrawWorldLine();
 
 		/** Render_SetProjectionMatrix。
 		*/

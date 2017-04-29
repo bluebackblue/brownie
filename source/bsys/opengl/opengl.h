@@ -69,6 +69,14 @@ namespace NBsys{namespace NOpengl
 		*/
 		void Main();
 
+		/** [スレッドセーフ]バーテックスバッファ作成。
+		*/
+		s32 CreateVertexBuffer(const sharedptr< u8 >& a_data_byte,s32 a_size_byte,s32 a_stride_byte);
+
+		/** [スレッドセーフ]バーテックスバッファ削除。
+		*/
+		void DeleteVertexBuffer(s32 a_vertexbufferid);
+
 		#if(0)
 
 		/** SetShadeModel
@@ -90,14 +98,6 @@ namespace NBsys{namespace NOpengl
 		/** フレームバッファ削除。
 		*/
 		//void DeleteFrameBuffer(s32 a_framebufferid);
-
-		/** バーテックスバッファ作成。
-		*/
-		s32 CreateVertexBuffer(const sharedptr< u8 >& a_data_byte,s32 a_size_byte,s32 a_stride_byte);
-
-		/** バーテックスバッファ削除。
-		*/
-		//void DeleteVertexBuffer(s32 a_vertexbufferid);
 
 		/** マウス取得。
 		*/
@@ -133,6 +133,14 @@ namespace NBsys{namespace NOpengl
 		*/
 		void Render_ClearBuffer(bool a_depth,bool a_color);
 
+		/** [描画命令]ワールドライン描画。
+		*/
+		#if(ROM_DEVELOP)
+		void Render_DrawWorldLine();
+		#endif
+
+
+
 		#if(0)
 		/** アクションバッチング更新。
 		*/
@@ -163,9 +171,6 @@ namespace NBsys{namespace NOpengl
 		*/
 		void Render_SetFrameBuffer(s32 a_framebufferid);
 
-		/** Render_DrawWorldLine。
-		*/
-		void Render_DrawWorldLine();
 
 		/** Render_SetProjectionMatrix。
 		*/

@@ -67,6 +67,20 @@ namespace NBsys{namespace NOpengl
 		this->impl->Main();
 	}
 
+	/** [スレッドセーフ]バーテックスバッファ作成。
+	*/
+	s32 Opengl::CreateVertexBuffer(const sharedptr< u8 >& a_data_byte,s32 a_size_byte,s32 a_stride_byte)
+	{
+		return this->impl->CreateVertexBuffer(a_data_byte,a_size_byte,a_stride_byte);
+	}
+
+	/** [スレッドセーフ]バーテックスバッファ削除。
+	*/
+	void Opengl::DeleteVertexBuffer(s32 a_vertexbufferid)
+	{
+		this->impl->DeleteVertexBuffer(a_vertexbufferid);
+	}
+
 	#if(0)
 
 	/** SetShadeModel
@@ -103,22 +117,6 @@ namespace NBsys{namespace NOpengl
 	void Opengl::DeleteFrameBuffer(s32 a_framebufferid)
 	{
 		this->impl->DeleteFrameBuffer();
-	}
-	*/
-
-	/** バーテックスバッファ作成。
-	*/
-	s32 Opengl::CreateVertexBuffer(const sharedptr< u8 >& a_data_byte,s32 a_size_byte,s32 a_stride_byte)
-	{
-		return this->impl->CreateVertexBuffer(a_data_byte,a_size_byte,a_stride_byte);
-	}
-
-	/** バーテックスバッファ削除。
-	*/
-	/*
-	void Opengl::DeleteVertexBuffer(s32 a_vertexbufferid)
-	{
-		this->impl->DeleteVertexBuffer(a_vertexbufferid);
 	}
 	*/
 
@@ -162,6 +160,15 @@ namespace NBsys{namespace NOpengl
 	{
 		this->impl->Render_ClearBuffer(a_depth,a_color);
 	}
+
+	/** [描画命令]ワールドライン描画。
+	*/
+	#if(ROM_DEVELOP)
+	void Opengl::Render_DrawWorldLine()
+	{
+		this->impl->Render_DrawWorldLine();
+	}
+	#endif
 
 	#if(0)
 
@@ -210,13 +217,6 @@ namespace NBsys{namespace NOpengl
 	void Opengl::Render_SetFrameBuffer(s32 a_framebufferid)
 	{
 		this->impl->Render_SetFrameBuffer(a_framebufferid);
-	}
-
-	/** Render_DrawWorldLine。
-	*/
-	void Opengl::Render_DrawWorldLine()
-	{
-		this->impl->Render_DrawWorldLine();
 	}
 
 	/** Render_SetProjectionMatrix。
