@@ -253,7 +253,7 @@ namespace NBlib
 
 				addrinfo t_addrinfo_hints = {0};
 				{
-					Memory::memset(&t_addrinfo_hints, 0, sizeof(t_addrinfo_hints));
+					Memory::memset(&t_addrinfo_hints,0,sizeof(t_addrinfo_hints));
 					t_addrinfo_hints.ai_family = AF_INET;
 					t_addrinfo_hints.ai_socktype = SOCK_DGRAM;
 				}

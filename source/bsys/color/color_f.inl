@@ -16,6 +16,7 @@
 
 /** NBsys::NColor
 */
+#if(BSYS_COLOR_ENABLE)
 namespace NBsys{namespace NColor
 {
 
@@ -206,4 +207,4 @@ namespace NBsys{namespace NColor
 	}
 
 }}
-
+#endif

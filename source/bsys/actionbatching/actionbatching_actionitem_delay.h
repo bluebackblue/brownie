@@ -21,6 +21,7 @@
 
 /** NBsys::NActionBatching
 */
+#if(BSYS_ACTIONBATCHING_ENABLE)
 namespace NBsys{namespace NActionBatching
 {
 	/** ActionBatching_Action_Delay
@@ -88,4 +89,4 @@ namespace NBsys{namespace NActionBatching
 	};
 
 }}
-
+#endif

@@ -17,14 +17,20 @@
 
 /** include
 */
+#if(BSYS_COLOR_ENABLE)
+#include "./color/color.h"
+#endif
+
+/** include
+*/
 #if(BSYS_FILE_ENABLE)
 #include "./file/file.h"
 #endif
 
 /** include
 */
-#if(BSYS_COLOR_ENABLE)
-#include "./color/color.h"
+#if(BSYS_MODEL_ENABLE)
+#include "./model/model.h"
 #endif
 
 /** include

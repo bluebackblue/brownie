@@ -83,54 +83,86 @@ sharedptr< NBsys::NOpengl::Opengl >& OpenGL()
 }
 
 
+//s_step
+static s32 s_step = 0;
+
+
+//s_vertex
+static sharedptr< NBsys::NModel::Model_Vertex< NBsys::NModel::Model_Vertex_Data_PosColor > > s_vertex;
+
+//s_vertexbuffer_id
+static s32 s_vertexbuffer_id = -1;
+
+
 /** opengl_draw
 */
 void opengl_draw()
 {
-	//通常カメラから。
-
-	{
-		//ビューポート。
-		//this->viewport.Set_ViewPortMatrix(BSYS_OPENGL_SCREEN_W,BSYS_OPENGL_SCREEN_H);
-
-		//プロジェクション。
-		//this->projection.Set_PerspectiveProjectionMatrix(BSYS_OPENGL_SCREEN_W,BSYS_OPENGL_SCREEN_H,this->screen_fov_deg,this->screen_near,this->screen_far);
-
-		//ビュー。
-		//this->view.Set_ViewMatrix(this->camera_target,this->camera_position,this->camera_up);
-	}
-
-	{
-		//ビューポート。
-		//OpenGL()->Render_ViewPort(0,0,BSYS_OPENGL_SCREEN_W,BSYS_OPENGL_SCREEN_H);
-
-		//プロジェクション。
-		//OpenGL()->Render_SetProjectionMatrix(this->projection);
-
-		//ビュー。
-		//OpenGL()->Render_SetViewMatrix(this->view);
-
-		//カラーマスク。
-		//OpenGL()->Render_SetColorMask(true,true,true,true);
-
+	if(s_step < 100){
 		//クリアカラー設定。
-		OpenGL()->Render_SetClearColor(NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f));
+		OpenGL()->Render_SetClearColor(NBsys::NColor::Color_F(0.0f,0.0f,0.0f,1.0f));
 
 		//クリア。デプス。カラー。
 		OpenGL()->Render_ClearBuffer(true,true);
+	}else{
+	
+		{
+			//ビューポート。
+			//this->viewport.Set_ViewPortMatrix(BSYS_OPENGL_SCREEN_W,BSYS_OPENGL_SCREEN_H);
 
-		//デプステスト。
-		//OpenGL()->Render_SetDepthTest(true);
+			//プロジェクション。
+			//this->projection.Set_PerspectiveProjectionMatrix(BSYS_OPENGL_SCREEN_W,BSYS_OPENGL_SCREEN_H,this->screen_fov_deg,this->screen_near,this->screen_far);
 
-		//ワールドライン描画。
-		OpenGL()->Render_DrawWorldLine();
+			//ビュー。
+			//this->view.Set_ViewMatrix(this->camera_target,this->camera_position,this->camera_up);
+		}
+
+		{
+			//ビューポート。
+			//OpenGL()->Render_ViewPort(0,0,BSYS_OPENGL_SCREEN_W,BSYS_OPENGL_SCREEN_H);
+
+			//プロジェクション。
+			//OpenGL()->Render_SetProjectionMatrix(this->projection);
+
+			//ビュー。
+			//OpenGL()->Render_SetViewMatrix(this->view);
+
+			//カラーマスク。
+			//OpenGL()->Render_SetColorMask(true,true,true,true);
+
+			//クリアカラー設定。
+			OpenGL()->Render_SetClearColor(NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f));
+
+			//クリア。デプス。カラー。
+			OpenGL()->Render_ClearBuffer(true,true);
+
+			//デプステスト。
+			//OpenGL()->Render_SetDepthTest(true);
+
+			//ワールドライン描画。
+			OpenGL()->Render_DrawWorldLine();
+		}
+
 	}
-
-
 }
 
 bool opengl_update(f32 a_delta,bool a_endrequest)
 {
+	if(s_step == 0){
+
+		//vertex
+		s_vertex = NBsys::NModel::Preset_Box< NBsys::NModel::Model_Vertex_Data_PosColor >();
+
+		sharedptr< u8 > t_data_byte(reinterpret_cast< const u8* >(s_vertex->GetVertexPointer()),null_delete());
+		s32 t_size_byte = s_vertex->GetVertexStrideByte() * s_vertex->GetVertexAllCountOf();
+		s32 t_stride_byte = s_vertex->GetVertexStrideByte();
+		s_vertexbuffer_id = OpenGL()->CreateVertexBuffer(t_data_byte,t_size_byte,t_stride_byte);
+
+		s_step++;
+	}else if(s_step == 1){
+		s_step = 100;
+	}
+
 	if(a_endrequest == true){
 		//中断。
 		return false;

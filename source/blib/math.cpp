@@ -70,9 +70,9 @@ namespace NBlib
 
 	/** [static]a_x/a_y‚Ì—]èB
 	*/
-	f32 Math::modf(f32 a_x, f32 a_y)
+	f32 Math::modf(f32 a_x,f32 a_y)
 	{
-		return std::fmodf(a_x, a_y);
+		return std::fmodf(a_x,a_y);
 	}
 	/** [static]x‚ÌyæB
 	*/

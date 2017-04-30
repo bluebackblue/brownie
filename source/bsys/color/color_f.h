@@ -21,6 +21,7 @@
 
 /** NBsys::NColor
 */
+#if(BSYS_COLOR_ENABLE)
 namespace NBsys{namespace NColor
 {
 	/** Color_F_Raw
@@ -147,4 +148,4 @@ namespace NBsys{namespace NColor
 	};
 
 }}
-
+#endif

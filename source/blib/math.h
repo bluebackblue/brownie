@@ -52,14 +52,14 @@ namespace NBlib
 
 		/** Max
 		*/
-		template < typename T > static inline T Max(T a_1, T a_2)
+		template < typename T > static inline T Max(T a_1,T a_2)
 		{
 			return ((a_1)>=(a_2))?(a_1):(a_2);
 		}
 
 		/** Clamp
 		*/
-		template < typename T > static inline T Clamp(T a_value, T a_min, T a_max)
+		template < typename T > static inline T Clamp(T a_value,T a_min,T a_max)
 		{
 			return ((a_value)>=(a_max))?(a_max):(((a_value)<=(a_min))?(a_min):(a_value));
 		}
@@ -70,7 +70,7 @@ namespace NBlib
 
 		/** [static]a_x/a_y‚Ì—]èB
 		*/
-		static f32 modf(f32 a_x, f32 a_y);
+		static f32 modf(f32 a_x,f32 a_y);
 
 		/** [static]x‚ÌyæB
 		*/

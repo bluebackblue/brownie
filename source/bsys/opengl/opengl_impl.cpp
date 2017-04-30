@@ -147,7 +147,7 @@ namespace NBsys{namespace NOpengl
 
 					GLint t_status = GL_FALSE;
 					glGetProgramiv(t_shaderprogram_rawid.rawid,GL_LINK_STATUS,&t_status);
-					if(t_status == GL_FALSE) {
+					if(t_status == GL_FALSE){
 						GLint t_infoLogLength;
 						glGetProgramiv(t_shaderprogram_rawid.rawid,GL_INFO_LOG_LENGTH,&t_infoLogLength);
 						sharedptr< GLchar > t_logbuffer(new GLchar[t_infoLogLength],default_delete< GLchar[] >());

@@ -337,19 +337,19 @@ namespace NBlib
 					if((t_char & 0x80) == 0){
 						//t_char & 10000000 == 00000000
 						return 1;
-					}else if((t_char & 0xE0) == 0xC0) {
+					}else if((t_char & 0xE0) == 0xC0){
 						//t_char & 11100000 == 11000000
 						return 2;
-					}else if((t_char & 0xF0) == 0xE0) {
+					}else if((t_char & 0xF0) == 0xE0){
 						//t_char & 11110000 == 11100000
 						return 3;
-					}else if((t_char & 0xF8) == 0xF0) {
+					}else if((t_char & 0xF8) == 0xF0){
 						//t_char & 11111000 == 11110000
 						return 4;
-					}else if((t_char & 0xFC) == 0xF8) {
+					}else if((t_char & 0xFC) == 0xF8){
 						//t_char & 11111100 == 11111000
 						return 5;
-					}else if((t_char & 0xFE) == 0xFC) {
+					}else if((t_char & 0xFE) == 0xFC){
 						//t_char & 11111110 == 11111100
 						return 6;
 					}else{
@@ -1653,7 +1653,7 @@ namespace NBlib
 		this->value.Reset();
 		
 		this->valuetype = ValueType::AssociativeArray;
-		this->value.associative_array.reset(new STLMap< STLString, sharedptr< JsonItem > >::Type());
+		this->value.associative_array.reset(new STLMap< STLString , sharedptr< JsonItem > >::Type());
 	}
 
 	/** [設定]空インデックスリスト。

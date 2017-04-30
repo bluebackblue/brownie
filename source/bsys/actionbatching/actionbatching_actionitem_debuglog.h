@@ -21,6 +21,7 @@
 
 /** NBsys::NActionBatching
 */
+#if(BSYS_ACTIONBATCHING_ENABLE)
 namespace NBsys{namespace NActionBatching
 {
 	/** ActionBatching_Action_DebugLog
@@ -68,4 +69,5 @@ namespace NBsys{namespace NActionBatching
 	};
 
 }}
+#endif
 

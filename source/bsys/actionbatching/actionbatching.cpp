@@ -26,6 +26,7 @@
 
 /** NBsys::NActionBatching
 */
+#if(BSYS_ACTIONBATCHING_ENABLE)
 namespace NBsys{namespace NActionBatching
 {
 
@@ -80,4 +81,6 @@ namespace NBsys{namespace NActionBatching
 	}
 
 }}
+#endif
+
 

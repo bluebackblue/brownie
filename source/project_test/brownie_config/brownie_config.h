@@ -224,6 +224,13 @@
 
 /*
 
+	color
+
+*/
+#define BSYS_COLOR_ENABLE								(1)
+
+/*
+
 	file
 
 	BSYS_FILE_LISTSIZE	: 同時リクエスト数。
@@ -236,6 +243,14 @@
 
 /*
 
+	model
+
+*/
+#define BSYS_MODEL_ENABLE								(1)
+
+
+/*
+
 	opengl
 
 */
@@ -244,12 +259,7 @@
 #define BSYS_OPENGL_WIDTH								(1440)
 #define BSYS_OPENGL_HEIGHT								(810)
 
-/*
 
-	color
-
-*/
-#define BSYS_COLOR_ENABLE								(1)
 
 
 

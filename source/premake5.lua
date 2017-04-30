@@ -22,6 +22,7 @@ do
 	language "C++"
 
 	files{
+		"**.inl"
 		"**.h",
 		"**.cpp"
 	}

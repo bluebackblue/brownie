@@ -152,7 +152,7 @@ namespace NBlib
 
 		/** 明示的なコンストラクタの呼び出し。
 		*/
-		void construct(pointer a_pointer, const T& a_value)
+		void construct(pointer a_pointer,const T& a_value)
 		{
 			//placement new
 			::new ((void*)a_pointer) T(a_value);
@@ -291,7 +291,7 @@ namespace NBlib
 
 		/** 明示的なコンストラクタの呼び出し。
 		*/
-		void construct(pointer a_pointer, const T& a_value)
+		void construct(pointer a_pointer,const T& a_value)
 		{
 			//placement new
 			::new ((void*)a_pointer) T(a_value);
