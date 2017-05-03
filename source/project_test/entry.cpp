@@ -132,6 +132,46 @@ static s32 s_device_index = 0;
 static AsyncResult< bool > s_asyncresult;
 
 
+//s_view
+NBsys::NGeometry::Geometry_Matrix_44 s_view;
+
+
+//s_projection
+NBsys::NGeometry::Geometry_Matrix_44 s_projection;
+
+
+//s_viewport
+NBsys::NGeometry::Geometry_Matrix_44 s_viewport;
+
+
+//s_matrix
+NBsys::NGeometry::Geometry_Matrix_44 s_matrix = NBsys::NGeometry::Geometry_Matrix_44::Identity();
+
+
+//s_near
+f32 s_near = 1.0f;
+
+
+//s_far
+f32 s_far = 100.0f;
+
+
+//s_fov_deg
+f32 s_fov_deg = 60.0f;
+
+
+//s_camera_position
+NBsys::NGeometry::Geometry_Vector3 s_camera_position(0.0f,5.0f,5.0f);
+
+
+//s_camera_target
+NBsys::NGeometry::Geometry_Vector3 s_camera_target(0.0f,0.0f,0.0f);
+
+
+//s_camera_up
+NBsys::NGeometry::Geometry_Vector3 s_camera_up(0.0f,1.0f,0.0f);
+
+
 /** opengl_draw
 */
 void opengl_draw()
@@ -146,18 +186,18 @@ void opengl_draw()
 	
 		{
 			//ビューポート。
-			//this->viewport.Set_ViewPortMatrix(BSYS_OPENGL_SCREEN_W,BSYS_OPENGL_SCREEN_H);
+			s_viewport.Set_ViewPortMatrix(BSYS_OPENGL_WIDTH,BSYS_OPENGL_HEIGHT);
 
 			//プロジェクション。
-			//this->projection.Set_PerspectiveProjectionMatrix(BSYS_OPENGL_SCREEN_W,BSYS_OPENGL_SCREEN_H,this->screen_fov_deg,this->screen_near,this->screen_far);
+			s_projection.Set_PerspectiveProjectionMatrix(BSYS_OPENGL_WIDTH,BSYS_OPENGL_HEIGHT,s_fov_deg,s_near,s_far);
 
 			//ビュー。
-			//this->view.Set_ViewMatrix(this->camera_target,this->camera_position,this->camera_up);
+			s_view.Set_ViewMatrix(s_camera_target,s_camera_position,s_camera_up);
 		}
 
 		{
 			//ビューポート。
-			//OpenGL()->Render_ViewPort(0,0,BSYS_OPENGL_SCREEN_W,BSYS_OPENGL_SCREEN_H);
+			OpenGL()->Render_ViewPort(0,0,BSYS_OPENGL_WIDTH,BSYS_OPENGL_HEIGHT);
 
 			//プロジェクション。
 			//OpenGL()->Render_SetProjectionMatrix(this->projection);
@@ -175,10 +215,10 @@ void opengl_draw()
 			OpenGL()->Render_ClearBuffer(true,true);
 
 			//デプステスト。
-			//OpenGL()->Render_SetDepthTest(true);
+			OpenGL()->Render_SetDepthTest(true);
 
 			//ワールドライン描画。
-			OpenGL()->Render_DrawWorldLine();
+			//OpenGL()->Render_DrawWorldLine();
 		}
 
 		{
@@ -188,8 +228,8 @@ void opengl_draw()
 				OpenGL()->Render_SetVertexBuffer(s_vertexbuffer_id);
 
 				//ビュー。プロジェクション。
-				//Matrix t_view_projection = a_matrix * this->view * this->projection;
-				//OpenGL()->Render_SetUniformParameter(a_shaderid,"a_view_projection",&t_view_projection,1);
+				NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = s_matrix * s_view * s_projection;
+				OpenGL()->Render_SetUniformParameter(s_shader_id,"a_view_projection",&t_view_projection,1);
 
 				//頂点情報。
 				{
@@ -289,6 +329,13 @@ bool opengl_update(f32 a_delta,bool a_endrequest)
 		s_step++;
 	}else{
 		s_step = 100;
+	}
+
+	if(s_step == 100){
+		s_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_RotationY(0.01f);
+		s_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_RotationX(0.001f);
+		s_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_RotationZ(0.002f);
+
 	}
 
 	if(a_endrequest == true){
