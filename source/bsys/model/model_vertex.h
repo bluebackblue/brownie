@@ -1,13 +1,11 @@
 #pragma once
 
 /**
-* Copyright (c) 2016 blueback
+* Copyright (c) 2017 blueback
+* Released under the MIT License
+* https://github.com/bluebackblue/brownie/blob/master/LICENSE
+* http://bbbproject.sakura.ne.jp/wordpress/mitlicense
 * @brief ÉÇÉfÉãÅB
-* $Revision: 941 $
-* $Author: bbbproject $
-* $Date:: 2016-12-08 00:13:53 +0900#$
-* $HeadURL: svn+ssh://bbbproject@bbbproject.sakura.ne.jp/home/bbbproject/svn-repos/www/artemis/asys/model/model_vertex.h $
-* $Id: model_vertex.h 941 2016-12-07 15:13:53Z bbbproject $
 */
 
 

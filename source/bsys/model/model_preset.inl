@@ -172,7 +172,7 @@ namespace NBsys{namespace NModel
 				//y:green
 				SetColor< T >(t_vertex,0.0f,1.0f,0.0f,1.0f);
 
-				SetPos< T >(t_vertex, 0.5f, 0.5f, 0.5f);//3
+				SetPos< T >(t_vertex,-0.5f, 0.5f, 0.5f);//3
 				t_box->AddVertex(t_vertex);
 				SetPos< T >(t_vertex, 0.5f, 0.5f, 0.5f);//2
 				t_box->AddVertex(t_vertex);

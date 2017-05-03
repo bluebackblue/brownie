@@ -29,6 +29,12 @@
 
 /** include
 */
+#if(BSYS_GEOMETRY_ENABLE)
+#include "./geometry/geometry.h"
+#endif
+
+/** include
+*/
 #if(BSYS_MODEL_ENABLE)
 #include "./model/model.h"
 #endif

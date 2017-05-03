@@ -302,10 +302,17 @@ namespace NBsys{namespace NOpengl
 		*/
 		void Render_DrawArray_Triangle(s32 a_vertex_offset,s32 a_vertex_countof);
 
+		/** Render_ViewPort。
+		*/
+		void Render_ViewPort(f32 a_x,f32 a_y,f32 a_width,f32 a_height);
 
+		/** Render_SetVertexUniform。
+		*/
+		void Render_SetUniformParameter(s32 a_shaderid,const STLString& a_name,const void* a_data_byte,s32 a_countof);
 
-
-
+		/** Render_SetDepthTest。
+		*/
+		void Render_SetDepthTest(bool a_flag);
 
 		#if(0)
 
@@ -333,13 +340,8 @@ namespace NBsys{namespace NOpengl
 		*/
 		void Render_SetViewMatrix(const NBsys::NGeometry::Geometry_Matrix_44& a_view);
 
-		/** Render_ViewPort。
-		*/
-		void Render_ViewPort(f32 a_x,f32 a_y,f32 a_width,f32 a_height);
 
-		/** Render_SetDepthTest。
-		*/
-		void Render_SetDepthTest(bool a_flag);
+
 
 		/** Render_SetAlphaBlend。
 		*/
@@ -349,9 +351,6 @@ namespace NBsys{namespace NOpengl
 		*/
 		void Render_SetShader(s32 a_vertex_shader_index);
 
-		/** Render_SetVertexUniform。
-		*/
-		void Render_SetUniformParameter(s32 a_shaderid,const STLString& a_name,const void* a_data_byte,s32 a_countof);
 
 		/** Render_SetUniformTexture。
 		*/

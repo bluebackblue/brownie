@@ -1291,10 +1291,155 @@ namespace NBsys{namespace NOpengl
 		}
 	}
 
+	/** Render_ViewPort。
+	*/
+	void Opengl_Impl::Render_ViewPort(f32 a_x,f32 a_y,f32 a_width,f32 a_height)
+	{
+		//AutoLock t_autolock(this->lockobject);
 
+		{
+			#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+			{
+				TAGLOG("gl",VASTRING_DEBUG("glViewport : %d : %d : %d : %d",static_cast<s32>(a_x),static_cast<s32>(a_y),static_cast<s32>(a_width),static_cast<s32>(a_height)));
+			}
+			#endif
 
+			glViewport(static_cast<s32>(a_x),static_cast<s32>(a_y),static_cast<s32>(a_width),static_cast<s32>(a_height));
+		}
+	}
 
+	/** Render_SetVertexUniform
 
+	a_shaderid		:	シェーダーＩＤ。
+	a_name			:	変数名。
+	a_data_byte		:	データ。
+	a_countof		:	配列数。
+
+	*/
+	void Opengl_Impl::Render_SetUniformParameter(s32 a_shaderid,const STLString& a_name,const void* a_data_byte,s32 a_countof)
+	{
+		AutoLock t_autolock(this->lockobject);
+
+		{
+			sharedptr< Opengl_Impl_ShaderState >& t_shaderstate = this->shaderstate_list[a_shaderid];
+
+			if(t_shaderstate){
+				STLMap< STLString , Opengl_Impl_ShaderState::Uniform >::const_iterator t_it = t_shaderstate->uniform_list.find(a_name);
+				if(t_it != t_shaderstate->uniform_list.end()){
+
+					ASSERT(a_countof <= t_it->second.countof);
+
+					switch(t_it->second.shadervaluetype){
+					case Opengl_ShaderValueType::Float:
+						{
+							#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+							{
+								TAGLOG("gl",VASTRING_DEBUG("glUniform1fv : location = %d : countof = %d : GL_FALSE : data_byte = 0x%08x",t_it->second.location,a_countof,a_data_byte));
+							}
+							#endif
+
+							glUniform1fv(t_it->second.location,a_countof,reinterpret_cast< const GLfloat* >(a_data_byte));
+						}break;
+					case Opengl_ShaderValueType::Float2:
+					case Opengl_ShaderValueType::Vector2:
+						{
+							#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+							{
+								TAGLOG("gl",VASTRING_DEBUG("glUniform2fv : location = %d : countof = %d : GL_FALSE : data_byte = 0x%08x",t_it->second.location,a_countof,a_data_byte));
+							}
+							#endif
+
+							glUniform2fv(t_it->second.location,a_countof,reinterpret_cast< const GLfloat* >(a_data_byte));
+						}break;
+					case Opengl_ShaderValueType::Float3:
+					case Opengl_ShaderValueType::Vector3:
+						{
+							#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+							{
+								TAGLOG("gl",VASTRING_DEBUG("glUniform3fv : location = %d : countof = %d : GL_FALSE : data_byte = 0x%08x",t_it->second.location,a_countof,a_data_byte));
+							}
+							#endif
+
+							glUniform3fv(t_it->second.location,a_countof,reinterpret_cast< const GLfloat* >(a_data_byte));
+						}break;
+					case Opengl_ShaderValueType::Float4:
+					case Opengl_ShaderValueType::Vector4:
+						{
+							#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+							{
+								TAGLOG("gl",VASTRING_DEBUG("glUniform4fv : location = %d : countof = %d : GL_FALSE : data_byte = 0x%08x",t_it->second.location,a_countof,a_data_byte));
+							}
+							#endif
+
+							glUniform4fv(t_it->second.location,a_countof,reinterpret_cast< const GLfloat* >(a_data_byte));
+						}break;
+					case Opengl_ShaderValueType::Float16:
+					case Opengl_ShaderValueType::Matrix:
+						{
+							#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+							{
+								TAGLOG("gl",VASTRING_DEBUG("glUniformMatrix4fv : location = %d : countof = %d : GL_FALSE : data_byte = 0x%08x",t_it->second.location,a_countof,a_data_byte));
+							}
+							#endif
+
+							glUniformMatrix4fv(t_it->second.location,a_countof,GL_FALSE,reinterpret_cast< const GLfloat* >(a_data_byte));
+						}break;
+					case Opengl_ShaderValueType::IntToFloat:
+						{
+							ASSERT(0);
+						}break;
+					case Opengl_ShaderValueType::Int2ToFloat2:
+						{
+							ASSERT(0);
+						}break;
+					case Opengl_ShaderValueType::Int3ToFloat3:
+						{
+							ASSERT(0);
+						}break;
+					case Opengl_ShaderValueType::Int4ToFloat4:
+						{
+							ASSERT(0);
+						}break;
+					default:
+						{
+							ASSERT(0);
+						}break;
+					}
+				}else{
+					ASSERT(0);
+				}
+			}else{
+				ASSERT(0);
+			}
+		}
+	}
+
+	/** Render_SetDepthTest。
+	*/
+	void Opengl_Impl::Render_SetDepthTest(bool a_flag)
+	{
+		//AutoLock t_autolock(this->lockobject);
+	
+		{
+			if(a_flag == true){
+				#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+				{
+					TAGLOG("gl",VASTRING_DEBUG("glEnable : GL_DEPTH_TEST"));
+				}
+				#endif
+
+				glEnable(GL_DEPTH_TEST);
+			}else{
+				#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+				{
+					TAGLOG("gl",VASTRING_DEBUG("glDisable : GL_DEPTH_TEST"));
+				}
+				#endif
+
+				glDisable(GL_DEPTH_TEST);
+			}
+		}
+	}
 
 	#if(0)
 
@@ -1861,51 +2006,10 @@ namespace NBsys{namespace NOpengl
 		}
 	}
 
-	/** Render_ViewPort。
-	*/
-	void Opengl_Impl::Render_ViewPort(f32 a_x,f32 a_y,f32 a_width,f32 a_height)
-	{
-		//AutoLock t_autolock(this->lockobject);
-
-		{
-			#if(BSYS_OPENGL_DETAILLOG_ENABLE)
-			{
-				TAGLOG("gl",VASTRING_DEBUG("glViewport : %d : %d : %d : %d",static_cast<s32>(a_x),static_cast<s32>(a_y),static_cast<s32>(a_width),static_cast<s32>(a_height)));
-			}
-			#endif
-
-			glViewport(static_cast<s32>(a_x),static_cast<s32>(a_y),static_cast<s32>(a_width),static_cast<s32>(a_height));
-		}
-	}
 
 
 
-	/** Render_SetDepthTest。
-	*/
-	void Opengl_Impl::Render_SetDepthTest(bool a_flag)
-	{
-		//AutoLock t_autolock(this->lockobject);
-	
-		{
-			if(a_flag == true){
-				#if(BSYS_OPENGL_DETAILLOG_ENABLE)
-				{
-					TAGLOG("gl",VASTRING_DEBUG("glEnable : GL_DEPTH_TEST"));
-				}
-				#endif
 
-				glEnable(GL_DEPTH_TEST);
-			}else{
-				#if(BSYS_OPENGL_DETAILLOG_ENABLE)
-				{
-					TAGLOG("gl",VASTRING_DEBUG("glDisable : GL_DEPTH_TEST"));
-				}
-				#endif
-
-				glDisable(GL_DEPTH_TEST);
-			}
-		}
-	}
 
 	/** Render_SetAlphaBlend。
 	*/
@@ -1938,109 +2042,7 @@ namespace NBsys{namespace NOpengl
 
 
 
-	/** Render_SetVertexUniform
 
-	a_shaderid		:	シェーダーＩＤ。
-	a_name			:	変数名。
-	a_data_byte		:	データ。
-	a_countof		:	配列数。
-
-	*/
-	void Opengl_Impl::Render_SetUniformParameter(s32 a_shaderid,const STLString& a_name,const void* a_data_byte,s32 a_countof)
-	{
-		AutoLock t_autolock(this->lockobject);
-
-		{
-			if(this->shaderstate_list[a_shaderid].enable == true){
-				STLMap< STLString , Opengl_Impl::Uniform >::const_iterator t_it = this->shaderstate_list[a_shaderid].uniform_list.find(a_name);
-				if(t_it != this->shaderstate_list[a_shaderid].uniform_list.end()){
-
-					ASSERT(a_countof <= t_it->second.countof);
-
-					switch(t_it->second.shadervaluetype){
-					case Opengl_ShaderValueType::Float:
-						{
-							#if(BSYS_OPENGL_DETAILLOG_ENABLE)
-							{
-								TAGLOG("gl",VASTRING_DEBUG("glUniform1fv : location = %d : countof = %d : GL_FALSE : data_byte = 0x%08x",t_it->second.location,a_countof,a_data_byte));
-							}
-							#endif
-
-							glUniform1fv(t_it->second.location,a_countof,reinterpret_cast< const GLfloat* >(a_data_byte));
-						}break;
-					case Opengl_ShaderValueType::Float2:
-					case Opengl_ShaderValueType::Vector2:
-						{
-							#if(BSYS_OPENGL_DETAILLOG_ENABLE)
-							{
-								TAGLOG("gl",VASTRING_DEBUG("glUniform2fv : location = %d : countof = %d : GL_FALSE : data_byte = 0x%08x",t_it->second.location,a_countof,a_data_byte));
-							}
-							#endif
-
-							glUniform2fv(t_it->second.location,a_countof,reinterpret_cast< const GLfloat* >(a_data_byte));
-						}break;
-					case Opengl_ShaderValueType::Float3:
-					case Opengl_ShaderValueType::Vector3:
-						{
-							#if(BSYS_OPENGL_DETAILLOG_ENABLE)
-							{
-								TAGLOG("gl",VASTRING_DEBUG("glUniform3fv : location = %d : countof = %d : GL_FALSE : data_byte = 0x%08x",t_it->second.location,a_countof,a_data_byte));
-							}
-							#endif
-
-							glUniform3fv(t_it->second.location,a_countof,reinterpret_cast< const GLfloat* >(a_data_byte));
-						}break;
-					case Opengl_ShaderValueType::Float4:
-					case Opengl_ShaderValueType::Vector4:
-						{
-							#if(BSYS_OPENGL_DETAILLOG_ENABLE)
-							{
-								TAGLOG("gl",VASTRING_DEBUG("glUniform4fv : location = %d : countof = %d : GL_FALSE : data_byte = 0x%08x",t_it->second.location,a_countof,a_data_byte));
-							}
-							#endif
-
-							glUniform4fv(t_it->second.location,a_countof,reinterpret_cast< const GLfloat* >(a_data_byte));
-						}break;
-					case Opengl_ShaderValueType::Float16:
-					case Opengl_ShaderValueType::Matrix:
-						{
-							#if(BSYS_OPENGL_DETAILLOG_ENABLE)
-							{
-								TAGLOG("gl",VASTRING_DEBUG("glUniformMatrix4fv : location = %d : countof = %d : GL_FALSE : data_byte = 0x%08x",t_it->second.location,a_countof,a_data_byte));
-							}
-							#endif
-
-							glUniformMatrix4fv(t_it->second.location,a_countof,GL_FALSE,reinterpret_cast< const GLfloat* >(a_data_byte));
-						}break;
-					case Opengl_ShaderValueType::IntToFloat:
-						{
-							ASSERT(0);
-						}break;
-					case Opengl_ShaderValueType::Int2ToFloat2:
-						{
-							ASSERT(0);
-						}break;
-					case Opengl_ShaderValueType::Int3ToFloat3:
-						{
-							ASSERT(0);
-						}break;
-					case Opengl_ShaderValueType::Int4ToFloat4:
-						{
-							ASSERT(0);
-						}break;
-					default:
-						{
-							ASSERT(0);
-						}break;
-					}
-				}else{
-					ASSERT(0);
-				}
-			}else{
-				ASSERT(0);
-			}
-		}
-	}
 
 	/** Render_SetUniformTexture。
 	*/

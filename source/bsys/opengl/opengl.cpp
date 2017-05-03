@@ -215,6 +215,28 @@ namespace NBsys{namespace NOpengl
 		this->impl->Render_DrawArray_Triangle(a_vertex_offset,a_vertex_countof);
 	}
 
+	/** Render_ViewPort。
+	*/
+	void Opengl::Render_ViewPort(f32 a_x,f32 a_y,f32 a_width,f32 a_height)
+	{
+		this->impl->Render_ViewPort(a_x,a_y,a_width,a_height);
+	}
+
+	/** Render_SetUniformParameter
+	*/
+	void Opengl::Render_SetUniformParameter(s32 a_shaderid,const STLString& a_name,const void* a_data_byte,s32 a_countof)
+	{
+		this->impl->Render_SetUniformParameter(a_shaderid,a_name,a_data_byte,a_countof);
+	}
+
+	/** Render_SetDepthTest
+	*/
+	void Opengl::Render_SetDepthTest(bool a_flag)
+	{
+		this->impl->Render_SetDepthTest(a_flag);
+	}
+
+
 	#if(0)
 
 	/** アクションバッチング更新。
@@ -267,19 +289,8 @@ namespace NBsys{namespace NOpengl
 		this->impl->Render_SetViewMatrix(a_view);
 	}
 
-	/** Render_ViewPort。
-	*/
-	void Opengl::Render_ViewPort(f32 a_x,f32 a_y,f32 a_width,f32 a_height)
-	{
-		this->impl->Render_ViewPort(a_x,a_y,a_width,a_height);
-	}
 
-	/** Render_SetDepthTest
-	*/
-	void Opengl::Render_SetDepthTest(bool a_flag)
-	{
-		this->impl->Render_SetDepthTest(a_flag);
-	}
+
 
 	/** Render_SetAlphaBlend。
 	*/
@@ -290,12 +301,7 @@ namespace NBsys{namespace NOpengl
 
 
 
-	/** Render_SetUniformParameter
-	*/
-	void Opengl::Render_SetUniformParameter(s32 a_shaderid,const STLString& a_name,const void* a_data_byte,s32 a_countof)
-	{
-		this->impl->Render_SetUniformParameter(a_shaderid,a_name,a_data_byte,a_countof);
-	}
+
 
 	/** Render_SetUniformTexture
 	*/
