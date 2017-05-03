@@ -23,7 +23,6 @@
 */
 #include "./opengl_impl.h"
 #include "./opengl_impl_include.h"
-#include "./opengl_impl_vertexbuffer.h"
 
 
 /** NBsys::NOpengl
@@ -33,7 +32,7 @@ namespace NBsys{namespace NOpengl
 {
 	/** バーテックスバッファ作成。
 	*/
-	class Opengl_Impl_ActionBatching_VertexBuffer_Create : public NBsys::NActionBatching::ActionBatching_ActionItem_Base
+	class Opengl_Impl_ActionBatching_Shader_Load : public NBsys::NActionBatching::ActionBatching_ActionItem_Base
 	{
 	private:
 
@@ -43,22 +42,27 @@ namespace NBsys{namespace NOpengl
 
 		/** vertexbuffer
 		*/
-		sharedptr< Opengl_Impl_VertexBuffer > vertexbuffer;
+		sharedptr< Opengl_ShaderLayout > shaderlayout;
+
+		/** isend
+		*/
+		AsyncResult< bool > asyncresult;
 
 	public:
 
 		/** constructor
 		*/
-		Opengl_Impl_ActionBatching_VertexBuffer_Create(Opengl_Impl& a_opengl_impl,const sharedptr< Opengl_Impl_VertexBuffer >& a_vertexbuffer)
+		Opengl_Impl_ActionBatching_Shader_Load(Opengl_Impl& a_opengl_impl,const sharedptr< Opengl_ShaderLayout >& a_shaderlayout,AsyncResult< bool >& a_asyncresult)
 			:
 			opengl_impl(a_opengl_impl),
-			vertexbuffer(a_vertexbuffer)
+			shaderlayout(a_shaderlayout),
+			asyncresult(a_asyncresult)
 		{
 		}
 
 		/** destructor
 		*/
-		virtual ~Opengl_Impl_ActionBatching_VertexBuffer_Create()
+		virtual ~Opengl_Impl_ActionBatching_Shader_Load()
 		{
 		}
 
@@ -78,12 +82,22 @@ namespace NBsys{namespace NOpengl
 				//中断。
 			}
 
-			//Render_CreateVertexBuffer
-			this->opengl_impl.Render_CreateVertexBuffer(this->vertexbuffer);
+			if(this->shaderlayout->IsBusy() == true){
+				//継続。
+				a_delta -= 1.0f;
+				return 0;
+			}
+
+			//Render_LoadShader
+			this->opengl_impl.Render_LoadShader(this->shaderlayout);
+
+			//asyncresult
+			this->asyncresult.Set(true);
 
 			//成功。
 			return 1;
 		}
+
 	};
 
 }}

@@ -3,6 +3,8 @@
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
+ * https://github.com/bluebackblue/brownie/blob/master/LICENSE
+ * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
  * @brief OpenGLB
 */
 
@@ -76,6 +78,7 @@ namespace NBsys{namespace NOpengl
 				//’†’fB
 			}
 
+			//Render_DeleteVertexBuffer
 			this->opengl_impl.Render_DeleteVertexBuffer(this->vertexbuffer);
 
 			//¬Œ÷B

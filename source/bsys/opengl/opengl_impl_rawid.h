@@ -48,7 +48,7 @@ namespace NBsys{namespace NOpengl
 
 		/** 無効チェック。
 		*/
-		bool IsInvalid()
+		bool IsInvalid() const
 		{
 			if(this->rawid == 0){
 				//無効。

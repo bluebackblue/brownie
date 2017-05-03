@@ -16,7 +16,7 @@
 
 /** include
 */
-#include "./opengl_shaderinitializelist.h"
+#include "./opengl_shaderlayout.h"
 
 
 /** include
@@ -69,13 +69,21 @@ namespace NBsys{namespace NOpengl
 		*/
 		void Main();
 
-		/** [スレッドセーフ]バーテックスバッファ作成。
+		/** バーテックスバッファ作成。
 		*/
 		s32 CreateVertexBuffer(const sharedptr< u8 >& a_data_byte,s32 a_size_byte,s32 a_stride_byte);
 
-		/** [スレッドセーフ]バーテックスバッファ削除。
+		/** バーテックスバッファ削除。
 		*/
 		void DeleteVertexBuffer(s32 a_vertexbufferid);
+
+		/** シェーダーロード開始。
+		*/
+		void LoadShaderRequest(const sharedptr< Opengl_ShaderLayout >& a_shaderlayout,AsyncResult< bool >& a_asyncresult);
+
+		/** シェーダー削除。
+		*/
+		void DeleteShader(s32 a_shaderid);
 
 		#if(0)
 
@@ -139,16 +147,29 @@ namespace NBsys{namespace NOpengl
 		void Render_DrawWorldLine();
 		#endif
 
+		/** [描画命令]シェーダー設定。
+		*/
+		void Render_SetShader(s32 a_shaderid);
 
+		/** [描画命令]バッテックスバッファ設定。
+		*/
+		void Render_SetVertexBuffer(s32 a_vertexbufferid);
+
+		/** Render_SetAttributeParameter。
+
+		return : 使用バイト数。
+
+		*/
+		s32 Render_SetAttributeParameter(s32 a_shaderid,const STLString& a_name,s32 a_stride_byte,s32 a_offset_byte);
+
+		/** Render_DrawArray_Triangle。
+		*/
+		void Render_DrawArray_Triangle(s32 a_vertex_offset,s32 a_vertex_countof);
 
 		#if(0)
 		/** アクションバッチング更新。
 		*/
 		void Render_UpdateActionBatching();
-
-		/** Render_SetVertexBuffer。
-		*/
-		void Render_SetVertexBuffer(s32 a_vertexbufferid);
 
 		/** Render_SetColorMask。
 		*/
@@ -158,11 +179,6 @@ namespace NBsys{namespace NOpengl
 		*/
 		void Render_SetPolygonOffset(bool a_flag,f32 a_factor,f32 a_unit);
 
-		#endif
-
-
-		#if(0)
-
 		/** Render_SetTextureDirect。
 		*/
 		void Render_SetTextureDirect(s32 a_textureunitid,s32 a_textureid);
@@ -170,7 +186,6 @@ namespace NBsys{namespace NOpengl
 		/** Render_SetFrameBuffer。
 		*/
 		void Render_SetFrameBuffer(s32 a_framebufferid);
-
 
 		/** Render_SetProjectionMatrix。
 		*/
@@ -184,7 +199,6 @@ namespace NBsys{namespace NOpengl
 		*/
 		void Render_ViewPort(f32 a_x,f32 a_y,f32 a_width,f32 a_height);
 
-
 		/** Render_SetDepthTest。
 		*/
 		void Render_SetDepthTest(bool a_flag);
@@ -193,17 +207,6 @@ namespace NBsys{namespace NOpengl
 		*/
 		void Render_SetAlphaBlend(bool a_flag);
 
-		/** Render_SetShader。
-		*/
-		void Render_SetShader(s32 a_vertex_shader_index);
-
-		/** Render_SetAttributeParameter。
-
-		return : 使用バイト数。
-
-		*/
-		s32 Render_SetAttributeParameter(s32 a_shaderid,const STLString& a_name,const void* a_data_byte,s32 a_stride_byte,s32 a_offset_byte);
-
 		/** Render_SetUniformParameter。
 		*/
 		void Render_SetUniformParameter(s32 a_shaderid,const STLString& a_name,const void* a_data_byte,s32 a_countof);
@@ -211,10 +214,6 @@ namespace NBsys{namespace NOpengl
 		/** Render_SetUniformTexture。
 		*/
 		void Render_SetUniformTexture(s32 a_shaderid,const STLString& a_name,s32 a_textureid);
-
-		/** Render_DrawArray_Triangle。
-		*/
-		void Render_DrawArray_Triangle(s32 a_vertex_offset,s32 a_vertex_countof);
 
 		/** Render_DrawArray_Quads。
 		*/

@@ -23,7 +23,6 @@
 */
 #include "./opengl_impl.h"
 #include "./opengl_impl_include.h"
-#include "./opengl_impl_vertexbuffer.h"
 
 
 /** NBsys::NOpengl
@@ -33,7 +32,7 @@ namespace NBsys{namespace NOpengl
 {
 	/** バーテックスバッファ作成。
 	*/
-	class Opengl_Impl_ActionBatching_VertexBuffer_Create : public NBsys::NActionBatching::ActionBatching_ActionItem_Base
+	class Opengl_Impl_ActionBatching_Shader_Delete : public NBsys::NActionBatching::ActionBatching_ActionItem_Base
 	{
 	private:
 
@@ -41,24 +40,24 @@ namespace NBsys{namespace NOpengl
 		*/
 		Opengl_Impl& opengl_impl;
 
-		/** vertexbuffer
+		/** shaderstate
 		*/
-		sharedptr< Opengl_Impl_VertexBuffer > vertexbuffer;
+		sharedptr< Opengl_Impl_ShaderState > shaderstate;
 
 	public:
 
 		/** constructor
 		*/
-		Opengl_Impl_ActionBatching_VertexBuffer_Create(Opengl_Impl& a_opengl_impl,const sharedptr< Opengl_Impl_VertexBuffer >& a_vertexbuffer)
+		Opengl_Impl_ActionBatching_Shader_Delete(Opengl_Impl& a_opengl_impl,sharedptr< Opengl_Impl_ShaderState >& a_shaderstate)
 			:
 			opengl_impl(a_opengl_impl),
-			vertexbuffer(a_vertexbuffer)
+			shaderstate(a_shaderstate)
 		{
 		}
 
 		/** destructor
 		*/
-		virtual ~Opengl_Impl_ActionBatching_VertexBuffer_Create()
+		virtual ~Opengl_Impl_ActionBatching_Shader_Delete()
 		{
 		}
 
@@ -78,12 +77,12 @@ namespace NBsys{namespace NOpengl
 				//中断。
 			}
 
-			//Render_CreateVertexBuffer
-			this->opengl_impl.Render_CreateVertexBuffer(this->vertexbuffer);
+			this->opengl_impl.Render_DeleteShader(this->shaderstate);
 
 			//成功。
 			return 1;
 		}
+
 	};
 
 }}

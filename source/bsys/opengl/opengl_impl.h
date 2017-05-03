@@ -25,13 +25,14 @@
 
 /** include
 */
-#include "./opengl_shaderinitializelist.h"
+#include "./opengl_shaderlayout.h"
 
 
 /** include
 */
 #include "./opengl_impl_include.h"
 #include "./opengl_impl_vertexbuffer.h"
+#include "./opengl_impl_shaderstate.h"
 //#include "./opengl_impl_rawid.h"
 //#include "./opengl_impl_texture.h"
 //#include "./opengl_impl_framebuffer.h"
@@ -49,105 +50,13 @@ namespace NBsys{namespace NOpengl
 	{
 	private:
 
-		#if(0)
 
-		/** Uniform
-		*/
-		struct Uniform
-		{
-			/** location
-			*/
-			GLint location;
-
-			/** shadervaluetype
-			*/
-			Opengl_ShaderValueType::Id shadervaluetype;
-
-			/** 配列数。
-			*/
-			s32 countof;
-
-			/** コンストラクタ。
-			*/
-			Uniform(GLint a_location,Opengl_ShaderValueType::Id a_shadervaluetype,s32 a_countof)
-				:
-				location(a_location),
-				shadervaluetype(a_shadervaluetype),
-				countof(a_countof)
-			{
-			}
-
-			/** デストラクタ。
-			*/
-			nonvirtual ~Uniform()
-			{
-			}
-		};
-
-		/** Attribute
-		*/
-		struct Attribute
-		{
-			/** location
-			*/
-			GLint location;
-
-			/** shadervaluetype
-			*/
-			Opengl_ShaderValueType::Id shadervaluetype;
-
-			/** コンストラクタ。
-			*/
-			Attribute(GLint a_location,Opengl_ShaderValueType::Id a_shadervaluetype)
-				:
-				location(a_location),
-				shadervaluetype(a_shadervaluetype)
-			{
-			}
-
-			/** デストラクタ。
-			*/
-			nonvirtual ~Attribute()
-			{
-			}
-		};
-
-		/** ShaderState
-		*/
-		struct ShaderState
-		{
-			/** 有効無効。
-			*/
-			bool enable;
-
-			/** vertex_shadercreate_rawid
-			*/
-			RawID vertex_shadercreate_rawid;
-
-			/** fragment_shadercreate_rawid
-			*/
-			RawID fragment_shadercreate_rawid;
-
-			/** shaderprogram_rawid
-			*/
-			RawID shaderprogram_rawid;
-
-			/** vertex_uniform_list
-			*/
-			STLMap< STLString , Uniform >::Type uniform_list;
-
-			/** attribute_list
-			*/
-			STLMap< STLString , Attribute >::Type attribute_list;
-
-			/** vertexarray_rawid
-			*/
-			RawID vertexarray_rawid;
-		};
-
-		#endif
 
 	private:
+
+		/** ロックオブジェクト。
+		*/
+		LockObject lockobject;
 
 		/** window
 		*/
@@ -189,13 +98,27 @@ namespace NBsys{namespace NOpengl
 		*/
 		LockObject actionbatching_lockobject;
 
-		/** [actionbatching_lockobject]アクションバッチング。
+		/** アクションバッチング。
 		*/
 		NBsys::NActionBatching::ActionBatching actionbatching;
 
-		/** [actionbatching_lockobject]バーテックスバッファリスト。
+		/** バーテックスバッファリスト。
 		*/
 		STLMap< s32 , sharedptr< Opengl_Impl_VertexBuffer > >::Type vertexbuffer_list;
+
+		/** shaderstate_list
+		*/
+		STLVector< sharedptr< Opengl_Impl_ShaderState > >::Type shaderstate_list;
+
+		/** current_shaderprogram_rawid
+		*/
+		RawID current_shaderprogram_rawid;
+
+		/** current_vertexarray_rawid
+		*/
+		RawID current_vertexarray_rawid;
+
+
 
 		#if(0)
 
@@ -207,21 +130,13 @@ namespace NBsys{namespace NOpengl
 		*/
 		STLMap< s32 , sharedptr< Opengl_Impl_FrameBuffer > >::Type framebuffer_list;
 
-		/** shaderstate_list
-		*/
-		STLVector< ShaderState >::Type shaderstate_list;
 
-		/** current_shaderprogram_rawid
-		*/
-		RawID current_shaderprogram_rawid;
+
 
 		/** current_framebuffer_rawid
 		*/
 		RawID current_framebuffer_rawid;
 
-		/** current_vertexarray_rawid
-		*/
-		RawID current_vertexarray_rawid;
 
 		/** current_texture_rawid
 		*/
@@ -252,13 +167,26 @@ namespace NBsys{namespace NOpengl
 		*/
 		void Main();
 
-		/** [スレッドセーフ]バーテックスバッファ作成。
+		/** StartBatching
+		*/
+		void StartBatching(sharedptr< NBsys::NActionBatching::ActionBatching_ActionList >& a_actionlist);
+
+		/** バーテックスバッファ作成。
 		*/
 		s32 CreateVertexBuffer(const sharedptr< u8 >& a_data_byte,s32 a_size_byte,s32 a_stride_byte);
 
-		/** [スレッドセーフ]バーテックスバッファ削除。
+		/** バーテックスバッファ削除。
 		*/
 		void DeleteVertexBuffer(s32 a_vertexbufferid);
+
+		/** シェーダーロード開始。
+		*/
+		void LoadShaderRequest(const sharedptr< Opengl_ShaderLayout >& a_shaderlayout,AsyncResult< bool >& a_asyncresult);
+
+		/** シェーダー削除。
+		*/
+		void DeleteShader(s32 a_shaderid);
+
 
 		#if(0)
 		/** SetShadeModel
@@ -347,11 +275,39 @@ namespace NBsys{namespace NOpengl
 		*/
 		void Render_DeleteVertexBuffer(sharedptr< Opengl_Impl_VertexBuffer >& a_vertexbuffer);
 
-		#if(0)
+		/** [描画命令]シェーダーロード。
+		*/
+		void Render_LoadShader(sharedptr< Opengl_ShaderLayout >& a_shaderlayout);
 
-		/** Render_SetVertexBuffer。
+		/** [描画命令]シェーダー削除。
+		*/
+		void Render_DeleteShader(sharedptr< Opengl_Impl_ShaderState >& a_shaderstate);
+
+		/** [描画命令]シェーダー設定。
+		*/
+		void Render_SetShader(s32 a_shaderid);
+	
+		/** [描画命令]バーテックスバッファ設定。
 		*/
 		void Render_SetVertexBuffer(s32 a_vertexbufferid);
+
+		/** Render_SetAttributeParameter。
+
+		return : 使用バイト数。
+
+		*/
+		s32 Render_SetAttributeParameter(s32 a_shaderid,const STLString& a_name,s32 a_stride_byte,s32 a_offset_byte);
+
+		/** Render_DrawArray_Triangle。
+		*/
+		void Render_DrawArray_Triangle(s32 a_vertex_offset,s32 a_vertex_countof);
+
+
+
+
+
+
+		#if(0)
 
 		/** [レンダースレッドRender_SetColorMask。
 		*/
@@ -360,10 +316,6 @@ namespace NBsys{namespace NOpengl
 		/** Render_SetPolygonOffset。
 		*/
 		void Render_SetPolygonOffset(bool a_flag,f32 a_factor,f32 a_unit);
-
-		#endif
-
-		#if(0)
 
 		/** Render_SetTextureDirect。
 		*/
@@ -397,13 +349,6 @@ namespace NBsys{namespace NOpengl
 		*/
 		void Render_SetShader(s32 a_vertex_shader_index);
 
-		/** Render_SetAttributeParameter。
-
-		return : 使用バイト数。
-
-		*/
-		s32 Render_SetAttributeParameter(s32 a_shaderid,const STLString& a_name,const void* a_data_byte,s32 a_stride_byte,s32 a_offset_byte);
-
 		/** Render_SetVertexUniform。
 		*/
 		void Render_SetUniformParameter(s32 a_shaderid,const STLString& a_name,const void* a_data_byte,s32 a_countof);
@@ -411,10 +356,6 @@ namespace NBsys{namespace NOpengl
 		/** Render_SetUniformTexture。
 		*/
 		void Render_SetUniformTexture(s32 a_shaderid,const STLString& a_name,s32 a_textureid);
-
-		/** Render_DrawArray_Triangle。
-		*/
-		void Render_DrawArray_Triangle(s32 a_vertex_offset,s32 a_vertex_countof);
 
 		/** Render_DrawArray_Quads。
 		*/

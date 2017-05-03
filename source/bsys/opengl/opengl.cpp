@@ -67,18 +67,32 @@ namespace NBsys{namespace NOpengl
 		this->impl->Main();
 	}
 
-	/** [スレッドセーフ]バーテックスバッファ作成。
+	/** バーテックスバッファ作成。
 	*/
 	s32 Opengl::CreateVertexBuffer(const sharedptr< u8 >& a_data_byte,s32 a_size_byte,s32 a_stride_byte)
 	{
 		return this->impl->CreateVertexBuffer(a_data_byte,a_size_byte,a_stride_byte);
 	}
 
-	/** [スレッドセーフ]バーテックスバッファ削除。
+	/** バーテックスバッファ削除。
 	*/
 	void Opengl::DeleteVertexBuffer(s32 a_vertexbufferid)
 	{
 		this->impl->DeleteVertexBuffer(a_vertexbufferid);
+	}
+
+	/** シェーダーロード開始。
+	*/
+	void Opengl::LoadShaderRequest(const sharedptr< Opengl_ShaderLayout >& a_shaderlayout,AsyncResult< bool >& a_asyncresult)
+	{
+		this->impl->LoadShaderRequest(a_shaderlayout,a_asyncresult);
+	}
+
+	/** シェーダー削除。
+	*/
+	void Opengl::DeleteShader(s32 a_shaderid)
+	{
+		this->impl->DeleteShader(a_shaderid);
 	}
 
 	#if(0)
@@ -170,6 +184,37 @@ namespace NBsys{namespace NOpengl
 	}
 	#endif
 
+	/** [描画命令]シェーダー設定。
+	*/
+	void Opengl::Render_SetShader(s32 a_shaderid)
+	{
+		this->impl->Render_SetShader(a_shaderid);
+	}
+
+	/** [描画命令]バーテックスバッファ設定。
+	*/
+	void Opengl::Render_SetVertexBuffer(s32 a_vertexbufferid)
+	{
+		this->impl->Render_SetVertexBuffer(a_vertexbufferid);
+	}
+
+	/** Render_SetVertexAttribute。
+
+	return : 使用バイト数。
+
+	*/
+	s32 Opengl::Render_SetAttributeParameter(s32 a_shaderid,const STLString& a_name,s32 a_stride_byte,s32 a_offset_byte)
+	{
+		return this->impl->Render_SetAttributeParameter(a_shaderid,a_name,a_stride_byte,a_offset_byte);
+	}
+
+	/** Render_DrawArray_Triangle
+	*/
+	void Opengl::Render_DrawArray_Triangle(s32 a_vertex_offset,s32 a_vertex_countof)
+	{
+		this->impl->Render_DrawArray_Triangle(a_vertex_offset,a_vertex_countof);
+	}
+
 	#if(0)
 
 	/** アクションバッチング更新。
@@ -179,12 +224,6 @@ namespace NBsys{namespace NOpengl
 		this->impl->Render_UpdateActionBatching();
 	}
 
-	/** Render_SetVertexBuffer。
-	*/
-	void Opengl::Render_SetVertexBuffer(s32 a_vertexbufferid)
-	{
-		this->impl->Render_SetVertexBuffer(a_vertexbufferid);
-	}
 
 	/** [レンダースレッドRender_SetColorMask。
 	*/
@@ -199,11 +238,6 @@ namespace NBsys{namespace NOpengl
 	{
 		this->impl->Render_SetPolygonOffset(a_flag,a_factor,a_unit);
 	}
-
-	#endif
-
-
-	#if(0)
 
 	/** Render_SetTextureDirect
 	*/
@@ -240,8 +274,6 @@ namespace NBsys{namespace NOpengl
 		this->impl->Render_ViewPort(a_x,a_y,a_width,a_height);
 	}
 
-
-
 	/** Render_SetDepthTest
 	*/
 	void Opengl::Render_SetDepthTest(bool a_flag)
@@ -256,22 +288,7 @@ namespace NBsys{namespace NOpengl
 		this->impl->Render_SetAlphaBlend(a_flag);
 	}
 
-	/** Render_SetShader。
-	*/
-	void Opengl::Render_SetShader(s32 a_vertex_shader_index)
-	{
-		this->impl->Render_SetShader(a_vertex_shader_index);
-	}
 
-	/** Render_SetVertexAttribute。
-
-	return : 使用バイト数。
-
-	*/
-	s32 Opengl::Render_SetAttributeParameter(s32 a_shaderid,const STLString& a_name,const void* a_data_byte,s32 a_stride_byte,s32 a_offset_byte)
-	{
-		return this->impl->Render_SetAttributeParameter(a_shaderid,a_name,a_data_byte,a_stride_byte,a_offset_byte);
-	}
 
 	/** Render_SetUniformParameter
 	*/
@@ -287,12 +304,7 @@ namespace NBsys{namespace NOpengl
 		this->impl->Render_SetUniformTexture(a_shaderid,a_name,a_textureid);
 	}
 
-	/** Render_DrawArray_Triangle
-	*/
-	void Opengl::Render_DrawArray_Triangle(s32 a_vertex_offset,s32 a_vertex_countof)
-	{
-		this->impl->Render_DrawArray_Triangle(a_vertex_offset,a_vertex_countof);
-	}
+
 
 	/** Render_DrawArray_Quads
 	*/

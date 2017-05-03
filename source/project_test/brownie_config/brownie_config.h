@@ -258,7 +258,7 @@
 #define BSYS_OPENGL_UPDATE_FPS							(60)
 #define BSYS_OPENGL_WIDTH								(1440)
 #define BSYS_OPENGL_HEIGHT								(810)
-
+#define BSYS_OPENGL_SHADERIDMAX							(32)
 
 
 

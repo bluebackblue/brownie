@@ -29,10 +29,9 @@
 #if(BSYS_OPENGL_ENABLE)
 namespace NBsys{namespace NOpengl
 {
-	#if(0)
-	/** Opengl_ShaderInitializeList
+	/** Opengl_ShaderLayout
 	*/
-	class Opengl_ShaderInitializeList
+	class Opengl_ShaderLayout
 	{
 	public:
 
@@ -97,9 +96,9 @@ namespace NBsys{namespace NOpengl
 			}
 		};
 
-		/** InitializeItem
+		/** Item
 		*/
-		struct InitializeItem
+		struct Item
 		{
 			/** shaderid
 			*/
@@ -107,24 +106,23 @@ namespace NBsys{namespace NOpengl
 
 			/** vertex_fileobject
 			*/
-			//sharedptr< NBsys::NFile::File_Object > vertex_fileobject;
+			sharedptr< NBsys::NFile::File_Object > vertex_fileobject;
 
 			/** fragment_fileobject
 			*/
-			//sharedptr< NBsys::NFile::File_Object > fragment_fileobject;
+			sharedptr< NBsys::NFile::File_Object > fragment_fileobject;
 
 			/** uniform_list
 			*/
-			sharedptr< STLVector< Opengl_ShaderInitializeList::Uniform >::Type > uniform_list;
+			sharedptr< STLVector< Opengl_ShaderLayout::Uniform >::Type > uniform_list;
 
 			/** vertex_attribute_list
 			*/
-			sharedptr< STLVector< Opengl_ShaderInitializeList::Attribute >::Type > attribute_list;
+			sharedptr< STLVector< Opengl_ShaderLayout::Attribute >::Type > attribute_list;
 
 			/** コンストラクタ。
 			*/
-			#if(0)
-			InitializeItem::InitializeItem(s32 a_shaderid,const sharedptr< NBsys::NFile::File_Object >& a_vertex_fileobject,const sharedptr< NBsys::NFile::File_Object >& a_fragment_fileobject,const sharedptr< STLVector< Opengl_ShaderInitializeList::Uniform >::Type >& a_uniform_list,const sharedptr< STLVector< Opengl_ShaderInitializeList::Attribute >::Type >& a_attribute_list)
+			Item::Item(s32 a_shaderid,const sharedptr< NBsys::NFile::File_Object >& a_vertex_fileobject,const sharedptr< NBsys::NFile::File_Object >& a_fragment_fileobject,const sharedptr< STLVector< Opengl_ShaderLayout::Uniform >::Type >& a_uniform_list,const sharedptr< STLVector< Opengl_ShaderLayout::Attribute >::Type >& a_attribute_list)
 				:
 				shaderid(a_shaderid),
 				vertex_fileobject(a_vertex_fileobject),
@@ -133,15 +131,10 @@ namespace NBsys{namespace NOpengl
 				attribute_list(a_attribute_list)
 			{
 			}
-			#else
-			InitializeItem::InitializeItem()
-			{
-			}
-			#endif
 
 			/** デストラクタ。
 			*/
-			InitializeItem::~InitializeItem()
+			nonvirtual Item::~Item()
 			{
 			}
 		};
@@ -149,22 +142,22 @@ namespace NBsys{namespace NOpengl
 	private:
 		/** list
 		*/
-		STLVector< InitializeItem >::Type list;
+		STLVector< Item >::Type list;
 
 	public:
 		/** コンストラクタ。
 		*/
-		Opengl_ShaderInitializeList();
+		Opengl_ShaderLayout();
 
 		/** デストラクタ。
 		*/
-		nonvirtual ~Opengl_ShaderInitializeList();
+		nonvirtual ~Opengl_ShaderLayout();
 
 	public:
 
-		/** AddInitializeItem
+		/** AddItem
 		*/
-		void AddInitializeItem(Opengl_ShaderInitializeList::InitializeItem& a_item);
+		void AddItem(Opengl_ShaderLayout::Item& a_item);
 
 		/** IsBusy
 		*/
@@ -176,10 +169,9 @@ namespace NBsys{namespace NOpengl
 
 		/** GetInitializeItem
 		*/
-		InitializeItem& GetInitializeItem(s32 a_index);
+		Item& GetItem(s32 a_index);
 
 	};
-	#endif
 }}
 #endif
 
