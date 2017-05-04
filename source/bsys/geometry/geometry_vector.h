@@ -288,27 +288,27 @@ namespace NBsys{namespace NGeometry
 	*/
 	struct Geometry_Vector4 : public Geometry_Vector_4_Raw
 	{
-		/** コンストラクタ。
+		/** constructor。
 		*/
 		inline Geometry_Vector4();
 
-		/** コンストラクタ。
+		/** constructor。
 		*/
 		inline Geometry_Vector4(f32 a_x,f32 a_y,f32 a_z,f32 a_w);
 
-		/** コンストラクタ。
+		/** constructor。
 		*/
 		inline Geometry_Vector4(const f32* a_value_pointer);
 
-		/** コンストラクタ。
+		/** constructor。
 		*/
 		inline Geometry_Vector4(const Geometry_Vector4& a_vector);
 
-		/** コンストラクタ。
+		/** constructor。
 		*/
 		inline Geometry_Vector4(const Geometry_Identity& /*a_identity*/);
 
-		/** デストラクタ。
+		/** destructor。
 		*/
 		nonvirtual inline ~Geometry_Vector4();
 

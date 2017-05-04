@@ -50,10 +50,6 @@ namespace NBsys{namespace NOpengl
 	{
 	private:
 
-
-
-	private:
-
 		/** ロックオブジェクト。
 		*/
 		LockObject lockobject;

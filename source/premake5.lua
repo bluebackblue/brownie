@@ -19,10 +19,15 @@ project "brownie"
 do
 	kind "WindowedApp"
 
+	flags
+	{
+		"WinMain"
+	}
+
 	language "C++"
 
 	files{
-		"**.inl"
+		"**.inl",
 		"**.h",
 		"**.cpp"
 	}
@@ -38,10 +43,10 @@ do
 
 	filter "action:vs*"
 	do
-		buildoptions
-		{
-			"/MP",
-		}
+		-- buildoptions
+		-- {
+		-- 	"/MP",
+		-- }
 
 		defines{
 			"PLATFORM_VCWIN"

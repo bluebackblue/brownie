@@ -25,14 +25,13 @@
 namespace NBsys{namespace NGeometry
 {
 
-	/** コンストラクタ。
+	/** constructor。
 	*/
 	inline Geometry_Frustum::Geometry_Frustum()
 	{
 	}
 
-
-	/** デストラクタ。
+	/** destructor。
 	*/
 	inline Geometry_Frustum::~Geometry_Frustum()
 	{
@@ -74,7 +73,7 @@ namespace NBsys{namespace NGeometry
 		this->plane[3].SetABCD(t_matrix.ax_w - t_matrix.ax_y, t_matrix.ay_w - t_matrix.ay_y,t_matrix.az_w - t_matrix.az_y,- t_matrix.tr_w + t_matrix.tr_y);
 
 		//near
-		#if(BSYS_OPENGL_PERSPECTIVE_TYPE == 0x00)
+		#if(BSYS_GEOMETRY_PERSPECTIVE_TYPE == 0x00)
 		{
 			this->plane[4].SetABCD(t_matrix.ax_w + t_matrix.ax_z, t_matrix.ay_w + t_matrix.ay_z,t_matrix.az_w + t_matrix.az_z,- t_matrix.tr_w - t_matrix.tr_z);
 		}

@@ -693,13 +693,13 @@ namespace NBsys{namespace NGeometry
 		this->z = a_vector_1.z + (a_vector_2.z - a_vector_1.z) * a_per;
 	}
 
-	/** コンストラクタ。
+	/** constructor。
 	*/
 	inline Geometry_Vector4::Geometry_Vector4()
 	{
 	}
 
-	/** コンストラクタ。
+	/** constructor。
 	*/
 	inline Geometry_Vector4::Geometry_Vector4(f32 a_x,f32 a_y,f32 a_z,f32 a_w)
 	{
@@ -709,7 +709,7 @@ namespace NBsys{namespace NGeometry
 		this->w = a_w;
 	}
 
-	/** コンストラクタ。
+	/** constructor。
 	*/
 	inline Geometry_Vector4::Geometry_Vector4(const f32* a_value_pointer)
 	{
@@ -719,7 +719,7 @@ namespace NBsys{namespace NGeometry
 		this->w = a_value_pointer[3];
 	}
 
-	/** コンストラクタ。
+	/** constructor。
 	*/
 	inline Geometry_Vector4::Geometry_Vector4(const Geometry_Vector4& a_vector)
 	{
@@ -729,14 +729,14 @@ namespace NBsys{namespace NGeometry
 		this->w = a_vector.w;
 	}
 
-	/** コンストラクタ。
+	/** constructor。
 	*/
 	inline Geometry_Vector4::Geometry_Vector4(const Geometry_Identity& /*a_identity*/)
 	{
 		this->Set_Zero();
 	}
 
-	/** デストラクタ。
+	/** destructor。
 	*/
 	inline Geometry_Vector4::~Geometry_Vector4()
 	{

@@ -253,13 +253,11 @@
 	opengl
 
 */
-#define BSYS_OPENGL_ENABLE								(1)
+#define BSYS_OPENGL_ENABLE								(0)
 #define BSYS_OPENGL_UPDATE_FPS							(60)
 #define BSYS_OPENGL_WIDTH								(1440)
 #define BSYS_OPENGL_HEIGHT								(810)
 #define BSYS_OPENGL_SHADERIDMAX							(32)
-#define BSYS_OPENGL_PERSPECTIVE_TYPE					(0x00)
-#define BSYS_GEOMETRY_MATRIX_SINCOSFAST_ENABLE			(1)
 
 /*
 
@@ -267,6 +265,18 @@
 
 */
 #define BSYS_GEOMETRY_ENABLE							(1)
+#define BSYS_GEOMETRY_MATRIX_SINCOSFAST_ENABLE			(1)
+#define BSYS_GEOMETRY_PERSPECTIVE_TYPE					(0x01)
+#define BSYS_GEOMETRY_ROWCOLUMN_TYPE					(0x01)
+#define BSYS_GEOMETRY_LEFTRIGHT_TYPE					(0x01)
+
+/*
+
+	fovehmd
+
+*/
+#define BSYS_FOVEHMD_ENABLE								(1)
+
 
 
 /** user.h

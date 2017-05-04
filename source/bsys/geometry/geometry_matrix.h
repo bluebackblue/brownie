@@ -34,11 +34,11 @@ namespace NBsys{namespace NGeometry
 	*/
 	struct Geometry_Matrix_44 : public Geometry_Matrix_44_Raw
 	{
-		/** コンストラクタ。
+		/** constructor。
 		*/
 		inline Geometry_Matrix_44();
 
-		/** コンストラクタ。
+		/** constructor。
 		*/
 		inline Geometry_Matrix_44(
 			f32 a_ax_x,f32 a_ax_y,f32 a_ax_z,f32 a_ax_w,
@@ -47,15 +47,15 @@ namespace NBsys{namespace NGeometry
 			f32 a_tr_x,f32 a_tr_y,f32 a_tr_z,f32 a_tr_w
 		);
 
-		/** コンストラクタ。
+		/** constructor。
 		*/
 		inline Geometry_Matrix_44(const Geometry_Identity& /*a_identity*/);
 
-		/** コンストラクタ。
+		/** constructor。
 		*/
 		inline Geometry_Matrix_44(const Geometry_Quaternion& a_quaternion);
 
-		/** デストラクタ。
+		/** destructor。
 		*/
 		inline ~Geometry_Matrix_44();
 

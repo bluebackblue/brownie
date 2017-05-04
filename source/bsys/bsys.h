@@ -29,6 +29,12 @@
 
 /** include
 */
+#if(BSYS_FOVEHMD_ENABLE)
+#include "./fovehmd/fovehmd.h"
+#endif
+
+/** include
+*/
 #if(BSYS_GEOMETRY_ENABLE)
 #include "./geometry/geometry.h"
 #endif

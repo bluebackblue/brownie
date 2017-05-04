@@ -25,13 +25,13 @@
 namespace NBsys{namespace NGeometry
 {
 
-	/** コンストラクタ。
+	/** constructor。
 	*/
 	inline Geometry_Quaternion::Geometry_Quaternion()
 	{
 	}
 
-	/** コンストラクタ。
+	/** constructor。
 	*/
 	inline Geometry_Quaternion::Geometry_Quaternion(const Geometry_Quaternion& a_quaternion)
 	{
@@ -46,7 +46,7 @@ namespace NBsys{namespace NGeometry
 		this->w = a_quaternion.w;
 	}
 
-	/** コンストラクタ。
+	/** constructor。
 	*/
 	inline Geometry_Quaternion::Geometry_Quaternion(const f32* a_list)
 	{
@@ -61,7 +61,7 @@ namespace NBsys{namespace NGeometry
 		this->w = a_list[3];
 	}
 
-	/** コンストラクタ。
+	/** constructor。
 	*/
 	inline Geometry_Quaternion::Geometry_Quaternion(f32 a_x,f32 a_y,f32 a_z,f32 a_w)
 	{
@@ -74,6 +74,32 @@ namespace NBsys{namespace NGeometry
 		this->y = a_y;
 		this->z = a_z;
 		this->w = a_w;
+	}
+
+	/** constructor。
+	*/
+	inline Geometry_Quaternion::Geometry_Quaternion(f32 a_rad,const Geometry_Vector3& a_normal)
+	{
+		Geometry_Vector3 t_normal = a_normal.Make_Normalize();
+
+		#if(BSYS_GEOMETRY_MATRIX_SINCOSFAST_ENABLE)
+		f32 t_sin = Math::sinf_fast(a_rad * 0.50f);
+		f32 t_cos = Math::cosf_fast(a_rad * 0.50f);
+		#else
+		f32 t_sin = Math::sinf(a_rad * 0.50f);
+		f32 t_cos = Math::cosf(a_rad * 0.50f);
+		#endif
+
+		this->x = t_sin * t_normal.x;
+		this->y = t_sin * t_normal.y;
+		this->z = t_sin * t_normal.z;
+		this->w = t_cos;
+	}
+
+	/** destructor。
+	*/
+	inline Geometry_Quaternion::~Geometry_Quaternion()
+	{
 	}
 
 	/** Set_Normalize

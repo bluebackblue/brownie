@@ -28,6 +28,10 @@
 void Test();
 
 
+//TODO:
+int WINAPI wwwwWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int nCmdShow);
+
+
 /** Main
 */
 void main(int a_argc,char** a_argv)
@@ -43,7 +47,15 @@ void main(int a_argc,char** a_argv)
 #if defined(PLATFORM_VCWIN)
 int WINAPI WinMain(_In_ HINSTANCE a_hinstance,_In_opt_ HINSTANCE a_prev_hinstance,_In_ LPSTR a_commandline,_In_ int a_cmdshow)
 {
+	try{
+		wwwwWinMain(a_hinstance,a_prev_hinstance,a_commandline,a_cmdshow);
+	}catch(...){
+		return -1;
+	}
+
 	main(__argc,__argv);
+
+	return 0;
 }
 #endif
 
@@ -93,11 +105,13 @@ public:
 
 
 //opengl
+#if(BSYS_OPENGL_ENABLE)
 sharedptr< NBsys::NOpengl::Opengl >& OpenGL()
 {
 	static sharedptr< NBsys::NOpengl::Opengl > s_opengl;
 	return s_opengl;
 }
+#endif
 
 
 //s_step
@@ -177,11 +191,16 @@ NBsys::NGeometry::Geometry_Vector3 s_camera_up(0.0f,1.0f,0.0f);
 void opengl_draw()
 {
 	if(s_step < 100){
-		//クリアカラー設定。
-		OpenGL()->Render_SetClearColor(NBsys::NColor::Color_F(0.0f,0.0f,0.0f,1.0f));
 
-		//クリア。デプス。カラー。
-		OpenGL()->Render_ClearBuffer(true,true);
+		#if(BSYS_OPENGL_ENABLE)
+		{
+			//クリアカラー設定。
+			OpenGL()->Render_SetClearColor(NBsys::NColor::Color_F(0.0f,0.0f,0.0f,1.0f));
+
+			//クリア。デプス。カラー。
+			OpenGL()->Render_ClearBuffer(true,true);
+		}
+		#endif
 	}else{
 	
 		{
@@ -195,6 +214,7 @@ void opengl_draw()
 			s_view.Set_ViewMatrix(s_camera_target,s_camera_position,s_camera_up);
 		}
 
+		#if(BSYS_OPENGL_ENABLE)
 		{
 			//ビューポート。
 			OpenGL()->Render_ViewPort(0,0,BSYS_OPENGL_WIDTH,BSYS_OPENGL_HEIGHT);
@@ -220,7 +240,9 @@ void opengl_draw()
 			//ワールドライン描画。
 			//OpenGL()->Render_DrawWorldLine();
 		}
+		#endif
 
+		#if(BSYS_OPENGL_ENABLE)
 		{
 			OpenGL()->Render_SetShader(s_shader_id);
 			{
@@ -264,6 +286,7 @@ void opengl_draw()
 			}
 			OpenGL()->Render_SetShader(-1);
 		}
+		#endif
 
 	}
 }
@@ -277,48 +300,52 @@ bool opengl_update(f32 a_delta,bool a_endrequest)
 
 		s_step++;
 	}else if(s_step == 1){
-
-		//vertex
+	
+		#if(BSYS_OPENGL_ENABLE)
 		{
-			s_vertex = NBsys::NModel::Preset_Box< NBsys::NModel::Model_Vertex_Data_PosColor >();
-		}
-
-		//vertexbuffer_id
-		{
-			sharedptr< u8 > t_data_byte(reinterpret_cast< const u8* >(s_vertex->GetVertexPointer()),null_delete());
-			s32 t_size_byte = s_vertex->GetVertexStrideByte() * s_vertex->GetVertexAllCountOf();
-			s32 t_stride_byte = s_vertex->GetVertexStrideByte();
-			s_vertexbuffer_id = OpenGL()->CreateVertexBuffer(t_data_byte,t_size_byte,t_stride_byte);
-		}
-
-		//shader
-		{
-			s_asyncresult.Create(false);
-			sharedptr< NBsys::NOpengl::Opengl_ShaderLayout > t_shader_layout(new NBsys::NOpengl::Opengl_ShaderLayout());
+			//vertex
 			{
-				sharedptr< STLVector< NBsys::NOpengl::Opengl_ShaderLayout::Uniform >::Type > t_vertex_uniform_list(new STLVector< NBsys::NOpengl::Opengl_ShaderLayout::Uniform >::Type());
-				{
-					t_vertex_uniform_list->push_back(NBsys::NOpengl::Opengl_ShaderLayout::Uniform("a_view_projection",NBsys::NOpengl::Opengl_ShaderValueType::Float16,1));
-				}
-
-				sharedptr< STLVector< NBsys::NOpengl::Opengl_ShaderLayout::Attribute >::Type > t_vertex_attribute_list(new STLVector< NBsys::NOpengl::Opengl_ShaderLayout::Attribute >::Type());
-				{
-					t_vertex_attribute_list->push_back(NBsys::NOpengl::Opengl_ShaderLayout::Attribute("a_position",NBsys::NOpengl::Opengl_ShaderValueType::Float3));
-					t_vertex_attribute_list->push_back(NBsys::NOpengl::Opengl_ShaderLayout::Attribute("a_color",NBsys::NOpengl::Opengl_ShaderValueType::Float4));
-				}
-
-				t_shader_layout->AddItem(
-					NBsys::NOpengl::Opengl_ShaderLayout::Item(
-						s_shader_id,
-						sharedptr< NBsys::NFile::File_Object >(new NBsys::NFile::File_Object(s_device_index,L"./project_test/simple.vert",-1,s_file_allocator,1)),
-						sharedptr< NBsys::NFile::File_Object >(new NBsys::NFile::File_Object(s_device_index,L"./project_test/simple.frag",-1,s_file_allocator,1)),
-						t_vertex_uniform_list,
-						t_vertex_attribute_list
-					)
-				);
+				s_vertex = NBsys::NModel::Preset_Box< NBsys::NModel::Model_Vertex_Data_PosColor >();
 			}
-			OpenGL()->LoadShaderRequest(t_shader_layout,s_asyncresult);
+
+			//vertexbuffer_id
+			{
+				sharedptr< u8 > t_data_byte(reinterpret_cast< const u8* >(s_vertex->GetVertexPointer()),null_delete());
+				s32 t_size_byte = s_vertex->GetVertexStrideByte() * s_vertex->GetVertexAllCountOf();
+				s32 t_stride_byte = s_vertex->GetVertexStrideByte();
+				s_vertexbuffer_id = OpenGL()->CreateVertexBuffer(t_data_byte,t_size_byte,t_stride_byte);
+			}
+
+			//shader
+			{
+				s_asyncresult.Create(false);
+				sharedptr< NBsys::NOpengl::Opengl_ShaderLayout > t_shader_layout(new NBsys::NOpengl::Opengl_ShaderLayout());
+				{
+					sharedptr< STLVector< NBsys::NOpengl::Opengl_ShaderLayout::Uniform >::Type > t_vertex_uniform_list(new STLVector< NBsys::NOpengl::Opengl_ShaderLayout::Uniform >::Type());
+					{
+						t_vertex_uniform_list->push_back(NBsys::NOpengl::Opengl_ShaderLayout::Uniform("a_view_projection",NBsys::NOpengl::Opengl_ShaderValueType::Float16,1));
+					}
+
+					sharedptr< STLVector< NBsys::NOpengl::Opengl_ShaderLayout::Attribute >::Type > t_vertex_attribute_list(new STLVector< NBsys::NOpengl::Opengl_ShaderLayout::Attribute >::Type());
+					{
+						t_vertex_attribute_list->push_back(NBsys::NOpengl::Opengl_ShaderLayout::Attribute("a_position",NBsys::NOpengl::Opengl_ShaderValueType::Float3));
+						t_vertex_attribute_list->push_back(NBsys::NOpengl::Opengl_ShaderLayout::Attribute("a_color",NBsys::NOpengl::Opengl_ShaderValueType::Float4));
+					}
+
+					t_shader_layout->AddItem(
+						NBsys::NOpengl::Opengl_ShaderLayout::Item(
+							s_shader_id,
+							sharedptr< NBsys::NFile::File_Object >(new NBsys::NFile::File_Object(s_device_index,L"./project_test/simple.vert",-1,s_file_allocator,1)),
+							sharedptr< NBsys::NFile::File_Object >(new NBsys::NFile::File_Object(s_device_index,L"./project_test/simple.frag",-1,s_file_allocator,1)),
+							t_vertex_uniform_list,
+							t_vertex_attribute_list
+						)
+					);
+				}
+				OpenGL()->LoadShaderRequest(t_shader_layout,s_asyncresult);
+			}
 		}
+		#endif
 
 		s_step++;
 	}else if(s_step == 2){
@@ -340,10 +367,14 @@ bool opengl_update(f32 a_delta,bool a_endrequest)
 
 	if(a_endrequest == true){
 
-		OpenGL()->DeleteVertexBuffer(s_vertexbuffer_id);
-		s_vertexbuffer_id = -1;
+		#if(BSYS_OPENGL_ENABLE)
+		{
+			OpenGL()->DeleteVertexBuffer(s_vertexbuffer_id);
+			s_vertexbuffer_id = -1;
 
-		OpenGL()->DeleteShader(s_shader_id);
+			OpenGL()->DeleteShader(s_shader_id);
+		}
+		#endif
 
 		s_step = -1;
 
@@ -355,18 +386,24 @@ bool opengl_update(f32 a_delta,bool a_endrequest)
 	}
 }
 
+
+
 /** Test
 */
 void Test()
 {
-	//opengl
-	OpenGL().reset(new NBsys::NOpengl::Opengl());
+	#if(BSYS_OPENGL_ENABLE)
+	{
+		//opengl
+		OpenGL().reset(new NBsys::NOpengl::Opengl());
 
-	//opengl init
-	OpenGL()->Init(opengl_update,opengl_draw);
+		//opengl init
+		OpenGL()->Init(opengl_update,opengl_draw);
 
-	//opengl main
-	OpenGL()->Main();
+		//opengl main
+		OpenGL()->Main();
+	}
+	#endif
 
 	//EndSystemRequest
 	NBsys::NFile::EndSystemRequest();

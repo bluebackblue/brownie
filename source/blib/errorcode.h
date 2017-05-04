@@ -29,8 +29,20 @@ namespace NBlib
 			//成功。
 			Success						= 0x00000000,
 
+			//不明。
+			UnknownError				= 0xFFFFFFFF,
+
 			//処理中。
 			Busy						= 0x80000001,	//処理中。
+
+			//未初期化。
+			Uninitialized				= 0x80000002,	//未初期化。
+
+
+
+
+
+
 
 			//ロード。
 			Load_Error					= 0x80001000,	// 不明。
@@ -55,9 +67,12 @@ namespace NBlib
 			System_Error				= 0x8000F000,	// 不明。
 			System_InvalidID			= 0x8000F001,	// 無効なＩＤ。
 			System_BufferOver			= 0x8000F002,	// 配列外。
+		};
 
-			//不明。
-			UnknownError				= 0xFFFFFFFF,
+		union
+		{
+			ErrorCode::Id	id;
+			u32				code;
 		};
 	};
 }

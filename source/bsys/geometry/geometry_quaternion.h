@@ -18,6 +18,7 @@
 */
 #include "./geometry_identity.h"
 #include "./geometry_quaternion_raw.h"
+#include "./geometry_vector.h"
 
 
 /** NBsys::NGeometry
@@ -29,25 +30,29 @@ namespace NBsys{namespace NGeometry
 	*/
 	struct Geometry_Quaternion : public Geometry_Quaternion_Raw
 	{
-		/** コンストラクタ。
+		/** constructor。
 		*/
 		inline Geometry_Quaternion();
 
-		/** コンストラクタ。
+		/** constructor。
 		*/
 		inline Geometry_Quaternion(const Geometry_Quaternion& a_quaternion);
 
-		/** コンストラクタ。
+		/** constructor。
 		*/
 		inline Geometry_Quaternion(const f32* a_list);
 
-		/** コンストラクタ。
+		/** constructor。
 		*/
 		inline Geometry_Quaternion(f32 a_x,f32 a_y,f32 a_z,f32 a_w);
 
-		/** デストラクタ。
+		/** constructor
 		*/
-		//nonvirtual ~Geometry_Quaternion();
+		inline Geometry_Quaternion(f32 a_rad,const Geometry_Vector3& a_normal);
+
+		/** destructor。
+		*/
+		nonvirtual inline ~Geometry_Quaternion();
 
 		/** Set_Normalize
 		*/

@@ -46,19 +46,19 @@ namespace NBsys{namespace NColor
 	*/
 	struct Color_F : public Color_F_Raw
 	{
-		/** コンストラクタ。
+		/** constructor。
 		*/
 		inline Color_F();
 
-		/** コンストラクタ。
+		/** constructor。
 		*/
 		inline Color_F(f32 a_r,f32 a_g,f32 a_b,f32 a_a);
 
-		/** コンストラクタ。
+		/** constructor。
 		*/
 		inline Color_F(const Color_F& a_color);
 
-		/** コンストラクタ。
+		/** constructor。
 		*/
 		inline Color_F(const Color_B& a_color);
 

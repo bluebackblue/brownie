@@ -52,13 +52,13 @@ namespace NBsys{namespace NGeometry
 		}
 	}
 
-	/** コンストラクタ。
+	/** constructor。
 	*/
 	inline Geometry_Matrix_44::Geometry_Matrix_44()
 	{
 	}
 
-	/** コンストラクタ。
+	/** constructor。
 	*/
 	inline Geometry_Matrix_44::Geometry_Matrix_44(
 		f32 a_ax_x,f32 a_ax_y,f32 a_ax_z,f32 a_ax_w,
@@ -88,21 +88,21 @@ namespace NBsys{namespace NGeometry
 		this->tr_w = a_tr_w;
 	}
 
-	/** コンストラクタ。
+	/** constructor。
 	*/
 	inline Geometry_Matrix_44::Geometry_Matrix_44(const Geometry_Identity& /*a_identity*/)
 	{
 		*this = Geometry_Matrix_44::Identity();
 	}
 
-	/** コンストラクタ。
+	/** constructor。
 	*/
 	inline Geometry_Matrix_44::Geometry_Matrix_44(const Geometry_Quaternion& a_quaternion)
 	{
 		this->Set_Quaternion(a_quaternion);
 	}
 
-	/** デストラクタ。
+	/** destructor。
 	*/
 	inline Geometry_Matrix_44::~Geometry_Matrix_44()
 	{
@@ -813,21 +813,17 @@ namespace NBsys{namespace NGeometry
 	{
 		f32 t_s = 2.0f / ((a_quaternion.x * a_quaternion.x) + (a_quaternion.y * a_quaternion.y) + (a_quaternion.z * a_quaternion.z) + (a_quaternion.w * a_quaternion.w));
 
-		f32 t_xs = a_quaternion.x * t_s;
-		f32 t_ys = a_quaternion.y * t_s;
-		f32 t_zs = a_quaternion.z * t_s;
+		f32 t_wx = a_quaternion.w * a_quaternion.x * t_s;
+		f32 t_wy = a_quaternion.w * a_quaternion.y * t_s;
+		f32 t_wz = a_quaternion.w * a_quaternion.z * t_s;
 
-		f32 t_wx = a_quaternion.w * t_xs;
-		f32 t_wy = a_quaternion.w * t_ys;
-		f32 t_wz = a_quaternion.w * t_zs;
+		f32 t_xx = a_quaternion.x * a_quaternion.x * t_s;
+		f32 t_xy = a_quaternion.x * a_quaternion.y * t_s;
+		f32 t_xz = a_quaternion.x * a_quaternion.z * t_s;
 
-		f32 t_xx = a_quaternion.x * t_xs;
-		f32 t_xy = a_quaternion.x * t_ys;
-		f32 t_xz = a_quaternion.x * t_zs;
-
-		f32 t_yy = a_quaternion.y * t_ys;
-		f32 t_yz = a_quaternion.y * t_zs;
-		f32 t_zz = a_quaternion.z * t_zs;
+		f32 t_yy = a_quaternion.y * a_quaternion.y * t_s;
+		f32 t_yz = a_quaternion.y * a_quaternion.z * t_s;
+		f32 t_zz = a_quaternion.z * a_quaternion.z * t_s;
 
 		this->ax_x = 1.0f - (t_yy + t_zz);
 		this->ax_y = t_xy - t_wz;
@@ -858,7 +854,7 @@ namespace NBsys{namespace NGeometry
 		f32 t_fov_radian =  BLIB_MATH_DEG_TO_RAD(a_fov_deg);
 		f32 t_scale = 1.0f / Math::tanf(t_fov_radian / 2);
 
-		#if(BSYS_OPENGL_PERSPECTIVE_TYPE == 0x00)
+		#if(BSYS_GEOMETRY_PERSPECTIVE_TYPE == 0x00)
 		{
 			//gluPerspective
 			this->Set(

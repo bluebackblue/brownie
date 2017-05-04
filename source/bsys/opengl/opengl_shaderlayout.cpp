@@ -35,7 +35,7 @@ namespace NBsys{namespace NOpengl
 	{
 	}
 
-	/** デストラクタ。
+	/** destructor。
 	*/
 	Opengl_ShaderLayout::~Opengl_ShaderLayout()
 	{
