@@ -55,6 +55,10 @@ namespace NBsys{namespace NGeometry
 		*/
 		inline Geometry_Matrix_44(const Geometry_Quaternion& a_quaternion);
 
+		/** constructor
+		*/
+		inline Geometry_Matrix_44(const f32* a_m);
+
 		/** destructorÅB
 		*/
 		inline ~Geometry_Matrix_44();

@@ -52,7 +52,6 @@ namespace NBsys{namespace NFovehmd
 		nonvirtual ~Fovehmd();
 
 	public:
-
 		/** ResetErrorCode
 		*/
 		void ResetErrorCode();
@@ -76,6 +75,30 @@ namespace NBsys{namespace NFovehmd
 		/** çXêVÅB
  		*/
 		void Update();
+
+		/** GetLeftEyeProjection
+		*/
+		NBsys::NGeometry::Geometry_Matrix_44 GetLeftEyeProjection();
+
+		/** GetRightEyeProjection
+		*/
+		NBsys::NGeometry::Geometry_Matrix_44 GetRightEyeProjection();
+
+		/** GetIOD
+		*/
+		f32 GetIOD();
+
+		/** SetTexture
+		*/
+		void SetTexture(void* a_texture_pointer);
+
+		/** GetCameraPosition
+		*/
+		NBsys::NGeometry::Geometry_Matrix_44& GetCameraPosition();
+
+		/** GetCameraQuaternion
+		*/
+		NBsys::NGeometry::Geometry_Quaternion& GetCameraQuaternion();
 
 	};
 }}

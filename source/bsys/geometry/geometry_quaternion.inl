@@ -33,6 +33,16 @@ namespace NBsys{namespace NGeometry
 
 	/** constructorB
 	*/
+	inline Geometry_Quaternion::Geometry_Quaternion(const Geometry_Identity& /*a_identity*/)
+	{
+		this->x = 0.0f;
+		this->y = 0.0f;
+		this->z = 0.0f;
+		this->w = 1.0f;
+	}
+
+	/** constructorB
+	*/
 	inline Geometry_Quaternion::Geometry_Quaternion(const Geometry_Quaternion& a_quaternion)
 	{
 		ASSERT(Math::is_nan(a_quaternion.x) == false);
@@ -83,17 +93,17 @@ namespace NBsys{namespace NGeometry
 		Geometry_Vector3 t_normal = a_normal.Make_Normalize();
 
 		#if(BSYS_GEOMETRY_MATRIX_SINCOSFAST_ENABLE)
-		f32 t_sin = Math::sinf_fast(a_rad * 0.50f);
-		f32 t_cos = Math::cosf_fast(a_rad * 0.50f);
+		f32 t_sin_half = Math::sinf_fast(a_rad * 0.50f);
+		f32 t_cos_half = Math::cosf_fast(a_rad * 0.50f);
 		#else
-		f32 t_sin = Math::sinf(a_rad * 0.50f);
-		f32 t_cos = Math::cosf(a_rad * 0.50f);
+		f32 t_sin_half = Math::sinf(a_rad * 0.50f);
+		f32 t_cos_half = Math::cosf(a_rad * 0.50f);
 		#endif
 
-		this->x = t_sin * t_normal.x;
-		this->y = t_sin * t_normal.y;
-		this->z = t_sin * t_normal.z;
-		this->w = t_cos;
+		this->x = t_sin_half * t_normal.x;
+		this->y = t_sin_half * t_normal.y;
+		this->z = t_sin_half * t_normal.z;
+		this->w = t_cos_half;
 	}
 
 	/** destructorB

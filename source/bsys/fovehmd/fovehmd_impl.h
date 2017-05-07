@@ -39,7 +39,6 @@ namespace NBsys{namespace NFovehmd
 		nonvirtual ~Fovehmd_Impl() throw();
 
 	public:
-
 		/** errorcode
 		*/
 		ErrorCode errorcode;
@@ -56,12 +55,19 @@ namespace NBsys{namespace NFovehmd
 		*/
 		NGeometry::Geometry_Vector2 singleeye_resolution;
 
+		/** pose
+		*/
+		Fove::SFVR_Pose pose;
+
 		/** camera_position
 		*/
-		NGeometry::Geometry_Matrix_44 camera_position;
+		NBsys::NGeometry::Geometry_Matrix_44 camera_position;
+
+		/** camera_quaternion
+		*/
+		NBsys::NGeometry::Geometry_Quaternion camera_quaternion;
 
 	public:
-
 		/** ResetErrorCode
 		*/
 		void ResetErrorCode();
@@ -85,6 +91,31 @@ namespace NBsys{namespace NFovehmd
 		/** çXêVÅB
  		*/
 		void Update();
+
+		/** GetLeftEyeProjection
+		*/
+		NBsys::NGeometry::Geometry_Matrix_44 GetLeftEyeProjection();
+
+		/** GetRightEyeProjection
+		*/
+		NBsys::NGeometry::Geometry_Matrix_44 GetRightEyeProjection();
+
+		/** GetIOD
+		*/
+		f32 GetIOD();
+
+		/** SetTexture
+		*/
+		void SetTexture(void* a_texture_pointer);
+
+		/** GetCameraPosition
+		*/
+		NBsys::NGeometry::Geometry_Matrix_44& GetCameraPosition();
+
+		/** GetCameraQuaternion
+		*/
+		NBsys::NGeometry::Geometry_Quaternion& GetCameraQuaternion();
+
 	};
 }}
 #endif

@@ -69,11 +69,23 @@ namespace NBlib
 			System_BufferOver			= 0x8000F002,	// îzóÒäOÅB
 		};
 
-		union
+		/** code
+		*/
+		u32 code;
+
+		/** constructor
+		*/
+		ErrorCode(u32 a_code)
+			:
+			code(a_code)
 		{
-			ErrorCode::Id	id;
-			u32				code;
-		};
+		}
+
+		/** destructor
+		*/
+		nonvirtual ~ErrorCode()
+		{
+		}
 	};
 }
 

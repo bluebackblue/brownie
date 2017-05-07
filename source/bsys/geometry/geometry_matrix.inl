@@ -102,6 +102,31 @@ namespace NBsys{namespace NGeometry
 		this->Set_Quaternion(a_quaternion);
 	}
 
+	/** constructor
+	*/
+	inline Geometry_Matrix_44::Geometry_Matrix_44(const f32* a_m)
+	{
+		this->m_11 = a_m[0];
+		this->m_12 = a_m[1];
+		this->m_13 = a_m[2];
+		this->m_14 = a_m[3];
+
+		this->m_21 = a_m[4];
+		this->m_22 = a_m[5];
+		this->m_23 = a_m[6];
+		this->m_24 = a_m[7];
+
+		this->m_31 = a_m[8];
+		this->m_32 = a_m[9];
+		this->m_33 = a_m[10];
+		this->m_34 = a_m[11];
+
+		this->m_41 = a_m[12];
+		this->m_42 = a_m[13];
+		this->m_43 = a_m[14];
+		this->m_44 = a_m[15];
+	}
+
 	/** destructorB
 	*/
 	inline Geometry_Matrix_44::~Geometry_Matrix_44()

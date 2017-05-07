@@ -36,7 +36,9 @@ int WINAPI wwwwWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPSTR,
 */
 void main(int a_argc,char** a_argv)
 {
-	NBlib::BootInitialize();
+	if(NBlib::IsBootInitialize() == false){
+		NBlib::BootInitialize();
+	}
 
 	Test();
 }
@@ -47,6 +49,10 @@ void main(int a_argc,char** a_argv)
 #if defined(PLATFORM_VCWIN)
 int WINAPI WinMain(_In_ HINSTANCE a_hinstance,_In_opt_ HINSTANCE a_prev_hinstance,_In_ LPSTR a_commandline,_In_ int a_cmdshow)
 {
+	if(NBlib::IsBootInitialize() == false){
+		NBlib::BootInitialize();
+	}
+
 	try{
 		wwwwWinMain(a_hinstance,a_prev_hinstance,a_commandline,a_cmdshow);
 	}catch(...){

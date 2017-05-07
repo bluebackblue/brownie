@@ -87,6 +87,49 @@ namespace NBsys{namespace NFovehmd
 	{
 		this->impl->Update();
 	}
+
+	/** GetLeftEyeProjection
+	*/
+	NBsys::NGeometry::Geometry_Matrix_44 Fovehmd::GetLeftEyeProjection()
+	{
+		return this->impl->GetLeftEyeProjection();
+	}
+
+	/** GetRightEyeProjection
+	*/
+	NBsys::NGeometry::Geometry_Matrix_44 Fovehmd::GetRightEyeProjection()
+	{
+		return this->impl->GetRightEyeProjection();
+	}
+
+	/** GetIOD
+	*/
+	f32 Fovehmd::GetIOD()
+	{
+		return this->impl->GetIOD();
+	}
+
+	/** SetTexture
+	*/
+	void Fovehmd::SetTexture(void* a_texture_pointer)
+	{
+		this->impl->SetTexture(a_texture_pointer);
+	}
+
+	/** GetCameraPosition
+	*/
+	NBsys::NGeometry::Geometry_Matrix_44& Fovehmd::GetCameraPosition()
+	{
+		return this->impl->GetCameraPosition();
+	}
+
+	/** GetCameraQuaternion
+	*/
+	NBsys::NGeometry::Geometry_Quaternion& Fovehmd::GetCameraQuaternion()
+	{
+		return this->impl->GetCameraQuaternion();
+	}
+
 }}
 #endif
 

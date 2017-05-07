@@ -36,6 +36,10 @@ namespace NBsys{namespace NGeometry
 
 		/** constructorB
 		*/
+		inline Geometry_Quaternion(const Geometry_Identity& /*a_identity*/);
+
+		/** constructorB
+		*/
 		inline Geometry_Quaternion(const Geometry_Quaternion& a_quaternion);
 
 		/** constructorB
