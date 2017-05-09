@@ -47,6 +47,12 @@
 
 /** include
 */
+#if(BSYS_WINDOW_ENABLE)
+#include "./window/window.h"
+#endif
+
+/** include
+*/
 #if(BSYS_OPENGL_ENABLE)
 #include "./opengl/opengl.h"
 #endif

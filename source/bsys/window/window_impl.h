@@ -1,0 +1,131 @@
+#pragma once
+
+/**
+* Copyright (c) 2017 blueback
+* Released under the MIT License
+* https://github.com/bluebackblue/brownie/blob/master/LICENSE
+* http://bbbproject.sakura.ne.jp/wordpress/mitlicense
+* @brief ウィンドウ。
+*/
+
+
+/** include
+*/
+#include "../types/types.h"
+
+
+/** include
+*/
+#if defined(PLATFORM_VCWIN)
+
+	#include "../../blib/include_windows.h"
+
+#endif
+
+
+/** NBsys::NWindow
+*/
+#if(BSYS_WINDOW_ENABLE)
+namespace NBsys{namespace NWindow
+{
+
+	/** Window_Impl
+	*/
+	class Window_Impl
+	{
+	private:
+		/** handle
+		*/
+		#if defined(PLATFORM_VCWIN)
+		HWND handle;
+		#endif
+
+		/** mouse
+		*/
+		s32 mouse_x;
+		s32 mouse_y;
+		bool isview;
+		bool isactive;
+
+		/** isopen
+		*/
+		bool isopen;
+
+		/** default
+		*/
+		s32 default_width;
+		s32 default_height;
+
+	public:
+		/** constructor
+		*/
+		Window_Impl();
+
+		/** destructor
+		*/
+		nonvirtual ~Window_Impl();
+
+	public:
+		/** Create
+		*/
+		void Create(const STLWString& a_title,s32 a_width,s32 a_height);
+
+		/** Delete
+		*/
+		void Delete();
+
+		/** GetDefaultWidth
+		*/
+		s32 GetDefaultWidth();
+
+		/** GetDefaultHeight
+		*/
+		s32 GetDefaultHeight();
+
+		/** Update
+		*/
+		void Update();
+
+		/** IsEnd
+		*/
+		bool IsEnd();
+
+		/** IsView
+		*/
+		bool IsView();
+
+		/** IsActive
+		*/
+		bool IsActive();
+
+		/** CallBackProc
+		*/
+		#if defined(PLATFORM_VCWIN)
+		LRESULT CallBackProc(HWND a_hwnd,UINT a_msg,WPARAM a_wparam,LPARAM a_lparam);
+		#endif
+
+		/** GetHandle
+		*/
+		#if defined(PLATFORM_VCWIN)
+		HWND GetHandle();
+		#endif
+
+		/** GetMouseX
+		*/
+		s32 GetMouseX();
+
+		/** GetMouseY
+		*/
+		s32 GetMouseY();
+
+		/** StaticCallBackProc
+		*/
+		#if defined(PLATFORM_VCWIN)
+		static LRESULT CALLBACK StaticCallBackProc(HWND a_hwnd,UINT a_msg,WPARAM a_wparam,LPARAM a_lparam);
+		#endif
+
+	};
+
+}}
+#endif
+

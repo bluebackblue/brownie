@@ -277,6 +277,12 @@
 */
 #define BSYS_FOVEHMD_ENABLE								(1)
 
+/*
+
+	window
+
+*/
+#define BSYS_WINDOW_ENABLE								(1)
 
 
 /** user.h
