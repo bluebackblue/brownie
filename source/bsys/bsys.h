@@ -57,8 +57,9 @@
 #include "./opengl/opengl.h"
 #endif
 
-
-
-
-
+/** include
+*/
+#if(BSYS_D3D11_ENABLE)
+#include "./d3d11/d3d11.h"
+#endif
 

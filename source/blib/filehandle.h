@@ -41,7 +41,7 @@ namespace NBlib
 	public:
 		/** GetImpl
 		*/
-		const sharedptr< FileHandle_Impl >& GetImpl() const;
+		sharedptr< FileHandle_Impl >& GetImpl();
 
 	public:
 		/** constructor

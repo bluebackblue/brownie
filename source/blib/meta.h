@@ -82,11 +82,25 @@ namespace NBlib
 	*/
 	template < class T > struct placement_delete
 	{
-		placement_delete() throw(){}
-		template < class OTHER > void operator ()(OTHER *) const = delete;
+		placement_delete() throw()
+		{
+		}
 		void operator ()(T* a_pointer) const throw ()
 		{
 			a_pointer->~T();
+		}
+	};
+
+	/** íœqBrelease
+	*/
+	template < class T > struct release_delete
+	{
+		release_delete() throw()
+		{
+		}
+		void operator ()(T* a_instance) const throw()
+		{
+			a_instance->Release();
 		}
 	};
 

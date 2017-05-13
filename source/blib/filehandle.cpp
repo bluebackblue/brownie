@@ -41,7 +41,7 @@ namespace NBlib
 
 	/** GetImpl
 	*/
-	const sharedptr< FileHandle_Impl >& FileHandle::GetImpl() const
+	sharedptr< FileHandle_Impl >& FileHandle::GetImpl()
 	{
 		return this->impl;
 	}

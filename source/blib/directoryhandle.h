@@ -41,7 +41,7 @@ namespace NBlib
 	public:
 		/** GetImpl
 		*/
-		const sharedptr< DirectoryHandle_Impl >& GetImpl() const;
+		sharedptr< DirectoryHandle_Impl >& GetImpl();
 
 	public:
 		/** DirectoryItem

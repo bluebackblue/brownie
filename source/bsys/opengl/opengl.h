@@ -48,7 +48,7 @@ namespace NBsys{namespace NOpengl
 	public:
 		/** GetImpl
 		*/
-		const sharedptr< Opengl_Impl >& GetImpl() const;
+		sharedptr< Opengl_Impl >& GetImpl();
 
 	public:
 		/** constructor

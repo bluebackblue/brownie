@@ -47,7 +47,7 @@ namespace NBsys{namespace NOpengl
 
 	/** GetImpl
 	*/
-	const sharedptr< Opengl_Impl >& Opengl::GetImpl() const
+	sharedptr< Opengl_Impl >& Opengl::GetImpl()
 	{
 		return this->impl;
 	}

@@ -41,7 +41,7 @@ namespace NBlib
 
 	/** GetImpl
 	*/
-	const sharedptr< DirectoryHandle_Impl >& DirectoryHandle::GetImpl() const
+	sharedptr< DirectoryHandle_Impl >& DirectoryHandle::GetImpl()
 	{
 		return this->impl;
 	}

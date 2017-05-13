@@ -284,6 +284,12 @@
 */
 #define BSYS_WINDOW_ENABLE								(1)
 
+/*
+
+	d3d11
+
+*/
+#define BSYS_D3D11_ENABLE								(1)
 
 /** user.h
 */

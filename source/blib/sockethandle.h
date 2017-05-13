@@ -41,7 +41,7 @@ namespace NBlib
 	public:
 		/** GetImpl
 		*/
-		const sharedptr< SocketHandle_Impl >& GetImpl() const;
+		sharedptr< SocketHandle_Impl >& GetImpl();
 
 	public:
 		/** constructor

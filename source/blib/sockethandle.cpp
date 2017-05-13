@@ -49,7 +49,7 @@ namespace NBlib
 
 	/** GetImpl
 	*/
-	const sharedptr< SocketHandle_Impl >& SocketHandle::GetImpl() const
+	sharedptr< SocketHandle_Impl >& SocketHandle::GetImpl()
 	{
 		return this->impl;
 	}

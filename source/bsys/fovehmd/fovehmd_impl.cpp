@@ -55,6 +55,8 @@ namespace NBsys{namespace NFovehmd
 	*/
 	Fovehmd_Impl::~Fovehmd_Impl() throw()
 	{
+		this->compositor.reset();
+		this->headset.reset();
 	}
 
 	/** ResetErrorCode
