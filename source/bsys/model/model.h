@@ -26,179 +26,297 @@
 #if(BSYS_MODEL_ENABLE)
 namespace NBsys{namespace NModel
 {
-	/** Model_Vertex_Data_Pos
-
-	pos_x pos_y pos_z
-
+	/** Model_Vertex_Data_Pos3
 	*/
-	struct Model_Vertex_Data_Pos
+	struct Model_Vertex_Data_Pos3
 	{
 		union
 		{
 			struct
 			{
-				f32 pos_x;
-				f32 pos_y;
-				f32 pos_z;
+				f32 pos_xx;
+				f32 pos_yy;
+				f32 pos_zz;
 			};
 		};
 	};
 
-	/** Model_Vertex_Data_PosColor
-
-	pos_x pos_y pos_z
-	color_r color_g color_b color_a
-
+	/** Model_Vertex_Data_Pos3Color4
 	*/
-	struct Model_Vertex_Data_PosColor
+	struct Model_Vertex_Data_Pos3Color4
 	{
 		union
 		{
 			struct
 			{
-				f32 pos_x;
-				f32 pos_y;
-				f32 pos_z;
+				f32 pos_xx;
+				f32 pos_yy;
+				f32 pos_zz;
 
-				f32 color_r;
-				f32 color_g;
-				f32 color_b;
-				f32 color_a;
+				f32 color_rr;
+				f32 color_gg;
+				f32 color_bb;
+				f32 color_aa;
 			};
 		};
 	};
 
-	/** Model_Vertex_Data_PosUvColor
-
-	pos_x pos_y pos_z
-	uv_x uv_y
-	color_r color_g color_b color_a
-
+	/** Model_Vertex_Data_Pos4Color3
 	*/
-	struct Model_Vertex_Data_PosUvColor
+	struct Model_Vertex_Data_Pos4Color3
 	{
 		union
 		{
 			struct
 			{
-				f32 pos_x;
-				f32 pos_y;
-				f32 pos_z;
+				f32 pos_xx;
+				f32 pos_yy;
+				f32 pos_zz;
+				f32 pos_ww;
 
-				f32 uv_x;
-				f32 uv_y;
-
-				f32 color_r;
-				f32 color_g;
-				f32 color_b;
-				f32 color_a;
+				f32 color_rr;
+				f32 color_gg;
+				f32 color_bb;
 			};
 		};
 	};
 
-	/** Model_Vertex_Data_PosUvMatrixindexMatrixweight
-
-	pos_x pos_y pos_z
-	uv_x uv_y
-	matrix_index_0 matrix_index_1 matrix_index_2 matrix_index_3
-	matrix_weight_0 matrix_weight_1 matrix_weight_2 matrix_weight_3
-
+	/** Model_Vertex_Data_Pos3Uv2Color4
 	*/
-	struct Model_Vertex_Data_PosUvMatrixindexMatrixweight
+	struct Model_Vertex_Data_Pos3Uv2Color4
 	{
 		union
 		{
 			struct
 			{
-				f32 pos_x;
-				f32 pos_y;
-				f32 pos_z;
+				f32 pos_xx;
+				f32 pos_yy;
+				f32 pos_zz;
 
-				f32 uv_x;
-				f32 uv_y;
+				f32 uv_xx;
+				f32 uv_yy;
 
-				s32 matrix_index_0;
-				s32 matrix_index_1;
-				s32 matrix_index_2;
-				s32 matrix_index_3;
+				f32 color_rr;
+				f32 color_gg;
+				f32 color_bb;
+				f32 color_aa;
+			};
+		};
+	};
 
-				f32 matrix_weight_0;
-				f32 matrix_weight_1;
-				f32 matrix_weight_2;
-				f32 matrix_weight_3;
+	/** Model_Vertex_Data_Pos3Uv2Matrixindex4Matrixweight4
+	*/
+	struct Model_Vertex_Data_Pos3Uv2Matrixindex4Matrixweight4
+	{
+		union
+		{
+			struct
+			{
+				f32 pos_xx;
+				f32 pos_yy;
+				f32 pos_zz;
+
+				f32 uv_xx;
+				f32 uv_yy;
+
+				s32 matrix_index_00;
+				s32 matrix_index_01;
+				s32 matrix_index_02;
+				s32 matrix_index_03;
+
+				f32 matrix_weight_00;
+				f32 matrix_weight_01;
+				f32 matrix_weight_02;
+				f32 matrix_weight_03;
 			};
 		};
 	};
 
 	namespace NImpl
 	{
-		//Model_Vertex_SetPos
-		template < typename T , bool EXIST > struct Model_Vertex_SetPos
+		//Model_Vertex_SetPos_XX
+		template < typename T , bool EXIST > struct Model_Vertex_SetPos_XX
 		{
 			static s32 GetOffset(){return 0;}
-			static void Set(T& a_vertex,f32 a_pos_x,f32 a_pos_y,f32 a_pos_z){}
+			static void Set(T& a_vertex,f32 a_pos_xx){}
 		};
-		template < typename T > struct Model_Vertex_SetPos< T , true >
+		template < typename T > struct Model_Vertex_SetPos_XX< T , true >
 		{
 			static s32 GetOffset()
 			{
-				return static_cast< s32 >(reinterpret_cast< std::size_t >(&(reinterpret_cast< T* >(nullptr)->pos_x)));
+				return static_cast< s32 >(reinterpret_cast< std::size_t >(&(reinterpret_cast< T* >(nullptr)->pos_xx)));
 			}
-			static void Set(T& a_vertex,f32 a_pos_x,f32 a_pos_y,f32 a_pos_z)
+			static void Set(T& a_vertex,f32 a_pos_xx)
 			{
-				a_vertex.pos_x = a_pos_x;
-				a_vertex.pos_y = a_pos_y;
-				a_vertex.pos_z = a_pos_z;
+				a_vertex.pos_xx = a_pos_xx;
 			}
 		};
-
-		//Model_Vertex_SetColor
-		template < typename T , bool EXIST > struct Model_Vertex_SetColor
+		//Model_Vertex_SetPos_YY
+		template < typename T , bool EXIST > struct Model_Vertex_SetPos_YY
 		{
 			static s32 GetOffset(){return 0;}
-			static void Set(T& a_vertex,f32 a_color_r,f32 a_color_g,f32 a_color_b,f32 a_color_a){}
+			static void Set(T& a_vertex,f32 a_pos_yy){}
 		};
-		template < typename T > struct Model_Vertex_SetColor< T , true >
+		template < typename T > struct Model_Vertex_SetPos_YY< T , true >
 		{
 			static s32 GetOffset()
 			{
-				return static_cast< s32 >(reinterpret_cast< std::size_t >(&(reinterpret_cast< T* >(nullptr)->color_r)));
+				return static_cast< s32 >(reinterpret_cast< std::size_t >(&(reinterpret_cast< T* >(nullptr)->pos_yy)));
 			}
-			static void Set(T& a_vertex,f32 a_color_r,f32 a_color_g,f32 a_color_b,f32 a_color_a)
+			static void Set(T& a_vertex,f32 a_pos_yy)
 			{
-				a_vertex.color_r = a_color_r;
-				a_vertex.color_g = a_color_g;
-				a_vertex.color_b = a_color_b;
-				a_vertex.color_a = a_color_a;
+				a_vertex.pos_yy = a_pos_yy;
 			}
 		};
-
-		//Model_Vertex_SetUv
-		template < typename T , bool EXIST > struct Model_Vertex_SetUv
+		//Model_Vertex_SetPos_ZZ
+		template < typename T , bool EXIST > struct Model_Vertex_SetPos_ZZ
 		{
 			static s32 GetOffset(){return 0;}
-			static void Set(T& a_vertex,f32 a_uv_x,f32 a_uv_y){}
+			static void Set(T& a_vertex,f32 a_pos_zz){}
 		};
-		template < typename T > struct Model_Vertex_SetUv< T , true >
+		template < typename T > struct Model_Vertex_SetPos_ZZ< T , true >
 		{
 			static s32 GetOffset()
 			{
-				return static_cast< s32 >(reinterpret_cast< std::size_t >(&(reinterpret_cast< T* >(nullptr)->uv_x)));
+				return static_cast< s32 >(reinterpret_cast< std::size_t >(&(reinterpret_cast< T* >(nullptr)->pos_zz)));
 			}
-			static void Set(T& a_vertex,f32 a_uv_x,f32 a_uv_y)
+			static void Set(T& a_vertex,f32 a_pos_zz)
 			{
-				a_vertex.uv_x = a_uv_x;
-				a_vertex.uv_y = a_uv_y;
+				a_vertex.pos_zz = a_pos_zz;
+			}
+		};
+		//Model_Vertex_SetPos_WW
+		template < typename T , bool EXIST > struct Model_Vertex_SetPos_WW
+		{
+			static s32 GetOffset(){return 0;}
+			static void Set(T& a_vertex,f32 a_pos_ww){}
+		};
+		template < typename T > struct Model_Vertex_SetPos_WW< T , true >
+		{
+			static s32 GetOffset()
+			{
+				return static_cast< s32 >(reinterpret_cast< std::size_t >(&(reinterpret_cast< T* >(nullptr)->pos_ww)));
+			}
+			static void Set(T& a_vertex,f32 a_pos_ww)
+			{
+				a_vertex.pos_ww = a_pos_ww;
 			}
 		};
 
-		//Model_Vertex_SetMatrixindex
-		template < typename T , bool EXIST > struct Model_Vertex_SetMatrixindex
+
+		//Model_Vertex_SetColor_RR
+		template < typename T , bool EXIST > struct Model_Vertex_SetColor_RR
+		{
+			static s32 GetOffset(){return 0;}
+			static void Set(T& a_vertex,f32 a_color_rr){}
+		};
+		template < typename T > struct Model_Vertex_SetColor_RR< T , true >
+		{
+			static s32 GetOffset()
+			{
+				return static_cast< s32 >(reinterpret_cast< std::size_t >(&(reinterpret_cast< T* >(nullptr)->color_rr)));
+			}
+			static void Set(T& a_vertex,f32 a_color_rr)
+			{
+				a_vertex.color_rr = a_color_rr;
+			}
+		};
+		//Model_Vertex_SetColor_GG
+		template < typename T , bool EXIST > struct Model_Vertex_SetColor_GG
+		{
+			static s32 GetOffset(){return 0;}
+			static void Set(T& a_vertex,f32 a_color_gg){}
+		};
+		template < typename T > struct Model_Vertex_SetColor_GG< T , true >
+		{
+			static s32 GetOffset()
+			{
+				return static_cast< s32 >(reinterpret_cast< std::size_t >(&(reinterpret_cast< T* >(nullptr)->color_gg)));
+			}
+			static void Set(T& a_vertex,f32 a_color_gg)
+			{
+				a_vertex.color_gg = a_color_gg;
+			}
+		};
+		//Model_Vertex_SetColor_BB
+		template < typename T , bool EXIST > struct Model_Vertex_SetColor_BB
+		{
+			static s32 GetOffset(){return 0;}
+			static void Set(T& a_vertex,f32 a_color_bb){}
+		};
+		template < typename T > struct Model_Vertex_SetColor_BB< T , true >
+		{
+			static s32 GetOffset()
+			{
+				return static_cast< s32 >(reinterpret_cast< std::size_t >(&(reinterpret_cast< T* >(nullptr)->color_bb)));
+			}
+			static void Set(T& a_vertex,f32 a_color_bb)
+			{
+				a_vertex.color_bb = a_color_bb;
+			}
+		};
+		//Model_Vertex_SetColor_AA
+		template < typename T , bool EXIST > struct Model_Vertex_SetColor_AA
+		{
+			static s32 GetOffset(){return 0;}
+			static void Set(T& a_vertex,f32 a_color_aa){}
+		};
+		template < typename T > struct Model_Vertex_SetColor_AA< T , true >
+		{
+			static s32 GetOffset()
+			{
+				return static_cast< s32 >(reinterpret_cast< std::size_t >(&(reinterpret_cast< T* >(nullptr)->color_aa)));
+			}
+			static void Set(T& a_vertex,f32 a_color_aa)
+			{
+				a_vertex.color_aa = a_color_aa;
+			}
+		};
+
+
+		//Model_Vertex_SetUv_XX
+		template < typename T , bool EXIST > struct Model_Vertex_SetUv_XX
+		{
+			static s32 GetOffset(){return 0;}
+			static void Set(T& a_vertex,f32 a_uv_xx){}
+		};
+		template < typename T > struct Model_Vertex_SetUv_XX< T , true >
+		{
+			static s32 GetOffset()
+			{
+				return static_cast< s32 >(reinterpret_cast< std::size_t >(&(reinterpret_cast< T* >(nullptr)->uv_xx)));
+			}
+			static void Set(T& a_vertex,f32 a_uv_xx)
+			{
+				a_vertex.uv_xx = a_uv_xx;
+			}
+		};
+		//Model_Vertex_SetUv_YY
+		template < typename T , bool EXIST > struct Model_Vertex_SetUv_YY
+		{
+			static s32 GetOffset(){return 0;}
+			static void Set(T& a_vertex,f32 a_uv_yy){}
+		};
+		template < typename T > struct Model_Vertex_SetUv_YY< T , true >
+		{
+			static s32 GetOffset()
+			{
+				return static_cast< s32 >(reinterpret_cast< std::size_t >(&(reinterpret_cast< T* >(nullptr)->uv_yy)));
+			}
+			static void Set(T& a_vertex,f32 a_uv_yy)
+			{
+				a_vertex.uv_yy = a_uv_yy;
+			}
+		};
+
+
+		//Model_Vertex_SetMatrixindex4
+		template < typename T , bool EXIST > struct Model_Vertex_SetMatrixindex4
 		{
 			static s32 GetOffset(){return 0;}
 			static void Set(T& a_vertex,s32 a_matrix_index_0,s32 a_matrix_index_1,s32 a_matrix_index_2,s32 a_matrix_index_3){}
 		};
-		template < typename T > struct Model_Vertex_SetMatrixindex< T , true >
+		template < typename T > struct Model_Vertex_SetMatrixindex4< T , true >
 		{
 			static s32 GetOffset()
 			{
@@ -213,13 +331,13 @@ namespace NBsys{namespace NModel
 			}
 		};
 
-		//Model_Vertex_SetMatrixweight
-		template < typename T , bool EXIST > struct Model_Vertex_SetMatrixweight
+		//Model_Vertex_SetMatrixweight4
+		template < typename T , bool EXIST > struct Model_Vertex_SetMatrixweight4
 		{
 			static s32 GetOffset(){return 0;}
 			static void Set(T& a_vertex,f32 a_matrix_weight_0,f32 a_matrix_weight_1,f32 a_matrix_weight_2,f32 a_matrix_weight_3){}
 		};
-		template < typename T > struct Model_Vertex_SetMatrixweight< T , true >
+		template < typename T > struct Model_Vertex_SetMatrixweight4< T , true >
 		{
 			static s32 GetOffset()
 			{
@@ -256,77 +374,206 @@ namespace NBsys{namespace NModel
 		*/
 		template < typename T > class Model_Vertex_Convertible;
 
-		/** Model_Vertex_Data_Pos
+		/** Model_Vertex_Data_Pos3
 		*/
-		template < > class Model_Vertex_Convertible< Model_Vertex_Data_Pos >
+		template < > class Model_Vertex_Convertible< Model_Vertex_Data_Pos3 >
 			:
-				public Model_Vertex_SetPos< Model_Vertex_Data_Pos , true >
+				public Model_Vertex_SetPos_XX< Model_Vertex_Data_Pos3 , true >,
+				public Model_Vertex_SetPos_YY< Model_Vertex_Data_Pos3 , true >,
+				public Model_Vertex_SetPos_ZZ< Model_Vertex_Data_Pos3 , true >
 		{
 		};
 
-		/** Model_Vertex_Data_PosColor
+		/** Model_Vertex_Data_Pos3Color4
 		*/
-		template < > class Model_Vertex_Convertible< Model_Vertex_Data_PosColor >
+		template < > class Model_Vertex_Convertible< Model_Vertex_Data_Pos3Color4 >
 			:
-				public Model_Vertex_SetPos< Model_Vertex_Data_PosColor , true >,
-				public Model_Vertex_SetColor< Model_Vertex_Data_PosColor , true >
+				public Model_Vertex_SetPos_XX< Model_Vertex_Data_Pos3Color4 , true >,
+				public Model_Vertex_SetPos_YY< Model_Vertex_Data_Pos3Color4 , true >,
+				public Model_Vertex_SetPos_ZZ< Model_Vertex_Data_Pos3Color4 , true >,
+				public Model_Vertex_SetColor_RR< Model_Vertex_Data_Pos3Color4 , true >,
+				public Model_Vertex_SetColor_GG< Model_Vertex_Data_Pos3Color4 , true >,
+				public Model_Vertex_SetColor_BB< Model_Vertex_Data_Pos3Color4 , true >,
+				public Model_Vertex_SetColor_AA< Model_Vertex_Data_Pos3Color4 , true >
 		{
 		};
 
-		/** Model_Vertex_Data_PosUvColor
+		/** Model_Vertex_Data_Pos4Color3
 		*/
-		template < > class Model_Vertex_Convertible< Model_Vertex_Data_PosUvColor >
+		template < > class Model_Vertex_Convertible< Model_Vertex_Data_Pos4Color3 >
 			:
-				public Model_Vertex_SetPos< Model_Vertex_Data_PosUvColor , true >,
-				public Model_Vertex_SetUv< Model_Vertex_Data_PosUvColor , true >,
-				public Model_Vertex_SetColor< Model_Vertex_Data_PosUvColor , true >
+				public Model_Vertex_SetPos_XX< Model_Vertex_Data_Pos4Color3 , true >,
+				public Model_Vertex_SetPos_YY< Model_Vertex_Data_Pos4Color3 , true >,
+				public Model_Vertex_SetPos_ZZ< Model_Vertex_Data_Pos4Color3 , true >,
+				public Model_Vertex_SetPos_WW< Model_Vertex_Data_Pos4Color3 , true >,
+				public Model_Vertex_SetColor_RR< Model_Vertex_Data_Pos4Color3 , true >,
+				public Model_Vertex_SetColor_GG< Model_Vertex_Data_Pos4Color3 , true >,
+				public Model_Vertex_SetColor_BB< Model_Vertex_Data_Pos4Color3 , true >
 		{
 		};
 
-		/** Model_Vertex_Data_PUMIMW
+		/** Model_Vertex_Data_Pos3Uv2Color4
 		*/
-		template < > class Model_Vertex_Convertible< Model_Vertex_Data_PosUvMatrixindexMatrixweight >
+		template < > class Model_Vertex_Convertible< Model_Vertex_Data_Pos3Uv2Color4 >
 			:
-				public Model_Vertex_SetPos< Model_Vertex_Data_PosUvMatrixindexMatrixweight , true >,
-				public Model_Vertex_SetUv< Model_Vertex_Data_PosUvMatrixindexMatrixweight , true >,
-				public Model_Vertex_SetMatrixindex< Model_Vertex_Data_PosUvMatrixindexMatrixweight , true >,
-				public Model_Vertex_SetMatrixweight< Model_Vertex_Data_PosUvMatrixindexMatrixweight , true >
+				public Model_Vertex_SetPos_XX< Model_Vertex_Data_Pos3Uv2Color4 , true >,
+				public Model_Vertex_SetPos_YY< Model_Vertex_Data_Pos3Uv2Color4 , true >,
+				public Model_Vertex_SetPos_ZZ< Model_Vertex_Data_Pos3Uv2Color4 , true >,
+				public Model_Vertex_SetUv_XX< Model_Vertex_Data_Pos3Uv2Color4 , true >,
+				public Model_Vertex_SetUv_YY< Model_Vertex_Data_Pos3Uv2Color4 , true >,
+				public Model_Vertex_SetColor_RR< Model_Vertex_Data_Pos3Uv2Color4 , true >,
+				public Model_Vertex_SetColor_GG< Model_Vertex_Data_Pos3Uv2Color4 , true >,
+				public Model_Vertex_SetColor_BB< Model_Vertex_Data_Pos3Uv2Color4 , true >,
+				public Model_Vertex_SetColor_AA< Model_Vertex_Data_Pos3Uv2Color4 , true >
+		{
+		};
+
+		/** Model_Vertex_Data_Pos3Uv2Matrixindex4Matrixweight4
+		*/
+		template < > class Model_Vertex_Convertible< Model_Vertex_Data_Pos3Uv2Matrixindex4Matrixweight4 >
+			:
+				public Model_Vertex_SetPos_XX< Model_Vertex_Data_Pos3Uv2Matrixindex4Matrixweight4 , true >,
+				public Model_Vertex_SetPos_YY< Model_Vertex_Data_Pos3Uv2Matrixindex4Matrixweight4 , true >,
+				public Model_Vertex_SetPos_ZZ< Model_Vertex_Data_Pos3Uv2Matrixindex4Matrixweight4 , true >,
+				public Model_Vertex_SetUv_XX< Model_Vertex_Data_Pos3Uv2Matrixindex4Matrixweight4 , true >,
+				public Model_Vertex_SetUv_YY< Model_Vertex_Data_Pos3Uv2Matrixindex4Matrixweight4 , true >,
+				public Model_Vertex_SetMatrixindex4< Model_Vertex_Data_Pos3Uv2Matrixindex4Matrixweight4 , true >,
+				public Model_Vertex_SetMatrixweight4< Model_Vertex_Data_Pos3Uv2Matrixindex4Matrixweight4 , true >
 		{
 		};
 	}
 		
-	/** SetPos
-	*/
-	template < typename T > inline void SetPos(T& a_vertex,f32 a_pos_x,f32 a_pos_y,f32 a_pos_z)
-	{
-		NImpl::Model_Vertex_SetPos< T , is_convertible< NImpl::Model_Vertex_Convertible< T >*, NImpl::Model_Vertex_SetPos< T , true >* >::value >::Set(a_vertex,a_pos_x,a_pos_y,a_pos_z);
-	}
-	template < typename T > inline s32 GetPosOffset()
-	{
-		return NImpl::Model_Vertex_SetPos< T , is_convertible< NImpl::Model_Vertex_Convertible< T >*, NImpl::Model_Vertex_SetPos< T , true >* >::value >::GetOffset();
-	}
 
+	/** SetPos_XX
+	*/
+	template < typename T > inline void SetPos_XX(T& a_vertex,f32 a_pos_xx)
+	{
+		NImpl::Model_Vertex_SetPos_XX< T , is_convertible< NImpl::Model_Vertex_Convertible< T >*, NImpl::Model_Vertex_SetPos_XX< T , true >* >::value >::Set(a_vertex,a_pos_xx);
+	}
+	template < typename T > inline s32 GetPosOffset_XX()
+	{
+		return NImpl::Model_Vertex_SetPos_XX< T , is_convertible< NImpl::Model_Vertex_Convertible< T >*, NImpl::Model_Vertex_SetPos_XX< T , true >* >::value >::GetOffset();
+	}
+	/** SetPos_YY
+	*/
+	template < typename T > inline void SetPos_YY(T& a_vertex,f32 a_pos_yy)
+	{
+		NImpl::Model_Vertex_SetPos_YY< T , is_convertible< NImpl::Model_Vertex_Convertible< T >*, NImpl::Model_Vertex_SetPos_YY< T , true >* >::value >::Set(a_vertex,a_pos_yy);
+	}
+	template < typename T > inline s32 GetPosOffset_YY()
+	{
+		return NImpl::Model_Vertex_SetPos_YY< T , is_convertible< NImpl::Model_Vertex_Convertible< T >*, NImpl::Model_Vertex_SetPos_YY< T , true >* >::value >::GetOffset();
+	}
+	/** SetPos_ZZ
+	*/
+	template < typename T > inline void SetPos_ZZ(T& a_vertex,f32 a_pos_zz)
+	{
+		NImpl::Model_Vertex_SetPos_ZZ< T , is_convertible< NImpl::Model_Vertex_Convertible< T >*, NImpl::Model_Vertex_SetPos_ZZ< T , true >* >::value >::Set(a_vertex,a_pos_zz);
+	}
+	template < typename T > inline s32 GetPosOffset_ZZ()
+	{
+		return NImpl::Model_Vertex_SetPos_ZZ< T , is_convertible< NImpl::Model_Vertex_Convertible< T >*, NImpl::Model_Vertex_SetPos_ZZ< T , true >* >::value >::GetOffset();
+	}
+	/** SetPos_WW
+	*/
+	template < typename T > inline void SetPos_WW(T& a_vertex,f32 a_pos_ww)
+	{
+		NImpl::Model_Vertex_SetPos_WW< T , is_convertible< NImpl::Model_Vertex_Convertible< T >*, NImpl::Model_Vertex_SetPos_WW< T , true >* >::value >::Set(a_vertex,a_pos_ww);
+	}
+	template < typename T > inline s32 GetPosOffset_WW()
+	{
+		return NImpl::Model_Vertex_SetPos_WW< T , is_convertible< NImpl::Model_Vertex_Convertible< T >*, NImpl::Model_Vertex_SetPos_WW< T , true >* >::value >::GetOffset();
+	}
 	/** SetColor
 	*/
-	template < typename T > inline void SetColor(T& a_vertex,f32 a_color_r,f32 a_color_g,f32 a_color_b,f32 a_color_a)
+	template < typename T > inline void SetPos(T& a_vertex,f32 a_pos_xx = 0.0f,f32 a_pos_yy = 0.0f,f32 a_pos_zz = 0.0f,f32 a_pos_ww = 0.0f)
 	{
-		NImpl::Model_Vertex_SetColor< T , is_convertible< NImpl::Model_Vertex_Convertible< T >*, NImpl::Model_Vertex_SetColor< T , true >* >::value >::Set(a_vertex,a_color_r,a_color_g,a_color_b,a_color_a);
-	}
-	template < typename T > inline s32 GetColorOffset()
-	{
-		return NImpl::Model_Vertex_SetColor< T , is_convertible< NImpl::Model_Vertex_Convertible< T >*, NImpl::Model_Vertex_SetColor< T , true >* >::value >::GetOffset();
+		SetPos_XX< T >(a_vertex,a_pos_xx);
+		SetPos_YY< T >(a_vertex,a_pos_yy);
+		SetPos_ZZ< T >(a_vertex,a_pos_zz);
+		SetPos_WW< T >(a_vertex,a_pos_ww);
 	}
 
+
+	/** SetColor_RR
+	*/
+	template < typename T > inline void SetColor_RR(T& a_vertex,f32 a_color_rr)
+	{
+		NImpl::Model_Vertex_SetColor_RR< T , is_convertible< NImpl::Model_Vertex_Convertible< T >*, NImpl::Model_Vertex_SetColor_RR< T , true >* >::value >::Set(a_vertex,a_color_rr);
+	}
+	template < typename T > inline s32 GetColorOffset_RR()
+	{
+		return NImpl::Model_Vertex_SetColor_RR< T , is_convertible< NImpl::Model_Vertex_Convertible< T >*, NImpl::Model_Vertex_SetColor_RR< T , true >* >::value >::GetOffset();
+	}
+	/** SetColor_GG
+	*/
+	template < typename T > inline void SetColor_GG(T& a_vertex,f32 a_color_gg)
+	{
+		NImpl::Model_Vertex_SetColor_GG< T , is_convertible< NImpl::Model_Vertex_Convertible< T >*, NImpl::Model_Vertex_SetColor_GG< T , true >* >::value >::Set(a_vertex,a_color_gg);
+	}
+	template < typename T > inline s32 GetColorOffset_GG()
+	{
+		return NImpl::Model_Vertex_SetColor_GG< T , is_convertible< NImpl::Model_Vertex_Convertible< T >*, NImpl::Model_Vertex_SetColor_GG< T , true >* >::value >::GetOffset();
+	}
+	/** SetColor_BB
+	*/
+	template < typename T > inline void SetColor_BB(T& a_vertex,f32 a_color_bb)
+	{
+		NImpl::Model_Vertex_SetColor_BB< T , is_convertible< NImpl::Model_Vertex_Convertible< T >*, NImpl::Model_Vertex_SetColor_BB< T , true >* >::value >::Set(a_vertex,a_color_bb);
+	}
+	template < typename T > inline s32 GetColorOffset_BB()
+	{
+		return NImpl::Model_Vertex_SetColor_BB< T , is_convertible< NImpl::Model_Vertex_Convertible< T >*, NImpl::Model_Vertex_SetColor_BB< T , true >* >::value >::GetOffset();
+	}
+	/** SetColor_AA
+	*/
+	template < typename T > inline void SetColor_AA(T& a_vertex,f32 a_color_aa)
+	{
+		NImpl::Model_Vertex_SetColor_AA< T , is_convertible< NImpl::Model_Vertex_Convertible< T >*, NImpl::Model_Vertex_SetColor_AA< T , true >* >::value >::Set(a_vertex,a_color_aa);
+	}
+	template < typename T > inline s32 GetColorOffset_AA()
+	{
+		return NImpl::Model_Vertex_SetColor_AA< T , is_convertible< NImpl::Model_Vertex_Convertible< T >*, NImpl::Model_Vertex_SetColor_AA< T , true >* >::value >::GetOffset();
+	}
+	/** SetColor
+	*/
+	template < typename T > inline void SetColor(T& a_vertex,f32 a_color_rr = 0.0f,f32 a_color_gg = 0.0f,f32 a_color_bb = 0.0f,f32 a_color_aa = 0.0f)
+	{
+		SetColor_RR< T >(a_vertex,a_color_rr);
+		SetColor_GG< T >(a_vertex,a_color_gg);
+		SetColor_BB< T >(a_vertex,a_color_bb);
+		SetColor_AA< T >(a_vertex,a_color_aa);
+	}
+
+
+	/** SetUv_XX
+	*/
+	template < typename T > inline void SetUv_XX(T& a_vertex,f32 a_uv_xx)
+	{
+		NImpl::Model_Vertex_SetUv_XX< T , is_convertible< NImpl::Model_Vertex_Convertible< T >*, NImpl::Model_Vertex_SetUv_XX< T , true >* >::value >::Set(a_vertex,a_uv_xx);
+	}
+	template < typename T > inline s32 GetUvOffset_XX()
+	{
+		return NImpl::Model_Vertex_SetUv_XX< T , is_convertible< NImpl::Model_Vertex_Convertible< T >*, NImpl::Model_Vertex_SetUv_XX< T , true >* >::value >::GetOffset();
+	}
+	/** SetUv_YY
+	*/
+	template < typename T > inline void SetUv_YY(T& a_vertex,f32 a_uv_yy)
+	{
+		NImpl::Model_Vertex_SetUv_YY< T , is_convertible< NImpl::Model_Vertex_Convertible< T >*, NImpl::Model_Vertex_SetUv_YY< T , true >* >::value >::Set(a_vertex,a_uv_yy);
+	}
+	template < typename T > inline s32 GetUvOffset_YY()
+	{
+		return NImpl::Model_Vertex_SetUv_YY< T , is_convertible< NImpl::Model_Vertex_Convertible< T >*, NImpl::Model_Vertex_SetUv_YY< T , true >* >::value >::GetOffset();
+	}
 	/** SetUv
 	*/
-	template < typename T > inline void SetUv(T& a_vertex,f32 a_uv_x,f32 a_uv_y)
+	template < typename T > inline void SetUv(T& a_vertex,f32 a_uv_xx = 0.0f,f32 a_uv_yy = 0.0f)
 	{
-		NImpl::Model_Vertex_SetUv< T , is_convertible< NImpl::Model_Vertex_Convertible< T >*, NImpl::Model_Vertex_SetUv< T , true >* >::value >::Set(a_vertex,a_uv_x,a_uv_y);
+		SetUv_XX< T >(a_vertex,a_uv_xx);
+		SetUv_YY< T >(a_vertex,a_uv_yy);
 	}
-	template < typename T > inline s32 GetUvOffset()
-	{
-		return NImpl::Model_Vertex_SetUv< T , is_convertible< NImpl::Model_Vertex_Convertible< T >*, NImpl::Model_Vertex_SetUv< T , true >* >::value >::GetOffset();
-	}
+
 
 	/** SetMatrixIndex
 	*/

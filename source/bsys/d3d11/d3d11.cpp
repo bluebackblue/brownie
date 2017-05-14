@@ -95,35 +95,8 @@ namespace NBsys{namespace ND3d11
 	*/
 	bool D3d11::Render_Present()
 	{
-		this->impl->Render_Present();
+		return this->impl->Render_Present();
 	}
-
-	/** Clear
-	*/
-	/*
-	void D3d11::Clear()
-	{
-		this->impl->Clear();
-	}
-	*/
-
-	/** BeginScene
-	*/
-	/*
-	void D3d11::BeginScene()
-	{
-		this->impl->BeginScene();
-	}
-	*/
-
-	/** EndScene
-	*/
-	/*
-	void D3d11::EndScene()
-	{
-		this->impl->EndScene();
-	}
-	*/
 
 }}
 #endif

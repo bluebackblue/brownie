@@ -17,3 +17,13 @@
 */
 #define DEF_TEST1
 
+
+#if defined(DEF_TEST0)
+
+#elif defined(DEF_TEST1)
+
+	#define BSYS_WINDOW_ENABLE								(1)
+	#define BSYS_D3D11_ENABLE								(1)
+
+#endif
+
