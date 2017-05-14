@@ -799,7 +799,7 @@ namespace NBsys{namespace NGeometry
 					}
 				}
 
-				s32 t_next[3] = {1, 2, 0};
+				s32 t_next[3] = {1,2,0};
 				s32 jj = t_next[ii];
 				s32 kk = t_next[jj];
 
@@ -955,10 +955,10 @@ namespace NBsys{namespace NGeometry
 	inline void Geometry_Matrix_44::Set_ViewPortMatrix(f32 a_width,f32 a_height)
 	{
 		this->Set(
-			a_width/2,  0.0f,        0.0f, 0.0f,
-			0.0f,      -a_height/2,  0.0f, 0.0f,
-			0.0f,       0.0f,        1.0f, 0.0f,
-			a_width/2,  a_height/2,  0.0f, 1.0f
+			a_width/2,  0.0f,        0.0f,  0.0f,
+			0.0f,      -a_height/2,  0.0f,  0.0f,
+			0.0f,       0.0f,        1.0f,  0.0f,
+			a_width/2,  a_height/2,  0.0f,  1.0f
 		);
 	}
 

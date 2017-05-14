@@ -9,289 +9,374 @@
 */
 
 
+/** user.h
+*/
+#include "./user_customize.h"
+
+
 /*
 
 	std atomic
 
 */
-#define BLIB_STDATOMIC_ENABLE							(1)
+#if !defined(BLIB_STDATOMIC_ENABLE)
+	#define BLIB_STDATOMIC_ENABLE							(1)
+#endif
 
 /*
 
-	グローバル。固定長アロケータ。
+	グローバル固定長アロケータ。
 
 */
-#define BLIB_GLOBALFIXEDALLOCATOR_ENABLE				(1)
-#define BLIB_GLOBALFIXEDALLOCATOR_BLOCKSIZE				(32)
-#define BLIB_GLOBALFIXEDALLOCATOR_SIZE					(1 * 1024 * 1024)
+#if !defined(BLIB_GLOBALFIXEDALLOCATOR_ENABLE)
+	#define BLIB_GLOBALFIXEDALLOCATOR_ENABLE				(1)
+#endif
+#if !defined(BLIB_GLOBALFIXEDALLOCATOR_BLOCKSIZE)
+	#define BLIB_GLOBALFIXEDALLOCATOR_BLOCKSIZE				(32)
+#endif
+#if !defined(BLIB_GLOBALFIXEDALLOCATOR_SIZE)
+	#define BLIB_GLOBALFIXEDALLOCATOR_SIZE					(1 * 1024 * 1024)
+#endif
 
 /*
 
-	デバッグアサート。
+	デバッグアサートコールバック。
 
 */
-#define BLIB_DEBUGASSERT_CALLBACK_ENABLE				(1)
-
+#if !defined(BLIB_DEBUGASSERT_CALLBACK_ENABLE)
+	#define BLIB_DEBUGASSERT_CALLBACK_ENABLE				(0)
+#endif
 
 /*
 
-	デバッグブレイク。
+	デバッグブレイクコールバック。
 
 */
-#define BLIB_DEBUGBREAK_CALLBACK_ENABLE					(1)
+#if !defined(BLIB_DEBUGBREAK_CALLBACK_ENABLE)
+	#define BLIB_DEBUGBREAK_CALLBACK_ENABLE					(0)
+#endif
 
 /*
 
 	デバッグログ。
 
 */
-#define BLIB_DEBUGLOG_CALLBACK_ENABLE					(1)
+#if !defined(BLIB_DEBUGLOG_CALLBACK_ENABLE)
+	#define BLIB_DEBUGLOG_CALLBACK_ENABLE					(0)
+#endif
 
 /*
 
 	ファイルハンドル。プロックサイズ。
 
 */
-#define BLIB_FILEHANDLE_BLOCKSIZE						(4096)
+#if !defined(BLIB_FILEHANDLE_BLOCKSIZE)
+	#define BLIB_FILEHANDLE_BLOCKSIZE						(4096)
+#endif
 
 /*
 
 	ファイルハンドル。リトライ回数。
 
 */
-#define BLIB_FILEHANDLE_RETRYMAX						(15)
+#if !defined(BLIB_FILEHANDLE_RETRYMAX)
+	#define BLIB_FILEHANDLE_RETRYMAX						(15)
+#endif
 
 /*
 
 	std regex
 
 */
-#define BLIB_STDREGEX_ENABLE							(1)
+#if !defined(BLIB_STDREGEX_ENABLE)
+	#define BLIB_STDREGEX_ENABLE							(1)
+#endif
 
 /*
 
 	std mutex
 
 */
-#define BLIB_STDMUTEX_ENABLE							(1)
+#if !defined(BLIB_STDMUTEX_ENABLE)
+	#define BLIB_STDMUTEX_ENABLE							(1)
+#endif
 
 /*
 
 	Math::sin_fast / Math::cos_fast のテーブルサイズ。
 
 */
-#define BLIB_MATH_SINCOSFAST_TABLESIZE					(4096)
+#if !defined(BLIB_MATH_SINCOSFAST_TABLESIZE)
+	#define BLIB_MATH_SINCOSFAST_TABLESIZE					(4096)
+#endif
 
 /*
 
 	メモリーコンテナー。
 
 */
-#define BLIB_MEMORYCONTAINER_ENABLE						(1)
+#if !defined(BLIB_MEMORYCONTAINER_ENABLE)
+	#define BLIB_MEMORYCONTAINER_ENABLE						(1)
+#endif
 
 /*
 
 	メモリーコンテナー。ネスト最大値。
 
 */
-#define BLIB_MEMORYCONTAINER_NESTMAX					(16)
+#if !defined(BLIB_MEMORYCONTAINER_NESTMAX)
+	#define BLIB_MEMORYCONTAINER_NESTMAX					(16)
+#endif
 
 /*
 
 	メモリーコンテナー。スレッドローカルスロット。
 
 */
-#define BLIB_MEMORYCONTAINER_THREADLOCALSLOT			(0x01)
+#if !defined(BLIB_MEMORYCONTAINER_THREADLOCALSLOT)
+	#define BLIB_MEMORYCONTAINER_THREADLOCALSLOT			(0x01)
+#endif
 
 /*
 
 	std random
 
 */
-#define BLIB_STDRANDOM_ENABLE							(1)
+#if !defined(BLIB_STDRANDOM_ENABLE)
+	#define BLIB_STDRANDOM_ENABLE							(1)
+#endif
 
 /*
 
 	std sharedptr
 
 */
-#define BLIB_STDSHAREDPTR_ENABLE						(0)
+#if !defined(BLIB_STDSHAREDPTR_ENABLE)
+	#define BLIB_STDSHAREDPTR_ENABLE						(0)
+#endif
 
 /*
 
 	シェアードポインタ。キャッシュ。
 
 */
-#define BLIB_SHAREDPTR_CACHE_ENABLE						(1)
+#if !defined(BLIB_SHAREDPTR_CACHE_ENABLE)
+	#define BLIB_SHAREDPTR_CACHE_ENABLE						(1)
+#endif
 
 /*
 
 	std nullptr
 
 */
-#define BLIB_STDNULLPTR_ENABLE							(1)
+#if !defined(BLIB_STDNULLPTR_ENABLE)
+	#define BLIB_STDNULLPTR_ENABLE							(1)
+#endif
 
 /*
 
 	ＪＳＯＮアイテム。
 
 */
-#define BLIB_JSONITEM_ENABLE							(1)
+#if !defined(BLIB_JSONITEM_ENABLE)
+	#define BLIB_JSONITEM_ENABLE							(1)
+#endif
 
 /*
 
 	スタックトレース。
 
 */
-#define BLIB_STACKTRACE_ENABLE							(1)
+#if !defined(BLIB_STACKTRACE_ENABLE)
+#define BLIB_STACKTRACE_ENABLE								(1)
+#endif
 
 /*
 
 	std thread
 
 */
-#define BLIB_STDTHREAD_ENABLE							(1)
+#if !defined(BLIB_STDTHREAD_ENABLE)
+#define BLIB_STDTHREAD_ENABLE								(1)
+#endif
 
 /*
 
 	std threadlocal
 
 */
-#define BLIB_STDTHREADLOCAL_ENABLE						(1)
+#if !defined(BLIB_STDTHREADLOCAL_ENABLE)
+	#define BLIB_STDTHREADLOCAL_ENABLE						(1)
+#endif
 
 /*
 
 	スレッドローカル。ソロット数。
 
 */
-#define BLIB_THREADLOCAL_SLOTMAX						(32)
+#if !defined(BLIB_THREADLOCAL_SLOTMAX)
+	#define BLIB_THREADLOCAL_SLOTMAX						(32)
+#endif
 
 /*
 
 	スレッドローカル。
 
 */
-#define BLIB_THREADLOCAL_ENABLE							(1)
+#if !defined(BLIB_THREADLOCAL_ENABLE)
+	#define BLIB_THREADLOCAL_ENABLE							(1)
+#endif
 
 /*
 
 	可変引数文字列操作。デバッグ用。スレッドローカルスロット。
 
 */
-#define BLIB_VASTRING_DEBUG_THREADLOCALSLOT				(0x00)
+#if !defined(BLIB_VASTRING_DEBUG_THREADLOCALSLOT)
+	#define BLIB_VASTRING_DEBUG_THREADLOCALSLOT				(0x00)
+#endif
 
 /*
 
 	可変引数文字列操作。デバッグ用。サイズ。
 
 */
-#define BLIB_VASTRING_DEBUG_SIZE						(4 * 1024)
+#if !defined(BLIB_VASTRING_DEBUG_SIZE)
+	#define BLIB_VASTRING_DEBUG_SIZE						(4 * 1024)
+#endif
 
 /*
 
 	std unordered_map
 
 */
-#define BLIB_STDUNORDEREDMAP_ENABLE						(1)
+#if !defined(BLIB_STDUNORDEREDMAP_ENABLE)
+	#define BLIB_STDUNORDEREDMAP_ENABLE						(1)
+#endif
 
 /*
 
 	std alias template
 
 */
-#define BLIB_STDALIASTEMPLATE_ENABLE					(1)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#if !defined(BLIB_STDALIASTEMPLATE_ENABLE)
+	#define BLIB_STDALIASTEMPLATE_ENABLE					(1)
+#endif
 
 /*
 
 	actionbatching
 
 */
-#define BSYS_ACTIONBATCHING_ENABLE						(1)
+#if !defined(BSYS_ACTIONBATCHING_ENABLE)
+	#define BSYS_ACTIONBATCHING_ENABLE						(1)
+#endif
 
 /*
 
 	color
 
 */
-#define BSYS_COLOR_ENABLE								(1)
+#if !defined(BSYS_COLOR_ENABLE)
+	#define BSYS_COLOR_ENABLE								(1)
+#endif
 
 /*
 
 	file
 
-	BSYS_FILE_LISTSIZE	: 同時リクエスト数。
+	BSYS_FILE_LISTSIZE		: 同時リクエスト数。
+	BSYS_FILE_PACK_ENABLE	: パックファイル。
 
 */
-#define BSYS_FILE_ENABLE								(1)
-#define BSYS_FILE_PACK_ENABLE							(1)
-#define BSYS_FILE_MEMORYCONTAINER						(0x01)
-#define BSYS_FILE_LISTSIZE								(512)
+#if !defined(BSYS_FILE_ENABLE)
+	#define BSYS_FILE_ENABLE								(1)
+#endif
+#if !defined(BSYS_FILE_PACK_ENABLE)
+	#define BSYS_FILE_PACK_ENABLE							(1)
+#endif
+#if !defined(BSYS_FILE_MEMORYCONTAINER)
+	#define BSYS_FILE_MEMORYCONTAINER						(0x01)
+#endif
+#if !defined(BSYS_FILE_LISTSIZE)
+	#define BSYS_FILE_LISTSIZE								(512)
+#endif
 
 /*
 
 	model
 
 */
-#define BSYS_MODEL_ENABLE								(1)
+#if !defined(BSYS_MODEL_ENABLE)
+	#define BSYS_MODEL_ENABLE								(1)
+#endif
 
 /*
 
 	opengl
 
 */
-#define BSYS_OPENGL_ENABLE								(0)
-#define BSYS_OPENGL_UPDATE_FPS							(60)
-#define BSYS_OPENGL_WIDTH								(1440)
-#define BSYS_OPENGL_HEIGHT								(810)
-#define BSYS_OPENGL_SHADERIDMAX							(32)
+#if !defined(BSYS_OPENGL_ENABLE)
+	#define BSYS_OPENGL_ENABLE								(0)
+#endif
+#if !defined(BSYS_OPENGL_UPDATE_FPS)
+	#define BSYS_OPENGL_UPDATE_FPS							(60)
+#endif
+#if !defined(BSYS_OPENGL_WIDTH)
+	#define BSYS_OPENGL_WIDTH								(1440)
+#endif
+#if !defined(BSYS_OPENGL_HEIGHT)
+	#define BSYS_OPENGL_HEIGHT								(810)
+#endif
+#if !defined(BSYS_OPENGL_SHADERIDMAX)
+	#define BSYS_OPENGL_SHADERIDMAX							(32)
+#endif
 
 /*
 
 	geometry
 
 */
-#define BSYS_GEOMETRY_ENABLE							(1)
-#define BSYS_GEOMETRY_MATRIX_SINCOSFAST_ENABLE			(1)
-#define BSYS_GEOMETRY_PERSPECTIVE_TYPE					(0x01)
-#define BSYS_GEOMETRY_ROWCOLUMN_TYPE					(0x01)
-#define BSYS_GEOMETRY_LEFTRIGHT_TYPE					(0x01)
+#if !defined(BSYS_GEOMETRY_ENABLE)
+	#define BSYS_GEOMETRY_ENABLE							(1)
+#endif
+#if !defined(BSYS_GEOMETRY_MATRIX_SINCOSFAST_ENABLE)
+	#define BSYS_GEOMETRY_MATRIX_SINCOSFAST_ENABLE			(1)
+#endif
+#if !defined(BSYS_GEOMETRY_PERSPECTIVE_TYPE)
+	#define BSYS_GEOMETRY_PERSPECTIVE_TYPE					(0x01)
+#endif
+#if !defined(BSYS_GEOMETRY_ROWCOLUMN_TYPE)
+	#define BSYS_GEOMETRY_ROWCOLUMN_TYPE					(0x01)
+#endif
+#if !defined(BSYS_GEOMETRY_LEFTRIGHT_TYPE)
+	#define BSYS_GEOMETRY_LEFTRIGHT_TYPE					(0x01)
+#endif
 
 /*
 
 	fovehmd
 
 */
-#define BSYS_FOVEHMD_ENABLE								(1)
+#if !defined(BSYS_FOVEHMD_ENABLE)
+#define BSYS_FOVEHMD_ENABLE									(0)
+#endif
 
 /*
 
 	window
 
 */
-#define BSYS_WINDOW_ENABLE								(1)
+#if !defined(BSYS_WINDOW_ENABLE)
+	#define BSYS_WINDOW_ENABLE								(0)
+#endif
 
 /*
 
 	d3d11
 
 */
-#define BSYS_D3D11_ENABLE								(1)
-
-/** user.h
-*/
-#include "./user_customize.h"
+#if !defined(BSYS_D3D11_ENABLE)
+	#define BSYS_D3D11_ENABLE								(0)
+#endif
 

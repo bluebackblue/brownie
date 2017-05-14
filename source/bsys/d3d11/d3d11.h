@@ -17,6 +17,7 @@
 /** include
 */
 #include "../window/window.h"
+#include "../color/color.h"
 
 
 /** NBsys::ND3d11
@@ -54,11 +55,34 @@ namespace NBsys{namespace ND3d11
 	public:
 		/** 作成。
 		*/
-		void Create(sharedptr< NWindow::Window >& a_window,s32 a_width,s32 a_height);
+		void Render_Create(sharedptr< NWindow::Window >& a_window,s32 a_width,s32 a_height);
 
 		/** 削除。
 		*/
-		void Delete();
+		void Render_Delete();
+
+	public:
+		/** Render_ViewPort。
+		*/
+		void Render_ViewPort(f32 a_x,f32 a_y,f32 a_width,f32 a_height);
+
+		/** Render_ClearRenderTargetView
+		*/
+		void Render_ClearRenderTargetView(NBsys::NColor::Color_F& a_color);
+
+		/** Render_ClearDepthStencilView
+		*/
+		void Render_ClearDepthStencilView();
+
+		/** Render_CreateBuffer
+		*/
+		void Render_CreateBuffer();
+
+		/** Render_Present
+		*/
+		bool Render_Present();
+
+
 
 		/** クリア。
 		*/

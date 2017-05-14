@@ -45,7 +45,7 @@ namespace NBsys{namespace NModel
 
 					{
 						SetPos< T >(t_vertex,t_x0,0.0f,t_y0);
-						SetUv< T >(t_vertex,0.0f, 0.0f);
+						SetUv< T >(t_vertex,0.0f,0.0f);
 						t_plane->AddVertex(t_vertex);
 					}
 

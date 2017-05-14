@@ -352,7 +352,7 @@ namespace NBsys{namespace NModel
 
 	/** SetDummy
 	*/
-	template < typename T > inline void SetDummy(T& a_vertex , f32 a_dummy)
+	template < typename T > inline void SetDummy(T& a_vertex,f32 a_dummy)
 	{
 		NImpl::Model_Vertex_SetDummy< T , is_convertible< NImpl::Model_Vertex_Convertible< T >* , NImpl::Model_Vertex_SetDummy< T , true >* >::value >::Set(a_vertex,a_dummy);
 	}

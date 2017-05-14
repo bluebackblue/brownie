@@ -22,6 +22,7 @@
 /** include
 */
 #include "../window/window.h"
+#include "../color/color.h"
 
 
 /** include
@@ -78,6 +79,10 @@ namespace NBsys{namespace ND3d11
 		*/
 		sharedptr< ID3D11DepthStencilView > depthstencilview;
 
+		/** buffer
+		*/
+		sharedptr< ID3D11Buffer > buffer;
+
 		/** texture_list
 		*/
 		//STLMap< Muid::UniqueNameType , D3d11_Texture >::Type texture_list;
@@ -96,101 +101,71 @@ namespace NBsys{namespace ND3d11
 		nonvirtual ~D3d11_Impl();
 
 	public:
-		/** Create
+		/** Render_Create
 		*/
-		void Create(sharedptr< NWindow::Window >& a_window,s32 a_width,s32 a_height);
+		void Render_Create(sharedptr< NWindow::Window >& a_window,s32 a_width,s32 a_height);
 
-		/** Delete
+		/** Render_Delete
 		*/
-		void Delete();
+		void Render_Delete();
 
-		/** GetDevice
+		/** Render_GetDevice
 		*/
 		sharedptr< ID3D11Device >& GetDevice();
 
-		/** GetDeviceContext
+		/** Render_GetDeviceContext
 		*/
 		sharedptr< ID3D11DeviceContext >& GetDeviceContext();
 
-		/** GetSwapChain
+		/** Render_GetSwapChain
 		*/
 		sharedptr< IDXGISwapChain >& GetSwapChain();
 
-		/** GetBackBuffer
+		/** Render_GetBackBuffer
 		*/
 		sharedptr< ID3D11Texture2D >& GetBackBuffer();
 
-		/** GetRenderTargetView
+		/** Render_GetRenderTargetView
 		*/
 		sharedptr< ID3D11RenderTargetView >& GetRenderTargetView();
 
-		/** GetDepthBuffer
+		/** Render_GetDepthBuffer
 		*/
 		sharedptr< ID3D11Texture2D >& GetDepthBuffer();
 
-		/** GetDepthStencilState
+		/** Render_GetDepthStencilState
 		*/
 		sharedptr< ID3D11DepthStencilState >& GetDepthStencilState();
 
-		/** GetDepthStencilView
+		/** Render_GetDepthStencilView
 		*/
 		sharedptr< ID3D11DepthStencilView >& GetDepthStencilView();
 
+		/** Render_GetBuffer
+		*/
+		sharedptr< ID3D11Buffer >& GetBuffer();
 
+	public:
 
-		/** Clear
+		/** Render_ViewPortÅB
 		*/
-		/*
-		void Clear();
-		*/
+		void Render_ViewPort(f32 a_x,f32 a_y,f32 a_width,f32 a_height);
 
-		/** BeginScene
+		/** Render_ClearRenderTargetView
 		*/
-		/*
-		void BeginScene();
-		*/
+		void Render_ClearRenderTargetView(NBsys::NColor::Color_F& a_color);
 
-		/** EndScene
+		/** Render_ClearDepthStencilView
 		*/
-		/*
-		void EndScene();
-		*/
+		void Render_ClearDepthStencilView();
 
-		/** device
+		/** Render_CreateBuffer
 		*/
-		/*
-		ID3D11Device* GetDevice();
-		*/
+		void Render_CreateBuffer();
 
-		/** devicecontext
+		/** Render_Present
 		*/
-		/*
-		ID3D11DeviceContext* GetDeviceContext();
-		*/
-
-		/** swapchain
-		*/
-		/*
-		IDXGISwapChain* GetSwapChain();
-		*/
-
-		/** rendertargetview
-		*/
-		/*
-		ID3D11RenderTargetView* GetRenderTargetView();
-		*/
-
-		/** depthstencil_texture
-		*/
-		/*
-		ID3D11Texture2D* GetDepthstencilTexture();
-		*/
-
-		/** depthstencil_view
-		*/
-		/*
-		ID3D11DepthStencilView* GetDepthstencilView();
-		*/
+		bool Render_Present();
 	};
 
 }}

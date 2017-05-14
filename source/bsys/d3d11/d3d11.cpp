@@ -49,18 +49,53 @@ namespace NBsys{namespace ND3d11
 	{
 	}
 
-	/** Create
+	/** Render_Create
 	*/
-	void D3d11::Create(sharedptr< NWindow::Window >& a_window,s32 a_width,s32 a_height)
+	void D3d11::Render_Create(sharedptr< NWindow::Window >& a_window,s32 a_width,s32 a_height)
 	{
-		return this->impl->Create(a_window,a_width,a_height);
+		return this->impl->Render_Create(a_window,a_width,a_height);
 	}
 
 	/** Delete
 	*/
-	void D3d11::Delete()
+	void D3d11::Render_Delete()
 	{
-		this->impl->Delete();
+		this->impl->Render_Delete();
+	}
+
+	/** Render_ViewPortB
+	*/
+	void D3d11::Render_ViewPort(f32 a_x,f32 a_y,f32 a_width,f32 a_height)
+	{
+		this->impl->Render_ViewPort(a_x,a_y,a_width,a_height);
+	}
+
+	/** Render_ClearRenderTargetView
+	*/
+	void D3d11::Render_ClearRenderTargetView(NBsys::NColor::Color_F& a_color)
+	{
+		this->impl->Render_ClearRenderTargetView(a_color);
+	}
+
+	/** Render_ClearDepthStencilView
+	*/
+	void D3d11::Render_ClearDepthStencilView()
+	{
+		this->impl->Render_ClearDepthStencilView();
+	}
+
+	/** Render_CreateBuffer
+	*/
+	void D3d11::Render_CreateBuffer()
+	{
+		this->impl->Render_CreateBuffer();
+	}
+
+	/** Render_Present
+	*/
+	bool D3d11::Render_Present()
+	{
+		this->impl->Render_Present();
 	}
 
 	/** Clear

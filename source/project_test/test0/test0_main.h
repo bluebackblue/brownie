@@ -5,15 +5,18 @@
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ユーザーカスタマイズ用ヘッダー。
+ * @brief インクルード。
 */
 
 
-/** DEF_TEST
-
-	DEF_TEST0	:	初期化、ログ、ブレイク、アサート。
-	DEF_TEST1	:	fovehmd
-
+/** include
 */
-#define DEF_TEST1
+#include "../include.h"
+
+
+/** DEF_TEST0
+*/
+#if defined(DEF_TEST0)
+void Test_Main();
+#endif
 
