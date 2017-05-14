@@ -891,6 +891,16 @@ namespace NBsys{namespace NGeometry
 		}
 		#else
 		{
+			/*
+			//D3DXMatrixPerspectiveFovLH
+			this->Set(
+				t_scale/t_aspect, 0.0f,    0.0f,                                   0.0f,
+				0.0f,             t_scale, 0.0f,                                   0.0f,
+				0.0f,             0.0f,    a_far / (a_far - a_near),               1.0f,
+				0.0f,             0.0f,    -(a_near * a_far)/(a_far - a_near),     0.0f
+			);
+			*/
+
 			//D3DXMatrixPerspectiveFovRH
 			this->Set(
 				t_scale/t_aspect, 0.0f,    0.0f,                                   0.0f,
@@ -918,8 +928,6 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline void Geometry_Matrix_44::Set_ViewMatrix(const Geometry_Vector3& a_camera_target,const Geometry_Vector3& a_camera_position,const Geometry_Vector3& a_camera_up)
 	{
-		//TODO:
-
 		static Geometry_Vector3 s_forward(0.0f,0.0f,1.0f);
 		static Geometry_Vector3 s_side(1.0f,0.0f,0.0f);
 
