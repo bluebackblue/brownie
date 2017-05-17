@@ -34,51 +34,53 @@ namespace NBsys{namespace NGeometry
 			{
 				#if(BSYS_GEOMETRY_ROWCOLUMN_TYPE == 0x00)
 
-				//column major
+				//çsóDêÊ(Row-major)
+				//D3DXMATRIX
 
-				f32 m_11;	//ax_x
-				f32 m_12;	//ax_y
-				f32 m_13;	//ax_z
-				f32 m_14;	//ax_w
+				f32 m_11;
+				f32 m_12;
+				f32 m_13;
+				f32 m_14;
 
-				f32 m_21;	//ay_x
-				f32 m_22;	//ay_y
-				f32 m_23;	//ay_z
-				f32 m_24;	//ay_w
+				f32 m_21;
+				f32 m_22;
+				f32 m_23;
+				f32 m_24;
 
-				f32 m_31;	//az_x
-				f32 m_32;	//az_y
-				f32 m_33;	//az_z
-				f32 m_34;	//az_w
+				f32 m_31;
+				f32 m_32;
+				f32 m_33;
+				f32 m_34;
 
-				f32 m_41;	//tr_x
-				f32 m_42;	//tr_y
-				f32 m_43;	//tr_z
-				f32 m_44;	//tr_w
+				f32 m_41;
+				f32 m_42;
+				f32 m_43;
+				f32 m_44;
 
 				#else
 
-				//row-major
+				//óÒóDêÊ(Column-major)
+				//HLSL
 
-				f32 m_11;	//ax_x
-				f32 m_12;	//ay_x
-				f32 m_13;	//az_x
-				f32 m_14;	//tr_x
+				f32 m_11;
+				f32 m_12;
+				f32 m_13;
+				f32 m_14;
 
-				f32 m_21;	//ax_y
-				f32 m_22;	//ay_y
-				f32 m_23;	//az_y
-				f32 m_24;	//tr_y
+				f32 m_21;
+				f32 m_22;
+				f32 m_23;
+				f32 m_24;
 
-				f32 m_31;	//ax_z
-				f32 m_32;	//ay_z
-				f32 m_33;	//az_z
-				f32 m_34;	//tr_z
+				f32 m_31;
+				f32 m_32;
+				f32 m_33;
+				f32 m_34;
 
-				f32 m_41;	//ax_w
-				f32 m_42;	//ay_w
-				f32 m_43;	//az_w
-				f32 m_44;	//tr_w
+				f32 m_41;
+				f32 m_42;
+				f32 m_43;
+				f32 m_44;
 
 				#endif
 			};
@@ -87,51 +89,55 @@ namespace NBsys{namespace NGeometry
 			{
 				#if(BSYS_GEOMETRY_ROWCOLUMN_TYPE == 0x00)
 
-				//column major
+				//çsóDêÊ(Row-major)
+				//D3DXMATRIX
+				//Maya
 
-				f32 ax_x;	 //m[0][0]
-				f32 ax_y;	 //m[0][1]
-				f32 ax_z;	 //m[0][2]
-				f32 ax_w;	 //m[0][3]
+				f32 ax_x;
+				f32 ax_y;
+				f32 ax_z;
+				f32 ax_w;
 
-				f32 ay_x;	 //m[1][0]
-				f32 ay_y;	 //m[1][1]
-				f32 ay_z;	 //m[1][2]
-				f32 ay_w;	 //m[1][3]
+				f32 ay_x;
+				f32 ay_y;
+				f32 ay_z;
+				f32 ay_w;
 
-				f32 az_x;	 //m[2][0]
-				f32 az_y;	 //m[2][1]
-				f32 az_z;	 //m[2][2]
-				f32 az_w;	 //m[2][3]
+				f32 az_x;
+				f32 az_y;
+				f32 az_z;
+				f32 az_w;
 
-				f32 tr_x;	 //m[3][0]
-				f32 tr_y;	 //m[3][1]
-				f32 tr_z;	 //m[3][2]
-				f32 tr_w;	 //m[3][3]
+				f32 tr_x;
+				f32 tr_y;
+				f32 tr_z;
+				f32 tr_w;
 
 				#else
 
-				//row-major
+				//óÒóDêÊ(Column-major)
+				//HLSL
+				//OpenGL
 
-				f32 ax_x;	 //m[0][0]
-				f32 ay_x;	 //m[0][1]
-				f32 az_x;	 //m[0][2]
-				f32 tr_x;	 //m[0][3]
+				f32 ax_x;
+				f32 ay_x;
+				f32 az_x;
+				f32 tr_x;
 
-				f32 ax_y;	 //m[1][0]
-				f32 ay_y;	 //m[1][1]
-				f32 az_y;	 //m[1][2]
-				f32 tr_y;	 //m[1][3]
+				f32 ax_y;
+				f32 ay_y;
+				f32 az_y;
+				f32 tr_y;
 
-				f32 ax_z;	 //m[2][0]
-				f32 ay_z;	 //m[2][1]
-				f32 az_z;	 //m[2][2]
-				f32 tr_z;	 //m[2][3]
+				f32 ax_z;
+				f32 ay_z;
+				f32 az_z;
+				f32 tr_z;
 
-				f32 ax_w;	 //m[3][0]
-				f32 ay_w;	 //m[3][1]
-				f32 az_w;	 //m[3][2]
-				f32 tr_w;	 //m[3][3]
+				f32 ax_w;
+				f32 ay_w;
+				f32 az_w;
+				f32 tr_w;
 
 				#endif
 			};

@@ -180,6 +180,14 @@ namespace NBsys{namespace NGeometry
 		*/
 		inline void Set_Inverse();
 
+		/** [作成]転置行列。
+		*/
+		inline Geometry_Matrix_44 Make_Transpose();
+
+		/** [設定]転置行列。
+		*/
+		inline void Set_Transpose();
+
 		/** [設定]Set_Lookat。
 		*/
 		inline void Set_Lookat(const Geometry_Vector3& a_position,const Geometry_Vector3& a_target,const Geometry_Vector3& a_up);

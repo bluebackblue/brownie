@@ -27,6 +27,9 @@
 /** include
 */
 #include "../bsys/d3d11/d3d11_impl.h"
+//#include "C:/Program Files (x86)/Microsoft DirectX SDK (June 2010)/Include/d3dx9math.h"
+//#pragma comment(lib,"C:/Program Files (x86)/Microsoft DirectX SDK (June 2010)/Lib/x64/d3dx9.lib")
+
 
 
 /** Blib_DebugAssert_Callback
@@ -81,10 +84,10 @@ static NBsys::NGeometry::Geometry_Matrix_44 s_projection;
 static NBsys::NGeometry::Geometry_Matrix_44 s_matrix = NBsys::NGeometry::Geometry_Matrix_44::Identity();
 
 //s_near
-static f32 s_near = 1.0f;
+static f32 s_near = 0.1f;
 
 //s_far
-static f32 s_far = 100.0f;
+static f32 s_far = 1000.0f;
 
 //s_fov_deg
 static f32 s_fov_deg = 60.0f;
@@ -101,23 +104,55 @@ static NBsys::NGeometry::Geometry_Vector3 s_camera_up(0.0f,1.0f,0.0f);
 //s_pcounter
 u64 s_pcounter = 0ULL;
 
-//
+//s_vertexbuffer
 sharedptr< ID3D11Buffer > s_vertexbuffer;
 s32 s_vertexbuffer_stride;
 s32 s_vertexbuffer_offset;
 s32 s_vertexbuffer_countofvertex;
+
+/** s_vertex
+*/
 sharedptr< ID3D11VertexShader > s_vertex_shader;
+
+/** s_pixel
+*/
 sharedptr< ID3D11InputLayout > s_vertex_layout;
 sharedptr< ID3D11PixelShader > s_pixel_shader;
 
+/** USE_FOVE
+*/
+#define USE_FOVE (1)
 
+/** s_fovehmd
+*/
+#if(USE_FOVE)
+static sharedptr< NBsys::NFovehmd::Fovehmd > s_fovehmd;
+#endif
 
+/** Draw
+*/
+void Draw(sharedptr< ID3D11Buffer >& a_constant_buffer,NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeometry::Geometry_Matrix_44& a_view_projection)
+{
+	for(s32 xx=-10;xx<10;xx++){
+		for(s32 zz=-10;zz<10;zz++){
+			s32 yy = 0;
 
-
-#include <atlbase.h>
-
-
-
+			NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = a_model_matrix * NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(xx*2.0f,yy*2.0f,zz*2.0f) * a_view_projection;
+			NBsys::NGeometry::Geometry_Matrix_44 t_view_projection_transpose = t_view_projection.Make_Transpose();
+			s_d3d11->GetImpl()->GetDeviceContext()->UpdateSubresource(a_constant_buffer.get(),0,nullptr,&t_view_projection_transpose.m[0][0],0,0);
+			s_d3d11->GetImpl()->GetDeviceContext()->VSSetShader(s_vertex_shader.get(),nullptr,0);
+			{
+				ID3D11Buffer* t_list[] = 
+				{
+					a_constant_buffer.get()
+				};
+				s_d3d11->GetImpl()->GetDeviceContext()->VSSetConstantBuffers(0,1,t_list);
+			}
+			s_d3d11->GetImpl()->GetDeviceContext()->PSSetShader(s_pixel_shader.get(),nullptr,0);
+			s_d3d11->GetImpl()->GetDeviceContext()->Draw(s_vertexbuffer_countofvertex,0);
+		}
+	}
+}
 
 
 /** Test_Main
@@ -126,12 +161,32 @@ void Test_Main()
 {
 	TAGLOG("main","DEF_TEST1");
 
-	s_window.reset(new NBsys::NWindow::Window());
-	s_window->Create(L"sample",800,600);
+	#if(USE_FOVE)
+	s_fovehmd.reset(new NBsys::NFovehmd::Fovehmd());
+	while(1){
+		s_fovehmd->ResetErrorCode();
+		s_fovehmd->ConnectStart();
+		while(s_fovehmd->ConnectUpdate() == false){
+			ThreadSleep(16);
+		}
+		if(s_fovehmd->GetErrorCode().code == ErrorCode::Success){
+			break;
+		}
+		ThreadSleep(16);
+	}
+	#endif
 
+	s_window.reset(new NBsys::NWindow::Window());
 	s_d3d11.reset(new NBsys::ND3d11::D3d11());
+
+	#if(USE_FOVE)
+	s_window->Create(L"sample",static_cast<s32>(s_fovehmd->GetSingleEyeResolution().x * 2)/3,static_cast<s32>(s_fovehmd->GetSingleEyeResolution().y)/3);
+	s_d3d11->Render_Create(s_window,static_cast<s32>(s_fovehmd->GetSingleEyeResolution().x * 2),static_cast<s32>(s_fovehmd->GetSingleEyeResolution().y));
+	#else
+	s_window->Create(L"sample",800,600);
 	s_d3d11->Render_Create(s_window,800,600);
-	
+	#endif
+
 	//モデル。
 	s_vertex = NBsys::NModel::Preset_Box< NBsys::NModel::Model_Vertex_Data_Pos3Color4 >();
 
@@ -318,12 +373,6 @@ void Test_Main()
 		}
 	}
 
-
-
-
-
-
-
 	// Main loop
 	while (true)
 	{
@@ -331,6 +380,10 @@ void Test_Main()
 		if(s_window->IsEnd() == true){
 			break;
 		}
+
+		#if(USE_FOVE)
+		s_fovehmd->Update();
+		#endif
 
 		float t_delta = 0.0f;
 		{
@@ -345,10 +398,7 @@ void Test_Main()
 
 		//更新。
 		{
-			s_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_RotationY(t_delta);
-
-
-
+			//s_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_RotationY(t_delta);
 		}
 
 		//レイアウト。
@@ -370,57 +420,121 @@ void Test_Main()
 		//プリミティブ形状。
 		s_d3d11->GetImpl()->GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-
+		s_d3d11->Render_ClearRenderTargetView(NBsys::NColor::Color_F(0.3f,0.3f,0.8f,1.0f));
+		s_d3d11->Render_ClearDepthStencilView();
 		{
-			NBsys::NGeometry::Geometry_Matrix_44 t_view_projection;
+			#if(USE_FOVE)
 			{
-				//プロジェクション。
-				s_projection.Set_PerspectiveProjectionMatrix(BSYS_OPENGL_WIDTH,BSYS_OPENGL_HEIGHT,s_fov_deg,s_near,s_far);
+				f32 t_iod = s_fovehmd->GetIOD();
 
-				//ビュー。
-				s_view.Set_ViewMatrix(s_camera_target,s_camera_position,s_camera_up);
+				//NBsys::NGeometry::Geometry_Matrix_44 t_camera_root = NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(0.0f,-1.6f,0.0f);
 
-				//モデル。
-				t_view_projection = s_matrix * s_view * s_projection;
-			}
-
-			s_d3d11->Render_ClearRenderTargetView(NBsys::NColor::Color_F(0.3f,0.3f,0.8f,1.0f));
-			s_d3d11->Render_ClearDepthStencilView();
-
-			s_d3d11->Render_ViewPort(0.0f,0.0f,800,600);
-
-			//姿勢行列更新。
-			s_d3d11->GetImpl()->GetDeviceContext()->UpdateSubresource(t_constant_buffer.get(),0,nullptr,&t_view_projection.m[0][0],0,0);
-
-			//バーテックスシェーダ。
-			s_d3d11->GetImpl()->GetDeviceContext()->VSSetShader(s_vertex_shader.get(),nullptr,0);
-
-			{
-				ID3D11Buffer* t_list[] = 
 				{
-					t_constant_buffer.get()
-				};
-				s_d3d11->GetImpl()->GetDeviceContext()->VSSetConstantBuffers(0,1,t_list);
+					NBsys::NGeometry::Geometry_Matrix_44 t_view;
+					{
+						NBsys::NGeometry::Geometry_Vector3 t_camera_position = s_fovehmd->GetCameraPosition();
+						NBsys::NGeometry::Geometry_Quaternion t_camera_quaternion = s_fovehmd->GetCameraQuaternion();
+						NBsys::NGeometry::Geometry_Matrix_44 t_camera_matrix(t_camera_quaternion);
+
+						NBsys::NGeometry::Geometry_Vector3 t_axis_zz = -t_camera_matrix.Make_AxisZ();//todo
+						NBsys::NGeometry::Geometry_Vector3 t_axis_xx = t_camera_matrix.Make_AxisX();
+						NBsys::NGeometry::Geometry_Vector3 t_axis_yy = -t_camera_matrix.Make_AxisY();//todo
+
+						t_view.ax_x = t_axis_xx.x;
+						t_view.ax_y = t_axis_yy.x;
+						t_view.ax_z = t_axis_zz.x;
+						t_view.ax_w = 0.0f;
+
+						t_view.ay_x = t_axis_xx.y;
+						t_view.ay_y = t_axis_yy.y;
+						t_view.ay_z = t_axis_zz.y;
+						t_view.ay_w = 0.0f;
+
+						t_view.az_x = t_axis_xx.z;
+						t_view.az_y = t_axis_yy.z;
+						t_view.az_z = t_axis_zz.z;
+						t_view.az_w = 0.0f;
+
+						t_view.tr_x = -t_axis_xx.Dot( t_camera_position );
+						t_view.tr_y = -t_axis_yy.Dot( t_camera_position );
+						t_view.tr_z = -t_axis_zz.Dot( t_camera_position );
+						t_view.tr_w = 1.0f;
+
+
+
+						//t_view.Set_ViewMatrix(-t_axis_zz,t_camera_position,-t_axis_yy);
+					}
+					
+
+					s_d3d11->Render_ViewPort(0.0f,0.0f,s_fovehmd->GetSingleEyeResolution().x,s_fovehmd->GetSingleEyeResolution().y);
+			
+					NBsys::NGeometry::Geometry_Matrix_44 t_mvp = t_view * s_fovehmd->GetLeftEyeProjection(s_near,s_far);
+
+					Draw(t_constant_buffer,s_matrix,t_mvp);
+				}
+
+				{
+					NBsys::NGeometry::Geometry_Matrix_44 t_view;
+					{
+						NBsys::NGeometry::Geometry_Vector3 t_camera_position = s_fovehmd->GetCameraPosition();
+						NBsys::NGeometry::Geometry_Quaternion t_camera_quaternion = s_fovehmd->GetCameraQuaternion();
+						NBsys::NGeometry::Geometry_Matrix_44 t_camera_matrix(t_camera_quaternion);
+
+						NBsys::NGeometry::Geometry_Vector3 t_axis_zz = t_camera_matrix.Make_AxisZ();
+						NBsys::NGeometry::Geometry_Vector3 t_axis_xx = t_camera_matrix.Make_AxisX();
+						NBsys::NGeometry::Geometry_Vector3 t_axis_yy = t_camera_matrix.Make_AxisY();
+
+						t_view.ax_x = t_axis_xx.x;
+						t_view.ax_y = t_axis_yy.x;
+						t_view.ax_z = t_axis_zz.x;
+						t_view.ax_w = 0.0f;
+
+						t_view.ay_x = t_axis_xx.y;
+						t_view.ay_y = t_axis_yy.y;
+						t_view.ay_z = t_axis_zz.y;
+						t_view.ay_w = 0.0f;
+
+						t_view.az_x = t_axis_xx.z;
+						t_view.az_y = t_axis_yy.z;
+						t_view.az_z = t_axis_zz.z;
+						t_view.az_w = 0.0f;
+
+						t_view.tr_x = -t_axis_xx.Dot( t_camera_position );
+						t_view.tr_y = -t_axis_yy.Dot( t_camera_position );
+						t_view.tr_z = -t_axis_zz.Dot( t_camera_position );
+						t_view.tr_w = 1.0f;
+					}
+
+					s_d3d11->Render_ViewPort(s_fovehmd->GetSingleEyeResolution().x,0.0f,s_fovehmd->GetSingleEyeResolution().x,s_fovehmd->GetSingleEyeResolution().y);
+			
+					NBsys::NGeometry::Geometry_Matrix_44 t_mvp = t_view * s_fovehmd->GetRightEyeProjection(s_near,s_far);
+
+					Draw(t_constant_buffer,s_matrix,t_mvp);
+				}
 			}
+			#else
+			{
+				s_d3d11->Render_ViewPort(0.0f,0.0f,800,600);
 
-			s_d3d11->GetImpl()->GetDeviceContext()->PSSetShader(s_pixel_shader.get(),nullptr,0);
+				s_projection.Set_PerspectiveProjectionMatrix(800,600,s_fov_deg,s_near,s_far);
 
-			s_d3d11->GetImpl()->GetDeviceContext()->Draw(s_vertexbuffer_countofvertex, 0);
+				s_view.Set_ViewMatrix(s_camera_target,s_camera_position,s_camera_up);
+				
+				Draw(t_constant_buffer,s_matrix,s_view * s_projection);
+			}
+			#endif
 		}
 
+		#if(USE_FOVE)
 		{
-			//s_fovehmd->SetTexture(s_d3d11->GetImpl()->GetBackBuffer().get());
+			s_fovehmd->SetTexture(s_d3d11->GetImpl()->GetBackBuffer().get());
 		}
+		#endif
 
 		if(s_d3d11->Render_Present() == false){
 			break;
 		}
 	}
-
-
-
-
-
 
 	s_d3d11->Render_Delete();
 	s_d3d11.reset();

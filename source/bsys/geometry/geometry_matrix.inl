@@ -695,6 +695,66 @@ namespace NBsys{namespace NGeometry
 		}
 	}
 
+	/** [作成]転置行列。
+	*/
+	inline Geometry_Matrix_44 Geometry_Matrix_44::Make_Transpose()
+	{
+		Geometry_Matrix_44 t_temp;
+		{
+			t_temp.m[0][0] = this->m[0][0];
+			t_temp.m[0][1] = this->m[1][0];
+			t_temp.m[0][2] = this->m[2][0];
+			t_temp.m[0][3] = this->m[3][0];
+
+			t_temp.m[1][0] = this->m[0][1];
+			t_temp.m[1][1] = this->m[1][1];
+			t_temp.m[1][2] = this->m[2][1];
+			t_temp.m[1][3] = this->m[3][1];
+
+			t_temp.m[2][0] = this->m[0][2];
+			t_temp.m[2][1] = this->m[1][2];
+			t_temp.m[2][2] = this->m[2][2];
+			t_temp.m[2][3] = this->m[3][2];
+
+			t_temp.m[3][0] = this->m[0][3];
+			t_temp.m[3][1] = this->m[1][3];
+			t_temp.m[3][2] = this->m[2][3];
+			t_temp.m[3][3] = this->m[3][3];
+		}
+
+		return t_temp;
+	}
+
+	/** [設定]転置行列。
+	*/
+	inline void Geometry_Matrix_44::Set_Transpose()
+	{
+		f32 t_m_0_1 = this->m[0][1];
+		f32 t_m_0_2 = this->m[0][2];
+		f32 t_m_0_3 = this->m[0][3];
+
+		f32 t_m_1_2 = this->m[1][2];
+		f32 t_m_1_3 = this->m[1][3];
+
+		f32 t_m_2_3 = this->m[2][3];
+
+		this->m[0][1] = this->m[1][0];
+		this->m[0][2] = this->m[2][0];
+		this->m[0][3] = this->m[3][0];
+
+		this->m[1][0] = t_m_0_1;
+		this->m[1][2] = this->m[2][1];
+		this->m[1][3] = this->m[3][1];
+
+		this->m[2][0] = t_m_0_2;
+		this->m[2][1] = t_m_1_2;
+		this->m[2][3] = this->m[3][2];
+
+		this->m[3][0] = t_m_0_3;
+		this->m[3][1] = t_m_1_3;
+		this->m[3][2] = t_m_2_3;
+	}
+
 	/** [設定]Set_Lookat。
 	*/
 	inline void Geometry_Matrix_44::Set_Lookat(const Geometry_Vector3& a_position,const Geometry_Vector3& a_target,const Geometry_Vector3& a_up)
@@ -878,36 +938,123 @@ namespace NBsys{namespace NGeometry
 		f32 t_aspect = a_width / a_height;
 		f32 t_fov_radian =  BLIB_MATH_DEG_TO_RAD(a_fov_deg);
 		f32 t_scale = 1.0f / Math::tanf(t_fov_radian / 2);
+		f32 t_w = t_scale/t_aspect;
+		f32 t_h = t_scale;
 
 		#if(BSYS_GEOMETRY_PERSPECTIVE_TYPE == 0x00)
 		{
-			//gluPerspective
-			this->Set(
-				t_scale/t_aspect, 0.0f,    0.0f,                                   0.0f,
-				0.0f,             t_scale, 0.0f,                                   0.0f,
-				0.0f,             0.0f,    (a_far + a_near)/(a_near - a_far),     -1.0f,
-				0.0f,             0.0f,    2 * (a_far * a_near)/(a_near - a_far),  0.0f
-			);
+			#if(BSYS_GEOMETRY_LEFTRIGHT_TYPE == 0x00)
+			{
+				//D3DXMatrixPerspectiveFovLH
+				/*
+				w       0       0               0
+				0       h       0               0
+				0       0       zf/(zf-zn)      1
+				0       0       -zn*zf/(zf-zn)  0
+				*/
+				
+				this->ax_x = t_w;
+				this->ax_y = 0.0f;
+				this->ax_z = 0.0f;
+				this->ax_w = 0.0f;
+
+				this->ay_x = 0.0f;
+				this->ay_y = t_h;
+				this->ay_z = 0.0f;
+				this->ay_w = 0.0f;
+
+				this->az_x = 0.0f;
+				this->az_y = 0.0f;
+				this->az_z = a_far / (a_far - a_near);
+				this->az_w = 1.0f;
+
+				this->tr_x = 0.0f;
+				this->tr_y = 0.0f;
+				this->tr_z = -(a_near * a_far) / (a_far - a_near);
+				this->tr_w = 0.0f;
+			}
+			#else
+			{
+				//D3DXMatrixPerspectiveFovRH 
+				/*
+				w       0       0                0
+				0       h       0                0
+				0       0       zf/(zn-zf)      -1
+				0       0       zn*zf/(zn-zf)    0
+				*/
+
+				this->ax_x = t_w;
+				this->ax_y = 0.0f;
+				this->ax_z = 0.0f;
+				this->ax_w = 0.0f;
+
+				this->ay_x = 0.0f;
+				this->ay_y = t_h;
+				this->ay_z = 0.0f;
+				this->ay_w = 0.0f;
+
+				this->az_x = 0.0f;
+				this->az_y = 0.0f;
+				this->az_z = a_far / (a_near - a_far);
+				this->az_w = -1.0f;
+
+				this->tr_x = 0.0f;
+				this->tr_y = 0.0f;
+				this->tr_z = a_near * a_far / (a_near - a_far);
+				this->tr_w = 0.0f;
+			}
+			#endif
 		}
 		#else
 		{
-			/*
-			//D3DXMatrixPerspectiveFovLH
-			this->Set(
-				t_scale/t_aspect, 0.0f,    0.0f,                                   0.0f,
-				0.0f,             t_scale, 0.0f,                                   0.0f,
-				0.0f,             0.0f,    a_far / (a_far - a_near),               1.0f,
-				0.0f,             0.0f,    -(a_near * a_far)/(a_far - a_near),     0.0f
-			);
-			*/
+			#if(BSYS_GEOMETRY_LEFTRIGHT_TYPE == 0x00)
+			{
 
-			//D3DXMatrixPerspectiveFovRH
-			this->Set(
-				t_scale/t_aspect, 0.0f,    0.0f,                                   0.0f,
-				0.0f,             t_scale, 0.0f,                                   0.0f,
-				0.0f,             0.0f,    a_far / (a_near - a_far),              -1.0f,
-				0.0f,             0.0f,    (a_near * a_far)/(a_near - a_far),      0.0f
-			);
+				this->ax_x = t_w;
+				this->ay_x = 0.0f;
+				this->az_x = 0.0f;
+				this->tr_x = 0.0f;
+
+				this->ax_y = 0.0f;
+				this->ay_y = t_h;
+				this->az_y = 0.0f;
+				this->tr_y = 0.0f;
+
+				this->ax_z = 0.0f;
+				this->ay_z = 0.0f;
+				this->az_z = (a_far + a_near) / (a_far - a_near);
+				this->tr_z = 1.0f;
+
+				this->ax_w = 0.0f;
+				this->ay_w = 0.0f;
+				this->az_w = -2 * (a_far * a_near) / (a_far - a_near);
+				this->tr_w = 0.0f;
+			}
+			#else
+			{
+				//gluPerspective
+
+				this->ax_x = t_w;
+				this->ay_x = 0.0f;
+				this->az_x = 0.0f;
+				this->tr_x = 0.0f;
+
+				this->ax_y = 0.0f;
+				this->ay_y = t_h;
+				this->az_y = 0.0f;
+				this->tr_y = 0.0f;
+
+				this->ax_z = 0.0f;
+				this->ay_z = 0.0f;
+				this->az_z = (a_far + a_near) / (a_near - a_far);
+				this->tr_z = -1.0f;
+
+				this->ax_w = 0.0f;
+				this->ay_w = 0.0f;
+				this->az_w = 2 * (a_far * a_near) / (a_near - a_far);
+				this->tr_w = 0.0f;
+			}
+			#endif
 		}
 		#endif
 	}
@@ -928,34 +1075,70 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline void Geometry_Matrix_44::Set_ViewMatrix(const Geometry_Vector3& a_camera_target,const Geometry_Vector3& a_camera_position,const Geometry_Vector3& a_camera_up)
 	{
-		static Geometry_Vector3 s_forward(0.0f,0.0f,1.0f);
-		static Geometry_Vector3 s_side(1.0f,0.0f,0.0f);
+		#if(BSYS_GEOMETRY_LEFTRIGHT_TYPE == 0x00)
+		{
+			Geometry_Vector3 t_axis_zz = a_camera_target - a_camera_position;
+			t_axis_zz.Set_Normalize();
 
-		Geometry_Vector3 t_forward = a_camera_target - a_camera_position;
-		t_forward.Set_Normalize_Safe(s_forward);
+			Geometry_Vector3 t_axis_xx = a_camera_up.Make_Cross(t_axis_zz);
+			t_axis_xx.Set_Normalize();
 
-		Geometry_Vector3 t_side = t_forward.Make_Cross(a_camera_up);
-		t_side.Set_Normalize_Safe(s_side);
+			Geometry_Vector3 t_axis_yy = t_axis_zz.Make_Cross(t_axis_xx);
 
-		Geometry_Vector3 t_up = t_side.Make_Cross(t_forward);
-		t_up.Set_Normalize();
+			this->ax_x = t_axis_xx.x;
+			this->ax_y = t_axis_yy.x;
+			this->ax_z = t_axis_zz.x;
+			this->ax_w = 0.0f;
 
-		Geometry_Matrix_44 t_move(
-			1.0f,0.0f,0.0f,0.0f,
-			0.0f,1.0f,0.0f,0.0f,
-			0.0f,0.0f,1.0f,0.0f,
-			-a_camera_position.x,-a_camera_position.y,-a_camera_position.z,1.0f
-		);
+			this->ay_x = t_axis_xx.y;
+			this->ay_y = t_axis_yy.y;
+			this->ay_z = t_axis_zz.y;
+			this->ay_w = 0.0f;
 
-		Geometry_Matrix_44 t_rotation(
-			t_side.x,t_up.x,-t_forward.x,0.0f,
-			t_side.y,t_up.y,-t_forward.y,0.0f,
-			t_side.z,t_up.z,-t_forward.z,0.0f,
-			0.0f,0.0f,0.0f,1.0f
-		);
+			this->az_x = t_axis_xx.z;
+			this->az_y = t_axis_yy.z;
+			this->az_z = t_axis_zz.z;
+			this->az_w = 0.0f;
 
-		*this = t_move;
-		*this *= t_rotation;
+			this->tr_x = -t_axis_xx.Dot( a_camera_position );
+			this->tr_y = -t_axis_yy.Dot( a_camera_position );
+			this->tr_z = -t_axis_zz.Dot( a_camera_position );
+			this->tr_w = 1.0f;
+		}
+		#else
+		{
+			Geometry_Vector3 t_axis_zz = a_camera_position - a_camera_target;
+			t_axis_zz.Set_Normalize();
+
+			Geometry_Vector3 t_axis_xx = a_camera_up.Make_Cross(t_axis_zz);
+			t_axis_xx.Set_Normalize();
+
+			Geometry_Vector3 t_axis_yy = t_axis_zz.Make_Cross(t_axis_xx);
+
+			this->Set(
+
+				t_axis_xx.x,
+				t_axis_yy.x,
+				t_axis_zz.x,
+				0.0f,
+
+				t_axis_xx.y,
+				t_axis_yy.y,
+				t_axis_zz.y,
+				0.0f,
+
+				t_axis_xx.z,
+				t_axis_yy.z,
+				t_axis_zz.z,
+				0.0f,
+
+				-t_axis_xx.Dot( a_camera_position ),
+				-t_axis_yy.Dot( a_camera_position ),
+				-t_axis_zz.Dot( a_camera_position ),
+				1.0f
+			);
+		}
+		#endif
 	}
 
 	/** [設定]ビューポート、

@@ -166,7 +166,7 @@ namespace NBsys{namespace NFovehmd
 		}
 
 		//camera_position
-		this->camera_position = NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(this->pose.position.x,this->pose.position.y,this->pose.position.z);
+		this->camera_position.Set(this->pose.position.x,this->pose.position.y,this->pose.position.z);
 
 		//camera_quaternion
 		this->camera_quaternion = NBsys::NGeometry::Geometry_Quaternion(pose.orientation.x,pose.orientation.y,pose.orientation.z,pose.orientation.w);
@@ -174,58 +174,56 @@ namespace NBsys{namespace NFovehmd
 
 	/** GetLeftEyeProjection
 	*/
-	NBsys::NGeometry::Geometry_Matrix_44 Fovehmd_Impl::GetLeftEyeProjection()
+	NBsys::NGeometry::Geometry_Matrix_44 Fovehmd_Impl::GetLeftEyeProjection(f32 a_near,f32 a_far)
 	{
-		Fove::SFVR_Matrix44 t_projection = this->headset->GetProjectionMatrixLH(Fove::EFVR_Eye::Left,0.01f,1000.0f);
+		Fove::SFVR_Matrix44 t_projection = this->headset->GetProjectionMatrixLH(Fove::EFVR_Eye::Left,a_near,a_far);
 
-		NBsys::NGeometry::Geometry_Matrix_44 t_transpose;
+		NBsys::NGeometry::Geometry_Matrix_44 t_matrix;
+		t_matrix.m_11 = t_projection.mat[0][0];
+		t_matrix.m_12 = t_projection.mat[0][1];
+		t_matrix.m_13 = t_projection.mat[0][2];
+		t_matrix.m_14 = t_projection.mat[0][3];
+		t_matrix.m_21 = t_projection.mat[1][0];
+		t_matrix.m_22 = t_projection.mat[1][1];
+		t_matrix.m_23 = t_projection.mat[1][2];
+		t_matrix.m_24 = t_projection.mat[1][3];
+		t_matrix.m_31 = t_projection.mat[2][0];
+		t_matrix.m_32 = t_projection.mat[2][1];
+		t_matrix.m_33 = t_projection.mat[2][2];
+		t_matrix.m_34 = t_projection.mat[2][3];
+		t_matrix.m_41 = t_projection.mat[3][0];
+		t_matrix.m_42 = t_projection.mat[3][1];
+		t_matrix.m_43 = t_projection.mat[3][2];
+		t_matrix.m_44 = t_projection.mat[3][3];
 
-		t_transpose.m_11 = t_projection.mat[0][0];
-		t_transpose.m_12 = t_projection.mat[1][0];
-		t_transpose.m_13 = t_projection.mat[2][0];
-		t_transpose.m_14 = t_projection.mat[3][0];
-		t_transpose.m_21 = t_projection.mat[0][1];
-		t_transpose.m_22 = t_projection.mat[1][1];
-		t_transpose.m_23 = t_projection.mat[2][1];
-		t_transpose.m_24 = t_projection.mat[3][1];
-		t_transpose.m_31 = t_projection.mat[0][2];
-		t_transpose.m_32 = t_projection.mat[1][2];
-		t_transpose.m_33 = t_projection.mat[2][2];
-		t_transpose.m_34 = t_projection.mat[3][2];
-		t_transpose.m_41 = t_projection.mat[0][3];
-		t_transpose.m_42 = t_projection.mat[1][3];
-		t_transpose.m_43 = t_projection.mat[2][3];
-		t_transpose.m_44 = t_projection.mat[3][3];
-
-		return t_transpose;
+		return t_matrix;
 	}
 
 	/** GetRightEyeProjection
 	*/
-	NBsys::NGeometry::Geometry_Matrix_44 Fovehmd_Impl::GetRightEyeProjection()
+	NBsys::NGeometry::Geometry_Matrix_44 Fovehmd_Impl::GetRightEyeProjection(f32 a_near,f32 a_far)
 	{
-		Fove::SFVR_Matrix44 t_projection = this->headset->GetProjectionMatrixLH(Fove::EFVR_Eye::Right,0.01f,1000.0f);
+		Fove::SFVR_Matrix44 t_projection = this->headset->GetProjectionMatrixLH(Fove::EFVR_Eye::Right,a_near,a_far);
 
-		NBsys::NGeometry::Geometry_Matrix_44 t_transpose;
+		NBsys::NGeometry::Geometry_Matrix_44 t_matrix;
+		t_matrix.m_11 = t_projection.mat[0][0];
+		t_matrix.m_12 = t_projection.mat[0][1];
+		t_matrix.m_13 = t_projection.mat[0][2];
+		t_matrix.m_14 = t_projection.mat[0][3];
+		t_matrix.m_21 = t_projection.mat[1][0];
+		t_matrix.m_22 = t_projection.mat[1][1];
+		t_matrix.m_23 = t_projection.mat[1][2];
+		t_matrix.m_24 = t_projection.mat[1][3];
+		t_matrix.m_31 = t_projection.mat[2][0];
+		t_matrix.m_32 = t_projection.mat[2][1];
+		t_matrix.m_33 = t_projection.mat[2][2];
+		t_matrix.m_34 = t_projection.mat[2][3];
+		t_matrix.m_41 = t_projection.mat[3][0];
+		t_matrix.m_42 = t_projection.mat[3][1];
+		t_matrix.m_43 = t_projection.mat[3][2];
+		t_matrix.m_44 = t_projection.mat[3][3];
 
-		t_transpose.m_11 = t_projection.mat[0][0];
-		t_transpose.m_12 = t_projection.mat[1][0];
-		t_transpose.m_13 = t_projection.mat[2][0];
-		t_transpose.m_14 = t_projection.mat[3][0];
-		t_transpose.m_21 = t_projection.mat[0][1];
-		t_transpose.m_22 = t_projection.mat[1][1];
-		t_transpose.m_23 = t_projection.mat[2][1];
-		t_transpose.m_24 = t_projection.mat[3][1];
-		t_transpose.m_31 = t_projection.mat[0][2];
-		t_transpose.m_32 = t_projection.mat[1][2];
-		t_transpose.m_33 = t_projection.mat[2][2];
-		t_transpose.m_34 = t_projection.mat[3][2];
-		t_transpose.m_41 = t_projection.mat[0][3];
-		t_transpose.m_42 = t_projection.mat[1][3];
-		t_transpose.m_43 = t_projection.mat[2][3];
-		t_transpose.m_44 = t_projection.mat[3][3];
-
-		return t_transpose;
+		return t_matrix;
 	}
 
 	/** GetIOD
@@ -267,7 +265,7 @@ namespace NBsys{namespace NFovehmd
 
 	/** GetCameraPosition
 	*/
-	NBsys::NGeometry::Geometry_Matrix_44& Fovehmd_Impl::GetCameraPosition()
+	NBsys::NGeometry::Geometry_Vector3& Fovehmd_Impl::GetCameraPosition()
 	{
 		return this->camera_position;
 	}

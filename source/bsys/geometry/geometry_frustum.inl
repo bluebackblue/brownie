@@ -75,11 +75,13 @@ namespace NBsys{namespace NGeometry
 		//near
 		#if(BSYS_GEOMETRY_PERSPECTIVE_TYPE == 0x00)
 		{
-			this->plane[4].SetABCD(t_matrix.ax_w + t_matrix.ax_z,t_matrix.ay_w + t_matrix.ay_z,t_matrix.az_w + t_matrix.az_z,- t_matrix.tr_w - t_matrix.tr_z);
+			//directx
+			this->plane[4].SetABCD(t_matrix.ax_z,t_matrix.ay_z,t_matrix.az_z,-t_matrix.tr_z);
 		}
 		#else
 		{
-			this->plane[4].SetABCD(t_matrix.ax_z,t_matrix.ay_z,t_matrix.az_z,-t_matrix.tr_z);
+			//opengl
+			this->plane[4].SetABCD(t_matrix.ax_w + t_matrix.ax_z,t_matrix.ay_w + t_matrix.ay_z,t_matrix.az_w + t_matrix.az_z,- t_matrix.tr_w - t_matrix.tr_z);
 		}
 		#endif
 
