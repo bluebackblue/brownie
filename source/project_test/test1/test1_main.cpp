@@ -154,6 +154,33 @@ void Draw(sharedptr< ID3D11Buffer >& a_constant_buffer,NBsys::NGeometry::Geometr
 	}
 }
 
+/** Draw1
+*/
+void Draw1(sharedptr< ID3D11Buffer >& a_constant_buffer,NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeometry::Geometry_Matrix_44& a_view_projection)
+{
+	//for(s32 xx=-10;xx<10;xx++){
+		//for(s32 zz=-10;zz<10;zz++){
+			s32 xx = 0;
+			s32 zz = 0;
+			s32 yy = 0;
+
+			NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = a_model_matrix * NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(xx*2.0f,yy*2.0f,zz*2.0f) * a_view_projection;
+			NBsys::NGeometry::Geometry_Matrix_44 t_view_projection_transpose = t_view_projection.Make_Transpose();
+			s_d3d11->GetImpl()->GetDeviceContext()->UpdateSubresource(a_constant_buffer.get(),0,nullptr,&t_view_projection_transpose.m[0][0],0,0);
+			s_d3d11->GetImpl()->GetDeviceContext()->VSSetShader(s_vertex_shader.get(),nullptr,0);
+			{
+				ID3D11Buffer* t_list[] = 
+				{
+					a_constant_buffer.get()
+				};
+				s_d3d11->GetImpl()->GetDeviceContext()->VSSetConstantBuffers(0,1,t_list);
+			}
+			s_d3d11->GetImpl()->GetDeviceContext()->PSSetShader(s_pixel_shader.get(),nullptr,0);
+			s_d3d11->GetImpl()->GetDeviceContext()->Draw(s_vertexbuffer_countofvertex,0);
+		//}
+	//}
+}
+
 
 /** Test_Main
 */
@@ -423,7 +450,7 @@ void Test_Main()
 		s_d3d11->Render_ClearRenderTargetView(NBsys::NColor::Color_F(0.3f,0.3f,0.8f,1.0f));
 		s_d3d11->Render_ClearDepthStencilView();
 		{
-			#if(USE_FOVE)
+			#if(USE_FOVE && 0)
 			{
 				f32 t_iod = s_fovehmd->GetIOD();
 
@@ -459,8 +486,6 @@ void Test_Main()
 						t_view.tr_y = -t_axis_yy.Dot( t_camera_position );
 						t_view.tr_z = -t_axis_zz.Dot( t_camera_position );
 						t_view.tr_w = 1.0f;
-
-
 
 						//t_view.Set_ViewMatrix(-t_axis_zz,t_camera_position,-t_axis_yy);
 					}
@@ -514,13 +539,20 @@ void Test_Main()
 			}
 			#else
 			{
-				s_d3d11->Render_ViewPort(0.0f,0.0f,800,600);
+				s_d3d11->Render_ViewPort(0.0f,0.0f,s_fovehmd->GetSingleEyeResolution().x * 2,s_fovehmd->GetSingleEyeResolution().y);
 
-				s_projection.Set_PerspectiveProjectionMatrix(800,600,s_fov_deg,s_near,s_far);
+				s_projection.Set_PerspectiveProjectionMatrix(s_fovehmd->GetSingleEyeResolution().x * 2,s_fovehmd->GetSingleEyeResolution().y,s_fov_deg,s_near,s_far);
 
 				s_view.Set_ViewMatrix(s_camera_target,s_camera_position,s_camera_up);
 				
-				Draw(t_constant_buffer,s_matrix,s_view * s_projection);
+				NBsys::NGeometry::Geometry_Vector3 t_fovehmd_position = s_fovehmd->GetCameraPosition();
+				NBsys::NGeometry::Geometry_Quaternion t_fovehmd_quaternion = s_fovehmd->GetCameraQuaternion();
+				NBsys::NGeometry::Geometry_Matrix_44 t_fovehmd_matrix(t_fovehmd_quaternion);
+
+				NBsys::NGeometry::Geometry_Matrix_44 t_matrix = t_fovehmd_matrix;
+				t_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(t_fovehmd_position.x,t_fovehmd_position.y,t_fovehmd_position.z);
+
+				Draw1(t_constant_buffer,t_matrix,s_view * s_projection);
 			}
 			#endif
 		}
