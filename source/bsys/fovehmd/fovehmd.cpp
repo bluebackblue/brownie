@@ -102,6 +102,20 @@ namespace NBsys{namespace NFovehmd
 		return this->impl->GetRightEyeProjection(a_near,a_far);
 	}
 
+	/** GetLeftEyeTranslate
+	*/
+	NBsys::NGeometry::Geometry_Matrix_44& Fovehmd::GetLeftEyeTranslate()
+	{
+		return this->impl->GetLeftEyeTranslate();
+	}
+
+	/** GetRightEyeTranslate
+	*/
+	NBsys::NGeometry::Geometry_Matrix_44& Fovehmd::GetRightEyeTranslate()
+	{
+		return this->impl->GetRightEyeTranslate();
+	}
+
 	/** GetIOD
 	*/
 	f32 Fovehmd::GetIOD()

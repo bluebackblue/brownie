@@ -67,6 +67,22 @@ namespace NBsys{namespace NFovehmd
 		*/
 		NBsys::NGeometry::Geometry_Quaternion camera_quaternion;
 
+		/** projection_left
+		*/
+		NBsys::NGeometry::Geometry_Matrix_44 projection_left;
+
+		/** projection_right
+		*/
+		NBsys::NGeometry::Geometry_Matrix_44 projection_right;
+
+		/** translate_left
+		*/
+		NBsys::NGeometry::Geometry_Matrix_44 translate_left;
+
+		/** translate_right
+		*/
+		NBsys::NGeometry::Geometry_Matrix_44 translate_right;
+
 	public:
 		/** ResetErrorCode
 		*/
@@ -99,6 +115,14 @@ namespace NBsys{namespace NFovehmd
 		/** GetRightEyeProjection
 		*/
 		NBsys::NGeometry::Geometry_Matrix_44 GetRightEyeProjection(f32 a_near,f32 a_far);
+
+		/** GetLeftEyeTranslate
+		*/
+		NBsys::NGeometry::Geometry_Matrix_44& GetLeftEyeTranslate();
+
+		/** GetRightEyeTranslate
+		*/
+		NBsys::NGeometry::Geometry_Matrix_44& GetRightEyeTranslate();
 
 		/** GetIOD
 		*/

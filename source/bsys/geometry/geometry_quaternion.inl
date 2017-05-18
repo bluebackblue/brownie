@@ -131,6 +131,29 @@ namespace NBsys{namespace NGeometry
 		this->z *= t_s;
 		this->w *= t_s;
 	}
+
+	/** Set_Conjugate
+	*/
+	inline void Geometry_Quaternion::Set_Conjugate()
+	{
+		this->x *= -1;
+		this->y *= -1;
+		this->z *= -1;
+	}
+
+	/** Make_Conjugate
+	*/
+	inline Geometry_Quaternion Geometry_Quaternion::Make_Conjugate()
+	{
+		Geometry_Quaternion t_temp;
+		{
+			t_temp.x = -this->x;
+			t_temp.y = -this->y;
+			t_temp.z = -this->z;
+			t_temp.w = this->w;
+		}
+		return t_temp;
+	}
 }}
 #endif
 

@@ -99,8 +99,8 @@ namespace NBsys{namespace NModel
 			SetUv< T >(t_vertex,0.0f,0.0f);
 
 			{
-				//z:red.
-				SetColor< T >(t_vertex,1.0f,0.0f,0.0f,1.0f);
+				//z:blue.
+				SetColor< T >(t_vertex,0.0f,0.0f,1.0f,1.0f);
 
 				SetPos< T >(t_vertex,-0.5f,-0.5f, 0.5f);//0
 				t_box->AddVertex(t_vertex);
@@ -134,8 +134,8 @@ namespace NBsys{namespace NModel
 				t_box->AddVertex(t_vertex);
 			}
 			{
-				//x:blue.
-				SetColor< T >(t_vertex,0.0f,0.0f,1.0f,1.0f);
+				//x:red.
+				SetColor< T >(t_vertex,1.0f,0.0f,0.0f,1.0f);
 
 				SetPos< T >(t_vertex, 0.5f,-0.5f, 0.5f);//1
 				t_box->AddVertex(t_vertex);

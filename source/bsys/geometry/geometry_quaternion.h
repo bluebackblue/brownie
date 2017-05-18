@@ -61,6 +61,14 @@ namespace NBsys{namespace NGeometry
 		/** Set_Normalize
 		*/
 		inline void Set_Normalize();
+
+		/** Set_Conjugate
+		*/
+		inline void Set_Conjugate();
+
+		/** Make_Conjugate
+		*/
+		inline Geometry_Quaternion Make_Conjugate();
 	};
 }}
 #endif
