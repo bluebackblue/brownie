@@ -27,9 +27,6 @@
 /** include
 */
 #include "../bsys/d3d11/d3d11_impl.h"
-//#include "C:/Program Files (x86)/Microsoft DirectX SDK (June 2010)/Include/d3dx9math.h"
-//#pragma comment(lib,"C:/Program Files (x86)/Microsoft DirectX SDK (June 2010)/Lib/x64/d3dx9.lib")
-
 
 
 /** Blib_DebugAssert_Callback
@@ -74,32 +71,8 @@ static sharedptr< NBsys::NModel::Model_Vertex< NBsys::NModel::Model_Vertex_Data_
 */
 static NBsys::NColor::Color_F s_clear_color(0.0f,0.5f,0.5f,1.0f);
 
-//s_view
-static NBsys::NGeometry::Geometry_Matrix_44 s_view;
-
-//s_projection
-static NBsys::NGeometry::Geometry_Matrix_44 s_projection;
-
 //s_matrix
 static NBsys::NGeometry::Geometry_Matrix_44 s_matrix = NBsys::NGeometry::Geometry_Matrix_44::Identity();
-
-//s_near
-static f32 s_near = 0.1f;
-
-//s_far
-static f32 s_far = 1000.0f;
-
-//s_fov_deg
-static f32 s_fov_deg = 60.0f;
-
-//s_camera_target
-static NBsys::NGeometry::Geometry_Vector3 s_camera_target(0.0f,0.0f,0.0f);
-
-//s_camera_position
-static NBsys::NGeometry::Geometry_Vector3 s_camera_position(1.0f,1.0f,-5.0f);
-
-//s_camera_up
-static NBsys::NGeometry::Geometry_Vector3 s_camera_up(0.0f,1.0f,0.0f);
 
 //s_pcounter
 u64 s_pcounter = 0ULL;
@@ -110,13 +83,16 @@ s32 s_vertexbuffer_stride;
 s32 s_vertexbuffer_offset;
 s32 s_vertexbuffer_countofvertex;
 
-/** s_vertex
+/** s_vertex_shader
 */
 sharedptr< ID3D11VertexShader > s_vertex_shader;
 
-/** s_pixel
+/** s_vertex_layout
 */
 sharedptr< ID3D11InputLayout > s_vertex_layout;
+
+/** s_pixel_shader
+*/
 sharedptr< ID3D11PixelShader > s_pixel_shader;
 
 /** USE_FOVE
@@ -448,12 +424,8 @@ void Test_Main()
 		s_d3d11->Render_ClearRenderTargetView(NBsys::NColor::Color_F(0.3f,0.3f,0.8f,1.0f));
 		s_d3d11->Render_ClearDepthStencilView();
 		{
-			#if(USE_FOVE)
+			#if(0)
 			{
-				NBsys::NGeometry::Geometry_Vector3 t_fovehmd_position = s_fovehmd->GetCameraPosition();
-				NBsys::NGeometry::Geometry_Quaternion t_fovehmd_quaternion = s_fovehmd->GetCameraQuaternion();
-				NBsys::NGeometry::Geometry_Matrix_44 t_fovehmd_matrix(t_fovehmd_quaternion);
-
 				{
 					s_d3d11->Render_ViewPort(0.0f,0.0f,s_fovehmd->GetSingleEyeResolution().x,s_fovehmd->GetSingleEyeResolution().y);
 
@@ -473,8 +445,30 @@ void Test_Main()
 			#else
 			{
 				s_d3d11->Render_ViewPort(0.0f,0.0f,s_fovehmd->GetSingleEyeResolution().x * 2,s_fovehmd->GetSingleEyeResolution().y);
-				s_projection.Set_PerspectiveProjectionMatrix(s_fovehmd->GetSingleEyeResolution().x * 2,s_fovehmd->GetSingleEyeResolution().y,s_fov_deg,s_near,s_far);
-				s_view.Set_ViewMatrix(s_camera_target,s_camera_position,s_camera_up);
+
+				//t_camera_target
+				NBsys::NGeometry::Geometry_Vector3 t_camera_target(0.0f,0.0f,0.0f);
+
+				//t_camera_position
+				NBsys::NGeometry::Geometry_Vector3 t_camera_position(1.0f,1.0f,-5.0f);
+
+				//t_camera_up
+				NBsys::NGeometry::Geometry_Vector3 t_camera_up(0.0f,1.0f,0.0f);
+
+				//s_near
+				f32 t_near = 0.1f;
+
+				//s_far
+				f32 t_far = 1000.0f;
+
+				//s_fov_deg
+				f32 t_fov_deg = 60.0f;
+
+				NBsys::NGeometry::Geometry_Matrix_44 t_projection;
+				t_projection.Set_PerspectiveProjectionMatrix(s_fovehmd->GetSingleEyeResolution().x * 2,s_fovehmd->GetSingleEyeResolution().y,t_fov_deg,t_near,t_far);
+
+				NBsys::NGeometry::Geometry_Matrix_44 t_view;
+				t_view.Set_ViewMatrix(t_camera_target,t_camera_position,t_camera_up);
 				
 				{
 					NBsys::NGeometry::Geometry_Vector3 t_fovehmd_position = s_fovehmd->GetCameraPosition();
@@ -485,14 +479,14 @@ void Test_Main()
 						NBsys::NGeometry::Geometry_Matrix_44 t_matrix = t_fovehmd_matrix;
 						t_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(t_fovehmd_position.x,t_fovehmd_position.y,t_fovehmd_position.z);
 						t_matrix *= s_fovehmd->GetLeftEyeTranslate();
-						Draw1(t_constant_buffer,t_matrix,s_view*s_projection);
+						Draw1(t_constant_buffer,t_matrix,t_view*t_projection);
 					}
 
 					{
 						NBsys::NGeometry::Geometry_Matrix_44 t_matrix = t_fovehmd_matrix;
 						t_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(t_fovehmd_position.x,t_fovehmd_position.y,t_fovehmd_position.z);
 						t_matrix *= s_fovehmd->GetRightEyeTranslate();
-						Draw1(t_constant_buffer,t_matrix,s_view*s_projection);
+						Draw1(t_constant_buffer,t_matrix,t_view*t_projection);
 					}
 				}
 			}

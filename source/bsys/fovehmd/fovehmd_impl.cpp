@@ -271,16 +271,13 @@ namespace NBsys{namespace NFovehmd
 			t_camera_matrix *= this->eye_translate_left;
 		}
 
-		NBsys::NGeometry::Geometry_Matrix_44 t_view_projection;
-		{
-			t_view_projection.Set_ViewMatrix(t_camera_matrix.Make_Translate_Vector() + t_camera_matrix.Make_AxisZ(),t_camera_matrix.Make_Translate_Vector(),t_camera_matrix.Make_AxisY());
-			t_view_projection *= this->GetLeftProjection(a_near,a_far);
-		}
+		t_camera_matrix.Set_Inverse();
+		t_camera_matrix *= this->GetLeftProjection(a_near,a_far);
 
-		return t_view_projection;
+		return t_camera_matrix;
 	}
 
-	/** GetRightEyeTranslate
+	/** GetRightViewProjection
 	*/
 	NBsys::NGeometry::Geometry_Matrix_44& Fovehmd_Impl::GetRightViewProjection(f32 a_near,f32 a_far,float a_camera_y)
 	{
@@ -290,15 +287,11 @@ namespace NBsys{namespace NFovehmd
 			t_camera_matrix *= this->eye_translate_right;
 		}
 
-		NBsys::NGeometry::Geometry_Matrix_44 t_view_projection;
-		{
-			t_view_projection.Set_ViewMatrix(t_camera_matrix.Make_Translate_Vector() + t_camera_matrix.Make_AxisZ(),t_camera_matrix.Make_Translate_Vector(),t_camera_matrix.Make_AxisY());
-			t_view_projection *= this->GetRightProjection(a_near,a_far);
-		}
+		t_camera_matrix.Set_Inverse();
+		t_camera_matrix *= this->GetRightProjection(a_near,a_far);
 
-		return t_view_projection;
+		return t_camera_matrix;
 	}
-
 
 }}
 #endif
