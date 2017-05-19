@@ -76,13 +76,13 @@ namespace NBsys{namespace NFovehmd
  		*/
 		void Update();
 
-		/** GetLeftEyeProjection
+		/** GetLeftProjection
 		*/
-		NBsys::NGeometry::Geometry_Matrix_44 GetLeftEyeProjection(f32 a_near,f32 a_far);
+		NBsys::NGeometry::Geometry_Matrix_44 GetLeftProjection(f32 a_near,f32 a_far);
 
-		/** GetRightEyeProjection
+		/** GetRightProjection
 		*/
-		NBsys::NGeometry::Geometry_Matrix_44 GetRightEyeProjection(f32 a_near,f32 a_far);
+		NBsys::NGeometry::Geometry_Matrix_44 GetRightProjection(f32 a_near,f32 a_far);
 
 		/** GetLeftEyeTranslate
 		*/
@@ -107,6 +107,14 @@ namespace NBsys{namespace NFovehmd
 		/** GetCameraQuaternion
 		*/
 		NBsys::NGeometry::Geometry_Quaternion& GetCameraQuaternion();
+
+		/** GetLeftViewProjection
+		*/
+		NBsys::NGeometry::Geometry_Matrix_44& GetLeftViewProjection(f32 a_near,f32 a_far,float a_camera_y);
+
+		/** GetRightEyeTranslate
+		*/
+		NBsys::NGeometry::Geometry_Matrix_44& GetRightViewProjection(f32 a_near,f32 a_far,float a_camera_y);
 
 	};
 }}

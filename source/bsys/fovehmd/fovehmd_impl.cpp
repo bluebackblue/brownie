@@ -170,44 +170,12 @@ namespace NBsys{namespace NFovehmd
 
 		//camera_quaternion
 		this->camera_quaternion = NBsys::NGeometry::Geometry_Quaternion(-pose.orientation.x,-pose.orientation.y,-pose.orientation.z,pose.orientation.w);
+		this->camera_matrix = NBsys::NGeometry::Geometry_Matrix_44(this->camera_quaternion);
 
+		//translate
 		f32 t_iod = this->GetIOD();
-
-		this->translate_left = NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(-t_iod,0,0);
-		this->translate_right = NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(t_iod,0,0);
-
-	}
-
-	/** GetLeftEyeProjection
-	*/
-	NBsys::NGeometry::Geometry_Matrix_44 Fovehmd_Impl::GetLeftEyeProjection(f32 a_near,f32 a_far)
-	{
-		Fove::SFVR_Matrix44 t_projection = this->headset->GetProjectionMatrixLH(Fove::EFVR_Eye::Left,a_near,a_far);
-
-		return NBsys::NGeometry::Geometry_Matrix_44(&t_projection.mat[0][0]);
-	}
-
-	/** GetRightEyeProjection
-	*/
-	NBsys::NGeometry::Geometry_Matrix_44 Fovehmd_Impl::GetRightEyeProjection(f32 a_near,f32 a_far)
-	{
-		Fove::SFVR_Matrix44 t_projection = this->headset->GetProjectionMatrixLH(Fove::EFVR_Eye::Right,a_near,a_far);
-
-		return NBsys::NGeometry::Geometry_Matrix_44(&t_projection.mat[0][0]);
-	}
-
-	/** GetLeftEyeTranslate
-	*/
-	NBsys::NGeometry::Geometry_Matrix_44& Fovehmd_Impl::GetLeftEyeTranslate()
-	{
-		return this->translate_left;
-	}
-
-	/** GetRightEyeTranslate
-	*/
-	NBsys::NGeometry::Geometry_Matrix_44& Fovehmd_Impl::GetRightEyeTranslate()
-	{
-		return this->translate_right;
+		this->eye_translate_left = NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(-t_iod,0,0);
+		this->eye_translate_right = NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(t_iod,0,0);
 	}
 
 	/** GetIOD
@@ -260,6 +228,77 @@ namespace NBsys{namespace NFovehmd
 	{
 		return this->camera_quaternion;
 	}
+
+	/** GetLeftProjection
+	*/
+	NBsys::NGeometry::Geometry_Matrix_44 Fovehmd_Impl::GetLeftProjection(f32 a_near,f32 a_far)
+	{
+		Fove::SFVR_Matrix44 t_projection = this->headset->GetProjectionMatrixLH(Fove::EFVR_Eye::Left,a_near,a_far);
+
+		return NBsys::NGeometry::Geometry_Matrix_44(&t_projection.mat[0][0]);
+	}
+
+	/** GetRightProjection
+	*/
+	NBsys::NGeometry::Geometry_Matrix_44 Fovehmd_Impl::GetRightProjection(f32 a_near,f32 a_far)
+	{
+		Fove::SFVR_Matrix44 t_projection = this->headset->GetProjectionMatrixLH(Fove::EFVR_Eye::Right,a_near,a_far);
+
+		return NBsys::NGeometry::Geometry_Matrix_44(&t_projection.mat[0][0]);
+	}
+
+	/** GetLeftEyeTranslate
+	*/
+	NBsys::NGeometry::Geometry_Matrix_44& Fovehmd_Impl::GetLeftEyeTranslate()
+	{
+		return this->eye_translate_left;
+	}
+
+	/** GetRightEyeTranslate
+	*/
+	NBsys::NGeometry::Geometry_Matrix_44& Fovehmd_Impl::GetRightEyeTranslate()
+	{
+		return this->eye_translate_right;
+	}
+
+	/** GetLeftViewProjection
+	*/
+	NBsys::NGeometry::Geometry_Matrix_44& Fovehmd_Impl::GetLeftViewProjection(f32 a_near,f32 a_far,float a_camera_y)
+	{
+		NBsys::NGeometry::Geometry_Matrix_44 t_camera_matrix = this->camera_matrix;
+		{
+			t_camera_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(this->camera_position.x,this->camera_position.y + a_camera_y,this->camera_position.z);
+			t_camera_matrix *= this->eye_translate_left;
+		}
+
+		NBsys::NGeometry::Geometry_Matrix_44 t_view_projection;
+		{
+			t_view_projection.Set_ViewMatrix(t_camera_matrix.Make_Translate_Vector() + t_camera_matrix.Make_AxisZ(),t_camera_matrix.Make_Translate_Vector(),t_camera_matrix.Make_AxisY());
+			t_view_projection *= this->GetLeftProjection(a_near,a_far);
+		}
+
+		return t_view_projection;
+	}
+
+	/** GetRightEyeTranslate
+	*/
+	NBsys::NGeometry::Geometry_Matrix_44& Fovehmd_Impl::GetRightViewProjection(f32 a_near,f32 a_far,float a_camera_y)
+	{
+		NBsys::NGeometry::Geometry_Matrix_44 t_camera_matrix = this->camera_matrix;
+		{
+			t_camera_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(this->camera_position.x,this->camera_position.y + a_camera_y,this->camera_position.z);
+			t_camera_matrix *= this->eye_translate_right;
+		}
+
+		NBsys::NGeometry::Geometry_Matrix_44 t_view_projection;
+		{
+			t_view_projection.Set_ViewMatrix(t_camera_matrix.Make_Translate_Vector() + t_camera_matrix.Make_AxisZ(),t_camera_matrix.Make_Translate_Vector(),t_camera_matrix.Make_AxisY());
+			t_view_projection *= this->GetRightProjection(a_near,a_far);
+		}
+
+		return t_view_projection;
+	}
+
 
 }}
 #endif

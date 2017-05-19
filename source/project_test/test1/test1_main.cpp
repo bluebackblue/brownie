@@ -455,29 +455,19 @@ void Test_Main()
 				NBsys::NGeometry::Geometry_Matrix_44 t_fovehmd_matrix(t_fovehmd_quaternion);
 
 				{
-					NBsys::NGeometry::Geometry_Matrix_44 t_camera_matrix = t_fovehmd_matrix;
-					t_camera_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(t_fovehmd_position.x,t_fovehmd_position.y + 2,t_fovehmd_position.z);
-					t_camera_matrix *= s_fovehmd->GetLeftEyeTranslate();
-
-					NBsys::NGeometry::Geometry_Matrix_44 t_view;
-					t_view.Set_ViewMatrix(t_camera_matrix.Make_Translate_Vector() + t_camera_matrix.Make_AxisZ(),t_camera_matrix.Make_Translate_Vector(),t_camera_matrix.Make_AxisY());
-
 					s_d3d11->Render_ViewPort(0.0f,0.0f,s_fovehmd->GetSingleEyeResolution().x,s_fovehmd->GetSingleEyeResolution().y);
-					NBsys::NGeometry::Geometry_Matrix_44 t_mvp = t_view * s_fovehmd->GetLeftEyeProjection(s_near,s_far);
-					Draw(t_constant_buffer,s_matrix,t_mvp);
+
+					NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = s_fovehmd->GetLeftViewProjection(s_near,s_far,2.0f);
+
+					Draw(t_constant_buffer,s_matrix,t_view_projection);
 				}
 
 				{
-					NBsys::NGeometry::Geometry_Matrix_44 t_camera_matrix = t_fovehmd_matrix;
-					t_camera_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(t_fovehmd_position.x,t_fovehmd_position.y + 2,t_fovehmd_position.z);
-					t_camera_matrix *= s_fovehmd->GetRightEyeTranslate();
-
-					NBsys::NGeometry::Geometry_Matrix_44 t_view;
-					t_view.Set_ViewMatrix(t_camera_matrix.Make_Translate_Vector() + t_camera_matrix.Make_AxisZ(),t_camera_matrix.Make_Translate_Vector(),t_camera_matrix.Make_AxisY());
-
 					s_d3d11->Render_ViewPort(s_fovehmd->GetSingleEyeResolution().x,0.0f,s_fovehmd->GetSingleEyeResolution().x,s_fovehmd->GetSingleEyeResolution().y);
-					NBsys::NGeometry::Geometry_Matrix_44 t_mvp = t_view * s_fovehmd->GetRightEyeProjection(s_near,s_far);
-					Draw(t_constant_buffer,s_matrix,t_mvp);
+
+					NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = s_fovehmd->GetRightViewProjection(s_near,s_far,2.0f);
+
+					Draw(t_constant_buffer,s_matrix,t_view_projection);
 				}
 			}
 			#else

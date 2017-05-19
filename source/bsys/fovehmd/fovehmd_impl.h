@@ -67,6 +67,10 @@ namespace NBsys{namespace NFovehmd
 		*/
 		NBsys::NGeometry::Geometry_Quaternion camera_quaternion;
 
+		/** camera_matrix
+		*/
+		NBsys::NGeometry::Geometry_Matrix_44 camera_matrix;
+
 		/** projection_left
 		*/
 		NBsys::NGeometry::Geometry_Matrix_44 projection_left;
@@ -77,11 +81,11 @@ namespace NBsys{namespace NFovehmd
 
 		/** translate_left
 		*/
-		NBsys::NGeometry::Geometry_Matrix_44 translate_left;
+		NBsys::NGeometry::Geometry_Matrix_44 eye_translate_left;
 
 		/** translate_right
 		*/
-		NBsys::NGeometry::Geometry_Matrix_44 translate_right;
+		NBsys::NGeometry::Geometry_Matrix_44 eye_translate_right;
 
 	public:
 		/** ResetErrorCode
@@ -108,22 +112,6 @@ namespace NBsys{namespace NFovehmd
  		*/
 		void Update();
 
-		/** GetLeftEyeProjection
-		*/
-		NBsys::NGeometry::Geometry_Matrix_44 GetLeftEyeProjection(f32 a_near,f32 a_far);
-
-		/** GetRightEyeProjection
-		*/
-		NBsys::NGeometry::Geometry_Matrix_44 GetRightEyeProjection(f32 a_near,f32 a_far);
-
-		/** GetLeftEyeTranslate
-		*/
-		NBsys::NGeometry::Geometry_Matrix_44& GetLeftEyeTranslate();
-
-		/** GetRightEyeTranslate
-		*/
-		NBsys::NGeometry::Geometry_Matrix_44& GetRightEyeTranslate();
-
 		/** GetIOD
 		*/
 		f32 GetIOD();
@@ -139,6 +127,30 @@ namespace NBsys{namespace NFovehmd
 		/** GetCameraQuaternion
 		*/
 		NBsys::NGeometry::Geometry_Quaternion& GetCameraQuaternion();
+
+		/** GetLeftProjection
+		*/
+		NBsys::NGeometry::Geometry_Matrix_44 GetLeftProjection(f32 a_near,f32 a_far);
+
+		/** GetRightProjection
+		*/
+		NBsys::NGeometry::Geometry_Matrix_44 GetRightProjection(f32 a_near,f32 a_far);
+
+		/** GetLeftEyeTranslate
+		*/
+		NBsys::NGeometry::Geometry_Matrix_44& GetLeftEyeTranslate();
+
+		/** GetRightEyeTranslate
+		*/
+		NBsys::NGeometry::Geometry_Matrix_44& GetRightEyeTranslate();
+
+		/** GetLeftViewProjection
+		*/
+		NBsys::NGeometry::Geometry_Matrix_44& GetLeftViewProjection(f32 a_near,f32 a_far,float a_camera_y);
+
+		/** GetRightEyeTranslate
+		*/
+		NBsys::NGeometry::Geometry_Matrix_44& GetRightViewProjection(f32 a_near,f32 a_far,float a_camera_y);
 
 	};
 }}
