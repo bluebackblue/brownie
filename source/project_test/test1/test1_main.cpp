@@ -105,6 +105,8 @@ sharedptr< ID3D11PixelShader > s_pixel_shader;
 static sharedptr< NBsys::NFovehmd::Fovehmd > s_fovehmd;
 #endif
 
+static int s_step = 0;
+
 /** Draw
 */
 void Draw(sharedptr< ID3D11Buffer >& a_constant_buffer,NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeometry::Geometry_Matrix_44& a_view_projection)
@@ -189,190 +191,13 @@ void Test_Main()
 	//モデル。
 	s_vertex = NBsys::NModel::Preset_Box< NBsys::NModel::Model_Vertex_Data_Pos3Color4 >();
 
-	//バーテックスバッファ。
-	{
-		s_vertexbuffer_stride = s_vertex->GetVertexStrideByte();
-		s_vertexbuffer_offset = s_vertex->GetVertexOffset(0);
-		s_vertexbuffer_countofvertex = s_vertex->GetVertexCountOf(0);
-
-		D3D11_BUFFER_DESC t_desc;
-		{
-			Memory::memset(&t_desc,0,sizeof(t_desc));
-			t_desc.Usage = D3D11_USAGE_DEFAULT;
-			t_desc.ByteWidth = s_vertex->GetVertexAllCountOf() * s_vertex->GetVertexStrideByte();
-			t_desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-			t_desc.CPUAccessFlags = 0;
-		}
-
-		D3D11_SUBRESOURCE_DATA t_subresource_data;
-		{
-			ZeroMemory(&t_subresource_data,sizeof(t_subresource_data));
-			t_subresource_data.pSysMem = s_vertex->GetVertexPointer();
-		}
-
-		ID3D11Buffer* t_raw;
-		HRESULT t_result = s_d3d11->GetImpl()->GetDevice()->CreateBuffer(&t_desc,&t_subresource_data,&t_raw);
-		if(t_raw != nullptr){
-			s_vertexbuffer.reset(t_raw,release_delete< ID3D11Buffer >());
-		}
-		if(FAILED(t_result)){
-			s_vertexbuffer.reset();
-		}
-	}
-
-	//バーテックス。
-	{
-		STLString t_vertex_source = 
-			"float4x4 modelView;"
-			"struct VSI {"
-				"float4 p : POSITION0;"
-				"float3 c : COLOR;"
-			"};"
-			"struct VSO {"
-				"float4 p : SV_POSITION;"
-				"float3 c : COLOR;"
-			"};"
-			"VSO VS(VSI i) {"
-				"VSO ret;"
-				"ret.p = mul(i.p, modelView);"
-				"ret.c = i.c;"
-				"return ret;"
-			"}";
-
-		sharedptr< ID3DBlob > t_blob;
-		{
-			sharedptr< ID3DBlob > t_blob_error;
-			ID3DBlob* t_raw = nullptr;
-			ID3DBlob* t_raw_error = nullptr;
-			HRESULT t_result = D3DCompile(t_vertex_source.c_str(),t_vertex_source.size(),nullptr,nullptr,nullptr,"VS","vs_4_0",D3DCOMPILE_ENABLE_STRICTNESS|D3DCOMPILE_DEBUG,0,&t_raw,&t_raw_error);
-			if(t_raw != nullptr){
-				t_blob.reset(t_raw,release_delete< ID3DBlob >());
-			}
-			if(t_raw != nullptr){
-				t_blob_error.reset(t_raw_error,release_delete< ID3DBlob >());
-			}
-			if(FAILED(t_result)){
-				t_blob.reset();
-			}
-
-			if(t_blob != nullptr){
-			}else{
-				std::string t_errorstring;
-				if(t_blob_error != nullptr){
-					t_errorstring = std::string((const char*)t_blob_error->GetBufferPointer(),t_blob_error->GetBufferSize());
-				}
-				TAGLOG("compile vertex","FAILED");
-				TAGLOG("compile vertex",t_errorstring.c_str());
-			}
-
-			t_blob_error.reset();
-		}
-
-		{
-			ID3D11VertexShader* t_raw = nullptr;
-			HRESULT t_result = s_d3d11->GetImpl()->GetDevice()->CreateVertexShader(t_blob->GetBufferPointer(),t_blob->GetBufferSize(),nullptr,&t_raw);
-			if(t_raw != nullptr){
-				s_vertex_shader.reset(t_raw,release_delete< ID3D11VertexShader >());
-			}
-			if(FAILED(t_result)){
-				s_vertex_shader.reset();
-			}
-		}
-
-		{
-			D3D11_INPUT_ELEMENT_DESC t_layout[] = {
-				{	"POSITION",		0,	DXGI_FORMAT_R32G32B32_FLOAT,		0,	0,		D3D11_INPUT_PER_VERTEX_DATA,	0},
-				{	"COLOR",	    0,	DXGI_FORMAT_R32G32B32A32_FLOAT,		0,	12,		D3D11_INPUT_PER_VERTEX_DATA,	0},
-			};
-
-			ID3D11InputLayout* t_raw = nullptr;
-			HRESULT t_result = s_d3d11->GetImpl()->GetDevice()->CreateInputLayout(t_layout,COUNTOF(t_layout),t_blob->GetBufferPointer(),t_blob->GetBufferSize(),&t_raw);
-			if(t_raw != nullptr){
-				s_vertex_layout.reset(t_raw,release_delete< ID3D11InputLayout >());
-			}
-			if(FAILED(t_result)){
-				s_vertex_layout.reset();
-			}
-		}
-	}
-	
-	//ピクセル。
-	{
-		STLString t_pixel_source = 
-			"struct VSO {"
-				"float4 p : SV_POSITION;"
-				"float3 c : COLOR;"
-			"};"
-			"float4 PS(VSO i) : SV_Target {"
-				"return float4(i.c.r, i.c.g, i.c.b, 1.0f);"
-			"}";
-
-		sharedptr< ID3DBlob > t_blob;
-		{
-			sharedptr< ID3DBlob > t_blob_error;
-			ID3DBlob* t_raw = nullptr;
-			ID3DBlob* t_raw_error = nullptr;
-			HRESULT t_result = D3DCompile(t_pixel_source.c_str(),t_pixel_source.size(),nullptr,nullptr,nullptr,"PS","ps_4_0",D3DCOMPILE_ENABLE_STRICTNESS|D3DCOMPILE_DEBUG,0,&t_raw,&t_raw_error);
-			if(t_raw != nullptr){
-				t_blob.reset(t_raw,release_delete< ID3DBlob >());
-			}
-			if(t_raw != nullptr){
-				t_blob_error.reset(t_raw_error,release_delete< ID3DBlob >());
-			}
-			if(FAILED(t_result)){
-				t_blob.reset();
-			}
-
-			if(t_blob != nullptr){
-			}else{
-				std::string t_errorstring;
-				if(t_blob_error != nullptr){
-					t_errorstring = std::string((const char*)t_blob_error->GetBufferPointer(),t_blob_error->GetBufferSize());
-				}
-				TAGLOG("compile vertex","FAILED");
-				TAGLOG("compile vertex",t_errorstring.c_str());
-			}
-
-			t_blob_error.reset();
-		}
-
-		{
-			ID3D11PixelShader* t_raw = nullptr;
-			HRESULT t_result = s_d3d11->GetImpl()->GetDevice()->CreatePixelShader(t_blob->GetBufferPointer(),t_blob->GetBufferSize(),nullptr,&t_raw);
-			if(t_raw != nullptr){
-				s_pixel_shader.reset(t_raw,release_delete< ID3D11PixelShader >());
-			}
-			if(FAILED(t_result)){
-				s_pixel_shader.reset();
-			}
-		}
-	}
-
-	//シェーダ。
-	sharedptr< ID3D11Buffer > t_constant_buffer;
-	{
-		{
-			D3D11_BUFFER_DESC t_desc;
-			{
-				Memory::memset(&t_desc,0,sizeof(t_desc));
-				t_desc.Usage = D3D11_USAGE_DEFAULT;
-				t_desc.ByteWidth = sizeof(float) * 16;
-				t_desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-				t_desc.CPUAccessFlags = 0;
-			}
-
-			ID3D11Buffer* t_raw = nullptr;
-			HRESULT t_result = s_d3d11->GetImpl()->GetDevice()->CreateBuffer(&t_desc,nullptr,&t_raw);
-			if(t_raw != nullptr){
-				t_constant_buffer.reset(t_raw,release_delete< ID3D11Buffer >());
-			}
-			if(FAILED(t_result)){
-				t_constant_buffer.reset();
-			}
-		}
-	}
-
 	s_pcounter = PerformanceCounter::GetPerformanceCounter();
+
+	sharedptr< ID3D11Buffer > t_constant_buffer;
+
+	AsyncResult< bool > t_asyncresult_vertexshader;
+
+	s32 t_vertexshader_id = -1;
 
 	// Main loop
 	while (true)
@@ -397,110 +222,320 @@ void Test_Main()
 			s_pcounter = t_pcounter_now;
 		}
 
-		//更新。
-		{
-			//s_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_RotationY(t_delta * 0.1f);
-		}
+		s_d3d11->Render_Main();
 
-		//レイアウト。
-		s_d3d11->GetImpl()->GetDeviceContext()->IASetInputLayout(s_vertex_layout.get());
+		if(s_step == 0){
 
-		//頂点バッファ。
-		{
-			ID3D11Buffer* t_list[] = {
-				s_vertexbuffer.get(),
-			};
+			t_asyncresult_vertexshader.Create(false);
+			t_vertexshader_id = s_d3d11->CreateVertexShader(t_asyncresult_vertexshader);
 
-			UINT t_stride = s_vertexbuffer_stride;
+			s_step++;
 
-			UINT t_offset = 0;
+		}else if(s_step == 1){
 
-			s_d3d11->GetImpl()->GetDeviceContext()->IASetVertexBuffers(0, 1, t_list, &t_stride, &t_offset);
-		}
+			if(t_asyncresult_vertexshader.Get() == true){
+				s_step++;
+			}
 
-		//プリミティブ形状。
-		s_d3d11->GetImpl()->GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		}else if(s_step == 2){
 
-		s_d3d11->Render_ClearRenderTargetView(NBsys::NColor::Color_F(0.3f,0.3f,0.8f,1.0f));
-		s_d3d11->Render_ClearDepthStencilView();
-		{
-			#if(0)
+			//バーテックスバッファ。
 			{
+				s_vertexbuffer_stride = s_vertex->GetVertexStrideByte();
+				s_vertexbuffer_offset = s_vertex->GetVertexOffset(0);
+				s_vertexbuffer_countofvertex = s_vertex->GetVertexCountOf(0);
+
+				D3D11_BUFFER_DESC t_desc;
 				{
-					s_d3d11->Render_ViewPort(0.0f,0.0f,s_fovehmd->GetSingleEyeResolution().x,s_fovehmd->GetSingleEyeResolution().y);
-
-					NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = s_fovehmd->GetLeftViewProjection(s_near,s_far,2.0f);
-
-					Draw(t_constant_buffer,s_matrix,t_view_projection);
+					Memory::memset(&t_desc,0,sizeof(t_desc));
+					t_desc.Usage = D3D11_USAGE_DEFAULT;
+					t_desc.ByteWidth = s_vertex->GetVertexAllCountOf() * s_vertex->GetVertexStrideByte();
+					t_desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+					t_desc.CPUAccessFlags = 0;
 				}
 
+				D3D11_SUBRESOURCE_DATA t_subresource_data;
 				{
-					s_d3d11->Render_ViewPort(s_fovehmd->GetSingleEyeResolution().x,0.0f,s_fovehmd->GetSingleEyeResolution().x,s_fovehmd->GetSingleEyeResolution().y);
+					ZeroMemory(&t_subresource_data,sizeof(t_subresource_data));
+					t_subresource_data.pSysMem = s_vertex->GetVertexPointer();
+				}
 
-					NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = s_fovehmd->GetRightViewProjection(s_near,s_far,2.0f);
-
-					Draw(t_constant_buffer,s_matrix,t_view_projection);
+				ID3D11Buffer* t_raw;
+				HRESULT t_result = s_d3d11->GetImpl()->GetDevice()->CreateBuffer(&t_desc,&t_subresource_data,&t_raw);
+				if(t_raw != nullptr){
+					s_vertexbuffer.reset(t_raw,release_delete< ID3D11Buffer >());
+				}
+				if(FAILED(t_result)){
+					s_vertexbuffer.reset();
 				}
 			}
-			#else
+
+			//バーテックス。
+			/*
 			{
-				s_d3d11->Render_ViewPort(0.0f,0.0f,s_fovehmd->GetSingleEyeResolution().x * 2,s_fovehmd->GetSingleEyeResolution().y);
+				STLString t_vertex_source = 
+					"float4x4 modelView;"
+					"struct VSI {"
+						"float4 p : POSITION0;"
+						"float3 c : COLOR;"
+					"};"
+					"struct VSO {"
+						"float4 p : SV_POSITION;"
+						"float3 c : COLOR;"
+					"};"
+					"VSO VS(VSI i) {"
+						"VSO ret;"
+						"ret.p = mul(i.p, modelView);"
+						"ret.c = i.c;"
+						"return ret;"
+					"}";
 
-				//t_camera_target
-				NBsys::NGeometry::Geometry_Vector3 t_camera_target(0.0f,0.0f,0.0f);
-
-				//t_camera_position
-				NBsys::NGeometry::Geometry_Vector3 t_camera_position(1.0f,1.0f,-5.0f);
-
-				//t_camera_up
-				NBsys::NGeometry::Geometry_Vector3 t_camera_up(0.0f,1.0f,0.0f);
-
-				//s_near
-				f32 t_near = 0.1f;
-
-				//s_far
-				f32 t_far = 1000.0f;
-
-				//s_fov_deg
-				f32 t_fov_deg = 60.0f;
-
-				NBsys::NGeometry::Geometry_Matrix_44 t_projection;
-				t_projection.Set_PerspectiveProjectionMatrix(s_fovehmd->GetSingleEyeResolution().x * 2,s_fovehmd->GetSingleEyeResolution().y,t_fov_deg,t_near,t_far);
-
-				NBsys::NGeometry::Geometry_Matrix_44 t_view;
-				t_view.Set_ViewMatrix(t_camera_target,t_camera_position,t_camera_up);
-				
+				sharedptr< ID3DBlob > t_blob;
 				{
-					NBsys::NGeometry::Geometry_Vector3 t_fovehmd_position = s_fovehmd->GetCameraPosition();
-					NBsys::NGeometry::Geometry_Quaternion t_fovehmd_quaternion = s_fovehmd->GetCameraQuaternion();
-					NBsys::NGeometry::Geometry_Matrix_44 t_fovehmd_matrix(t_fovehmd_quaternion);
-
-					{
-						NBsys::NGeometry::Geometry_Matrix_44 t_matrix = t_fovehmd_matrix;
-						t_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(t_fovehmd_position.x,t_fovehmd_position.y,t_fovehmd_position.z);
-						t_matrix *= s_fovehmd->GetLeftEyeTranslate();
-						Draw1(t_constant_buffer,t_matrix,t_view*t_projection);
+					sharedptr< ID3DBlob > t_blob_error;
+					ID3DBlob* t_raw = nullptr;
+					ID3DBlob* t_raw_error = nullptr;
+					HRESULT t_result = D3DCompile(t_vertex_source.c_str(),t_vertex_source.size(),nullptr,nullptr,nullptr,"VS","vs_4_0",D3DCOMPILE_ENABLE_STRICTNESS|D3DCOMPILE_DEBUG,0,&t_raw,&t_raw_error);
+					if(t_raw != nullptr){
+						t_blob.reset(t_raw,release_delete< ID3DBlob >());
+					}
+					if(t_raw != nullptr){
+						t_blob_error.reset(t_raw_error,release_delete< ID3DBlob >());
+					}
+					if(FAILED(t_result)){
+						t_blob.reset();
 					}
 
-					{
-						NBsys::NGeometry::Geometry_Matrix_44 t_matrix = t_fovehmd_matrix;
-						t_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(t_fovehmd_position.x,t_fovehmd_position.y,t_fovehmd_position.z);
-						t_matrix *= s_fovehmd->GetRightEyeTranslate();
-						Draw1(t_constant_buffer,t_matrix,t_view*t_projection);
+					if(t_blob != nullptr){
+					}else{
+						std::string t_errorstring;
+						if(t_blob_error != nullptr){
+							t_errorstring = std::string((const char*)t_blob_error->GetBufferPointer(),t_blob_error->GetBufferSize());
+						}
+						TAGLOG("compile vertex","FAILED");
+						TAGLOG("compile vertex",t_errorstring.c_str());
+					}
+
+					t_blob_error.reset();
+				}
+
+				{
+					ID3D11VertexShader* t_raw = nullptr;
+					HRESULT t_result = s_d3d11->GetImpl()->GetDevice()->CreateVertexShader(t_blob->GetBufferPointer(),t_blob->GetBufferSize(),nullptr,&t_raw);
+					if(t_raw != nullptr){
+						s_vertex_shader.reset(t_raw,release_delete< ID3D11VertexShader >());
+					}
+					if(FAILED(t_result)){
+						s_vertex_shader.reset();
 					}
 				}
+
+				{
+					D3D11_INPUT_ELEMENT_DESC t_layout[] = {
+						{	"POSITION",		0,	DXGI_FORMAT_R32G32B32_FLOAT,		0,	0,		D3D11_INPUT_PER_VERTEX_DATA,	0},
+						{	"COLOR",	    0,	DXGI_FORMAT_R32G32B32A32_FLOAT,		0,	12,		D3D11_INPUT_PER_VERTEX_DATA,	0},
+					};
+
+					ID3D11InputLayout* t_raw = nullptr;
+					HRESULT t_result = s_d3d11->GetImpl()->GetDevice()->CreateInputLayout(t_layout,COUNTOF(t_layout),t_blob->GetBufferPointer(),t_blob->GetBufferSize(),&t_raw);
+					if(t_raw != nullptr){
+						s_vertex_layout.reset(t_raw,release_delete< ID3D11InputLayout >());
+					}
+					if(FAILED(t_result)){
+						s_vertex_layout.reset();
+					}
+				}
+			}
+			*/
+			{
+				s_vertex_shader = s_d3d11->GetImpl()->GetVertexShader(t_vertexshader_id)->vertexshader;
+				s_vertex_layout = s_d3d11->GetImpl()->GetVertexShader(t_vertexshader_id)->inputlayout;
+			}
+	
+			//ピクセル。
+			{
+				STLString t_pixel_source = 
+					"struct VSO {"
+						"float4 p : SV_POSITION;"
+						"float3 c : COLOR;"
+					"};"
+					"float4 PS(VSO i) : SV_Target {"
+						"return float4(i.c.r, i.c.g, i.c.b, 1.0f);"
+					"}";
+
+				sharedptr< ID3DBlob > t_blob;
+				{
+					sharedptr< ID3DBlob > t_blob_error;
+					ID3DBlob* t_raw = nullptr;
+					ID3DBlob* t_raw_error = nullptr;
+					HRESULT t_result = D3DCompile(t_pixel_source.c_str(),t_pixel_source.size(),nullptr,nullptr,nullptr,"PS","ps_4_0",D3DCOMPILE_ENABLE_STRICTNESS|D3DCOMPILE_DEBUG,0,&t_raw,&t_raw_error);
+					if(t_raw != nullptr){
+						t_blob.reset(t_raw,release_delete< ID3DBlob >());
+					}
+					if(t_raw != nullptr){
+						t_blob_error.reset(t_raw_error,release_delete< ID3DBlob >());
+					}
+					if(FAILED(t_result)){
+						t_blob.reset();
+					}
+
+					if(t_blob != nullptr){
+					}else{
+						std::string t_errorstring;
+						if(t_blob_error != nullptr){
+							t_errorstring = std::string((const char*)t_blob_error->GetBufferPointer(),t_blob_error->GetBufferSize());
+						}
+						TAGLOG("compile vertex","FAILED");
+						TAGLOG("compile vertex",t_errorstring.c_str());
+					}
+
+					t_blob_error.reset();
+				}
+
+				{
+					ID3D11PixelShader* t_raw = nullptr;
+					HRESULT t_result = s_d3d11->GetImpl()->GetDevice()->CreatePixelShader(t_blob->GetBufferPointer(),t_blob->GetBufferSize(),nullptr,&t_raw);
+					if(t_raw != nullptr){
+						s_pixel_shader.reset(t_raw,release_delete< ID3D11PixelShader >());
+					}
+					if(FAILED(t_result)){
+						s_pixel_shader.reset();
+					}
+				}
+			}
+
+			//コンスタントバッファ。
+			{
+				{
+					D3D11_BUFFER_DESC t_desc;
+					{
+						Memory::memset(&t_desc,0,sizeof(t_desc));
+						t_desc.Usage = D3D11_USAGE_DEFAULT;
+						t_desc.ByteWidth = sizeof(float) * 16;
+						t_desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+						t_desc.CPUAccessFlags = 0;
+					}
+
+					ID3D11Buffer* t_raw = nullptr;
+					HRESULT t_result = s_d3d11->GetImpl()->GetDevice()->CreateBuffer(&t_desc,nullptr,&t_raw);
+					if(t_raw != nullptr){
+						t_constant_buffer.reset(t_raw,release_delete< ID3D11Buffer >());
+					}
+					if(FAILED(t_result)){
+						t_constant_buffer.reset();
+					}
+				}
+			}
+
+			s_step++;
+
+		}else{
+
+			//更新。
+			{
+				//s_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_RotationY(t_delta * 0.1f);
+			}
+
+			//レイアウト。
+			s_d3d11->GetImpl()->GetDeviceContext()->IASetInputLayout(s_vertex_layout.get());
+
+			//頂点バッファ。
+			{
+				ID3D11Buffer* t_list[] = {
+					s_vertexbuffer.get(),
+				};
+
+				UINT t_stride = s_vertexbuffer_stride;
+
+				UINT t_offset = 0;
+
+				s_d3d11->GetImpl()->GetDeviceContext()->IASetVertexBuffers(0, 1, t_list, &t_stride, &t_offset);
+			}
+
+			//プリミティブ形状。
+			s_d3d11->GetImpl()->GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+			s_d3d11->Render_ClearRenderTargetView(NBsys::NColor::Color_F(0.3f,0.3f,0.8f,1.0f));
+			s_d3d11->Render_ClearDepthStencilView();
+			{
+				#if(0)
+				{
+					{
+						s_d3d11->Render_ViewPort(0.0f,0.0f,s_fovehmd->GetSingleEyeResolution().x,s_fovehmd->GetSingleEyeResolution().y);
+
+						NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = s_fovehmd->GetLeftViewProjection(s_near,s_far,2.0f);
+
+						Draw(t_constant_buffer,s_matrix,t_view_projection);
+					}
+
+					{
+						s_d3d11->Render_ViewPort(s_fovehmd->GetSingleEyeResolution().x,0.0f,s_fovehmd->GetSingleEyeResolution().x,s_fovehmd->GetSingleEyeResolution().y);
+
+						NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = s_fovehmd->GetRightViewProjection(s_near,s_far,2.0f);
+
+						Draw(t_constant_buffer,s_matrix,t_view_projection);
+					}
+				}
+				#else
+				{
+					s_d3d11->Render_ViewPort(0.0f,0.0f,s_fovehmd->GetSingleEyeResolution().x * 2,s_fovehmd->GetSingleEyeResolution().y);
+
+					//t_camera_target
+					NBsys::NGeometry::Geometry_Vector3 t_camera_target(0.0f,0.0f,0.0f);
+
+					//t_camera_position
+					NBsys::NGeometry::Geometry_Vector3 t_camera_position(1.0f,1.0f,-5.0f);
+
+					//t_camera_up
+					NBsys::NGeometry::Geometry_Vector3 t_camera_up(0.0f,1.0f,0.0f);
+
+					//s_near
+					f32 t_near = 0.1f;
+
+					//s_far
+					f32 t_far = 1000.0f;
+
+					//s_fov_deg
+					f32 t_fov_deg = 60.0f;
+
+					NBsys::NGeometry::Geometry_Matrix_44 t_projection;
+					t_projection.Set_PerspectiveProjectionMatrix(s_fovehmd->GetSingleEyeResolution().x * 2,s_fovehmd->GetSingleEyeResolution().y,t_fov_deg,t_near,t_far);
+
+					NBsys::NGeometry::Geometry_Matrix_44 t_view;
+					t_view.Set_ViewMatrix(t_camera_target,t_camera_position,t_camera_up);
+				
+					{
+						NBsys::NGeometry::Geometry_Vector3 t_fovehmd_position = s_fovehmd->GetCameraPosition();
+						NBsys::NGeometry::Geometry_Quaternion t_fovehmd_quaternion = s_fovehmd->GetCameraQuaternion();
+						NBsys::NGeometry::Geometry_Matrix_44 t_fovehmd_matrix(t_fovehmd_quaternion);
+
+						{
+							NBsys::NGeometry::Geometry_Matrix_44 t_matrix = t_fovehmd_matrix;
+							t_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(t_fovehmd_position.x,t_fovehmd_position.y,t_fovehmd_position.z);
+							t_matrix *= s_fovehmd->GetLeftEyeTranslate();
+							Draw1(t_constant_buffer,t_matrix,t_view*t_projection);
+						}
+
+						{
+							NBsys::NGeometry::Geometry_Matrix_44 t_matrix = t_fovehmd_matrix;
+							t_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(t_fovehmd_position.x,t_fovehmd_position.y,t_fovehmd_position.z);
+							t_matrix *= s_fovehmd->GetRightEyeTranslate();
+							Draw1(t_constant_buffer,t_matrix,t_view*t_projection);
+						}
+					}
+				}
+				#endif
+			}
+
+			#if(USE_FOVE)
+			{
+				s_fovehmd->SetTexture(s_d3d11->GetImpl()->GetBackBuffer().get());
 			}
 			#endif
-		}
 
-		#if(USE_FOVE)
-		{
-			s_fovehmd->SetTexture(s_d3d11->GetImpl()->GetBackBuffer().get());
-		}
-		#endif
-
-		if(s_d3d11->Render_Present() == false){
-			break;
+			if(s_d3d11->Render_Present() == false){
+				break;
+			}
 		}
 	}
 

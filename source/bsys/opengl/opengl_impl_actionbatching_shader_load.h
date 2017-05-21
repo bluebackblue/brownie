@@ -40,11 +40,11 @@ namespace NBsys{namespace NOpengl
 		*/
 		Opengl_Impl& opengl_impl;
 
-		/** vertexbuffer
+		/** shaderlayout
 		*/
 		sharedptr< Opengl_ShaderLayout > shaderlayout;
 
-		/** isend
+		/** asyncresult
 		*/
 		AsyncResult< bool > asyncresult;
 

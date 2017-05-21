@@ -53,6 +53,24 @@ namespace NBsys{namespace ND3d11
 		nonvirtual ~D3d11();
 
 	public:
+
+		/** CreateVertexShader
+		*/
+		s32 CreateVertexShader(AsyncResult< bool >& a_asyncresult);
+
+		/** CreatePixelShader
+		*/
+		s32 CreatePixelShader(AsyncResult< bool >& a_asyncresult);
+
+		/** CreateVertexBuffer
+		*/
+		s32 CreateVertexBuffer(AsyncResult< bool >& a_asyncresult,const void* a_data,s32 a_stridebyte,s32 a_offset,s32 a_countofvertex);
+
+		/** CreateConstantBuffer
+		*/
+		s32 CreateConstantBuffer(AsyncResult< bool >& a_asyncresult,s32 a_size);
+
+	public:
 		/** 作成。
 		*/
 		void Render_Create(sharedptr< NWindow::Window >& a_window,s32 a_width,s32 a_height);
@@ -60,6 +78,10 @@ namespace NBsys{namespace ND3d11
 		/** 削除。
 		*/
 		void Render_Delete();
+
+		/** Render_Main
+		*/
+		void Render_Main();
 
 	public:
 		/** Render_ViewPort。
@@ -74,33 +96,30 @@ namespace NBsys{namespace ND3d11
 		*/
 		void Render_ClearDepthStencilView();
 
-		/** Render_CreateBuffer
-		*/
-		void Render_CreateBuffer();
-
 		/** Render_Present
 		*/
 		bool Render_Present();
 
+	public:
+		/** Render_UpdateSubresource
+		*/
+		void Render_UpdateSubresource(s32 a_constantbuffer_id,const void* a_data);
 
+		/** Render_VSSetShader
+		*/
+		void Render_VSSetShader(s32 a_vertexshader_id);
 
-		/** クリア。
+		/** Render_PSSetShader
 		*/
-		/*
-		void Clear();
-		*/
+		void Render_PSSetShader(s32 a_pixelshader_id);
 
-		/** シーン開始。
+		/** Render_Draw
 		*/
-		/*
-		void BeginScene();
-		*/
+		void Render_Draw(s32 a_count_of_vertex,s32 a_start_of_vertex);
 
-		/** シーン終了。
+		/** Render_VSSetConstantBuffers
 		*/
-		/*
-		void EndScene();
-		*/
+		void Render_VSSetConstantBuffers(s32 a_startslot,s32 a_constantbuffer_id);
 
 	};
 

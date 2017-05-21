@@ -24,6 +24,14 @@
 #include "../bsys/window/window_impl.h"
 
 
+/** include
+*/
+#include "./d3d11_impl_actionbatching_vertexshader_create.h"
+#include "./d3d11_impl_actionbatching_pixelshader_create.h"
+#include "./d3d11_impl_actionbatching_vertexbuffer_create.h"
+#include "./d3d11_impl_actionbatching_constantbuffer_create.h"
+
+
 /** lib
 */
 #if(BSYS_D3D11_ENABLE)
@@ -43,15 +51,18 @@ namespace NBsys{namespace ND3d11
 	*/
 	D3d11_Impl::D3d11_Impl()
 		:
-		device(nullptr),
-		devicecontext(nullptr)
-		/*
-		swapchain(nullptr),
-		featurelevel(D3D_FEATURE_LEVEL_9_1),
-		rendertarget_view(nullptr),
-		depthstencil_texture(nullptr),
-		depthstencil_view(nullptr)
-		*/
+		id_maker(),
+		actionbatching_lockobject(),
+		actionbatching(),
+		device(),
+		devicecontext(),
+		swapchain(),
+		backbuffer(),
+		rendertargetview(),
+		depthbuffer(),
+		depthstencilstate(),
+		depthstencilview(),
+		vertexshader_list()
 	{
 	}
 
@@ -330,6 +341,371 @@ namespace NBsys{namespace ND3d11
 		return this->depthstencilview;
 	}
 
+	/** GetVertexshader
+	*/
+	sharedptr< D3d11_Impl_VertexShader > D3d11_Impl::GetVertexShader(s32 a_vertexshader_id)
+	{
+		STLMap< s32 , sharedptr< D3d11_Impl_VertexShader > >::iterator t_it = this->vertexshader_list.find(a_vertexshader_id);
+		if(t_it->second != nullptr){
+			return t_it->second;
+		}
+		return sharedptr< D3d11_Impl_VertexShader >::null();
+	}
+
+	/** GetPixelshader
+	*/
+	sharedptr< D3d11_Impl_PixelShader > D3d11_Impl::GetPixelShader(s32 a_pixelshader_id)
+	{
+		STLMap< s32 , sharedptr< D3d11_Impl_PixelShader > >::iterator t_it = this->pixelshader_list.find(a_pixelshader_id);
+		if(t_it->second != nullptr){
+			return t_it->second;
+		}
+		return sharedptr< D3d11_Impl_PixelShader >::null();
+	}
+
+	/** GetVertexbuffer
+	*/
+	sharedptr< D3d11_Impl_VertexBuffer > D3d11_Impl::GetVertexBuffer(s32 a_vertexbuffer_id)
+	{
+		STLMap< s32 , sharedptr< D3d11_Impl_VertexBuffer > >::iterator t_it = this->vertexbuffer_list.find(a_vertexbuffer_id);
+		if(t_it->second != nullptr){
+			return t_it->second;
+		}
+		return sharedptr< D3d11_Impl_VertexBuffer >::null();
+	}
+
+	/** GetConstantBuffer
+	*/
+	sharedptr< D3d11_Impl_ConstantBuffer > D3d11_Impl::GetConstantBuffer(s32 a_constantbuffer_id)
+	{
+		STLMap< s32 , sharedptr< D3d11_Impl_ConstantBuffer > >::iterator t_it = this->constantbuffer_list.find(a_constantbuffer_id);
+		if(t_it->second != nullptr){
+			return t_it->second;
+		}
+		return sharedptr< D3d11_Impl_ConstantBuffer >::null();
+	}
+
+	/** CreateVertexShader
+	*/
+	s32 D3d11_Impl::CreateVertexShader(AsyncResult< bool >& a_asyncresult)
+	{
+		AutoLock t_autolock(this->actionbatching_lockobject);
+
+		{
+			//ＩＤ。
+			s32 t_vertexshader_id = this->id_maker.MakeID();
+
+			sharedptr< D3d11_Impl_VertexShader > t_vertexshader = new D3d11_Impl_VertexShader();
+
+			//レンダーコマンド。
+			sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
+			{
+				t_actionlist->Add(new Opengl_Impl_ActionBatching_VertexShader_Create(*this,t_vertexshader,a_asyncresult));
+			}
+			this->StartBatching(t_actionlist);
+
+			//管理リスト。
+			this->vertexshader_list.insert(STLMap< s32 , sharedptr< D3d11_Impl_VertexShader > >::value_type(t_vertexshader_id,t_vertexshader));
+
+			return t_vertexshader_id;
+		}
+	}
+
+	/** CreatePixelShader
+	*/
+	s32 D3d11_Impl::CreatePixelShader(AsyncResult< bool >& a_asyncresult)
+	{
+		AutoLock t_autolock(this->actionbatching_lockobject);
+
+		{
+			//ＩＤ。
+			s32 t_pixelshader_id = this->id_maker.MakeID();
+
+			sharedptr< D3d11_Impl_PixelShader > t_pixelshader = new D3d11_Impl_PixelShader();
+
+			//レンダーコマンド。
+			sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
+			{
+				t_actionlist->Add(new Opengl_Impl_ActionBatching_PixelShader_Create(*this,t_pixelshader,a_asyncresult));
+			}
+			this->StartBatching(t_actionlist);
+
+			//管理リスト。
+			this->pixelshader_list.insert(STLMap< s32 , sharedptr< D3d11_Impl_PixelShader > >::value_type(t_pixelshader_id,t_pixelshader));
+
+			return t_pixelshader_id;
+		}
+	}
+
+	/** CreateVertexBuffer
+	*/
+	s32 D3d11_Impl::CreateVertexBuffer(AsyncResult< bool >& a_asyncresult,const void* a_data,s32 a_stridebyte,s32 a_offset,s32 a_countofvertex)
+	{
+		AutoLock t_autolock(this->actionbatching_lockobject);
+
+		{
+			//ＩＤ。
+			s32 t_vertexbuffer_id = this->id_maker.MakeID();
+
+			sharedptr< D3d11_Impl_VertexBuffer > t_vertexbuffer = new D3d11_Impl_VertexBuffer();
+			{
+				t_vertexbuffer->data = a_data;
+				t_vertexbuffer->stridebyte = a_stridebyte;
+				t_vertexbuffer->offset = a_offset;
+				t_vertexbuffer->countofvertex;
+			}
+
+			//レンダーコマンド。
+			sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
+			{
+				t_actionlist->Add(new Opengl_Impl_ActionBatching_VertexBuffer_Create(*this,t_vertexbuffer,a_asyncresult));
+			}
+			this->StartBatching(t_actionlist);
+
+			//管理リスト。
+			this->vertexbuffer_list.insert(STLMap< s32 , sharedptr< D3d11_Impl_VertexBuffer > >::value_type(t_vertexbuffer_id,t_vertexbuffer));
+
+			return t_vertexbuffer_id;
+		}
+	}
+
+	/** CreateConstantBuffer
+	*/
+	s32 D3d11_Impl::CreateConstantBuffer(AsyncResult< bool >& a_asyncresult,s32 a_size)
+	{
+		AutoLock t_autolock(this->actionbatching_lockobject);
+
+		{
+			//ＩＤ。
+			s32 t_constantbuffer_id = this->id_maker.MakeID();
+
+			sharedptr< D3d11_Impl_ConstantBuffer > t_constantbuffer = new D3d11_Impl_ConstantBuffer();
+			{
+				t_constantbuffer->size = a_size;
+			}
+
+			//レンダーコマンド。
+			sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
+			{
+				t_actionlist->Add(new Opengl_Impl_ActionBatching_ConstantBuffer_Create(*this,t_constantbuffer,a_asyncresult));
+			}
+			this->StartBatching(t_actionlist);
+
+			//管理リスト。
+			this->constantbuffer_list.insert(STLMap< s32 , sharedptr< D3d11_Impl_ConstantBuffer > >::value_type(t_constantbuffer_id,t_constantbuffer));
+
+			return t_constantbuffer_id;
+		}
+	}
+
+	/** Render_CreateVertexShader
+	*/
+	void D3d11_Impl::Render_CreateVertexShader(sharedptr< D3d11_Impl_VertexShader >& a_vertexshader)
+	{
+		/** t_vertex_source
+		*/
+		STLString t_vertex_source = 
+			"float4x4 modelView;"
+			"struct VSI {"
+				"float4 p : POSITION0;"
+				"float3 c : COLOR;"
+			"};"
+			"struct VSO {"
+				"float4 p : SV_POSITION;"
+				"float3 c : COLOR;"
+			"};"
+			"VSO VS(VSI i) {"
+				"VSO ret;"
+				"ret.p = mul(i.p, modelView);"
+				"ret.c = i.c;"
+				"return ret;"
+			"}";
+
+		/** t_blob
+		*/
+		sharedptr< ID3DBlob > t_blob;
+		{
+			sharedptr< ID3DBlob > t_blob_error;
+			ID3DBlob* t_raw = nullptr;
+			ID3DBlob* t_raw_error = nullptr;
+			HRESULT t_result = D3DCompile(t_vertex_source.c_str(),t_vertex_source.size(),nullptr,nullptr,nullptr,"VS","vs_4_0",D3DCOMPILE_ENABLE_STRICTNESS|D3DCOMPILE_DEBUG,0,&t_raw,&t_raw_error);
+			if(t_raw != nullptr){
+				t_blob.reset(t_raw,release_delete< ID3DBlob >());
+			}
+			if(t_raw != nullptr){
+				t_blob_error.reset(t_raw_error,release_delete< ID3DBlob >());
+			}
+			if(FAILED(t_result)){
+				t_blob.reset();
+			}
+
+			if(t_blob != nullptr){
+			}else{
+				std::string t_errorstring;
+				if(t_blob_error != nullptr){
+					t_errorstring = std::string((const char*)t_blob_error->GetBufferPointer(),t_blob_error->GetBufferSize());
+				}
+				TAGLOG("compile vertex","FAILED");
+				TAGLOG("compile vertex",t_errorstring.c_str());
+			}
+
+			t_blob_error.reset();
+		}
+
+		/** ID3D11VertexShader
+		*/
+		{
+			ID3D11VertexShader* t_raw = nullptr;
+			HRESULT t_result = this->device->CreateVertexShader(t_blob->GetBufferPointer(),t_blob->GetBufferSize(),nullptr,&t_raw);
+			if(t_raw != nullptr){
+				a_vertexshader->vertexshader.reset(t_raw,release_delete< ID3D11VertexShader >());
+			}
+			if(FAILED(t_result)){
+				a_vertexshader->vertexshader.reset();
+			}
+		}
+
+		/** ID3D11InputLayout
+		*/
+		{
+			D3D11_INPUT_ELEMENT_DESC t_layout[] = {
+				{	"POSITION",		0,	DXGI_FORMAT_R32G32B32_FLOAT,		0,	0,		D3D11_INPUT_PER_VERTEX_DATA,	0},
+				{	"COLOR",	    0,	DXGI_FORMAT_R32G32B32A32_FLOAT,		0,	12,		D3D11_INPUT_PER_VERTEX_DATA,	0},
+			};
+
+			ID3D11InputLayout* t_raw = nullptr;
+			HRESULT t_result = this->device->CreateInputLayout(t_layout,COUNTOF(t_layout),t_blob->GetBufferPointer(),t_blob->GetBufferSize(),&t_raw);
+			if(t_raw != nullptr){
+				a_vertexshader->inputlayout.reset(t_raw,release_delete< ID3D11InputLayout >());
+			}
+			if(FAILED(t_result)){
+				a_vertexshader->inputlayout.reset();
+			}
+		}
+	}
+
+	/** Render_CreatePixelShader
+	*/
+	void D3d11_Impl::Render_CreatePixelShader(sharedptr< D3d11_Impl_PixelShader >& a_pixelshader)
+	{
+		STLString t_pixel_source = 
+			"struct VSO {"
+				"float4 p : SV_POSITION;"
+				"float3 c : COLOR;"
+			"};"
+			"float4 PS(VSO i) : SV_Target {"
+				"return float4(i.c.r, i.c.g, i.c.b, 1.0f);"
+			"}";
+
+		sharedptr< ID3DBlob > t_blob;
+		{
+			sharedptr< ID3DBlob > t_blob_error;
+			ID3DBlob* t_raw = nullptr;
+			ID3DBlob* t_raw_error = nullptr;
+			HRESULT t_result = D3DCompile(t_pixel_source.c_str(),t_pixel_source.size(),nullptr,nullptr,nullptr,"PS","ps_4_0",D3DCOMPILE_ENABLE_STRICTNESS|D3DCOMPILE_DEBUG,0,&t_raw,&t_raw_error);
+			if(t_raw != nullptr){
+				t_blob.reset(t_raw,release_delete< ID3DBlob >());
+			}
+			if(t_raw != nullptr){
+				t_blob_error.reset(t_raw_error,release_delete< ID3DBlob >());
+			}
+			if(FAILED(t_result)){
+				t_blob.reset();
+			}
+
+			if(t_blob != nullptr){
+			}else{
+				std::string t_errorstring;
+				if(t_blob_error != nullptr){
+					t_errorstring = std::string((const char*)t_blob_error->GetBufferPointer(),t_blob_error->GetBufferSize());
+				}
+				TAGLOG("compile vertex","FAILED");
+				TAGLOG("compile vertex",t_errorstring.c_str());
+			}
+
+			t_blob_error.reset();
+		}
+
+		{
+			ID3D11PixelShader* t_raw = nullptr;
+			HRESULT t_result = this->device->CreatePixelShader(t_blob->GetBufferPointer(),t_blob->GetBufferSize(),nullptr,&t_raw);
+			if(t_raw != nullptr){
+				a_pixelshader->pixelshader.reset(t_raw,release_delete< ID3D11PixelShader >());
+			}
+			if(FAILED(t_result)){
+				a_pixelshader->pixelshader.reset();
+			}
+		}
+	}
+
+	/** Render_CreateVertexBuffer
+	*/
+	void D3d11_Impl::Render_CreateVertexBuffer(sharedptr< D3d11_Impl_VertexBuffer >& a_vertexbuffer)
+	{
+		D3D11_BUFFER_DESC t_desc;
+		{
+			Memory::memset(&t_desc,0,sizeof(t_desc));
+			t_desc.Usage = D3D11_USAGE_DEFAULT;
+			t_desc.ByteWidth = a_vertexbuffer->countofvertex * a_vertexbuffer->stridebyte;
+			t_desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+			t_desc.CPUAccessFlags = 0;
+		}
+
+		D3D11_SUBRESOURCE_DATA t_subresource_data;
+		{
+			ZeroMemory(&t_subresource_data,sizeof(t_subresource_data));
+			t_subresource_data.pSysMem = a_vertexbuffer->data;
+		}
+
+		ID3D11Buffer* t_raw;
+		HRESULT t_result = this->device->CreateBuffer(&t_desc,&t_subresource_data,&t_raw);
+		if(t_raw != nullptr){
+			a_vertexbuffer->buffer.reset(t_raw,release_delete< ID3D11Buffer >());
+		}
+		if(FAILED(t_result)){
+			a_vertexbuffer->buffer.reset();
+		}
+	}
+	
+	/** Render_CreateConstantBuffer
+	*/
+	void D3d11_Impl::Render_CreateConstantBuffer(sharedptr< D3d11_Impl_ConstantBuffer >& a_constantbuffer)
+	{
+		D3D11_BUFFER_DESC t_desc;
+		{
+			Memory::memset(&t_desc,0,sizeof(t_desc));
+			t_desc.Usage = D3D11_USAGE_DEFAULT;
+			t_desc.ByteWidth = a_constantbuffer->size;
+			t_desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+			t_desc.CPUAccessFlags = 0;
+		}
+
+		ID3D11Buffer* t_raw = nullptr;
+		HRESULT t_result = this->device->CreateBuffer(&t_desc,nullptr,&t_raw);
+		if(t_raw != nullptr){
+			a_constantbuffer->buffer.reset(t_raw,release_delete< ID3D11Buffer >());
+		}
+		if(FAILED(t_result)){
+			a_constantbuffer->buffer.reset();
+		}
+	}
+
+	/** Render_Main
+	*/
+	void D3d11_Impl::Render_Main()
+	{
+		AutoLock t_autolock_actionbatching(this->actionbatching_lockobject);
+		this->actionbatching.Update(1.0f);
+	}
+
+	/** StartBatching
+	*/
+	void D3d11_Impl::StartBatching(sharedptr< NBsys::NActionBatching::ActionBatching_ActionList >& a_actionlist)
+	{
+		AutoLock t_autolock_actionbatching(this->actionbatching_lockobject);
+		this->actionbatching.StartBatching(a_actionlist);
+	}
+
 	/** Render_ViewPort。
 	*/
 	void D3d11_Impl::Render_ViewPort(f32 a_x,f32 a_y,f32 a_width,f32 a_height)
@@ -360,28 +736,6 @@ namespace NBsys{namespace ND3d11
 		this->devicecontext->ClearDepthStencilView(this->depthstencilview.get(),D3D11_CLEAR_DEPTH,1,0);
 	}
 
-	/** Render_CreateBuffer
-	*/
-	void D3d11_Impl::Render_CreateBuffer()
-	{
-		D3D11_BUFFER_DESC t_desc;
-		{
-			Memory::memset(&t_desc,0,sizeof(t_desc));
-			t_desc.Usage = D3D11_USAGE_DEFAULT;
-			t_desc.ByteWidth = sizeof(float) * 16;
-			t_desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-			t_desc.CPUAccessFlags = 0;
-		}
-		ID3D11Buffer* t_raw = nullptr;
-		HRESULT t_result = this->device->CreateBuffer(&t_desc,nullptr,&t_raw);
-		if(t_raw != nullptr){
-			this->buffer.reset(t_raw,release_delete< ID3D11Buffer >());
-		}
-		if(FAILED(t_result)){
-			this->buffer.reset();
-		}
-	}
-
 	/** Render_Present
 	*/
 	bool D3d11_Impl::Render_Present()
@@ -394,6 +748,108 @@ namespace NBsys{namespace ND3d11
 
 		return true;
 	}
+
+	/** Render_UpdateSubresource
+	*/
+	void D3d11_Impl::Render_UpdateSubresource(s32 a_constantbuffer_id,const void* a_data)
+	{
+		STLMap< s32 , sharedptr< D3d11_Impl_ConstantBuffer > >::iterator t_it = this->constantbuffer_list.find(a_constantbuffer_id);
+		if(t_it != this->constantbuffer_list.end()){
+
+			if(t_it->second != nullptr){
+				if(t_it->second->buffer != nullptr){
+					if(t_it->second->buffer.get() != nullptr){
+
+						this->devicecontext->UpdateSubresource(t_it->second->buffer.get(),0,nullptr,a_data,0,0);
+
+						return;
+					}
+				}
+			}
+		}
+
+		ASSERT(0);
+	}
+
+	/** Render_VSSetShader
+	*/
+	void D3d11_Impl::Render_VSSetShader(s32 a_vertexshader_id)
+	{
+		STLMap< s32 , sharedptr< D3d11_Impl_VertexShader > >::iterator t_it = this->vertexshader_list.find(a_vertexshader_id);
+		if(t_it != this->vertexshader_list.end()){
+
+			if(t_it->second != nullptr){
+				if(t_it->second->vertexshader != nullptr){
+					if(t_it->second->vertexshader.get() != nullptr){
+
+						this->devicecontext->VSSetShader(t_it->second->vertexshader.get(),nullptr,0);
+
+						return;
+					}
+				}
+			}
+		}
+
+		ASSERT(0);
+	}
+
+	/** Render_PSSetShader
+	*/
+	void D3d11_Impl::Render_PSSetShader(s32 a_pixelshader_id)
+	{
+		STLMap< s32 , sharedptr< D3d11_Impl_PixelShader > >::iterator t_it = this->pixelshader_list.find(a_pixelshader_id);
+		if(t_it != this->pixelshader_list.end()){
+
+			if(t_it->second != nullptr){
+				if(t_it->second->pixelshader != nullptr){
+					if(t_it->second->pixelshader.get() != nullptr){
+
+						this->devicecontext->PSSetShader(t_it->second->pixelshader.get(),nullptr,0);
+
+						return;
+					}
+				}
+			}
+		}
+
+		ASSERT(0);
+	}
+
+	/** Render_Draw
+	*/
+	void D3d11_Impl::Render_Draw(s32 a_count_of_vertex,s32 a_start_of_vertex)
+	{
+		this->devicecontext->Draw(a_count_of_vertex,a_start_of_vertex);
+	}
+
+	/** Render_VSSetConstantBuffers
+	*/
+	void D3d11_Impl::Render_VSSetConstantBuffers(s32 a_startslot,s32 a_constantbuffer_id)
+	{
+		STLMap< s32 , sharedptr< D3d11_Impl_ConstantBuffer > >::iterator t_it = this->constantbuffer_list.find(a_constantbuffer_id);
+		if(t_it != this->constantbuffer_list.end()){
+
+			if(t_it->second != nullptr){
+				if(t_it->second->buffer != nullptr){
+					if(t_it->second->buffer.get() != nullptr){
+
+						ID3D11Buffer* t_list[] = 
+						{
+							t_it->second->buffer.get()
+						};
+
+						this->devicecontext->VSSetConstantBuffers(0,COUNTOF(t_list),t_list);
+
+						return;
+					}
+				}
+			}
+		}
+
+		ASSERT(0);
+	}
+
+
 }}
 #endif
 

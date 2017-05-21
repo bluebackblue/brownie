@@ -83,7 +83,7 @@ namespace NBsys{namespace NFovehmd
 		if(this->headset){
 			//ランタイム、コンポジター起動。
 			bool t_ret_initialize = this->headset->Initialise(Fove::EFVR_ClientCapabilities::Orientation | Fove::EFVR_ClientCapabilities::Position);
-			TAGLOG("fovehmd",VASTRING_DEBUG("ret_initialize = %s",t_ret_initialize?"true":"false"));
+			TAGLOG("fovehmd",VASTRING_DEBUG("ret_initialize = %s",t_ret_initialize ? "true" : "false"));
 		}else{
 			//失敗。
 			//Unable to create headset connection.
@@ -263,7 +263,7 @@ namespace NBsys{namespace NFovehmd
 
 	/** GetLeftViewProjection
 	*/
-	NBsys::NGeometry::Geometry_Matrix_44& Fovehmd_Impl::GetLeftViewProjection(f32 a_near,f32 a_far,float a_camera_y)
+	NBsys::NGeometry::Geometry_Matrix_44 Fovehmd_Impl::GetLeftViewProjection(f32 a_near,f32 a_far,float a_camera_y)
 	{
 		NBsys::NGeometry::Geometry_Matrix_44 t_camera_matrix = this->camera_matrix;
 		{
@@ -279,7 +279,7 @@ namespace NBsys{namespace NFovehmd
 
 	/** GetRightViewProjection
 	*/
-	NBsys::NGeometry::Geometry_Matrix_44& Fovehmd_Impl::GetRightViewProjection(f32 a_near,f32 a_far,float a_camera_y)
+	NBsys::NGeometry::Geometry_Matrix_44 Fovehmd_Impl::GetRightViewProjection(f32 a_near,f32 a_far,float a_camera_y)
 	{
 		NBsys::NGeometry::Geometry_Matrix_44 t_camera_matrix = this->camera_matrix;
 		{

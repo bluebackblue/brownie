@@ -23,6 +23,7 @@
 */
 #include "../window/window.h"
 #include "../color/color.h"
+#include "../actionbatching/actionbatching.h"
 
 
 /** include
@@ -42,11 +43,84 @@
 namespace NBsys{namespace ND3d11
 {
 
+	/** D3d11_Impl_VertexShader
+	*/
+	struct D3d11_Impl_VertexShader
+	{
+		/** vertexshader
+		*/
+		sharedptr< ID3D11VertexShader > vertexshader;
+		
+		/** inputlayout
+		*/
+		sharedptr< ID3D11InputLayout > inputlayout;
+	};
+
+	/** D3d11_Impl_PixelShader
+	*/
+	struct D3d11_Impl_PixelShader
+	{
+		/** pixelshader
+		*/
+		sharedptr< ID3D11PixelShader > pixelshader;
+	};
+
+	/** D3d11_Impl_VertexBuffer
+	*/
+	struct D3d11_Impl_VertexBuffer
+	{
+		/** buffer
+		*/
+		sharedptr< ID3D11Buffer > buffer;
+
+		/** data
+		*/
+		const void* data;
+
+		/** stridebyte
+		*/
+		s32 stridebyte;
+
+		/** offset
+		*/
+		s32 offset;
+
+		/** countofvertex
+		*/
+		s32 countofvertex;
+	};
+
+	/** D3d11_Impl_ConstantBuffer
+	*/
+	struct D3d11_Impl_ConstantBuffer
+	{
+		/** buffer
+		*/
+		sharedptr< ID3D11Buffer > buffer;
+
+		/** size
+		*/
+		s32 size;
+	};
+
 	/** D3d11_Impl
 	*/
 	class D3d11_Impl
 	{
 	private:
+
+		/** id_maker
+		*/
+		IDMaker id_maker;
+
+		/** アクションバッチング。ロックオブジェクト。
+		*/
+		LockObject actionbatching_lockobject;
+
+		/** アクションバッチング。
+		*/
+		NBsys::NActionBatching::ActionBatching actionbatching;
+
 		/** device
 		*/
 		sharedptr< ID3D11Device > device;
@@ -79,17 +153,23 @@ namespace NBsys{namespace ND3d11
 		*/
 		sharedptr< ID3D11DepthStencilView > depthstencilview;
 
-		/** buffer
-		*/
-		sharedptr< ID3D11Buffer > buffer;
+	private:
 
-		/** texture_list
-		*/
-		//STLMap< Muid::UniqueNameType , D3d11_Texture >::Type texture_list;
-		
 		/** vertexshader_list
 		*/
-		//STLMap< Muid::UniqueNameType , D3d11_VertexShader >::Type vertexshader_list;
+		STLMap< s32 , sharedptr< D3d11_Impl_VertexShader > >::Type vertexshader_list;
+
+		/** pixelshader_list
+		*/
+		STLMap< s32 , sharedptr< D3d11_Impl_PixelShader > >::Type pixelshader_list;
+
+		/** vertexbuffer_list
+		*/
+		STLMap< s32 , sharedptr< D3d11_Impl_VertexBuffer > >::Type vertexbuffer_list;
+
+		/** constantbuffer_list
+		*/
+		STLMap< s32 , sharedptr< D3d11_Impl_ConstantBuffer > >::Type constantbuffer_list;
 
 	public:
 		/** constructor
@@ -141,11 +221,69 @@ namespace NBsys{namespace ND3d11
 		*/
 		sharedptr< ID3D11DepthStencilView >& GetDepthStencilView();
 
-		/** Render_GetBuffer
+	public:
+
+		/** GetVertexshader
 		*/
-		sharedptr< ID3D11Buffer >& GetBuffer();
+		sharedptr< D3d11_Impl_VertexShader > GetVertexShader(s32 a_vertexshader_id);
+
+		/** GetPixelshader
+		*/
+		sharedptr< D3d11_Impl_PixelShader > GetPixelShader(s32 a_pixelshader_id);
+
+		/** GetVertexbuffer
+		*/
+		sharedptr< D3d11_Impl_VertexBuffer > GetVertexBuffer(s32 a_vertexbuffer_id);
+
+		/** GetConstantBuffer
+		*/
+		sharedptr< D3d11_Impl_ConstantBuffer > GetConstantBuffer(s32 a_constantbuffer_id);
 
 	public:
+
+		/** CreateVertexShader
+		*/
+		s32 CreateVertexShader(AsyncResult< bool >& a_asyncresult);
+
+		/** CreatePixelShader
+		*/
+		s32 CreatePixelShader(AsyncResult< bool >& a_asyncresult);
+
+		/** CreateVertexBuffer
+		*/
+		s32 CreateVertexBuffer(AsyncResult< bool >& a_asyncresult,const void* a_data,s32 a_stridebyte,s32 a_offset,s32 a_countofvertex);
+
+		/** CreateConstantBuffer
+		*/
+		s32 CreateConstantBuffer(AsyncResult< bool >& a_asyncresult,s32 a_size);
+
+	public:
+
+		/** Render_CreateVertexShader
+		*/
+		void Render_CreateVertexShader(sharedptr< D3d11_Impl_VertexShader >& a_vertexshader);
+
+		/** Render_CreatePixelShader
+		*/
+		void Render_CreatePixelShader(sharedptr< D3d11_Impl_PixelShader >& a_pixelshader);
+
+		/** Render_CreateVertexBuffer
+		*/
+		void Render_CreateVertexBuffer(sharedptr< D3d11_Impl_VertexBuffer >& a_pixelshader);
+
+		/** Render_CreateConstantBuffer
+		*/
+		void Render_CreateConstantBuffer(sharedptr< D3d11_Impl_ConstantBuffer >& a_constantbuffer);
+
+	public:
+
+		/** Render_Main
+		*/
+		void Render_Main();
+
+		/** StartBatching
+		*/
+		void StartBatching(sharedptr< NBsys::NActionBatching::ActionBatching_ActionList >& a_actionlist);
 
 		/** Render_ViewPort。
 		*/
@@ -159,13 +297,32 @@ namespace NBsys{namespace ND3d11
 		*/
 		void Render_ClearDepthStencilView();
 
-		/** Render_CreateBuffer
-		*/
-		void Render_CreateBuffer();
-
 		/** Render_Present
 		*/
 		bool Render_Present();
+
+	public:
+
+		/** Render_UpdateSubresource
+		*/
+		void Render_UpdateSubresource(s32 a_constantbuffer_id,const void* a_data);
+
+		/** Render_VSSetShader
+		*/
+		void Render_VSSetShader(s32 a_vertexshader_id);
+
+		/** Render_PSSetShader
+		*/
+		void Render_PSSetShader(s32 a_pixelshader_id);
+
+		/** Render_Draw
+		*/
+		void Render_Draw(s32 a_count_of_vertex,s32 a_start_of_vertex);
+
+		/** Render_VSSetConstantBuffers
+		*/
+		void Render_VSSetConstantBuffers(s32 a_startslot,s32 a_constantbuffer_id);
+		
 	};
 
 }}

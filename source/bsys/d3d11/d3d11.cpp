@@ -49,6 +49,34 @@ namespace NBsys{namespace ND3d11
 	{
 	}
 
+	/** CreateVertexShader
+	*/
+	s32 D3d11::CreateVertexShader(AsyncResult< bool >& a_asyncresult)
+	{
+		return this->impl->CreateVertexShader(a_asyncresult);
+	}
+
+	/** CreatePixelShader
+	*/
+	s32 D3d11::CreatePixelShader(AsyncResult< bool >& a_asyncresult)
+	{
+		return this->impl->CreatePixelShader(a_asyncresult);
+	}
+
+	/** CreatePixelShader
+	*/
+	s32 D3d11::CreateVertexBuffer(AsyncResult< bool >& a_asyncresult,const void* a_data,s32 a_stridebyte,s32 a_offset,s32 a_countofvertex)
+	{
+		return this->impl->CreateVertexBuffer(a_asyncresult,a_data,a_stridebyte,a_offset,a_countofvertex);
+	}
+
+	/** CreateConstantBuffer
+	*/
+	s32 D3d11::CreateConstantBuffer(AsyncResult< bool >& a_asyncresult,s32 a_size)
+	{
+		return this->impl->CreateConstantBuffer(a_asyncresult,a_size);
+	}
+	
 	/** Render_Create
 	*/
 	void D3d11::Render_Create(sharedptr< NWindow::Window >& a_window,s32 a_width,s32 a_height)
@@ -61,6 +89,13 @@ namespace NBsys{namespace ND3d11
 	void D3d11::Render_Delete()
 	{
 		this->impl->Render_Delete();
+	}
+
+	/** Render_Main
+	*/
+	void D3d11::Render_Main()
+	{
+		this->impl->Render_Main();
 	}
 
 	/** Render_ViewPortB
@@ -84,18 +119,46 @@ namespace NBsys{namespace ND3d11
 		this->impl->Render_ClearDepthStencilView();
 	}
 
-	/** Render_CreateBuffer
-	*/
-	void D3d11::Render_CreateBuffer()
-	{
-		this->impl->Render_CreateBuffer();
-	}
-
 	/** Render_Present
 	*/
 	bool D3d11::Render_Present()
 	{
 		return this->impl->Render_Present();
+	}
+
+	/** Render_UpdateSubresource
+	*/
+	void D3d11::Render_UpdateSubresource(s32 a_constantbuffer_id,const void* a_data)
+	{
+		return this->impl->Render_UpdateSubresource(a_constantbuffer_id,a_data);
+	}
+
+	/** Render_VSSetShader
+	*/
+	void D3d11::Render_VSSetShader(s32 a_vertexshader_id)
+	{
+		return this->impl->Render_VSSetShader(a_vertexshader_id);
+	}
+
+	/** Render_PSSetShader
+	*/
+	void D3d11::Render_PSSetShader(s32 a_pixelshader_id)
+	{
+		return this->impl->Render_PSSetShader(a_pixelshader_id);
+	}
+
+	/** Render_Draw
+	*/
+	void D3d11::Render_Draw(s32 a_count_of_vertex,s32 a_start_of_vertex)
+	{
+		return this->impl->Render_Draw(a_count_of_vertex,a_start_of_vertex);
+	}
+
+	/** Render_VSSetConstantBuffers
+	*/
+	void D3d11::Render_VSSetConstantBuffers(s32 a_startslot,s32 a_constantbuffer_id)
+	{
+		return this->impl->Render_VSSetConstantBuffers(a_startslot,a_constantbuffer_id);
 	}
 
 }}

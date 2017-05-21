@@ -146,14 +146,14 @@ namespace NBsys{namespace NFovehmd
 
 	/** GetLeftViewProjection
 	*/
-	NBsys::NGeometry::Geometry_Matrix_44& Fovehmd::GetLeftViewProjection(f32 a_near,f32 a_far,float a_camera_y)
+	NBsys::NGeometry::Geometry_Matrix_44 Fovehmd::GetLeftViewProjection(f32 a_near,f32 a_far,float a_camera_y)
 	{
 		return this->impl->GetLeftViewProjection(a_near,a_far,a_camera_y);
 	}
 
 	/** GetRightEyeTranslate
 	*/
-	NBsys::NGeometry::Geometry_Matrix_44& Fovehmd::GetRightViewProjection(f32 a_near,f32 a_far,float a_camera_y)
+	NBsys::NGeometry::Geometry_Matrix_44 Fovehmd::GetRightViewProjection(f32 a_near,f32 a_far,float a_camera_y)
 	{
 		return this->impl->GetRightViewProjection(a_near,a_far,a_camera_y);
 	}
