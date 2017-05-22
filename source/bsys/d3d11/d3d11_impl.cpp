@@ -452,7 +452,7 @@ namespace NBsys{namespace ND3d11
 				t_vertexbuffer->data = a_data;
 				t_vertexbuffer->stridebyte = a_stridebyte;
 				t_vertexbuffer->offset = a_offset;
-				t_vertexbuffer->countofvertex;
+				t_vertexbuffer->countofvertex = a_countofvertex;
 			}
 
 			//レンダーコマンド。
@@ -653,7 +653,7 @@ namespace NBsys{namespace ND3d11
 
 		D3D11_SUBRESOURCE_DATA t_subresource_data;
 		{
-			ZeroMemory(&t_subresource_data,sizeof(t_subresource_data));
+			Memory::memset(&t_subresource_data,0,sizeof(t_subresource_data));
 			t_subresource_data.pSysMem = a_vertexbuffer->data;
 		}
 

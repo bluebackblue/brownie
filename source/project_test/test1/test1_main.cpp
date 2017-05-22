@@ -196,8 +196,14 @@ void Test_Main()
 	sharedptr< ID3D11Buffer > t_constant_buffer;
 
 	AsyncResult< bool > t_asyncresult_vertexshader;
+	AsyncResult< bool > t_asyncresult_pixelshader;
+	AsyncResult< bool > t_asyncresult_constantbuffer;
+	AsyncResult< bool > t_asyncresult_vertexbuffer;
 
 	s32 t_vertexshader_id = -1;
+	s32 t_pixelshader_id = -1;
+	s32 t_constantbuffer_id = -1;
+	s32 t_vertexbuffer_id = -1;
 
 	// Main loop
 	while (true)
@@ -227,206 +233,43 @@ void Test_Main()
 		if(s_step == 0){
 
 			t_asyncresult_vertexshader.Create(false);
+			t_asyncresult_pixelshader.Create(false);
+			t_asyncresult_constantbuffer.Create(false);
+			t_asyncresult_vertexbuffer.Create(false);
+
 			t_vertexshader_id = s_d3d11->CreateVertexShader(t_asyncresult_vertexshader);
+			t_pixelshader_id = s_d3d11->CreatePixelShader(t_asyncresult_pixelshader);
+			t_constantbuffer_id = s_d3d11->CreateConstantBuffer(t_asyncresult_constantbuffer,sizeof(float) * 16);
+			t_vertexbuffer_id = s_d3d11->CreateVertexBuffer(t_asyncresult_vertexbuffer,s_vertex->GetVertexPointer(),s_vertex->GetVertexStrideByte(),0,s_vertex->GetVertexAllCountOf());
 
 			s_step++;
 
 		}else if(s_step == 1){
 
 			if(t_asyncresult_vertexshader.Get() == true){
-				s_step++;
+				if(t_asyncresult_pixelshader.Get() == true){
+					if(t_asyncresult_constantbuffer.Get() == true){
+						if(t_asyncresult_vertexbuffer.Get() == true){
+							s_step++;
+						}
+					}
+				}
 			}
 
 		}else if(s_step == 2){
 
-			//バーテックスバッファ。
-			{
-				s_vertexbuffer_stride = s_vertex->GetVertexStrideByte();
-				s_vertexbuffer_offset = s_vertex->GetVertexOffset(0);
-				s_vertexbuffer_countofvertex = s_vertex->GetVertexCountOf(0);
-
-				D3D11_BUFFER_DESC t_desc;
-				{
-					Memory::memset(&t_desc,0,sizeof(t_desc));
-					t_desc.Usage = D3D11_USAGE_DEFAULT;
-					t_desc.ByteWidth = s_vertex->GetVertexAllCountOf() * s_vertex->GetVertexStrideByte();
-					t_desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-					t_desc.CPUAccessFlags = 0;
-				}
-
-				D3D11_SUBRESOURCE_DATA t_subresource_data;
-				{
-					ZeroMemory(&t_subresource_data,sizeof(t_subresource_data));
-					t_subresource_data.pSysMem = s_vertex->GetVertexPointer();
-				}
-
-				ID3D11Buffer* t_raw;
-				HRESULT t_result = s_d3d11->GetImpl()->GetDevice()->CreateBuffer(&t_desc,&t_subresource_data,&t_raw);
-				if(t_raw != nullptr){
-					s_vertexbuffer.reset(t_raw,release_delete< ID3D11Buffer >());
-				}
-				if(FAILED(t_result)){
-					s_vertexbuffer.reset();
-				}
-			}
-
-			//バーテックス。
-			/*
-			{
-				STLString t_vertex_source = 
-					"float4x4 modelView;"
-					"struct VSI {"
-						"float4 p : POSITION0;"
-						"float3 c : COLOR;"
-					"};"
-					"struct VSO {"
-						"float4 p : SV_POSITION;"
-						"float3 c : COLOR;"
-					"};"
-					"VSO VS(VSI i) {"
-						"VSO ret;"
-						"ret.p = mul(i.p, modelView);"
-						"ret.c = i.c;"
-						"return ret;"
-					"}";
-
-				sharedptr< ID3DBlob > t_blob;
-				{
-					sharedptr< ID3DBlob > t_blob_error;
-					ID3DBlob* t_raw = nullptr;
-					ID3DBlob* t_raw_error = nullptr;
-					HRESULT t_result = D3DCompile(t_vertex_source.c_str(),t_vertex_source.size(),nullptr,nullptr,nullptr,"VS","vs_4_0",D3DCOMPILE_ENABLE_STRICTNESS|D3DCOMPILE_DEBUG,0,&t_raw,&t_raw_error);
-					if(t_raw != nullptr){
-						t_blob.reset(t_raw,release_delete< ID3DBlob >());
-					}
-					if(t_raw != nullptr){
-						t_blob_error.reset(t_raw_error,release_delete< ID3DBlob >());
-					}
-					if(FAILED(t_result)){
-						t_blob.reset();
-					}
-
-					if(t_blob != nullptr){
-					}else{
-						std::string t_errorstring;
-						if(t_blob_error != nullptr){
-							t_errorstring = std::string((const char*)t_blob_error->GetBufferPointer(),t_blob_error->GetBufferSize());
-						}
-						TAGLOG("compile vertex","FAILED");
-						TAGLOG("compile vertex",t_errorstring.c_str());
-					}
-
-					t_blob_error.reset();
-				}
-
-				{
-					ID3D11VertexShader* t_raw = nullptr;
-					HRESULT t_result = s_d3d11->GetImpl()->GetDevice()->CreateVertexShader(t_blob->GetBufferPointer(),t_blob->GetBufferSize(),nullptr,&t_raw);
-					if(t_raw != nullptr){
-						s_vertex_shader.reset(t_raw,release_delete< ID3D11VertexShader >());
-					}
-					if(FAILED(t_result)){
-						s_vertex_shader.reset();
-					}
-				}
-
-				{
-					D3D11_INPUT_ELEMENT_DESC t_layout[] = {
-						{	"POSITION",		0,	DXGI_FORMAT_R32G32B32_FLOAT,		0,	0,		D3D11_INPUT_PER_VERTEX_DATA,	0},
-						{	"COLOR",	    0,	DXGI_FORMAT_R32G32B32A32_FLOAT,		0,	12,		D3D11_INPUT_PER_VERTEX_DATA,	0},
-					};
-
-					ID3D11InputLayout* t_raw = nullptr;
-					HRESULT t_result = s_d3d11->GetImpl()->GetDevice()->CreateInputLayout(t_layout,COUNTOF(t_layout),t_blob->GetBufferPointer(),t_blob->GetBufferSize(),&t_raw);
-					if(t_raw != nullptr){
-						s_vertex_layout.reset(t_raw,release_delete< ID3D11InputLayout >());
-					}
-					if(FAILED(t_result)){
-						s_vertex_layout.reset();
-					}
-				}
-			}
-			*/
 			{
 				s_vertex_shader = s_d3d11->GetImpl()->GetVertexShader(t_vertexshader_id)->vertexshader;
 				s_vertex_layout = s_d3d11->GetImpl()->GetVertexShader(t_vertexshader_id)->inputlayout;
+				s_pixel_shader = s_d3d11->GetImpl()->GetPixelShader(t_pixelshader_id)->pixelshader;
+				t_constant_buffer = s_d3d11->GetImpl()->GetConstantBuffer(t_constantbuffer_id)->buffer;
+				s_vertexbuffer = s_d3d11->GetImpl()->GetVertexBuffer(t_vertexbuffer_id)->buffer;
+
+				s_vertexbuffer_stride = s_vertex->GetVertexStrideByte();
+				s_vertexbuffer_offset = s_vertex->GetVertexOffset(0);
+				s_vertexbuffer_countofvertex = s_vertex->GetVertexCountOf(0);
 			}
 	
-			//ピクセル。
-			{
-				STLString t_pixel_source = 
-					"struct VSO {"
-						"float4 p : SV_POSITION;"
-						"float3 c : COLOR;"
-					"};"
-					"float4 PS(VSO i) : SV_Target {"
-						"return float4(i.c.r, i.c.g, i.c.b, 1.0f);"
-					"}";
-
-				sharedptr< ID3DBlob > t_blob;
-				{
-					sharedptr< ID3DBlob > t_blob_error;
-					ID3DBlob* t_raw = nullptr;
-					ID3DBlob* t_raw_error = nullptr;
-					HRESULT t_result = D3DCompile(t_pixel_source.c_str(),t_pixel_source.size(),nullptr,nullptr,nullptr,"PS","ps_4_0",D3DCOMPILE_ENABLE_STRICTNESS|D3DCOMPILE_DEBUG,0,&t_raw,&t_raw_error);
-					if(t_raw != nullptr){
-						t_blob.reset(t_raw,release_delete< ID3DBlob >());
-					}
-					if(t_raw != nullptr){
-						t_blob_error.reset(t_raw_error,release_delete< ID3DBlob >());
-					}
-					if(FAILED(t_result)){
-						t_blob.reset();
-					}
-
-					if(t_blob != nullptr){
-					}else{
-						std::string t_errorstring;
-						if(t_blob_error != nullptr){
-							t_errorstring = std::string((const char*)t_blob_error->GetBufferPointer(),t_blob_error->GetBufferSize());
-						}
-						TAGLOG("compile vertex","FAILED");
-						TAGLOG("compile vertex",t_errorstring.c_str());
-					}
-
-					t_blob_error.reset();
-				}
-
-				{
-					ID3D11PixelShader* t_raw = nullptr;
-					HRESULT t_result = s_d3d11->GetImpl()->GetDevice()->CreatePixelShader(t_blob->GetBufferPointer(),t_blob->GetBufferSize(),nullptr,&t_raw);
-					if(t_raw != nullptr){
-						s_pixel_shader.reset(t_raw,release_delete< ID3D11PixelShader >());
-					}
-					if(FAILED(t_result)){
-						s_pixel_shader.reset();
-					}
-				}
-			}
-
-			//コンスタントバッファ。
-			{
-				{
-					D3D11_BUFFER_DESC t_desc;
-					{
-						Memory::memset(&t_desc,0,sizeof(t_desc));
-						t_desc.Usage = D3D11_USAGE_DEFAULT;
-						t_desc.ByteWidth = sizeof(float) * 16;
-						t_desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-						t_desc.CPUAccessFlags = 0;
-					}
-
-					ID3D11Buffer* t_raw = nullptr;
-					HRESULT t_result = s_d3d11->GetImpl()->GetDevice()->CreateBuffer(&t_desc,nullptr,&t_raw);
-					if(t_raw != nullptr){
-						t_constant_buffer.reset(t_raw,release_delete< ID3D11Buffer >());
-					}
-					if(FAILED(t_result)){
-						t_constant_buffer.reset();
-					}
-				}
-			}
-
 			s_step++;
 
 		}else{
