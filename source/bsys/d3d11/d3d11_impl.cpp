@@ -849,6 +849,55 @@ namespace NBsys{namespace ND3d11
 		ASSERT(0);
 	}
 
+	/** Render_IASetInputLayout
+	*/
+	void D3d11_Impl::Render_IASetInputLayout(s32 a_vertexshader_id)
+	{
+		STLMap< s32 , sharedptr< D3d11_Impl_VertexShader > >::iterator t_it = this->vertexshader_list.find(a_vertexshader_id);
+		if(t_it != this->vertexshader_list.end()){
+
+			if(t_it->second != nullptr){
+				if(t_it->second->inputlayout != nullptr){
+					this->devicecontext->IASetInputLayout(t_it->second->inputlayout.get());
+					return;
+				}
+			}
+		}
+	}
+
+	/** Render_IASetVertexBuffers
+	*/
+	void D3d11_Impl::Render_IASetVertexBuffers(s32 a_vertexbuffer_id)
+	{
+		STLMap< s32 , sharedptr< D3d11_Impl_VertexBuffer > >::iterator t_it = this->vertexbuffer_list.find(a_vertexbuffer_id);
+		if(t_it != this->vertexbuffer_list.end()){
+
+			if(t_it->second != nullptr){
+				if(t_it->second->buffer != nullptr){
+
+					ID3D11Buffer* t_list[] = {
+						t_it->second->buffer.get(),
+					};
+					
+					UINT t_stride = t_it->second->stridebyte;
+					
+					UINT t_offset = t_it->second->offset;
+
+					this->devicecontext->IASetVertexBuffers(0,COUNTOF(t_list),t_list,&t_stride,&t_offset);
+					return;
+				}
+			}
+		}
+	}
+
+	/** Render_IASetPrimitiveTopology_TriangleList
+	*/
+	void D3d11_Impl::Render_IASetPrimitiveTopology_TriangleList()
+	{
+		if(this->devicecontext){
+			this->devicecontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		}
+	}
 
 }}
 #endif

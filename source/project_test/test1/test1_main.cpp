@@ -56,48 +56,20 @@ void Blib_DebugLog_Callback(const char* a_tag,const char* a_string)
 #endif
 
 
+/** USE_FOVE
+*/
+#define USE_FOVE (1)
+
+
 /** s_window
 */
 static sharedptr< NBsys::NWindow::Window > s_window;
+
 
 /** s_d3d11
 */
 static sharedptr< NBsys::ND3d11::D3d11 > s_d3d11;
 
-//s_vertex
-static sharedptr< NBsys::NModel::Model_Vertex< NBsys::NModel::Model_Vertex_Data_Pos3Color4 > > s_vertex;
-
-/** s_clear_color
-*/
-static NBsys::NColor::Color_F s_clear_color(0.0f,0.5f,0.5f,1.0f);
-
-//s_matrix
-static NBsys::NGeometry::Geometry_Matrix_44 s_matrix = NBsys::NGeometry::Geometry_Matrix_44::Identity();
-
-//s_pcounter
-u64 s_pcounter = 0ULL;
-
-//s_vertexbuffer
-sharedptr< ID3D11Buffer > s_vertexbuffer;
-s32 s_vertexbuffer_stride;
-s32 s_vertexbuffer_offset;
-s32 s_vertexbuffer_countofvertex;
-
-/** s_vertex_shader
-*/
-sharedptr< ID3D11VertexShader > s_vertex_shader;
-
-/** s_vertex_layout
-*/
-sharedptr< ID3D11InputLayout > s_vertex_layout;
-
-/** s_pixel_shader
-*/
-sharedptr< ID3D11PixelShader > s_pixel_shader;
-
-/** USE_FOVE
-*/
-#define USE_FOVE (1)
 
 /** s_fovehmd
 */
@@ -105,11 +77,40 @@ sharedptr< ID3D11PixelShader > s_pixel_shader;
 static sharedptr< NBsys::NFovehmd::Fovehmd > s_fovehmd;
 #endif
 
+
+//s_vertex
+static sharedptr< NBsys::NModel::Model_Vertex< NBsys::NModel::Model_Vertex_Data_Pos3Color4 > > s_vertex;
+
+
+//s_matrix
+static NBsys::NGeometry::Geometry_Matrix_44 s_matrix = NBsys::NGeometry::Geometry_Matrix_44::Identity();
+
+
+//s_pcounter
+static u64 s_pcounter = 0ULL;
+
+
+//s_step
 static int s_step = 0;
+
+
+//asyncresult
+AsyncResult< bool > t_asyncresult_vertexshader;
+AsyncResult< bool > t_asyncresult_pixelshader;
+AsyncResult< bool > t_asyncresult_constantbuffer;
+AsyncResult< bool > t_asyncresult_vertexbuffer;
+
+
+//id
+s32 t_vertexshader_id = -1;
+s32 t_pixelshader_id = -1;
+s32 t_constantbuffer_id = -1;
+s32 t_vertexbuffer_id = -1;
+
 
 /** Draw
 */
-void Draw(sharedptr< ID3D11Buffer >& a_constant_buffer,NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeometry::Geometry_Matrix_44& a_view_projection)
+void Draw(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeometry::Geometry_Matrix_44& a_view_projection)
 {
 	for(s32 xx=-10;xx<10;xx++){
 		for(s32 zz=-10;zz<10;zz++){
@@ -117,24 +118,19 @@ void Draw(sharedptr< ID3D11Buffer >& a_constant_buffer,NBsys::NGeometry::Geometr
 
 			NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = a_model_matrix * NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(xx*2.0f,yy*2.0f,zz*2.0f) * a_view_projection;
 			NBsys::NGeometry::Geometry_Matrix_44 t_view_projection_transpose = t_view_projection.Make_Transpose();
-			s_d3d11->GetImpl()->GetDeviceContext()->UpdateSubresource(a_constant_buffer.get(),0,nullptr,&t_view_projection_transpose.m[0][0],0,0);
-			s_d3d11->GetImpl()->GetDeviceContext()->VSSetShader(s_vertex_shader.get(),nullptr,0);
-			{
-				ID3D11Buffer* t_list[] = 
-				{
-					a_constant_buffer.get()
-				};
-				s_d3d11->GetImpl()->GetDeviceContext()->VSSetConstantBuffers(0,1,t_list);
-			}
-			s_d3d11->GetImpl()->GetDeviceContext()->PSSetShader(s_pixel_shader.get(),nullptr,0);
-			s_d3d11->GetImpl()->GetDeviceContext()->Draw(s_vertexbuffer_countofvertex,0);
+
+			s_d3d11->Render_UpdateSubresource(t_constantbuffer_id,&t_view_projection_transpose.m[0][0]);
+			s_d3d11->Render_VSSetShader(t_vertexshader_id);
+			s_d3d11->Render_VSSetConstantBuffers(0,t_constantbuffer_id);
+			s_d3d11->Render_PSSetShader(t_pixelshader_id);
+			s_d3d11->Render_Draw(s_vertex->GetVertexCountOf(0),s_vertex->GetVertexOffset(0));
 		}
 	}
 }
 
 /** Draw1
 */
-void Draw1(sharedptr< ID3D11Buffer >& a_constant_buffer,NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeometry::Geometry_Matrix_44& a_view_projection)
+void Draw1(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeometry::Geometry_Matrix_44& a_view_projection)
 {
 	s32 xx = 0;
 	s32 zz = 0;
@@ -142,19 +138,13 @@ void Draw1(sharedptr< ID3D11Buffer >& a_constant_buffer,NBsys::NGeometry::Geomet
 
 	NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = a_model_matrix * NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(xx*2.0f,yy*2.0f,zz*2.0f) * a_view_projection;
 	NBsys::NGeometry::Geometry_Matrix_44 t_view_projection_transpose = t_view_projection.Make_Transpose();
-	s_d3d11->GetImpl()->GetDeviceContext()->UpdateSubresource(a_constant_buffer.get(),0,nullptr,&t_view_projection_transpose.m[0][0],0,0);
-	s_d3d11->GetImpl()->GetDeviceContext()->VSSetShader(s_vertex_shader.get(),nullptr,0);
-	{
-		ID3D11Buffer* t_list[] = 
-		{
-			a_constant_buffer.get()
-		};
-		s_d3d11->GetImpl()->GetDeviceContext()->VSSetConstantBuffers(0,1,t_list);
-	}
-	s_d3d11->GetImpl()->GetDeviceContext()->PSSetShader(s_pixel_shader.get(),nullptr,0);
-	s_d3d11->GetImpl()->GetDeviceContext()->Draw(s_vertexbuffer_countofvertex,0);
-}
 
+	s_d3d11->Render_UpdateSubresource(t_constantbuffer_id,&t_view_projection_transpose.m[0][0]);
+	s_d3d11->Render_VSSetShader(t_vertexshader_id);
+	s_d3d11->Render_VSSetConstantBuffers(0,t_constantbuffer_id);
+	s_d3d11->Render_PSSetShader(t_pixelshader_id);
+	s_d3d11->Render_Draw(s_vertex->GetVertexCountOf(0),s_vertex->GetVertexOffset(0));
+}
 
 /** Test_Main
 */
@@ -195,15 +185,7 @@ void Test_Main()
 
 	sharedptr< ID3D11Buffer > t_constant_buffer;
 
-	AsyncResult< bool > t_asyncresult_vertexshader;
-	AsyncResult< bool > t_asyncresult_pixelshader;
-	AsyncResult< bool > t_asyncresult_constantbuffer;
-	AsyncResult< bool > t_asyncresult_vertexbuffer;
 
-	s32 t_vertexshader_id = -1;
-	s32 t_pixelshader_id = -1;
-	s32 t_constantbuffer_id = -1;
-	s32 t_vertexbuffer_id = -1;
 
 	// Main loop
 	while (true)
@@ -258,45 +240,16 @@ void Test_Main()
 
 		}else if(s_step == 2){
 
-			{
-				s_vertex_shader = s_d3d11->GetImpl()->GetVertexShader(t_vertexshader_id)->vertexshader;
-				s_vertex_layout = s_d3d11->GetImpl()->GetVertexShader(t_vertexshader_id)->inputlayout;
-				s_pixel_shader = s_d3d11->GetImpl()->GetPixelShader(t_pixelshader_id)->pixelshader;
-				t_constant_buffer = s_d3d11->GetImpl()->GetConstantBuffer(t_constantbuffer_id)->buffer;
-				s_vertexbuffer = s_d3d11->GetImpl()->GetVertexBuffer(t_vertexbuffer_id)->buffer;
-
-				s_vertexbuffer_stride = s_vertex->GetVertexStrideByte();
-				s_vertexbuffer_offset = s_vertex->GetVertexOffset(0);
-				s_vertexbuffer_countofvertex = s_vertex->GetVertexCountOf(0);
-			}
-	
 			s_step++;
 
 		}else{
 
-			//更新。
-			{
-				//s_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_RotationY(t_delta * 0.1f);
-			}
-
 			//レイアウト。
-			s_d3d11->GetImpl()->GetDeviceContext()->IASetInputLayout(s_vertex_layout.get());
-
-			//頂点バッファ。
-			{
-				ID3D11Buffer* t_list[] = {
-					s_vertexbuffer.get(),
-				};
-
-				UINT t_stride = s_vertexbuffer_stride;
-
-				UINT t_offset = 0;
-
-				s_d3d11->GetImpl()->GetDeviceContext()->IASetVertexBuffers(0, 1, t_list, &t_stride, &t_offset);
-			}
+			s_d3d11->Render_IASetInputLayout(t_vertexshader_id);
+			s_d3d11->Render_IASetVertexBuffers(t_vertexbuffer_id);
 
 			//プリミティブ形状。
-			s_d3d11->GetImpl()->GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+			s_d3d11->Render_IASetPrimitiveTopology_TriangleList();
 
 			s_d3d11->Render_ClearRenderTargetView(NBsys::NColor::Color_F(0.3f,0.3f,0.8f,1.0f));
 			s_d3d11->Render_ClearDepthStencilView();
@@ -356,14 +309,14 @@ void Test_Main()
 							NBsys::NGeometry::Geometry_Matrix_44 t_matrix = t_fovehmd_matrix;
 							t_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(t_fovehmd_position.x,t_fovehmd_position.y,t_fovehmd_position.z);
 							t_matrix *= s_fovehmd->GetLeftEyeTranslate();
-							Draw1(t_constant_buffer,t_matrix,t_view*t_projection);
+							Draw1(t_matrix,t_view*t_projection);
 						}
 
 						{
 							NBsys::NGeometry::Geometry_Matrix_44 t_matrix = t_fovehmd_matrix;
 							t_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(t_fovehmd_position.x,t_fovehmd_position.y,t_fovehmd_position.z);
 							t_matrix *= s_fovehmd->GetRightEyeTranslate();
-							Draw1(t_constant_buffer,t_matrix,t_view*t_projection);
+							Draw1(t_matrix,t_view*t_projection);
 						}
 					}
 				}

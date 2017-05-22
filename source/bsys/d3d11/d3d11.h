@@ -84,7 +84,7 @@ namespace NBsys{namespace ND3d11
 		void Render_Main();
 
 	public:
-		/** Render_ViewPortÅB
+		/** Render_ViewPort
 		*/
 		void Render_ViewPort(f32 a_x,f32 a_y,f32 a_width,f32 a_height);
 
@@ -120,6 +120,18 @@ namespace NBsys{namespace ND3d11
 		/** Render_VSSetConstantBuffers
 		*/
 		void Render_VSSetConstantBuffers(s32 a_startslot,s32 a_constantbuffer_id);
+
+		/** Render_IASetInputLayout
+		*/
+		void Render_IASetInputLayout(s32 a_vertexshader_id);
+
+		/** Render_IASetVertexBuffers
+		*/
+		void Render_IASetVertexBuffers(s32 a_vertexbuffer_id);
+
+		/** Render_IASetPrimitiveTopology_TriangleList
+		*/
+		void Render_IASetPrimitiveTopology_TriangleList();
 
 	};
 

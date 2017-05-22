@@ -323,6 +323,17 @@ namespace NBsys{namespace ND3d11
 		*/
 		void Render_VSSetConstantBuffers(s32 a_startslot,s32 a_constantbuffer_id);
 		
+		/** Render_IASetInputLayout
+		*/
+		void Render_IASetInputLayout(s32 a_vertexshader_id);
+
+		/** Render_IASetVertexBuffers
+		*/
+		void Render_IASetVertexBuffers(s32 a_vertexbuffer_id);
+
+		/** Render_IASetPrimitiveTopology_TriangleList
+		*/
+		void Render_IASetPrimitiveTopology_TriangleList();
 	};
 
 }}

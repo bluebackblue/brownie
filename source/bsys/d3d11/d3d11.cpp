@@ -130,36 +130,58 @@ namespace NBsys{namespace ND3d11
 	*/
 	void D3d11::Render_UpdateSubresource(s32 a_constantbuffer_id,const void* a_data)
 	{
-		return this->impl->Render_UpdateSubresource(a_constantbuffer_id,a_data);
+		this->impl->Render_UpdateSubresource(a_constantbuffer_id,a_data);
 	}
 
 	/** Render_VSSetShader
 	*/
 	void D3d11::Render_VSSetShader(s32 a_vertexshader_id)
 	{
-		return this->impl->Render_VSSetShader(a_vertexshader_id);
+		this->impl->Render_VSSetShader(a_vertexshader_id);
 	}
 
 	/** Render_PSSetShader
 	*/
 	void D3d11::Render_PSSetShader(s32 a_pixelshader_id)
 	{
-		return this->impl->Render_PSSetShader(a_pixelshader_id);
+		this->impl->Render_PSSetShader(a_pixelshader_id);
 	}
 
 	/** Render_Draw
 	*/
 	void D3d11::Render_Draw(s32 a_count_of_vertex,s32 a_start_of_vertex)
 	{
-		return this->impl->Render_Draw(a_count_of_vertex,a_start_of_vertex);
+		this->impl->Render_Draw(a_count_of_vertex,a_start_of_vertex);
 	}
 
 	/** Render_VSSetConstantBuffers
 	*/
 	void D3d11::Render_VSSetConstantBuffers(s32 a_startslot,s32 a_constantbuffer_id)
 	{
-		return this->impl->Render_VSSetConstantBuffers(a_startslot,a_constantbuffer_id);
+		this->impl->Render_VSSetConstantBuffers(a_startslot,a_constantbuffer_id);
 	}
+
+	/** Render_IASetInputLayout
+	*/
+	void D3d11::Render_IASetInputLayout(s32 a_vertexshader_id)
+	{
+		this->impl->Render_IASetInputLayout(a_vertexshader_id);
+	}
+
+	/** Render_IASetVertexBuffers
+	*/
+	void D3d11::Render_IASetVertexBuffers(s32 a_vertexbuffer_id)
+	{
+		this->impl->Render_IASetVertexBuffers(a_vertexbuffer_id);
+	}
+
+	/** Render_IASetPrimitiveTopology_TriangleList
+	*/
+	void D3d11::Render_IASetPrimitiveTopology_TriangleList()
+	{
+		this->impl->Render_IASetPrimitiveTopology_TriangleList();
+	}
+
 
 }}
 #endif
