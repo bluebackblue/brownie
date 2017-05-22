@@ -58,7 +58,7 @@ void Blib_DebugLog_Callback(const char* a_tag,const char* a_string)
 
 /** USE_FOVE
 */
-#define USE_FOVE (1)
+#define USE_FOVE (0)
 
 
 /** s_window
@@ -183,10 +183,6 @@ void Test_Main()
 
 	s_pcounter = PerformanceCounter::GetPerformanceCounter();
 
-	sharedptr< ID3D11Buffer > t_constant_buffer;
-
-
-
 	// Main loop
 	while (true)
 	{
@@ -261,7 +257,7 @@ void Test_Main()
 
 						NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = s_fovehmd->GetLeftViewProjection(s_near,s_far,2.0f);
 
-						Draw(t_constant_buffer,s_matrix,t_view_projection);
+						Draw(s_matrix,t_view_projection);
 					}
 
 					{
@@ -269,12 +265,16 @@ void Test_Main()
 
 						NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = s_fovehmd->GetRightViewProjection(s_near,s_far,2.0f);
 
-						Draw(t_constant_buffer,s_matrix,t_view_projection);
+						Draw(s_matrix,t_view_projection);
 					}
 				}
 				#else
 				{
+					#if(USE_FOVE)
 					s_d3d11->Render_ViewPort(0.0f,0.0f,s_fovehmd->GetSingleEyeResolution().x * 2,s_fovehmd->GetSingleEyeResolution().y);
+					#else
+					s_d3d11->Render_ViewPort(0.0f,0.0f,800,600);
+					#endif
 
 					//t_camera_target
 					NBsys::NGeometry::Geometry_Vector3 t_camera_target(0.0f,0.0f,0.0f);
@@ -295,27 +295,41 @@ void Test_Main()
 					f32 t_fov_deg = 60.0f;
 
 					NBsys::NGeometry::Geometry_Matrix_44 t_projection;
+					#if(USE_FOVE)
 					t_projection.Set_PerspectiveProjectionMatrix(s_fovehmd->GetSingleEyeResolution().x * 2,s_fovehmd->GetSingleEyeResolution().y,t_fov_deg,t_near,t_far);
+					#else
+					t_projection.Set_PerspectiveProjectionMatrix(800,600,t_fov_deg,t_near,t_far);
+					#endif
 
 					NBsys::NGeometry::Geometry_Matrix_44 t_view;
 					t_view.Set_ViewMatrix(t_camera_target,t_camera_position,t_camera_up);
 				
 					{
+						#if(USE_FOVE)
 						NBsys::NGeometry::Geometry_Vector3 t_fovehmd_position = s_fovehmd->GetCameraPosition();
 						NBsys::NGeometry::Geometry_Quaternion t_fovehmd_quaternion = s_fovehmd->GetCameraQuaternion();
 						NBsys::NGeometry::Geometry_Matrix_44 t_fovehmd_matrix(t_fovehmd_quaternion);
+						#endif
 
 						{
+							#if(USE_FOVE)
 							NBsys::NGeometry::Geometry_Matrix_44 t_matrix = t_fovehmd_matrix;
 							t_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(t_fovehmd_position.x,t_fovehmd_position.y,t_fovehmd_position.z);
 							t_matrix *= s_fovehmd->GetLeftEyeTranslate();
+							#else
+							NBsys::NGeometry::Geometry_Matrix_44 t_matrix = NBsys::NGeometry::Geometry_Matrix_44::Identity();
+							#endif
 							Draw1(t_matrix,t_view*t_projection);
 						}
 
 						{
+							#if(USE_FOVE)
 							NBsys::NGeometry::Geometry_Matrix_44 t_matrix = t_fovehmd_matrix;
 							t_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(t_fovehmd_position.x,t_fovehmd_position.y,t_fovehmd_position.z);
 							t_matrix *= s_fovehmd->GetRightEyeTranslate();
+							#else
+							NBsys::NGeometry::Geometry_Matrix_44 t_matrix = NBsys::NGeometry::Geometry_Matrix_44::Identity();
+							#endif
 							Draw1(t_matrix,t_view*t_projection);
 						}
 					}
