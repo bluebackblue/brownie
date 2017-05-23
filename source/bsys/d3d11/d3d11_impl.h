@@ -24,6 +24,7 @@
 #include "../window/window.h"
 #include "../color/color.h"
 #include "../actionbatching/actionbatching.h"
+#include "../file/file.h"
 
 
 /** include
@@ -54,6 +55,10 @@ namespace NBsys{namespace ND3d11
 		/** inputlayout
 		*/
 		sharedptr< ID3D11InputLayout > inputlayout;
+
+		/** fileobject
+		*/
+		sharedptr< NBsys::NFile::File_Object > fileobject; 
 	};
 
 	/** D3d11_Impl_PixelShader
@@ -63,6 +68,10 @@ namespace NBsys{namespace ND3d11
 		/** pixelshader
 		*/
 		sharedptr< ID3D11PixelShader > pixelshader;
+
+		/** fileobject
+		*/
+		sharedptr< NBsys::NFile::File_Object > fileobject; 
 	};
 
 	/** D3d11_Impl_VertexBuffer
@@ -243,11 +252,11 @@ namespace NBsys{namespace ND3d11
 
 		/** CreateVertexShader
 		*/
-		s32 CreateVertexShader(AsyncResult< bool >& a_asyncresult);
+		s32 CreateVertexShader(AsyncResult< bool >& a_asyncresult,sharedptr< NBsys::NFile::File_Object >& a_fileobject);
 
 		/** CreatePixelShader
 		*/
-		s32 CreatePixelShader(AsyncResult< bool >& a_asyncresult);
+		s32 CreatePixelShader(AsyncResult< bool >& a_asyncresult,sharedptr< NBsys::NFile::File_Object >& a_fileobject);
 
 		/** CreateVertexBuffer
 		*/

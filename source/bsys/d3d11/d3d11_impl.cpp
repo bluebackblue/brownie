@@ -387,7 +387,7 @@ namespace NBsys{namespace ND3d11
 
 	/** CreateVertexShader
 	*/
-	s32 D3d11_Impl::CreateVertexShader(AsyncResult< bool >& a_asyncresult)
+	s32 D3d11_Impl::CreateVertexShader(AsyncResult< bool >& a_asyncresult,sharedptr< NBsys::NFile::File_Object >& a_fileobject)
 	{
 		AutoLock t_autolock(this->actionbatching_lockobject);
 
@@ -396,6 +396,9 @@ namespace NBsys{namespace ND3d11
 			s32 t_vertexshader_id = this->id_maker.MakeID();
 
 			sharedptr< D3d11_Impl_VertexShader > t_vertexshader = new D3d11_Impl_VertexShader();
+			{
+				t_vertexshader->fileobject = a_fileobject;
+			}
 
 			//レンダーコマンド。
 			sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
@@ -413,7 +416,7 @@ namespace NBsys{namespace ND3d11
 
 	/** CreatePixelShader
 	*/
-	s32 D3d11_Impl::CreatePixelShader(AsyncResult< bool >& a_asyncresult)
+	s32 D3d11_Impl::CreatePixelShader(AsyncResult< bool >& a_asyncresult,sharedptr< NBsys::NFile::File_Object >& a_fileobject)
 	{
 		AutoLock t_autolock(this->actionbatching_lockobject);
 
@@ -422,6 +425,9 @@ namespace NBsys{namespace ND3d11
 			s32 t_pixelshader_id = this->id_maker.MakeID();
 
 			sharedptr< D3d11_Impl_PixelShader > t_pixelshader = new D3d11_Impl_PixelShader();
+			{
+				t_pixelshader->fileobject = a_fileobject;
+			}
 
 			//レンダーコマンド。
 			sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
@@ -502,24 +508,14 @@ namespace NBsys{namespace ND3d11
 	*/
 	void D3d11_Impl::Render_CreateVertexShader(sharedptr< D3d11_Impl_VertexShader >& a_vertexshader)
 	{
-		/** t_vertex_source
-		*/
-		STLString t_vertex_source = 
-			"float4x4 modelView;"
-			"struct VSI {"
-				"float4 p : POSITION0;"
-				"float3 c : COLOR;"
-			"};"
-			"struct VSO {"
-				"float4 p : SV_POSITION;"
-				"float3 c : COLOR;"
-			"};"
-			"VSO VS(VSI i) {"
-				"VSO ret;"
-				"ret.p = mul(i.p, modelView);"
-				"ret.c = i.c;"
-				"return ret;"
-			"}";
+		char* t_data = reinterpret_cast< char* >(a_vertexshader->fileobject->GetLoadData().get());
+		s64 t_size = a_vertexshader->fileobject->GetLoadSize();
+
+		if(a_vertexshader->fileobject->GetAddAllocateSize() > 0){
+			t_data[t_size] = 0x00;
+		}else{
+			ASSERT(0);
+		}
 
 		/** t_blob
 		*/
@@ -528,7 +524,7 @@ namespace NBsys{namespace ND3d11
 			sharedptr< ID3DBlob > t_blob_error;
 			ID3DBlob* t_raw = nullptr;
 			ID3DBlob* t_raw_error = nullptr;
-			HRESULT t_result = D3DCompile(t_vertex_source.c_str(),t_vertex_source.size(),nullptr,nullptr,nullptr,"VS","vs_4_0",D3DCOMPILE_ENABLE_STRICTNESS|D3DCOMPILE_DEBUG,0,&t_raw,&t_raw_error);
+			HRESULT t_result = D3DCompile(t_data,t_size,nullptr,nullptr,nullptr,"VS","vs_4_0",D3DCOMPILE_ENABLE_STRICTNESS|D3DCOMPILE_DEBUG,0,&t_raw,&t_raw_error);
 			if(t_raw != nullptr){
 				t_blob.reset(t_raw,release_delete< ID3DBlob >());
 			}
@@ -588,21 +584,21 @@ namespace NBsys{namespace ND3d11
 	*/
 	void D3d11_Impl::Render_CreatePixelShader(sharedptr< D3d11_Impl_PixelShader >& a_pixelshader)
 	{
-		STLString t_pixel_source = 
-			"struct VSO {"
-				"float4 p : SV_POSITION;"
-				"float3 c : COLOR;"
-			"};"
-			"float4 PS(VSO i) : SV_Target {"
-				"return float4(i.c.r, i.c.g, i.c.b, 1.0f);"
-			"}";
+		char* t_data = reinterpret_cast< char* >(a_pixelshader->fileobject->GetLoadData().get());
+		s64 t_size = a_pixelshader->fileobject->GetLoadSize();
+
+		if(a_pixelshader->fileobject->GetAddAllocateSize() > 0){
+			t_data[t_size] = 0x00;
+		}else{
+			ASSERT(0);
+		}
 
 		sharedptr< ID3DBlob > t_blob;
 		{
 			sharedptr< ID3DBlob > t_blob_error;
 			ID3DBlob* t_raw = nullptr;
 			ID3DBlob* t_raw_error = nullptr;
-			HRESULT t_result = D3DCompile(t_pixel_source.c_str(),t_pixel_source.size(),nullptr,nullptr,nullptr,"PS","ps_4_0",D3DCOMPILE_ENABLE_STRICTNESS|D3DCOMPILE_DEBUG,0,&t_raw,&t_raw_error);
+			HRESULT t_result = D3DCompile(t_data,t_size,nullptr,nullptr,nullptr,"PS","ps_4_0",D3DCOMPILE_ENABLE_STRICTNESS|D3DCOMPILE_DEBUG,0,&t_raw,&t_raw_error);
 			if(t_raw != nullptr){
 				t_blob.reset(t_raw,release_delete< ID3DBlob >());
 			}

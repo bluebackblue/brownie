@@ -77,6 +77,15 @@ namespace NBsys{namespace ND3d11
 				//中断。
 			}
 
+			//ロード。
+			if(this->pixelshader != nullptr){
+				if(this->pixelshader->fileobject != nullptr){
+					if(this->pixelshader->fileobject->IsBusy() == true){
+						return 0;
+					}
+				}
+			}
+
 			//Render_CreatePixelShader
 			this->d3d11_impl.Render_CreatePixelShader(this->pixelshader);
 

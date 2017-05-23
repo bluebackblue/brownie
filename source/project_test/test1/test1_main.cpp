@@ -24,9 +24,16 @@
 #include "./test1_main.h"
 
 
+/** USE_FOVE
+*/
+#define USE_FOVE (0)
+
+
 /** include
 */
+#if(USE_FOVE)
 #include "../bsys/d3d11/d3d11_impl.h"
+#endif
 
 
 /** Blib_DebugAssert_Callback
@@ -54,11 +61,6 @@ void Blib_DebugLog_Callback(const char* a_tag,const char* a_string)
 {
 }
 #endif
-
-
-/** USE_FOVE
-*/
-#define USE_FOVE (0)
 
 
 /** s_window
@@ -108,35 +110,11 @@ s32 t_constantbuffer_id = -1;
 s32 t_vertexbuffer_id = -1;
 
 
-/** Draw
+/** DrawOnce
 */
-void Draw(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeometry::Geometry_Matrix_44& a_view_projection)
+void DrawOnce(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeometry::Geometry_Matrix_44& a_view_projection,s32 a_xx,s32 a_yy,s32 a_zz)
 {
-	for(s32 xx=-10;xx<10;xx++){
-		for(s32 zz=-10;zz<10;zz++){
-			s32 yy = 0;
-
-			NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = a_model_matrix * NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(xx*2.0f,yy*2.0f,zz*2.0f) * a_view_projection;
-			NBsys::NGeometry::Geometry_Matrix_44 t_view_projection_transpose = t_view_projection.Make_Transpose();
-
-			s_d3d11->Render_UpdateSubresource(t_constantbuffer_id,&t_view_projection_transpose.m[0][0]);
-			s_d3d11->Render_VSSetShader(t_vertexshader_id);
-			s_d3d11->Render_VSSetConstantBuffers(0,t_constantbuffer_id);
-			s_d3d11->Render_PSSetShader(t_pixelshader_id);
-			s_d3d11->Render_Draw(s_vertex->GetVertexCountOf(0),s_vertex->GetVertexOffset(0));
-		}
-	}
-}
-
-/** Draw1
-*/
-void Draw1(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeometry::Geometry_Matrix_44& a_view_projection)
-{
-	s32 xx = 0;
-	s32 zz = 0;
-	s32 yy = 0;
-
-	NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = a_model_matrix * NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(xx*2.0f,yy*2.0f,zz*2.0f) * a_view_projection;
+	NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = a_model_matrix * NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(a_xx*2.0f,a_yy*2.0f,a_zz*2.0f) * a_view_projection;
 	NBsys::NGeometry::Geometry_Matrix_44 t_view_projection_transpose = t_view_projection.Make_Transpose();
 
 	s_d3d11->Render_UpdateSubresource(t_constantbuffer_id,&t_view_projection_transpose.m[0][0]);
@@ -146,11 +124,28 @@ void Draw1(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeometry
 	s_d3d11->Render_Draw(s_vertex->GetVertexCountOf(0),s_vertex->GetVertexOffset(0));
 }
 
+
+/** Draw
+*/
+void Draw(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeometry::Geometry_Matrix_44& a_view_projection)
+{
+	for(s32 xx=-10;xx<10;xx++){
+		for(s32 zz=-10;zz<10;zz++){
+			s32 yy = 0;
+			DrawOnce(a_model_matrix,a_view_projection,xx,yy,zz);
+		}
+	}
+}
+
+
 /** Test_Main
 */
 void Test_Main()
 {
 	TAGLOG("main","DEF_TEST1");
+
+	NBsys::NFile::StartSystem(1);
+	NBsys::NFile::SetRoot(0,L"./project_test");
 
 	#if(USE_FOVE)
 	s_fovehmd.reset(new NBsys::NFovehmd::Fovehmd());
@@ -178,14 +173,15 @@ void Test_Main()
 	s_d3d11->Render_Create(s_window,800,600);
 	#endif
 
-	//ÉÇÉfÉãÅB
+	//s_vertex
 	s_vertex = NBsys::NModel::Preset_Box< NBsys::NModel::Model_Vertex_Data_Pos3Color4 >();
 
+	//s_pcounter
 	s_pcounter = PerformanceCounter::GetPerformanceCounter();
 
-	// Main loop
 	while (true)
 	{
+		//s_window
 		s_window->Update();
 		if(s_window->IsEnd() == true){
 			break;
@@ -210,13 +206,16 @@ void Test_Main()
 
 		if(s_step == 0){
 
+			sharedptr< NBsys::NFile::File_Object > t_simple_vertex_fx(new NBsys::NFile::File_Object(0,L"simple_vertex.fx",-1,sharedptr< NBsys::NFile::File_Allocator >(),1));
+			sharedptr< NBsys::NFile::File_Object > t_simple_pixel_fx(new NBsys::NFile::File_Object(0,L"simple_pixel.fx",-1,sharedptr< NBsys::NFile::File_Allocator >(),1));
+
 			t_asyncresult_vertexshader.Create(false);
 			t_asyncresult_pixelshader.Create(false);
 			t_asyncresult_constantbuffer.Create(false);
 			t_asyncresult_vertexbuffer.Create(false);
 
-			t_vertexshader_id = s_d3d11->CreateVertexShader(t_asyncresult_vertexshader);
-			t_pixelshader_id = s_d3d11->CreatePixelShader(t_asyncresult_pixelshader);
+			t_vertexshader_id = s_d3d11->CreateVertexShader(t_asyncresult_vertexshader,t_simple_vertex_fx);
+			t_pixelshader_id = s_d3d11->CreatePixelShader(t_asyncresult_pixelshader,t_simple_pixel_fx);
 			t_constantbuffer_id = s_d3d11->CreateConstantBuffer(t_asyncresult_constantbuffer,sizeof(float) * 16);
 			t_vertexbuffer_id = s_d3d11->CreateVertexBuffer(t_asyncresult_vertexbuffer,s_vertex->GetVertexPointer(),s_vertex->GetVertexStrideByte(),0,s_vertex->GetVertexAllCountOf());
 
@@ -319,7 +318,7 @@ void Test_Main()
 							#else
 							NBsys::NGeometry::Geometry_Matrix_44 t_matrix = NBsys::NGeometry::Geometry_Matrix_44::Identity();
 							#endif
-							Draw1(t_matrix,t_view*t_projection);
+							DrawOnce(t_matrix,t_view*t_projection,0,0,0);
 						}
 
 						{
@@ -330,7 +329,7 @@ void Test_Main()
 							#else
 							NBsys::NGeometry::Geometry_Matrix_44 t_matrix = NBsys::NGeometry::Geometry_Matrix_44::Identity();
 							#endif
-							Draw1(t_matrix,t_view*t_projection);
+							DrawOnce(t_matrix,t_view*t_projection,0,0,0);
 						}
 					}
 				}

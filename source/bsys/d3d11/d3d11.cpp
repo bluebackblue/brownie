@@ -51,16 +51,16 @@ namespace NBsys{namespace ND3d11
 
 	/** CreateVertexShader
 	*/
-	s32 D3d11::CreateVertexShader(AsyncResult< bool >& a_asyncresult)
+	s32 D3d11::CreateVertexShader(AsyncResult< bool >& a_asyncresult,sharedptr< NBsys::NFile::File_Object >& a_fileobject)
 	{
-		return this->impl->CreateVertexShader(a_asyncresult);
+		return this->impl->CreateVertexShader(a_asyncresult,a_fileobject);
 	}
 
 	/** CreatePixelShader
 	*/
-	s32 D3d11::CreatePixelShader(AsyncResult< bool >& a_asyncresult)
+	s32 D3d11::CreatePixelShader(AsyncResult< bool >& a_asyncresult,sharedptr< NBsys::NFile::File_Object >& a_fileobject)
 	{
-		return this->impl->CreatePixelShader(a_asyncresult);
+		return this->impl->CreatePixelShader(a_asyncresult,a_fileobject);
 	}
 
 	/** CreatePixelShader

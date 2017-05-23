@@ -77,6 +77,15 @@ namespace NBsys{namespace ND3d11
 				//中断。
 			}
 
+			//ロード。
+			if(this->vertexshader != nullptr){
+				if(this->vertexshader->fileobject != nullptr){
+					if(this->vertexshader->fileobject->IsBusy() == true){
+						return 0;
+					}
+				}
+			}
+
 			//Render_CreateVertexShader
 			this->d3d11_impl.Render_CreateVertexShader(this->vertexshader);
 

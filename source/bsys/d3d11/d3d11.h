@@ -18,6 +18,7 @@
 */
 #include "../window/window.h"
 #include "../color/color.h"
+#include "../file/file.h"
 
 
 /** NBsys::ND3d11
@@ -56,11 +57,11 @@ namespace NBsys{namespace ND3d11
 
 		/** CreateVertexShader
 		*/
-		s32 CreateVertexShader(AsyncResult< bool >& a_asyncresult);
+		s32 CreateVertexShader(AsyncResult< bool >& a_asyncresult,sharedptr< NBsys::NFile::File_Object >& a_fileobject);
 
 		/** CreatePixelShader
 		*/
-		s32 CreatePixelShader(AsyncResult< bool >& a_asyncresult);
+		s32 CreatePixelShader(AsyncResult< bool >& a_asyncresult,sharedptr< NBsys::NFile::File_Object >& a_fileobject);
 
 		/** CreateVertexBuffer
 		*/
