@@ -275,6 +275,11 @@ namespace NBsys{namespace ND3d11
 	*/
 	void D3d11_Impl::Render_Delete()
 	{
+		this->vertexshader_list.clear();
+		this->pixelshader_list.clear();
+		this->vertexbuffer_list.clear();
+		this->constantbuffer_list.clear();
+
 		this->depthstencilview.reset();
 		this->depthstencilstate.reset();
 		this->depthbuffer.reset();
@@ -387,7 +392,7 @@ namespace NBsys{namespace ND3d11
 
 	/** CreateVertexShader
 	*/
-	s32 D3d11_Impl::CreateVertexShader(AsyncResult< bool >& a_asyncresult,sharedptr< NBsys::NFile::File_Object >& a_fileobject)
+	s32 D3d11_Impl::CreateVertexShader(AsyncResult< bool >& a_asyncresult,sharedptr< NBsys::NFile::File_Object >& a_fileobject,sharedptr< STLVector< NBsys::ND3d11::D3d11_Layout >::Type >& a_layout)
 	{
 		AutoLock t_autolock(this->actionbatching_lockobject);
 
@@ -398,6 +403,7 @@ namespace NBsys{namespace ND3d11
 			sharedptr< D3d11_Impl_VertexShader > t_vertexshader = new D3d11_Impl_VertexShader();
 			{
 				t_vertexshader->fileobject = a_fileobject;
+				t_vertexshader->layout = a_layout;
 			}
 
 			//レンダーコマンド。
@@ -564,13 +570,28 @@ namespace NBsys{namespace ND3d11
 		/** ID3D11InputLayout
 		*/
 		{
-			D3D11_INPUT_ELEMENT_DESC t_layout[] = {
-				{	"POSITION",		0,	DXGI_FORMAT_R32G32B32_FLOAT,		0,	0,		D3D11_INPUT_PER_VERTEX_DATA,	0},
-				{	"COLOR",	    0,	DXGI_FORMAT_R32G32B32A32_FLOAT,		0,	12,		D3D11_INPUT_PER_VERTEX_DATA,	0},
-			};
+			s32 t_layout_size = static_cast<s32>(a_vertexshader->layout->size());
+			D3D11_INPUT_ELEMENT_DESC* t_layout_data = new D3D11_INPUT_ELEMENT_DESC[t_layout_size];
+			sharedptr< D3D11_INPUT_ELEMENT_DESC > t_layout(t_layout_data,default_delete< D3D11_INPUT_ELEMENT_DESC[] >());
+			{
+				 for(s32 ii=0;ii<t_layout_size;ii++){
+					t_layout_data[ii].SemanticName			= a_vertexshader->layout->at(ii).semantic_name.c_str();
+					t_layout_data[ii].SemanticIndex		= a_vertexshader->layout->at(ii).semantic_index;
+					t_layout_data[ii].InputSlot			= a_vertexshader->layout->at(ii).input_slot;
+					t_layout_data[ii].AlignedByteOffset	= a_vertexshader->layout->at(ii).offset;
+					t_layout_data[ii].InputSlotClass		= D3D11_INPUT_PER_VERTEX_DATA;
+					t_layout_data[ii].InstanceDataStepRate	= 0;
+
+					switch(a_vertexshader->layout->at(ii).format){
+					case D3d11_FormatType::R32G32B32_FLOAT:		t_layout_data[ii].Format = DXGI_FORMAT_R32G32B32_FLOAT;		break;
+					case D3d11_FormatType::R32G32B32A32_FLOAT:	t_layout_data[ii].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;		break;
+					default:ASSERT(0);break;
+					}
+				 }
+			}
 
 			ID3D11InputLayout* t_raw = nullptr;
-			HRESULT t_result = this->device->CreateInputLayout(t_layout,COUNTOF(t_layout),t_blob->GetBufferPointer(),t_blob->GetBufferSize(),&t_raw);
+			HRESULT t_result = this->device->CreateInputLayout(t_layout_data,static_cast<UINT>(t_layout_size),t_blob->GetBufferPointer(),t_blob->GetBufferSize(),&t_raw);
 			if(t_raw != nullptr){
 				a_vertexshader->inputlayout.reset(t_raw,release_delete< ID3D11InputLayout >());
 			}

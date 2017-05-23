@@ -206,15 +206,21 @@ void Test_Main()
 
 		if(s_step == 0){
 
-			sharedptr< NBsys::NFile::File_Object > t_simple_vertex_fx(new NBsys::NFile::File_Object(0,L"simple_vertex.fx",-1,sharedptr< NBsys::NFile::File_Allocator >(),1));
-			sharedptr< NBsys::NFile::File_Object > t_simple_pixel_fx(new NBsys::NFile::File_Object(0,L"simple_pixel.fx",-1,sharedptr< NBsys::NFile::File_Allocator >(),1));
+			sharedptr< NBsys::NFile::File_Object > t_simple_vertex_fx(	new NBsys::NFile::File_Object(0,L"simple_vertex.fx",	-1,sharedptr< NBsys::NFile::File_Allocator >(),1));
+			sharedptr< NBsys::NFile::File_Object > t_simple_pixel_fx(	new NBsys::NFile::File_Object(0,L"simple_pixel.fx",		-1,sharedptr< NBsys::NFile::File_Allocator >(),1));
 
 			t_asyncresult_vertexshader.Create(false);
 			t_asyncresult_pixelshader.Create(false);
 			t_asyncresult_constantbuffer.Create(false);
 			t_asyncresult_vertexbuffer.Create(false);
 
-			t_vertexshader_id = s_d3d11->CreateVertexShader(t_asyncresult_vertexshader,t_simple_vertex_fx);
+			sharedptr< STLVector< NBsys::ND3d11::D3d11_Layout >::Type > t_layout(new STLVector< NBsys::ND3d11::D3d11_Layout >::Type());
+			{
+				t_layout->push_back(NBsys::ND3d11::D3d11_Layout("POSITION",	0,NBsys::ND3d11::D3d11_FormatType::R32G32B32_FLOAT,		0,	0));
+				t_layout->push_back(NBsys::ND3d11::D3d11_Layout("COLOR",	0,NBsys::ND3d11::D3d11_FormatType::R32G32B32A32_FLOAT,	0,	12));
+			}
+
+			t_vertexshader_id = s_d3d11->CreateVertexShader(t_asyncresult_vertexshader,t_simple_vertex_fx,t_layout);
 			t_pixelshader_id = s_d3d11->CreatePixelShader(t_asyncresult_pixelshader,t_simple_pixel_fx);
 			t_constantbuffer_id = s_d3d11->CreateConstantBuffer(t_asyncresult_constantbuffer,sizeof(float) * 16);
 			t_vertexbuffer_id = s_d3d11->CreateVertexBuffer(t_asyncresult_vertexbuffer,s_vertex->GetVertexPointer(),s_vertex->GetVertexStrideByte(),0,s_vertex->GetVertexAllCountOf());
@@ -353,6 +359,9 @@ void Test_Main()
 
 	s_window->Delete();
 	s_window.reset();
+
+	NBsys::NFile::EndSystemRequest();
+	NBsys::NFile::EndWaitSystem();
 
 	return;
 }

@@ -29,6 +29,11 @@
 
 /** include
 */
+#include "./d3d11_layout.h"
+
+
+/** include
+*/
 #if(BSYS_D3D11_ENABLE)
 
 	#include <dxgi1_2.h>
@@ -59,6 +64,10 @@ namespace NBsys{namespace ND3d11
 		/** fileobject
 		*/
 		sharedptr< NBsys::NFile::File_Object > fileobject; 
+
+		/** layout
+		*/
+		sharedptr< STLVector< NBsys::ND3d11::D3d11_Layout >::Type > layout;
 	};
 
 	/** D3d11_Impl_PixelShader
@@ -252,7 +261,7 @@ namespace NBsys{namespace ND3d11
 
 		/** CreateVertexShader
 		*/
-		s32 CreateVertexShader(AsyncResult< bool >& a_asyncresult,sharedptr< NBsys::NFile::File_Object >& a_fileobject);
+		s32 CreateVertexShader(AsyncResult< bool >& a_asyncresult,sharedptr< NBsys::NFile::File_Object >& a_fileobject,sharedptr< STLVector< NBsys::ND3d11::D3d11_Layout >::Type >& a_layout);
 
 		/** CreatePixelShader
 		*/
