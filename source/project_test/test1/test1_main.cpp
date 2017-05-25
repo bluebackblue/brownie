@@ -26,7 +26,7 @@
 
 /** USE_FOVE
 */
-#define USE_FOVE (0)
+#define USE_FOVE (1)
 
 
 /** include

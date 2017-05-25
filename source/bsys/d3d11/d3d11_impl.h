@@ -16,7 +16,9 @@
 
 /** include
 */
-#include "../../blib/include_windows.h"
+#if defined(PLATFORM_VCWIN)
+	#include <brownie_config/windows_include.h>
+#endif
 
 
 /** include
@@ -35,11 +37,7 @@
 /** include
 */
 #if(BSYS_D3D11_ENABLE)
-
-	#include <dxgi1_2.h>
-	#include <d3d11.h>
-	#include <d3dcompiler.h>
-	
+	#include <brownie_config/d3d11_include.h>
 #endif
 
 

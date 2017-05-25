@@ -28,7 +28,7 @@
 */
 #if defined(PLATFORM_VCWIN)
 
-	#include "./include_windows.h"
+	#include <brownie_config/windows_include.h>
 
 	#include <winsock2.h>
 	#include <ws2tcpip.h>

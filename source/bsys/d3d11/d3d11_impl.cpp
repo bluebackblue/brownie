@@ -35,10 +35,7 @@
 /** lib
 */
 #if(BSYS_D3D11_ENABLE)
-
-	#pragma comment(lib,"d3d11.lib")
-	#pragma comment(lib,"D3DCompiler.lib")
-
+	#include <brownie_config/d3d11_lib.h>
 #endif
 
 

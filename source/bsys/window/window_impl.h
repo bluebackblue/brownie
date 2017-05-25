@@ -17,9 +17,7 @@
 /** include
 */
 #if defined(PLATFORM_VCWIN)
-
-	#include "../../blib/include_windows.h"
-
+	#include <brownie_config/windows_include.h>
 #endif
 
 

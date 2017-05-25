@@ -24,11 +24,7 @@
 /** lib
 */
 #if(BSYS_FOVEHMD_ENABLE)
-	#if defined(ROM_32BIT)
-		#error
-	#else
-		#pragma comment(lib, "hovehmd/FOVE SDK 0.11.4/lib/FoveClient.lib")
-	#endif
+	#include <brownie_config/fovehmd_lib.h>
 #endif
 
 

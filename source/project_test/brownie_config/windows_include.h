@@ -5,23 +5,16 @@
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ウィンドウズ。
+ * @brief コンフィグ。
 */
+
+
+/** _WINSOCKAPI_
+*/
+#define _WINSOCKAPI_
 
 
 /** include
 */
-#include "./types.h"
-#include "./platform.h"
-
-
-/** include
-*/
-#if defined(PLATFORM_VCWIN)
-
-	#define _WINSOCKAPI_
-
-	#include <windows.h>
-
-#endif
+#include <windows.h>
 
