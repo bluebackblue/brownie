@@ -63,3 +63,10 @@
 #include "./d3d11/d3d11.h"
 #endif
 
+/** include
+*/
+#if(BSYS_MMDPMX_ENABLE)
+#include "./mmdpmx/mmdpmx.h"
+#endif
+
+

@@ -25,6 +25,7 @@
 */
 #include "./test0/test0_main.h"
 #include "./test1/test1_main.h"
+#include "./test2/test2_main.h"
 
 
 /** include

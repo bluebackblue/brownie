@@ -380,3 +380,12 @@
 	#define BSYS_D3D11_ENABLE								(0)
 #endif
 
+/*
+
+	mmdpmx
+
+*/
+#if !defined(BSYS_MMDPMX_ENABLE)
+	#define BSYS_MMDPMX_ENABLE								(0)
+#endif
+
