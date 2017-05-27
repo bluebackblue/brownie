@@ -117,6 +117,7 @@ void DrawOnce(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeome
 	NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = a_model_matrix * NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(a_xx*2.0f,a_yy*2.0f,a_zz*2.0f) * a_view_projection;
 	NBsys::NGeometry::Geometry_Matrix_44 t_view_projection_transpose = t_view_projection.Make_Transpose();
 
+	s_d3d11->Render_IASetPrimitiveTopology_TriangleList();
 	s_d3d11->Render_UpdateSubresource(t_constantbuffer_id,&t_view_projection_transpose.m[0][0]);
 	s_d3d11->Render_VSSetShader(t_vertexshader_id);
 	s_d3d11->Render_VSSetConstantBuffers(0,t_constantbuffer_id);
@@ -249,9 +250,6 @@ void Test_Main()
 			s_d3d11->Render_IASetInputLayout(t_vertexshader_id);
 			s_d3d11->Render_IASetVertexBuffers(t_vertexbuffer_id);
 
-			//プリミティブ形状。
-			s_d3d11->Render_IASetPrimitiveTopology_TriangleList();
-
 			s_d3d11->Render_ClearRenderTargetView(NBsys::NColor::Color_F(0.3f,0.3f,0.8f,1.0f));
 			s_d3d11->Render_ClearDepthStencilView();
 			{
@@ -327,6 +325,7 @@ void Test_Main()
 							DrawOnce(t_matrix,t_view*t_projection,0,0,0);
 						}
 
+						#if(USE_FOVE)
 						{
 							#if(USE_FOVE)
 							NBsys::NGeometry::Geometry_Matrix_44 t_matrix = t_fovehmd_matrix;
@@ -337,6 +336,7 @@ void Test_Main()
 							#endif
 							DrawOnce(t_matrix,t_view*t_projection,0,0,0);
 						}
+						#endif
 					}
 				}
 				#endif

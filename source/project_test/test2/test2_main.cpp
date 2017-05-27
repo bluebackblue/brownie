@@ -63,6 +63,16 @@ void Blib_DebugLog_Callback(const char* a_tag,const char* a_string)
 #endif
 
 
+/** s_width
+*/
+static s32 s_width = 800;
+
+
+/** s_height
+*/
+static s32 s_height = 600;
+
+
 /** s_window
 */
 static sharedptr< NBsys::NWindow::Window > s_window;
@@ -96,6 +106,10 @@ static u64 s_pcounter = 0ULL;
 static int s_step = 0;
 
 
+//s_rotate
+static f32 s_rotate = 0.0f;
+
+
 //asyncresult
 AsyncResult< bool > t_asyncresult_vertexshader;
 AsyncResult< bool > t_asyncresult_pixelshader;
@@ -117,6 +131,7 @@ void DrawOnce(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeome
 	NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = a_model_matrix * NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(a_xx*2.0f,a_yy*2.0f,a_zz*2.0f) * a_view_projection;
 	NBsys::NGeometry::Geometry_Matrix_44 t_view_projection_transpose = t_view_projection.Make_Transpose();
 
+	s_d3d11->Render_IASetPrimitiveTopology_TriangleList();
 	s_d3d11->Render_UpdateSubresource(t_constantbuffer_id,&t_view_projection_transpose.m[0][0]);
 	s_d3d11->Render_VSSetShader(t_vertexshader_id);
 	s_d3d11->Render_VSSetConstantBuffers(0,t_constantbuffer_id);
@@ -148,6 +163,7 @@ void Test_Main()
 	NBsys::NFile::SetRoot(0,L"./project_test");
 	NBsys::NFile::SetRoot(1,L"../../sdk/mmd");
 
+	//sharedptr< NBsys::NFile::File_Object > t_pmx(new NBsys::NFile::File_Object(1,L"FL改_レミリア・スカーレット_v2.20/ナイトキャップ.pmx",-1,sharedptr< NBsys::NFile::File_Allocator >(),1));
 	sharedptr< NBsys::NFile::File_Object > t_pmx(new NBsys::NFile::File_Object(1,L"FL改_レミリア・スカーレット_v2.20/レミリア・スカーレット_2_20.pmx",-1,sharedptr< NBsys::NFile::File_Allocator >(),1));
 	sharedptr< NBsys::NMmdPmx::MmdPmx > t_mmdpmx(nullptr);
 
@@ -162,9 +178,10 @@ void Test_Main()
 		s_vertex = new NBsys::NModel::Model_Vertex< NBsys::NModel::Model_Vertex_Data_Pos3Color4 >();
 		s_vertex->AddParts("pmx");
 
-		for(u32 ii=0;ii<t_mmdpmx->vertex_list_size;ii++){
+		for(u32 ii=0;ii<t_mmdpmx->index_list_size;ii++){
+			u32 t_index = t_mmdpmx->index_list.get()[ii];
 			NBsys::NModel::Model_Vertex_Data_Pos3Color4 t_vertex;
-			NBsys::NMmdPmx::MmdPmx_VertexData& t_data = t_mmdpmx->vertex_list.get()[ii];
+			NBsys::NMmdPmx::MmdPmx_VertexData& t_data = t_mmdpmx->vertex_list.get()[t_index];
 
 			NBsys::NModel::SetColor< NBsys::NModel::Model_Vertex_Data_Pos3Color4 >(t_vertex,1.0f,1.0f,1.0f,1.0f);
 			NBsys::NModel::SetPos< NBsys::NModel::Model_Vertex_Data_Pos3Color4 >(t_vertex,t_data.position.x,t_data.position.y,t_data.position.z);
@@ -200,8 +217,8 @@ void Test_Main()
 	s_window->Create(L"sample",static_cast<s32>(s_fovehmd->GetSingleEyeResolution().x * 2)/3,static_cast<s32>(s_fovehmd->GetSingleEyeResolution().y)/3);
 	s_d3d11->Render_Create(s_window,static_cast<s32>(s_fovehmd->GetSingleEyeResolution().x * 2),static_cast<s32>(s_fovehmd->GetSingleEyeResolution().y));
 	#else
-	s_window->Create(L"sample",800,600);
-	s_d3d11->Render_Create(s_window,800,600);
+	s_window->Create(L"sample",s_width,s_height);
+	s_d3d11->Render_Create(s_window,s_width,s_height);
 	#endif
 
 	//s_pcounter
@@ -273,14 +290,16 @@ void Test_Main()
 
 		}else{
 
-			s_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_RotationY(0.01f);
+			s_rotate += 0.002f;
+			if(s_rotate >= 3.14f * 2){
+				s_rotate -= 3.14f * 2;
+			}
+
+			s_matrix = NBsys::NGeometry::Geometry_Matrix_44::Make_RotationY(s_rotate);
 
 			//レイアウト。
 			s_d3d11->Render_IASetInputLayout(t_vertexshader_id);
 			s_d3d11->Render_IASetVertexBuffers(t_vertexbuffer_id);
-
-			//プリミティブ形状。
-			s_d3d11->Render_IASetPrimitiveTopology_TriangleList();
 
 			s_d3d11->Render_ClearRenderTargetView(NBsys::NColor::Color_F(0.3f,0.3f,0.8f,1.0f));
 			s_d3d11->Render_ClearDepthStencilView();
@@ -308,14 +327,14 @@ void Test_Main()
 					#if(USE_FOVE)
 					s_d3d11->Render_ViewPort(0.0f,0.0f,s_fovehmd->GetSingleEyeResolution().x * 2,s_fovehmd->GetSingleEyeResolution().y);
 					#else
-					s_d3d11->Render_ViewPort(0.0f,0.0f,800,600);
+					s_d3d11->Render_ViewPort(0.0f,0.0f,static_cast<f32>(s_width),static_cast<f32>(s_height));
 					#endif
 
 					//t_camera_target
 					NBsys::NGeometry::Geometry_Vector3 t_camera_target(0.0f,3.0f,0.0f);
 
 					//t_camera_position
-					NBsys::NGeometry::Geometry_Vector3 t_camera_position(10.0f,1.0f,-30.0f);
+					NBsys::NGeometry::Geometry_Vector3 t_camera_position(10.0f,1.0f,-10.0f);
 
 					//t_camera_up
 					NBsys::NGeometry::Geometry_Vector3 t_camera_up(0.0f,1.0f,0.0f);
@@ -333,12 +352,12 @@ void Test_Main()
 					#if(USE_FOVE)
 					t_projection.Set_PerspectiveProjectionMatrix(s_fovehmd->GetSingleEyeResolution().x * 2,s_fovehmd->GetSingleEyeResolution().y,t_fov_deg,t_near,t_far);
 					#else
-					t_projection.Set_PerspectiveProjectionMatrix(800,600,t_fov_deg,t_near,t_far);
+					t_projection.Set_PerspectiveProjectionMatrix(static_cast<f32>(s_width),static_cast<f32>(s_height),t_fov_deg,t_near,t_far);
 					#endif
 
 					NBsys::NGeometry::Geometry_Matrix_44 t_view;
 					t_view.Set_ViewMatrix(t_camera_target,t_camera_position,t_camera_up);
-				
+
 					{
 						#if(USE_FOVE)
 						NBsys::NGeometry::Geometry_Vector3 t_fovehmd_position = s_fovehmd->GetCameraPosition();

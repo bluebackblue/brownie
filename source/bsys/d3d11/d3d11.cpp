@@ -182,6 +182,19 @@ namespace NBsys{namespace ND3d11
 		this->impl->Render_IASetPrimitiveTopology_TriangleList();
 	}
 
+	/** Render_IASetPrimitiveTopology_TriangleStrip
+	*/
+	void D3d11::Render_IASetPrimitiveTopology_TriangleStrip()
+	{
+		this->impl->Render_IASetPrimitiveTopology_TriangleStrip();
+	}
+
+	/** Render_IASetPrimitiveTopology_PointList
+	*/
+	void D3d11::Render_IASetPrimitiveTopology_PointList()
+	{
+		this->impl->Render_IASetPrimitiveTopology_PointList();
+	}
 
 }}
 #endif

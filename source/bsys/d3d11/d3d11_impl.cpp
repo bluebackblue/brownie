@@ -913,6 +913,24 @@ namespace NBsys{namespace ND3d11
 		}
 	}
 
+	/** Render_IASetPrimitiveTopology_TriangleStrip
+	*/
+	void D3d11_Impl::Render_IASetPrimitiveTopology_TriangleStrip()
+	{
+		if(this->devicecontext){
+			this->devicecontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+		}
+	}
+
+	/** Render_IASetPrimitiveTopology_PointList
+	*/
+	void D3d11_Impl::Render_IASetPrimitiveTopology_PointList()
+	{
+		if(this->devicecontext){
+			this->devicecontext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
+		}
+	}
+
 }}
 #endif
 

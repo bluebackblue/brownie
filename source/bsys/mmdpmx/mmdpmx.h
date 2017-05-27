@@ -76,7 +76,6 @@ namespace NBsys{namespace NMmdPmx
 		f32									edge_mag;
 	};
 
-
 	/** MmdPmx
 	*/
 	class MmdPmx
@@ -104,6 +103,10 @@ namespace NBsys{namespace NMmdPmx
 		*/
 		u32 vertex_list_size;
 		sharedptr< MmdPmx_VertexData > vertex_list;
+
+		u32 index_list_size;
+		sharedptr< u32 > index_list;
+
 
 	public:
 		/** constructor

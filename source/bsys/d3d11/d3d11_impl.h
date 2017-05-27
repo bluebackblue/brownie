@@ -350,6 +350,15 @@ namespace NBsys{namespace ND3d11
 		/** Render_IASetPrimitiveTopology_TriangleList
 		*/
 		void Render_IASetPrimitiveTopology_TriangleList();
+
+		/** Render_IASetPrimitiveTopology_TriangleStrip
+		*/
+		void Render_IASetPrimitiveTopology_TriangleStrip();
+
+		/** Render_IASetPrimitiveTopology_PointList
+		*/
+		void Render_IASetPrimitiveTopology_PointList();
+
 	};
 
 }}

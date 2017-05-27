@@ -106,6 +106,7 @@ namespace NBsys{namespace NMmdPmx
 				}
 			}
 
+			//vertex
 			{
 				t_mmdpmx->vertex_list_size = Memory::Copy< u32 >(t_raw);
 				t_mmdpmx->vertex_list.reset(new MmdPmx_VertexData[t_mmdpmx->vertex_list_size],default_delete< MmdPmx_VertexData[] >());
@@ -215,8 +216,35 @@ namespace NBsys{namespace NMmdPmx
 					//edge_mag
 					t_vertex_data.edge_mag = Memory::Copy< f32 >(t_raw);
 				}
-
 			}
+
+			//index
+			{
+				t_mmdpmx->index_list_size = Memory::Copy< u32 >(t_raw);
+				t_mmdpmx->index_list.reset(new u32[t_mmdpmx->index_list_size],default_delete< u32[] >());
+
+				if(t_mmdpmx->header_ex.vertex_index_size == 1){
+					for(s32 ii=0;ii<t_mmdpmx->index_list_size;ii++){
+						t_mmdpmx->index_list.get()[ii] = Memory::Copy< u8 >(t_raw);
+					}
+				}else if(t_mmdpmx->header_ex.vertex_index_size == 2){
+					for(s32 ii=0;ii<t_mmdpmx->index_list_size;ii++){
+						t_mmdpmx->index_list.get()[ii] = Memory::Copy< u16 >(t_raw);
+					}
+				}else{
+					for(s32 ii=0;ii<t_mmdpmx->index_list_size;ii++){
+						t_mmdpmx->index_list.get()[ii] = Memory::Copy< u32 >(t_raw);
+					}
+				}
+			}
+
+
+
+
+
+
+
+
 		}
 
 		return t_mmdpmx;
