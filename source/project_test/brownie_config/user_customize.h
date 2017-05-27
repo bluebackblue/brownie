@@ -30,6 +30,9 @@
 #elif defined(DEF_TEST2)
 
 	#define BSYS_MMDPMX_ENABLE								(1)
+	#define BSYS_WINDOW_ENABLE								(1)
+	#define BSYS_D3D11_ENABLE								(1)
+	#define BSYS_FOVEHMD_ENABLE								(1)
 
 #endif
 

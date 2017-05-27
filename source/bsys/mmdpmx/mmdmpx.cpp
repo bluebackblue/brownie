@@ -16,7 +16,7 @@
 
 /** include
 */
-#include "../file/file.h"
+#include "./mmdpmx.h"
 
 
 /** NBsys::NMmdPmx
@@ -24,197 +24,202 @@
 #if(BSYS_MODEL_ENABLE)
 namespace NBsys{namespace NMmdPmx
 {
-	struct Header
-	{
-		//[PMX ][pmx ]
-		char	tag[4];
-
-		f32		version;
-	};
-
-	struct HeaderEx
-	{
-		u8		utf8;
-		u8		add_uv_num;
-		u8		vertex_index_size;
-		u8		texture_index_size;
-		u8		material_index_size;
-		u8		bone_index_size;
-		u8		morph_index_size;
-		u8		rigid_body_index_size;
-	};
-
-	/*
-	//Model Info
-	std::string modelName;							//!< \if ENGLISH \brief  The name of the model (in Japanese) \endif
-													//!< \if JAPANESE \brief モデルの名前（日本語で）。 \endif
-	std::string modelNameEnglish;					//!< \if ENGLISH \brief  The name of the model (in English) \endif
-													//!< \if JAPANESE \brief モデルの名前（英語で）。 \endif
-	std::string comment;							//!< \if ENGLISH \brief  Comments about the model (in Japanese) \endif
-													//!< \if JAPANESE \brief モデルに関するコメント（日本語で）。 \endif
-	std::string commentEnglish;						//!< \if ENGLISH \brief  Comments about the model (in English) \endif
-													//!< \if JAPANESE \brief モデルに関するコメント（英語で）。 \endif
-		
-	//Vertex
-	int vertex_continuing_datasets; 				//!< \if ENGLISH \brief  The number of vertices in the PMX model. \endif
-													//!< \if JAPANESE \brief PMXモデルに格納されている頂点の数。 \endif
-	std::vector<PMXVertex*> vertices;				//!< \if ENGLISH \brief  A vector containing the vertices. \endif
-													//!< \if JAPANESE \brief 頂点の配列（vector式） \endif
-		
-	//Face
-	int face_continuing_datasets;					//!< \if ENGLISH \brief  The number of faces in the PMX model. \endif
-													//!< \if JAPANESE \brief PMXモデルに格納されている面の数。 \endif
-	std::vector<PMXFace*> faces;					//!< \if ENGLISH \brief  A vector containing the faces. \endif
-													//!< \if JAPANESE \brief 面の配列（vector式） \endif
-		
-	//Texture
-	int texture_continuing_datasets;				//!< \if ENGLISH \brief  The number of textures in the PMX model. \endif
-													//!< \if JAPANESE \brief PMXモデルに格納されているテクスチャの数。 \endif
-	std::string *texturePaths;						//!< \if ENGLISH \brief  A pointer containing an array texture paths. \endif
-													//!< \if JAPANESE \brief テクスチャのパスの配列へのポインター。 \endif
-		
-	//Material
-	int material_continuing_datasets;				//!< \if ENGLISH \brief  The number of materials in the PMX model. \endif
-													//!< \if JAPANESE \brief PMXモデルに格納されているマテリアルの数。 \endif
-	std::vector<PMXMaterial*> materials;			//!< \if ENGLISH \brief  A vector containing the materials. \endif
-													//!< \if JAPANESE \brief マテリアルの配列（vector式） \endif
-		
-	//Bone
-	int bone_continuing_datasets;					//!< \if ENGLISH \brief  The number of bones in the PMX model. \endif
-													//!< \if JAPANESE \brief PMXモデルに格納されているボーンの数。 \endif
-	std::vector<PMXBone*> bones;					//!< \if ENGLISH \brief  A vector containing the bones. \endif
-													//!< \if JAPANESE \brief ボーンの配列（vector式） \endif
-		
-	//Morph (Emotion data)
-	int morph_continuing_datasets;					//!< \if ENGLISH \brief  The number of morphs in the PMX model. \endif
-													//!< \if JAPANESE \brief PMXモデルに格納されているモーフの数。 \endif
-	std::vector<PMXMorph*> morphs;					//!< \if ENGLISH \brief  A vector containing the bones. \endif
-													//!< \if JAPANESE \brief モーフの配列（vector式） \endif
-		
-	//Display Frame
-	int display_frame_continuing_datasets;			//!< \if ENGLISH \brief  The number of display frames in the PMX model. \endif
-													//!< \if JAPANESE \brief PMXモデルに格納されている表示枠の数。 \endif
-	std::vector<PMXDisplayFrame*> displayFrames;	//!< \if ENGLISH \brief  A vector containing the display frames. \endif
-													//!< \if JAPANESE \brief 表示枠の配列（vector式） \endif
-		
-	//Rigid Body
-	int rigid_body_continuing_datasets;				//!< \if ENGLISH \brief  The number of rigidbodies in the PMX model. \endif
-													//!< \if JAPANESE \brief PMXモデルに格納されている剛体の数。 \endif
-	std::vector<PMXRigidBody*> rigidBodies;			//!< \if ENGLISH \brief  A vector containing the rigidbodies. \endif
-													//!< \if JAPANESE \brief 剛体の配列（vector式） \endif
-		
-	//Joint
-	int joint_continuing_datasets;					//!< \if ENGLISH \brief  The number of joints in the PMX model. \endif
-													//!< \if JAPANESE \brief PMXモデルに格納されているジョイントの数。 \endif
-	std::vector<PMXJoint*> joints;					//!< \if ENGLISH \brief  A vector containing the joints. \endif
+	/** Load
 	*/
-
-
-	bool Load(sharedptr< NFile::File_Object >& a_file)
+	sharedptr< MmdPmx > Load(sharedptr< NFile::File_Object >& a_file)
 	{
 		if(a_file->IsBusy() == true){
-			return false;
+			return nullptr;
 		}
 
+		sharedptr< MmdPmx > t_mmdpmx(new MmdPmx());
 		sharedptr< u8 >& t_data = a_file->GetLoadData();
-
 		u8* t_raw = t_data.get();
 
-		Header* t_header = reinterpret_cast< Header* >(t_raw);
-		t_raw += 8;	//sizeof(Header)
-
-		u8 t_header_ex_size = *reinterpret_cast< u8* >(t_raw);
-		t_raw += 1;	//sizeof(u8) 
-
-		HeaderEx* t_header_ex = reinterpret_cast< HeaderEx* >(t_raw);
-		t_raw += t_header_ex_size;
-
-		STLWString t_mode_name_jp;
 		{
-			u32 t_size;
-			reinterpret_cast< u8* >(&t_size)[0] = t_raw[0];
-			reinterpret_cast< u8* >(&t_size)[1] = t_raw[1];
-			reinterpret_cast< u8* >(&t_size)[2] = t_raw[2];
-			reinterpret_cast< u8* >(&t_size)[3] = t_raw[3];
-			t_raw += 4;	//sizeof(u32)
+			//MmdPmx_Header
+			t_mmdpmx->header = Memory::Copy< MmdPmx_Header >(t_raw);
 
-			if(t_size > 0){
-				if(t_header_ex->utf8){
-					CharToWchar(reinterpret_cast< char* >(t_raw),t_mode_name_jp);
-				}else{
-					t_mode_name_jp = reinterpret_cast< wchar* >(t_raw);
+			//t_header_ex_size
+			u8 t_header_ex_size = Memory::Copy< u8 >(t_raw,0);
+
+			//MmdPmx_Header_Ex
+			t_mmdpmx->header_ex = Memory::Copy< MmdPmx_Header_Ex >(t_raw,t_header_ex_size + 1);
+
+			//model_name
+			STLWString model_name_jp;
+			STLWString model_name_en;
+
+			//comment
+			STLWString comment_jp;
+			STLWString comment_en;
+
+			//model name jp
+			{
+				u32 t_length = Memory::Copy< u32 >(t_raw);
+				if(t_length > 0){
+					if(t_mmdpmx->header_ex.is_utf8){
+						CharToWchar(reinterpret_cast< char* >(t_raw),t_mmdpmx->model_name_jp);
+					}else{
+						t_mmdpmx->model_name_jp = reinterpret_cast< wchar* >(t_raw);
+					}
+					t_raw += t_length;
 				}
 			}
-			t_raw += t_size;
-		}
 
-		STLWString t_mode_name_en;
-		{
-			u32 t_size;
-			reinterpret_cast< u8* >(&t_size)[0] = t_raw[0];
-			reinterpret_cast< u8* >(&t_size)[1] = t_raw[1];
-			reinterpret_cast< u8* >(&t_size)[2] = t_raw[2];
-			reinterpret_cast< u8* >(&t_size)[3] = t_raw[3];
-			t_raw += 4;	//sizeof(u32)
-
-			if(t_size > 0){
-				if(t_header_ex->utf8){
-					CharToWchar(reinterpret_cast< char* >(t_raw),t_mode_name_en);
-				}else{
-					t_mode_name_en = reinterpret_cast< wchar* >(t_raw);
+			//model name en
+			{
+				u32 t_length = Memory::Copy< u32 >(t_raw);
+				if(t_length > 0){
+					if(t_mmdpmx->header_ex.is_utf8){
+						CharToWchar(reinterpret_cast< char* >(t_raw),t_mmdpmx->model_name_en);
+					}else{
+						t_mmdpmx->model_name_en = reinterpret_cast< wchar* >(t_raw);
+					}
+					t_raw += t_length;
 				}
 			}
-			t_raw += t_size;
-		}
 
-		STLWString t_commnet_jp;
-		{
-			u32 t_size;
-			reinterpret_cast< u8* >(&t_size)[0] = t_raw[0];
-			reinterpret_cast< u8* >(&t_size)[1] = t_raw[1];
-			reinterpret_cast< u8* >(&t_size)[2] = t_raw[2];
-			reinterpret_cast< u8* >(&t_size)[3] = t_raw[3];
-			t_raw += 4;	//sizeof(u32)
-
-			if(t_size > 0){
-				if(t_header_ex->utf8){
-					CharToWchar(reinterpret_cast< char* >(t_raw),t_commnet_jp);
-				}else{
-					t_commnet_jp = reinterpret_cast< wchar* >(t_raw);
+			//comment jp
+			{
+				u32 t_length = Memory::Copy< u32 >(t_raw);
+				if(t_length > 0){
+					if(t_mmdpmx->header_ex.is_utf8){
+						CharToWchar(reinterpret_cast< char* >(t_raw),t_mmdpmx->comment_jp);
+					}else{
+						t_mmdpmx->comment_jp = reinterpret_cast< wchar* >(t_raw);
+					}
+					t_raw += t_length;
 				}
 			}
-			t_raw += t_size;
-		}
 
-		STLWString t_commnet_en;
-		{
-			u32 t_size;
-			reinterpret_cast< u8* >(&t_size)[0] = t_raw[0];
-			reinterpret_cast< u8* >(&t_size)[1] = t_raw[1];
-			reinterpret_cast< u8* >(&t_size)[2] = t_raw[2];
-			reinterpret_cast< u8* >(&t_size)[3] = t_raw[3];
-			t_raw += 4;	//sizeof(u32)
-
-			if(t_size > 0){
-				if(t_header_ex->utf8){
-					CharToWchar(reinterpret_cast< char* >(t_raw),t_commnet_en);
-				}else{
-					t_commnet_en = reinterpret_cast< wchar* >(t_raw);
+			//comment en
+			{
+				u32 t_length = Memory::Copy< u32 >(t_raw);
+				if(t_length > 0){
+					if(t_mmdpmx->header_ex.is_utf8){
+						CharToWchar(reinterpret_cast< char* >(t_raw),t_mmdpmx->comment_en);
+					}else{
+						t_mmdpmx->comment_en = reinterpret_cast< wchar* >(t_raw);
+					}
+					t_raw += t_length;
 				}
 			}
-			t_raw += t_size;
+
+			{
+				t_mmdpmx->vertex_list_size = Memory::Copy< u32 >(t_raw);
+				t_mmdpmx->vertex_list.reset(new MmdPmx_VertexData[t_mmdpmx->vertex_list_size],default_delete< MmdPmx_VertexData[] >());
+
+				for(u32 ii=0;ii<t_mmdpmx->vertex_list_size;ii++){
+					MmdPmx_VertexData& t_vertex_data = t_mmdpmx->vertex_list.get()[ii];
+
+					//position
+					t_vertex_data.position = Memory::Copy< NBsys::NGeometry::Geometry_Vector3 >(t_raw);
+
+					//normal
+					t_vertex_data.normal = Memory::Copy< NBsys::NGeometry::Geometry_Vector3 >(t_raw);
+
+					//uv
+					t_vertex_data.uv = Memory::Copy< NBsys::NGeometry::Geometry_Vector2 >(t_raw);
+
+					//uv_ex
+					for(s32 jj=0;jj<t_mmdpmx->header_ex.uv_ex_size;jj++){
+						t_vertex_data.uv_ex[jj] = Memory::Copy< NBsys::NGeometry::Geometry_Vector4 >(t_raw);
+					}
+
+					//weight_type
+					t_vertex_data.weight_type = Memory::Copy< u8 >(t_raw);
+
+					//bone
+					switch (t_vertex_data.weight_type){
+					case 0:
+						{
+							if(t_mmdpmx->header_ex.bone_index_size == 1){
+								t_vertex_data.bone_index[0] = Memory::Copy< s8 >(t_raw);
+							}else if(t_mmdpmx->header_ex.bone_index_size == 2){
+								t_vertex_data.bone_index[0] = Memory::Copy< s16 >(t_raw);
+							}else{
+								t_vertex_data.bone_index[0] = Memory::Copy< s32 >(t_raw);
+							}
+						}break;
+					case 1:
+						{
+							for(s32 jj=0;jj<2;jj++){
+								if(t_mmdpmx->header_ex.bone_index_size == 1){
+									t_vertex_data.bone_index[jj] = Memory::Copy< s8 >(t_raw);
+								}else if(t_mmdpmx->header_ex.bone_index_size == 2){
+									t_vertex_data.bone_index[jj] = Memory::Copy< s16 >(t_raw);
+								}else{
+									t_vertex_data.bone_index[jj] = Memory::Copy< s32 >(t_raw);
+								}
+							}
+
+							t_vertex_data.bone_weight[0] = Memory::Copy< f32 >(t_raw);
+						}break;
+					case 2:
+						{
+							for(s32 jj=0;jj<4;jj++){
+								if(t_mmdpmx->header_ex.bone_index_size == 1){
+									t_vertex_data.bone_index[jj] = Memory::Copy< s8 >(t_raw);
+								}else if(t_mmdpmx->header_ex.bone_index_size == 2){
+									t_vertex_data.bone_index[jj] = Memory::Copy< s16 >(t_raw);
+								}else{
+									t_vertex_data.bone_index[jj] = Memory::Copy< s32 >(t_raw);
+								}
+							}
+
+							for(s32 jj=0;jj<4;jj++){
+								t_vertex_data.bone_weight[jj] = Memory::Copy< f32 >(t_raw);
+							}
+						}break;
+					case 3:
+						{
+							for(s32 jj=0;jj<2;jj++){
+								if(t_mmdpmx->header_ex.bone_index_size == 1){
+									t_vertex_data.bone_index[jj] = Memory::Copy< s8 >(t_raw);
+								}else if(t_mmdpmx->header_ex.bone_index_size == 2){
+									t_vertex_data.bone_index[jj] = Memory::Copy< s16 >(t_raw);
+								}else{
+									t_vertex_data.bone_index[jj] = Memory::Copy< s32 >(t_raw);
+								}
+							}
+
+							t_vertex_data.bone_weight[0] = Memory::Copy< f32 >(t_raw);
+
+							t_vertex_data.sdef_c = Memory::Copy< NBsys::NGeometry::Geometry_Vector3 >(t_raw);
+							t_vertex_data.sdef_r0 = Memory::Copy< NBsys::NGeometry::Geometry_Vector3 >(t_raw);
+							t_vertex_data.sdef_r1 = Memory::Copy< NBsys::NGeometry::Geometry_Vector3 >(t_raw);
+						}break;
+					case 4:
+						{
+							for(s32 jj=0;jj<4;jj++){
+								if(t_mmdpmx->header_ex.bone_index_size == 1){
+									t_vertex_data.bone_index[jj] = Memory::Copy< s8 >(t_raw);
+								}else if(t_mmdpmx->header_ex.bone_index_size == 2){
+									t_vertex_data.bone_index[jj] = Memory::Copy< s16 >(t_raw);
+								}else{
+									t_vertex_data.bone_index[jj] = Memory::Copy< s32 >(t_raw);
+								}
+							}
+
+							for(s32 jj=0;jj<4;jj++){
+								t_vertex_data.bone_weight[jj] = Memory::Copy< f32 >(t_raw);
+							}
+						}break;
+					default:
+						{
+							ASSERT(0);
+						}break;
+					}
+
+					//edge_mag
+					t_vertex_data.edge_mag = Memory::Copy< f32 >(t_raw);
+				}
+
+			}
 		}
 
-		{
-			u32 t_vertex_count;
-			reinterpret_cast< u8* >(&t_vertex_count)[0] = t_raw[0];
-			reinterpret_cast< u8* >(&t_vertex_count)[1] = t_raw[1];
-			reinterpret_cast< u8* >(&t_vertex_count)[2] = t_raw[2];
-			reinterpret_cast< u8* >(&t_vertex_count)[3] = t_raw[3];
-			t_raw += 4;	//sizeof(u32)
-		}
-
-		return true;
+		return t_mmdpmx;
 	}
 
 }}
