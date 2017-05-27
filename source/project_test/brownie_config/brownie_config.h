@@ -103,6 +103,15 @@
 
 /*
 
+	std move
+
+*/
+#if !defined(BLIB_STDMOVE_ENABLE)
+	#define BLIB_STDMOVE_ENABLE								(1)
+#endif
+
+/*
+
 	Math::sin_fast / Math::cos_fast のテーブルサイズ。
 
 */

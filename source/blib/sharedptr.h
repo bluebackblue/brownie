@@ -534,6 +534,23 @@ namespace NBlib
 			*/
 			sharedptr(const weakptr< T >& a_weakptr);
 
+			/** [constructor]move constructor
+			*/
+			#if(BLIB_STDMOVE_ENABLE)
+			sharedptr(sharedptr< T >&& a_sharedptr) throw()
+				:
+				impl(a_sharedptr.impl)
+				#if(BLIB_SHAREDPTR_CACHE_ENABLE)
+				,
+				cache(a_sharedptr.cache)
+				#endif
+			{
+				//残骸もデストラクタの呼び出しは行われる。
+				a_sharedptr.impl = nullptr;
+				a_sharedptr.cache = nullptr;
+			}
+			#endif
+
 			/** [constructor]copy constructor。
 			*/
 			sharedptr(const sharedptr< T >& a_sharedptr) throw()
