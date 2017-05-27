@@ -32,7 +32,7 @@ namespace NBlib
 {
 	/** constructor
 	*/
-	FileHandle_Impl::FileHandle_Impl() throw()
+	FileHandle_Impl::FileHandle_Impl() noexcept
 		:
 		#if defined(PLATFORM_VCWIN)
 		rawhandle(INVALID_HANDLE_VALUE),
@@ -45,7 +45,7 @@ namespace NBlib
 
 	/** destructor
 	*/
-	FileHandle_Impl::~FileHandle_Impl() throw()
+	FileHandle_Impl::~FileHandle_Impl() noexcept
 	{
 		this->Close();
 	}

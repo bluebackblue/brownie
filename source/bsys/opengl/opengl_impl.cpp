@@ -166,7 +166,7 @@ namespace NBsys{namespace NOpengl
 
 	/** constructor
 	*/
-	Opengl_Impl::Opengl_Impl() throw()
+	Opengl_Impl::Opengl_Impl() noexcept
 		:
 		lockobject(),
 		window(nullptr),
@@ -200,7 +200,7 @@ namespace NBsys{namespace NOpengl
 
 	/** destructor
 	*/
-	Opengl_Impl::~Opengl_Impl() throw()
+	Opengl_Impl::~Opengl_Impl() noexcept
 	{
 	}
 

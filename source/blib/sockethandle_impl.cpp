@@ -43,7 +43,7 @@ namespace NBlib
 {
 	/** constructor
 	*/
-	SocketHandle_Impl::SocketHandle_Impl() throw()
+	SocketHandle_Impl::SocketHandle_Impl() noexcept
 		:
 		#if defined(PLATFORM_VCWIN)
 
@@ -60,7 +60,7 @@ namespace NBlib
 	*/
 	#if defined(PLATFORM_VCWIN)
 
-	SocketHandle_Impl::SocketHandle_Impl(SOCKET a_rawhandle) throw()
+	SocketHandle_Impl::SocketHandle_Impl(SOCKET a_rawhandle) noexcept
 		:
 		rawhandle(a_rawhandle),
 		rawaddrinfo(nullptr),
@@ -73,7 +73,7 @@ namespace NBlib
 
 	/** destructor
 	*/
-	SocketHandle_Impl::~SocketHandle_Impl() throw()
+	SocketHandle_Impl::~SocketHandle_Impl() noexcept
 	{
 		this->Close();
 	}

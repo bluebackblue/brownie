@@ -86,7 +86,7 @@ namespace NBlib
 
 			/** destructor
 			*/
-			virtual ~sharedptrbase() throw()
+			virtual ~sharedptrbase() noexcept
 			{
 			}
 
@@ -262,7 +262,7 @@ namespace NBlib
 
 			/** destructor
 			*/
-			virtual ~sharedptr_impl() throw()
+			virtual ~sharedptr_impl() noexcept
 			{
 			}
 
@@ -270,14 +270,14 @@ namespace NBlib
 
 			/** operator new
 			*/
-			static void* operator new(size_t a_size) throw()
+			static void* operator new(size_t a_size) noexcept
 			{
 				return sharedptrbase::Alloc(a_size);
 			}
 		
 			/** operator delete
 			*/
-			static void operator delete(void* a_pointer) throw()
+			static void operator delete(void* a_pointer) noexcept
 			{
 				sharedptrbase::Free(a_pointer);
 			}
@@ -315,7 +315,7 @@ namespace NBlib
 
 			/** destructor
 			*/
-			virtual ~nullsharedptr_impl() throw()
+			virtual ~nullsharedptr_impl() noexcept
 			{
 				//static destructor.
 			}
@@ -332,7 +332,7 @@ namespace NBlib
 
 			/** operator new
 			*/
-			static void* operator new(size_t /*a_size*/) throw()
+			static void* operator new(size_t /*a_size*/) noexcept
 			{
 				ASSERT(0);
 				return nullptr;
@@ -340,7 +340,7 @@ namespace NBlib
 		
 			/** operator delete
 			*/
-			static void operator delete(void* /*a_pointer*/) throw()
+			static void operator delete(void* /*a_pointer*/) noexcept
 			{
 				ASSERT(0);
 			}
@@ -443,7 +443,7 @@ namespace NBlib
 		public:
 			/** [constructor]nullptr。
 			*/
-			sharedptr() throw()
+			sharedptr() noexcept
 				:
 				#if(BLIB_SHAREDPTR_CACHE_ENABLE)
 
@@ -461,7 +461,7 @@ namespace NBlib
 			/** [constructor]nullptr。
 			*/
 			#if(BLIB_STDNULLPTR_ENABLE)
-			sharedptr(nullptr_t) throw()
+			sharedptr(nullptr_t) noexcept
 				:
 				#if(BLIB_SHAREDPTR_CACHE_ENABLE)
 
@@ -479,7 +479,7 @@ namespace NBlib
 
 			/** [constructor]nullsharedptr。
 			*/
-			explicit sharedptr(nullsharedptr_impl& a_impl) throw()
+			explicit sharedptr(nullsharedptr_impl& a_impl) noexcept
 				:
 				impl(&a_impl)
 			{
@@ -492,7 +492,7 @@ namespace NBlib
 
 			/** [constructor]新規。削除子なし。
 			*/
-			sharedptr(const T* a_instance) throw()
+			sharedptr(const T* a_instance) noexcept
 			{
 				//開始時は使用数１、参照数１。
 				if(a_instance != nullptr){
@@ -512,7 +512,7 @@ namespace NBlib
 
 			/** [constructor]新規。削除子あり。
 			*/
-			template < typename T2 , typename D > sharedptr(const T2* a_instance,D a_deleter) throw()
+			template < typename T2 , typename D > sharedptr(const T2* a_instance,D a_deleter) noexcept
 			{
 				//開始時は使用数１、参照数１。
 				if(a_instance != nullptr){
@@ -537,7 +537,7 @@ namespace NBlib
 			/** [constructor]move constructor
 			*/
 			#if(BLIB_STDMOVE_ENABLE)
-			sharedptr(sharedptr< T >&& a_sharedptr) throw()
+			sharedptr(sharedptr< T >&& a_sharedptr) noexcept
 				:
 				impl(a_sharedptr.impl)
 				#if(BLIB_SHAREDPTR_CACHE_ENABLE)
@@ -553,7 +553,7 @@ namespace NBlib
 
 			/** [constructor]copy constructor。
 			*/
-			sharedptr(const sharedptr< T >& a_sharedptr) throw()
+			sharedptr(const sharedptr< T >& a_sharedptr) noexcept
 				:
 				impl(a_sharedptr.impl)
 			{
@@ -581,7 +581,7 @@ namespace NBlib
 
 			/** [constructor]copy constructor。
 			*/
-			template < class T2 > sharedptr(const sharedptr< T2 >& a_sharedptr,typename enable_if< is_convertible< T2* , T* >::value , bool >::type check = true) throw()
+			template < class T2 > sharedptr(const sharedptr< T2 >& a_sharedptr,typename enable_if< is_convertible< T2* , T* >::value , bool >::type check = true) noexcept
 				:
 				impl(a_sharedptr.impl)
 			{
@@ -612,7 +612,7 @@ namespace NBlib
 
 			/** 代入。
 			*/
-			sharedptr< T >& operator =(const sharedptr< T >& a_sharedptr) throw()
+			sharedptr< T >& operator =(const sharedptr< T >& a_sharedptr) noexcept
 			{
 				//新しい「sharedptrbase」の使用数、参照数をインクリメント。
 
@@ -738,63 +738,63 @@ namespace NBlib
 
 			/** ポインタのように振舞う。
 			*/
-			typename reference_type< T >::type operator *() throw()
+			typename reference_type< T >::type operator *() noexcept
 			{
 				return *(this->get());
 			}
 
 			/** ポインタのように振舞う。
 			*/
-			T* operator ->() throw()
+			T* operator ->() noexcept
 			{
 				return this->get();
 			}
 
 			/** ポインタのように振舞う。
 			*/
-			typename reference_type< const T >::type operator *() const throw()
+			typename reference_type< const T >::type operator *() const noexcept
 			{
 				return *(this->get());
 			}
 
 			/** ポインタのように振舞う。
 			*/
-			const T* operator ->() const throw()
+			const T* operator ->() const noexcept
 			{
 				return this->get();
 			}
 
 			/** ポインタのように振舞う。
 			*/
-			operator bool() const throw()
+			operator bool() const noexcept
 			{
 				return (this->get()!=nullptr) ? true : false;
 			}
 
 			/** 比較。
 			*/
-			template < typename T2 > bool operator ==(const NBlib::sharedptr< T2 >& a_sharedptr_b) const throw()
+			template < typename T2 > bool operator ==(const NBlib::sharedptr< T2 >& a_sharedptr_b) const noexcept
 			{
 				return (this->get() == a_sharedptr_b.get());
 			}
 
 			/** 比較。
 			*/
-			template < typename T2 > bool operator !=(const NBlib::sharedptr< T2 >& a_sharedptr_b) const throw()
+			template < typename T2 > bool operator !=(const NBlib::sharedptr< T2 >& a_sharedptr_b) const noexcept
 			{
 				return (this->get() != a_sharedptr_b.get());
 			}
 
 			/** 比較。
 			*/
-			bool operator ==(const void* a_sharedptr_b) const throw()
+			bool operator ==(const void* a_sharedptr_b) const noexcept
 			{
 				return (this->get() == a_sharedptr_b);
 			}
 
 			/** 比較。
 			*/
-			bool operator !=(const void* a_sharedptr_b) const throw()
+			bool operator !=(const void* a_sharedptr_b) const noexcept
 			{
 				return (this->get() != a_sharedptr_b);
 			}
@@ -831,7 +831,7 @@ namespace NBlib
 
 			/** [constructor]copy constructor。
 			*/
-			template < class T2 > weakptr(const sharedptr< T2 >& a_sharedptr,typename enable_if< is_convertible< T2* , T* >::value , bool >::type check = true) throw()
+			template < class T2 > weakptr(const sharedptr< T2 >& a_sharedptr,typename enable_if< is_convertible< T2* , T* >::value , bool >::type check = true) noexcept
 			{
 				//新しい「sharedptrbase」の参照数をインクリメント。
 				this->impl = a_sharedptr.impl;
@@ -842,7 +842,7 @@ namespace NBlib
 
 			/** 代入。
 			*/
-			template < class T2 > weakptr& operator =(const sharedptr< T2 >& a_sharedptr) throw()
+			template < class T2 > weakptr& operator =(const sharedptr< T2 >& a_sharedptr) noexcept
 			{
 				//現在保持している「sharedptrbase」の参照数のデクリメント。
 				if(this->impl){
@@ -868,21 +868,21 @@ namespace NBlib
 
 			/** 「weakptr」から「sharedptr」を作成。
 			*/
-			sharedptr< T > lock() throw()
+			sharedptr< T > lock() noexcept
 			{
 				return sharedptr< T >(*this);
 			}
 
 			/** 「weakptr」から「sharedptr」を作成。
 			*/
-			const sharedptr< T > lock() const throw()
+			const sharedptr< T > lock() const noexcept
 			{
 				return sharedptr< T >(*this);
 			}
 
 			/** reset
 			*/
-			void reset() throw()
+			void reset() noexcept
 			{
 				//現在保持している「sharedptrbase」の参照数のデクリメント。
 				if(this->impl){
@@ -1053,28 +1053,28 @@ namespace NBlib
 
 	/** 比較。
 	*/
-	template < typename T2 > inline bool operator ==(const void* a_sharedptr_a,const NBlib::sharedptr< T2 >& a_sharedptr_b) throw()
+	template < typename T2 > inline bool operator ==(const void* a_sharedptr_a,const NBlib::sharedptr< T2 >& a_sharedptr_b) noexcept
 	{
 		return (a_sharedptr_a == a_sharedptr_b.get());
 	}
 
 	/** 比較。
 	*/
-	template < typename T2 > inline bool operator !=(const void* a_sharedptr_a,const NBlib::sharedptr< T2 >& a_sharedptr_b) throw()
+	template < typename T2 > inline bool operator !=(const void* a_sharedptr_a,const NBlib::sharedptr< T2 >& a_sharedptr_b) noexcept
 	{
 		return (a_sharedptr_a != a_sharedptr_b.get());
 	}
 
 	/** 比較。
 	*/
-	template < typename T2 > inline bool operator ==(const NBlib::sharedptr< T2 >& a_sharedptr_a,const void* a_sharedptr_b) throw()
+	template < typename T2 > inline bool operator ==(const NBlib::sharedptr< T2 >& a_sharedptr_a,const void* a_sharedptr_b) noexcept
 	{
 		return (a_sharedptr_a.get() == a_sharedptr_b);
 	}
 
 	/** 比較。
 	*/
-	template < typename T2 > inline bool operator !=(const NBlib::sharedptr< T2 >& a_sharedptr_a,const void* a_sharedptr_b) throw()
+	template < typename T2 > inline bool operator !=(const NBlib::sharedptr< T2 >& a_sharedptr_a,const void* a_sharedptr_b) noexcept
 	{
 		return (a_sharedptr_a.get() != a_sharedptr_b);
 	}

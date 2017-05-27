@@ -85,7 +85,7 @@ namespace NBlib
 
 		/** constructor。
 		*/
-		STLAllocator() throw()
+		STLAllocator() noexcept
 			:
 			size(0)
 		{
@@ -93,7 +93,7 @@ namespace NBlib
 
 		/** constructor。
 		*/
-		STLAllocator(const STLAllocator< T >& a_other) throw()
+		STLAllocator(const STLAllocator< T >& a_other) noexcept
 			:
 			size(a_other.size)
 		{
@@ -101,7 +101,7 @@ namespace NBlib
 
 		/** constructor。
 		*/
-		template < class OTHER > STLAllocator(const STLAllocator< OTHER >& a_other) throw()
+		template < class OTHER > STLAllocator(const STLAllocator< OTHER >& a_other) noexcept
 			:
 			size(a_other.size)
 		{
@@ -109,7 +109,7 @@ namespace NBlib
 
 		/** destructor。
 		*/
-		nonvirtual ~STLAllocator() throw()
+		nonvirtual ~STLAllocator() noexcept
 		{
 		}
 
@@ -129,7 +129,7 @@ namespace NBlib
 
 		/** 割当てることができる最大の要素数を返す。
 		*/
-		size_type max_size() const throw()
+		size_type max_size() const noexcept
 		{
 			STATIC_ASSERT(sizeof(T) > 0);
 			return std::numeric_limits<size_type>::max()/sizeof(T);
@@ -224,7 +224,7 @@ namespace NBlib
 
 		/** constructor。
 		*/
-		STLAllocator_String() throw()
+		STLAllocator_String() noexcept
 			:
 			size(0)
 		{
@@ -232,7 +232,7 @@ namespace NBlib
 
 		/** constructor。
 		*/
-		STLAllocator_String(const STLAllocator_String< T >& a_other) throw()
+		STLAllocator_String(const STLAllocator_String< T >& a_other) noexcept
 			:
 			size(a_other.size)
 		{
@@ -240,7 +240,7 @@ namespace NBlib
 
 		/** constructor。
 		*/
-		template < class OTHER > STLAllocator_String(const STLAllocator_String< OTHER >& a_other) throw()
+		template < class OTHER > STLAllocator_String(const STLAllocator_String< OTHER >& a_other) noexcept
 			:
 			size(a_other.size)
 		{
@@ -248,7 +248,7 @@ namespace NBlib
 
 		/** destructor。
 		*/
-		nonvirtual ~STLAllocator_String() throw()
+		nonvirtual ~STLAllocator_String() noexcept
 		{
 		}
 
@@ -268,7 +268,7 @@ namespace NBlib
 
 		/** 割当てることができる最大の要素数を返す。
 		*/
-		size_type max_size() const throw()
+		size_type max_size() const noexcept
 		{
 			STATIC_ASSERT(sizeof(T) > 0);
 			return std::numeric_limits<size_type>::max()/sizeof(T);
@@ -337,28 +337,28 @@ namespace NBlib
 
 	/** 比較。アロケーターに互換性があるかどうか。
 	*/
-	template < class T1 , class T2 > inline bool operator ==(const STLAllocator< T1 >& /*a_allocator_1*/,const STLAllocator< T2 >& /*a_allocator_2*/) throw()
+	template < class T1 , class T2 > inline bool operator ==(const STLAllocator< T1 >& /*a_allocator_1*/,const STLAllocator< T2 >& /*a_allocator_2*/) noexcept
 	{	
 		return true;
 	}
 
 	/** 比較。アロケーターに互換性があるかどうか。
 	*/
-	template < class T1 , class T2 > inline bool operator !=(const STLAllocator< T1 >& /*a_allocator_1*/,const STLAllocator< T2 >& /*a_allocator_2*/) throw()
+	template < class T1 , class T2 > inline bool operator !=(const STLAllocator< T1 >& /*a_allocator_1*/,const STLAllocator< T2 >& /*a_allocator_2*/) noexcept
 	{
 		return false;
 	}
 
 	/** 比較。アロケーターに互換性があるかどうか。
 	*/
-	template < class T1 , class T2 > inline bool operator ==(const STLAllocator_String< T1 >& /*a_allocator_1*/,const STLAllocator_String< T2 >& /*a_allocator_2*/) throw()
+	template < class T1 , class T2 > inline bool operator ==(const STLAllocator_String< T1 >& /*a_allocator_1*/,const STLAllocator_String< T2 >& /*a_allocator_2*/) noexcept
 	{	
 		return true;
 	}
 
 	/** 比較。アロケーターに互換性があるかどうか。
 	*/
-	template < class T1 , class T2 > inline bool operator !=(const STLAllocator_String< T1 >& /*a_allocator_1*/,const STLAllocator_String< T2 >& /*a_allocator_2*/) throw()
+	template < class T1 , class T2 > inline bool operator !=(const STLAllocator_String< T1 >& /*a_allocator_1*/,const STLAllocator_String< T2 >& /*a_allocator_2*/) noexcept
 	{
 		return false;
 	}

@@ -52,7 +52,7 @@ namespace NBsys{namespace NFile
 
 		/** constructor
 		*/
-		explicit File_Alloc_Deleter(sharedptr< File_Allocator >& a_allocator) throw()
+		explicit File_Alloc_Deleter(sharedptr< File_Allocator >& a_allocator) noexcept
 			:
 			allocator(a_allocator)
 		{
@@ -60,7 +60,7 @@ namespace NBsys{namespace NFile
 
 		/** ‰ð•úˆ—B
 		*/
-		void operator ()(void* a_pointer) throw()
+		void operator ()(void* a_pointer) noexcept
 		{
 			if(this->allocator){
 				this->allocator->Free(a_pointer);

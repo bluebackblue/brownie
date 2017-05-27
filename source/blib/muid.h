@@ -49,7 +49,7 @@ namespace NBlib
 
 		/** operator new
 		*/
-		static void* operator new(size_t a_size) throw()
+		static void* operator new(size_t a_size) noexcept
 		{
 			return Muid_Impl::Alloc(a_size);
 		}

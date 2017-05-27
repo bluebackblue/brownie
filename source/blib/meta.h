@@ -28,10 +28,10 @@ namespace NBlib
 	*/
 	template < typename T > struct default_delete
 	{
-		default_delete() throw()
+		default_delete() noexcept
 		{
 		}
-		void operator ()(T* a_instance) const throw()
+		void operator ()(T* a_instance) const noexcept
 		{
 			STATIC_ASSERT(0<sizeof(T));
 
@@ -43,10 +43,10 @@ namespace NBlib
 	*/
 	template < typename T > struct default_delete< T[] >
 	{
-		default_delete() throw()
+		default_delete() noexcept
 		{
 		}
-		void operator ()(T* a_instance) const throw()
+		void operator ()(T* a_instance) const noexcept
 		{
 			delete [] a_instance;
 		}
@@ -56,10 +56,10 @@ namespace NBlib
 	*/
 	struct null_delete
 	{
-		null_delete() throw()
+		null_delete() noexcept
 		{
 		}
-		void operator ()(void* /*a_instance*/) const throw()
+		void operator ()(void* /*a_instance*/) const noexcept
 		{
 			//NOP.
 		}
@@ -71,8 +71,8 @@ namespace NBlib
 	template < > struct default_delete< void >
 	{
 	private:
-		default_delete() throw() = delete;
-		void operator ()(void* a_instance) const throw() = delete;
+		default_delete() noexcept = delete;
+		void operator ()(void* a_instance) const noexcept = delete;
 	};
 
 	/** çÌèúéqÅBplacement_delete
@@ -82,7 +82,7 @@ namespace NBlib
 	*/
 	template < class T > struct placement_delete
 	{
-		placement_delete() throw()
+		placement_delete() noexcept
 		{
 		}
 		void operator ()(T* a_pointer) const throw ()
@@ -95,10 +95,10 @@ namespace NBlib
 	*/
 	template < class T > struct release_delete
 	{
-		release_delete() throw()
+		release_delete() noexcept
 		{
 		}
-		void operator ()(T* a_instance) const throw()
+		void operator ()(T* a_instance) const noexcept
 		{
 			a_instance->Release();
 		}

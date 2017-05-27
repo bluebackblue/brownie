@@ -33,7 +33,7 @@ namespace NBlib
 {
 	/** constructor
 	*/
-	DirectoryHandle_Impl::DirectoryHandle_Impl() throw()
+	DirectoryHandle_Impl::DirectoryHandle_Impl() noexcept
 		:
 		#if defined(PLATFORM_VCWIN)
 
@@ -48,7 +48,7 @@ namespace NBlib
 
 	/** destructor
 	*/
-	DirectoryHandle_Impl::~DirectoryHandle_Impl() throw()
+	DirectoryHandle_Impl::~DirectoryHandle_Impl() noexcept
 	{
 		this->Close();
 	}

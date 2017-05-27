@@ -35,7 +35,7 @@ namespace NBsys{namespace NFovehmd
 {
 	/** constructor
 	*/
-	Fovehmd_Impl::Fovehmd_Impl() throw()
+	Fovehmd_Impl::Fovehmd_Impl() noexcept
 		:
 		errorcode(ErrorCode::Success),
 		headset(),
@@ -49,7 +49,7 @@ namespace NBsys{namespace NFovehmd
 
 	/** constructor
 	*/
-	Fovehmd_Impl::~Fovehmd_Impl() throw()
+	Fovehmd_Impl::~Fovehmd_Impl() noexcept
 	{
 		this->compositor.reset();
 		this->headset.reset();

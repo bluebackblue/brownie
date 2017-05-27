@@ -62,19 +62,19 @@ namespace NBlib
 	public:
 		/** constructor
 		*/
-		SocketHandle_Impl() throw();
+		SocketHandle_Impl() noexcept;
 
 		/** constructor
 		*/
 		#if defined(PLATFORM_VCWIN)
 
-		SocketHandle_Impl(SOCKET a_rawhandle) throw();
+		SocketHandle_Impl(SOCKET a_rawhandle) noexcept;
 
 		#endif
 
 		/** destructor
 		*/
-		nonvirtual ~SocketHandle_Impl() throw();
+		nonvirtual ~SocketHandle_Impl() noexcept;
 
 		/** GetHostIp
 		*/

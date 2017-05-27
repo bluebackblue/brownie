@@ -201,7 +201,7 @@ namespace NBlib
 
 		/** operator new
 		*/
-		static void* operator new(size_t a_size) throw()
+		static void* operator new(size_t a_size) noexcept
 		{
 			return JsonItem::Alloc(a_size);
 		}

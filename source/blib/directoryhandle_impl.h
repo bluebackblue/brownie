@@ -63,11 +63,11 @@ namespace NBlib
 	public:
 		/** constructor
 		*/
-		DirectoryHandle_Impl() throw();
+		DirectoryHandle_Impl() noexcept;
 
 		/** destructor
 		*/
-		nonvirtual ~DirectoryHandle_Impl() throw();
+		nonvirtual ~DirectoryHandle_Impl() noexcept;
 
 	public:
 		/** Oepn

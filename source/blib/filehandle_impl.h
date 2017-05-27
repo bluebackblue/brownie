@@ -58,11 +58,11 @@ namespace NBlib
 	public:
 		/** constructor
 		*/
-		FileHandle_Impl() throw();
+		FileHandle_Impl() noexcept;
 
 		/** destructor
 		*/
-		nonvirtual ~FileHandle_Impl() throw();
+		nonvirtual ~FileHandle_Impl() noexcept;
 
 	public:
 		/** ReadOpen

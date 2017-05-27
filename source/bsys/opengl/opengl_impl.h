@@ -147,11 +147,11 @@ namespace NBsys{namespace NOpengl
 	public:
 		/** constructor
 		*/
-		Opengl_Impl() throw();
+		Opengl_Impl() noexcept;
 
 		/** destructor
 		*/
-		nonvirtual ~Opengl_Impl() throw();
+		nonvirtual ~Opengl_Impl() noexcept;
 
 	public:
 

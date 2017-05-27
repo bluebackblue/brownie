@@ -32,11 +32,11 @@ namespace NBsys{namespace NFovehmd
 	public:
 		/** constructor
 		*/
-		Fovehmd_Impl() throw();
+		Fovehmd_Impl() noexcept;
 
 		/** destructor
 		*/
-		nonvirtual ~Fovehmd_Impl() throw();
+		nonvirtual ~Fovehmd_Impl() noexcept;
 
 	public:
 		/** errorcode
