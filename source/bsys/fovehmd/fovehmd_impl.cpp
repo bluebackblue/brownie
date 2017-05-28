@@ -259,11 +259,11 @@ namespace NBsys{namespace NFovehmd
 
 	/** GetLeftViewProjection
 	*/
-	NBsys::NGeometry::Geometry_Matrix_44 Fovehmd_Impl::GetLeftViewProjection(f32 a_near,f32 a_far,float a_camera_y)
+	NBsys::NGeometry::Geometry_Matrix_44 Fovehmd_Impl::GetLeftViewProjection(f32 a_near,f32 a_far,const NGeometry::Geometry_Vector3& a_camera_position)
 	{
 		NBsys::NGeometry::Geometry_Matrix_44 t_camera_matrix = this->camera_matrix;
 		{
-			t_camera_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(this->camera_position.x,this->camera_position.y + a_camera_y,this->camera_position.z);
+			t_camera_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(this->camera_position.x + a_camera_position.x,this->camera_position.y + a_camera_position.y,this->camera_position.z + a_camera_position.z);
 			t_camera_matrix *= this->eye_translate_left;
 		}
 
@@ -275,11 +275,11 @@ namespace NBsys{namespace NFovehmd
 
 	/** GetRightViewProjection
 	*/
-	NBsys::NGeometry::Geometry_Matrix_44 Fovehmd_Impl::GetRightViewProjection(f32 a_near,f32 a_far,float a_camera_y)
+	NBsys::NGeometry::Geometry_Matrix_44 Fovehmd_Impl::GetRightViewProjection(f32 a_near,f32 a_far,const NGeometry::Geometry_Vector3& a_camera_position)
 	{
 		NBsys::NGeometry::Geometry_Matrix_44 t_camera_matrix = this->camera_matrix;
 		{
-			t_camera_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(this->camera_position.x,this->camera_position.y + a_camera_y,this->camera_position.z);
+			t_camera_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(this->camera_position.x + a_camera_position.x,this->camera_position.y + a_camera_position.y,this->camera_position.z + a_camera_position.z);
 			t_camera_matrix *= this->eye_translate_right;
 		}
 

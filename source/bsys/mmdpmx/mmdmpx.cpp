@@ -59,9 +59,10 @@ namespace NBsys{namespace NMmdPmx
 				u32 t_length = Memory::Copy< u32 >(t_raw);
 				if(t_length > 0){
 					if(t_mmdpmx->header_ex.is_utf8){
-						CharToWchar(reinterpret_cast< char* >(t_raw),t_mmdpmx->model_name_jp);
+						STLString t_buffer(reinterpret_cast< char* >(t_raw),t_length);
+						CharToWchar(t_buffer,t_mmdpmx->model_name_jp);
 					}else{
-						t_mmdpmx->model_name_jp = reinterpret_cast< wchar* >(t_raw);
+						t_mmdpmx->model_name_jp = STLWString(reinterpret_cast< wchar* >(t_raw),t_length/2);
 					}
 					t_raw += t_length;
 				}
@@ -72,9 +73,10 @@ namespace NBsys{namespace NMmdPmx
 				u32 t_length = Memory::Copy< u32 >(t_raw);
 				if(t_length > 0){
 					if(t_mmdpmx->header_ex.is_utf8){
-						CharToWchar(reinterpret_cast< char* >(t_raw),t_mmdpmx->model_name_en);
+						STLString t_buffer(reinterpret_cast< char* >(t_raw),t_length);
+						CharToWchar(t_buffer,t_mmdpmx->model_name_en);
 					}else{
-						t_mmdpmx->model_name_en = reinterpret_cast< wchar* >(t_raw);
+						t_mmdpmx->model_name_en = STLWString(reinterpret_cast< wchar* >(t_raw),t_length/2);
 					}
 					t_raw += t_length;
 				}
@@ -85,9 +87,10 @@ namespace NBsys{namespace NMmdPmx
 				u32 t_length = Memory::Copy< u32 >(t_raw);
 				if(t_length > 0){
 					if(t_mmdpmx->header_ex.is_utf8){
-						CharToWchar(reinterpret_cast< char* >(t_raw),t_mmdpmx->comment_jp);
+						STLString t_buffer(reinterpret_cast< char* >(t_raw),t_length);
+						CharToWchar(t_buffer,t_mmdpmx->comment_jp);
 					}else{
-						t_mmdpmx->comment_jp = reinterpret_cast< wchar* >(t_raw);
+						t_mmdpmx->comment_jp = STLWString(reinterpret_cast< wchar* >(t_raw),t_length/2);
 					}
 					t_raw += t_length;
 				}
@@ -98,9 +101,10 @@ namespace NBsys{namespace NMmdPmx
 				u32 t_length = Memory::Copy< u32 >(t_raw);
 				if(t_length > 0){
 					if(t_mmdpmx->header_ex.is_utf8){
-						CharToWchar(reinterpret_cast< char* >(t_raw),t_mmdpmx->comment_en);
+						STLString t_buffer(reinterpret_cast< char* >(t_raw),t_length);
+						CharToWchar(t_buffer,t_mmdpmx->comment_en);
 					}else{
-						t_mmdpmx->comment_en = reinterpret_cast< wchar* >(t_raw);
+						t_mmdpmx->comment_en = STLWString(reinterpret_cast< wchar* >(t_raw),t_length/2);
 					}
 					t_raw += t_length;
 				}
@@ -224,21 +228,42 @@ namespace NBsys{namespace NMmdPmx
 				t_mmdpmx->index_list.reset(new u32[t_mmdpmx->index_list_size],default_delete< u32[] >());
 
 				if(t_mmdpmx->header_ex.vertex_index_size == 1){
-					for(s32 ii=0;ii<t_mmdpmx->index_list_size;ii++){
+					for(u32 ii=0;ii<t_mmdpmx->index_list_size;ii++){
 						t_mmdpmx->index_list.get()[ii] = Memory::Copy< u8 >(t_raw);
 					}
 				}else if(t_mmdpmx->header_ex.vertex_index_size == 2){
-					for(s32 ii=0;ii<t_mmdpmx->index_list_size;ii++){
+					for(u32 ii=0;ii<t_mmdpmx->index_list_size;ii++){
 						t_mmdpmx->index_list.get()[ii] = Memory::Copy< u16 >(t_raw);
 					}
 				}else{
-					for(s32 ii=0;ii<t_mmdpmx->index_list_size;ii++){
+					for(u32 ii=0;ii<t_mmdpmx->index_list_size;ii++){
 						t_mmdpmx->index_list.get()[ii] = Memory::Copy< u32 >(t_raw);
 					}
 				}
 			}
 
+			//texturename
+			{
+				t_mmdpmx->texturename_list_size = Memory::Copy< u32 >(t_raw);
 
+				for(u32 ii=0;ii<t_mmdpmx->texturename_list_size;ii++){
+
+					STLWString t_texturename;
+					
+					u32 t_length = Memory::Copy< u32 >(t_raw);
+					if(t_length > 0){
+						if(t_mmdpmx->header_ex.is_utf8){
+							STLString t_buffer(reinterpret_cast< char* >(t_raw),t_length);
+							CharToWchar(reinterpret_cast< char* >(t_raw),t_texturename);
+						}else{
+							t_texturename = STLWString(reinterpret_cast< wchar* >(t_raw),t_length/2);
+						}
+						t_raw += t_length;
+					}
+
+					t_mmdpmx->texturename_list.push_back(t_texturename);
+				}
+			}
 
 
 

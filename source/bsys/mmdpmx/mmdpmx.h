@@ -104,9 +104,15 @@ namespace NBsys{namespace NMmdPmx
 		u32 vertex_list_size;
 		sharedptr< MmdPmx_VertexData > vertex_list;
 
+		/** index_list
+		*/
 		u32 index_list_size;
 		sharedptr< u32 > index_list;
 
+		/** texturename_list
+		*/
+		u32 texturename_list_size;
+		STLVector< STLWString >::Type texturename_list;
 
 	public:
 		/** constructor

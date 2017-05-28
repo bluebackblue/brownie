@@ -290,12 +290,14 @@ void Test_Main()
 
 		}else{
 
+			#if(USE_FOVE)
+			#else
 			s_rotate += 0.002f;
 			if(s_rotate >= 3.14f * 2){
 				s_rotate -= 3.14f * 2;
 			}
-
 			s_matrix = NBsys::NGeometry::Geometry_Matrix_44::Make_RotationY(s_rotate);
+			#endif
 
 			//レイアウト。
 			s_d3d11->Render_IASetInputLayout(t_vertexshader_id);
@@ -304,23 +306,34 @@ void Test_Main()
 			s_d3d11->Render_ClearRenderTargetView(NBsys::NColor::Color_F(0.3f,0.3f,0.8f,1.0f));
 			s_d3d11->Render_ClearDepthStencilView();
 			{
+				//t_near
+				f32 t_near = 0.1f;
+
+				//t_far
+				f32 t_far = 1000.0f;
+
+				//t_camera_pos
+				NBsys::NGeometry::Geometry_Vector3 t_camera_pos(0,2,-20);
+
 				#if(0)
 				{
+					#if(USE_FOVE)
 					{
 						s_d3d11->Render_ViewPort(0.0f,0.0f,s_fovehmd->GetSingleEyeResolution().x,s_fovehmd->GetSingleEyeResolution().y);
 
-						NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = s_fovehmd->GetLeftViewProjection(s_near,s_far,2.0f);
+						NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = s_fovehmd->GetLeftViewProjection(t_near,t_far,t_camera_pos);
 
-						Draw(s_matrix,t_view_projection);
+						DrawOnce(s_matrix,t_view_projection,0,0,0);
 					}
 
 					{
 						s_d3d11->Render_ViewPort(s_fovehmd->GetSingleEyeResolution().x,0.0f,s_fovehmd->GetSingleEyeResolution().x,s_fovehmd->GetSingleEyeResolution().y);
 
-						NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = s_fovehmd->GetRightViewProjection(s_near,s_far,2.0f);
+						NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = s_fovehmd->GetRightViewProjection(t_near,t_far,t_camera_pos);
 
-						Draw(s_matrix,t_view_projection);
+						DrawOnce(s_matrix,t_view_projection,0,0,0);
 					}
+					#endif
 				}
 				#else
 				{
@@ -331,21 +344,15 @@ void Test_Main()
 					#endif
 
 					//t_camera_target
-					NBsys::NGeometry::Geometry_Vector3 t_camera_target(0.0f,3.0f,0.0f);
+					NBsys::NGeometry::Geometry_Vector3 t_camera_target(0.0f,10.0f,0.0f);
 
 					//t_camera_position
-					NBsys::NGeometry::Geometry_Vector3 t_camera_position(10.0f,1.0f,-10.0f);
+					NBsys::NGeometry::Geometry_Vector3 t_camera_position(0.0f,10.0f,-20);
 
 					//t_camera_up
 					NBsys::NGeometry::Geometry_Vector3 t_camera_up(0.0f,1.0f,0.0f);
 
-					//s_near
-					f32 t_near = 0.1f;
-
-					//s_far
-					f32 t_far = 1000.0f;
-
-					//s_fov_deg
+					//t_fov_deg
 					f32 t_fov_deg = 60.0f;
 
 					NBsys::NGeometry::Geometry_Matrix_44 t_projection;
