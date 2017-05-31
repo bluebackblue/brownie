@@ -69,4 +69,10 @@
 #include "./mmdpmx/mmdpmx.h"
 #endif
 
+/** include
+*/
+#if(BSYS_TEXTURE_ENABLE)
+#include "./texture/texture.h"
+#endif
+
 

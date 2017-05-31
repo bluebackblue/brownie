@@ -31,9 +31,9 @@
 
 /** include
 */
-#if(USE_FOVE)
+//#if(USE_FOVE)
 #include "../bsys/d3d11/d3d11_impl.h"
-#endif
+//#endif
 
 
 /** Blib_DebugAssert_Callback
@@ -91,7 +91,7 @@ static sharedptr< NBsys::NFovehmd::Fovehmd > s_fovehmd;
 
 
 //s_vertex
-static sharedptr< NBsys::NModel::Model_Vertex< NBsys::NModel::Model_Vertex_Data_Pos3Color4 > > s_vertex;
+static sharedptr< NBsys::NModel::Model_Vertex< NBsys::NModel::Model_Vertex_Data_Pos3Uv2Color4 > > s_vertex;
 
 
 //s_matrix
@@ -136,7 +136,10 @@ void DrawOnce(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeome
 	s_d3d11->Render_VSSetShader(t_vertexshader_id);
 	s_d3d11->Render_VSSetConstantBuffers(0,t_constantbuffer_id);
 	s_d3d11->Render_PSSetShader(t_pixelshader_id);
-	s_d3d11->Render_Draw(s_vertex->GetVertexCountOf(0),s_vertex->GetVertexOffset(0));
+
+	for(s32 ii=0;ii<s_vertex->GetMaxParts();ii++){
+		s_d3d11->Render_Draw(s_vertex->GetVertexCountOf(ii),s_vertex->GetVertexOffset(ii));
+	}
 }
 
 
@@ -173,20 +176,55 @@ void Test_Main()
 
 	t_mmdpmx = NBsys::NMmdPmx::Load(t_pmx);
 
+	//テクスチャーのロード。
+	STLVector< sharedptr< NBsys::NTexture::Texture > >::Type t_texture_list;
+	{
+		STLVector< sharedptr< NBsys::NFile::File_Object > >::Type t_file_list;
+		for(u32 ii=0;ii<t_mmdpmx->texturename_list_size;ii++){
+			STLWString t_path = Path::DirAndName(L"FL改_レミリア・スカーレット_v2.20/",t_mmdpmx->texturename_list[ii]);
+			t_file_list.push_back(new NBsys::NFile::File_Object(1,t_path,-1,sharedptr< NBsys::NFile::File_Allocator >(),1));
+		}
+		while(1){
+			bool t_isbusy = false;
+			for(u32 ii=0;ii<t_mmdpmx->texturename_list_size;ii++){
+				if(t_file_list[ii]->IsBusy()){
+					t_isbusy = true;
+				}
+			}
+			if(t_isbusy == true){
+				ThreadSleep(10);
+			}else{
+				for(u32 ii=0;ii<t_mmdpmx->texturename_list_size;ii++){
+					t_texture_list.push_back(NBsys::NTexture::CreateTexture_FromPng(t_file_list[ii]->GetLoadData(),"png"));
+				}
+				break;
+			}
+		}
+	}
+
 	#if(1)
 	{
-		s_vertex = new NBsys::NModel::Model_Vertex< NBsys::NModel::Model_Vertex_Data_Pos3Color4 >();
-		s_vertex->AddParts("pmx");
+		s_vertex = new NBsys::NModel::Model_Vertex< NBsys::NModel::Model_Vertex_Data_Pos3Uv2Color4 >();
 
-		for(u32 ii=0;ii<t_mmdpmx->index_list_size;ii++){
-			u32 t_index = t_mmdpmx->index_list.get()[ii];
-			NBsys::NModel::Model_Vertex_Data_Pos3Color4 t_vertex;
-			NBsys::NMmdPmx::MmdPmx_VertexData& t_data = t_mmdpmx->vertex_list.get()[t_index];
+		for(u32 ii=0;ii<t_mmdpmx->parts_list_size;ii++){
+			NBsys::NMmdPmx::MmdPmx_Parts& t_parts = t_mmdpmx->parts_list[ii];
+			s_vertex->AddParts("parts");
+			for(u32 jj=0;jj<t_parts.count_of_index;jj++){
+				u32 t_index = t_mmdpmx->index_list.get()[t_parts.start_index + jj];
 
-			NBsys::NModel::SetColor< NBsys::NModel::Model_Vertex_Data_Pos3Color4 >(t_vertex,1.0f,1.0f,1.0f,1.0f);
-			NBsys::NModel::SetPos< NBsys::NModel::Model_Vertex_Data_Pos3Color4 >(t_vertex,t_data.position.x,t_data.position.y,t_data.position.z);
+				NBsys::NModel::Model_Vertex_Data_Pos3Uv2Color4 t_vertex;
+				NBsys::NMmdPmx::MmdPmx_VertexData& t_data = t_mmdpmx->vertex_list.get()[t_index];
 
-			s_vertex->AddVertex(t_vertex);
+				f32 t_color_r = ((ii * 18) % 10) / 9.0f;
+				f32 t_color_g = ((ii * 36) % 10) / 9.0f;
+				f32 t_color_b = ((ii * 59) % 10) / 9.0f;
+
+				NBsys::NModel::SetColor< NBsys::NModel::Model_Vertex_Data_Pos3Uv2Color4 >(t_vertex,t_color_r,t_color_g,t_color_b,1.0f);
+				NBsys::NModel::SetPos< NBsys::NModel::Model_Vertex_Data_Pos3Uv2Color4 >(t_vertex,t_data.position.x,t_data.position.y,t_data.position.z);
+				NBsys::NModel::SetUv< NBsys::NModel::Model_Vertex_Data_Pos3Uv2Color4 >(t_vertex,t_data.uv.x,t_data.uv.y);
+
+				s_vertex->AddVertex(t_vertex);
+			}
 		}
 	}
 	#else
@@ -261,8 +299,9 @@ void Test_Main()
 
 			sharedptr< STLVector< NBsys::ND3d11::D3d11_Layout >::Type > t_layout(new STLVector< NBsys::ND3d11::D3d11_Layout >::Type());
 			{
-				t_layout->push_back(NBsys::ND3d11::D3d11_Layout("POSITION",	0,NBsys::ND3d11::D3d11_FormatType::R32G32B32_FLOAT,		0,	0));
-				t_layout->push_back(NBsys::ND3d11::D3d11_Layout("COLOR",	0,NBsys::ND3d11::D3d11_FormatType::R32G32B32A32_FLOAT,	0,	12));
+				t_layout->push_back(NBsys::ND3d11::D3d11_Layout("POSITION",		0,NBsys::ND3d11::D3d11_FormatType::R32G32B32_FLOAT,		0,	0));			//12
+				t_layout->push_back(NBsys::ND3d11::D3d11_Layout("TEXCOORD",		0,NBsys::ND3d11::D3d11_FormatType::R32G32_FLOAT,		0,	0 + 12));		//8
+				t_layout->push_back(NBsys::ND3d11::D3d11_Layout("COLOR",		0,NBsys::ND3d11::D3d11_FormatType::R32G32B32A32_FLOAT,	0,	0 + 12 + 8));	//16
 			}
 
 			t_vertexshader_id = s_d3d11->CreateVertexShader(t_asyncresult_vertexshader,t_simple_vertex_fx,t_layout);

@@ -1,18 +1,40 @@
-float4x4 modelView;
 
-struct VSI {
-	float4 p : POSITION0;
-	float3 c : COLOR;
-};
-struct VSO {
-	float4 p : SV_POSITION;
-	float3 c : COLOR;
+
+/** view_projection
+*/
+float4x4 view_projection;
+
+
+/** VS_IN
+*/
+struct VS_IN
+{
+	float4 in_pos		: POSITION0;
+	float3 in_color		: COLOR0;
+	float2 in_uv		: TEXCOORD0;
 };
 
-VSO VS(VSI i) {
-	VSO ret;
-	ret.p = mul(i.p, modelView);
-	ret.c = i.c;
-	return ret;
+
+/** VS_OUT
+*/
+struct VS_OUT
+{
+	float4 out_pos		: SV_POSITION0;
+	float3 out_color	: COLOR0;
+	float2 out_uv		: TEXCOORD0;
+};
+
+
+/** VS
+*/
+VS_OUT VS(VS_IN a_vs_in)
+{
+	VS_OUT t_out;
+
+	t_out.out_pos = mul(a_vs_in.in_pos,view_projection);
+	t_out.out_color = a_vs_in.in_color;
+	t_out.out_uv = a_vs_in.in_uv;
+
+	return t_out;
 }
 

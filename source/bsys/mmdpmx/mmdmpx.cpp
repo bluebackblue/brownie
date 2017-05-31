@@ -265,9 +265,151 @@ namespace NBsys{namespace NMmdPmx
 				}
 			}
 
+			//parts
+			{
+				t_mmdpmx->parts_list_size = Memory::Copy< u32 >(t_raw);
+				t_mmdpmx->parts_list.resize(t_mmdpmx->parts_list_size);
 
+				s32 t_start_index = 0;
 
+				for(u32 ii=0;ii<t_mmdpmx->parts_list_size;ii++){
+					MmdPmx_Parts& t_parts = t_mmdpmx->parts_list.at(ii);
 
+					//parts_name_jp
+					{
+						u32 t_length = Memory::Copy< u32 >(t_raw);
+						if(t_length > 0){
+							if(t_mmdpmx->header_ex.is_utf8){
+								STLString t_buffer(reinterpret_cast< char* >(t_raw),t_length);
+								CharToWchar(t_buffer,t_parts.parts_name_jp);
+							}else{
+								t_parts.parts_name_jp = STLWString(reinterpret_cast< wchar* >(t_raw),t_length/2);
+							}
+							t_raw += t_length;
+						}
+					}
+
+					//parts_name_en
+					{
+						u32 t_length = Memory::Copy< u32 >(t_raw);
+						if(t_length > 0){
+							if(t_mmdpmx->header_ex.is_utf8){
+								STLString t_buffer(reinterpret_cast< char* >(t_raw),t_length);
+								CharToWchar(t_buffer,t_parts.parts_name_en);
+							}else{
+								t_parts.parts_name_en = STLWString(reinterpret_cast< wchar* >(t_raw),t_length/2);
+							}
+							t_raw += t_length;
+						}
+					}
+
+					//diffuse
+					{
+						t_parts.diffuse = Memory::Copy< NBsys::NColor::Color_F >(t_raw);
+					}
+
+					//specular : TODO : COLOR3
+					{
+						t_parts.specular = Memory::Copy< NBsys::NGeometry::Geometry_Vector3 >(t_raw);
+					}
+
+					//specular_power
+					{
+						t_parts.specular_power = Memory::Copy< f32 >(t_raw);
+					}
+
+					//ambient
+					{
+						t_parts.ambient = Memory::Copy< NBsys::NGeometry::Geometry_Vector3 >(t_raw);
+					}
+
+					//mode
+					{
+						//00000001 : 両面描画。
+						//00000010 : 地面影。
+						//00000100 : セルフシャドウマップへの描画。
+						//00001000 : セルフシャドウの描画。
+						//00010000 : エッジ描画。
+						//00100000 : 頂点カラー。
+						//01000000 : Point描画。
+						//10000000 : Line描画。
+
+						t_parts.draw_mode = Memory::Copy< u8 >(t_raw);
+					}
+
+					//edge
+					{
+						t_parts.edge_color = Memory::Copy< NBsys::NColor::Color_F >(t_raw);
+						t_parts.edge_size = Memory::Copy< f32 >(t_raw);
+					}
+
+					//textureindex
+					{
+						if(t_mmdpmx->header_ex.texture_index_size == 1){
+							t_parts.textureindex = Memory::Copy< s8 >(t_raw);
+						}else if(t_mmdpmx->header_ex.texture_index_size == 1){
+							t_parts.textureindex = Memory::Copy< s16 >(t_raw);
+						}else{
+							t_parts.textureindex = Memory::Copy< s32 >(t_raw);
+						}
+
+						if(t_mmdpmx->header_ex.texture_index_size == 1){
+							t_parts.textureindex_sphere = Memory::Copy< s8 >(t_raw);
+						}else if(t_mmdpmx->header_ex.texture_index_size == 1){
+							t_parts.textureindex_sphere = Memory::Copy< s16 >(t_raw);
+						}else{
+							t_parts.textureindex_sphere = Memory::Copy< s32 >(t_raw);
+						}
+
+						t_parts.textureindex_sphere_mode = Memory::Copy< s8 >(t_raw);
+					}
+
+					//toon
+					{
+						t_parts.toon_mode = Memory::Copy< u8 >(t_raw);
+
+						if(t_parts.toon_mode == 0){
+							//個別。
+
+							if(t_mmdpmx->header_ex.texture_index_size == 1){
+								t_parts.toon_textureindex = Memory::Copy< s8 >(t_raw);
+							}else if(t_mmdpmx->header_ex.texture_index_size == 1){
+								t_parts.toon_textureindex = Memory::Copy< s16 >(t_raw);
+							}else{
+								t_parts.toon_textureindex = Memory::Copy< s32 >(t_raw);
+							}
+
+						}else if(t_parts.toon_mode == 1){
+							//共通。
+
+							t_parts.toon_textureindex = Memory::Copy< s8 >(t_raw);
+						}else{
+							ASSERT(0);
+						}
+					}
+
+					//comment
+					{
+						u32 t_length = Memory::Copy< u32 >(t_raw);
+						if(t_length > 0){
+							if(t_mmdpmx->header_ex.is_utf8){
+								STLString t_buffer(reinterpret_cast< char* >(t_raw),t_length);
+								CharToWchar(t_buffer,t_parts.comment);
+							}else{
+								t_parts.comment = STLWString(reinterpret_cast< wchar* >(t_raw),t_length/2);
+							}
+							t_raw += t_length;
+						}
+					}
+
+					//index_size
+					{
+						t_parts.start_index = t_start_index;
+						t_parts.count_of_index = Memory::Copy< u32 >(t_raw);
+						t_start_index += t_parts.count_of_index;
+					}
+				}
+			}
 
 
 		}

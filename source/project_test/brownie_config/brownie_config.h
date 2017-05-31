@@ -398,3 +398,12 @@
 	#define BSYS_MMDPMX_ENABLE								(0)
 #endif
 
+/*
+
+	テクスチャー
+
+*/
+#if !defined(BSYS_TEXTURE_ENABLE)
+	#define BSYS_TEXTURE_ENABLE								(0)
+#endif
+

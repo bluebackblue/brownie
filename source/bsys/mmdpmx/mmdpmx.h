@@ -18,6 +18,7 @@
 */
 #include "../file/file.h"
 #include "../geometry/geometry.h"
+#include "../color/color.h"
 
 
 /** NBsys::NMmdPmx
@@ -48,7 +49,7 @@ namespace NBsys{namespace NMmdPmx
 		u8 uv_ex_size;
 		u8 vertex_index_size;
 		u8 texture_index_size;
-		u8 material_index_size;
+		u8 parts_index_size;
 		u8 bone_index_size;
 		u8 morph_index_size;
 		u8 rigid_body_index_size;
@@ -74,6 +75,64 @@ namespace NBsys{namespace NMmdPmx
 		NBsys::NGeometry::Geometry_Vector3	sdef_r1;
 
 		f32									edge_mag;
+	};
+
+	/** MmdPmx_Parts
+	*/
+	struct MmdPmx_Parts
+	{
+		/** parts_name
+		*/
+		STLWString parts_name_jp;
+
+		/** parts_name_en
+		*/
+		STLWString parts_name_en;
+
+		/** diffuse
+		*/
+		NBsys::NColor::Color_F diffuse;
+
+		/** specular
+		*/
+		NBsys::NGeometry::Geometry_Vector3 specular;
+
+		/** specular_power
+		*/
+		f32 specular_power;
+
+		/** ambient
+		*/
+		NBsys::NGeometry::Geometry_Vector3 ambient;
+
+		/** draw_mode
+		*/
+		u8 draw_mode;
+
+		/** edge
+		*/
+		NBsys::NColor::Color_F edge_color;
+		f32 edge_size;
+
+		/** textureindex
+		*/
+		s32 textureindex;
+		s32 textureindex_sphere;
+		u8 textureindex_sphere_mode;
+
+		/** toon
+		*/
+		u8 toon_mode;
+		s32 toon_textureindex;
+
+		/** comment
+		*/
+		STLWString comment;
+		
+		/** count_of_index
+		*/
+		u32 start_index;
+		u32 count_of_index;
 	};
 
 	/** MmdPmx
@@ -113,6 +172,11 @@ namespace NBsys{namespace NMmdPmx
 		*/
 		u32 texturename_list_size;
 		STLVector< STLWString >::Type texturename_list;
+
+		/** parts_list
+		*/
+		u32 parts_list_size;
+		STLVector< MmdPmx_Parts >::Type parts_list;
 
 	public:
 		/** constructor

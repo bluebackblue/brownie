@@ -531,7 +531,7 @@ namespace NBsys{namespace ND3d11
 			if(t_raw != nullptr){
 				t_blob.reset(t_raw,release_delete< ID3DBlob >());
 			}
-			if(t_raw != nullptr){
+			if(t_raw_error != nullptr){
 				t_blob_error.reset(t_raw_error,release_delete< ID3DBlob >());
 			}
 			if(FAILED(t_result)){
@@ -553,7 +553,7 @@ namespace NBsys{namespace ND3d11
 
 		/** ID3D11VertexShader
 		*/
-		{
+		if(t_blob){
 			ID3D11VertexShader* t_raw = nullptr;
 			HRESULT t_result = this->device->CreateVertexShader(t_blob->GetBufferPointer(),t_blob->GetBufferSize(),nullptr,&t_raw);
 			if(t_raw != nullptr){
@@ -566,22 +566,23 @@ namespace NBsys{namespace ND3d11
 
 		/** ID3D11InputLayout
 		*/
-		{
+		if(t_blob){
 			s32 t_layout_size = static_cast<s32>(a_vertexshader->layout->size());
 			D3D11_INPUT_ELEMENT_DESC* t_layout_data = new D3D11_INPUT_ELEMENT_DESC[t_layout_size];
 			sharedptr< D3D11_INPUT_ELEMENT_DESC > t_layout(t_layout_data,default_delete< D3D11_INPUT_ELEMENT_DESC[] >());
 			{
 				 for(s32 ii=0;ii<t_layout_size;ii++){
 					t_layout_data[ii].SemanticName			= a_vertexshader->layout->at(ii).semantic_name.c_str();
-					t_layout_data[ii].SemanticIndex		= a_vertexshader->layout->at(ii).semantic_index;
-					t_layout_data[ii].InputSlot			= a_vertexshader->layout->at(ii).input_slot;
-					t_layout_data[ii].AlignedByteOffset	= a_vertexshader->layout->at(ii).offset;
+					t_layout_data[ii].SemanticIndex			= a_vertexshader->layout->at(ii).semantic_index;
+					t_layout_data[ii].InputSlot				= a_vertexshader->layout->at(ii).input_slot;
+					t_layout_data[ii].AlignedByteOffset		= a_vertexshader->layout->at(ii).offset;
 					t_layout_data[ii].InputSlotClass		= D3D11_INPUT_PER_VERTEX_DATA;
 					t_layout_data[ii].InstanceDataStepRate	= 0;
 
 					switch(a_vertexshader->layout->at(ii).format){
 					case D3d11_FormatType::R32G32B32_FLOAT:		t_layout_data[ii].Format = DXGI_FORMAT_R32G32B32_FLOAT;		break;
-					case D3d11_FormatType::R32G32B32A32_FLOAT:	t_layout_data[ii].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;		break;
+					case D3d11_FormatType::R32G32B32A32_FLOAT:	t_layout_data[ii].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;	break;
+					case D3d11_FormatType::R32G32_FLOAT:		t_layout_data[ii].Format = DXGI_FORMAT_R32G32_FLOAT;		break;
 					default:ASSERT(0);break;
 					}
 				 }
@@ -620,7 +621,7 @@ namespace NBsys{namespace ND3d11
 			if(t_raw != nullptr){
 				t_blob.reset(t_raw,release_delete< ID3DBlob >());
 			}
-			if(t_raw != nullptr){
+			if(t_raw_error != nullptr){
 				t_blob_error.reset(t_raw_error,release_delete< ID3DBlob >());
 			}
 			if(FAILED(t_result)){
@@ -640,7 +641,7 @@ namespace NBsys{namespace ND3d11
 			t_blob_error.reset();
 		}
 
-		{
+		if(t_blob){
 			ID3D11PixelShader* t_raw = nullptr;
 			HRESULT t_result = this->device->CreatePixelShader(t_blob->GetBufferPointer(),t_blob->GetBufferSize(),nullptr,&t_raw);
 			if(t_raw != nullptr){
@@ -701,6 +702,67 @@ namespace NBsys{namespace ND3d11
 		}
 		if(FAILED(t_result)){
 			a_constantbuffer->buffer.reset();
+		}
+	}
+
+	/** Render_CreateTexture
+	*/
+	void D3d11_Impl::Render_CreateTexture(s32 a_width,s32 a_height,sharedptr< u8 >& a_data,s32 a_stride,s32 a_slice_pich_size)
+	{
+		sharedptr< ID3D11Texture2D > t_texture;
+		{
+			D3D11_TEXTURE2D_DESC t_desc;
+			{
+				Memory::memset(&t_desc,0,sizeof(t_desc));
+				t_desc.Width = a_width;
+				t_desc.Height = a_height;
+				t_desc.MipLevels = 1;
+				t_desc.ArraySize = 1;
+				t_desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+				t_desc.SampleDesc.Count = 1;
+				t_desc.SampleDesc.Quality = 0;
+				t_desc.Usage = D3D11_USAGE_DEFAULT;
+				t_desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+				t_desc.CPUAccessFlags = 0;
+				t_desc.MiscFlags = 0;
+			}
+
+			D3D11_SUBRESOURCE_DATA t_data;
+			{
+				Memory::memset(&t_data,0,sizeof(t_data));
+				t_data.pSysMem = a_data.get();
+				t_data.SysMemPitch = a_stride;
+				t_data.SysMemSlicePitch = a_slice_pich_size;
+			}
+
+			ID3D11Texture2D* t_raw = nullptr;
+			HRESULT t_result = this->device->CreateTexture2D(&t_desc,&t_data,&t_raw);
+			if(t_raw != nullptr){
+				t_texture.reset(t_raw,release_delete< ID3D11Texture2D >());
+			}
+			if(FAILED(t_result)){
+				t_texture.reset();
+			}
+		}
+
+		sharedptr< ID3D11ShaderResourceView > t_shader_resource;
+		{
+			D3D11_SHADER_RESOURCE_VIEW_DESC t_desc;
+			{
+				Memory::memset(&t_desc,0,sizeof(t_desc));
+				t_desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+				t_desc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+				t_desc.Texture2D.MipLevels = 1;
+			}
+
+			ID3D11ShaderResourceView* t_raw = nullptr;
+			HRESULT t_result = this->device->CreateShaderResourceView(t_texture.get(),&t_desc,&t_raw);
+			if(t_raw != nullptr){
+				t_shader_resource.reset(t_raw,release_delete< ID3D11ShaderResourceView >());
+			}
+			if(FAILED(t_result)){
+				t_shader_resource.reset();
+			}
 		}
 	}
 

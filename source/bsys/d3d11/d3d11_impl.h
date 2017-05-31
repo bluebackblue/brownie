@@ -291,6 +291,10 @@ namespace NBsys{namespace ND3d11
 		*/
 		void Render_CreateConstantBuffer(sharedptr< D3d11_Impl_ConstantBuffer >& a_constantbuffer);
 
+		/** Render_CreateTexture
+		*/
+		void Render_CreateTexture(s32 a_width,s32 a_height,sharedptr< u8 >& a_data,s32 a_stride,s32 a_slice_pich_size);
+
 	public:
 
 		/** Render_Main
