@@ -23,12 +23,22 @@ mid-level library
 * _______ brownie_config.h
 * _______ user_customize.h
 * _ premake
-* _ glew
-* _ glfw
+* _ licence
+* ___ fovehmd
+* ___ glew
+* ___ glfw
+* ___ libpng
+* ___ mmd
+* ___ saba
+* ___ zlib
 * sdk
-* _ glew-2.0.0
-* _ glfw-3.2.1
+* _ gl
+* ___ glew-2.0.0
+* ___ glfw-3.2.1
 * _ fovehmd
+* ___ FOVE SDK 0.11.4
+* _ png
+* ___ lpng1628
 
 ## include path
 

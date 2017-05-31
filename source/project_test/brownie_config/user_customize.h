@@ -16,10 +16,12 @@
 	DEF_TEST2	:	mmdpmx
 
 */
-#define DEF_TEST2
+#define DEF_TEST0
 
 
 #if defined(DEF_TEST0)
+
+	#define BSYS_OPENGL_ENABLE								(1)
 
 #elif defined(DEF_TEST1)
 
