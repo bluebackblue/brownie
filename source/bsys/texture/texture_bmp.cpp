@@ -105,7 +105,7 @@ namespace NBsys{namespace NTexture
 		for(s32 yy=0;yy<static_cast<s32>(t_height);yy++){
 			for(s32 xx=0;xx<static_cast<s32>(t_width);xx++){
 				s32 t_index = t_width * yy + xx;
-				t_dst[t_index] = (static_cast<u32>(t_src[t_index*3+0]))<<24 | (static_cast<u32>(t_src[t_index*3+1]))<<16 | (static_cast<u32>(t_src[t_index*3+2]))<<8 | 0x000000FF; 
+				t_dst[t_index] = 0xFF000000 | (static_cast<u32>(t_src[t_index*3+0]))<<16 | (static_cast<u32>(t_src[t_index*3+1]))<<8 | t_src[t_index*3+2]; 
 			}
 		}
 

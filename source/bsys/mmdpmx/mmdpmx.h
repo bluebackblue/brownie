@@ -105,9 +105,38 @@ namespace NBsys{namespace NMmdPmx
 		*/
 		NBsys::NGeometry::Geometry_Vector3 ambient;
 
-		/** draw_mode
+		/** 両面描画。
 		*/
-		u8 draw_mode;
+		bool drawmode_cullfull;
+
+		/** 影発生。
+		*/
+		bool drawmode_shadow;
+
+		/** セルフシャドウマップへの描画。
+		*/
+		bool drawmode_selfshadowmap;
+
+		/** セルフシャドウの描画。
+		*/
+		bool drawmode_selfshadow;
+
+		/** エッジの描画。
+		*/
+		bool drawmode_edge;
+
+		/** 頂点カラー。
+		*/
+		bool drawmode_vertexcolor;
+
+		/** ポイント描画。
+		*/
+		bool drawmode_point;
+
+		/** ライン描画。
+		*/
+		bool drawmode_line;
+
 
 		/** edge
 		*/

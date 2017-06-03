@@ -334,7 +334,39 @@ namespace NBsys{namespace NMmdPmx
 						//01000000 : Point描画。
 						//10000000 : Line描画。
 
-						t_parts.draw_mode = Memory::Copy< u8 >(t_raw);
+						u8 t_drawmode = Memory::Copy< u8 >(t_raw);
+
+						/** 両面描画。
+						*/
+						t_parts.drawmode_cullfull = (t_drawmode & (0x01)) > 0;
+
+						/** 影発生。
+						*/
+						t_parts.drawmode_shadow = (t_drawmode & (0x01<<1)) > 0;
+
+						/** セルフシャドウマップへの描画。
+						*/
+						t_parts.drawmode_selfshadowmap = (t_drawmode & (0x01<<2)) > 0;
+
+						/** セルフシャドウの描画。
+						*/
+						t_parts.drawmode_selfshadow = (t_drawmode & (0x01<<3)) > 0;
+
+						/** エッジの描画。
+						*/
+						t_parts.drawmode_edge = (t_drawmode & (0x01<<4)) > 0;
+
+						/** 頂点カラー。
+						*/
+						t_parts.drawmode_vertexcolor = (t_drawmode & (0x01<<5)) > 0;
+
+						/** ポイント描画。
+						*/
+						t_parts.drawmode_point = (t_drawmode & (0x01<<6)) > 0;
+
+						/** ライン描画。
+						*/
+						t_parts.drawmode_line = (t_drawmode & (0x01<<7)) > 0;
 					}
 
 					//edge

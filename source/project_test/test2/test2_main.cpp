@@ -247,6 +247,7 @@ void DrawOnce(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeome
 	NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = a_model_matrix * NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(a_xx*2.0f,a_yy*2.0f,a_zz*2.0f) * a_view_projection;
 	NBsys::NGeometry::Geometry_Matrix_44 t_view_projection_transpose = t_view_projection.Make_Transpose();
 
+
 	s_d3d11->Render_IASetPrimitiveTopology_TriangleList();
 	s_d3d11->Render_UpdateSubresource(t_constantbuffer_id,&t_view_projection_transpose.m[0][0]);
 	s_d3d11->Render_VSSetShader(t_vertexshader_id);
@@ -254,9 +255,16 @@ void DrawOnce(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeome
 	s_d3d11->Render_PSSetShader(t_pixelshader_id);
 	s_d3d11->Render_SetBlendState(t_blendstate_id);
 
+
 	for(s32 ii=0;ii<s_model->size();ii++){
-		s_d3d11->Render_SetTexture(s_model->at(ii).texture_id);
-		s_d3d11->Render_Draw(s_vertex->GetVertexCountOf(ii),s_vertex->GetVertexOffset(ii));
+		if(s_model->at(ii).texture_index >= 0){
+			s_d3d11->Render_SetTexture(s_model->at(ii).texture_id);
+			s_d3d11->Render_Draw(s_vertex->GetVertexCountOf(ii),s_vertex->GetVertexOffset(ii));
+		}else{
+			//TODO:
+			s_d3d11->Render_SetTexture(s_model->at(ii).texture_id);
+			s_d3d11->Render_Draw(s_vertex->GetVertexCountOf(ii),s_vertex->GetVertexOffset(ii));
+		}
 	}
 }
 
