@@ -39,19 +39,14 @@ namespace NBsys{namespace ND3d11
 		*/
 		sharedptr< D3d11_Impl_Texture > texture;
 
-		/** asyncresult
-		*/
-		AsyncResult< bool > asyncresult;
-
 	public:
 
 		/** constructor
 		*/
-		D3d11_Impl_ActionBatching_Texture_Create(D3d11_Impl& a_d3d11_impl,sharedptr< D3d11_Impl_Texture >& a_texture,AsyncResult< bool >& a_asyncresult)
+		D3d11_Impl_ActionBatching_Texture_Create(D3d11_Impl& a_d3d11_impl,sharedptr< D3d11_Impl_Texture >& a_texture)
 			:
 			d3d11_impl(a_d3d11_impl),
-			texture(a_texture),
-			asyncresult(a_asyncresult)
+			texture(a_texture)
 		{
 		}
 
@@ -79,8 +74,6 @@ namespace NBsys{namespace ND3d11
 
 			//Render_CreateTexture
 			this->d3d11_impl.Render_CreateTexture(this->texture);
-
-			this->asyncresult.Set(true);
 
 			//ê¨å˜ÅB
 			return 1;

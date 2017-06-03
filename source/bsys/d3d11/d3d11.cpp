@@ -65,23 +65,30 @@ namespace NBsys{namespace ND3d11
 
 	/** CreatePixelShader
 	*/
-	s32 D3d11::CreateVertexBuffer(AsyncResult< bool >& a_asyncresult,const void* a_data,s32 a_stridebyte,s32 a_offset,s32 a_countofvertex)
+	s32 D3d11::CreateVertexBuffer(const void* a_data,s32 a_stridebyte,s32 a_offset,s32 a_countofvertex)
 	{
-		return this->impl->CreateVertexBuffer(a_asyncresult,a_data,a_stridebyte,a_offset,a_countofvertex);
+		return this->impl->CreateVertexBuffer(a_data,a_stridebyte,a_offset,a_countofvertex);
 	}
 
 	/** CreateConstantBuffer
 	*/
-	s32 D3d11::CreateConstantBuffer(AsyncResult< bool >& a_asyncresult,s32 a_size)
+	s32 D3d11::CreateConstantBuffer(s32 a_size)
 	{
-		return this->impl->CreateConstantBuffer(a_asyncresult,a_size);
+		return this->impl->CreateConstantBuffer(a_size);
 	}
 	
 	/** CreateTexture
 	*/
-	s32 D3d11::CreateTexture(AsyncResult< bool >& a_asyncresult,sharedptr< NBsys::NTexture::Texture >& a_texture)
+	s32 D3d11::CreateTexture(sharedptr< NBsys::NTexture::Texture >& a_texture)
 	{
-		return this->impl->CreateTexture(a_asyncresult,a_texture);
+		return this->impl->CreateTexture(a_texture);
+	}
+
+	/** CreateBlendState
+	*/
+	s32 D3d11::CreateBlendState(bool a_blend_state)
+	{
+		return this->impl->CreateBlendState(a_blend_state);
 	}
 
 	/** Render_Create
@@ -208,6 +215,13 @@ namespace NBsys{namespace ND3d11
 	void D3d11::Render_SetTexture(s32 a_texture_id)
 	{
 		this->impl->Render_SetTexture(a_texture_id);
+	}
+
+	/** Render_SetBlendState
+	*/
+	void D3d11::Render_SetBlendState(s32 a_blendstate_id)
+	{
+		this->impl->Render_SetBlendState(a_blendstate_id);
 	}
 
 }}

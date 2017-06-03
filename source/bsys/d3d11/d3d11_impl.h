@@ -137,6 +137,19 @@ namespace NBsys{namespace ND3d11
 		sharedptr< ID3D11ShaderResourceView > resourceview;
 	};
 
+	/** D3d11_Impl_BlendState
+	*/
+	struct D3d11_Impl_BlendState
+	{
+		/** blendstate
+		*/
+		sharedptr< ID3D11BlendState > blendstate;
+
+		/** alpha_blend
+		*/
+		bool alpha_blend;
+	};
+
 	/** D3d11_Impl
 	*/
 	class D3d11_Impl
@@ -208,6 +221,10 @@ namespace NBsys{namespace ND3d11
 		/** texture_list
 		*/
 		STLMap< s32 , sharedptr< D3d11_Impl_Texture > >::Type texture_list;
+
+		/** blendstate_list
+		*/
+		STLMap< s32 , sharedptr< D3d11_Impl_BlendState > >::Type blendstate_list;
 
 	public:
 		/** constructor
@@ -281,6 +298,10 @@ namespace NBsys{namespace ND3d11
 		*/
 		sharedptr< D3d11_Impl_Texture > GetTexture(s32 a_texture_id);
 
+		/** GetBlendState
+		*/
+		sharedptr< D3d11_Impl_BlendState > GetBlendState(s32 a_blendstate_id);
+
 	public:
 
 		/** CreateVertexShader
@@ -293,15 +314,19 @@ namespace NBsys{namespace ND3d11
 
 		/** CreateVertexBuffer
 		*/
-		s32 CreateVertexBuffer(AsyncResult< bool >& a_asyncresult,const void* a_data,s32 a_stridebyte,s32 a_offset,s32 a_countofvertex);
+		s32 CreateVertexBuffer(const void* a_data,s32 a_stridebyte,s32 a_offset,s32 a_countofvertex);
 
 		/** CreateConstantBuffer
 		*/
-		s32 CreateConstantBuffer(AsyncResult< bool >& a_asyncresult,s32 a_size);
+		s32 CreateConstantBuffer(s32 a_size);
 
 		/** CreateTexture
 		*/
-		s32 CreateTexture(AsyncResult< bool >& a_asyncresult,sharedptr< NBsys::NTexture::Texture >& a_texture);
+		s32 CreateTexture(sharedptr< NBsys::NTexture::Texture >& a_texture);
+
+		/** CreateBlendState
+		*/
+		s32 CreateBlendState(bool a_alpha_blend);
 
 	public:
 
@@ -324,6 +349,10 @@ namespace NBsys{namespace ND3d11
 		/** Render_CreateTexture
 		*/
 		void Render_CreateTexture(sharedptr< D3d11_Impl_Texture >& a_texture);
+
+		/** Render_CreateBlendState
+		*/
+		void Render_CreateBlendState(sharedptr< D3d11_Impl_BlendState >& a_blendstate);
 
 	public:
 
@@ -396,6 +425,10 @@ namespace NBsys{namespace ND3d11
 		/** Render_SetTexture
 		*/
 		void Render_SetTexture(s32 a_texture_id);
+
+		/** Render_SetBlendState
+		*/
+		void Render_SetBlendState(s32 a_blendstate_id);
 
 	};
 

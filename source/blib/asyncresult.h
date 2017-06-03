@@ -67,6 +67,16 @@ namespace NBlib
 			}
 		}
 
+		/** IsCreate
+		*/
+		bool IsCreate()
+		{
+			if(this->instance){
+				return true;
+			}
+			return false;
+		}
+
 		/** Set
 		*/
 		void Set(const T& a_value)

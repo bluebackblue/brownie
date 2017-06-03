@@ -25,9 +25,9 @@
 #if(BSYS_D3D11_ENABLE)
 namespace NBsys{namespace ND3d11
 {
-	/** バーテックスバッファー作成。
+	/** テクスチャー作成。
 	*/
-	class D3d11_Impl_ActionBatching_VertexBuffer_Create : public NBsys::NActionBatching::ActionBatching_ActionItem_Base
+	class D3d11_Impl_ActionBatching_BlendState_Create : public NBsys::NActionBatching::ActionBatching_ActionItem_Base
 	{
 	private:
 
@@ -35,24 +35,24 @@ namespace NBsys{namespace ND3d11
 		*/
 		D3d11_Impl& d3d11_impl;
 
-		/** vertexbuffer
+		/** blendstate
 		*/
-		sharedptr< D3d11_Impl_VertexBuffer > vertexbuffer;
+		sharedptr< D3d11_Impl_BlendState > blendstate;
 
 	public:
 
 		/** constructor
 		*/
-		D3d11_Impl_ActionBatching_VertexBuffer_Create(D3d11_Impl& a_d3d11_impl,sharedptr< D3d11_Impl_VertexBuffer >& a_vertexbuffer)
+		D3d11_Impl_ActionBatching_BlendState_Create(D3d11_Impl& a_d3d11_impl,sharedptr< D3d11_Impl_BlendState >& a_blendstate)
 			:
 			d3d11_impl(a_d3d11_impl),
-			vertexbuffer(a_vertexbuffer)
+			blendstate(a_blendstate)
 		{
 		}
 
 		/** destructor
 		*/
-		virtual ~D3d11_Impl_ActionBatching_VertexBuffer_Create()
+		virtual ~D3d11_Impl_ActionBatching_BlendState_Create()
 		{
 		}
 
@@ -72,8 +72,8 @@ namespace NBsys{namespace ND3d11
 				//中断。
 			}
 
-			//Render_CreateVertexBuffer
-			this->d3d11_impl.Render_CreateVertexBuffer(this->vertexbuffer);
+			//Render_CreateBlendState
+			this->d3d11_impl.Render_CreateBlendState(this->blendstate);
 
 			//成功。
 			return 1;

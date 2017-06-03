@@ -114,8 +114,6 @@ static f32 s_rotate = 0.0f;
 //asyncresult
 AsyncResult< bool > t_asyncresult_vertexshader;
 AsyncResult< bool > t_asyncresult_pixelshader;
-AsyncResult< bool > t_asyncresult_constantbuffer;
-AsyncResult< bool > t_asyncresult_vertexbuffer;
 
 
 //id
@@ -123,6 +121,10 @@ s32 t_vertexshader_id = -1;
 s32 t_pixelshader_id = -1;
 s32 t_constantbuffer_id = -1;
 s32 t_vertexbuffer_id = -1;
+
+
+AsyncResult< bool > t_asyncresult_blendstate;
+s32 t_blendstate_id = -1;
 
 
 struct ModelParts
@@ -225,9 +227,7 @@ void LoadPmx()
 			}
 
 			//テクスチャー作成。
-			AsyncResult<bool> t_result;
-			t_result.Create(false);
-			t_model_patrs.texture_id = s_d3d11->CreateTexture(t_result,t_model_patrs.texture);
+			t_model_patrs.texture_id = s_d3d11->CreateTexture(t_model_patrs.texture);
 
 		}
 	}
@@ -252,12 +252,11 @@ void DrawOnce(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeome
 	s_d3d11->Render_VSSetShader(t_vertexshader_id);
 	s_d3d11->Render_VSSetConstantBuffers(0,t_constantbuffer_id);
 	s_d3d11->Render_PSSetShader(t_pixelshader_id);
+	s_d3d11->Render_SetBlendState(t_blendstate_id);
 
 	for(s32 ii=0;ii<s_model->size();ii++){
-		//if(ii == 18){
-			s_d3d11->Render_SetTexture(s_model->at(ii).texture_id);
-			s_d3d11->Render_Draw(s_vertex->GetVertexCountOf(ii),s_vertex->GetVertexOffset(ii));
-		//}
+		s_d3d11->Render_SetTexture(s_model->at(ii).texture_id);
+		s_d3d11->Render_Draw(s_vertex->GetVertexCountOf(ii),s_vertex->GetVertexOffset(ii));
 	}
 }
 
@@ -311,6 +310,11 @@ void Test_Main()
 	s_d3d11->Render_Create(s_window,s_width,s_height);
 	#endif
 
+	//ブレンドステータス。
+	t_asyncresult_blendstate.Create(false);
+	t_blendstate_id = s_d3d11->CreateBlendState(true);
+
+
 	//s_pcounter
 	s_pcounter = PerformanceCounter::GetPerformanceCounter();
 
@@ -348,8 +352,6 @@ void Test_Main()
 
 			t_asyncresult_vertexshader.Create(false);
 			t_asyncresult_pixelshader.Create(false);
-			t_asyncresult_constantbuffer.Create(false);
-			t_asyncresult_vertexbuffer.Create(false);
 
 			sharedptr< STLVector< NBsys::ND3d11::D3d11_Layout >::Type > t_layout(new STLVector< NBsys::ND3d11::D3d11_Layout >::Type());
 			{
@@ -360,8 +362,8 @@ void Test_Main()
 
 			t_vertexshader_id = s_d3d11->CreateVertexShader(t_asyncresult_vertexshader,t_simple_vertex_fx,t_layout);
 			t_pixelshader_id = s_d3d11->CreatePixelShader(t_asyncresult_pixelshader,t_simple_pixel_fx);
-			t_constantbuffer_id = s_d3d11->CreateConstantBuffer(t_asyncresult_constantbuffer,sizeof(float) * 16);
-			t_vertexbuffer_id = s_d3d11->CreateVertexBuffer(t_asyncresult_vertexbuffer,s_vertex->GetVertexPointer(),s_vertex->GetVertexStrideByte(),0,s_vertex->GetVertexAllCountOf());
+			t_constantbuffer_id = s_d3d11->CreateConstantBuffer(sizeof(float) * 16);
+			t_vertexbuffer_id = s_d3d11->CreateVertexBuffer(s_vertex->GetVertexPointer(),s_vertex->GetVertexStrideByte(),0,s_vertex->GetVertexAllCountOf());
 
 			s_step++;
 
@@ -369,11 +371,7 @@ void Test_Main()
 
 			if(t_asyncresult_vertexshader.Get() == true){
 				if(t_asyncresult_pixelshader.Get() == true){
-					if(t_asyncresult_constantbuffer.Get() == true){
-						if(t_asyncresult_vertexbuffer.Get() == true){
-							s_step++;
-						}
-					}
+					s_step++;
 				}
 			}
 

@@ -39,19 +39,14 @@ namespace NBsys{namespace ND3d11
 		*/
 		sharedptr< D3d11_Impl_ConstantBuffer > constantbuffer;
 
-		/** asyncresult
-		*/
-		AsyncResult< bool > asyncresult;
-
 	public:
 
 		/** constructor
 		*/
-		D3d11_Impl_ActionBatching_ConstantBuffer_Create(D3d11_Impl& a_d3d11_impl,sharedptr< D3d11_Impl_ConstantBuffer >& a_constantbuffer,AsyncResult< bool >& a_asyncresult)
+		D3d11_Impl_ActionBatching_ConstantBuffer_Create(D3d11_Impl& a_d3d11_impl,sharedptr< D3d11_Impl_ConstantBuffer >& a_constantbuffer)
 			:
 			d3d11_impl(a_d3d11_impl),
-			constantbuffer(a_constantbuffer),
-			asyncresult(a_asyncresult)
+			constantbuffer(a_constantbuffer)
 		{
 		}
 
@@ -79,8 +74,6 @@ namespace NBsys{namespace ND3d11
 
 			//Render_CreateConstantBuffer
 			this->d3d11_impl.Render_CreateConstantBuffer(this->constantbuffer);
-
-			this->asyncresult.Set(true);
 
 			//ê¨å˜ÅB
 			return 1;

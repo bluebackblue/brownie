@@ -71,15 +71,20 @@ namespace NBsys{namespace ND3d11
 
 		/** CreateVertexBuffer
 		*/
-		s32 CreateVertexBuffer(AsyncResult< bool >& a_asyncresult,const void* a_data,s32 a_stridebyte,s32 a_offset,s32 a_countofvertex);
+		s32 CreateVertexBuffer(const void* a_data,s32 a_stridebyte,s32 a_offset,s32 a_countofvertex);
 
 		/** CreateConstantBuffer
 		*/
-		s32 CreateConstantBuffer(AsyncResult< bool >& a_asyncresult,s32 a_size);
+		s32 CreateConstantBuffer(s32 a_size);
 
 		/** CreateTexture
 		*/
-		s32 CreateTexture(AsyncResult< bool >& a_asyncresult,sharedptr< NBsys::NTexture::Texture >& a_texture);
+		s32 CreateTexture(sharedptr< NBsys::NTexture::Texture >& a_texture);
+
+		/** CreateBlendState
+		*/
+		s32 CreateBlendState(bool a_blend_state);
+
 
 	public:
 		/** çÏê¨ÅB
@@ -156,6 +161,9 @@ namespace NBsys{namespace ND3d11
 		*/
 		void Render_SetTexture(s32 a_texture_id);
 
+		/** Render_SetBlendState
+		*/
+		void Render_SetBlendState(s32 a_blendstate_id);
 	};
 
 }}

@@ -31,6 +31,7 @@
 #include "./d3d11_impl_actionbatching_vertexbuffer_create.h"
 #include "./d3d11_impl_actionbatching_constantbuffer_create.h"
 #include "./d3d11_impl_actionbatching_texture_create.h"
+#include "./d3d11_impl_actionbatching_blendstate_create.h"
 
 
 /** lib
@@ -399,153 +400,169 @@ namespace NBsys{namespace ND3d11
 		return sharedptr< D3d11_Impl_Texture >::null();
 	}
 
+	/** GetBlendState
+	*/
+	sharedptr< D3d11_Impl_BlendState > D3d11_Impl::GetBlendState(s32 a_blendstate_id)
+	{
+		STLMap< s32 , sharedptr< D3d11_Impl_BlendState > >::iterator t_it = this->blendstate_list.find(a_blendstate_id);
+		if(t_it->second != nullptr){
+			return t_it->second;
+		}
+		return sharedptr< D3d11_Impl_BlendState >::null();
+	}
+
 	/** CreateVertexShader
 	*/
 	s32 D3d11_Impl::CreateVertexShader(AsyncResult< bool >& a_asyncresult,sharedptr< NBsys::NFile::File_Object >& a_fileobject,sharedptr< STLVector< NBsys::ND3d11::D3d11_Layout >::Type >& a_layout)
 	{
-		AutoLock t_autolock(this->actionbatching_lockobject);
+		//ＩＤ。
+		s32 t_vertexshader_id = this->id_maker.MakeID();
 
+		sharedptr< D3d11_Impl_VertexShader > t_vertexshader = new D3d11_Impl_VertexShader();
 		{
-			//ＩＤ。
-			s32 t_vertexshader_id = this->id_maker.MakeID();
-
-			sharedptr< D3d11_Impl_VertexShader > t_vertexshader = new D3d11_Impl_VertexShader();
-			{
-				t_vertexshader->fileobject = a_fileobject;
-				t_vertexshader->layout = a_layout;
-			}
-
-			//レンダーコマンド。
-			sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
-			{
-				t_actionlist->Add(new D3d11_Impl_ActionBatching_VertexShader_Create(*this,t_vertexshader,a_asyncresult));
-			}
-			this->StartBatching(t_actionlist);
-
-			//管理リスト。
-			this->vertexshader_list.insert(STLMap< s32 , sharedptr< D3d11_Impl_VertexShader > >::value_type(t_vertexshader_id,t_vertexshader));
-
-			return t_vertexshader_id;
+			t_vertexshader->fileobject = a_fileobject;
+			t_vertexshader->layout = a_layout;
 		}
+
+		//レンダーコマンド。
+		sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
+		{
+			t_actionlist->Add(new D3d11_Impl_ActionBatching_VertexShader_Create(*this,t_vertexshader,a_asyncresult));
+		}
+		this->StartBatching(t_actionlist);
+
+		//管理リスト。
+		this->vertexshader_list.insert(STLMap< s32 , sharedptr< D3d11_Impl_VertexShader > >::value_type(t_vertexshader_id,t_vertexshader));
+
+		return t_vertexshader_id;
 	}
 
 	/** CreatePixelShader
 	*/
 	s32 D3d11_Impl::CreatePixelShader(AsyncResult< bool >& a_asyncresult,sharedptr< NBsys::NFile::File_Object >& a_fileobject)
 	{
-		AutoLock t_autolock(this->actionbatching_lockobject);
+		//ＩＤ。
+		s32 t_pixelshader_id = this->id_maker.MakeID();
 
+		sharedptr< D3d11_Impl_PixelShader > t_pixelshader = new D3d11_Impl_PixelShader();
 		{
-			//ＩＤ。
-			s32 t_pixelshader_id = this->id_maker.MakeID();
-
-			sharedptr< D3d11_Impl_PixelShader > t_pixelshader = new D3d11_Impl_PixelShader();
-			{
-				t_pixelshader->fileobject = a_fileobject;
-			}
-
-			//レンダーコマンド。
-			sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
-			{
-				t_actionlist->Add(new D3d11_Impl_ActionBatching_PixelShader_Create(*this,t_pixelshader,a_asyncresult));
-			}
-			this->StartBatching(t_actionlist);
-
-			//管理リスト。
-			this->pixelshader_list.insert(STLMap< s32 , sharedptr< D3d11_Impl_PixelShader > >::value_type(t_pixelshader_id,t_pixelshader));
-
-			return t_pixelshader_id;
+			t_pixelshader->fileobject = a_fileobject;
 		}
+
+		//レンダーコマンド。
+		sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
+		{
+			t_actionlist->Add(new D3d11_Impl_ActionBatching_PixelShader_Create(*this,t_pixelshader,a_asyncresult));
+		}
+		this->StartBatching(t_actionlist);
+
+		//管理リスト。
+		this->pixelshader_list.insert(STLMap< s32 , sharedptr< D3d11_Impl_PixelShader > >::value_type(t_pixelshader_id,t_pixelshader));
+
+		return t_pixelshader_id;
 	}
 
 	/** CreateVertexBuffer
 	*/
-	s32 D3d11_Impl::CreateVertexBuffer(AsyncResult< bool >& a_asyncresult,const void* a_data,s32 a_stridebyte,s32 a_offset,s32 a_countofvertex)
+	s32 D3d11_Impl::CreateVertexBuffer(const void* a_data,s32 a_stridebyte,s32 a_offset,s32 a_countofvertex)
 	{
-		AutoLock t_autolock(this->actionbatching_lockobject);
+		//ＩＤ。
+		s32 t_vertexbuffer_id = this->id_maker.MakeID();
 
+		sharedptr< D3d11_Impl_VertexBuffer > t_vertexbuffer = new D3d11_Impl_VertexBuffer();
 		{
-			//ＩＤ。
-			s32 t_vertexbuffer_id = this->id_maker.MakeID();
-
-			sharedptr< D3d11_Impl_VertexBuffer > t_vertexbuffer = new D3d11_Impl_VertexBuffer();
-			{
-				t_vertexbuffer->data = a_data;
-				t_vertexbuffer->stridebyte = a_stridebyte;
-				t_vertexbuffer->offset = a_offset;
-				t_vertexbuffer->countofvertex = a_countofvertex;
-			}
-
-			//レンダーコマンド。
-			sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
-			{
-				t_actionlist->Add(new D3d11_Impl_ActionBatching_VertexBuffer_Create(*this,t_vertexbuffer,a_asyncresult));
-			}
-			this->StartBatching(t_actionlist);
-
-			//管理リスト。
-			this->vertexbuffer_list.insert(STLMap< s32 , sharedptr< D3d11_Impl_VertexBuffer > >::value_type(t_vertexbuffer_id,t_vertexbuffer));
-
-			return t_vertexbuffer_id;
+			t_vertexbuffer->data = a_data;
+			t_vertexbuffer->stridebyte = a_stridebyte;
+			t_vertexbuffer->offset = a_offset;
+			t_vertexbuffer->countofvertex = a_countofvertex;
 		}
+
+		//レンダーコマンド。
+		sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
+		{
+			t_actionlist->Add(new D3d11_Impl_ActionBatching_VertexBuffer_Create(*this,t_vertexbuffer));
+		}
+		this->StartBatching(t_actionlist);
+
+		//管理リスト。
+		this->vertexbuffer_list.insert(STLMap< s32 , sharedptr< D3d11_Impl_VertexBuffer > >::value_type(t_vertexbuffer_id,t_vertexbuffer));
+
+		return t_vertexbuffer_id;
 	}
 
 	/** CreateConstantBuffer
 	*/
-	s32 D3d11_Impl::CreateConstantBuffer(AsyncResult< bool >& a_asyncresult,s32 a_size)
+	s32 D3d11_Impl::CreateConstantBuffer(s32 a_size)
 	{
-		AutoLock t_autolock(this->actionbatching_lockobject);
+		//ＩＤ。
+		s32 t_constantbuffer_id = this->id_maker.MakeID();
 
+		sharedptr< D3d11_Impl_ConstantBuffer > t_constantbuffer = new D3d11_Impl_ConstantBuffer();
 		{
-			//ＩＤ。
-			s32 t_constantbuffer_id = this->id_maker.MakeID();
-
-			sharedptr< D3d11_Impl_ConstantBuffer > t_constantbuffer = new D3d11_Impl_ConstantBuffer();
-			{
-				t_constantbuffer->size = a_size;
-			}
-
-			//レンダーコマンド。
-			sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
-			{
-				t_actionlist->Add(new D3d11_Impl_ActionBatching_ConstantBuffer_Create(*this,t_constantbuffer,a_asyncresult));
-			}
-			this->StartBatching(t_actionlist);
-
-			//管理リスト。
-			this->constantbuffer_list.insert(STLMap< s32 , sharedptr< D3d11_Impl_ConstantBuffer > >::value_type(t_constantbuffer_id,t_constantbuffer));
-
-			return t_constantbuffer_id;
+			t_constantbuffer->size = a_size;
 		}
+
+		//レンダーコマンド。
+		sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
+		{
+			t_actionlist->Add(new D3d11_Impl_ActionBatching_ConstantBuffer_Create(*this,t_constantbuffer));
+		}
+		this->StartBatching(t_actionlist);
+
+		//管理リスト。
+		this->constantbuffer_list.insert(STLMap< s32 , sharedptr< D3d11_Impl_ConstantBuffer > >::value_type(t_constantbuffer_id,t_constantbuffer));
+
+		return t_constantbuffer_id;
 	}
 
 	/** CreateTexture
 	*/
-	s32 D3d11_Impl::CreateTexture(AsyncResult< bool >& a_asyncresult,sharedptr< NBsys::NTexture::Texture >& a_texture)
+	s32 D3d11_Impl::CreateTexture(sharedptr< NBsys::NTexture::Texture >& a_texture)
 	{
-		AutoLock t_autolock(this->actionbatching_lockobject);
+		//ＩＤ。
+		s32 t_texture_id = this->id_maker.MakeID();
 
+		sharedptr< D3d11_Impl_Texture > t_texture = new D3d11_Impl_Texture();
 		{
-			//ＩＤ。
-			s32 t_texture_id = this->id_maker.MakeID();
-
-			sharedptr< D3d11_Impl_Texture > t_texture = new D3d11_Impl_Texture();
-			{
-				t_texture->texture = a_texture;
-			}
-
-			//レンダーコマンド。
-			sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
-			{
-				t_actionlist->Add(new D3d11_Impl_ActionBatching_Texture_Create(*this,t_texture,a_asyncresult));
-			}
-			this->StartBatching(t_actionlist);
-
-			//管理リスト。
-			this->texture_list.insert(STLMap< s32 , sharedptr< D3d11_Impl_Texture > >::value_type(t_texture_id,t_texture));
-
-			return t_texture_id;
+			t_texture->texture = a_texture;
 		}
+
+		//レンダーコマンド。
+		sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
+		{
+			t_actionlist->Add(new D3d11_Impl_ActionBatching_Texture_Create(*this,t_texture));
+		}
+		this->StartBatching(t_actionlist);
+
+		//管理リスト。
+		this->texture_list.insert(STLMap< s32 , sharedptr< D3d11_Impl_Texture > >::value_type(t_texture_id,t_texture));
+
+		return t_texture_id;
+	}
+
+	/** CreateBlendState
+	*/
+	s32 D3d11_Impl::CreateBlendState(bool a_alpha_blend)
+	{
+		//ＩＤ。
+		s32 t_blendstate_id = this->id_maker.MakeID();
+
+		sharedptr< D3d11_Impl_BlendState > t_blendstate = new D3d11_Impl_BlendState();
+		{
+			t_blendstate->alpha_blend = a_alpha_blend;
+		}
+
+		//レンダーコマンド。
+		sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
+		{
+			t_actionlist->Add(new D3d11_Impl_ActionBatching_BlendState_Create(*this,t_blendstate));
+		}
+		this->StartBatching(t_actionlist);
+
+		//管理リスト。
+		this->blendstate_list.insert(STLMap< s32 , sharedptr< D3d11_Impl_BlendState > >::value_type(t_blendstate_id,t_blendstate));
+
+		return t_blendstate_id;
 	}
 
 	/** Render_CreateVertexShader
@@ -805,11 +822,61 @@ namespace NBsys{namespace ND3d11
 		}
 	}
 
+	/** Render_CreateBlendState
+	*/
+	void D3d11_Impl::Render_CreateBlendState(sharedptr< D3d11_Impl_BlendState >& a_blendstate)
+	{
+		D3D11_BLEND_DESC t_desc;
+		{
+			Memory::memset(&t_desc,0,sizeof(t_desc));
+
+			if(a_blendstate->alpha_blend == true){
+				//アルファブレンド。
+				t_desc.AlphaToCoverageEnable = FALSE;
+				t_desc.IndependentBlendEnable = FALSE;
+				for(s32 ii=0;ii<COUNTOF(t_desc.RenderTarget);ii++){
+					t_desc.RenderTarget[ii].BlendEnable = TRUE;
+					t_desc.RenderTarget[ii].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+					t_desc.RenderTarget[ii].BlendOp = D3D11_BLEND_OP_ADD;
+					t_desc.RenderTarget[ii].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+					t_desc.RenderTarget[ii].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+					t_desc.RenderTarget[ii].SrcBlendAlpha = D3D11_BLEND_ONE;
+					t_desc.RenderTarget[ii].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+					t_desc.RenderTarget[ii].DestBlendAlpha = D3D11_BLEND_ZERO;
+				}
+			}else{
+				t_desc.AlphaToCoverageEnable = FALSE;
+				t_desc.IndependentBlendEnable = FALSE;
+				for(s32 ii=0;ii<COUNTOF(t_desc.RenderTarget);ii++){
+					t_desc.RenderTarget[ii].BlendEnable = TRUE;
+					t_desc.RenderTarget[ii].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+					t_desc.RenderTarget[ii].BlendOp = D3D11_BLEND_OP_ADD;
+					t_desc.RenderTarget[ii].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+					t_desc.RenderTarget[ii].SrcBlend = D3D11_BLEND_ONE;
+					t_desc.RenderTarget[ii].SrcBlendAlpha = D3D11_BLEND_ONE;
+					t_desc.RenderTarget[ii].DestBlend = D3D11_BLEND_ZERO;
+					t_desc.RenderTarget[ii].DestBlendAlpha = D3D11_BLEND_ZERO;
+				}
+			}
+		}
+
+		ID3D11BlendState* t_raw = nullptr;
+		HRESULT t_result = this->device->CreateBlendState(&t_desc,&t_raw);
+		if(t_raw != nullptr){
+			a_blendstate->blendstate.reset(t_raw,release_delete< ID3D11BlendState >());
+		}
+		if(FAILED(t_result)){
+			a_blendstate->blendstate.reset();
+		}
+	}
+
 	/** Render_Main
 	*/
 	void D3d11_Impl::Render_Main()
 	{
+		//アクションバッチング実行中はロック。
 		AutoLock t_autolock_actionbatching(this->actionbatching_lockobject);
+
 		this->actionbatching.Update(1.0f);
 	}
 
@@ -817,7 +884,9 @@ namespace NBsys{namespace ND3d11
 	*/
 	void D3d11_Impl::StartBatching(sharedptr< NBsys::NActionBatching::ActionBatching_ActionList >& a_actionlist)
 	{
+		//アクションバッチング登録中はロック。
 		AutoLock t_autolock_actionbatching(this->actionbatching_lockobject);
+
 		this->actionbatching.StartBatching(a_actionlist);
 	}
 
@@ -825,30 +894,55 @@ namespace NBsys{namespace ND3d11
 	*/
 	void D3d11_Impl::Render_ViewPort(f32 a_x,f32 a_y,f32 a_width,f32 a_height)
 	{
-		D3D11_VIEWPORT t_viewport;
-		{
-			t_viewport.Width = a_width;
-			t_viewport.Height = a_height;
-			t_viewport.MinDepth = 0.0f;
-			t_viewport.MaxDepth = 1.0f;
-			t_viewport.TopLeftX = a_x;
-			t_viewport.TopLeftY = a_y;
+		if(this->devicecontext){
+
+			D3D11_VIEWPORT t_viewport;
+			{
+				t_viewport.Width = a_width;
+				t_viewport.Height = a_height;
+				t_viewport.MinDepth = 0.0f;
+				t_viewport.MaxDepth = 1.0f;
+				t_viewport.TopLeftX = a_x;
+				t_viewport.TopLeftY = a_y;
+			}
+
+			this->devicecontext->RSSetViewports(1,&t_viewport);
+
+			return;
+
 		}
-		this->devicecontext->RSSetViewports(1,&t_viewport);
+
+		ASSERT(0);
 	}
 
 	/** Render_ClearRenderTargetView
 	*/
 	void D3d11_Impl::Render_ClearRenderTargetView(NBsys::NColor::Color_F& a_color)
 	{
-		this->devicecontext->ClearRenderTargetView(this->rendertargetview.get(),a_color.p);
+		if(this->devicecontext){
+
+			this->devicecontext->ClearRenderTargetView(this->rendertargetview.get(),a_color.p);
+
+			return;
+
+		}
+
+		ASSERT(0);
 	}
 
 	/** Render_ClearDepthStencilView
 	*/
 	void D3d11_Impl::Render_ClearDepthStencilView()
 	{
-		this->devicecontext->ClearDepthStencilView(this->depthstencilview.get(),D3D11_CLEAR_DEPTH,1,0);
+		if(this->devicecontext){
+
+			this->devicecontext->ClearDepthStencilView(this->depthstencilview.get(),D3D11_CLEAR_DEPTH,1,0);
+
+			return;
+
+		}
+
+		ASSERT(0);
 	}
 
 	/** Render_Present
@@ -868,18 +962,14 @@ namespace NBsys{namespace ND3d11
 	*/
 	void D3d11_Impl::Render_UpdateSubresource(s32 a_constantbuffer_id,const void* a_data)
 	{
-		STLMap< s32 , sharedptr< D3d11_Impl_ConstantBuffer > >::iterator t_it = this->constantbuffer_list.find(a_constantbuffer_id);
-		if(t_it != this->constantbuffer_list.end()){
+		if(a_constantbuffer_id >= 0){
+			sharedptr< D3d11_Impl_ConstantBuffer >& t_constantbuffer = this->GetConstantBuffer(a_constantbuffer_id);
+			if(t_constantbuffer){
 
-			if(t_it->second != nullptr){
-				if(t_it->second->buffer != nullptr){
-					if(t_it->second->buffer.get() != nullptr){
+				this->devicecontext->UpdateSubresource(t_constantbuffer->buffer.get(),0,nullptr,a_data,0,0);
 
-						this->devicecontext->UpdateSubresource(t_it->second->buffer.get(),0,nullptr,a_data,0,0);
+				return;
 
-						return;
-					}
-				}
 			}
 		}
 
@@ -890,41 +980,14 @@ namespace NBsys{namespace ND3d11
 	*/
 	void D3d11_Impl::Render_VSSetShader(s32 a_vertexshader_id)
 	{
-		STLMap< s32 , sharedptr< D3d11_Impl_VertexShader > >::iterator t_it = this->vertexshader_list.find(a_vertexshader_id);
-		if(t_it != this->vertexshader_list.end()){
+		if(a_vertexshader_id){
+			sharedptr< D3d11_Impl_VertexShader >& t_vertexshader = this->GetVertexShader(a_vertexshader_id);
+			if(t_vertexshader){
 
-			if(t_it->second != nullptr){
-				if(t_it->second->vertexshader != nullptr){
-					if(t_it->second->vertexshader.get() != nullptr){
+				this->devicecontext->VSSetShader(t_vertexshader->vertexshader.get(),nullptr,0);
 
-						static ID3D11BlendState* t_blendstate = nullptr;
+				return;
 
-						if(t_blendstate == nullptr){
-							D3D11_BLEND_DESC t_desc;
-							{
-								Memory::memset(&t_desc,0,sizeof(t_desc));
-								t_desc.AlphaToCoverageEnable = FALSE;
-								t_desc.IndependentBlendEnable = FALSE;
-								t_desc.RenderTarget[0].BlendEnable = TRUE;
-								t_desc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
-								t_desc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
-								t_desc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
-								t_desc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
-								t_desc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
-								t_desc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
-								t_desc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
-							}
-							this->device->CreateBlendState(&t_desc,&t_blendstate);
-						}
-
-						FLOAT t_blendfactor[4] = {D3D11_BLEND_ZERO,D3D11_BLEND_ZERO,D3D11_BLEND_ZERO,D3D11_BLEND_ZERO};
-						this->devicecontext->OMSetBlendState(t_blendstate,t_blendfactor,0xFFFFFFFF);
-
-						this->devicecontext->VSSetShader(t_it->second->vertexshader.get(),nullptr,0);
-
-						return;
-					}
-				}
 			}
 		}
 
@@ -935,18 +998,14 @@ namespace NBsys{namespace ND3d11
 	*/
 	void D3d11_Impl::Render_PSSetShader(s32 a_pixelshader_id)
 	{
-		STLMap< s32 , sharedptr< D3d11_Impl_PixelShader > >::iterator t_it = this->pixelshader_list.find(a_pixelshader_id);
-		if(t_it != this->pixelshader_list.end()){
+		if(a_pixelshader_id >= 0){
+			sharedptr< D3d11_Impl_PixelShader >& t_pixelshader = this->GetPixelShader(a_pixelshader_id);
+			if(t_pixelshader){
 
-			if(t_it->second != nullptr){
-				if(t_it->second->pixelshader != nullptr){
-					if(t_it->second->pixelshader.get() != nullptr){
+				this->devicecontext->PSSetShader(t_pixelshader->pixelshader.get(),nullptr,0);
 
-						this->devicecontext->PSSetShader(t_it->second->pixelshader.get(),nullptr,0);
+				return;
 
-						return;
-					}
-				}
 			}
 		}
 
@@ -957,30 +1016,34 @@ namespace NBsys{namespace ND3d11
 	*/
 	void D3d11_Impl::Render_Draw(s32 a_count_of_vertex,s32 a_start_of_vertex)
 	{
-		this->devicecontext->Draw(a_count_of_vertex,a_start_of_vertex);
+		if(this->devicecontext){
+
+			this->devicecontext->Draw(a_count_of_vertex,a_start_of_vertex);
+			
+			return;
+
+		}
+
+		ASSERT(0);
 	}
 
 	/** Render_VSSetConstantBuffers
 	*/
 	void D3d11_Impl::Render_VSSetConstantBuffers(s32 a_startslot,s32 a_constantbuffer_id)
 	{
-		STLMap< s32 , sharedptr< D3d11_Impl_ConstantBuffer > >::iterator t_it = this->constantbuffer_list.find(a_constantbuffer_id);
-		if(t_it != this->constantbuffer_list.end()){
+		if(a_constantbuffer_id >= 0){
+			sharedptr< D3d11_Impl_ConstantBuffer >& t_constantbuffer = this->GetConstantBuffer(a_constantbuffer_id);
+			if(t_constantbuffer){
 
-			if(t_it->second != nullptr){
-				if(t_it->second->buffer != nullptr){
-					if(t_it->second->buffer.get() != nullptr){
+				ID3D11Buffer* t_list[] = 
+				{
+					t_constantbuffer->buffer.get()
+				};
 
-						ID3D11Buffer* t_list[] = 
-						{
-							t_it->second->buffer.get()
-						};
+				this->devicecontext->VSSetConstantBuffers(a_startslot,COUNTOF(t_list),t_list);
 
-						this->devicecontext->VSSetConstantBuffers(0,COUNTOF(t_list),t_list);
+				return;
 
-						return;
-					}
-				}
 			}
 		}
 
@@ -991,41 +1054,43 @@ namespace NBsys{namespace ND3d11
 	*/
 	void D3d11_Impl::Render_IASetInputLayout(s32 a_vertexshader_id)
 	{
-		STLMap< s32 , sharedptr< D3d11_Impl_VertexShader > >::iterator t_it = this->vertexshader_list.find(a_vertexshader_id);
-		if(t_it != this->vertexshader_list.end()){
+		if(a_vertexshader_id >= 0){
+			sharedptr< D3d11_Impl_VertexShader >& t_vertexshader = this->GetVertexShader(a_vertexshader_id);
+			if(t_vertexshader){
 
-			if(t_it->second != nullptr){
-				if(t_it->second->inputlayout != nullptr){
-					this->devicecontext->IASetInputLayout(t_it->second->inputlayout.get());
-					return;
-				}
+				this->devicecontext->IASetInputLayout(t_vertexshader->inputlayout.get());
+
+				return;
+
 			}
 		}
+
+		ASSERT(0);
 	}
 
 	/** Render_IASetVertexBuffers
 	*/
 	void D3d11_Impl::Render_IASetVertexBuffers(s32 a_vertexbuffer_id)
 	{
-		STLMap< s32 , sharedptr< D3d11_Impl_VertexBuffer > >::iterator t_it = this->vertexbuffer_list.find(a_vertexbuffer_id);
-		if(t_it != this->vertexbuffer_list.end()){
+		if(a_vertexbuffer_id >= 0){
+			sharedptr< D3d11_Impl_VertexBuffer >& t_vertexbuffer = this->GetVertexBuffer(a_vertexbuffer_id);
+			if(t_vertexbuffer){
 
-			if(t_it->second != nullptr){
-				if(t_it->second->buffer != nullptr){
-
-					ID3D11Buffer* t_list[] = {
-						t_it->second->buffer.get(),
-					};
+				ID3D11Buffer* t_list[] = {
+					t_vertexbuffer->buffer.get(),
+				};
 					
-					UINT t_stride = t_it->second->stridebyte;
+				UINT t_stride = t_vertexbuffer->stridebyte;
 					
-					UINT t_offset = t_it->second->offset;
+				UINT t_offset = t_vertexbuffer->offset;
 
-					this->devicecontext->IASetVertexBuffers(0,COUNTOF(t_list),t_list,&t_stride,&t_offset);
-					return;
-				}
+				this->devicecontext->IASetVertexBuffers(0,COUNTOF(t_list),t_list,&t_stride,&t_offset);
+
+				return;
 			}
 		}
+
+		ASSERT(0);
 	}
 
 	/** Render_IASetPrimitiveTopology_TriangleList
@@ -1033,8 +1098,14 @@ namespace NBsys{namespace ND3d11
 	void D3d11_Impl::Render_IASetPrimitiveTopology_TriangleList()
 	{
 		if(this->devicecontext){
+
 			this->devicecontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+			return;
+
 		}
+
+		ASSERT(0);
 	}
 
 	/** Render_IASetPrimitiveTopology_TriangleStrip
@@ -1042,8 +1113,14 @@ namespace NBsys{namespace ND3d11
 	void D3d11_Impl::Render_IASetPrimitiveTopology_TriangleStrip()
 	{
 		if(this->devicecontext){
+
 			this->devicecontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+
+			return;
+
 		}
+
+		ASSERT(0);
 	}
 
 	/** Render_IASetPrimitiveTopology_PointList
@@ -1051,8 +1128,14 @@ namespace NBsys{namespace ND3d11
 	void D3d11_Impl::Render_IASetPrimitiveTopology_PointList()
 	{
 		if(this->devicecontext){
+
 			this->devicecontext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
+
+			return;
+
 		}
+
+		ASSERT(0);
 	}
 
 	/** Render_SetTexture
@@ -1060,22 +1143,54 @@ namespace NBsys{namespace ND3d11
 	void D3d11_Impl::Render_SetTexture(s32 a_texture_id)
 	{
 		if(a_texture_id >= 0){
-			STLMap< s32 , sharedptr< D3d11_Impl_Texture > >::iterator t_it = this->texture_list.find(a_texture_id);
-			if(t_it != this->texture_list.end()){
-				if(t_it->second != nullptr){
+			sharedptr< D3d11_Impl_Texture >& t_texture = this->GetTexture(a_texture_id);
+			if(t_texture){
 
-					ID3D11ShaderResourceView* hpShaderResourceViews[] = {
-						t_it->second->resourceview.get()
-					};
+				ID3D11ShaderResourceView* t_resourceview_list[] = {
+					t_texture->resourceview.get()
+				};
 
-					this->devicecontext->PSSetShaderResources(0, 1, hpShaderResourceViews);
+				this->devicecontext->PSSetShaderResources(0,1,t_resourceview_list);
 
-				}
+				return;
+
 			}
 		}else{
-			this->devicecontext->PSSetShaderResources(0, 0, nullptr);
+
+			this->devicecontext->PSSetShaderResources(0,0,nullptr);	//TODO:
+
+			return;
+
 		}
+
+		ASSERT(0);
 	}
+
+	/** Render_SetBlendState
+	*/
+	void D3d11_Impl::Render_SetBlendState(s32 a_blendstate_id)
+	{
+		if(a_blendstate_id >= 0){
+			sharedptr< D3d11_Impl_BlendState >& t_blendstate = this->GetBlendState(a_blendstate_id);
+			if(t_blendstate){
+
+				FLOAT t_blendfactor[4] = {
+					D3D11_BLEND_ZERO,
+					D3D11_BLEND_ZERO,
+					D3D11_BLEND_ZERO,
+					D3D11_BLEND_ZERO
+				};
+
+				this->devicecontext->OMSetBlendState(t_blendstate->blendstate.get(),t_blendfactor,0xFFFFFFFF);
+
+				return;
+
+			}
+		}
+
+		ASSERT(0);
+	}
+
 }}
 #endif
 
