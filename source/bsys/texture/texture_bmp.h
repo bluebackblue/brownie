@@ -23,9 +23,9 @@
 */
 namespace NBsys{namespace NTexture
 {
-	/** CreateTexture_FromTga
+	/** CreateTexture_FromBmp
 	*/
-	sharedptr< Texture > CreateTexture_FromTga(const sharedptr< u8 >& a_data,s32 a_size,const STLWString& a_name);
+	sharedptr< Texture > CreateTexture_FromBmp(const sharedptr< u8 >& a_data,s32 a_size,const STLWString& a_name);
 
 }}
 

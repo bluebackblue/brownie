@@ -92,6 +92,7 @@ static sharedptr< NBsys::NFovehmd::Fovehmd > s_fovehmd;
 
 //s_vertex
 static sharedptr< NBsys::NModel::Model_Vertex< NBsys::NModel::Model_Vertex_Data_Pos3Uv2Color4 > > s_vertex;
+static sharedptr< NBsys::NMmdPmx::MmdPmx > s_mmdpmx;
 
 
 //s_matrix
@@ -124,6 +125,121 @@ s32 t_constantbuffer_id = -1;
 s32 t_vertexbuffer_id = -1;
 
 
+struct ModelParts
+{
+	STLWString patrs_name;
+
+	s32 texture_index;
+	STLWString texture_filepath;
+	sharedptr< NBsys::NFile::File_Object > texture_file;
+	sharedptr< NBsys::NTexture::Texture > texture;
+
+	s32 texture_id;
+};
+sharedptr< STLVector< ModelParts >::Type > s_model;
+
+
+void LoadPmx()
+{
+	{
+		sharedptr< NBsys::NFile::File_Object > t_pmx(new NBsys::NFile::File_Object(1,L"FL改_レミリア・スカーレット_v2.20/レミリア・スカーレット_2_20.pmx",-1,sharedptr< NBsys::NFile::File_Allocator >(),1));
+		while(t_pmx->IsBusy()){
+			ThreadSleep(10);
+		}
+		s_mmdpmx = NBsys::NMmdPmx::Load(t_pmx);
+	}
+
+	s_vertex = new NBsys::NModel::Model_Vertex< NBsys::NModel::Model_Vertex_Data_Pos3Uv2Color4 >();
+	s_model = new STLVector< ModelParts >::Type();
+
+	for(u32 ii=0;ii<s_mmdpmx->parts_list_size;ii++){
+		NBsys::NMmdPmx::MmdPmx_Parts& t_mmdpmx_parts = s_mmdpmx->parts_list[ii];
+		s_model->push_back(ModelParts());
+
+		//モデルパーツ。
+		ModelParts& t_model_patrs = s_model->at(ii);
+
+		//パーツ名。
+		t_model_patrs.patrs_name = t_mmdpmx_parts.parts_name_jp;
+
+		//バーテックスにパーツ追加。
+		s_vertex->AddParts("parts");
+
+		//パーツに頂点追加。
+		for(u32 jj=0;jj<t_mmdpmx_parts.count_of_index;jj++){
+			u32 t_index = s_mmdpmx->index_list.get()[t_mmdpmx_parts.start_index + jj];
+
+			NBsys::NModel::Model_Vertex_Data_Pos3Uv2Color4 t_vertex;
+			NBsys::NMmdPmx::MmdPmx_VertexData& t_data = s_mmdpmx->vertex_list.get()[t_index];
+
+			f32 t_color_r = 1.0f;
+			f32 t_color_g = 1.0f;
+			f32 t_color_b = 1.0f;
+			f32 t_color_a = 1.0f;
+
+			NBsys::NModel::SetColor< NBsys::NModel::Model_Vertex_Data_Pos3Uv2Color4 >(t_vertex,t_color_r,t_color_g,t_color_b,t_color_a);
+			NBsys::NModel::SetPos< NBsys::NModel::Model_Vertex_Data_Pos3Uv2Color4 >(t_vertex,t_data.position.x,t_data.position.y,t_data.position.z);
+			NBsys::NModel::SetUv< NBsys::NModel::Model_Vertex_Data_Pos3Uv2Color4 >(t_vertex,t_data.uv.x,t_data.uv.y);
+
+			s_vertex->AddVertex(t_vertex);
+		}
+
+		//テクスチャーインデックス。
+		t_model_patrs.texture_index = t_mmdpmx_parts.textureindex;
+
+		//テクスチャー読み込み開始。
+		if(t_model_patrs.texture_index >= 0){
+			t_model_patrs.texture_filepath = Path::DirAndName(L"FL改_レミリア・スカーレット_v2.20/",s_mmdpmx->texturename_list[t_model_patrs.texture_index]);
+			t_model_patrs.texture_file = new NBsys::NFile::File_Object(1,t_model_patrs.texture_filepath,-1,sharedptr< NBsys::NFile::File_Allocator >(),1);
+		}else{
+			t_model_patrs.texture_filepath = Path::DirAndName(L"",L"white.bmp");
+			t_model_patrs.texture_file = new NBsys::NFile::File_Object(1,t_model_patrs.texture_filepath,-1,sharedptr< NBsys::NFile::File_Allocator >(),1);
+		}
+	}
+
+	for(u32 ii=0;ii<s_model->size();ii++){
+
+		//モデルパーツ。
+		ModelParts& t_model_patrs = s_model->at(ii);
+
+		if(t_model_patrs.texture_file != nullptr){
+
+			//テクスチャー読み込み中。
+			while(t_model_patrs.texture_file->IsBusy()){
+				ThreadSleep(10);
+			}
+
+			//テクスチャーの拡張子取得。
+			STLWString t_filetype_string = L"";
+			s32 t_offset = static_cast<s32>(t_model_patrs.texture_file->GetFileNameShort().size() - 4);
+			if(t_offset >= 0){
+				t_filetype_string = t_model_patrs.texture_file->GetFileNameShort().substr(t_offset,4);
+				std::transform(t_filetype_string.begin(),t_filetype_string.end(),t_filetype_string.begin(),::toupper);
+			}
+
+			//テクスチャーの読み込み。
+			if(t_filetype_string == L".PNG"){
+				t_model_patrs.texture = NBsys::NTexture::CreateTexture_FromPng(t_model_patrs.texture_file->GetLoadData(),static_cast<s32>(t_model_patrs.texture_file->GetLoadSize()),t_model_patrs.texture_file->GetFileNameShort());
+			}else if(t_filetype_string == L".BMP"){
+				t_model_patrs.texture = NBsys::NTexture::CreateTexture_FromBmp(t_model_patrs.texture_file->GetLoadData(),static_cast<s32>(t_model_patrs.texture_file->GetLoadSize()),t_model_patrs.texture_file->GetFileNameShort());
+			}
+
+			//テクスチャー作成。
+			AsyncResult<bool> t_result;
+			t_result.Create(false);
+			t_model_patrs.texture_id = s_d3d11->CreateTexture(t_result,t_model_patrs.texture);
+
+		}
+	}
+
+
+
+
+}
+
+
+
+
 /** DrawOnce
 */
 void DrawOnce(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeometry::Geometry_Matrix_44& a_view_projection,s32 a_xx,s32 a_yy,s32 a_zz)
@@ -137,8 +253,11 @@ void DrawOnce(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeome
 	s_d3d11->Render_VSSetConstantBuffers(0,t_constantbuffer_id);
 	s_d3d11->Render_PSSetShader(t_pixelshader_id);
 
-	for(s32 ii=0;ii<s_vertex->GetMaxParts();ii++){
-		s_d3d11->Render_Draw(s_vertex->GetVertexCountOf(ii),s_vertex->GetVertexOffset(ii));
+	for(s32 ii=0;ii<s_model->size();ii++){
+		//if(ii == 18){
+			s_d3d11->Render_SetTexture(s_model->at(ii).texture_id);
+			s_d3d11->Render_Draw(s_vertex->GetVertexCountOf(ii),s_vertex->GetVertexOffset(ii));
+		//}
 	}
 }
 
@@ -165,73 +284,6 @@ void Test_Main()
 	NBsys::NFile::StartSystem(2);
 	NBsys::NFile::SetRoot(0,L"./project_test");
 	NBsys::NFile::SetRoot(1,L"../../sdk/mmd");
-
-	//sharedptr< NBsys::NFile::File_Object > t_pmx(new NBsys::NFile::File_Object(1,L"FL改_レミリア・スカーレット_v2.20/ナイトキャップ.pmx",-1,sharedptr< NBsys::NFile::File_Allocator >(),1));
-	sharedptr< NBsys::NFile::File_Object > t_pmx(new NBsys::NFile::File_Object(1,L"FL改_レミリア・スカーレット_v2.20/レミリア・スカーレット_2_20.pmx",-1,sharedptr< NBsys::NFile::File_Allocator >(),1));
-	sharedptr< NBsys::NMmdPmx::MmdPmx > t_mmdpmx(nullptr);
-
-	while(t_pmx->IsBusy()){
-		ThreadSleep(10);
-	}
-
-	t_mmdpmx = NBsys::NMmdPmx::Load(t_pmx);
-
-	//テクスチャーのロード。
-	STLVector< sharedptr< NBsys::NTexture::Texture > >::Type t_texture_list;
-	{
-		STLVector< sharedptr< NBsys::NFile::File_Object > >::Type t_file_list;
-		for(u32 ii=0;ii<t_mmdpmx->texturename_list_size;ii++){
-			STLWString t_path = Path::DirAndName(L"FL改_レミリア・スカーレット_v2.20/",t_mmdpmx->texturename_list[ii]);
-			t_file_list.push_back(new NBsys::NFile::File_Object(1,t_path,-1,sharedptr< NBsys::NFile::File_Allocator >(),1));
-		}
-		while(1){
-			bool t_isbusy = false;
-			for(u32 ii=0;ii<t_mmdpmx->texturename_list_size;ii++){
-				if(t_file_list[ii]->IsBusy()){
-					t_isbusy = true;
-				}
-			}
-			if(t_isbusy == true){
-				ThreadSleep(10);
-			}else{
-				for(u32 ii=0;ii<t_mmdpmx->texturename_list_size;ii++){
-					t_texture_list.push_back(NBsys::NTexture::CreateTexture_FromPng(t_file_list[ii]->GetLoadData(),"png"));
-				}
-				break;
-			}
-		}
-	}
-
-	#if(1)
-	{
-		s_vertex = new NBsys::NModel::Model_Vertex< NBsys::NModel::Model_Vertex_Data_Pos3Uv2Color4 >();
-
-		for(u32 ii=0;ii<t_mmdpmx->parts_list_size;ii++){
-			NBsys::NMmdPmx::MmdPmx_Parts& t_parts = t_mmdpmx->parts_list[ii];
-			s_vertex->AddParts("parts");
-			for(u32 jj=0;jj<t_parts.count_of_index;jj++){
-				u32 t_index = t_mmdpmx->index_list.get()[t_parts.start_index + jj];
-
-				NBsys::NModel::Model_Vertex_Data_Pos3Uv2Color4 t_vertex;
-				NBsys::NMmdPmx::MmdPmx_VertexData& t_data = t_mmdpmx->vertex_list.get()[t_index];
-
-				f32 t_color_r = ((ii * 18) % 10) / 9.0f;
-				f32 t_color_g = ((ii * 36) % 10) / 9.0f;
-				f32 t_color_b = ((ii * 59) % 10) / 9.0f;
-
-				NBsys::NModel::SetColor< NBsys::NModel::Model_Vertex_Data_Pos3Uv2Color4 >(t_vertex,t_color_r,t_color_g,t_color_b,1.0f);
-				NBsys::NModel::SetPos< NBsys::NModel::Model_Vertex_Data_Pos3Uv2Color4 >(t_vertex,t_data.position.x,t_data.position.y,t_data.position.z);
-				NBsys::NModel::SetUv< NBsys::NModel::Model_Vertex_Data_Pos3Uv2Color4 >(t_vertex,t_data.uv.x,t_data.uv.y);
-
-				s_vertex->AddVertex(t_vertex);
-			}
-		}
-	}
-	#else
-	{
-		s_vertex = NBsys::NModel::Preset_Box< NBsys::NModel::Model_Vertex_Data_Pos3Color4 >();
-	}
-	#endif
 
 	#if(USE_FOVE)
 	s_fovehmd.reset(new NBsys::NFovehmd::Fovehmd());
@@ -261,6 +313,8 @@ void Test_Main()
 
 	//s_pcounter
 	s_pcounter = PerformanceCounter::GetPerformanceCounter();
+
+	LoadPmx();
 
 	while (true)
 	{

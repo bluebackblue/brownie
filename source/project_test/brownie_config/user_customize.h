@@ -16,12 +16,10 @@
 	DEF_TEST2	:	mmdpmx
 
 */
-#define DEF_TEST0
+#define DEF_TEST2
 
 
 #if defined(DEF_TEST0)
-
-	#define BSYS_OPENGL_ENABLE								(1)
 
 #elif defined(DEF_TEST1)
 
@@ -36,6 +34,7 @@
 	#define BSYS_D3D11_ENABLE								(1)
 	#define BSYS_FOVEHMD_ENABLE								(1)
 	#define BSYS_TEXTURE_ENABLE								(1)
+	#define BSYS_TEXTURE_PNG_ENABLE							(1)
 
 #endif
 

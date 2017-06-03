@@ -39,6 +39,24 @@ namespace NBlib
 
 		/** Copy
 		*/
+		template < typename T > static T Copy(const u8*& a_current_pointer,int a_increment = -1)
+		{
+			T t_ret;
+			{
+				Memory::memcpy(&t_ret,static_cast<s32>(sizeof(T)),a_current_pointer,static_cast<s32>(sizeof(T)));
+
+				if(a_increment < 0){
+					//Ž©“®B
+					a_current_pointer += sizeof(T);
+				}else{
+					//Žè“®B
+					a_current_pointer += a_increment;
+				}
+			}
+			return t_ret;
+		}
+		/** Copy
+		*/
 		template < typename T > static T Copy(u8*& a_current_pointer,int a_increment = -1)
 		{
 			T t_ret;
@@ -55,6 +73,7 @@ namespace NBlib
 			}
 			return t_ret;
 		}
+
 	};
 
 }

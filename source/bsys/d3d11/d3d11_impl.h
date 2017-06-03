@@ -27,6 +27,7 @@
 #include "../color/color.h"
 #include "../actionbatching/actionbatching.h"
 #include "../file/file.h"
+#include "../texture/texture.h"
 
 
 /** include
@@ -119,6 +120,23 @@ namespace NBsys{namespace ND3d11
 		s32 size;
 	};
 
+	/** D3d11_Impl_Texture
+	*/
+	struct D3d11_Impl_Texture
+	{
+		/** texture2d
+		*/
+		sharedptr< ID3D11Texture2D > texture2d;
+
+		/** texture
+		*/
+		sharedptr< NBsys::NTexture::Texture > texture;
+
+		/** resourceview
+		*/
+		sharedptr< ID3D11ShaderResourceView > resourceview;
+	};
+
 	/** D3d11_Impl
 	*/
 	class D3d11_Impl
@@ -186,6 +204,10 @@ namespace NBsys{namespace ND3d11
 		/** constantbuffer_list
 		*/
 		STLMap< s32 , sharedptr< D3d11_Impl_ConstantBuffer > >::Type constantbuffer_list;
+
+		/** texture_list
+		*/
+		STLMap< s32 , sharedptr< D3d11_Impl_Texture > >::Type texture_list;
 
 	public:
 		/** constructor
@@ -255,6 +277,10 @@ namespace NBsys{namespace ND3d11
 		*/
 		sharedptr< D3d11_Impl_ConstantBuffer > GetConstantBuffer(s32 a_constantbuffer_id);
 
+		/** GetTexture
+		*/
+		sharedptr< D3d11_Impl_Texture > GetTexture(s32 a_texture_id);
+
 	public:
 
 		/** CreateVertexShader
@@ -272,6 +298,10 @@ namespace NBsys{namespace ND3d11
 		/** CreateConstantBuffer
 		*/
 		s32 CreateConstantBuffer(AsyncResult< bool >& a_asyncresult,s32 a_size);
+
+		/** CreateTexture
+		*/
+		s32 CreateTexture(AsyncResult< bool >& a_asyncresult,sharedptr< NBsys::NTexture::Texture >& a_texture);
 
 	public:
 
@@ -293,7 +323,7 @@ namespace NBsys{namespace ND3d11
 
 		/** Render_CreateTexture
 		*/
-		void Render_CreateTexture(s32 a_width,s32 a_height,sharedptr< u8 >& a_data,s32 a_stride,s32 a_slice_pich_size);
+		void Render_CreateTexture(sharedptr< D3d11_Impl_Texture >& a_texture);
 
 	public:
 
@@ -362,6 +392,10 @@ namespace NBsys{namespace ND3d11
 		/** Render_IASetPrimitiveTopology_PointList
 		*/
 		void Render_IASetPrimitiveTopology_PointList();
+
+		/** Render_SetTexture
+		*/
+		void Render_SetTexture(s32 a_texture_id);
 
 	};
 

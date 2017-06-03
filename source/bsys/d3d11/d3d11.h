@@ -19,6 +19,7 @@
 #include "../window/window.h"
 #include "../color/color.h"
 #include "../file/file.h"
+#include "../texture/texture.h"
 
 
 /** include
@@ -75,6 +76,10 @@ namespace NBsys{namespace ND3d11
 		/** CreateConstantBuffer
 		*/
 		s32 CreateConstantBuffer(AsyncResult< bool >& a_asyncresult,s32 a_size);
+
+		/** CreateTexture
+		*/
+		s32 CreateTexture(AsyncResult< bool >& a_asyncresult,sharedptr< NBsys::NTexture::Texture >& a_texture);
 
 	public:
 		/** çÏê¨ÅB
@@ -146,6 +151,10 @@ namespace NBsys{namespace ND3d11
 		/** Render_IASetPrimitiveTopology_PointList
 		*/
 		void Render_IASetPrimitiveTopology_PointList();
+
+		/** Render_SetTexture
+		*/
+		void Render_SetTexture(s32 a_texture_id);
 
 	};
 

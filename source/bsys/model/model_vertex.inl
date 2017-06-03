@@ -124,7 +124,7 @@ namespace NBsys{namespace NModel
 	template < typename T > void Model_Vertex< T >::AddVertex(const T& a_vertex)
 	{
 		this->vertex_list.push_back(a_vertex);
-		this->parts_list[this->parts_list.size() - 1]->vertex_countof = static_cast<s32>(this->vertex_list.size());
+		this->parts_list[this->parts_list.size() - 1]->vertex_countof++;
 	}
 
 	/** GetMaxParts

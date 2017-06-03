@@ -18,6 +18,7 @@
 */
 #include "./texture_tga.h"
 #include "./texture_png.h"
+#include "./texture_bmp.h"
 
 
 /** NBsys::NTexture
@@ -42,13 +43,15 @@ namespace NBsys{namespace NTexture
 		sharedptr< u8 > pixel;
 		s32 width;
 		s32 height;
+		s32 pitch;
+
 		TextureType::Id texturetype;
-		STLString name;
+		STLWString name;
 
 	public:
 		/** コンストラクタ。
 		*/
-		Texture(const sharedptr< u8 >& a_pixel,s32 a_width,s32 a_height,TextureType::Id a_texturetype,const STLString& a_name);
+		Texture(const sharedptr< u8 >& a_pixel,s32 a_width,s32 a_height,s32 a_pitch,TextureType::Id a_texturetype,const STLWString& a_name);
 
 		/** デストラクタ。
 		*/
@@ -70,6 +73,10 @@ namespace NBsys{namespace NTexture
 		/** TextureType
 		*/
 		TextureType::Id GetTextureType() const;
+
+		/** GetPitch
+		*/
+		s32 GetPitch();
 
 	};
 

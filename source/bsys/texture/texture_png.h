@@ -25,7 +25,7 @@ namespace NBsys{namespace NTexture
 {
 	/** CreateTexture_FromPng
 	*/
-	sharedptr< Texture > CreateTexture_FromPng(const sharedptr< u8 >& a_data,const STLString& a_name);
+	sharedptr< Texture > CreateTexture_FromPng(const sharedptr< u8 >& a_data,s32 a_size,const STLWString& a_name);
 
 }}
 

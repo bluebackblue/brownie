@@ -77,6 +77,13 @@ namespace NBsys{namespace ND3d11
 		return this->impl->CreateConstantBuffer(a_asyncresult,a_size);
 	}
 	
+	/** CreateTexture
+	*/
+	s32 D3d11::CreateTexture(AsyncResult< bool >& a_asyncresult,sharedptr< NBsys::NTexture::Texture >& a_texture)
+	{
+		return this->impl->CreateTexture(a_asyncresult,a_texture);
+	}
+
 	/** Render_Create
 	*/
 	void D3d11::Render_Create(sharedptr< NWindow::Window >& a_window,s32 a_width,s32 a_height)
@@ -194,6 +201,13 @@ namespace NBsys{namespace ND3d11
 	void D3d11::Render_IASetPrimitiveTopology_PointList()
 	{
 		this->impl->Render_IASetPrimitiveTopology_PointList();
+	}
+
+	/** Render_SetTexture
+	*/
+	void D3d11::Render_SetTexture(s32 a_texture_id)
+	{
+		this->impl->Render_SetTexture(a_texture_id);
 	}
 
 }}

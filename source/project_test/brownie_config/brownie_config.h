@@ -406,4 +406,9 @@
 #if !defined(BSYS_TEXTURE_ENABLE)
 	#define BSYS_TEXTURE_ENABLE								(0)
 #endif
+#if !defined(BSYS_TEXTURE_PNG_ENABLE)
+	#define BSYS_TEXTURE_PNG_ENABLE							(0)
+#endif
+
+
 

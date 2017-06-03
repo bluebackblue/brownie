@@ -104,7 +104,7 @@ namespace NBsys{namespace NTexture
 
 	/** CreateTexture_FromTga
 	*/
-	sharedptr< Texture > CreateTexture_FromTga(const sharedptr< u8 >& a_data,const STLString& a_name)
+	sharedptr< Texture > CreateTexture_FromTga(const sharedptr< u8 >& a_data,s32 a_size,const STLWString& a_name)
 	{
 		const HEADER_TGA* t_header = reinterpret_cast< const HEADER_TGA* >(a_data.get());
 
@@ -181,7 +181,7 @@ namespace NBsys{namespace NTexture
 			}
 		}
 
-		sharedptr< Texture > t_texture(new Texture(t_pixel,t_header->h_w,t_header->h_h,TextureType::R8G8B8A8,a_name));
+		sharedptr< Texture > t_texture(new Texture(t_pixel,t_header->h_w,t_header->h_h,t_header->h_w * 4,TextureType::R8G8B8A8,a_name));
 
 		return t_texture;
 	}

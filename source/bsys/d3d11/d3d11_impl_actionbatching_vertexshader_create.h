@@ -27,7 +27,7 @@ namespace NBsys{namespace ND3d11
 {
 	/** バーテックスシェーダー作成。
 	*/
-	class Opengl_Impl_ActionBatching_VertexShader_Create : public NBsys::NActionBatching::ActionBatching_ActionItem_Base
+	class D3d11_Impl_ActionBatching_VertexShader_Create : public NBsys::NActionBatching::ActionBatching_ActionItem_Base
 	{
 	private:
 
@@ -47,7 +47,7 @@ namespace NBsys{namespace ND3d11
 
 		/** constructor
 		*/
-		Opengl_Impl_ActionBatching_VertexShader_Create(D3d11_Impl& a_d3d11_impl,sharedptr< D3d11_Impl_VertexShader >& a_vertexshader,AsyncResult< bool >& a_asyncresult)
+		D3d11_Impl_ActionBatching_VertexShader_Create(D3d11_Impl& a_d3d11_impl,sharedptr< D3d11_Impl_VertexShader >& a_vertexshader,AsyncResult< bool >& a_asyncresult)
 			:
 			d3d11_impl(a_d3d11_impl),
 			vertexshader(a_vertexshader),
@@ -57,7 +57,7 @@ namespace NBsys{namespace ND3d11
 
 		/** destructor
 		*/
-		virtual ~Opengl_Impl_ActionBatching_VertexShader_Create()
+		virtual ~D3d11_Impl_ActionBatching_VertexShader_Create()
 		{
 		}
 
