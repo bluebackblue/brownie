@@ -65,12 +65,12 @@ void Blib_DebugLog_Callback(const char* a_tag,const char* a_string)
 
 /** s_width
 */
-static s32 s_width = 800;
+static s32 s_width = 800*2;
 
 
 /** s_height
 */
-static s32 s_height = 600;
+static s32 s_height = 600*2;
 
 
 /** s_window
