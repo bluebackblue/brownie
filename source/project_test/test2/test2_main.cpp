@@ -122,11 +122,10 @@ s32 t_pixelshader_id = -1;
 s32 t_constantbuffer_id = -1;
 s32 t_vertexbuffer_id = -1;
 
-
 s32 t_blendstate_id = -1;
 
-s32 t_rasterizerstate_cull_on_id = -1;
-s32 t_rasterizerstate_cull_off_id = -1;
+s32 t_rasterizerstate_cull_back_id = -1;
+s32 t_rasterizerstate_cull_none_id = -1;
 
 
 struct ModelParts
@@ -248,18 +247,14 @@ void DrawOnce(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeome
 	s_d3d11->Render_PSSetShader(t_pixelshader_id);
 	s_d3d11->Render_SetBlendState(t_blendstate_id);
 
-
-	s_d3d11->Render_SetRasterizerState(t_rasterizerstate_cull_on_id);
-
-
 	for(s32 ii=0;ii<s_model->size();ii++){
 
 		if(s_model->at(ii).cullfull){
-			//両面。
-			s_d3d11->Render_SetRasterizerState(t_rasterizerstate_cull_off_id);
+			//両面描画。
+			s_d3d11->Render_SetRasterizerState(t_rasterizerstate_cull_none_id);
 		}else{
 			//カリングあり。
-			s_d3d11->Render_SetRasterizerState(t_rasterizerstate_cull_on_id);
+			s_d3d11->Render_SetRasterizerState(t_rasterizerstate_cull_back_id);
 		}
 
 		if(s_model->at(ii).texture_index >= 0){
@@ -326,9 +321,8 @@ void Test_Main()
 	t_blendstate_id = s_d3d11->CreateBlendState(true);
 
 	//ラスタライザー。
-	t_rasterizerstate_cull_on_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::BACK);
-	t_rasterizerstate_cull_off_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::NONE);
-
+	t_rasterizerstate_cull_back_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::BACK);
+	t_rasterizerstate_cull_none_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::NONE);
 
 	//s_pcounter
 	s_pcounter = PerformanceCounter::GetPerformanceCounter();

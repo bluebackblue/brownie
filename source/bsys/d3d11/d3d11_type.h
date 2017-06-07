@@ -25,6 +25,10 @@ namespace NBsys{namespace ND3d11
 	{
 		enum Id
 		{
+			/** float2
+			*/
+			R32G32_FLOAT,
+
 			/** float3 
 			*/
 			R32G32B32_FLOAT,
@@ -32,10 +36,6 @@ namespace NBsys{namespace ND3d11
 			/** float4
 			*/
 			R32G32B32A32_FLOAT,
-
-			/** float2
-			*/
-			R32G32_FLOAT
 		};
 	};
 
