@@ -43,9 +43,8 @@ struct VS_IN
 */
 float4 PS(VS_IN a_vs_in) : SV_Target
 {
-	float4 t_diff = tex_diffuse.Sample(DiffuseSampler,a_vs_in.in_uv);
-	return float4(t_diff.r,t_diff.g,t_diff.b,t_diff.a);
-
-	//return float4(a_vs_in.in_color.r,a_vs_in.in_color.g,a_vs_in.in_color.b,1.0f);
+	float4 t_color_tex = tex_diffuse.Sample(DiffuseSampler,a_vs_in.in_uv);
+	float4 t_color = t_color_tex * float4(a_vs_in.in_color,1.0f);
+	return t_color;
 }
 

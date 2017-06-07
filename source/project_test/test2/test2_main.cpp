@@ -146,8 +146,10 @@ sharedptr< STLVector< ModelParts >::Type > s_model;
 
 void LoadPmx()
 {
+	STLWString t_path = L"アリスあぴミクver1.0/";
+
 	{
-		sharedptr< NBsys::NFile::File_Object > t_pmx(new NBsys::NFile::File_Object(1,L"FL改_レミリア・スカーレット_v2.20/レミリア・スカーレット_2_20.pmx",-1,sharedptr< NBsys::NFile::File_Allocator >(),1));
+		sharedptr< NBsys::NFile::File_Object > t_pmx(new NBsys::NFile::File_Object(1,t_path + L"Appearance Miku_Alice.pmx",-1,sharedptr< NBsys::NFile::File_Allocator >(),1));
 		while(t_pmx->IsBusy()){
 			ThreadSleep(10);
 		}
@@ -177,10 +179,10 @@ void LoadPmx()
 			NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 t_vertex;
 			NBsys::NMmdPmx::MmdPmx_VertexData& t_data = s_mmdpmx->vertex_list.get()[t_index];
 
-			f32 t_color_r = 1.0f;
-			f32 t_color_g = 1.0f;
-			f32 t_color_b = 1.0f;
-			f32 t_color_a = 1.0f;
+			f32 t_color_r = t_mmdpmx_parts.diffuse.r;
+			f32 t_color_g = t_mmdpmx_parts.diffuse.g;
+			f32 t_color_b = t_mmdpmx_parts.diffuse.b;
+			f32 t_color_a = t_mmdpmx_parts.diffuse.a;
 
 			NBsys::NVertex::SetColor< NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 >(t_vertex,t_color_r,t_color_g,t_color_b,t_color_a);
 			NBsys::NVertex::SetPos< NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 >(t_vertex,t_data.position.x,t_data.position.y,t_data.position.z);
@@ -197,7 +199,7 @@ void LoadPmx()
 
 		//テクスチャー読み込み開始。
 		if(t_model_patrs.texture_index >= 0){
-			t_model_patrs.texture_filepath = Path::DirAndName(L"FL改_レミリア・スカーレット_v2.20/",s_mmdpmx->texturename_list[t_model_patrs.texture_index]);
+			t_model_patrs.texture_filepath = Path::DirAndName(t_path,s_mmdpmx->texturename_list[t_model_patrs.texture_index]);
 			t_model_patrs.texture_file = new NBsys::NFile::File_Object(1,t_model_patrs.texture_filepath,-1,sharedptr< NBsys::NFile::File_Allocator >(),1);
 		}else{
 			t_model_patrs.texture_filepath = Path::DirAndName(L"",L"white.bmp");
