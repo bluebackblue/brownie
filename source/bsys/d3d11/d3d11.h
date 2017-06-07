@@ -85,6 +85,9 @@ namespace NBsys{namespace ND3d11
 		*/
 		s32 CreateBlendState(bool a_blend_state);
 
+		/** CreateRasterizerState
+		*/
+		s32 CreateRasterizerState(D3d11_CullType::Id a_culltype);
 
 	public:
 		/** çÏê¨ÅB
@@ -164,6 +167,10 @@ namespace NBsys{namespace ND3d11
 		/** Render_SetBlendState
 		*/
 		void Render_SetBlendState(s32 a_blendstate_id);
+
+		/** Render_SetRasterizerState
+		*/
+		void Render_SetRasterizerState(s32 a_rasterizerstate_id);
 	};
 
 }}

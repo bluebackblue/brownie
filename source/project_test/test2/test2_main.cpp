@@ -123,8 +123,10 @@ s32 t_constantbuffer_id = -1;
 s32 t_vertexbuffer_id = -1;
 
 
-AsyncResult< bool > t_asyncresult_blendstate;
 s32 t_blendstate_id = -1;
+
+s32 t_rasterizerstate_cull_on_id = -1;
+s32 t_rasterizerstate_cull_off_id = -1;
 
 
 struct ModelParts
@@ -137,6 +139,8 @@ struct ModelParts
 	sharedptr< NBsys::NTexture::Texture > texture;
 
 	s32 texture_id;
+
+	bool cullfull;
 };
 sharedptr< STLVector< ModelParts >::Type > s_model;
 
@@ -185,6 +189,9 @@ void LoadPmx()
 
 			s_vertex->AddVertex(t_vertex);
 		}
+
+		//カリング。
+		t_model_patrs.cullfull = t_mmdpmx_parts.drawmode_cullfull;
 
 		//テクスチャーインデックス。
 		t_model_patrs.texture_index = t_mmdpmx_parts.textureindex;
@@ -242,12 +249,23 @@ void DrawOnce(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeome
 	s_d3d11->Render_SetBlendState(t_blendstate_id);
 
 
+	s_d3d11->Render_SetRasterizerState(t_rasterizerstate_cull_on_id);
+
+
 	for(s32 ii=0;ii<s_model->size();ii++){
+
+		if(s_model->at(ii).cullfull){
+			//両面。
+			s_d3d11->Render_SetRasterizerState(t_rasterizerstate_cull_off_id);
+		}else{
+			//カリングあり。
+			s_d3d11->Render_SetRasterizerState(t_rasterizerstate_cull_on_id);
+		}
+
 		if(s_model->at(ii).texture_index >= 0){
 			s_d3d11->Render_SetTexture(s_model->at(ii).texture_id);
 			s_d3d11->Render_Draw(s_vertex->GetVertexCountOf(ii),s_vertex->GetVertexOffset(ii));
 		}else{
-			//TODO:
 			s_d3d11->Render_SetTexture(s_model->at(ii).texture_id);
 			s_d3d11->Render_Draw(s_vertex->GetVertexCountOf(ii),s_vertex->GetVertexOffset(ii));
 		}
@@ -305,8 +323,11 @@ void Test_Main()
 	#endif
 
 	//ブレンドステータス。
-	t_asyncresult_blendstate.Create(false);
 	t_blendstate_id = s_d3d11->CreateBlendState(true);
+
+	//ラスタライザー。
+	t_rasterizerstate_cull_on_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::BACK);
+	t_rasterizerstate_cull_off_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::NONE);
 
 
 	//s_pcounter
@@ -349,9 +370,9 @@ void Test_Main()
 
 			sharedptr< STLVector< NBsys::ND3d11::D3d11_Layout >::Type > t_layout(new STLVector< NBsys::ND3d11::D3d11_Layout >::Type());
 			{
-				t_layout->push_back(NBsys::ND3d11::D3d11_Layout("POSITION",		0,NBsys::ND3d11::D3d11_FormatType::R32G32B32_FLOAT,		0,	0));			//12
-				t_layout->push_back(NBsys::ND3d11::D3d11_Layout("TEXCOORD",		0,NBsys::ND3d11::D3d11_FormatType::R32G32_FLOAT,		0,	0 + 12));		//8
-				t_layout->push_back(NBsys::ND3d11::D3d11_Layout("COLOR",		0,NBsys::ND3d11::D3d11_FormatType::R32G32B32A32_FLOAT,	0,	0 + 12 + 8));	//16
+				t_layout->push_back(NBsys::ND3d11::D3d11_Layout("POSITION",		0,NBsys::ND3d11::D3d11_LayoutFormatType::R32G32B32_FLOAT,		0,	0));			//12
+				t_layout->push_back(NBsys::ND3d11::D3d11_Layout("TEXCOORD",		0,NBsys::ND3d11::D3d11_LayoutFormatType::R32G32_FLOAT,			0,	0 + 12));		//8
+				t_layout->push_back(NBsys::ND3d11::D3d11_Layout("COLOR",		0,NBsys::ND3d11::D3d11_LayoutFormatType::R32G32B32A32_FLOAT,	0,	0 + 12 + 8));	//16
 			}
 
 			t_vertexshader_id = s_d3d11->CreateVertexShader(t_asyncresult_vertexshader,t_simple_vertex_fx,t_layout);

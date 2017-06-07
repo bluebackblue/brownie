@@ -32,6 +32,7 @@
 #include "./d3d11_impl_actionbatching_constantbuffer_create.h"
 #include "./d3d11_impl_actionbatching_texture_create.h"
 #include "./d3d11_impl_actionbatching_blendstate_create.h"
+#include "./d3d11_impl_actionbatching_rasterizerstate_create.h"
 
 
 /** lib
@@ -411,6 +412,18 @@ namespace NBsys{namespace ND3d11
 		return sharedptr< D3d11_Impl_BlendState >::null();
 	}
 
+	/** GetRasterizerState
+	*/
+	sharedptr< D3d11_Impl_RasterizerState > D3d11_Impl::GetRasterizerState(s32 a_rasterizerstate_id)
+	{
+		STLMap< s32 , sharedptr< D3d11_Impl_RasterizerState > >::iterator t_it = this->rasterizerstate_list.find(a_rasterizerstate_id);
+		if(t_it->second != nullptr){
+			return t_it->second;
+		}
+		return sharedptr< D3d11_Impl_RasterizerState >::null();
+	}
+
+
 	/** CreateVertexShader
 	*/
 	s32 D3d11_Impl::CreateVertexShader(AsyncResult< bool >& a_asyncresult,sharedptr< NBsys::NFile::File_Object >& a_fileobject,sharedptr< STLVector< NBsys::ND3d11::D3d11_Layout >::Type >& a_layout)
@@ -567,16 +580,27 @@ namespace NBsys{namespace ND3d11
 
 	/** CreateRasterizerState
 	*/
-	s32 D3d11_Impl::CreateRasterizerState(bool a_cull)
+	s32 D3d11_Impl::CreateRasterizerState(D3d11_CullType::Id a_culltype)
 	{
-	
-1	D3D11_RASTERIZER_DESC rasterizerDesc;
-2	rasterizerDesc.FillMode = D3D11_FILL_MODE.D3D11_FILL_SOLID;
-3	rasterizerDesc.CullMode = D3D11_CULL_MODE.D3D11_CULL_NONE;
-4	rasterizerDesc.DepthClipEnable = FALSE;
-5	rasterizerDesc.MultisampleEnable = FALSE;
-6	rasterizerDesc.DepthBiasClamp = 0;
-7	rasterizerDesc.SlopeScaledDepthBias = 0;
+		//ＩＤ。
+		s32 t_rasterizerstate_id = this->id_maker.MakeID();
+
+		sharedptr< D3d11_Impl_RasterizerState > t_rasterizerstate = new D3d11_Impl_RasterizerState();
+		{
+			t_rasterizerstate->culltype = a_culltype;
+		}
+
+		//レンダーコマンド。
+		sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
+		{
+			t_actionlist->Add(new D3d11_Impl_ActionBatching_RasterizerState_Create(*this,t_rasterizerstate));
+		}
+		this->StartBatching(t_actionlist);
+
+		//管理リスト。
+		this->rasterizerstate_list.insert(STLMap< s32 , sharedptr< D3d11_Impl_RasterizerState > >::value_type(t_rasterizerstate_id,t_rasterizerstate));
+
+		return t_rasterizerstate_id;
 	}
 
 	/** Render_CreateVertexShader
@@ -652,9 +676,9 @@ namespace NBsys{namespace ND3d11
 					t_layout_data[ii].InstanceDataStepRate	= 0;
 
 					switch(a_vertexshader->layout->at(ii).format){
-					case D3d11_FormatType::R32G32B32_FLOAT:		t_layout_data[ii].Format = DXGI_FORMAT_R32G32B32_FLOAT;		break;
-					case D3d11_FormatType::R32G32B32A32_FLOAT:	t_layout_data[ii].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;	break;
-					case D3d11_FormatType::R32G32_FLOAT:		t_layout_data[ii].Format = DXGI_FORMAT_R32G32_FLOAT;		break;
+					case D3d11_LayoutFormatType::R32G32B32_FLOAT:		t_layout_data[ii].Format = DXGI_FORMAT_R32G32B32_FLOAT;		break;
+					case D3d11_LayoutFormatType::R32G32B32A32_FLOAT:	t_layout_data[ii].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;	break;
+					case D3d11_LayoutFormatType::R32G32_FLOAT:			t_layout_data[ii].Format = DXGI_FORMAT_R32G32_FLOAT;		break;
 					default:ASSERT(0);break;
 					}
 				 }
@@ -881,6 +905,37 @@ namespace NBsys{namespace ND3d11
 		}
 		if(FAILED(t_result)){
 			a_blendstate->blendstate.reset();
+		}
+	}
+
+	/** Render_CreateRasterizerState
+	*/
+	void D3d11_Impl::Render_CreateRasterizerState(sharedptr< D3d11_Impl_RasterizerState >& a_rasterizerstate)
+	{
+		D3D11_RASTERIZER_DESC t_desc;
+		{
+			Memory::memset(&t_desc,0,sizeof(t_desc));
+
+			t_desc.FillMode = D3D11_FILL_SOLID;
+			t_desc.DepthClipEnable = FALSE;
+			t_desc.MultisampleEnable = FALSE;
+			t_desc.DepthBiasClamp = 0;
+			t_desc.SlopeScaledDepthBias = 0;
+
+			switch(a_rasterizerstate->culltype){
+			case D3d11_CullType::NONE:		t_desc.CullMode = D3D11_CULL_NONE;		break;
+			case D3d11_CullType::FRONT:		t_desc.CullMode = D3D11_CULL_FRONT;		break;
+			case D3d11_CullType::BACK:		t_desc.CullMode = D3D11_CULL_BACK;		break;
+			}
+		}
+
+		ID3D11RasterizerState* t_raw = nullptr;
+		HRESULT t_result = this->device->CreateRasterizerState(&t_desc,&t_raw);
+		if(t_raw != nullptr){
+			a_rasterizerstate->rasterizerstate.reset(t_raw,release_delete< ID3D11RasterizerState >());
+		}
+		if(FAILED(t_result)){
+			a_rasterizerstate->rasterizerstate.reset();
 		}
 	}
 
@@ -1199,6 +1254,23 @@ namespace NBsys{namespace ND3d11
 
 				return;
 
+			}
+		}
+
+		ASSERT(0);
+	}
+
+	/** Render_SetRasterizerState
+	*/
+	void D3d11_Impl::Render_SetRasterizerState(s32 a_rasterizerstate_id)
+	{
+		if(a_rasterizerstate_id >= 0){
+			sharedptr< D3d11_Impl_RasterizerState >& t_rasterizerstate = this->GetRasterizerState(a_rasterizerstate_id);
+			if(t_rasterizerstate){
+
+				this->devicecontext->RSSetState(t_rasterizerstate->rasterizerstate.get());
+
+				return;
 			}
 		}
 

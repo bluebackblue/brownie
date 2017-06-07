@@ -150,9 +150,18 @@ namespace NBsys{namespace ND3d11
 		bool alpha_blend;
 	};
 
-	/**
+	/** D3d11_Impl_RasterizerState
 	*/
-	//TODO:cull
+	struct D3d11_Impl_RasterizerState
+	{
+		/** rasterizerstate
+		*/
+		sharedptr< ID3D11RasterizerState > rasterizerstate;
+
+		/** culltype
+		*/
+		D3d11_CullType::Id culltype;
+	};
 
 	/** D3d11_Impl
 	*/
@@ -230,9 +239,9 @@ namespace NBsys{namespace ND3d11
 		*/
 		STLMap< s32 , sharedptr< D3d11_Impl_BlendState > >::Type blendstate_list;
 
-		/** CreateRasterizerState
+		/** rasterizerstate_list
 		*/
-		//TODO:cull
+		STLMap< s32 , sharedptr< D3d11_Impl_RasterizerState > >::Type rasterizerstate_list;
 
 	public:
 		/** constructor
@@ -310,9 +319,9 @@ namespace NBsys{namespace ND3d11
 		*/
 		sharedptr< D3d11_Impl_BlendState > GetBlendState(s32 a_blendstate_id);
 
-		/**
+		/** GetRasterizerState
 		*/
-		//TODO:cull
+		sharedptr< D3d11_Impl_RasterizerState > GetRasterizerState(s32 a_rasterizerstate_id);
 
 	public:
 
@@ -342,7 +351,7 @@ namespace NBsys{namespace ND3d11
 
 		/** CreateRasterizerState
 		*/
-		s32 CreateRasterizerState(bool a_cull);
+		s32 CreateRasterizerState(D3d11_CullType::Id a_culltype);
 
 	public:
 
@@ -370,9 +379,9 @@ namespace NBsys{namespace ND3d11
 		*/
 		void Render_CreateBlendState(sharedptr< D3d11_Impl_BlendState >& a_blendstate);
 
-		/** //TODO:cull
+		/** Render_CreateRasterizerState
 		*/
-		void Render_CreateRasterizer();
+		void Render_CreateRasterizerState(sharedptr< D3d11_Impl_RasterizerState >& a_rasterizerstate);
 
 	public:
 
@@ -452,7 +461,7 @@ namespace NBsys{namespace ND3d11
 
 		/** Renser_SetRasterizerSatte();
 		*/
-		void Render_SetRasterizerState();
+		void Render_SetRasterizerState(s32 a_rasterizerstate);
 
 	};
 

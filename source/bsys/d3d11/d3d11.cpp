@@ -91,6 +91,13 @@ namespace NBsys{namespace ND3d11
 		return this->impl->CreateBlendState(a_blend_state);
 	}
 
+	/** CreateRasterizerState
+	*/
+	s32 D3d11::CreateRasterizerState(D3d11_CullType::Id a_culltype)
+	{
+		return this->impl->CreateRasterizerState(a_culltype);
+	}
+
 	/** Render_Create
 	*/
 	void D3d11::Render_Create(sharedptr< NWindow::Window >& a_window,s32 a_width,s32 a_height)
@@ -222,6 +229,13 @@ namespace NBsys{namespace ND3d11
 	void D3d11::Render_SetBlendState(s32 a_blendstate_id)
 	{
 		this->impl->Render_SetBlendState(a_blendstate_id);
+	}
+
+	/** Render_SetRasterizerState
+	*/
+	void D3d11::Render_SetRasterizerState(s32 a_rasterizerstate_id)
+	{
+		this->impl->Render_SetRasterizerState(a_rasterizerstate_id);
 	}
 
 }}
