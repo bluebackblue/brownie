@@ -41,8 +41,8 @@
 
 /** include
 */
-#if(BSYS_MODEL_ENABLE)
-#include "./model/model.h"
+#if(BSYS_VERTEX_ENABLE)
+#include "./vertex/vertex.h"
 #endif
 
 /** include

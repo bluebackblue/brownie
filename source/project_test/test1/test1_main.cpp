@@ -81,7 +81,7 @@ static sharedptr< NBsys::NFovehmd::Fovehmd > s_fovehmd;
 
 
 //s_vertex
-static sharedptr< NBsys::NModel::Model_Vertex< NBsys::NModel::Model_Vertex_Data_Pos3Color4 > > s_vertex;
+static sharedptr< NBsys::NVertex::Model_Vertex< NBsys::NModel::Model_Vertex_Data_Pos3Color4 > > s_vertex;
 
 
 //s_matrix
@@ -175,7 +175,7 @@ void Test_Main()
 	#endif
 
 	//s_vertex
-	s_vertex = NBsys::NModel::Preset_Box< NBsys::NModel::Model_Vertex_Data_Pos3Color4 >();
+	s_vertex = NBsys::NVertex::Preset_Box< NBsys::NModel::Model_Vertex_Data_Pos3Color4 >();
 
 	//s_pcounter
 	s_pcounter = PerformanceCounter::GetPerformanceCounter();

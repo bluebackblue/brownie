@@ -313,11 +313,11 @@
 
 /*
 
-	model
+	vertex
 
 */
-#if !defined(BSYS_MODEL_ENABLE)
-	#define BSYS_MODEL_ENABLE								(1)
+#if !defined(BSYS_VERTEX_ENABLE)
+	#define BSYS_VERTEX_ENABLE								(1)
 #endif
 
 /*

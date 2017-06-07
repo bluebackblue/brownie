@@ -5,25 +5,30 @@
 * Released under the MIT License
 * https://github.com/bluebackblue/brownie/blob/master/LICENSE
 * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
-* @brief モデル。
+* @brief バーテックス。
 */
 
 
 /** include
 */
-#include "./model_presest.h"
+#include "../types/types.h"
 
 
-/** NBsys::NModel
+/** include
 */
-#if(BSYS_MODEL_ENABLE)
-namespace NBsys{namespace NModel
+#include "./vertex_presest.h"
+
+
+/** NBsys::NVertex
+*/
+#if(BSYS_VERTEX_ENABLE)
+namespace NBsys{namespace NVertex
 {
 	/** Preset_Plane
 	*/
-	template < typename T > inline sharedptr< Model_Vertex< T > > Preset_Plane()
+	template < typename T > inline sharedptr< Vertex< T > > Preset_Plane()
 	{
-		sharedptr< Model_Vertex< T > > t_plane(new Model_Vertex< T >());
+		sharedptr< Vertex< T > > t_plane(new Vertex< T >());
 
 		t_plane->AddParts("plane");
 
@@ -87,9 +92,9 @@ namespace NBsys{namespace NModel
 
 	/** Preset_Box
 	*/
-	template < typename T > inline sharedptr< Model_Vertex< T > > Preset_Box()
+	template < typename T > inline sharedptr< Vertex< T > > Preset_Box()
 	{
-		sharedptr< Model_Vertex< T > > t_box(new Model_Vertex< T >());
+		sharedptr< Vertex< T > > t_box(new Vertex< T >());
 
 		t_box->AddParts("box");
 

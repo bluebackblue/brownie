@@ -21,7 +21,7 @@
 
 /** NBsys::NMmdPmx
 */
-#if(BSYS_MODEL_ENABLE)
+#if(BSYS_MMDPMX_ENABLE)
 namespace NBsys{namespace NMmdPmx
 {
 	/** Load

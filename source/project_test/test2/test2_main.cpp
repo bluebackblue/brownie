@@ -91,7 +91,7 @@ static sharedptr< NBsys::NFovehmd::Fovehmd > s_fovehmd;
 
 
 //s_vertex
-static sharedptr< NBsys::NModel::Model_Vertex< NBsys::NModel::Model_Vertex_Data_Pos3Uv2Color4 > > s_vertex;
+static sharedptr< NBsys::NVertex::Vertex< NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 > > s_vertex;
 static sharedptr< NBsys::NMmdPmx::MmdPmx > s_mmdpmx;
 
 
@@ -154,7 +154,7 @@ void LoadPmx()
 		s_mmdpmx = NBsys::NMmdPmx::Load(t_pmx);
 	}
 
-	s_vertex = new NBsys::NModel::Model_Vertex< NBsys::NModel::Model_Vertex_Data_Pos3Uv2Color4 >();
+	s_vertex = new NBsys::NVertex::Vertex< NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 >();
 	s_model = new STLVector< ModelParts >::Type();
 
 	for(u32 ii=0;ii<s_mmdpmx->parts_list_size;ii++){
@@ -174,7 +174,7 @@ void LoadPmx()
 		for(u32 jj=0;jj<t_mmdpmx_parts.count_of_index;jj++){
 			u32 t_index = s_mmdpmx->index_list.get()[t_mmdpmx_parts.start_index + jj];
 
-			NBsys::NModel::Model_Vertex_Data_Pos3Uv2Color4 t_vertex;
+			NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 t_vertex;
 			NBsys::NMmdPmx::MmdPmx_VertexData& t_data = s_mmdpmx->vertex_list.get()[t_index];
 
 			f32 t_color_r = 1.0f;
@@ -182,9 +182,9 @@ void LoadPmx()
 			f32 t_color_b = 1.0f;
 			f32 t_color_a = 1.0f;
 
-			NBsys::NModel::SetColor< NBsys::NModel::Model_Vertex_Data_Pos3Uv2Color4 >(t_vertex,t_color_r,t_color_g,t_color_b,t_color_a);
-			NBsys::NModel::SetPos< NBsys::NModel::Model_Vertex_Data_Pos3Uv2Color4 >(t_vertex,t_data.position.x,t_data.position.y,t_data.position.z);
-			NBsys::NModel::SetUv< NBsys::NModel::Model_Vertex_Data_Pos3Uv2Color4 >(t_vertex,t_data.uv.x,t_data.uv.y);
+			NBsys::NVertex::SetColor< NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 >(t_vertex,t_color_r,t_color_g,t_color_b,t_color_a);
+			NBsys::NVertex::SetPos< NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 >(t_vertex,t_data.position.x,t_data.position.y,t_data.position.z);
+			NBsys::NVertex::SetUv< NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 >(t_vertex,t_data.uv.x,t_data.uv.y);
 
 			s_vertex->AddVertex(t_vertex);
 		}

@@ -5,7 +5,7 @@
 * Released under the MIT License
 * https://github.com/bluebackblue/brownie/blob/master/LICENSE
 * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
-* @brief モデル。
+* @brief バーテックス。
 */
 
 
@@ -16,21 +16,26 @@
 
 /** include
 */
-#include "./model_vertex.h"
+#include "./vertex.h"
 
 
-/** NBsys::NModel
+/** NBsys::NVertex
 */
-#if(BSYS_MODEL_ENABLE)
-namespace NBsys{namespace NModel
+#if(BSYS_VERTEX_ENABLE)
+namespace NBsys{namespace NVertex
 {
 	/** Preset_Plane
 	*/
-	template < typename T > sharedptr< Model_Vertex< T > > Preset_Plane();
+	template < typename T > sharedptr< Vertex< T > > Preset_Plane();
 
 	/** Preset_Box
 	*/
-	template < typename T > sharedptr< Model_Vertex< T > > Preset_Box();
+	template < typename T > sharedptr< Vertex< T > > Preset_Box();
+
 }}
 #endif
+
+/** include
+*/
+#include "./vertex_preset.inl"
 
