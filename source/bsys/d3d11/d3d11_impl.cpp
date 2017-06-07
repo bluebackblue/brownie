@@ -505,7 +505,7 @@ namespace NBsys{namespace ND3d11
 
 	/** CreateConstantBuffer
 	*/
-	s32 D3d11_Impl::CreateConstantBuffer(s32 a_size)
+	s32 D3d11_Impl::CreateConstantBuffer(s32 a_register_b_index,s32 a_size)
 	{
 		//ＩＤ。
 		s32 t_constantbuffer_id = this->id_maker.MakeID();
@@ -513,6 +513,7 @@ namespace NBsys{namespace ND3d11
 		sharedptr< D3d11_Impl_ConstantBuffer > t_constantbuffer = new D3d11_Impl_ConstantBuffer();
 		{
 			t_constantbuffer->size = a_size;
+			t_constantbuffer->register_b_index = a_register_b_index;
 		}
 
 		//レンダーコマンド。
@@ -1098,7 +1099,7 @@ namespace NBsys{namespace ND3d11
 
 	/** Render_VSSetConstantBuffers
 	*/
-	void D3d11_Impl::Render_VSSetConstantBuffers(s32 a_startslot,s32 a_constantbuffer_id)
+	void D3d11_Impl::Render_VSSetConstantBuffers(s32 a_constantbuffer_id)
 	{
 		if(a_constantbuffer_id >= 0){
 			sharedptr< D3d11_Impl_ConstantBuffer >& t_constantbuffer = this->GetConstantBuffer(a_constantbuffer_id);
@@ -1109,7 +1110,30 @@ namespace NBsys{namespace ND3d11
 					t_constantbuffer->buffer.get()
 				};
 
-				this->devicecontext->VSSetConstantBuffers(a_startslot,COUNTOF(t_list),t_list);
+				this->devicecontext->VSSetConstantBuffers(t_constantbuffer->register_b_index,COUNTOF(t_list),t_list);
+
+				return;
+
+			}
+		}
+
+		ASSERT(0);
+	}
+
+	/** Render_PSSetConstantBuffers
+	*/
+	void D3d11_Impl::Render_PSSetConstantBuffers(s32 a_constantbuffer_id)
+	{
+		if(a_constantbuffer_id >= 0){
+			sharedptr< D3d11_Impl_ConstantBuffer >& t_constantbuffer = this->GetConstantBuffer(a_constantbuffer_id);
+			if(t_constantbuffer){
+
+				ID3D11Buffer* t_list[] = 
+				{
+					t_constantbuffer->buffer.get()
+				};
+
+				this->devicecontext->PSSetConstantBuffers(t_constantbuffer->register_b_index,COUNTOF(t_list),t_list);
 
 				return;
 
@@ -1209,7 +1233,7 @@ namespace NBsys{namespace ND3d11
 
 	/** Render_SetTexture
 	*/
-	void D3d11_Impl::Render_SetTexture(s32 a_texture_id)
+	void D3d11_Impl::Render_SetTexture(s32 a_register_t_index,s32 a_texture_id)
 	{
 		if(a_texture_id >= 0){
 			sharedptr< D3d11_Impl_Texture >& t_texture = this->GetTexture(a_texture_id);
@@ -1219,7 +1243,7 @@ namespace NBsys{namespace ND3d11
 					t_texture->resourceview.get()
 				};
 
-				this->devicecontext->PSSetShaderResources(0,1,t_resourceview_list);
+				this->devicecontext->PSSetShaderResources(a_register_t_index,COUNTOF(t_resourceview_list),t_resourceview_list);
 
 				return;
 

@@ -72,9 +72,9 @@ namespace NBsys{namespace ND3d11
 
 	/** CreateConstantBuffer
 	*/
-	s32 D3d11::CreateConstantBuffer(s32 a_size)
+	s32 D3d11::CreateConstantBuffer(s32 a_register_b_index,s32 a_size)
 	{
-		return this->impl->CreateConstantBuffer(a_size);
+		return this->impl->CreateConstantBuffer(a_register_b_index,a_size);
 	}
 	
 	/** CreateTexture
@@ -177,9 +177,16 @@ namespace NBsys{namespace ND3d11
 
 	/** Render_VSSetConstantBuffers
 	*/
-	void D3d11::Render_VSSetConstantBuffers(s32 a_startslot,s32 a_constantbuffer_id)
+	void D3d11::Render_VSSetConstantBuffers(s32 a_constantbuffer_id)
 	{
-		this->impl->Render_VSSetConstantBuffers(a_startslot,a_constantbuffer_id);
+		this->impl->Render_VSSetConstantBuffers(a_constantbuffer_id);
+	}
+
+	/** Render_PSSetConstantBuffers
+	*/
+	void D3d11::Render_PSSetConstantBuffers(s32 a_constantbuffer_id)
+	{
+		this->impl->Render_PSSetConstantBuffers(a_constantbuffer_id);
 	}
 
 	/** Render_IASetInputLayout
@@ -219,9 +226,9 @@ namespace NBsys{namespace ND3d11
 
 	/** Render_SetTexture
 	*/
-	void D3d11::Render_SetTexture(s32 a_texture_id)
+	void D3d11::Render_SetTexture(s32 a_register_t_index,s32 a_texture_id)
 	{
-		this->impl->Render_SetTexture(a_texture_id);
+		this->impl->Render_SetTexture(a_register_t_index,a_texture_id);
 	}
 
 	/** Render_SetBlendState

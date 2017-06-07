@@ -119,7 +119,8 @@ AsyncResult< bool > t_asyncresult_pixelshader;
 //id
 s32 t_vertexshader_id = -1;
 s32 t_pixelshader_id = -1;
-s32 t_constantbuffer_id = -1;
+s32 t_vs_constantbuffer_b0_id = -1;
+s32 t_ps_constantbuffer_b1_id = -1;
 s32 t_vertexbuffer_id = -1;
 
 s32 t_blendstate_id = -1;
@@ -127,6 +128,42 @@ s32 t_blendstate_id = -1;
 s32 t_rasterizerstate_cull_back_id = -1;
 s32 t_rasterizerstate_cull_none_id = -1;
 
+
+/** バーテックスシェーダ。定数。
+*/
+struct VS_ConstantBuffer_B0
+{
+	NBsys::NGeometry::Geometry_Matrix_44 view_projection;
+
+	VS_ConstantBuffer_B0()
+		:
+		view_projection(NBsys::NGeometry::Geometry_Identity())
+	{
+	}
+
+	~VS_ConstantBuffer_B0()
+	{
+	}
+};
+
+/** ピクセルシェーダ。定数。
+*/
+struct PS_ConstantBuffer_B1
+{
+	u32 flag1;
+	u32 flag2;
+	u32 flag3;
+	u32 flag4;
+
+	PS_ConstantBuffer_B1()
+		:
+		flag1(0),
+		flag2(0),
+		flag3(0),
+		flag4(0)
+	{
+	}
+};
 
 struct ModelParts
 {
@@ -239,17 +276,20 @@ void LoadPmx()
 void DrawOnce(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeometry::Geometry_Matrix_44& a_view_projection,s32 a_xx,s32 a_yy,s32 a_zz)
 {
 	NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = a_model_matrix * NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(a_xx*2.0f,a_yy*2.0f,a_zz*2.0f) * a_view_projection;
-	NBsys::NGeometry::Geometry_Matrix_44 t_view_projection_transpose = t_view_projection.Make_Transpose();
 
+
+	s_d3d11->Render_VSSetShader(t_vertexshader_id);
+	s_d3d11->Render_PSSetShader(t_pixelshader_id);
+
+	s_d3d11->Render_VSSetConstantBuffers(t_vs_constantbuffer_b0_id);
+	s_d3d11->Render_PSSetConstantBuffers(t_ps_constantbuffer_b1_id);
 
 	s_d3d11->Render_IASetPrimitiveTopology_TriangleList();
-	s_d3d11->Render_UpdateSubresource(t_constantbuffer_id,&t_view_projection_transpose.m[0][0]);
-	s_d3d11->Render_VSSetShader(t_vertexshader_id);
-	s_d3d11->Render_VSSetConstantBuffers(0,t_constantbuffer_id);
-	s_d3d11->Render_PSSetShader(t_pixelshader_id);
 	s_d3d11->Render_SetBlendState(t_blendstate_id);
 
 	for(s32 ii=0;ii<s_model->size();ii++){
+		VS_ConstantBuffer_B0 t_vs_constantbuffer_b0;
+		PS_ConstantBuffer_B1 t_ps_constantbuffer_b1;
 
 		if(s_model->at(ii).cullfull){
 			//両面描画。
@@ -259,13 +299,17 @@ void DrawOnce(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeome
 			s_d3d11->Render_SetRasterizerState(t_rasterizerstate_cull_back_id);
 		}
 
+		//テクスチャー設定。
 		if(s_model->at(ii).texture_index >= 0){
-			s_d3d11->Render_SetTexture(s_model->at(ii).texture_id);
-			s_d3d11->Render_Draw(s_vertex->GetVertexCountOf(ii),s_vertex->GetVertexOffset(ii));
-		}else{
-			s_d3d11->Render_SetTexture(s_model->at(ii).texture_id);
-			s_d3d11->Render_Draw(s_vertex->GetVertexCountOf(ii),s_vertex->GetVertexOffset(ii));
+			s_d3d11->Render_SetTexture(0,s_model->at(ii).texture_id);
+			t_ps_constantbuffer_b1.flag1 = 1;
 		}
+
+		t_vs_constantbuffer_b0.view_projection = t_view_projection.Make_Transpose();
+
+		s_d3d11->Render_UpdateSubresource(t_vs_constantbuffer_b0_id,&t_vs_constantbuffer_b0);
+		s_d3d11->Render_UpdateSubresource(t_ps_constantbuffer_b1_id,&t_ps_constantbuffer_b1);
+		s_d3d11->Render_Draw(s_vertex->GetVertexCountOf(ii),s_vertex->GetVertexOffset(ii));
 	}
 }
 
@@ -373,7 +417,8 @@ void Test_Main()
 
 			t_vertexshader_id = s_d3d11->CreateVertexShader(t_asyncresult_vertexshader,t_simple_vertex_fx,t_layout);
 			t_pixelshader_id = s_d3d11->CreatePixelShader(t_asyncresult_pixelshader,t_simple_pixel_fx);
-			t_constantbuffer_id = s_d3d11->CreateConstantBuffer(sizeof(float) * 16);
+			t_vs_constantbuffer_b0_id = s_d3d11->CreateConstantBuffer(0,sizeof(VS_ConstantBuffer_B0));
+			t_ps_constantbuffer_b1_id = s_d3d11->CreateConstantBuffer(1,sizeof(PS_ConstantBuffer_B1));
 			t_vertexbuffer_id = s_d3d11->CreateVertexBuffer(s_vertex->GetVertexPointer(),s_vertex->GetVertexStrideByte(),0,s_vertex->GetVertexAllCountOf());
 
 			s_step++;

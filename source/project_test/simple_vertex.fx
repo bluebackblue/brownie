@@ -1,8 +1,11 @@
 
 
-/** view_projection
+/** VS_ConstantBuffer_B0
 */
-float4x4 view_projection;
+cbuffer VS_ConstantBuffer_B0 : register( b0 )
+{
+	float4x4 view_projection;
+}
 
 
 /** VS_IN
