@@ -34,7 +34,7 @@
 	#define BSYS_D3D11_ENABLE								(1)
 	#define BSYS_FOVEHMD_ENABLE								(1)
 	#define BSYS_TEXTURE_ENABLE								(1)
-	#define BSYS_TEXTURE_PNG_ENABLE							(1)
+	#define BSYS_TEXTURE_GDIPLUS_ENABLE						(1)
 
 #endif
 

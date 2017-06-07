@@ -211,22 +211,8 @@ void LoadPmx()
 				ThreadSleep(10);
 			}
 
-			//テクスチャーの拡張子取得。
-			STLWString t_filetype_string = L"";
-			s32 t_offset = static_cast<s32>(t_model_patrs.texture_file->GetFileNameShort().size() - 4);
-			if(t_offset >= 0){
-				t_filetype_string = t_model_patrs.texture_file->GetFileNameShort().substr(t_offset,4);
-				std::transform(t_filetype_string.begin(),t_filetype_string.end(),t_filetype_string.begin(),::toupper);
-			}
-
-			//テクスチャーの読み込み。
-			if(t_filetype_string == L".PNG"){
-				t_model_patrs.texture = NBsys::NTexture::CreateTexture_FromPng(t_model_patrs.texture_file->GetLoadData(),static_cast<s32>(t_model_patrs.texture_file->GetLoadSize()),t_model_patrs.texture_file->GetFileNameShort());
-			}else if(t_filetype_string == L".BMP"){
-				t_model_patrs.texture = NBsys::NTexture::CreateTexture_FromBmp(t_model_patrs.texture_file->GetLoadData(),static_cast<s32>(t_model_patrs.texture_file->GetLoadSize()),t_model_patrs.texture_file->GetFileNameShort());
-			}
-
 			//テクスチャー作成。
+			t_model_patrs.texture = NBsys::NTexture::CreateTexture(t_model_patrs.texture_file->GetLoadData(),static_cast<s32>(t_model_patrs.texture_file->GetLoadSize()),t_model_patrs.texture_file->GetFileNameShort());
 			t_model_patrs.texture_id = s_d3d11->CreateTexture(t_model_patrs.texture);
 
 		}

@@ -16,15 +16,17 @@
 
 /** include
 */
-#include "./texture_tga.h"
-#include "./texture_png.h"
 #include "./texture_bmp.h"
+#include "./texture_gdiplus.h"
+#include "./texture_tga.h"
 
 
 /** NBsys::NTexture
 */
 namespace NBsys{namespace NTexture
 {
+	/** TextureType
+	*/
 	struct TextureType
 	{
 		enum Id
@@ -33,7 +35,6 @@ namespace NBsys{namespace NTexture
 			Depth,
 		};
 	};
-
 
 	/** Texture
 	*/
@@ -79,6 +80,11 @@ namespace NBsys{namespace NTexture
 		s32 GetPitch();
 
 	};
+
+	/** CreateTexture
+	*/
+	sharedptr< Texture > CreateTexture(const sharedptr< u8 >& a_data,s32 a_size,const STLWString& a_name);
+
 
 }}
 

@@ -150,6 +150,10 @@ namespace NBsys{namespace ND3d11
 		bool alpha_blend;
 	};
 
+	/**
+	*/
+	//TODO:cull
+
 	/** D3d11_Impl
 	*/
 	class D3d11_Impl
@@ -225,6 +229,10 @@ namespace NBsys{namespace ND3d11
 		/** blendstate_list
 		*/
 		STLMap< s32 , sharedptr< D3d11_Impl_BlendState > >::Type blendstate_list;
+
+		/** CreateRasterizerState
+		*/
+		//TODO:cull
 
 	public:
 		/** constructor
@@ -302,6 +310,10 @@ namespace NBsys{namespace ND3d11
 		*/
 		sharedptr< D3d11_Impl_BlendState > GetBlendState(s32 a_blendstate_id);
 
+		/**
+		*/
+		//TODO:cull
+
 	public:
 
 		/** CreateVertexShader
@@ -328,6 +340,10 @@ namespace NBsys{namespace ND3d11
 		*/
 		s32 CreateBlendState(bool a_alpha_blend);
 
+		/** CreateRasterizerState
+		*/
+		s32 CreateRasterizerState(bool a_cull);
+
 	public:
 
 		/** Render_CreateVertexShader
@@ -353,6 +369,10 @@ namespace NBsys{namespace ND3d11
 		/** Render_CreateBlendState
 		*/
 		void Render_CreateBlendState(sharedptr< D3d11_Impl_BlendState >& a_blendstate);
+
+		/** //TODO:cull
+		*/
+		void Render_CreateRasterizer();
 
 	public:
 
@@ -429,6 +449,10 @@ namespace NBsys{namespace ND3d11
 		/** Render_SetBlendState
 		*/
 		void Render_SetBlendState(s32 a_blendstate_id);
+
+		/** Renser_SetRasterizerSatte();
+		*/
+		void Render_SetRasterizerState();
 
 	};
 

@@ -29,14 +29,11 @@
 */
 namespace NBsys{namespace NTexture
 {
-	/** CreateTexture_FromTga
+	/** CreateTexture_Bmp
 	*/
-	sharedptr< Texture > CreateTexture_FromBmp(const sharedptr< u8 >& a_data,s32 a_size,const STLWString& a_name)
+	sharedptr< Texture > CreateTexture_Bmp(const sharedptr< u8 >& a_data,s32 a_size,const STLWString& a_name)
 	{
 		const u8* t_raw = reinterpret_cast< const u8* >(a_data.get());
-
-
-
 
 		//タイプ。
 		u16 t_header_type =	Memory::Copy< u16 >(t_raw);
@@ -58,9 +55,6 @@ namespace NBsys{namespace NTexture
 
 		//オフセット。
 		u32 t_data_offset = Memory::Copy< u32 >(t_raw);
-
-
-
 
 		//構造体のサイズ。
 		u32 t_size = Memory::Copy< u32 >(t_raw);
@@ -94,8 +88,6 @@ namespace NBsys{namespace NTexture
 
 		//重要な色の数 0の場合は全部重要。
 		u32 t_color_size_important = Memory::Copy< u32 >(t_raw);
-
-
 
 		const u8* t_src = reinterpret_cast< const u8* >(a_data.get()) + t_data_offset;
 

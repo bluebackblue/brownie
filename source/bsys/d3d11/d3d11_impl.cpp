@@ -565,6 +565,20 @@ namespace NBsys{namespace ND3d11
 		return t_blendstate_id;
 	}
 
+	/** CreateRasterizerState
+	*/
+	s32 D3d11_Impl::CreateRasterizerState(bool a_cull)
+	{
+	
+1	D3D11_RASTERIZER_DESC rasterizerDesc;
+2	rasterizerDesc.FillMode = D3D11_FILL_MODE.D3D11_FILL_SOLID;
+3	rasterizerDesc.CullMode = D3D11_CULL_MODE.D3D11_CULL_NONE;
+4	rasterizerDesc.DepthClipEnable = FALSE;
+5	rasterizerDesc.MultisampleEnable = FALSE;
+6	rasterizerDesc.DepthBiasClamp = 0;
+7	rasterizerDesc.SlopeScaledDepthBias = 0;
+	}
+
 	/** Render_CreateVertexShader
 	*/
 	void D3d11_Impl::Render_CreateVertexShader(sharedptr< D3d11_Impl_VertexShader >& a_vertexshader)

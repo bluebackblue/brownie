@@ -9,8 +9,7 @@
 */
 
 
-/** include
+/** lib
 */
-#include <png/lpng/png.h>
-
+#pragma	comment(lib,"gdiplus.lib")
 

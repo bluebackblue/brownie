@@ -83,5 +83,33 @@ namespace NBsys{namespace NTexture
 		return this->pitch;
 	}
 
+	/** CreateTexture
+	*/
+	sharedptr< Texture > CreateTexture(const sharedptr< u8 >& a_data,s32 a_size,const STLWString& a_name)
+	{
+		#if(BSYS_TEXTURE_GDIPLUS_ENABLE)
+		return CreateTexture_GdiPlus(a_data,a_size,a_name);
+		#endif
+
+		{
+			STLWString t_filetype_string = L"";
+
+			s32 t_offset = static_cast<s32>(a_name.size() - 4);
+			
+			if(t_offset >= 0){
+				t_filetype_string = a_name.substr(t_offset,4);
+				std::transform(t_filetype_string.begin(),t_filetype_string.end(),t_filetype_string.begin(),::tolower);
+			}
+
+			if(t_filetype_string == L".bmp"){
+				return CreateTexture_Bmp(a_data,a_size,a_name);
+			}else if(t_filetype_string == L".tga"){
+				return CreateTexture_Tga(a_data,a_size,a_name);
+			}
+		}
+
+		return nullptr;
+	}
+
 }}
 

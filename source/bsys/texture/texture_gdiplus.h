@@ -23,9 +23,11 @@
 */
 namespace NBsys{namespace NTexture
 {
-	/** CreateTexture_FromPng
+	/** CreateTexture_GdiPlus
 	*/
-	sharedptr< Texture > CreateTexture_FromPng(const sharedptr< u8 >& a_data,s32 a_size,const STLWString& a_name);
+	#if(BSYS_TEXTURE_GDIPLUS_ENABLE)
+	sharedptr< Texture > CreateTexture_GdiPlus(const sharedptr< u8 >& a_data,s32 a_size,const STLWString& a_name);
+	#endif
 
 }}
 
