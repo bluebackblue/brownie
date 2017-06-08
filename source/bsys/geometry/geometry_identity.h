@@ -21,9 +21,16 @@ namespace NBsys{namespace NGeometry
 {
 	/** íPà å^ÅB
 	*/
-	struct Geometry_Identity
+	struct Geometry_Identity_Type
 	{
 	};
+
+	/** Geometry_Identity
+	*/
+	inline Geometry_Identity_Type Geometry_Identity()
+	{
+		return Geometry_Identity_Type();
+	}
 }}
 #endif
 

@@ -52,7 +52,7 @@ namespace NBsys{namespace NGeometry
 
 		/** constructor。
 		*/
-		inline Geometry_Vector2(const Geometry_Identity& /*a_identity*/);
+		inline Geometry_Vector2(const Geometry_Identity_Type& /*a_identity*/);
 
 		/** destructor。
 		*/
@@ -113,7 +113,7 @@ namespace NBsys{namespace NGeometry
 
 		/** constructor。
 		*/
-		inline Geometry_Vector3(const Geometry_Identity& /*a_identity*/);
+		inline Geometry_Vector3(const Geometry_Identity_Type& /*a_identity*/);
 
 		/** destructor。
 		*/
@@ -306,7 +306,7 @@ namespace NBsys{namespace NGeometry
 
 		/** constructor。
 		*/
-		inline Geometry_Vector4(const Geometry_Identity& /*a_identity*/);
+		inline Geometry_Vector4(const Geometry_Identity_Type& /*a_identity*/);
 
 		/** destructor。
 		*/

@@ -49,7 +49,7 @@ namespace NBsys{namespace NGeometry
 
 		/** constructor。
 		*/
-		inline Geometry_Matrix_44(const Geometry_Identity& /*a_identity*/);
+		inline Geometry_Matrix_44(const Geometry_Identity_Type& /*a_identity*/);
 
 		/** constructor。
 		*/
@@ -226,7 +226,7 @@ namespace NBsys{namespace NGeometry
 
 		/** [設定]単位型。
 		*/
-		inline Geometry_Matrix_44& operator =(const Geometry_Identity& /*a_identity*/);
+		inline Geometry_Matrix_44& operator =(const Geometry_Identity_Type& /*a_identity*/);
 
 		/** [設定]乗算。
 		*/

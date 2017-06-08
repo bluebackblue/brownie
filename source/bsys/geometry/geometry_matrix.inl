@@ -90,7 +90,7 @@ namespace NBsys{namespace NGeometry
 
 	/** constructorÅB
 	*/
-	inline Geometry_Matrix_44::Geometry_Matrix_44(const Geometry_Identity& /*a_identity*/)
+	inline Geometry_Matrix_44::Geometry_Matrix_44(const Geometry_Identity_Type& /*a_identity*/)
 	{
 		*this = Geometry_Matrix_44::Identity();
 	}
@@ -1155,7 +1155,7 @@ namespace NBsys{namespace NGeometry
 
 	/** [ê›íË]íPà å^ÅB
 	*/
-	inline Geometry_Matrix_44& Geometry_Matrix_44::operator =(const Geometry_Identity& /*a_identity*/)
+	inline Geometry_Matrix_44& Geometry_Matrix_44::operator =(const Geometry_Identity_Type& /*a_identity*/)
 	{
 		*this = Geometry_Matrix_44::Identity();
 
