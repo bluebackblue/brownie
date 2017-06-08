@@ -379,7 +379,7 @@ namespace NBsys{namespace NMmdPmx
 					{
 						if(t_mmdpmx->header_ex.texture_index_size == 1){
 							t_parts.textureindex = Memory::Copy< s8 >(t_raw);
-						}else if(t_mmdpmx->header_ex.texture_index_size == 1){
+						}else if(t_mmdpmx->header_ex.texture_index_size == 2){
 							t_parts.textureindex = Memory::Copy< s16 >(t_raw);
 						}else{
 							t_parts.textureindex = Memory::Copy< s32 >(t_raw);
@@ -387,7 +387,7 @@ namespace NBsys{namespace NMmdPmx
 
 						if(t_mmdpmx->header_ex.texture_index_size == 1){
 							t_parts.textureindex_sphere = Memory::Copy< s8 >(t_raw);
-						}else if(t_mmdpmx->header_ex.texture_index_size == 1){
+						}else if(t_mmdpmx->header_ex.texture_index_size == 2){
 							t_parts.textureindex_sphere = Memory::Copy< s16 >(t_raw);
 						}else{
 							t_parts.textureindex_sphere = Memory::Copy< s32 >(t_raw);
@@ -405,7 +405,7 @@ namespace NBsys{namespace NMmdPmx
 
 							if(t_mmdpmx->header_ex.texture_index_size == 1){
 								t_parts.toon_textureindex = Memory::Copy< s8 >(t_raw);
-							}else if(t_mmdpmx->header_ex.texture_index_size == 1){
+							}else if(t_mmdpmx->header_ex.texture_index_size == 2){
 								t_parts.toon_textureindex = Memory::Copy< s16 >(t_raw);
 							}else{
 								t_parts.toon_textureindex = Memory::Copy< s32 >(t_raw);
@@ -442,6 +442,219 @@ namespace NBsys{namespace NMmdPmx
 					}
 				}
 			}
+
+			//bone
+			{
+				u32 t_bone_count = Memory::Copy< u32 >(t_raw);
+
+				for(u32 ii=0;ii<t_bone_count;ii++){
+
+					STLWString t_bone_name_jp = L"";
+					STLWString t_bone_name_en = L"";
+
+					NBsys::NGeometry::Geometry_Vector3 t_bone_position = NBsys::NGeometry::Geometry_Identity();
+
+					s32 t_boneindex_parent = -1;
+
+					s32 t_deform_depth = -1;
+
+					u16 t_boneflag = 0x0000;
+
+					NBsys::NGeometry::Geometry_Vector3 t_bone_position_offset(NBsys::NGeometry::Geometry_Identity());
+
+					s32 t_boneindex_link = -1;
+
+					s32 t_boneindex_append = -1;
+					f32 t_boneindex_append_weight = 0.0f;
+
+					NBsys::NGeometry::Geometry_Vector3 t_bone_fixed_axis(NBsys::NGeometry::Geometry_Identity());
+
+					NBsys::NGeometry::Geometry_Vector3 t_bone_local_axix_x = NBsys::NGeometry::Geometry_Identity();
+					NBsys::NGeometry::Geometry_Vector3 t_bone_local_axix_z = NBsys::NGeometry::Geometry_Identity();
+
+					s32 t_bone_key_value = 0;
+
+					s32 t_bone_ik_target_boneindex = -1;
+					s32 t_bone_ik_iteration_count = 0;
+					f32	t_bone_ik_limit_rad = 0.0f;
+
+
+
+
+					//bonename_jp
+					{
+						u32 t_length = Memory::Copy< u32 >(t_raw);
+						if(t_length > 0){
+							if(t_mmdpmx->header_ex.is_utf8){
+								STLString t_buffer(reinterpret_cast< char* >(t_raw),t_length);
+								CharToWchar(t_buffer,t_bone_name_jp);
+							}else{
+								t_bone_name_jp = STLWString(reinterpret_cast< wchar* >(t_raw),t_length/2);
+							}
+							t_raw += t_length;
+						}
+					}
+
+					//bonename_en
+					{
+						u32 t_length = Memory::Copy< u32 >(t_raw);
+						if(t_length > 0){
+							if(t_mmdpmx->header_ex.is_utf8){
+								STLString t_buffer(reinterpret_cast< char* >(t_raw),t_length);
+								CharToWchar(t_buffer,t_bone_name_en);
+							}else{
+								t_bone_name_en = STLWString(reinterpret_cast< wchar* >(t_raw),t_length/2);
+							}
+							t_raw += t_length;
+						}
+					}
+
+					t_bone_position = Memory::Copy< NBsys::NGeometry::Geometry_Vector3 >(t_raw);
+
+					//boneindex_parent
+					{
+						if(t_mmdpmx->header_ex.bone_index_size == 1){
+							t_boneindex_parent = Memory::Copy< s8 >(t_raw);
+						}else if(t_mmdpmx->header_ex.bone_index_size == 2){
+							t_boneindex_parent = Memory::Copy< s16 >(t_raw);
+						}else{
+							t_boneindex_parent = Memory::Copy< s32 >(t_raw);
+						}
+					}
+
+					t_deform_depth = Memory::Copy< s32 >(t_raw);
+
+					t_boneflag = Memory::Copy< u16 >(t_raw);
+
+					/*
+					0x0001  : 接続先(PMD子ボーン指定)表示方法 -> 0:座標オフセットで指定 1:ボーンで指定。
+					0x0002  : 回転可能
+					0x0004  : 移動可能
+					0x0008  : 表示
+					0x0010  : 操作可
+					0x0020  : IK
+					0x0040	: dummy
+					0x0080  : ローカル付与 | 付与対象 0:ユーザー変形値／IKリンク／多重付与 1:親のローカル変形量。
+					0x0100  : 回転付与
+					0x0200  : 移動付与
+					0x0400  : 軸固定
+					0x0800  : ローカル軸
+					0x1000  : 物理後変形
+					0x2000  : 外部親変形
+					*/
+					bool t_boneflag_target_showmode			= (t_boneflag & (0x01    )) > 0;
+					bool t_boneflag_allow_rotate			= (t_boneflag & (0x01<<2 )) > 0;
+					bool t_boneflag_allow_translate			= (t_boneflag & (0x01<<3 )) > 0;
+					bool t_boneflag_visible					= (t_boneflag & (0x01<<4 )) > 0;
+					bool t_boneflag_allow_control			= (t_boneflag & (0x01<<5 )) > 0;
+					bool t_boneflag_ik						= (t_boneflag & (0x01<<6 )) > 0;
+					bool t_boneflag_dummy					= (t_boneflag & (0x01<<7 )) > 0;
+					bool t_boneflag_append_local			= (t_boneflag & (0x01<<8 )) > 0;
+					bool t_boneflag_append_rotate			= (t_boneflag & (0x01<<9 )) > 0;
+					bool t_boneflag_append_translate		= (t_boneflag & (0x01<<10)) > 0;
+					bool t_boneflag_fixed_axis				= (t_boneflag & (0x01<<11)) > 0;
+					bool t_boneflag_local_axis				= (t_boneflag & (0x01<<12)) > 0;
+					bool t_boneflag_deform_after_physics	= (t_boneflag & (0x01<<13)) > 0;
+					bool t_boneflag_deform_outer_parent		= (t_boneflag & (0x01<<14)) > 0;
+
+					if (t_boneflag_target_showmode == false){
+						t_bone_position_offset = Memory::Copy< NBsys::NGeometry::Geometry_Vector3 >(t_raw);
+					}else{
+						//boneindex_link
+						{
+							if(t_mmdpmx->header_ex.bone_index_size == 1){
+								t_boneindex_link = Memory::Copy< s8 >(t_raw);
+							}else if(t_mmdpmx->header_ex.bone_index_size == 2){
+								t_boneindex_link = Memory::Copy< s16 >(t_raw);
+							}else{
+								t_boneindex_link = Memory::Copy< s32 >(t_raw);
+							}
+						}
+					}
+
+					if(t_boneflag_append_rotate || t_boneflag_append_translate){
+
+						//boneindex_append
+						{
+							if(t_mmdpmx->header_ex.bone_index_size == 1){
+								t_boneindex_append = Memory::Copy< s8 >(t_raw);
+							}else if(t_mmdpmx->header_ex.bone_index_size == 2){
+								t_boneindex_append = Memory::Copy< s16 >(t_raw);
+							}else{
+								t_boneindex_append = Memory::Copy< s32 >(t_raw);
+							}
+						}
+
+						t_boneindex_append_weight = Memory::Copy< f32 >(t_raw);
+					}
+
+					if(t_boneflag_fixed_axis){
+						t_bone_fixed_axis = Memory::Copy< NBsys::NGeometry::Geometry_Vector3 >(t_raw);
+					}
+
+					if(t_boneflag_local_axis){
+						t_bone_local_axix_x = Memory::Copy< NBsys::NGeometry::Geometry_Vector3 >(t_raw);
+						t_bone_local_axix_z = Memory::Copy< NBsys::NGeometry::Geometry_Vector3 >(t_raw);
+					}
+
+					if(t_boneflag_deform_outer_parent){
+						t_bone_key_value = Memory::Copy< s32 >(t_raw);
+					}
+
+					if(t_boneflag_ik){
+
+						//ik_target_boneindex
+						{
+							if(t_mmdpmx->header_ex.bone_index_size == 1){
+								t_bone_ik_target_boneindex = Memory::Copy< s8 >(t_raw);
+							}else if(t_mmdpmx->header_ex.bone_index_size == 2){
+								t_bone_ik_target_boneindex = Memory::Copy< s16 >(t_raw);
+							}else{
+								t_bone_ik_target_boneindex = Memory::Copy< s32 >(t_raw);
+							}
+						}
+
+						t_bone_ik_iteration_count = Memory::Copy< s32 >(t_raw);
+						t_bone_ik_limit_rad = Memory::Copy< f32 >(t_raw);
+
+
+						{
+							s32 t_ik_link_count = 0;
+
+
+							t_ik_link_count = Memory::Copy< s32 >(t_raw);
+
+							for(int jj=0;jj<t_ik_link_count;jj++){
+
+								s32 t_ik_link_boneindex = -1;
+								u8 t_ik_link_enable_limit = 0x00;
+
+								NBsys::NGeometry::Geometry_Vector3 t_ik_link_limit_min = NBsys::NGeometry::Geometry_Identity();
+								NBsys::NGeometry::Geometry_Vector3 t_ik_link_limit_max = NBsys::NGeometry::Geometry_Identity();
+
+								//t_ik_link_boneindex
+								{
+									if(t_mmdpmx->header_ex.bone_index_size == 1){
+										t_ik_link_boneindex = Memory::Copy< s8 >(t_raw);
+									}else if(t_mmdpmx->header_ex.bone_index_size == 2){
+										t_ik_link_boneindex = Memory::Copy< s16 >(t_raw);
+									}else{
+										t_ik_link_boneindex = Memory::Copy< s32 >(t_raw);
+									}
+								}
+
+								t_ik_link_enable_limit = Memory::Copy< u8 >(t_raw);
+
+								if(t_ik_link_enable_limit > 0){
+									t_ik_link_limit_min = Memory::Copy< NBsys::NGeometry::Geometry_Vector3 >(t_raw);
+									t_ik_link_limit_max = Memory::Copy< NBsys::NGeometry::Geometry_Vector3 >(t_raw);
+								}
+							}
+						}
+					}
+				}
+			}
+
 
 
 		}

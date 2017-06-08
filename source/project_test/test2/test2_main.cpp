@@ -150,6 +150,18 @@ struct VS_ConstantBuffer_B0
 */
 struct PS_ConstantBuffer_B1
 {
+	/**
+
+	00000001 : テクスチャー使用。
+	00000010 :
+	00000100 :
+	00001000 :
+	00010000 :
+	00100000 :
+	01000000 :
+	10000000 :
+
+	*/
 	u32 flag1;
 	u32 flag2;
 	u32 flag3;
@@ -184,9 +196,11 @@ sharedptr< STLVector< ModelParts >::Type > s_model;
 void LoadPmx()
 {
 	STLWString t_path = L"アリスあぴミクver1.0/";
+	STLWString t_path_pmx = L"Appearance Miku_Alice.pmx";
 
+	//ＰＭＸ読み込み。
 	{
-		sharedptr< NBsys::NFile::File_Object > t_pmx(new NBsys::NFile::File_Object(1,t_path + L"Appearance Miku_Alice.pmx",-1,sharedptr< NBsys::NFile::File_Allocator >(),1));
+		sharedptr< NBsys::NFile::File_Object > t_pmx(new NBsys::NFile::File_Object(1,t_path + t_path_pmx,-1,sharedptr< NBsys::NFile::File_Allocator >(),1));
 		while(t_pmx->IsBusy()){
 			ThreadSleep(10);
 		}
@@ -262,10 +276,6 @@ void LoadPmx()
 
 		}
 	}
-
-
-
-
 }
 
 
@@ -277,12 +287,8 @@ void DrawOnce(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeome
 {
 	NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = a_model_matrix * NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(a_xx*2.0f,a_yy*2.0f,a_zz*2.0f) * a_view_projection;
 
-
 	s_d3d11->Render_VSSetShader(t_vertexshader_id);
 	s_d3d11->Render_PSSetShader(t_pixelshader_id);
-
-	s_d3d11->Render_VSSetConstantBuffers(t_vs_constantbuffer_b0_id);
-	s_d3d11->Render_PSSetConstantBuffers(t_ps_constantbuffer_b1_id);
 
 	s_d3d11->Render_IASetPrimitiveTopology_TriangleList();
 	s_d3d11->Render_SetBlendState(t_blendstate_id);
@@ -295,7 +301,7 @@ void DrawOnce(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeome
 			//両面描画。
 			s_d3d11->Render_SetRasterizerState(t_rasterizerstate_cull_none_id);
 		}else{
-			//カリングあり。
+			//後ろ向きを描画しない。
 			s_d3d11->Render_SetRasterizerState(t_rasterizerstate_cull_back_id);
 		}
 
@@ -307,22 +313,16 @@ void DrawOnce(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeome
 
 		t_vs_constantbuffer_b0.view_projection = t_view_projection.Make_Transpose();
 
+		//コンスタントバッファーの内容更新。
 		s_d3d11->Render_UpdateSubresource(t_vs_constantbuffer_b0_id,&t_vs_constantbuffer_b0);
 		s_d3d11->Render_UpdateSubresource(t_ps_constantbuffer_b1_id,&t_ps_constantbuffer_b1);
+
+		//コンスタントバッファーをシェーダーに設定。
+		s_d3d11->Render_VSSetConstantBuffers(t_vs_constantbuffer_b0_id);
+		s_d3d11->Render_PSSetConstantBuffers(t_ps_constantbuffer_b1_id);
+
+		//描画。
 		s_d3d11->Render_Draw(s_vertex->GetVertexCountOf(ii),s_vertex->GetVertexOffset(ii));
-	}
-}
-
-
-/** Draw
-*/
-void Draw(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeometry::Geometry_Matrix_44& a_view_projection)
-{
-	for(s32 xx=-10;xx<10;xx++){
-		for(s32 zz=-10;zz<10;zz++){
-			s32 yy = 0;
-			DrawOnce(a_model_matrix,a_view_projection,xx,yy,zz);
-		}
 	}
 }
 
@@ -331,7 +331,7 @@ void Draw(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeometry:
 */
 void Test_Main()
 {
-	TAGLOG("main","DEF_TEST1");
+	TAGLOG("main","DEF_TEST2");
 
 	NBsys::NFile::StartSystem(2);
 	NBsys::NFile::SetRoot(0,L"./project_test");
