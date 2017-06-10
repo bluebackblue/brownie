@@ -458,38 +458,11 @@ namespace NBsys{namespace NMmdPmx
 	*/
 	bool MmdPmx::Load_Bone(u8*& a_raw)
 	{
-		STLWString t_bone_name_jp = L"";
-		STLWString t_bone_name_en = L"";
+		this->bone_list_size = Memory::Copy< u32 >(a_raw);
+		this->bone_list.resize(this->bone_list_size);
 
-		NBsys::NGeometry::Geometry_Vector3 t_bone_position = NBsys::NGeometry::Geometry_Identity();
-
-		s32 t_boneindex_parent = -1;
-
-		s32 t_deform_depth = -1;
-
-		u16 t_boneflag = 0x0000;
-
-		NBsys::NGeometry::Geometry_Vector3 t_bone_position_offset(NBsys::NGeometry::Geometry_Identity());
-
-		s32 t_boneindex_link = -1;
-
-		s32 t_boneindex_append = -1;
-		f32 t_boneindex_append_weight = 0.0f;
-
-		NBsys::NGeometry::Geometry_Vector3 t_bone_fixed_axis(NBsys::NGeometry::Geometry_Identity());
-
-		NBsys::NGeometry::Geometry_Vector3 t_bone_local_axix_x = NBsys::NGeometry::Geometry_Identity();
-		NBsys::NGeometry::Geometry_Vector3 t_bone_local_axix_z = NBsys::NGeometry::Geometry_Identity();
-
-		s32 t_bone_key_value = 0;
-
-		s32 t_bone_ik_target_boneindex = -1;
-		s32 t_bone_ik_iteration_count = 0;
-		f32	t_bone_ik_limit_rad = 0.0f;
-
-		u32 t_bone_count = Memory::Copy< u32 >(a_raw);
-
-		for(u32 ii=0;ii<t_bone_count;ii++){
+		for(u32 ii=0;ii<this->bone_list_size;ii++){
+			MmdPmx_Bone& t_bone = this->bone_list.at(ii);
 
 			//bonename_jp
 			{
@@ -497,9 +470,9 @@ namespace NBsys{namespace NMmdPmx
 				if(t_length > 0){
 					if(this->header_ex.is_utf8){
 						STLString t_buffer(reinterpret_cast< char* >(a_raw),t_length);
-						CharToWchar(t_buffer,t_bone_name_jp);
+						CharToWchar(t_buffer,t_bone.bone_name_jp);
 					}else{
-						t_bone_name_jp = STLWString(reinterpret_cast< wchar* >(a_raw),t_length/2);
+						t_bone.bone_name_jp = STLWString(reinterpret_cast< wchar* >(a_raw),t_length/2);
 					}
 					a_raw += t_length;
 				}
@@ -511,155 +484,135 @@ namespace NBsys{namespace NMmdPmx
 				if(t_length > 0){
 					if(this->header_ex.is_utf8){
 						STLString t_buffer(reinterpret_cast< char* >(a_raw),t_length);
-						CharToWchar(t_buffer,t_bone_name_en);
+						CharToWchar(t_buffer,t_bone.bone_name_en);
 					}else{
-						t_bone_name_en = STLWString(reinterpret_cast< wchar* >(a_raw),t_length/2);
+						t_bone.bone_name_en = STLWString(reinterpret_cast< wchar* >(a_raw),t_length/2);
 					}
 					a_raw += t_length;
 				}
 			}
 
-			t_bone_position = Memory::Copy< NBsys::NGeometry::Geometry_Vector3 >(a_raw);
+			t_bone.bone_position = Memory::Copy< NBsys::NGeometry::Geometry_Vector3 >(a_raw);
 
 			//boneindex_parent
 			{
 				if(this->header_ex.bone_index_size == 1){
-					t_boneindex_parent = Memory::Copy< s8 >(a_raw);
+					t_bone.boneindex_parent = Memory::Copy< s8 >(a_raw);
 				}else if(this->header_ex.bone_index_size == 2){
-					t_boneindex_parent = Memory::Copy< s16 >(a_raw);
+					t_bone.boneindex_parent = Memory::Copy< s16 >(a_raw);
 				}else{
-					t_boneindex_parent = Memory::Copy< s32 >(a_raw);
+					t_bone.boneindex_parent = Memory::Copy< s32 >(a_raw);
 				}
 			}
 
-			t_deform_depth = Memory::Copy< s32 >(a_raw);
+			t_bone.deform_depth = Memory::Copy< s32 >(a_raw);
 
-			t_boneflag = Memory::Copy< u16 >(a_raw);
-
-			/*
-			0x0001  : 接続先(PMD子ボーン指定)表示方法 -> 0:座標オフセットで指定 1:ボーンで指定。
-			0x0002  : 回転可能
-			0x0004  : 移動可能
-			0x0008  : 表示
-			0x0010  : 操作可
-			0x0020  : IK
-			0x0040	: dummy
-			0x0080  : ローカル付与 | 付与対象 0:ユーザー変形値／IKリンク／多重付与 1:親のローカル変形量。
-			0x0100  : 回転付与
-			0x0200  : 移動付与
-			0x0400  : 軸固定
-			0x0800  : ローカル軸
-			0x1000  : 物理後変形
-			0x2000  : 外部親変形
-			*/
-			bool t_boneflag_target_showmode			= (0x0001 & t_boneflag) > 0;
-			bool t_boneflag_allow_rotate			= (0x0002 & t_boneflag) > 0;
-			bool t_boneflag_allow_translate			= (0x0004 & t_boneflag) > 0;
-			bool t_boneflag_visible					= (0x0008 & t_boneflag) > 0;
-			bool t_boneflag_allow_control			= (0x0010 & t_boneflag) > 0;
-			bool t_boneflag_ik						= (0x0020 & t_boneflag) > 0;
-			bool t_boneflag_dummy					= (0x0040 & t_boneflag) > 0;
-			bool t_boneflag_append_local			= (0x0080 & t_boneflag) > 0;
-			bool t_boneflag_append_rotate			= (0x0100 & t_boneflag) > 0;
-			bool t_boneflag_append_translate		= (0x0200 & t_boneflag) > 0;
-			bool t_boneflag_fixed_axis				= (0x0400 & t_boneflag) > 0;
-			bool t_boneflag_local_axis				= (0x0800 & t_boneflag) > 0;
-			bool t_boneflag_deform_after_physics	= (0x1000 & t_boneflag) > 0;
-			bool t_boneflag_deform_outer_parent		= (0x2000 & t_boneflag) > 0;
+			u16 t_boneflag = Memory::Copy< u16 >(a_raw);
+			t_bone.boneflag_target_showmode			= (0x0001 & t_boneflag) > 0;
+			t_bone.boneflag_allow_rotate			= (0x0002 & t_boneflag) > 0;
+			t_bone.boneflag_allow_translate			= (0x0004 & t_boneflag) > 0;
+			t_bone.boneflag_visible					= (0x0008 & t_boneflag) > 0;
+			t_bone.boneflag_allow_control			= (0x0010 & t_boneflag) > 0;
+			t_bone.boneflag_ik						= (0x0020 & t_boneflag) > 0;
+			t_bone.boneflag_dummy					= (0x0040 & t_boneflag) > 0;
+			t_bone.boneflag_append_local			= (0x0080 & t_boneflag) > 0;
+			t_bone.boneflag_append_rotate			= (0x0100 & t_boneflag) > 0;
+			t_bone.boneflag_append_translate		= (0x0200 & t_boneflag) > 0;
+			t_bone.boneflag_fixed_axis				= (0x0400 & t_boneflag) > 0;
+			t_bone.boneflag_local_axis				= (0x0800 & t_boneflag) > 0;
+			t_bone.boneflag_deform_after_physics	= (0x1000 & t_boneflag) > 0;
+			t_bone.boneflag_deform_outer_parent		= (0x2000 & t_boneflag) > 0;
 
 
 
-			if (t_boneflag_target_showmode == false){
-				t_bone_position_offset = Memory::Copy< NBsys::NGeometry::Geometry_Vector3 >(a_raw);
+			if (t_bone.boneflag_target_showmode == false){
+				t_bone.bone_position_offset = Memory::Copy< NBsys::NGeometry::Geometry_Vector3 >(a_raw);
 			}else{
 				//boneindex_link
 				{
 					if(this->header_ex.bone_index_size == 1){
-						t_boneindex_link = Memory::Copy< s8 >(a_raw);
+						t_bone.boneindex_link = Memory::Copy< s8 >(a_raw);
 					}else if(this->header_ex.bone_index_size == 2){
-						t_boneindex_link = Memory::Copy< s16 >(a_raw);
+						t_bone.boneindex_link = Memory::Copy< s16 >(a_raw);
 					}else{
-						t_boneindex_link = Memory::Copy< s32 >(a_raw);
+						t_bone.boneindex_link = Memory::Copy< s32 >(a_raw);
 					}
 				}
 			}
 
-			if(t_boneflag_append_rotate || t_boneflag_append_translate){
+			if(t_bone.boneflag_append_rotate || t_bone.boneflag_append_translate){
 
 				//boneindex_append
 				{
 					if(this->header_ex.bone_index_size == 1){
-						t_boneindex_append = Memory::Copy< s8 >(a_raw);
+						t_bone.boneindex_append = Memory::Copy< s8 >(a_raw);
 					}else if(this->header_ex.bone_index_size == 2){
-						t_boneindex_append = Memory::Copy< s16 >(a_raw);
+						t_bone.boneindex_append = Memory::Copy< s16 >(a_raw);
 					}else{
-						t_boneindex_append = Memory::Copy< s32 >(a_raw);
+						t_bone.boneindex_append = Memory::Copy< s32 >(a_raw);
 					}
 				}
 
-				t_boneindex_append_weight = Memory::Copy< f32 >(a_raw);
+				t_bone.boneindex_append_weight = Memory::Copy< f32 >(a_raw);
 			}
 
-			if(t_boneflag_fixed_axis){
-				t_bone_fixed_axis = Memory::Copy< NBsys::NGeometry::Geometry_Vector3 >(a_raw);
+			if(t_bone.boneflag_fixed_axis){
+				t_bone.bone_fixed_axis = Memory::Copy< NBsys::NGeometry::Geometry_Vector3 >(a_raw);
 			}
 
-			if(t_boneflag_local_axis){
-				t_bone_local_axix_x = Memory::Copy< NBsys::NGeometry::Geometry_Vector3 >(a_raw);
-				t_bone_local_axix_z = Memory::Copy< NBsys::NGeometry::Geometry_Vector3 >(a_raw);
+			if(t_bone.boneflag_local_axis){
+				t_bone.bone_local_axis_x = Memory::Copy< NBsys::NGeometry::Geometry_Vector3 >(a_raw);
+				t_bone.bone_local_axis_z = Memory::Copy< NBsys::NGeometry::Geometry_Vector3 >(a_raw);
 			}
 
-			if(t_boneflag_deform_outer_parent){
-				t_bone_key_value = Memory::Copy< s32 >(a_raw);
+			if(t_bone.boneflag_deform_outer_parent){
+				t_bone.bone_key_value = Memory::Copy< s32 >(a_raw);
 			}
 
-			if(t_boneflag_ik){
+			if(t_bone.boneflag_ik){
 
 				//ik_target_boneindex
 				{
 					if(this->header_ex.bone_index_size == 1){
-						t_bone_ik_target_boneindex = Memory::Copy< s8 >(a_raw);
+						t_bone.bone_ik_target_boneindex = Memory::Copy< s8 >(a_raw);
 					}else if(this->header_ex.bone_index_size == 2){
-						t_bone_ik_target_boneindex = Memory::Copy< s16 >(a_raw);
+						t_bone.bone_ik_target_boneindex = Memory::Copy< s16 >(a_raw);
 					}else{
-						t_bone_ik_target_boneindex = Memory::Copy< s32 >(a_raw);
+						t_bone.bone_ik_target_boneindex = Memory::Copy< s32 >(a_raw);
 					}
 				}
 
-				t_bone_ik_iteration_count = Memory::Copy< s32 >(a_raw);
-				t_bone_ik_limit_rad = Memory::Copy< f32 >(a_raw);
-
+				t_bone.bone_ik_iteration_count = Memory::Copy< s32 >(a_raw);
+				t_bone.bone_ik_limit_rad = Memory::Copy< f32 >(a_raw);
 
 				{
-					s32 t_ik_link_count = 0;
+					t_bone.bone_ik_list_size = Memory::Copy< s32 >(a_raw);
+					if(t_bone.bone_ik_list_size > 0){
+						t_bone.bone_ik_list.resize(t_bone.bone_ik_list_size);
 
+						for(int jj=0;jj<t_bone.bone_ik_list_size;jj++){
+							MmdPmx_Bone_Ik& t_bone_ik = t_bone.bone_ik_list[jj];
 
-					t_ik_link_count = Memory::Copy< s32 >(a_raw);
-
-					for(int jj=0;jj<t_ik_link_count;jj++){
-
-						s32 t_ik_link_boneindex = -1;
-						u8 t_ik_link_enable_limit = 0x00;
-
-						NBsys::NGeometry::Geometry_Vector3 t_ik_link_limit_min = NBsys::NGeometry::Geometry_Identity();
-						NBsys::NGeometry::Geometry_Vector3 t_ik_link_limit_max = NBsys::NGeometry::Geometry_Identity();
-
-						//t_ik_link_boneindex
-						{
-							if(this->header_ex.bone_index_size == 1){
-								t_ik_link_boneindex = Memory::Copy< s8 >(a_raw);
-							}else if(this->header_ex.bone_index_size == 2){
-								t_ik_link_boneindex = Memory::Copy< s16 >(a_raw);
-							}else{
-								t_ik_link_boneindex = Memory::Copy< s32 >(a_raw);
+							//ik_link_boneindex
+							{
+								if(this->header_ex.bone_index_size == 1){
+									t_bone_ik.ik_link_boneindex = Memory::Copy< s8 >(a_raw);
+								}else if(this->header_ex.bone_index_size == 2){
+									t_bone_ik.ik_link_boneindex = Memory::Copy< s16 >(a_raw);
+								}else{
+									t_bone_ik.ik_link_boneindex = Memory::Copy< s32 >(a_raw);
+								}
 							}
-						}
 
-						t_ik_link_enable_limit = Memory::Copy< u8 >(a_raw);
-
-						if(t_ik_link_enable_limit > 0){
-							t_ik_link_limit_min = Memory::Copy< NBsys::NGeometry::Geometry_Vector3 >(a_raw);
-							t_ik_link_limit_max = Memory::Copy< NBsys::NGeometry::Geometry_Vector3 >(a_raw);
+							//ik_link_limit
+							t_bone_ik.ik_link_limit_enable = Memory::Copy< u8 >(a_raw);
+							if(t_bone_ik.ik_link_limit_enable > 0){
+								t_bone_ik.ik_link_limit_min = Memory::Copy< NBsys::NGeometry::Geometry_Vector3 >(a_raw);
+								t_bone_ik.ik_link_limit_max = Memory::Copy< NBsys::NGeometry::Geometry_Vector3 >(a_raw);
+							}else{
+								t_bone_ik.ik_link_limit_min = NBsys::NGeometry::Geometry_Identity();
+								t_bone_ik.ik_link_limit_max = NBsys::NGeometry::Geometry_Identity();
+							}
 						}
 					}
 				}

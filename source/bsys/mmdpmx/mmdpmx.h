@@ -137,7 +137,6 @@ namespace NBsys{namespace NMmdPmx
 		*/
 		bool drawmode_line;
 
-
 		/** edge
 		*/
 		NBsys::NColor::Color_F edge_color;
@@ -162,6 +161,97 @@ namespace NBsys{namespace NMmdPmx
 		*/
 		u32 start_index;
 		u32 count_of_index;
+	};
+
+	/** MmdPmx_Bone_Ik
+	*/
+	struct MmdPmx_Bone_Ik
+	{
+		/** ik_link_boneindex
+		*/
+		s32 ik_link_boneindex;
+
+		/** ik_link_limit_enable
+		*/
+		u8 ik_link_limit_enable;
+		NBsys::NGeometry::Geometry_Vector3 ik_link_limit_min;
+		NBsys::NGeometry::Geometry_Vector3 ik_link_limit_max;
+	};
+
+	/** MmdPmx_Bone
+	*/
+	struct MmdPmx_Bone
+	{
+		/** bone_name
+		*/
+		STLWString bone_name_jp;
+		STLWString bone_name_en;
+
+		/** bone_position
+		*/
+		NBsys::NGeometry::Geometry_Vector3 bone_position;
+
+		/** boneindex_parent
+		*/
+		s32 boneindex_parent;
+
+		/** deform_depth
+		*/
+		s32 deform_depth;
+
+		/** boneflag
+		*/
+		bool boneflag_target_showmode;		//接続先(PMD子ボーン指定)表示方法 -> 0:座標オフセットで指定 1:ボーンで指定。
+		bool boneflag_allow_rotate;			//回転可能
+		bool boneflag_allow_translate;		//移動可能
+		bool boneflag_visible;				//表示
+		bool boneflag_allow_control;		//操作可
+		bool boneflag_ik;					//IK
+		bool boneflag_dummy;				//dummy
+		bool boneflag_append_local;			//ローカル付与 | 付与対象 0:ユーザー変形値／IKリンク／多重付与 1:親のローカル変形量。
+		bool boneflag_append_rotate;		//回転付与
+		bool boneflag_append_translate;		//移動付与
+		bool boneflag_fixed_axis;			//軸固定
+		bool boneflag_local_axis;			//ローカル軸
+		bool boneflag_deform_after_physics;	//物理後変形
+		bool boneflag_deform_outer_parent;	//外部親変形
+
+		/** bone_position_offset
+		*/
+		NBsys::NGeometry::Geometry_Vector3 bone_position_offset;
+
+		/** boneindex_link
+		*/
+		s32 boneindex_link;
+
+		/** boneindex
+		*/
+		s32 boneindex_append;
+		f32 boneindex_append_weight;
+
+		/** bone_fixed_axis
+		*/
+		NBsys::NGeometry::Geometry_Vector3 bone_fixed_axis;
+
+		/** bone_local_axis
+		*/
+		NBsys::NGeometry::Geometry_Vector3 bone_local_axis_x;
+		NBsys::NGeometry::Geometry_Vector3 bone_local_axis_z;
+
+		/** bone_key_value
+		*/
+		s32 bone_key_value;
+
+		/** bone_ik
+		*/
+		s32 bone_ik_target_boneindex;
+		s32 bone_ik_iteration_count;
+		f32	bone_ik_limit_rad;
+
+		/** bone_ik_list
+		*/
+		u32 bone_ik_list_size;
+		STLVector< MmdPmx_Bone_Ik >::Type bone_ik_list;
 	};
 
 	/** MmdPmx
@@ -206,6 +296,11 @@ namespace NBsys{namespace NMmdPmx
 		*/
 		u32 parts_list_size;
 		STLVector< MmdPmx_Parts >::Type parts_list;
+
+		/** bone_list
+		*/
+		u32 bone_list_size;
+		STLVector< MmdPmx_Bone >::Type bone_list;
 
 	public:
 		/** constructor
