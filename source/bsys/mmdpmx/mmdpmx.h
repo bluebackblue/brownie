@@ -220,6 +220,38 @@ namespace NBsys{namespace NMmdPmx
 		{
 		}
 
+	private:
+
+		/** Load_Header
+		*/
+		bool Load_Header(u8*& a_raw);
+
+		/** Load_Vertex
+		*/
+		bool Load_Vertex(u8*& a_raw);
+
+		/** Load_Index
+		*/
+		bool Load_Index(u8*& a_raw);
+
+		/** Load_TextureName
+		*/
+		bool Load_TextureName(u8*& a_raw);
+
+		/** Load_Parts
+		*/
+		bool Load_Parts(u8*& a_raw);
+
+		/** Load_Bone
+		*/
+		bool Load_Bone(u8*& a_raw);
+
+	public:
+
+		/** Load
+		*/
+		bool Load(sharedptr< NFile::File_Object >& a_file);
+
 	};
 
 	/** ÉçÅ[ÉhÅB
