@@ -552,20 +552,22 @@ namespace NBsys{namespace NMmdPmx
 			0x1000  : 物理後変形
 			0x2000  : 外部親変形
 			*/
-			bool t_boneflag_target_showmode			= (t_boneflag & (0x01    )) > 0;
-			bool t_boneflag_allow_rotate			= (t_boneflag & (0x01<<2 )) > 0;
-			bool t_boneflag_allow_translate			= (t_boneflag & (0x01<<3 )) > 0;
-			bool t_boneflag_visible					= (t_boneflag & (0x01<<4 )) > 0;
-			bool t_boneflag_allow_control			= (t_boneflag & (0x01<<5 )) > 0;
-			bool t_boneflag_ik						= (t_boneflag & (0x01<<6 )) > 0;
-			bool t_boneflag_dummy					= (t_boneflag & (0x01<<7 )) > 0;
-			bool t_boneflag_append_local			= (t_boneflag & (0x01<<8 )) > 0;
-			bool t_boneflag_append_rotate			= (t_boneflag & (0x01<<9 )) > 0;
-			bool t_boneflag_append_translate		= (t_boneflag & (0x01<<10)) > 0;
-			bool t_boneflag_fixed_axis				= (t_boneflag & (0x01<<11)) > 0;
-			bool t_boneflag_local_axis				= (t_boneflag & (0x01<<12)) > 0;
-			bool t_boneflag_deform_after_physics	= (t_boneflag & (0x01<<13)) > 0;
-			bool t_boneflag_deform_outer_parent		= (t_boneflag & (0x01<<14)) > 0;
+			bool t_boneflag_target_showmode			= (0x0001 & t_boneflag) > 0;
+			bool t_boneflag_allow_rotate			= (0x0002 & t_boneflag) > 0;
+			bool t_boneflag_allow_translate			= (0x0004 & t_boneflag) > 0;
+			bool t_boneflag_visible					= (0x0008 & t_boneflag) > 0;
+			bool t_boneflag_allow_control			= (0x0010 & t_boneflag) > 0;
+			bool t_boneflag_ik						= (0x0020 & t_boneflag) > 0;
+			bool t_boneflag_dummy					= (0x0040 & t_boneflag) > 0;
+			bool t_boneflag_append_local			= (0x0080 & t_boneflag) > 0;
+			bool t_boneflag_append_rotate			= (0x0100 & t_boneflag) > 0;
+			bool t_boneflag_append_translate		= (0x0200 & t_boneflag) > 0;
+			bool t_boneflag_fixed_axis				= (0x0400 & t_boneflag) > 0;
+			bool t_boneflag_local_axis				= (0x0800 & t_boneflag) > 0;
+			bool t_boneflag_deform_after_physics	= (0x1000 & t_boneflag) > 0;
+			bool t_boneflag_deform_outer_parent		= (0x2000 & t_boneflag) > 0;
+
+
 
 			if (t_boneflag_target_showmode == false){
 				t_bone_position_offset = Memory::Copy< NBsys::NGeometry::Geometry_Vector3 >(a_raw);
@@ -695,9 +697,9 @@ namespace NBsys{namespace NMmdPmx
 				return false;
 			}
 
-			//if(this->Load_Bone(t_raw) == false){
-			//	return false;
-			//}
+			if(this->Load_Bone(t_raw) == false){
+				return false;
+			}
 		}
 
 		return true;
