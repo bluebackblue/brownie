@@ -177,7 +177,7 @@ namespace common
 					this->ps_constantbuffer_b0_id = this->d3d11->CreateConstantBuffer(1,sizeof(PS_ConstantBuffer_B0));
 
 					//バーテックスバッファ。
-					this->vertex_allcountof = 2 * 128;
+					this->vertex_allcountof = 2 * 1024;
 					this->vertex_stride = sizeof(VertexItem);
 					this->vertex_pointer.reset(new VertexItem[this->vertex_allcountof],default_delete< VertexItem[] >());
 					this->vertexbuffer_id = this->d3d11->CreateVertexBuffer(this->vertex_pointer.get(),this->vertex_stride,0,this->vertex_allcountof,true);

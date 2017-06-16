@@ -241,7 +241,7 @@ void LoadPmx()
 			f32 t_color_r = t_mmdpmx_parts.diffuse.r;
 			f32 t_color_g = t_mmdpmx_parts.diffuse.g;
 			f32 t_color_b = t_mmdpmx_parts.diffuse.b;
-			f32 t_color_a = t_mmdpmx_parts.diffuse.a;
+			f32 t_color_a = t_mmdpmx_parts.diffuse.a * 0.3f;
 
 			NBsys::NVertex::SetColor< NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 >(t_vertex,t_color_r,t_color_g,t_color_b,t_color_a);
 			NBsys::NVertex::SetPos< NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 >(t_vertex,t_data.position.x,t_data.position.y,t_data.position.z);
@@ -560,6 +560,24 @@ void Test_Main()
 					t_matrix *= s_matrix;
 
 					DrawOnce(t_matrix,t_view_projection,0,0,0);
+				}
+
+				{
+					for(s32 ii=0;ii<s_mmdpmx->bone_list.size();ii++){
+						NBsys::NMmdPmx::MmdPmx_Bone& t_bone = s_mmdpmx->bone_list[ii];
+						
+						NBsys::NGeometry::Geometry_Matrix_44 t_matrix = NBsys::NGeometry::Geometry_Matrix_44::Identity();
+						t_matrix *= s_matrix;
+
+						NBsys::NGeometry::Geometry_Vector3 t_start = t_bone.bone_position;
+						NBsys::NGeometry::Geometry_Vector3 t_end = t_bone.bone_position + NBsys::NGeometry::Geometry_Vector3(0.0f,0.0f,1.0f);
+
+						t_start = (NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(t_start.x,t_start.y,t_start.z) * t_matrix).Make_Translate_Vector();
+						t_end = (NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(t_end.x,t_end.y,t_end.z) * t_matrix).Make_Translate_Vector();
+
+						s_drawline_manager->DrawLine(t_start,t_end,NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
+
+					}
 				}
 
 				/*

@@ -13,7 +13,7 @@ cbuffer VS_ConstantBuffer_B0 : register( b0 )
 struct VS_IN
 {
 	float4 in_pos		: POSITION0;
-	float3 in_color		: COLOR0;
+	float4 in_color		: COLOR0;
 	float2 in_uv		: TEXCOORD0;
 };
 
@@ -23,7 +23,7 @@ struct VS_IN
 struct VS_OUT
 {
 	float4 out_pos		: SV_POSITION0;
-	float3 out_color	: COLOR0;
+	float4 out_color	: COLOR0;
 	float2 out_uv		: TEXCOORD0;
 };
 

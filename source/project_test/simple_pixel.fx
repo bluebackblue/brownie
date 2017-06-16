@@ -31,7 +31,7 @@ cbuffer PS_ConstantBuffer_B1 : register( b1 )
 struct VS_IN
 {
 	float4 in_pos		: SV_POSITION0;
-	float3 in_color		: COLOR0;
+	float4 in_color		: COLOR0;
 	float2 in_uv		: TEXCOORD0;
 };
 
@@ -41,7 +41,7 @@ struct VS_IN
 float4 PS(VS_IN a_vs_in) : SV_Target
 {
 	//diffuse
-	float4 t_color = float4(a_vs_in.in_color,1.0f);
+	float4 t_color = a_vs_in.in_color;
 
 	//texture
 	if(flag1 == 1){
