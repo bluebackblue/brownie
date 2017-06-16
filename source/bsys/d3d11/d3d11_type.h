@@ -39,6 +39,34 @@ namespace NBsys{namespace ND3d11
 		};
 	};
 
+	/** D3d11_TopologyType
+	*/
+	struct D3d11_TopologyType
+	{
+		enum Id
+		{
+			/**
+			*/
+			PointList,
+
+			/**
+			*/
+			LineList,
+
+			/**
+			*/
+			LineStrip,
+
+			/**
+			*/
+			TriangleList,
+
+			/**
+			*/
+			TriangleStrip,
+		};
+	};
+
 	/** D3d11_CullType
 	*/
 	struct D3d11_CullType

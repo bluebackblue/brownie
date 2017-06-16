@@ -34,7 +34,7 @@ namespace NBsys{namespace ND3d11
 		int								input_slot;
 		int								offset;
 
-		D3d11_Layout(const std::string& a_semantic_name,int a_semantic_index,D3d11_LayoutFormatType::Id a_format,int a_input_slot,int a_offset)
+		D3d11_Layout(const std::string& a_semantic_name,s32 a_semantic_index,D3d11_LayoutFormatType::Id a_format,s32 a_input_slot,s32 a_offset)
 			:
 			semantic_name(a_semantic_name),
 			semantic_index(a_semantic_index),

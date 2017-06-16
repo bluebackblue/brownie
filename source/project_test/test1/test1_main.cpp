@@ -247,8 +247,7 @@ void Test_Main()
 		}else{
 
 			//レイアウト。
-			s_d3d11->Render_IASetInputLayout(t_vertexshader_id);
-			s_d3d11->Render_IASetVertexBuffers(t_vertexbuffer_id);
+			s_d3d11->Render_SetVertexBuffer(t_vertexbuffer_id);
 
 			s_d3d11->Render_ClearRenderTargetView(NBsys::NColor::Color_F(0.3f,0.3f,0.8f,1.0f));
 			s_d3d11->Render_ClearDepthStencilView();

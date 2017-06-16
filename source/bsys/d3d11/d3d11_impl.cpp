@@ -477,7 +477,7 @@ namespace NBsys{namespace ND3d11
 
 	/** CreateVertexBuffer
 	*/
-	s32 D3d11_Impl::CreateVertexBuffer(const void* a_data,s32 a_stridebyte,s32 a_offset,s32 a_countofvertex)
+	s32 D3d11_Impl::CreateVertexBuffer(const void* a_data,s32 a_stridebyte,s32 a_offset,s32 a_countofvertex,bool a_write_flag)
 	{
 		//ＩＤ。
 		s32 t_vertexbuffer_id = this->id_maker.MakeID();
@@ -488,6 +488,7 @@ namespace NBsys{namespace ND3d11
 			t_vertexbuffer->stridebyte = a_stridebyte;
 			t_vertexbuffer->offset = a_offset;
 			t_vertexbuffer->countofvertex = a_countofvertex;
+			t_vertexbuffer->write_flag = a_write_flag;
 		}
 
 		//レンダーコマンド。
@@ -543,7 +544,7 @@ namespace NBsys{namespace ND3d11
 
 		//レンダーコマンド。
 		sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
-		{
+		{ 
 			t_actionlist->Add(new D3d11_Impl_ActionBatching_Texture_Create(*this,t_texture));
 		}
 		this->StartBatching(t_actionlist);
@@ -761,6 +762,11 @@ namespace NBsys{namespace ND3d11
 			t_desc.ByteWidth = a_vertexbuffer->countofvertex * a_vertexbuffer->stridebyte;
 			t_desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 			t_desc.CPUAccessFlags = 0;
+
+			if(a_vertexbuffer->write_flag){
+				t_desc.CPUAccessFlags |= D3D11_CPU_ACCESS_WRITE;
+				t_desc.Usage = D3D11_USAGE_DYNAMIC;
+			}
 		}
 
 		D3D11_SUBRESOURCE_DATA t_subresource_data;
@@ -1054,6 +1060,7 @@ namespace NBsys{namespace ND3d11
 			sharedptr< D3d11_Impl_VertexShader >& t_vertexshader = this->GetVertexShader(a_vertexshader_id);
 			if(t_vertexshader){
 
+				this->devicecontext->IASetInputLayout(t_vertexshader->inputlayout.get());
 				this->devicecontext->VSSetShader(t_vertexshader->vertexshader.get(),nullptr,0);
 
 				return;
@@ -1143,27 +1150,9 @@ namespace NBsys{namespace ND3d11
 		ASSERT(0);
 	}
 
-	/** Render_IASetInputLayout
+	/** Render_SetVertexBuffer
 	*/
-	void D3d11_Impl::Render_IASetInputLayout(s32 a_vertexshader_id)
-	{
-		if(a_vertexshader_id >= 0){
-			sharedptr< D3d11_Impl_VertexShader >& t_vertexshader = this->GetVertexShader(a_vertexshader_id);
-			if(t_vertexshader){
-
-				this->devicecontext->IASetInputLayout(t_vertexshader->inputlayout.get());
-
-				return;
-
-			}
-		}
-
-		ASSERT(0);
-	}
-
-	/** Render_IASetVertexBuffers
-	*/
-	void D3d11_Impl::Render_IASetVertexBuffers(s32 a_vertexbuffer_id)
+	void D3d11_Impl::Render_SetVertexBuffer(s32 a_vertexbuffer_id)
 	{
 		if(a_vertexbuffer_id >= 0){
 			sharedptr< D3d11_Impl_VertexBuffer >& t_vertexbuffer = this->GetVertexBuffer(a_vertexbuffer_id);
@@ -1186,43 +1175,41 @@ namespace NBsys{namespace ND3d11
 		ASSERT(0);
 	}
 
-	/** Render_IASetPrimitiveTopology_TriangleList
+	/** Render_ReMapVertexBuffer
 	*/
-	void D3d11_Impl::Render_IASetPrimitiveTopology_TriangleList()
+	void D3d11_Impl::Render_ReMapVertexBuffer(s32 a_vertexbuffer_id,const void* a_data,s32 a_size)
 	{
-		if(this->devicecontext){
+		if(a_vertexbuffer_id >= 0){
+			sharedptr< D3d11_Impl_VertexBuffer >& t_vertexbuffer = this->GetVertexBuffer(a_vertexbuffer_id);
+			if(t_vertexbuffer){
 
-			this->devicecontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+				D3D11_MAPPED_SUBRESOURCE t_mapped_resource;
 
-			return;
+				HRESULT t_result = this->devicecontext->Map(t_vertexbuffer->buffer.get(),0,D3D11_MAP_WRITE_DISCARD,0,&t_mapped_resource);
+				if(SUCCEEDED(t_result)){
 
+					s32 t_size = t_vertexbuffer->stridebyte * t_vertexbuffer->countofvertex;
+					Memory::memcpy(t_mapped_resource.pData,t_size,a_data,a_size);
+					this->devicecontext->Unmap(t_vertexbuffer->buffer.get(),0);
+
+				}
+			}
 		}
-
-		ASSERT(0);
 	}
 
-	/** Render_IASetPrimitiveTopology_TriangleStrip
+	/** Render_SetPrimitiveTopology
 	*/
-	void D3d11_Impl::Render_IASetPrimitiveTopology_TriangleStrip()
+	void D3d11_Impl::Render_SetPrimitiveTopology(D3d11_TopologyType::Id a_topology_type)
 	{
 		if(this->devicecontext){
 
-			this->devicecontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-
-			return;
-
-		}
-
-		ASSERT(0);
-	}
-
-	/** Render_IASetPrimitiveTopology_PointList
-	*/
-	void D3d11_Impl::Render_IASetPrimitiveTopology_PointList()
-	{
-		if(this->devicecontext){
-
-			this->devicecontext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
+			switch(a_topology_type){
+			case D3d11_TopologyType::Id::PointList:			this->devicecontext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);break;
+			case D3d11_TopologyType::Id::LineList:			this->devicecontext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINELIST);break;
+			case D3d11_TopologyType::Id::LineStrip:			this->devicecontext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINESTRIP);break;
+			case D3d11_TopologyType::Id::TriangleList:		this->devicecontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);break;
+			case D3d11_TopologyType::Id::TriangleStrip:		this->devicecontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);break;
+			}
 
 			return;
 
@@ -1300,6 +1287,14 @@ namespace NBsys{namespace ND3d11
 
 		ASSERT(0);
 	}
+
+	/** Render_DrawLine
+	*/
+	void D3d11_Impl::Render_DrawLine()
+	{
+		this->devicecontext->DrawAuto();
+	}
+
 
 }}
 #endif

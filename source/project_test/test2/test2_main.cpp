@@ -24,6 +24,11 @@
 #include "./test2_main.h"
 
 
+/** include
+*/
+#include "../common/d3d11_drawline.h"
+
+
 /** USE_FOVE
 */
 #define USE_FOVE (0)
@@ -31,9 +36,9 @@
 
 /** include
 */
-//#if(USE_FOVE)
+#if(USE_FOVE)
 #include "../bsys/d3d11/d3d11_impl.h"
-//#endif
+#endif
 
 
 /** Blib_DebugAssert_Callback
@@ -109,6 +114,7 @@ static int s_step = 0;
 
 //s_rotate
 static f32 s_rotate = 0.0f;
+static f32 s_rotate2 = 0.0f;
 
 
 //asyncresult
@@ -191,6 +197,8 @@ struct ModelParts
 	bool cullfull;
 };
 sharedptr< STLVector< ModelParts >::Type > s_model;
+
+sharedptr< common::D3d11_DrawLine_Manager > s_drawline_manager;
 
 
 void LoadPmx()
@@ -287,11 +295,14 @@ void DrawOnce(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeome
 {
 	NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = a_model_matrix * NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(a_xx*2.0f,a_yy*2.0f,a_zz*2.0f) * a_view_projection;
 
+	//シェーダー。
 	s_d3d11->Render_VSSetShader(t_vertexshader_id);
 	s_d3d11->Render_PSSetShader(t_pixelshader_id);
-
-	s_d3d11->Render_IASetPrimitiveTopology_TriangleList();
+	s_d3d11->Render_SetPrimitiveTopology(NBsys::ND3d11::D3d11_TopologyType::Id::TriangleList);
 	s_d3d11->Render_SetBlendState(t_blendstate_id);
+
+	//バーテックスバッファ。
+	s_d3d11->Render_SetVertexBuffer(t_vertexbuffer_id);
 
 	for(s32 ii=0;ii<s_model->size();ii++){
 		VS_ConstantBuffer_B0 t_vs_constantbuffer_b0;
@@ -375,6 +386,8 @@ void Test_Main()
 
 	LoadPmx();
 
+	s_drawline_manager.reset(new common::D3d11_DrawLine_Manager(s_d3d11));
+
 	while (true)
 	{
 		//s_window
@@ -383,10 +396,12 @@ void Test_Main()
 			break;
 		}
 
+		//s_fovehmd
 		#if(USE_FOVE)
 		s_fovehmd->Update();
 		#endif
 
+		//performance counter
 		float t_delta = 0.0f;
 		{
 			u64 t_pcounter_now = PerformanceCounter::GetPerformanceCounter();
@@ -398,9 +413,12 @@ void Test_Main()
 			s_pcounter = t_pcounter_now;
 		}
 
+		//Render_Main
 		s_d3d11->Render_Main();
 
 		if(s_step == 0){
+
+			//作成。
 
 			sharedptr< NBsys::NFile::File_Object > t_simple_vertex_fx(	new NBsys::NFile::File_Object(0,L"simple_vertex.fx",	-1,sharedptr< NBsys::NFile::File_Allocator >(),1));
 			sharedptr< NBsys::NFile::File_Object > t_simple_pixel_fx(	new NBsys::NFile::File_Object(0,L"simple_pixel.fx",		-1,sharedptr< NBsys::NFile::File_Allocator >(),1));
@@ -410,24 +428,38 @@ void Test_Main()
 
 			sharedptr< STLVector< NBsys::ND3d11::D3d11_Layout >::Type > t_layout(new STLVector< NBsys::ND3d11::D3d11_Layout >::Type());
 			{
-				t_layout->push_back(NBsys::ND3d11::D3d11_Layout("POSITION",		0,NBsys::ND3d11::D3d11_LayoutFormatType::R32G32B32_FLOAT,		0,	0));			//12
-				t_layout->push_back(NBsys::ND3d11::D3d11_Layout("TEXCOORD",		0,NBsys::ND3d11::D3d11_LayoutFormatType::R32G32_FLOAT,			0,	0 + 12));		//8
-				t_layout->push_back(NBsys::ND3d11::D3d11_Layout("COLOR",		0,NBsys::ND3d11::D3d11_LayoutFormatType::R32G32B32A32_FLOAT,	0,	0 + 12 + 8));	//16
+				s32 t_offset = 0;
+
+				t_layout->push_back(NBsys::ND3d11::D3d11_Layout("POSITION",		0,NBsys::ND3d11::D3d11_LayoutFormatType::R32G32B32_FLOAT,		0,	t_offset));
+				t_offset += sizeof(f32) * 3;
+
+				t_layout->push_back(NBsys::ND3d11::D3d11_Layout("TEXCOORD",		0,NBsys::ND3d11::D3d11_LayoutFormatType::R32G32_FLOAT,			0,	t_offset));
+				t_offset += sizeof(f32) * 2;
+
+				t_layout->push_back(NBsys::ND3d11::D3d11_Layout("COLOR",		0,NBsys::ND3d11::D3d11_LayoutFormatType::R32G32B32A32_FLOAT,	0,	t_offset));
+				t_offset += sizeof(f32) * 4;
 			}
 
 			t_vertexshader_id = s_d3d11->CreateVertexShader(t_asyncresult_vertexshader,t_simple_vertex_fx,t_layout);
 			t_pixelshader_id = s_d3d11->CreatePixelShader(t_asyncresult_pixelshader,t_simple_pixel_fx);
 			t_vs_constantbuffer_b0_id = s_d3d11->CreateConstantBuffer(0,sizeof(VS_ConstantBuffer_B0));
 			t_ps_constantbuffer_b1_id = s_d3d11->CreateConstantBuffer(1,sizeof(PS_ConstantBuffer_B1));
-			t_vertexbuffer_id = s_d3d11->CreateVertexBuffer(s_vertex->GetVertexPointer(),s_vertex->GetVertexStrideByte(),0,s_vertex->GetVertexAllCountOf());
+			t_vertexbuffer_id = s_d3d11->CreateVertexBuffer(s_vertex->GetVertexPointer(),s_vertex->GetVertexStrideByte(),0,s_vertex->GetVertexAllCountOf(),false);
 
 			s_step++;
 
 		}else if(s_step == 1){
 
+			//作成待ち。
+
 			if(t_asyncresult_vertexshader.Get() == true){
 				if(t_asyncresult_pixelshader.Get() == true){
-					s_step++;
+
+					s_drawline_manager->PreUpdate();
+					if(s_drawline_manager->IsBusy() == false){
+						s_step++;
+					}
+
 				}
 			}
 
@@ -437,70 +469,68 @@ void Test_Main()
 
 		}else{
 
-			#if(USE_FOVE)
-			#else
-			s_rotate += 0.002f;
-			if(s_rotate >= 3.14f * 2){
-				s_rotate -= 3.14f * 2;
-			}
-			s_matrix = NBsys::NGeometry::Geometry_Matrix_44::Make_RotationY(s_rotate);
-			#endif
+			//描画。
 
-			//レイアウト。
-			s_d3d11->Render_IASetInputLayout(t_vertexshader_id);
-			s_d3d11->Render_IASetVertexBuffers(t_vertexbuffer_id);
-
+			//クリア。
 			s_d3d11->Render_ClearRenderTargetView(NBsys::NColor::Color_F(0.3f,0.3f,0.8f,1.0f));
 			s_d3d11->Render_ClearDepthStencilView();
+
+			s32 t_left_right_index_max = 1;
+			#if(USE_FOVE)
 			{
-				//t_near
-				f32 t_near = 0.1f;
+				t_left_right_index_max = 2;
+			}
+			#endif
 
-				//t_far
-				f32 t_far = 1000.0f;
+			for(s32 t_left_right_index=0;t_left_right_index<t_left_right_index_max;t_left_right_index++){
 
-				//t_camera_pos
-				NBsys::NGeometry::Geometry_Vector3 t_camera_pos(0,2,-20);
+				//ライン描画開始。
+				s_drawline_manager->PreUpdate();
 
-				#if(0)
+				//ビュープロジェクション。
+				NBsys::NGeometry::Geometry_Matrix_44 t_view_projection;
+				#if(USE_FOVE)
 				{
+					//t_near
+					f32 t_near = 0.1f;
+
+					//t_far
+					f32 t_far = 1000.0f;
+
+					//t_camera_position
+					NBsys::NGeometry::Geometry_Vector3 t_camera_position(0,2,-20);
+
 					#if(USE_FOVE)
-					{
+					if(t_left_right_index == 0){
 						s_d3d11->Render_ViewPort(0.0f,0.0f,s_fovehmd->GetSingleEyeResolution().x,s_fovehmd->GetSingleEyeResolution().y);
-
-						NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = s_fovehmd->GetLeftViewProjection(t_near,t_far,t_camera_pos);
-
-						DrawOnce(s_matrix,t_view_projection,0,0,0);
-					}
-
-					{
+						t_view_projection = s_fovehmd->GetLeftViewProjection(t_near,t_far,t_camera_position);
+					}else{
 						s_d3d11->Render_ViewPort(s_fovehmd->GetSingleEyeResolution().x,0.0f,s_fovehmd->GetSingleEyeResolution().x,s_fovehmd->GetSingleEyeResolution().y);
-
-						NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = s_fovehmd->GetRightViewProjection(t_near,t_far,t_camera_pos);
-
-						DrawOnce(s_matrix,t_view_projection,0,0,0);
+						t_view_projection = s_fovehmd->GetRightViewProjection(t_near,t_far,t_camera_position);
 					}
 					#endif
 				}
 				#else
 				{
-					#if(USE_FOVE)
-					s_d3d11->Render_ViewPort(0.0f,0.0f,s_fovehmd->GetSingleEyeResolution().x * 2,s_fovehmd->GetSingleEyeResolution().y);
-					#else
 					s_d3d11->Render_ViewPort(0.0f,0.0f,static_cast<f32>(s_width),static_cast<f32>(s_height));
-					#endif
 
 					//t_camera_target
 					NBsys::NGeometry::Geometry_Vector3 t_camera_target(0.0f,10.0f,0.0f);
-
-					//t_camera_position
-					NBsys::NGeometry::Geometry_Vector3 t_camera_position(0.0f,10.0f,-20);
 
 					//t_camera_up
 					NBsys::NGeometry::Geometry_Vector3 t_camera_up(0.0f,1.0f,0.0f);
 
 					//t_fov_deg
 					f32 t_fov_deg = 60.0f;
+
+					//t_near
+					f32 t_near = 0.1f;
+
+					//t_far
+					f32 t_far = 1000.0f;
+
+					//t_camera_position
+					NBsys::NGeometry::Geometry_Vector3 t_camera_position(0.0f,10.0f,-20);
 
 					NBsys::NGeometry::Geometry_Matrix_44 t_projection;
 					#if(USE_FOVE)
@@ -512,45 +542,39 @@ void Test_Main()
 					NBsys::NGeometry::Geometry_Matrix_44 t_view;
 					t_view.Set_ViewMatrix(t_camera_target,t_camera_position,t_camera_up);
 
-					{
-						#if(USE_FOVE)
-						NBsys::NGeometry::Geometry_Vector3 t_fovehmd_position = s_fovehmd->GetCameraPosition();
-						NBsys::NGeometry::Geometry_Quaternion t_fovehmd_quaternion = s_fovehmd->GetCameraQuaternion();
-						NBsys::NGeometry::Geometry_Matrix_44 t_fovehmd_matrix(t_fovehmd_quaternion);
-						#endif
-
-						{
-							#if(USE_FOVE)
-							NBsys::NGeometry::Geometry_Matrix_44 t_matrix = t_fovehmd_matrix;
-							t_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(t_fovehmd_position.x,t_fovehmd_position.y,t_fovehmd_position.z);
-							t_matrix *= s_fovehmd->GetLeftEyeTranslate();
-							#else
-							NBsys::NGeometry::Geometry_Matrix_44 t_matrix = NBsys::NGeometry::Geometry_Matrix_44::Identity();
-							#endif
-
-							t_matrix *= s_matrix;
-
-							DrawOnce(t_matrix,t_view*t_projection,0,0,0);
-						}
-
-						#if(USE_FOVE)
-						{
-							#if(USE_FOVE)
-							NBsys::NGeometry::Geometry_Matrix_44 t_matrix = t_fovehmd_matrix;
-							t_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(t_fovehmd_position.x,t_fovehmd_position.y,t_fovehmd_position.z);
-							t_matrix *= s_fovehmd->GetRightEyeTranslate();
-							#else
-							NBsys::NGeometry::Geometry_Matrix_44 t_matrix = NBsys::NGeometry::Geometry_Matrix_44::Identity();
-							#endif
-
-							t_matrix *= s_matrix;
-
-							DrawOnce(t_matrix,t_view*t_projection,0,0,0);
-						}
-						#endif
-					}
+					t_view_projection = t_view * t_projection;
 				}
 				#endif
+
+				{
+					#if(USE_FOVE)
+					#else
+					s_rotate += 0.002f;
+					if(s_rotate >= 3.14f * 2){
+						s_rotate -= 3.14f * 2;
+					}
+					s_matrix = NBsys::NGeometry::Geometry_Matrix_44::Make_RotationY(s_rotate);
+					#endif
+
+					NBsys::NGeometry::Geometry_Matrix_44 t_matrix = NBsys::NGeometry::Geometry_Matrix_44::Identity();
+					t_matrix *= s_matrix;
+
+					DrawOnce(t_matrix,t_view_projection,0,0,0);
+				}
+
+				/*
+				{
+					s_rotate2 += 0.2f;
+					if(s_rotate2 >= 3.14f * 2){
+						s_rotate2 -= 3.14f * 2;
+					}
+					f32 t_x = Math::sinf(s_rotate2);
+					s_drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(0.0f,0.0f,0.0f),NBsys::NGeometry::Geometry_Vector3(t_x,5.0f,0.0f),NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
+				}
+				*/
+
+				//ライン描画。
+				s_drawline_manager->Update(t_view_projection);
 			}
 
 			#if(USE_FOVE)

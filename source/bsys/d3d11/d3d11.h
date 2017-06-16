@@ -71,7 +71,7 @@ namespace NBsys{namespace ND3d11
 
 		/** CreateVertexBuffer
 		*/
-		s32 CreateVertexBuffer(const void* a_data,s32 a_stridebyte,s32 a_offset,s32 a_countofvertex);
+		s32 CreateVertexBuffer(const void* a_data,s32 a_stridebyte,s32 a_offset,s32 a_countofvertex,bool a_write_flag);
 
 		/** CreateConstantBuffer
 		*/
@@ -144,25 +144,17 @@ namespace NBsys{namespace ND3d11
 		*/
 		void Render_PSSetConstantBuffers(s32 a_constantbuffer_id);
 
-		/** Render_IASetInputLayout
+		/** Render_SetVertexBuffer
 		*/
-		void Render_IASetInputLayout(s32 a_vertexshader_id);
+		void Render_SetVertexBuffer(s32 a_vertexbuffer_id);
 
-		/** Render_IASetVertexBuffers
+		/** Render_ReMapVertexBuffer
 		*/
-		void Render_IASetVertexBuffers(s32 a_vertexbuffer_id);
+		void Render_ReMapVertexBuffer(s32 a_vertexbuffer_id,const void* a_data,s32 a_size);
 
-		/** Render_IASetPrimitiveTopology_TriangleList
+		/** Render_SetPrimitiveTopology
 		*/
-		void Render_IASetPrimitiveTopology_TriangleList();
-
-		/** Render_IASetPrimitiveTopology_TriangleStrip
-		*/
-		void Render_IASetPrimitiveTopology_TriangleStrip();
-
-		/** Render_IASetPrimitiveTopology_PointList
-		*/
-		void Render_IASetPrimitiveTopology_PointList();
+		void Render_SetPrimitiveTopology(D3d11_TopologyType::Id a_topology_type);
 
 		/** Render_SetTexture
 		*/
@@ -175,6 +167,10 @@ namespace NBsys{namespace ND3d11
 		/** Render_SetRasterizerState
 		*/
 		void Render_SetRasterizerState(s32 a_rasterizerstate_id);
+
+		/** Render_DrawLine
+		*/
+		void Render_DrawLine();
 	};
 
 }}
