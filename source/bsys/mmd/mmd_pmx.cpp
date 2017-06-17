@@ -16,27 +16,27 @@
 
 /** include
 */
-#include "./mmdpmx.h"
+#include "./mmd_pmx.h"
 
 
-/** NBsys::NMmdPmx
+/** NBsys::NMmd
 */
-#if(BSYS_MMDPMX_ENABLE)
-namespace NBsys{namespace NMmdPmx
+#if(BSYS_MMD_PMX_ENABLE)
+namespace NBsys{namespace NMmd
 {
 
 	/** Load_Header
 	*/
-	bool MmdPmx::Load_Header(u8*& a_raw)
+	bool Mmd_Pmx::Load_Header(u8*& a_raw)
 	{
-		//MmdPmx_Header
-		this->header = Memory::Copy< MmdPmx_Header >(a_raw);
+		//Mmd_Pmx_Header
+		this->header = Memory::Copy< Mmd_Pmx_Header >(a_raw);
 
 		//t_header_ex_size
 		u8 t_header_ex_size = Memory::Copy< u8 >(a_raw,0);
 
-		//MmdPmx_Header_Ex
-		this->header_ex = Memory::Copy< MmdPmx_Header_Ex >(a_raw,t_header_ex_size + 1);
+		//Mmd_Pmx_Header_Ex
+		this->header_ex = Memory::Copy< Mmd_Pmx_Header_Ex >(a_raw,t_header_ex_size + 1);
 
 		//model_name
 		STLWString model_name_jp;
@@ -107,13 +107,13 @@ namespace NBsys{namespace NMmdPmx
 
 	/** Load_Vertex
 	*/
-	bool MmdPmx::Load_Vertex(u8*& a_raw)
+	bool Mmd_Pmx::Load_Vertex(u8*& a_raw)
 	{
 		this->vertex_list_size = Memory::Copy< u32 >(a_raw);
-		this->vertex_list.reset(new MmdPmx_VertexData[this->vertex_list_size],default_delete< MmdPmx_VertexData[] >());
+		this->vertex_list.reset(new Mmd_Pmx_VertexData[this->vertex_list_size],default_delete< Mmd_Pmx_VertexData[] >());
 
 		for(u32 ii=0;ii<this->vertex_list_size;ii++){
-			MmdPmx_VertexData& t_vertex_data = this->vertex_list.get()[ii];
+			Mmd_Pmx_VertexData& t_vertex_data = this->vertex_list.get()[ii];
 
 			//position
 			t_vertex_data.position = Memory::Copy< NBsys::NGeometry::Geometry_Vector3 >(a_raw);
@@ -223,7 +223,7 @@ namespace NBsys{namespace NMmdPmx
 
 	/** Load_Index
 	*/
-	bool MmdPmx::Load_Index(u8*& a_raw)
+	bool Mmd_Pmx::Load_Index(u8*& a_raw)
 	{
 		this->index_list_size = Memory::Copy< u32 >(a_raw);
 		this->index_list.reset(new u32[this->index_list_size],default_delete< u32[] >());
@@ -247,7 +247,7 @@ namespace NBsys{namespace NMmdPmx
 
 	/** Load_TextureName
 	*/
-	bool MmdPmx::Load_TextureName(u8*& a_raw)
+	bool Mmd_Pmx::Load_TextureName(u8*& a_raw)
 	{
 		this->texturename_list_size = Memory::Copy< u32 >(a_raw);
 
@@ -274,7 +274,7 @@ namespace NBsys{namespace NMmdPmx
 
 	/** Load_Parts
 	*/
-	bool MmdPmx::Load_Parts(u8*& a_raw)
+	bool Mmd_Pmx::Load_Parts(u8*& a_raw)
 	{
 		this->parts_list_size = Memory::Copy< u32 >(a_raw);
 		this->parts_list.resize(this->parts_list_size);
@@ -282,7 +282,7 @@ namespace NBsys{namespace NMmdPmx
 		s32 t_start_index = 0;
 
 		for(u32 ii=0;ii<this->parts_list_size;ii++){
-			MmdPmx_Parts& t_parts = this->parts_list.at(ii);
+			Mmd_Pmx_Parts& t_parts = this->parts_list.at(ii);
 
 			//parts_name_jp
 			{
@@ -456,13 +456,13 @@ namespace NBsys{namespace NMmdPmx
 
 	/** Load_Bone
 	*/
-	bool MmdPmx::Load_Bone(u8*& a_raw)
+	bool Mmd_Pmx::Load_Bone(u8*& a_raw)
 	{
 		this->bone_list_size = Memory::Copy< u32 >(a_raw);
 		this->bone_list.resize(this->bone_list_size);
 
 		for(u32 ii=0;ii<this->bone_list_size;ii++){
-			MmdPmx_Bone& t_bone = this->bone_list.at(ii);
+			Mmd_Pmx_Bone& t_bone = this->bone_list.at(ii);
 
 			//bonename_jp
 			{
@@ -590,8 +590,8 @@ namespace NBsys{namespace NMmdPmx
 					if(t_bone.bone_ik_list_size > 0){
 						t_bone.bone_ik_list.resize(t_bone.bone_ik_list_size);
 
-						for(int jj=0;jj<t_bone.bone_ik_list_size;jj++){
-							MmdPmx_Bone_Ik& t_bone_ik = t_bone.bone_ik_list[jj];
+						for(s32 jj=0;jj<static_cast<s32>(t_bone.bone_ik_list_size);jj++){
+							Mmd_Pmx_Bone_Ik& t_bone_ik = t_bone.bone_ik_list[jj];
 
 							//ik_link_boneindex
 							{
@@ -624,8 +624,12 @@ namespace NBsys{namespace NMmdPmx
 
 	/** Load
 	*/
-	bool MmdPmx::Load(sharedptr< NFile::File_Object >& a_file)
+	bool Mmd_Pmx::Load(sharedptr< NFile::File_Object >& a_file)
 	{
+		if(a_file->IsBusy() == true){
+			return false;
+		}
+
 		sharedptr< u8 >& t_data = a_file->GetLoadData();
 		u8* t_raw = t_data.get();
 		
@@ -656,22 +660,6 @@ namespace NBsys{namespace NMmdPmx
 		}
 
 		return true;
-	}
-
-	/** Load
-	*/
-	sharedptr< MmdPmx > Load(sharedptr< NFile::File_Object >& a_file)
-	{
-		if(a_file->IsBusy() == true){
-			return nullptr;
-		}
-
-		sharedptr< MmdPmx > t_mmdpmx(new MmdPmx());
-		if(t_mmdpmx->Load(a_file) == true){
-			return t_mmdpmx;
-		}
-
-		return nullptr;
 	}
 
 }}

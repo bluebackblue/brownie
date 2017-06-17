@@ -11,6 +11,10 @@
 
 /** lib
 */
-#pragma comment(lib, "fovehmd/FOVE SDK 0.11.4/lib/FoveClient.lib")
+#if defined(ROM_32BIT)
+	#error ""
+#else
+	#pragma comment(lib, "fovehmd/FOVE SDK 0.11.4/lib/FoveClient.lib")
+#endif
 
 

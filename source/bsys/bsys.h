@@ -65,8 +65,8 @@
 
 /** include
 */
-#if(BSYS_MMDPMX_ENABLE)
-#include "./mmdpmx/mmdpmx.h"
+#if(BSYS_MMD_PMX_ENABLE)
+#include "./mmd/mmd.h"
 #endif
 
 /** include

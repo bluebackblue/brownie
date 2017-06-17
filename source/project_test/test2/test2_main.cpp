@@ -97,7 +97,7 @@ static sharedptr< NBsys::NFovehmd::Fovehmd > s_fovehmd;
 
 //s_vertex
 static sharedptr< NBsys::NVertex::Vertex< NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 > > s_vertex;
-static sharedptr< NBsys::NMmdPmx::MmdPmx > s_mmdpmx;
+static sharedptr< NBsys::NMmd::Mmd_Pmx > s_mmd_pmx;
 
 
 //s_matrix
@@ -208,40 +208,41 @@ void LoadPmx()
 
 	//ＰＭＸ読み込み。
 	{
-		sharedptr< NBsys::NFile::File_Object > t_pmx(new NBsys::NFile::File_Object(1,t_path + t_path_pmx,-1,sharedptr< NBsys::NFile::File_Allocator >(),1));
-		while(t_pmx->IsBusy()){
+		sharedptr< NBsys::NFile::File_Object > t_fileobject_pmx(new NBsys::NFile::File_Object(1,t_path + t_path_pmx,-1,sharedptr< NBsys::NFile::File_Allocator >(),1));
+		while(t_fileobject_pmx->IsBusy()){
 			ThreadSleep(10);
 		}
-		s_mmdpmx = NBsys::NMmdPmx::Load(t_pmx);
+		s_mmd_pmx.reset(new NBsys::NMmd::Mmd_Pmx());
+		s_mmd_pmx->Load(t_fileobject_pmx);
 	}
 
 	s_vertex = new NBsys::NVertex::Vertex< NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 >();
 	s_model = new STLVector< ModelParts >::Type();
 
-	for(u32 ii=0;ii<s_mmdpmx->parts_list_size;ii++){
-		NBsys::NMmdPmx::MmdPmx_Parts& t_mmdpmx_parts = s_mmdpmx->parts_list[ii];
+	for(u32 ii=0;ii<s_mmd_pmx->parts_list_size;ii++){
+		NBsys::NMmd::Mmd_Pmx_Parts& t_mmd_pmx_parts = s_mmd_pmx->parts_list[ii];
 		s_model->push_back(ModelParts());
 
 		//モデルパーツ。
 		ModelParts& t_model_patrs = s_model->at(ii);
 
 		//パーツ名。
-		t_model_patrs.patrs_name = t_mmdpmx_parts.parts_name_jp;
+		t_model_patrs.patrs_name = t_mmd_pmx_parts.parts_name_jp;
 
 		//バーテックスにパーツ追加。
 		s_vertex->AddParts("parts");
 
 		//パーツに頂点追加。
-		for(u32 jj=0;jj<t_mmdpmx_parts.count_of_index;jj++){
-			u32 t_index = s_mmdpmx->index_list.get()[t_mmdpmx_parts.start_index + jj];
+		for(u32 jj=0;jj<t_mmd_pmx_parts.count_of_index;jj++){
+			u32 t_index = s_mmd_pmx->index_list.get()[t_mmd_pmx_parts.start_index + jj];
 
 			NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 t_vertex;
-			NBsys::NMmdPmx::MmdPmx_VertexData& t_data = s_mmdpmx->vertex_list.get()[t_index];
+			NBsys::NMmd::Mmd_Pmx_VertexData& t_data = s_mmd_pmx->vertex_list.get()[t_index];
 
-			f32 t_color_r = t_mmdpmx_parts.diffuse.r;
-			f32 t_color_g = t_mmdpmx_parts.diffuse.g;
-			f32 t_color_b = t_mmdpmx_parts.diffuse.b;
-			f32 t_color_a = t_mmdpmx_parts.diffuse.a * 0.3f;
+			f32 t_color_r = t_mmd_pmx_parts.diffuse.r;
+			f32 t_color_g = t_mmd_pmx_parts.diffuse.g;
+			f32 t_color_b = t_mmd_pmx_parts.diffuse.b;
+			f32 t_color_a = t_mmd_pmx_parts.diffuse.a * 0.3f;
 
 			NBsys::NVertex::SetColor< NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 >(t_vertex,t_color_r,t_color_g,t_color_b,t_color_a);
 			NBsys::NVertex::SetPos< NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 >(t_vertex,t_data.position.x,t_data.position.y,t_data.position.z);
@@ -251,14 +252,14 @@ void LoadPmx()
 		}
 
 		//カリング。
-		t_model_patrs.cullfull = t_mmdpmx_parts.drawmode_cullfull;
+		t_model_patrs.cullfull = t_mmd_pmx_parts.drawmode_cullfull;
 
 		//テクスチャーインデックス。
-		t_model_patrs.texture_index = t_mmdpmx_parts.textureindex;
+		t_model_patrs.texture_index = t_mmd_pmx_parts.textureindex;
 
 		//テクスチャー読み込み開始。
 		if(t_model_patrs.texture_index >= 0){
-			t_model_patrs.texture_filepath = Path::DirAndName(t_path,s_mmdpmx->texturename_list[t_model_patrs.texture_index]);
+			t_model_patrs.texture_filepath = Path::DirAndName(t_path,s_mmd_pmx->texturename_list[t_model_patrs.texture_index]);
 			t_model_patrs.texture_file = new NBsys::NFile::File_Object(1,t_model_patrs.texture_filepath,-1,sharedptr< NBsys::NFile::File_Allocator >(),1);
 		}else{
 			t_model_patrs.texture_filepath = Path::DirAndName(L"",L"white.bmp");
@@ -304,7 +305,7 @@ void DrawOnce(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeome
 	//バーテックスバッファ。
 	s_d3d11->Render_SetVertexBuffer(t_vertexbuffer_id);
 
-	for(s32 ii=0;ii<s_model->size();ii++){
+	for(s32 ii=0;ii<static_cast<s32>(s_model->size());ii++){
 		VS_ConstantBuffer_B0 t_vs_constantbuffer_b0;
 		PS_ConstantBuffer_B1 t_ps_constantbuffer_b1;
 
@@ -563,8 +564,8 @@ void Test_Main()
 				}
 
 				{
-					for(s32 ii=0;ii<s_mmdpmx->bone_list.size();ii++){
-						NBsys::NMmdPmx::MmdPmx_Bone& t_bone = s_mmdpmx->bone_list[ii];
+					for(s32 ii=0;ii<static_cast<s32>(s_mmd_pmx->bone_list.size());ii++){
+						NBsys::NMmd::Mmd_Pmx_Bone& t_bone = s_mmd_pmx->bone_list[ii];
 						
 						NBsys::NGeometry::Geometry_Matrix_44 t_matrix = NBsys::NGeometry::Geometry_Matrix_44::Identity();
 						t_matrix *= s_matrix;

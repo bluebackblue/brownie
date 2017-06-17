@@ -610,7 +610,7 @@ namespace NBsys{namespace ND3d11
 	void D3d11_Impl::Render_CreateVertexShader(sharedptr< D3d11_Impl_VertexShader >& a_vertexshader)
 	{
 		char* t_data = reinterpret_cast< char* >(a_vertexshader->fileobject->GetLoadData().get());
-		s64 t_size = a_vertexshader->fileobject->GetLoadSize();
+		s32 t_size = static_cast<s32>(a_vertexshader->fileobject->GetLoadSize());
 
 		if(a_vertexshader->fileobject->GetAddAllocateSize() > 0){
 			t_data[t_size] = 0x00;
@@ -702,7 +702,7 @@ namespace NBsys{namespace ND3d11
 	void D3d11_Impl::Render_CreatePixelShader(sharedptr< D3d11_Impl_PixelShader >& a_pixelshader)
 	{
 		char* t_data = reinterpret_cast< char* >(a_pixelshader->fileobject->GetLoadData().get());
-		s64 t_size = a_pixelshader->fileobject->GetLoadSize();
+		s32 t_size = static_cast<s32>(a_pixelshader->fileobject->GetLoadSize());
 
 		if(a_pixelshader->fileobject->GetAddAllocateSize() > 0){
 			t_data[t_size] = 0x00;

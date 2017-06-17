@@ -391,11 +391,11 @@
 
 /*
 
-	mmdpmx
+	mmd
 
 */
-#if !defined(BSYS_MMDPMX_ENABLE)
-	#define BSYS_MMDPMX_ENABLE								(0)
+#if !defined(BSYS_MMD_PMX_ENABLE)
+	#define BSYS_MMD_PMX_ENABLE								(0)
 #endif
 
 /*

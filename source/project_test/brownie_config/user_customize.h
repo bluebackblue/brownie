@@ -13,7 +13,7 @@
 
 	DEF_TEST0	:	初期化、ログ、ブレイク、アサート。
 	DEF_TEST1	:	directx fovehmd
-	DEF_TEST2	:	mmdpmx
+	DEF_TEST2	:	mmd
 
 */
 #define DEF_TEST2
@@ -29,7 +29,7 @@
 
 #elif defined(DEF_TEST2)
 
-	#define BSYS_MMDPMX_ENABLE								(1)
+	#define BSYS_MMD_PMX_ENABLE								(1)
 	#define BSYS_WINDOW_ENABLE								(1)
 	#define BSYS_D3D11_ENABLE								(1)
 	#define BSYS_FOVEHMD_ENABLE								(1)
