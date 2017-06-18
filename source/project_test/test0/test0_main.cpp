@@ -55,9 +55,22 @@ void Blib_DebugLog_Callback(const char* a_tag,const char* a_string)
 */
 void Test_Main()
 {
+	STATIC_ASSERT(sizeof(s32) == 4);
+
 	TAGLOG("main","DEF_TEST0");
+	TAGLOG("main",L"DEF_TEST0");
+
+	DEBUGLOG("%s%s\n","デバッグ","ログ");	
+	DEBUGLOG(L"%s%s\n",L"デバッグ",L"ログ");	
+
 	DEBUGBREAK();
+
+	STLString t_string;
+	STACKTRACE(t_string,-1);
+	DEBUGLOG("%s\n",t_string.c_str());	
+
 	ASSERT(0);
+
 	return;
 }
 

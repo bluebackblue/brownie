@@ -23,6 +23,7 @@
 /** include
 */
 #include "./stringtool.h"
+#include "./vastring.h"
 
 
 /** include
@@ -72,34 +73,49 @@ namespace NBlib
 				HANDLE t_process = ::GetCurrentProcess();
 
 				if(::SymInitialize(t_process,WIN_NULL,TRUE) != TRUE){
+					ASSERT(0);
 				}
 
 				void* t_stack_list[100];
 				s32 t_stack_count = ::RtlCaptureStackBackTrace(0,COUNTOF(t_stack_list),t_stack_list,WIN_NULL);
 
-				SYMBOL_INFO* t_symbol = nullptr;
+				IMAGEHLP_SYMBOL* t_symbol = nullptr;
 				{
-					u8 s_symbol_data[sizeof(SYMBOL_INFO) + 255 * sizeof(char) + sizeof(char)] = {0};
-					t_symbol = reinterpret_cast< SYMBOL_INFO* >(s_symbol_data);
-					t_symbol->MaxNameLen   = sizeof(s_symbol_data) - sizeof(SYMBOL_INFO) - 1;
-					t_symbol->SizeOfStruct = sizeof(SYMBOL_INFO);
+					static u8 s_symbol_data[sizeof(IMAGEHLP_SYMBOL) + 255 * sizeof(char) + sizeof(char)];
+					t_symbol = reinterpret_cast< IMAGEHLP_SYMBOL* >(s_symbol_data);
+					t_symbol->MaxNameLength = sizeof(s_symbol_data) - sizeof(IMAGEHLP_SYMBOL) - sizeof(char);
+					t_symbol->SizeOfStruct = sizeof(IMAGEHLP_SYMBOL);
 				}
 
-				int t_result_count = 0;
+				IMAGEHLP_LINE* t_line = nullptr;
+				{
+					static u8 s_line_data[sizeof(IMAGEHLP_LINE) + 255 * sizeof(char) + sizeof(char)] = {0};
+					t_line = reinterpret_cast< IMAGEHLP_LINE* >(s_line_data);
+					t_line->SizeOfStruct = sizeof(IMAGEHLP_LINE);
+				}
+
+				a_out_string += "----- stacktrace -----\n";
 
 				for(int ii=0;ii<t_stack_count;ii++){
 					if((a_index < 0)||(ii == a_index)){
-						::SymFromAddr(t_process,(DWORD64)(t_stack_list[ii]),0,t_symbol);
+						::SymGetSymFromAddr(t_process,(DWORD64)(t_stack_list[ii]),0,t_symbol);
 
-						if(t_result_count > 0){
-							a_out_string += "\n";
-						}
+						::SymGetLineFromAddr(t_process,(DWORD64)(t_stack_list[ii]),0,t_line);
+
+						char t_buffer[64] = {0};
+
+						#if defined(ROM_32BIT)
+						a_out_string += VASTRING(t_buffer,sizeof(t_buffer),"0x%08x : ",t_stack_list[ii]);
+						#else
+						a_out_string += VASTRING(t_buffer,sizeof(t_buffer),"0x%016x : ",t_stack_list[ii]);
+						#endif
 
 						a_out_string += t_symbol->Name;
-
-						t_result_count++;
+						a_out_string += "\n";
 					}
 				}
+
+				a_out_string += "----- ----- -----";
 			}
 			#else
 			{
