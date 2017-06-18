@@ -50,3 +50,7 @@ mid-level library
 * step 2: ./brownie/source/brownie.sln
 * step 3: ./brownie/source/project_test/brownie_config/user_customize.h
 
+## user_customize.h
+* TEST0: デバッグログ、デバッグブレイク、アサート。
+* TEST1: 型、リスト
+
