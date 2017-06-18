@@ -17,4 +17,6 @@
 /** include
 */
 #include "./mmd_pmx.h"
+#include "./mmd_vmd.h"
+
 

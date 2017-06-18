@@ -98,6 +98,7 @@ static sharedptr< NBsys::NFovehmd::Fovehmd > s_fovehmd;
 //s_vertex
 static sharedptr< NBsys::NVertex::Vertex< NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 > > s_vertex;
 static sharedptr< NBsys::NMmd::Mmd_Pmx > s_mmd_pmx;
+static sharedptr< NBsys::NMmd::Mmd_Vmd > s_mmd_vmd;
 
 
 //s_matrix
@@ -203,17 +204,30 @@ sharedptr< common::D3d11_DrawLine_Manager > s_drawline_manager;
 
 void LoadPmx()
 {
-	STLWString t_path = L"アリスあぴミクver1.0/";
-	STLWString t_path_pmx = L"Appearance Miku_Alice.pmx";
+	STLWString t_pmx_path = L"アリスあぴミクver1.0/";
+	STLWString t_pmx_name = L"Appearance Miku_Alice.pmx";
+
+	STLWString t_vmd_path = L"nac_miraikei/";
+	STLWString t_vmd_name = L"nac_miraikei.vmd";
 
 	//ＰＭＸ読み込み。
 	{
-		sharedptr< NBsys::NFile::File_Object > t_fileobject_pmx(new NBsys::NFile::File_Object(1,t_path + t_path_pmx,-1,sharedptr< NBsys::NFile::File_Allocator >(),1));
+		sharedptr< NBsys::NFile::File_Object > t_fileobject_pmx(new NBsys::NFile::File_Object(1,t_pmx_path + t_pmx_name,-1,sharedptr< NBsys::NFile::File_Allocator >(),1));
 		while(t_fileobject_pmx->IsBusy()){
 			ThreadSleep(10);
 		}
 		s_mmd_pmx.reset(new NBsys::NMmd::Mmd_Pmx());
 		s_mmd_pmx->Load(t_fileobject_pmx);
+	}
+
+	//ＶＭＤ読み込み。
+	{
+		sharedptr< NBsys::NFile::File_Object > t_fileobject_vmd(new NBsys::NFile::File_Object(1,t_vmd_path + t_vmd_name,-1,sharedptr< NBsys::NFile::File_Allocator >(),1));
+		while(t_fileobject_vmd->IsBusy()){
+			ThreadSleep(10);
+		}
+		s_mmd_vmd.reset(new NBsys::NMmd::Mmd_Vmd());
+		s_mmd_vmd->Load(t_fileobject_vmd);
 	}
 
 	s_vertex = new NBsys::NVertex::Vertex< NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 >();
@@ -242,7 +256,7 @@ void LoadPmx()
 			f32 t_color_r = t_mmd_pmx_parts.diffuse.r;
 			f32 t_color_g = t_mmd_pmx_parts.diffuse.g;
 			f32 t_color_b = t_mmd_pmx_parts.diffuse.b;
-			f32 t_color_a = t_mmd_pmx_parts.diffuse.a * 0.3f;
+			f32 t_color_a = t_mmd_pmx_parts.diffuse.a;
 
 			NBsys::NVertex::SetColor< NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 >(t_vertex,t_color_r,t_color_g,t_color_b,t_color_a);
 			NBsys::NVertex::SetPos< NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 >(t_vertex,t_data.position.x,t_data.position.y,t_data.position.z);
@@ -259,7 +273,7 @@ void LoadPmx()
 
 		//テクスチャー読み込み開始。
 		if(t_model_patrs.texture_index >= 0){
-			t_model_patrs.texture_filepath = Path::DirAndName(t_path,s_mmd_pmx->texturename_list[t_model_patrs.texture_index]);
+			t_model_patrs.texture_filepath = Path::DirAndName(t_pmx_path,s_mmd_pmx->texturename_list[t_model_patrs.texture_index]);
 			t_model_patrs.texture_file = new NBsys::NFile::File_Object(1,t_model_patrs.texture_filepath,-1,sharedptr< NBsys::NFile::File_Allocator >(),1);
 		}else{
 			t_model_patrs.texture_filepath = Path::DirAndName(L"",L"white.bmp");

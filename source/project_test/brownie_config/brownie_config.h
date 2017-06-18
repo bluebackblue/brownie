@@ -397,6 +397,9 @@
 #if !defined(BSYS_MMD_PMX_ENABLE)
 	#define BSYS_MMD_PMX_ENABLE								(0)
 #endif
+#if !defined(BSYS_MMD_VMD_ENABLE)
+	#define BSYS_MMD_VMD_ENABLE								(0)
+#endif
 
 /*
 
@@ -407,7 +410,7 @@
 	#define BSYS_TEXTURE_ENABLE								(0)
 #endif
 #if !defined(BSYS_TEXTURE_GDIPLUS_ENABLE)
-	#define BSYS_TEXTURE_GDIPLUS_ENABLE							(0)
+	#define BSYS_TEXTURE_GDIPLUS_ENABLE						(0)
 #endif
 
 
