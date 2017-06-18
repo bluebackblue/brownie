@@ -55,6 +55,7 @@ void Blib_DebugLog_Callback(const char* a_tag,const char* a_string)
 */
 void Test_Main()
 {
+	//ファイル開始。
 	NBsys::NFile::StartSystem(1);
 	NBsys::NFile::SetRoot(0,L"./project_test/test2");
 
@@ -102,6 +103,10 @@ void Test_Main()
 		t_filehandle.Write(reinterpret_cast< const u8* >(t_jsonstring.c_str()),t_jsonstring.size(),0);
 		t_filehandle.Close();
 	}
+
+	//ファイル終了。
+	NBsys::NFile::EndSystemRequest();
+	NBsys::NFile::EndWaitSystem();
 
 	return;
 }
