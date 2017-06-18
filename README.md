@@ -52,5 +52,5 @@ mid-level library
 
 ## user_customize.h
 * TEST0: デバッグログ、デバッグブレイク、アサート。
-* TEST1: 型、リスト
-
+* TEST1: 型、リスト。
+* TEST2: ファイル、ＪＳＯＮ。
