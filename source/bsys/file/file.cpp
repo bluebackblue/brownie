@@ -79,6 +79,8 @@ namespace NBsys{namespace NFile
 	*/
 	sharedptr< ThreadTemplate< File_Thread > >& GetSystemInstance(s32 a_device_index)
 	{
+		ASSERT((0 <= a_device_index)&&(a_device_index < s_thread_list->size()));
+
 		return s_thread_list->at(a_device_index);
 	}
 

@@ -161,15 +161,18 @@ namespace NBsys{namespace NFile
 			//未コンバート。
 
 			ASSERT(0);
+			return;
 		}else if(this->convertflag == 0){
 
 			//コンバート中 => コンバート済み。
 
 			this->convertflag = 1;
+			return;
 		}
 
 		//コンバート済み。
 		ASSERT(0);
+		return;
 	}
 
 	/** [スレッドから]更新。

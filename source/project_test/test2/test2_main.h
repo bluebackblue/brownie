@@ -14,7 +14,7 @@
 #include "../include.h"
 
 
-/** DEF_TEST1
+/** DEF_TEST2
 */
 #if defined(DEF_TEST2)
 void Test_Main();

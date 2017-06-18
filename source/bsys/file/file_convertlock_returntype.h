@@ -28,9 +28,6 @@ namespace NBsys{namespace NFile
 			//未コンバート => コンバート中。
 			Locked = 0,
 
-			//コンバート中 => コンバート済み。
-			Unlocked,
-
 			//コンバート中。
 			ConvertNow,
 
