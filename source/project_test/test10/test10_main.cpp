@@ -172,8 +172,8 @@ public:
 				{
 					this->target_time = 0.0f;
 					this->target_from.Set(10,10,10);
-					this->target_to_a.Set(0,0,5);
-					this->target_to_b.Set(5,0,0);
+					this->target_to_a.Set(0,0,10);
+					this->target_to_b.Set(3,0,0);
 				}
 
 				this->step++;
@@ -237,14 +237,14 @@ public:
 				{
 					NBsys::NGeometry::Geometry_Matrix_44 t_matrix_a = t_quat_a.Make_Matrix();
 					NBsys::NGeometry::Geometry_Vector3 t_to_a = this->target_from + t_matrix_a.Make_AxisZ() * 20;
-					this->drawline_manager->DrawLine(this->target_from,t_to_a,NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
+					this->drawline_manager->DrawLine(this->target_from,t_to_a,NBsys::NColor::Color_F(0.0f,0.0f,1.0f,1.0f));
 				}
 
 				//ライン描画。
 				{
 					NBsys::NGeometry::Geometry_Matrix_44 t_matrix_b = t_quat_b.Make_Matrix();
 					NBsys::NGeometry::Geometry_Vector3 t_to_b = this->target_from + t_matrix_b.Make_AxisZ() * 20;
-					this->drawline_manager->DrawLine(this->target_from,t_to_b,NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
+					this->drawline_manager->DrawLine(this->target_from,t_to_b,NBsys::NColor::Color_F(1.0f,0.0f,0.0f,1.0f));
 				}
 
 				//ライン描画。
