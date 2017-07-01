@@ -393,7 +393,7 @@ namespace NBsys{namespace ND3d11
 
 	public:
 
-		/** Render_Main
+		/** リクエスト処理。
 		*/
 		void Render_Main();
 

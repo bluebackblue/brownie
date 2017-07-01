@@ -112,7 +112,7 @@ namespace NBsys{namespace ND3d11
 		this->impl->Render_Delete();
 	}
 
-	/** Render_Main
+	/** リクエスト処理。
 	*/
 	void D3d11::Render_Main()
 	{

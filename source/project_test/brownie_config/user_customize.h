@@ -15,8 +15,10 @@
 	DEF_TEST1	:	å^ÅAÉäÉXÉgÅB
 	DEF_TEST2	:	ÉtÉ@ÉCÉãÅAÇiÇrÇnÇmÅB
 
+	DEF_TEST10	:	ÇcÇRÇcÇPÇPÅB
+
 */
-#define DEF_TEST2
+#define DEF_TEST10
 
 
 #if defined(DEF_TEST0)
@@ -26,6 +28,11 @@
 #elif defined(DEF_TEST2)
 
 #elif defined(DEF_TEST3)
+
+#elif defined(DEF_TEST10)
+
+	#define BSYS_WINDOW_ENABLE								(1)
+	#define BSYS_D3D11_ENABLE								(1)
 
 #elif defined(DEF_TEST22)
 
@@ -37,5 +44,5 @@
 	#define BSYS_TEXTURE_ENABLE								(1)
 	#define BSYS_TEXTURE_GDIPLUS_ENABLE						(1)
 
-	#endif
+#endif
 

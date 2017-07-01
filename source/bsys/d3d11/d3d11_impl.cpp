@@ -946,7 +946,7 @@ namespace NBsys{namespace ND3d11
 		}
 	}
 
-	/** Render_Main
+	/** リクエスト処理。
 	*/
 	void D3d11_Impl::Render_Main()
 	{

@@ -98,7 +98,7 @@ namespace NBsys{namespace ND3d11
 		*/
 		void Render_Delete();
 
-		/** Render_Main
+		/** リクエスト処理。
 		*/
 		void Render_Main();
 
