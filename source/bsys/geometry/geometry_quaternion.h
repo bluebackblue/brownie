@@ -18,7 +18,12 @@
 */
 #include "./geometry_identity.h"
 #include "./geometry_quaternion_raw.h"
-#include "./geometry_vector.h"
+
+
+/** include
+*/
+#include "./geometry_vector_decl.h"
+#include "./geometry_matrix_decl.h"
 
 
 /** NBsys::NGeometry
@@ -69,6 +74,18 @@ namespace NBsys{namespace NGeometry
 		/** Make_Conjugate
 		*/
 		inline Geometry_Quaternion Make_Conjugate();
+
+		/** [作成]マトリックス。
+		*/
+		inline Geometry_Matrix_44 Make_Matrix();
+
+		/** [作成]Make_Slerp。
+
+		a_per = 0.0f : return = this
+		a_per = 1.0f : return = a_quaternion
+
+		*/
+		inline Geometry_Quaternion Make_Slerp(const Geometry_Quaternion& a_quaternion,f32 a_per) const;
 	};
 }}
 #endif

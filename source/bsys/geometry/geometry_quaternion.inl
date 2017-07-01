@@ -19,6 +19,12 @@
 #include "./geometry_quaternion.h"
 
 
+/** include
+*/
+#include "./geometry_matrix.h"
+#include "./geometry_vector.h"
+
+
 /** NBsys::NGeometry
 */
 #if(BSYS_GEOMETRY_ENABLE)
@@ -152,6 +158,53 @@ namespace NBsys{namespace NGeometry
 			t_temp.z = -this->z;
 			t_temp.w = this->w;
 		}
+		return t_temp;
+	}
+
+	/** [作成]マトリックス。
+	*/
+	inline Geometry_Matrix_44 Geometry_Quaternion::Make_Matrix()
+	{
+		return Geometry_Matrix_44(*this);
+	}
+
+	/** [作成]Make_Slerp。
+
+	a_per = 0.0f : return = this
+	a_per = 1.0f : return = a_quaternion
+
+	*/
+	inline Geometry_Quaternion Geometry_Quaternion::Make_Slerp(const Geometry_Quaternion& a_quaternion,f32 a_per) const
+	{
+		Geometry_Quaternion t_temp;
+		{
+			f32 t_cosom = (this->x * a_quaternion.x) + (this->y * a_quaternion.y) + (this->z * a_quaternion.z) + (this->w * a_quaternion.w);
+			if(t_cosom < 0.0f){
+				t_cosom = -t_cosom;
+				t_temp.x = -a_quaternion.x;
+				t_temp.y = -a_quaternion.y;
+				t_temp.z = -a_quaternion.z;
+				t_temp.w = -a_quaternion.w;
+			}else{
+				t_temp = a_quaternion;
+			}
+
+			f32 t_rate_from = 1.0f - a_per;
+			f32 t_rate_to = a_per;
+
+			if((1.0f - t_cosom) >= FLT_EPSILON){
+				f32 t_omega = Math::acosf(t_cosom);
+				f32 t_sinom = Math::sinf(t_omega);
+				t_rate_from = Math::sinf((1.0f - a_per) * t_omega) / t_sinom;
+				t_rate_to = Math::sinf(a_per * t_omega) / t_sinom;
+			}
+
+			t_temp.x = t_rate_from * this->x + t_rate_to * t_temp.x;
+			t_temp.y = t_rate_from * this->y + t_rate_to * t_temp.y;
+			t_temp.z = t_rate_from * this->z + t_rate_to * t_temp.z;
+			t_temp.w = t_rate_from * this->w + t_rate_to * t_temp.w;
+		}
+
 		return t_temp;
 	}
 }}

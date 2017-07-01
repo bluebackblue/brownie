@@ -111,6 +111,13 @@ private:
 	f32 camera_near;
 	f32 camera_far;
 
+	/** ターゲット。
+	*/
+	f32 target_time;
+	NBsys::NGeometry::Geometry_Vector3 target_from;
+	NBsys::NGeometry::Geometry_Vector3 target_to_a;
+	NBsys::NGeometry::Geometry_Vector3 target_to_b;
+
 public:
 
 	/** constructor
@@ -140,7 +147,7 @@ public:
 public:
 	/** 更新。
 	*/
-	void Update()
+	void Update(f32 a_delta)
 	{
 		//ライン描画。
 		this->drawline_manager->PreUpdate();
@@ -148,18 +155,42 @@ public:
 		switch(this->step){
 		case 0:
 			{
-				if(this->drawline_manager->IsBusy() == false){
-					this->step++;
+				if(this->drawline_manager->IsBusy() == true){
+					break;
 				}
+
+				//初期化完了。
+				{
+					this->camera_position = NBsys::NGeometry::Geometry_Vector3(1.0f,10.0f,-20.0f);
+					this->camera_up = NBsys::NGeometry::Geometry_Vector3(0.0f,1.0f,0.0f);
+					this->camera_target = NBsys::NGeometry::Geometry_Vector3(0.0f,0.0f,0.0f);
+					this->camera_fov_deg = 60.0f;
+					this->camera_near = 0.1f;
+					this->camera_far = 1000.0f;
+				}
+
+				{
+					this->target_time = 0.0f;
+					this->target_from.Set(10,10,10);
+					this->target_to_a.Set(0,0,5);
+					this->target_to_b.Set(5,0,0);
+				}
+
+				this->step++;
 			}break;
 		case 1:
 			{
-				this->camera_position = NBsys::NGeometry::Geometry_Vector3(1.0f,10.0f,-20.0f);
-				this->camera_up = NBsys::NGeometry::Geometry_Vector3(0.0f,1.0f,0.0f);
-				this->camera_target = NBsys::NGeometry::Geometry_Vector3(0.0f,10.0f,0.0f);
-				this->camera_fov_deg = 60.0f;
-				this->camera_near = 0.1f;
-				this->camera_far = 1000.0f;
+				this->step++;
+				this->draw = true;
+			}break;
+		case 2:
+			{
+				this->target_time += a_delta;
+
+				//カメラ回転。
+				this->camera_position.x = Math::cosf(this->target_time / 10) * 20;
+				this->camera_position.z = Math::sinf(this->target_time / 10) * 20;
+
 			}break;
 		}
 	}
@@ -175,19 +206,54 @@ public:
 		s_d3d11->Render_ClearDepthStencilView();
 
 		if(this->draw){
+			//プロジェクション。
 			NBsys::NGeometry::Geometry_Matrix_44 t_projection;
 			t_projection.Set_PerspectiveProjectionMatrix(static_cast<f32>(s_width),static_cast<f32>(s_height),this->camera_fov_deg,this->camera_near,this->camera_far);
 
+			//ビュー。
 			NBsys::NGeometry::Geometry_Matrix_44 t_view;
 			t_view.Set_ViewMatrix(this->camera_target,this->camera_position,this->camera_up);
 
+			//ライン描画。
+			this->drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(-100,0,0),NBsys::NGeometry::Geometry_Vector3(100,0,0),NBsys::NColor::Color_F(1.0f,0.0f,0.0f,1.0f));
+			this->drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(0,-100,0),NBsys::NGeometry::Geometry_Vector3(0,100,0),NBsys::NColor::Color_F(0.0f,1.0f,0.0f,1.0f));
+			this->drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(0,0,-100),NBsys::NGeometry::Geometry_Vector3(0,0,100),NBsys::NColor::Color_F(0.0f,0.0f,1.0f,1.0f));
 
+			{
+				NBsys::NGeometry::Geometry_Matrix_44 t_matrix_a;
+				NBsys::NGeometry::Geometry_Matrix_44 t_matrix_b;
 
-			this->drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(-10,0,0),	NBsys::NGeometry::Geometry_Vector3(10,0,0),NBsys::NColor::Color_F(1.0f,0.0f,0.0f,1.0f));
-			this->drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(0,-10,0),	NBsys::NGeometry::Geometry_Vector3(0,10,0),NBsys::NColor::Color_F(0.0f,1.0f,0.0f,1.0f));
-			this->drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(0,0,-10),	NBsys::NGeometry::Geometry_Vector3(0,0,10),NBsys::NColor::Color_F(0.0f,0.0f,1.0f,1.0f));
+				//fromからaを向くマトリックス。
+				t_matrix_a.Set_Lookat(this->target_from,this->target_to_a,NBsys::NGeometry::Geometry_Vector3(0,1,0));
+				//fromからbを向くマトリックス。
+				t_matrix_b.Set_Lookat(this->target_from,this->target_to_b,NBsys::NGeometry::Geometry_Vector3(0,1,0));
 
+				//fromからaを向く姿勢。
+				NBsys::NGeometry::Geometry_Quaternion t_quat_a = t_matrix_a.Make_Quaternion();
+				//fromからbを向く姿勢。
+				NBsys::NGeometry::Geometry_Quaternion t_quat_b = t_matrix_b.Make_Quaternion();
 
+				//ライン描画。
+				{
+					NBsys::NGeometry::Geometry_Matrix_44 t_matrix_a = t_quat_a.Make_Matrix();
+					NBsys::NGeometry::Geometry_Vector3 t_to_a = this->target_from + t_matrix_a.Make_AxisZ() * 20;
+					this->drawline_manager->DrawLine(this->target_from,t_to_a,NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
+				}
+
+				//ライン描画。
+				{
+					NBsys::NGeometry::Geometry_Matrix_44 t_matrix_b = t_quat_b.Make_Matrix();
+					NBsys::NGeometry::Geometry_Vector3 t_to_b = this->target_from + t_matrix_b.Make_AxisZ() * 20;
+					this->drawline_manager->DrawLine(this->target_from,t_to_b,NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
+				}
+
+				//ライン描画。
+				{
+					NBsys::NGeometry::Geometry_Matrix_44 t_matrix_b = t_quat_a.Make_Slerp(t_quat_b,Math::absf(Math::cosf(this->target_time)));
+					NBsys::NGeometry::Geometry_Vector3 t_to_b = this->target_from + t_matrix_b.Make_AxisZ() * 20;
+					this->drawline_manager->DrawLine(this->target_from,t_to_b,NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
+				}
+			}
 
 			//ライン描画。
 			this->drawline_manager->Update(t_view * t_projection);
@@ -241,7 +307,7 @@ void Test_Main()
 		}
 
 		//更新。
-		s_app->Update();
+		s_app->Update(t_delta);
 
 		//リクエスト処理。
 		s_d3d11->Render_Main();

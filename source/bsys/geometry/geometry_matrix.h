@@ -18,7 +18,12 @@
 */
 #include "./geometry_identity.h"
 #include "./geometry_matrix_raw.h"
-#include "./geometry_quaternion.h"
+
+
+/** include
+*/
+#include "./geometry_quaternion_decl.h"
+#include "./geometry_vector_decl.h"
 
 
 /** NBsys::NGeometry
@@ -26,10 +31,6 @@
 #if(BSYS_GEOMETRY_ENABLE)
 namespace NBsys{namespace NGeometry
 {
-	/** Geometry_Matrix_44
-	*/
-	struct Geometry_Matrix_44;
-
 	/** Geometry_Matrix_44
 	*/
 	struct Geometry_Matrix_44 : public Geometry_Matrix_44_Raw
