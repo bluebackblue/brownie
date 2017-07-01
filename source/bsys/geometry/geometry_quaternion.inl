@@ -177,33 +177,26 @@ namespace NBsys{namespace NGeometry
 	inline Geometry_Quaternion Geometry_Quaternion::Make_Slerp(const Geometry_Quaternion& a_quaternion,f32 a_per) const
 	{
 		Geometry_Quaternion t_temp;
-		{
-			f32 t_cosom = (this->x * a_quaternion.x) + (this->y * a_quaternion.y) + (this->z * a_quaternion.z) + (this->w * a_quaternion.w);
-			if(t_cosom < 0.0f){
-				t_cosom = -t_cosom;
-				t_temp.x = -a_quaternion.x;
-				t_temp.y = -a_quaternion.y;
-				t_temp.z = -a_quaternion.z;
-				t_temp.w = -a_quaternion.w;
-			}else{
-				t_temp = a_quaternion;
-			}
 
-			f32 t_rate_from = 1.0f - a_per;
-			f32 t_rate_to = a_per;
+		f32 t_omega_v = (this->x * a_quaternion.x) + (this->y * a_quaternion.y) + (this->z * a_quaternion.z) + (this->w * a_quaternion.w);
 
-			if((1.0f - t_cosom) >= FLT_EPSILON){
-				f32 t_omega = Math::acosf(t_cosom);
-				f32 t_sinom = Math::sinf(t_omega);
-				t_rate_from = Math::sinf((1.0f - a_per) * t_omega) / t_sinom;
-				t_rate_to = Math::sinf(a_per * t_omega) / t_sinom;
-			}
-
-			t_temp.x = t_rate_from * this->x + t_rate_to * t_temp.x;
-			t_temp.y = t_rate_from * this->y + t_rate_to * t_temp.y;
-			t_temp.z = t_rate_from * this->z + t_rate_to * t_temp.z;
-			t_temp.w = t_rate_from * this->w + t_rate_to * t_temp.w;
+		if(t_omega_v < 0.0f){
+			t_omega_v = -t_omega_v;
 		}
+
+		f32 t_omega = Math::acosf(t_omega_v);
+		if (Math::absf(t_omega) < FLT_EPSILON) {
+			t_omega = FLT_EPSILON;
+		}
+
+		f32 t_s = Math::sinf(t_omega);
+		f32 t_from_per = Math::sinf(t_omega - a_per * t_omega) / t_s;
+		f32 t_to_per = Math::sinf(a_per * t_omega) / t_s;
+    
+		t_temp.x = this->x * t_from_per + a_quaternion.x * t_to_per;
+		t_temp.y = this->y * t_from_per + a_quaternion.y * t_to_per;
+		t_temp.z = this->z * t_from_per + a_quaternion.z * t_to_per;
+		t_temp.w = this->w * t_from_per + a_quaternion.w * t_to_per;
 
 		return t_temp;
 	}
