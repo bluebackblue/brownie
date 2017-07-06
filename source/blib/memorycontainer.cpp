@@ -45,7 +45,7 @@ namespace NBlib
 		void Reset()
 		{
 			this->index = 0;
-			for(int ii=0;ii<COUNTOF(this->containerindex_list);ii++){
+			for(s32 ii=0;ii<COUNTOF(this->containerindex_list);ii++){
 				this->containerindex_list[ii] = 0;
 			}
 		}

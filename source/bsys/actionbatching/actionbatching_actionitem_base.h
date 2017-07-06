@@ -49,7 +49,7 @@ namespace NBsys{namespace NActionBatching
 		a_delta : 0 < 処理時間残量。0 == 連続処理を一時中断。
 		
 		*/
-		virtual int Do(f32& a_delta,bool a_endrequest) = 0;
+		virtual s32 Do(f32& a_delta,bool a_endrequest) = 0;
 
 	};
 

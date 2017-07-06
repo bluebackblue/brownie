@@ -93,7 +93,7 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline bool Geometry_Frustum::InFrustumCheck(Geometry_Vector3& a_position)
 	{
-		for(int ii=0;ii<COUNTOF(this->plane);ii++){
+		for(s32 ii=0;ii<COUNTOF(this->plane);ii++){
 			if(this->plane[ii].Distance(a_position) < 0){
 
 				//フラスタム外。

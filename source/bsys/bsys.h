@@ -75,4 +75,12 @@
 #include "./texture/texture.h"
 #endif
 
+/** include
+*/
+#if(BSYS_DIJKSTRA_ENABLE)
+#include "./dijkstra/dijkstra.h"
+#endif
+
+
+
 

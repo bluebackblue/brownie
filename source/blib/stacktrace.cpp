@@ -96,7 +96,7 @@ namespace NBlib
 
 				a_out_string += "----- stacktrace -----\n";
 
-				for(int ii=0;ii<t_stack_count;ii++){
+				for(s32 ii=0;ii<t_stack_count;ii++){
 					if((a_index < 0)||(ii == a_index)){
 						::SymGetSymFromAddr(t_process,(DWORD64)(t_stack_list[ii]),0,t_symbol);
 

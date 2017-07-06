@@ -98,7 +98,7 @@ namespace NBlib
 				addrinfo* t_addrinfo_reference = nullptr;
 				if(::getaddrinfo(t_hostname,0,&t_addrinfo_hints,&t_addrinfo_reference) == 0){
 					char t_ip_name[256] = {0};
-					if(::getnameinfo(t_addrinfo_reference->ai_addr,(int)t_addrinfo_reference->ai_addrlen,t_ip_name,sizeof(t_ip_name),0,0,NI_NUMERICHOST) == 0){
+					if(::getnameinfo(t_addrinfo_reference->ai_addr,static_cast<s32>(t_addrinfo_reference->ai_addrlen),t_ip_name,sizeof(t_ip_name),0,0,NI_NUMERICHOST) == 0){
 						a_ip_name = t_ip_name;
 						t_ret = true;
 					}
@@ -413,7 +413,7 @@ namespace NBlib
 		{
 			s64 t_offset = 0LL;
 			s64 t_size = a_size - t_offset;
-			s32 t_ret = ::sendto(this->rawhandle,reinterpret_cast<const char*>(&a_data[t_offset+a_offset]),(int)t_size,0,this->rawaddrinfo->ai_addr,static_cast<s32>(this->rawaddrinfo->ai_addrlen));
+			s32 t_ret = ::sendto(this->rawhandle,reinterpret_cast<const char*>(&a_data[t_offset+a_offset]),static_cast<s32>(t_size),0,this->rawaddrinfo->ai_addr,static_cast<s32>(this->rawaddrinfo->ai_addrlen));
 			if(t_ret <= 0){
 				return false;
 			}
@@ -445,7 +445,7 @@ namespace NBlib
 					if(t_size <= 0){
 						return true;
 					}else{
-						s32 t_fix = ::send(this->rawhandle,reinterpret_cast<const char*>(&a_data[t_offset+a_offset]),(int)t_size,0);
+						s32 t_fix = ::send(this->rawhandle,reinterpret_cast<const char*>(&a_data[t_offset+a_offset]),static_cast<s32>(t_size),0);
 						if(t_fix > 0){
 							t_offset += t_fix;
 						}else{
@@ -486,7 +486,7 @@ namespace NBlib
 						//Š®—¹B
 						return a_size;
 					}else{
-						s32 t_fix = ::recv(this->rawhandle,reinterpret_cast<char*>(&a_data[t_offset+a_offset]),(int)t_size,0);
+						s32 t_fix = ::recv(this->rawhandle,reinterpret_cast<char*>(&a_data[t_offset+a_offset]),static_cast<s32>(t_size),0);
 						if(a_complete == true){
 							if(t_fix > 0){
 								t_offset += t_fix;

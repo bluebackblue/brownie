@@ -76,7 +76,7 @@ namespace NBsys{namespace NActionBatching
 		f32 t_delta = a_delta;
 
 		while(t_delta > 0.0f){
-			int t_next = this->actionlist[this->index]->Do(t_delta,this->endrequest);
+			s32 t_next = this->actionlist[this->index]->Do(t_delta,this->endrequest);
 			if(t_next != 0){
 				this->index += t_next;
 
@@ -103,7 +103,7 @@ namespace NBsys{namespace NActionBatching
 
 	/** GetCurrentIndex
 	*/
-	int ActionBatching_ActionList::GetCurrentIndex() const
+	s32 ActionBatching_ActionList::GetCurrentIndex() const
 	{
 		return this->index;
 	}

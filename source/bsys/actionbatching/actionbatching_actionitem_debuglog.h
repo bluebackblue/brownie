@@ -61,7 +61,7 @@ namespace NBsys{namespace NActionBatching
 
 		/** アクション中。
 		*/
-		virtual int Do(f32& /*a_delta*/,bool /*a_endrequest*/)
+		virtual s32 Do(f32& /*a_delta*/,bool /*a_endrequest*/)
 		{
 			return 1;
 		}

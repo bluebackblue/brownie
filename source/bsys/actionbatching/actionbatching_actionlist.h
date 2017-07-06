@@ -70,7 +70,7 @@ namespace NBsys{namespace NActionBatching
 
 		/** GetCurrentIndex
 		*/
-		int GetCurrentIndex() const;
+		s32 GetCurrentIndex() const;
 
 		/** ’†’fB
 		*/

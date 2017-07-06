@@ -144,7 +144,7 @@ namespace NBsys{namespace NFile
 					//各ファイル名文字数。
 					s64 t_filename_length_offset = t_offset;
 					sharedptr< u16 > t_filename_length(new u16[t_all_count],default_delete< u16[] >());
-					for(int ii=0;ii<static_cast< s32 >(t_filename_pack_short_list.size());ii++){
+					for(s32 ii=0;ii<static_cast< s32 >(t_filename_pack_short_list.size());ii++){
 						t_filename_length.get()[ii] = static_cast< u16 >(t_filename_pack_short_list[ii].length());
 					}
 					t_offset += sizeof(u16) * t_all_count;
@@ -186,7 +186,7 @@ namespace NBsys{namespace NFile
 					}
 
 					{
-						for(int ii=0;ii<static_cast< s32 >(t_filename_fullpath_list.size());ii++){
+						for(s32 ii=0;ii<static_cast< s32 >(t_filename_fullpath_list.size());ii++){
 							FileHandle t_filehandle_read;
 							t_filehandle_read.ReadOpen(Path::Name(t_filename_fullpath_list[ii]));
 

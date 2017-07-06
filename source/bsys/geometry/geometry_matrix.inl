@@ -762,6 +762,7 @@ namespace NBsys{namespace NGeometry
 		Geometry_Vector3 t_z = a_target - a_position;
 		t_z.Set_Normalize();
 
+		//a_up‚Í•â•B
 		Geometry_Vector3 t_x = a_up.Make_Cross(t_z);
 		t_x.Set_Normalize();
 
@@ -795,6 +796,7 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline void Geometry_Matrix_44::Set_LookatLimit(const Geometry_Vector3& a_position,const Geometry_Vector3& a_target,const Geometry_Vector3& a_up)
 	{
+		//t_dir‚Í•â•B
 		Geometry_Vector3 t_dir = a_target - a_position;
 		t_dir.Set_Normalize();
 

@@ -28,11 +28,11 @@ namespace NBsys{namespace ND3d11
 	*/
 	struct D3d11_Layout
 	{
-		std::string						semantic_name;
-		int								semantic_index;
+		std::string						semantic_name;	//TODO:
+		s32								semantic_index;
 		D3d11_LayoutFormatType::Id		format;
-		int								input_slot;
-		int								offset;
+		s32								input_slot;
+		s32								offset;
 
 		D3d11_Layout(const std::string& a_semantic_name,s32 a_semantic_index,D3d11_LayoutFormatType::Id a_format,s32 a_input_slot,s32 a_offset)
 			:

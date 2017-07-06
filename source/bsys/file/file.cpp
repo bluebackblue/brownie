@@ -43,7 +43,7 @@ namespace NBsys{namespace NFile
 		if(s_thread_list == nullptr){
 			s_thread_list.reset(new STLVector< sharedptr< ThreadTemplate< File_Thread > > >::Type());
 
-			for(int ii=0;ii<a_device_max;ii++){
+			for(s32 ii=0;ii<a_device_max;ii++){
 				s_thread_list->push_back(nullptr);
 			}
 

@@ -413,5 +413,11 @@
 	#define BSYS_TEXTURE_GDIPLUS_ENABLE						(0)
 #endif
 
+/*
 
+	ダイクストラ法
 
+*/
+#if !defined(BSYS_DIJKSTRA_ENABLE)
+	#define BSYS_DIJKSTRA_ENABLE							(0)
+#endif

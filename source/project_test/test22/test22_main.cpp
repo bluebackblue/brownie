@@ -110,7 +110,7 @@ static u64 s_pcounter = 0ULL;
 
 
 //s_step
-static int s_step = 0;
+static s32 s_step = 0;
 
 
 //s_rotate

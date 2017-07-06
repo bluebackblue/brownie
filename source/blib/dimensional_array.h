@@ -120,7 +120,7 @@ namespace NBlib
 		*/
 		void SetAll(const T& a_value)
 		{
-			for(int ii=0;ii<(this->size);ii++){
+			for(s32 ii=0;ii<(this->size);ii++){
 				this->list_cache[ii] = a_value;
 			}
 		}
@@ -240,7 +240,7 @@ namespace NBlib
 		*/
 		void SetAll(const T& a_value)
 		{
-			for(int ii=0;ii<(this->width * this->height);ii++){
+			for(s32 ii=0;ii<(this->width * this->height);ii++){
 				this->list_cache[ii] = a_value;
 			}
 		}

@@ -28,6 +28,7 @@
 #include "./test2/test2_main.h"
 
 #include "./test10/test10_main.h"
+#include "./test11/test11_main.h"
 
 #include "./test22/test22_main.h"
 

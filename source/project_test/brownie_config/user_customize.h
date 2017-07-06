@@ -16,9 +16,10 @@
 	DEF_TEST2	:	ファイル、ＪＳＯＮ。
 
 	DEF_TEST10	:	Ｄ３Ｄ１１。
+	DEF_TEST11	:	ダイクストラ法。
 
 */
-#define DEF_TEST10
+#define DEF_TEST11
 
 
 #if defined(DEF_TEST0)
@@ -33,6 +34,12 @@
 
 	#define BSYS_WINDOW_ENABLE								(1)
 	#define BSYS_D3D11_ENABLE								(1)
+
+#elif defined(DEF_TEST11)
+
+	#define BSYS_WINDOW_ENABLE								(1)
+	#define BSYS_D3D11_ENABLE								(1)
+	#define BSYS_DIJKSTRA_ENABLE							(1)
 
 #elif defined(DEF_TEST22)
 
