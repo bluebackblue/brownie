@@ -114,7 +114,7 @@ private:
 
 	/** åoòHíTç∏ÅB
 	*/
-	NBsys::NDijkstra::Dijkstra dijkstra;
+	//NBsys::NRootSearch::RootSearch rootsearch;
 
 public:
 
@@ -169,22 +169,24 @@ public:
 				}
 
 				//åoòHíTç∏ÅB
+				/*
 				{
-					this->dijkstra.Clear();
+					this->rootsearch.Clear();
 
-					s32 t_c = this->dijkstra.AddNode(NBsys::NGeometry::Geometry_Vector3(1,0,1));
+					s32 t_c = this->rootsearch.AddNode(NBsys::NGeometry::Geometry_Vector3(1,0,1));
 
-					s32 t_1 = this->dijkstra.AddNode(NBsys::NGeometry::Geometry_Vector3(10,0,10));
-					s32 t_2 = this->dijkstra.AddNode(NBsys::NGeometry::Geometry_Vector3(-10,0,-10));
+					s32 t_1 = this->rootsearch.AddNode(NBsys::NGeometry::Geometry_Vector3(10,0,10));
+					s32 t_2 = this->rootsearch.AddNode(NBsys::NGeometry::Geometry_Vector3(-10,0,-10));
 
-					s32 t_e = this->dijkstra.AddNode(NBsys::NGeometry::Geometry_Vector3(15,0,-15));
+					s32 t_e = this->rootsearch.AddNode(NBsys::NGeometry::Geometry_Vector3(15,0,-15));
 
-					this->dijkstra.Connect(t_c,t_1);
-					this->dijkstra.Connect(t_c,t_2);
+					this->rootsearch.Connect(t_c,t_1);
+					this->rootsearch.Connect(t_c,t_2);
 
-					this->dijkstra.Connect(t_1,t_e);
-					this->dijkstra.Connect(t_2,t_e);
+					this->rootsearch.Connect(t_1,t_e);
+					this->rootsearch.Connect(t_2,t_e);
 				}
+				*/
 
 				this->step++;
 			}break;
@@ -230,16 +232,18 @@ public:
 			this->drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(0,0,-100),NBsys::NGeometry::Geometry_Vector3(0,0,100),NBsys::NColor::Color_F(0.0f,0.0f,1.0f,1.0f));
 
 			{
-				this->dijkstra.SearchRoot(NBsys::NGeometry::Geometry_Vector3(0,0,0),NBsys::NGeometry::Geometry_Vector3(10,0,-10));
+				//this->rootsearch.SearchRoot(NBsys::NGeometry::Geometry_Vector3(0,0,0),NBsys::NGeometry::Geometry_Vector3(10,0,-10));
 
-				for(s32 ii=0;ii<static_cast<s32>(this->dijkstra.node_pool.size());ii++){
-					NBsys::NGeometry::Geometry_Vector3 t_start = this->dijkstra.node_pool[ii].pos;
-					for(s32 jj=0;jj<static_cast<s32>(this->dijkstra.node_pool[ii].connect_index_list.size());jj++){
-						s32 t_end_index = this->dijkstra.node_pool[ii].connect_index_list[jj];
-						NBsys::NGeometry::Geometry_Vector3 t_end = this->dijkstra.node_pool[t_end_index].pos;
+				/*
+				for(s32 ii=0;ii<static_cast<s32>(this->rootsearch.node_pool.size());ii++){
+					NBsys::NGeometry::Geometry_Vector3 t_start = this->rootsearch.node_pool[ii].pos;
+					for(s32 jj=0;jj<static_cast<s32>(this->rootsearch.node_pool[ii].connect_index_list.size());jj++){
+						s32 t_end_index = this->rootsearch.node_pool[ii].connect_index_list[jj];
+						NBsys::NGeometry::Geometry_Vector3 t_end = this->rootsearch.node_pool[t_end_index].pos;
 						this->drawline_manager->DrawLine(t_start,t_end,NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
 					}
 				}
+				*/
 			}
 
 			//ÉâÉCÉìï`âÊÅB

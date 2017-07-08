@@ -77,8 +77,8 @@
 
 /** include
 */
-#if(BSYS_DIJKSTRA_ENABLE)
-#include "./dijkstra/dijkstra.h"
+#if(BSYS_ROOTSEARCH_ENABLE)
+#include "./rootsearch/rootsearch.h"
 #endif
 
 

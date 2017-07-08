@@ -5,7 +5,7 @@
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief FoveHMD。
+ * @brief 経路探査。
 */
 
 
@@ -19,14 +19,16 @@
 #include "../geometry/geometry.h"
 
 
-/** NBsys::NFovehmd
+/** NBsys::NRootSearch
 */
-#if(BSYS_DIJKSTRA_ENABLE)
-namespace NBsys{namespace NDijkstra
+#if(BSYS_ROOTSEARCH_ENABLE)
+namespace NBsys{namespace NRootSearch
 {
-	/** Dijkstra_Connect
+	#if(0)
+
+	/** RootSearch_Connect
 	*/
-	struct Dijkstra_Connect
+	struct RootSearch_Connect
 	{
 		/** node_index
 		*/
@@ -38,7 +40,7 @@ namespace NBsys{namespace NDijkstra
 
 		/** constructor
 		*/
-		Dijkstra_Connect(s32 a_node_index,s32 a_cost)
+		RootSearch_Connect(s32 a_node_index,s32 a_cost)
 			:
 			node_index(a_node_index),
 			cost(a_cost)
@@ -47,14 +49,14 @@ namespace NBsys{namespace NDijkstra
 
 		/** destructor
 		*/
-		nonvirtual ~Dijkstra_Connect()
+		nonvirtual ~RootSearch_Connect()
 		{
 		}
 	};
 	
-	/** Dijkstra_Node
+	/** RootSearch_Node
 	*/
-	struct Dijkstra_Node
+	struct RootSearch_Node
 	{
 		/** pos
 		*/
@@ -66,7 +68,7 @@ namespace NBsys{namespace NDijkstra
 
 		/** constructor
 		*/
-		Dijkstra_Node(const NGeometry::Geometry_Vector3& a_pos)
+		RootSearch_Node(const NGeometry::Geometry_Vector3& a_pos)
 			:
 			pos(a_pos),
 			connect_index_list()
@@ -75,19 +77,19 @@ namespace NBsys{namespace NDijkstra
 
 		/** destructor
 		*/
-		nonvirtual ~Dijkstra_Node()
+		nonvirtual ~RootSearch_Node()
 		{
 		}
 	};
 
-	/** Dijkstra_CalcTemp
+	/** RootSearch_CalcTemp
 	*/
-	struct Dijkstra_CalcTemp
+	struct RootSearch_CalcTemp
 	{
 		s32 cost;
 		s32 to_node_index;
 
-		Dijkstra_CalcTemp()
+		RootSearch_CalcTemp()
 			:
 			cost(-1),
 			to_node_index(-1)
@@ -95,25 +97,25 @@ namespace NBsys{namespace NDijkstra
 		}
 	};
 
-	/** Dijkstra
+	/** RootSearch
 	*/
-	struct Dijkstra
+	struct RootSearch
 	{
 		/** node_pool
 		*/
-		STLVector< Dijkstra_Connect >::Type connect_pool;
+		STLVector< RootSearch_Connect >::Type connect_pool;
 
 		/** node_pool
 		*/
-		STLVector< Dijkstra_Node >::Type node_pool;
+		STLVector< RootSearch_Node >::Type node_pool;
 
 		/** constructor
 		*/
-		Dijkstra();
+		RootSearch();
 
 		/** destructor
 		*/
-		nonvirtual ~Dijkstra();
+		nonvirtual ~RootSearch();
 
 		/** クリア。
 		*/
@@ -136,6 +138,8 @@ namespace NBsys{namespace NDijkstra
 		NGeometry::Geometry_Vector3 SearchRoot(const NGeometry::Geometry_Vector3& a_start,const NGeometry::Geometry_Vector3& a_end);
 
 	};
+
+	#endif
 
 }}
 #endif

@@ -415,9 +415,9 @@
 
 /*
 
-	ダイクストラ法
+	経路探査
 
 */
-#if !defined(BSYS_DIJKSTRA_ENABLE)
-	#define BSYS_DIJKSTRA_ENABLE							(0)
+#if !defined(BSYS_ROOTSEARCH_ENABLE)
+	#define BSYS_ROOTSEARCH_ENABLE							(0)
 #endif
