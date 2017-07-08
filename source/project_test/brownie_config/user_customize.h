@@ -19,7 +19,7 @@
 	DEF_TEST11	:	ダイクストラ法。
 
 */
-#define DEF_TEST11
+#define DEF_TEST10
 
 
 #if defined(DEF_TEST0)

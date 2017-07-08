@@ -179,17 +179,13 @@ namespace NBsys{namespace NGeometry
 		Geometry_Quaternion t_temp;
 
 		f32 t_omega_v = (this->x * a_quaternion.x) + (this->y * a_quaternion.y) + (this->z * a_quaternion.z) + (this->w * a_quaternion.w);
-
-		if(t_omega_v < 0.0f){
-			t_omega_v = -t_omega_v;
-		}
-
-		f32 t_omega = Math::acosf(t_omega_v);
-		if (Math::absf(t_omega) < FLT_EPSILON) {
-			t_omega = FLT_EPSILON;
-		}
+		f32 t_omega = Math::acosf(Math::absf(t_omega_v));
 
 		f32 t_s = Math::sinf(t_omega);
+		if(t_s < FLT_EPSILON){
+			t_s = FLT_EPSILON;
+		}
+
 		f32 t_from_per = Math::sinf(t_omega - a_per * t_omega) / t_s;
 		f32 t_to_per = Math::sinf(a_per * t_omega) / t_s;
     

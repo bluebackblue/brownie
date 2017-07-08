@@ -232,9 +232,9 @@ public:
 			{
 				this->dijkstra.SearchRoot(NBsys::NGeometry::Geometry_Vector3(0,0,0),NBsys::NGeometry::Geometry_Vector3(10,0,-10));
 
-				for(s32 ii=0;ii<this->dijkstra.node_pool.size();ii++){
+				for(s32 ii=0;ii<static_cast<s32>(this->dijkstra.node_pool.size());ii++){
 					NBsys::NGeometry::Geometry_Vector3 t_start = this->dijkstra.node_pool[ii].pos;
-					for(s32 jj=0;jj<this->dijkstra.node_pool[ii].connect_index_list.size();jj++){
+					for(s32 jj=0;jj<static_cast<s32>(this->dijkstra.node_pool[ii].connect_index_list.size());jj++){
 						s32 t_end_index = this->dijkstra.node_pool[ii].connect_index_list[jj];
 						NBsys::NGeometry::Geometry_Vector3 t_end = this->dijkstra.node_pool[t_end_index].pos;
 						this->drawline_manager->DrawLine(t_start,t_end,NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
