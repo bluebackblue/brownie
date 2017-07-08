@@ -63,7 +63,7 @@ namespace NBsys{namespace NRootSearch
 		this->connect_pool.clear();
 	}
 
-	/** ノード、追加。
+	/** ノード追加。
 	*/
 	RootSearch_NodeIndex RootSearch_Data::AddNode(const NGeometry::Geometry_Vector3& a_pos,f32 a_radius,bool a_root)
 	{
@@ -108,6 +108,28 @@ namespace NBsys{namespace NRootSearch
 		return RootSearch_NodeIndex(t_index);
 	}
 
+	/** ノード取得。
+	*/
+	RootSearch_Node& RootSearch_Data::GetNode(RootSearch_NodeIndex a_nodeindex)
+	{
+		return this->node_pool[a_nodeindex.GetValue()];
+	}
+
+	/** ルートノードの計算。
+	*/
+	void RootSearch_Data::CalcRootNode()
+	{
+		STLVector< RootSearch_Node* >::Type t_root_node_list;
+
+		s32 ii_max = this->node_pool.size();
+		for(s32 ii=0;ii<ii_max;ii++){
+			if(this->node_pool[ii].IsRoot()){
+				t_root_node_list.push_back(&this->node_pool[ii]);
+			}
+		}
+
+
+	}
 
 }}
 #endif

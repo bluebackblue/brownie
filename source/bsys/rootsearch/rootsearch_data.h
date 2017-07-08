@@ -58,7 +58,7 @@ namespace NBsys{namespace NRootSearch
 		*/
 		void Clear();
 
-		/** ノード、追加。
+		/** ノード追加。
 		*/
 		RootSearch_NodeIndex AddNode(const NGeometry::Geometry_Vector3& a_pos,f32 a_radius,bool a_root);
 
@@ -69,6 +69,14 @@ namespace NBsys{namespace NRootSearch
 		/** 位置からノードインデックス取得。
 		*/
 		RootSearch_NodeIndex GetNodeIndexFromPos(const NBsys::NGeometry::Geometry_Vector3& a_pos);
+
+		/** ノード取得。
+		*/
+		RootSearch_Node& GetNode(RootSearch_NodeIndex a_nodeindex);
+
+		/** ルートノードの計算。
+		*/
+		void CalcRootNode();
 
 	};
 }}

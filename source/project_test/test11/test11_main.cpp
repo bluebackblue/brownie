@@ -114,7 +114,7 @@ private:
 
 	/** Œo˜H’T¸B
 	*/
-	//NBsys::NRootSearch::RootSearch rootsearch;
+	NBsys::NRootSearch::RootSearch_Data rootsearch_data;
 
 public:
 
@@ -169,24 +169,34 @@ public:
 				}
 
 				//Œo˜H’T¸B
-				/*
 				{
-					this->rootsearch.Clear();
+					this->rootsearch_data.Clear();
 
-					s32 t_c = this->rootsearch.AddNode(NBsys::NGeometry::Geometry_Vector3(1,0,1));
+					NBsys::NRootSearch::RootSearch_NodeIndex t_c = this->rootsearch_data.AddNode(NBsys::NGeometry::Geometry_Vector3(1,0,1),2,true);
+					NBsys::NRootSearch::RootSearch_NodeIndex t_1 = this->rootsearch_data.AddNode(NBsys::NGeometry::Geometry_Vector3(10,0,10),2,true);
+					NBsys::NRootSearch::RootSearch_NodeIndex t_2 = this->rootsearch_data.AddNode(NBsys::NGeometry::Geometry_Vector3(-10,0,-10),2,true);
+					NBsys::NRootSearch::RootSearch_NodeIndex t_e = this->rootsearch_data.AddNode(NBsys::NGeometry::Geometry_Vector3(15,0,-15),2,true);
 
-					s32 t_1 = this->rootsearch.AddNode(NBsys::NGeometry::Geometry_Vector3(10,0,10));
-					s32 t_2 = this->rootsearch.AddNode(NBsys::NGeometry::Geometry_Vector3(-10,0,-10));
+					{
+						s32 t_cost = static_cast<s32>((this->rootsearch_data.GetNode(t_c).GetPos() - this->rootsearch_data.GetNode(t_1).GetPos()).Length());
+						this->rootsearch_data.Connect(t_c,t_1,true,t_cost);
+					}
 
-					s32 t_e = this->rootsearch.AddNode(NBsys::NGeometry::Geometry_Vector3(15,0,-15));
+					{
+						s32 t_cost = static_cast<s32>((this->rootsearch_data.GetNode(t_c).GetPos() - this->rootsearch_data.GetNode(t_2).GetPos()).Length());
+						this->rootsearch_data.Connect(t_c,t_2,true,t_cost);
+					}
 
-					this->rootsearch.Connect(t_c,t_1);
-					this->rootsearch.Connect(t_c,t_2);
+					{
+						s32 t_cost = static_cast<s32>((this->rootsearch_data.GetNode(t_1).GetPos() - this->rootsearch_data.GetNode(t_e).GetPos()).Length());
+						this->rootsearch_data.Connect(t_1,t_e,true,t_cost);
+					}
 
-					this->rootsearch.Connect(t_1,t_e);
-					this->rootsearch.Connect(t_2,t_e);
+					{
+						s32 t_cost = static_cast<s32>((this->rootsearch_data.GetNode(t_2).GetPos() - this->rootsearch_data.GetNode(t_e).GetPos()).Length());
+						this->rootsearch_data.Connect(t_2,t_e,true,t_cost);
+					}
 				}
-				*/
 
 				this->step++;
 			}break;
