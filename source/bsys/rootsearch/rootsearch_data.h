@@ -50,7 +50,7 @@ namespace NBsys{namespace NRootSearch
 	private:
 		/** コネクトチェック。
 		*/
-		bool ConnectCheck(NodeIndex& a_nodeindex_from,NodeIndex& a_nodeindex_to,bool a_root);
+		bool ConnectCheck(RootSearch_NodeIndex& a_nodeindex_from,RootSearch_NodeIndex& a_nodeindex_to,bool a_root);
 
 	public:
 
@@ -60,15 +60,15 @@ namespace NBsys{namespace NRootSearch
 
 		/** ノード、追加。
 		*/
-		NodeIndex AddNode(const NGeometry::Geometry_Vector3& a_pos,f32 a_radius,bool a_root);
+		RootSearch_NodeIndex AddNode(const NGeometry::Geometry_Vector3& a_pos,f32 a_radius,bool a_root);
 
 		/** コネクト。
 		*/
-		void Connect(NodeIndex a_nodeindex_a,NodeIndex a_nodeindex_b,bool a_root,s32 a_cost);
+		void Connect(RootSearch_NodeIndex a_nodeindex_a,RootSearch_NodeIndex a_nodeindex_b,bool a_root,s32 a_cost);
 
 		/** 位置からノードインデックス取得。
 		*/
-		NodeIndex GetNodeIndexFromPos(const NBsys::NGeometry::Geometry_Vector3& a_pos);
+		RootSearch_NodeIndex GetNodeIndexFromPos(const NBsys::NGeometry::Geometry_Vector3& a_pos);
 
 	};
 }}

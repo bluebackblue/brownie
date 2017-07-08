@@ -19,16 +19,16 @@
 #if(BSYS_ROOTSEARCH_ENABLE)
 namespace NBsys{namespace NRootSearch
 {
-	/** NodeIndex
+	/** RootSearch_NodeIndex
 	*/
-	class NodeIndex
+	class RootSearch_NodeIndex
 	{
 		s32 nodeindex;
 
 	public:
 		/** constructor
 		*/
-		NodeIndex(s32 a_nodeindex)
+		RootSearch_NodeIndex(s32 a_nodeindex)
 			:
 			nodeindex(a_nodeindex)
 		{
@@ -36,7 +36,7 @@ namespace NBsys{namespace NRootSearch
 
 		/** constructor
 		*/
-		NodeIndex()
+		RootSearch_NodeIndex()
 			:
 			nodeindex(-1)
 		{
@@ -44,7 +44,7 @@ namespace NBsys{namespace NRootSearch
 
 		/** destructor
 		*/
-		nonvirtual ~NodeIndex()
+		nonvirtual ~RootSearch_NodeIndex()
 		{
 		}
 
@@ -68,7 +68,7 @@ namespace NBsys{namespace NRootSearch
 
 		/** operator ==
 		*/
-		bool operator ==(const NodeIndex& a_nodeindex) const noexcept
+		bool operator ==(const RootSearch_NodeIndex& a_nodeindex) const noexcept
 		{
 			if(this->IsInvalid() == false){
 				if(this->nodeindex == a_nodeindex.nodeindex){
@@ -80,16 +80,16 @@ namespace NBsys{namespace NRootSearch
 		}
 	};
 
-	/** ConnectIndex
+	/** RootSearch_ConnectIndex
 	*/
-	class ConnectIndex
+	class RootSearch_ConnectIndex
 	{
 		s32 connectindex;
 
 	public:
 		/** constructor
 		*/
-		ConnectIndex(s32 a_connectindex)
+		RootSearch_ConnectIndex(s32 a_connectindex)
 			:
 			connectindex(a_connectindex)
 		{
@@ -97,7 +97,7 @@ namespace NBsys{namespace NRootSearch
 
 		/** constructor
 		*/
-		ConnectIndex()
+		RootSearch_ConnectIndex()
 			:
 			connectindex(-1)
 		{
@@ -105,7 +105,7 @@ namespace NBsys{namespace NRootSearch
 
 		/** destructor
 		*/
-		nonvirtual ~ConnectIndex()
+		nonvirtual ~RootSearch_ConnectIndex()
 		{
 		}
 
@@ -129,7 +129,7 @@ namespace NBsys{namespace NRootSearch
 
 		/** operator ==
 		*/
-		bool operator ==(const ConnectIndex& a_connectindex) const noexcept
+		bool operator ==(const RootSearch_ConnectIndex& a_connectindex) const noexcept
 		{
 			if(this->IsInvalid() == false){
 				if(this->connectindex == a_connectindex.connectindex){

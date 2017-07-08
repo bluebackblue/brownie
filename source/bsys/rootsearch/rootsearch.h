@@ -16,7 +16,10 @@
 
 /** include
 */
-#include "../geometry/geometry.h"
+#include "./rootsearch_data.h"
+#include "./rootsearch_node.h"
+#include "./rootsearch_connect.h"
+#include "./rootsearch_type.h"
 
 
 /** NBsys::NRootSearch
@@ -24,6 +27,9 @@
 #if(BSYS_ROOTSEARCH_ENABLE)
 namespace NBsys{namespace NRootSearch
 {
+
+
+
 	#if(0)
 
 	/** RootSearch_Connect

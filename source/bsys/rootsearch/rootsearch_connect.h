@@ -30,7 +30,7 @@ namespace NBsys{namespace NRootSearch
 	{
 		/** 接続先。
 		*/
-		NodeIndex nodeindex_to;
+		RootSearch_NodeIndex nodeindex_to;
 
 		/** コスト。
 		*/
@@ -39,7 +39,7 @@ namespace NBsys{namespace NRootSearch
 	public:
 		/** constructor
 		*/
-		RootSearch_Connect(NodeIndex a_nodeindex_to,s32 a_cost);
+		RootSearch_Connect(RootSearch_NodeIndex a_nodeindex_to,s32 a_cost);
 
 		/** destructor
 		*/
@@ -49,7 +49,7 @@ namespace NBsys{namespace NRootSearch
 
 		/** 接続先、ノードインデクス取得。
 		*/
-		NodeIndex GetNodeIndex();
+		RootSearch_NodeIndex GetNodeIndex();
 
 		/** コスト。
 		*/

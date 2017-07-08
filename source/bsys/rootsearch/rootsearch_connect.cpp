@@ -26,7 +26,7 @@ namespace NBsys{namespace NRootSearch
 {
 	/** constructor
 	*/
-	RootSearch_Connect::RootSearch_Connect(NodeIndex a_nodeindex_to,s32 a_cost)
+	RootSearch_Connect::RootSearch_Connect(RootSearch_NodeIndex a_nodeindex_to,s32 a_cost)
 		:
 		nodeindex_to(a_nodeindex_to),
 		cost(a_cost)
@@ -41,7 +41,7 @@ namespace NBsys{namespace NRootSearch
 
 	/** 接続先、ノードインデクス取得。
 	*/
-	NodeIndex RootSearch_Connect::GetNodeIndex()
+	RootSearch_NodeIndex RootSearch_Connect::GetNodeIndex()
 	{
 		return this->nodeindex_to;
 	}

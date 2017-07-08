@@ -41,9 +41,9 @@ namespace NBsys{namespace NRootSearch
 
 	/** コネクトチェック。
 	*/
-	bool RootSearch_Data::ConnectCheck(NodeIndex& a_nodeindex_from,NodeIndex& a_nodeindex_to,bool a_root)
+	bool RootSearch_Data::ConnectCheck(RootSearch_NodeIndex& a_nodeindex_from,RootSearch_NodeIndex& a_nodeindex_to,bool a_root)
 	{
-		STLVector< ConnectIndex >::Type& t_connectindex_list = this->node_pool[a_nodeindex_from.GetValue()].ConnectIndexList(a_root);
+		STLVector< RootSearch_ConnectIndex >::Type& t_connectindex_list = this->node_pool[a_nodeindex_from.GetValue()].ConnectIndexList(a_root);
 
 		s32 ii_max = t_connectindex_list.size();
 		for(s32 ii=0;ii<ii_max;ii++){
@@ -65,33 +65,33 @@ namespace NBsys{namespace NRootSearch
 
 	/** ノード、追加。
 	*/
-	NodeIndex RootSearch_Data::AddNode(const NGeometry::Geometry_Vector3& a_pos,f32 a_radius,bool a_root)
+	RootSearch_NodeIndex RootSearch_Data::AddNode(const NGeometry::Geometry_Vector3& a_pos,f32 a_radius,bool a_root)
 	{
 		this->node_pool.push_back(RootSearch_Node(a_pos,a_radius,a_root));
-		return NodeIndex(static_cast<s32>(this->node_pool.size() - 1));
+		return RootSearch_NodeIndex(static_cast<s32>(this->node_pool.size() - 1));
 	}
 
 	/** コネクト。
 	*/
-	void RootSearch_Data::Connect(NodeIndex a_nodeindex_a,NodeIndex a_nodeindex_b,bool a_root,s32 a_cost)
+	void RootSearch_Data::Connect(RootSearch_NodeIndex a_nodeindex_a,RootSearch_NodeIndex a_nodeindex_b,bool a_root,s32 a_cost)
 	{
 		RootSearch_Node& t_node_a = this->node_pool[a_nodeindex_a.GetValue()];
 		RootSearch_Node& t_node_b = this->node_pool[a_nodeindex_b.GetValue()];
 
 		if(this->ConnectCheck(a_nodeindex_a,a_nodeindex_b,a_root) == false){
 			this->connect_pool.push_back(RootSearch_Connect(a_nodeindex_b,a_cost));
-			t_node_a.ConnectIndexList(a_root).push_back(ConnectIndex(this->connect_pool.size()-1));
+			t_node_a.ConnectIndexList(a_root).push_back(RootSearch_ConnectIndex(this->connect_pool.size()-1));
 		}
 
 		if(this->ConnectCheck(a_nodeindex_b,a_nodeindex_a,a_root) == false){
 			this->connect_pool.push_back(RootSearch_Connect(a_nodeindex_a,a_cost));
-			t_node_a.ConnectIndexList(a_root).push_back(ConnectIndex(this->connect_pool.size()-1));
+			t_node_a.ConnectIndexList(a_root).push_back(RootSearch_ConnectIndex(this->connect_pool.size()-1));
 		}
 	}
 
 	/** 位置からノードインデックス取得。
 	*/
-	NodeIndex RootSearch_Data::GetNodeIndexFromPos(const NBsys::NGeometry::Geometry_Vector3& a_pos)
+	RootSearch_NodeIndex RootSearch_Data::GetNodeIndexFromPos(const NBsys::NGeometry::Geometry_Vector3& a_pos)
 	{
 		s32 t_index = -1;
 		f32 t_min = -1;
@@ -105,7 +105,7 @@ namespace NBsys{namespace NRootSearch
 			}
 		}
 
-		return NodeIndex(t_index);
+		return RootSearch_NodeIndex(t_index);
 	}
 
 
