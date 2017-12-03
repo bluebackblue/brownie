@@ -61,7 +61,7 @@ namespace NBlib
 		}
 	}
 
-	/** [static]is_nan
+	/** [static]非数チェック。
 	*/
 	bool Math::is_nan(f32 a_value)
 	{
@@ -88,60 +88,60 @@ namespace NBlib
 		return std::sqrtf(a_value);
 	}
 
-	/** [static]absf
+	/** [static]絶対値。
 	*/
 	f32 Math::absf(f32 a_value)
 	{
 		return std::fabsf(a_value);
 	}
 
-	/** [static]自然対数の底e(ネイピア数)のvalue乗。
+	/** [static]自然対数の底のa_value乗。
 	*/
 	f32 Math::expf(f32 a_value)
 	{
 		return std::expf(a_value);
 	}
 
-	/** [static]sinf
+	/** [static]サイン。
 	*/
 	f32 Math::sinf(f32 a_rad)
 	{
 		return std::sinf(a_rad);
 	}
 
-	/** [static]cosf
+	/** [static]コサイン。
 	*/
 	f32 Math::cosf(f32 a_rad)
 	{
 		return std::cosf(a_rad);
 	}
 
-	/** [static]tanf
+	/** [static]タンジェント。
 	*/
 	f32 Math::tanf(f32 a_rad)
 	{
 		return std::tanf(a_rad);
 	}
 
-	/** [static]asinf
+	/** [static]アークサイン。
 	*/
-	f32 Math::asinf(f32 a_x)
+	f32 Math::asinf(f32 a_value)
 	{
-		return std::asinf(a_x);
+		return std::asinf(a_value);
 	}
 
-	/** [static]acosf
+	/** [static]アークコサイン。
 	*/
-	f32 Math::acosf(f32 a_x)
+	f32 Math::acosf(f32 a_value)
 	{
-		return std::acosf(a_x);
+		return std::acosf(a_value);
 	}
 
-	/** [static]atanf
+	/** [static]アークタンジェント。
 	*/
-	f32 Math::atanf(f32 a_x)
+	f32 Math::atanf(f32 a_value)
 	{
-		return std::atanf(a_x);
+		return std::atanf(a_value);
 	}
 
 	/** [static]sinf_fast
