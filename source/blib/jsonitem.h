@@ -372,7 +372,7 @@ namespace NBlib
 		*/
 		sharedptr< STLVector< STLString >::Type > CreateAssociativeKeyList();
 
-		/** JsonStringへのコンバート。
+		/** JsonStringへコンバート。
 		*/
 		const STLString ConvertJsonString() const;
 

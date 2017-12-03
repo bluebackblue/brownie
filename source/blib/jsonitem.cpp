@@ -1745,7 +1745,7 @@ namespace NBlib
 		return t_ret_keylist;
 	}
 
-	/** JsonStringへのコンバート。
+	/** JsonStringへコンバート。
 	*/
 	const STLString JsonItem::ConvertJsonString() const
 	{
