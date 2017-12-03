@@ -53,6 +53,6 @@ mid-level library
 
 ## user_customize.h
 テストデファインの各種説明
-* TEST0: デバッグログ、デバッグブレイク、アサート。
-* TEST1: 型、リスト。
-* TEST2: ファイル、ＪＳＯＮ。
+* DEF_TEST0: デバッグログ、デバッグブレイク、アサート。
+* DEF_TEST1: 型、リスト。
+* DEF_TEST2: ファイル、ＪＳＯＮ。
