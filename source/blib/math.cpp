@@ -144,7 +144,7 @@ namespace NBlib
 		return std::atanf(a_value);
 	}
 
-	/** [static]sinf_fast
+	/** [static]サイン（テーブル参照）。
 	*/
 	f32 Math::sinf_fast(f32 a_rad)
 	{
@@ -157,7 +157,7 @@ namespace NBlib
 		}
 	}
 
-	/** [static]cosf_fast
+	/** [static]コサイン（テーブル参照）。
 	*/
 	f32 Math::cosf_fast(f32 a_rad)
 	{
@@ -170,7 +170,7 @@ namespace NBlib
 		}
 	}
 
-	/** [static]tanf_fast
+	/** [static]タンジェント（テーブル参照）。
 	*/
 	f32 Math::tanf_fast(f32 a_rad)
 	{
