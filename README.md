@@ -12,7 +12,7 @@ low-level library
 mid-level library
 
 ## folder structure
-
+フォルダ構造
 * brownie
 * _ source
 * ___ blib
@@ -41,16 +41,18 @@ mid-level library
 * ___ lpng1628
 
 ## include path
-
+以下のインクルードパスを前提にしています。
 * ./brownie/source/project_test
 * ./sdk
 
 ## sample solution
-* step 1: ./brownie/source/premake.bat
-* step 2: ./brownie/source/brownie.sln
-* step 3: ./brownie/source/project_test/brownie_config/user_customize.h
+サンプル起動までの手順。
+* step 1: RUN  ./brownie/source/premake.bat
+* step 2: OPEN ./brownie/source/brownie.sln
+* step 3: EDIT ./brownie/source/project_test/brownie_config/user_customize.h
 
 ## user_customize.h
+テストデファインの各種説明
 * TEST0: デバッグログ、デバッグブレイク、アサート。
 * TEST1: 型、リスト。
 * TEST2: ファイル、ＪＳＯＮ。
