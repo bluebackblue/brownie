@@ -30,7 +30,7 @@
 namespace NBlib
 {
 
-	/** [static]Dir
+	/** [static]パスの整形。
 
 	a_path	: パス。
 	return	: パス。
@@ -58,7 +58,7 @@ namespace NBlib
 	}
 
 
-	/** [static]Name
+	/** [static]名前付きパスの整形。
 
 	a_name	: ([パス]+名前)。
 	return	: ([パス]+名前)。
@@ -80,7 +80,7 @@ namespace NBlib
 	}
 
 
-	/** [static]DirAndName
+	/** [static]パスと名前付きパスの合成。
 
 	a_path	: パス。
 	a_name	: ([パス]+名前)。
@@ -117,7 +117,7 @@ namespace NBlib
 	}
 
 
-	/** [static]DirAndDir
+	/** [static]パスの合成。
 
 	a_path_a	: パス。
 	a_path_b	: パス。
