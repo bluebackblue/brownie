@@ -45,7 +45,7 @@ mid-level library
 * ./brownie/source/project_test
 * ./sdk
 
-## sample solution
+## test project
 テストプロジェクト起動までの手順。
 * step 1: RUN  ./brownie/source/premake.bat
 * step 2: OPEN ./brownie/source/brownie.sln
