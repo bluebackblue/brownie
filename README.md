@@ -15,15 +15,15 @@ mid-level library
 フォルダ構造
 * brownie
 * _ source
-* ___ blib
-* ___ bsys
+* ___ blib [低レベルライブラリ]
+* ___ bsys [中レベルライブラリ]
 * ___ premake.bat
-* ___ project_test
+* ___ project_test [サンプルプロジェクト]
 * _____ brownie_config
 * _______ brownie_config.h
 * _______ user_customize.h
-* _ premake
-* _ licence
+* _ premake [ビルドツール]
+* _ licence [使用ライセンス関連ファイル]
 * ___ fovehmd
 * ___ glew
 * ___ glfw
@@ -31,7 +31,7 @@ mid-level library
 * ___ mmd
 * ___ saba
 * ___ zlib
-* sdk
+* sdk [blib/bsys内で使用する外部ミドルウェアの設置場所(このリポジトリには含まれていません)]
 * _ gl
 * ___ glew-2.0.0
 * ___ glfw-3.2.1
