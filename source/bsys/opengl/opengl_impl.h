@@ -100,11 +100,11 @@ namespace NBsys{namespace NOpengl
 
 		/** バーテックスバッファリスト。
 		*/
-		STLMap< s32 , sharedptr< Opengl_Impl_VertexBuffer > >::Type vertexbuffer_list;
+		STLMap<s32,sharedptr<Opengl_Impl_VertexBuffer>>::Type vertexbuffer_list;
 
 		/** shaderstate_list
 		*/
-		STLVector< sharedptr< Opengl_Impl_ShaderState > >::Type shaderstate_list;
+		STLVector<sharedptr<Opengl_Impl_ShaderState>>::Type shaderstate_list;
 
 		/** current_shaderprogram_rawid
 		*/
@@ -120,11 +120,11 @@ namespace NBsys{namespace NOpengl
 
 		/** rawtexture_list
 		*/
-		STLMap< s32 , sharedptr< Opengl_Impl_Texture > >::Type texture_list;
+		STLMap<s32,sharedptr<Opengl_Impl_Texture>>::Type texture_list;
 
 		/** framebuffer_list
 		*/
-		STLMap< s32 , sharedptr< Opengl_Impl_FrameBuffer > >::Type framebuffer_list;
+		STLMap<s32,sharedptr<Opengl_Impl_FrameBuffer>>::Type framebuffer_list;
 
 
 
@@ -140,7 +140,7 @@ namespace NBsys{namespace NOpengl
 
 		/** font
 		*/
-		sharedptr< Opengl_Impl_Font > font;
+		sharedptr<Opengl_Impl_Font> font;
 
 		#endif
 
@@ -165,11 +165,11 @@ namespace NBsys{namespace NOpengl
 
 		/** StartBatching
 		*/
-		void StartBatching(sharedptr< NBsys::NActionBatching::ActionBatching_ActionList >& a_actionlist);
+		void StartBatching(sharedptr<NBsys::NActionBatching::ActionBatching_ActionList>& a_actionlist);
 
 		/** バーテックスバッファ作成。
 		*/
-		s32 CreateVertexBuffer(const sharedptr< u8 >& a_data_byte,s32 a_size_byte,s32 a_stride_byte);
+		s32 CreateVertexBuffer(const sharedptr<u8>& a_data_byte,s32 a_size_byte,s32 a_stride_byte);
 
 		/** バーテックスバッファ削除。
 		*/
@@ -177,7 +177,7 @@ namespace NBsys{namespace NOpengl
 
 		/** シェーダーロード開始。
 		*/
-		void LoadShaderRequest(const sharedptr< Opengl_ShaderLayout >& a_shaderlayout,AsyncResult< bool >& a_asyncresult);
+		void LoadShaderRequest(const sharedptr<Opengl_ShaderLayout>& a_shaderlayout,AsyncResult<bool>& a_asyncresult);
 
 		/** シェーダー削除。
 		*/
@@ -191,7 +191,7 @@ namespace NBsys{namespace NOpengl
 
 		/** [メインスレッド]テクスチャ―作成。
 		*/
-		s32 CreateTexture(const sharedptr< NBsys::NTexture::Texture>& a_texture);
+		s32 CreateTexture(const sharedptr<NBsys::NTexture::Texture>& a_texture);
 
 		/** [メインスレッド]テクスチャー削除。
 		*/
@@ -211,7 +211,7 @@ namespace NBsys{namespace NOpengl
 		
 		/** SetFont
 		*/
-		void SetFont(sharedptr< NBsys::NFont::Font >& a_font,s32 a_texture_width,const STLString& a_name);
+		void SetFont(sharedptr<NBsys::NFont::Font>& a_font,s32 a_texture_width,const STLString& a_name);
 
 		#endif
 
@@ -235,15 +235,15 @@ namespace NBsys{namespace NOpengl
 	
 		/** Render_CreateFrameBuffer。
 		*/
-		void Render_CreateFrameBuffer(sharedptr< Opengl_Impl_FrameBuffer >& a_framebuffer);
+		void Render_CreateFrameBuffer(sharedptr<Opengl_Impl_FrameBuffer>& a_framebuffer);
 
 		/** Render_CreateTexture。
 		*/
-		void Render_CreateTexture(sharedptr< Opengl_Impl_Texture >& a_texture);
+		void Render_CreateTexture(sharedptr<Opengl_Impl_Texture>& a_texture);
 
 		/** Render_DeleteTexture。
 		*/
-		void Render_DeleteTexture(sharedptr< Opengl_Impl_Texture >& a_texture);
+		void Render_DeleteTexture(sharedptr<Opengl_Impl_Texture>& a_texture);
 
 		#endif
 
@@ -265,19 +265,19 @@ namespace NBsys{namespace NOpengl
 
 		/** [描画命令]バーテックスバッファ作成。
 		*/
-		void Render_CreateVertexBuffer(sharedptr< Opengl_Impl_VertexBuffer >& a_vertexbuffer);
+		void Render_CreateVertexBuffer(sharedptr<Opengl_Impl_VertexBuffer>& a_vertexbuffer);
 
 		/** [描画命令]バーテックスバッファ削除。
 		*/
-		void Render_DeleteVertexBuffer(sharedptr< Opengl_Impl_VertexBuffer >& a_vertexbuffer);
+		void Render_DeleteVertexBuffer(sharedptr<Opengl_Impl_VertexBuffer>& a_vertexbuffer);
 
 		/** [描画命令]シェーダーロード。
 		*/
-		void Render_LoadShader(sharedptr< Opengl_ShaderLayout >& a_shaderlayout);
+		void Render_LoadShader(sharedptr<Opengl_ShaderLayout>& a_shaderlayout);
 
 		/** [描画命令]シェーダー削除。
 		*/
-		void Render_DeleteShader(sharedptr< Opengl_Impl_ShaderState >& a_shaderstate);
+		void Render_DeleteShader(sharedptr<Opengl_Impl_ShaderState>& a_shaderstate);
 
 		/** [描画命令]シェーダー設定。
 		*/

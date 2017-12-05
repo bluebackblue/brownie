@@ -54,7 +54,7 @@ namespace NBlib
 
 		/** list
 		*/
-		STLVector< DirectoryHandle::DirectoryItem >::Type list;
+		STLVector<DirectoryHandle::DirectoryItem>::Type list;
 
 		/** fullpath
 		*/

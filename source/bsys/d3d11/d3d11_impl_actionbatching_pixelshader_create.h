@@ -37,17 +37,17 @@ namespace NBsys{namespace ND3d11
 
 		/** pixelshader
 		*/
-		sharedptr< D3d11_Impl_PixelShader > pixelshader;
+		sharedptr<D3d11_Impl_PixelShader> pixelshader;
 
 		/** asyncresult
 		*/
-		AsyncResult< bool > asyncresult;
+		AsyncResult<bool> asyncresult;
 
 	public:
 
 		/** constructor
 		*/
-		D3d11_Impl_ActionBatching_PixelShader_Create(D3d11_Impl& a_d3d11_impl,sharedptr< D3d11_Impl_PixelShader >& a_pixelshader,AsyncResult< bool >& a_asyncresult)
+		D3d11_Impl_ActionBatching_PixelShader_Create(D3d11_Impl& a_d3d11_impl,sharedptr<D3d11_Impl_PixelShader>& a_pixelshader,AsyncResult<bool>& a_asyncresult)
 			:
 			d3d11_impl(a_d3d11_impl),
 			pixelshader(a_pixelshader),

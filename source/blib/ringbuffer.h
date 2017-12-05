@@ -26,11 +26,11 @@ namespace NBlib
 {
 	/** RingBufferCopy
 	*/
-	template < typename R , bool RAWCOPYMODE > class RingBufferCopy;
+	template <typename R,bool RAWCOPYMODE> class RingBufferCopy;
 
-	/** RingBufferCopy<RAWCOPYMODE = true>
+	/** RingBufferCopy<RAWCOPYMODE=true>
 	*/
-	template < typename R > class RingBufferCopy< R , true >
+	template <typename R> class RingBufferCopy<R,true>
 	{
 	public:
 		typedef typename R::RingBufferItemType T;
@@ -50,9 +50,9 @@ namespace NBlib
 		}
 	};
 
-	/** RingBufferCopy<RAWCOPYMODE = false>
+	/** RingBufferCopy<RAWCOPYMODE=false>
 	*/
-	template < typename R > class RingBufferCopy< R , false >
+	template <typename R> class RingBufferCopy<R,false>
 	{
 	public:
 		typedef typename R::RingBufferItemType T;
@@ -80,7 +80,7 @@ namespace NBlib
 
 	/** リングバッファ。ベース。
 	*/
-	template < typename T > class RingBufferBase
+	template <typename T> class RingBufferBase
 	{
 	public:
 		/** 使用サイズ取得。
@@ -138,7 +138,7 @@ namespace NBlib
 
 	/** リングバッファ。
 	*/
-	template < typename T , s32 SIZE , bool RAWCOPYMODE > class RingBuffer : public RingBufferBase< T >
+	template <typename T,s32 SIZE,bool RAWCOPYMODE> class RingBuffer : public RingBufferBase<T>
 	{
 	public:
 		typedef T RingBufferItemType;
@@ -316,7 +316,7 @@ namespace NBlib
 						t_copycount = a_from_count - t_copy_fixcount;
 					}
 
-					RingBufferCopy< RingBuffer< T , SIZE , RAWCOPYMODE > , RAWCOPYMODE >::CopyToBuffer_Raw(*this,a_from_data,t_copy_fixcount,t_copycount);
+					RingBufferCopy<RingBuffer<T,SIZE,RAWCOPYMODE>,RAWCOPYMODE>::CopyToBuffer_Raw(*this,a_from_data,t_copy_fixcount,t_copycount);
 
 					this->AddUse(t_copycount);
 					t_copy_fixcount += t_copycount;
@@ -340,7 +340,7 @@ namespace NBlib
 						t_copycount = a_to_count - t_copy_fixcount;
 					}
 
-					RingBufferCopy< RingBuffer< T , SIZE , RAWCOPYMODE > , RAWCOPYMODE >::CopyFromBuffer_Raw(*this,a_to_data,t_copy_fixcount,t_copycount);
+					RingBufferCopy<RingBuffer<T,SIZE,RAWCOPYMODE>,RAWCOPYMODE>::CopyFromBuffer_Raw(*this,a_to_data,t_copy_fixcount,t_copycount);
 
 					this->AddFree(t_copycount);
 					t_copy_fixcount += t_copycount;

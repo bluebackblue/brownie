@@ -45,7 +45,7 @@ namespace NBsys{namespace NFile
 
 	/** 登録。
 	*/
-	void File_Pack::Resist(const sharedptr< File_Pack_WorkItem >& a_workitem)
+	void File_Pack::Resist(const sharedptr<File_Pack_WorkItem>& a_workitem)
 	{
 		//■排他。
 		AutoLock t_autolock(this->lockobject);
@@ -60,8 +60,8 @@ namespace NBsys{namespace NFile
 		//■排他。
 		AutoLock t_autolock(this->lockobject);
 
-		STLList< sharedptr< File_Pack_WorkItem > >::iterator t_it_end = this->list.end();
-		for(STLList< sharedptr< File_Pack_WorkItem > >::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
+		STLList<sharedptr<File_Pack_WorkItem>>::iterator t_it_end = this->list.end();
+		for(STLList<sharedptr<File_Pack_WorkItem>>::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
 			if((*t_it)->GetPackFileNameShort() == a_pack_filename_short){
 				return true;
 			}
@@ -72,20 +72,20 @@ namespace NBsys{namespace NFile
 
 	/** パックからファイルを開く。
 	*/
-	sharedptr< File_Pack_FileHandle >& File_Pack::CreatePackFileHandle(const STLWString& a_filename_short)
+	sharedptr<File_Pack_FileHandle>& File_Pack::CreatePackFileHandle(const STLWString& a_filename_short)
 	{
 		//■排他。
 		AutoLock t_autolock(this->lockobject);
 
-		STLList< sharedptr< File_Pack_WorkItem > >::iterator t_it_end = this->list.end();
-		for(STLList< sharedptr< File_Pack_WorkItem > >::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
-			sharedptr< File_Pack_FileHandle >& t_pack_filehandle = (*t_it)->FindFromFileNameShort(a_filename_short);
+		STLList<sharedptr<File_Pack_WorkItem>>::iterator t_it_end = this->list.end();
+		for(STLList<sharedptr<File_Pack_WorkItem>>::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
+			sharedptr<File_Pack_FileHandle>& t_pack_filehandle = (*t_it)->FindFromFileNameShort(a_filename_short);
 			if(t_pack_filehandle != nullptr){
 				return t_pack_filehandle;
 			}
 		}
 
-		return sharedptr< File_Pack_FileHandle >::null();
+		return sharedptr<File_Pack_FileHandle>::null();
 	}
 
 }}

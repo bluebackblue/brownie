@@ -59,7 +59,7 @@ namespace NBlib
 
 	/** STLAllocator
 	*/
-	template < class T > class STLAllocator
+	template <class T> class STLAllocator
 	{
 	public:
 		/** typedef
@@ -78,9 +78,9 @@ namespace NBlib
 
 		/** rebind
 		*/
-		template < class OTHER > struct rebind
+		template <class OTHER> struct rebind
 		{
-			typedef STLAllocator< OTHER > other;
+			typedef STLAllocator<OTHER> other;
 		};
 
 		/** constructor。
@@ -93,7 +93,7 @@ namespace NBlib
 
 		/** constructor。
 		*/
-		STLAllocator(const STLAllocator< T >& a_other) noexcept
+		STLAllocator(const STLAllocator<T>& a_other) noexcept
 			:
 			size(a_other.size)
 		{
@@ -101,7 +101,7 @@ namespace NBlib
 
 		/** constructor。
 		*/
-		template < class OTHER > STLAllocator(const STLAllocator< OTHER >& a_other) noexcept
+		template <class OTHER> STLAllocator(const STLAllocator<OTHER>& a_other) noexcept
 			:
 			size(a_other.size)
 		{
@@ -137,7 +137,7 @@ namespace NBlib
 
 		/** 代入。
 		*/
-		template < class OTHER > STLAllocator< T >&  operator =(const STLAllocator< OTHER >&)
+		template <class OTHER> STLAllocator<T>&  operator =(const STLAllocator<OTHER>&)
 		{
 			return (*this);
 		}
@@ -147,7 +147,7 @@ namespace NBlib
 		void construct(T* a_pointer)
 		{
 			//placement new
-			::new (static_cast< void* >(a_pointer)) T();
+			::new (static_cast<void*>(a_pointer)) T();
 		}
 
 		/** 明示的なコンストラクタの呼び出し。
@@ -167,7 +167,7 @@ namespace NBlib
 
 		/** 明示的なデストラクタの呼び出し。
 		*/
-		template < class U > void destroy(U* a_pointer)
+		template <class U> void destroy(U* a_pointer)
 		{
 			a_pointer->~U();
 		}
@@ -179,7 +179,7 @@ namespace NBlib
 			this->size += (a_count);
 
 			UNUSED(a_hint);
-			return reinterpret_cast< pointer >(STLAllocatorBase::Alloc(a_count * sizeof(T)));
+			return reinterpret_cast<pointer>(STLAllocatorBase::Alloc(a_count * sizeof(T)));
 		}
 
 		/** 領域開放。
@@ -198,7 +198,7 @@ namespace NBlib
 
 	/** STLAllocator_String
 	*/
-	template < class T > class STLAllocator_String
+	template <class T> class STLAllocator_String
 	{
 	public:
 		/** typedef
@@ -217,9 +217,9 @@ namespace NBlib
 
 		/** rebind
 		*/
-		template < class OTHER > struct rebind
+		template <class OTHER> struct rebind
 		{
-			typedef STLAllocator_String< OTHER > other;
+			typedef STLAllocator_String<OTHER> other;
 		};
 
 		/** constructor。
@@ -232,7 +232,7 @@ namespace NBlib
 
 		/** constructor。
 		*/
-		STLAllocator_String(const STLAllocator_String< T >& a_other) noexcept
+		STLAllocator_String(const STLAllocator_String<T>& a_other) noexcept
 			:
 			size(a_other.size)
 		{
@@ -240,7 +240,7 @@ namespace NBlib
 
 		/** constructor。
 		*/
-		template < class OTHER > STLAllocator_String(const STLAllocator_String< OTHER >& a_other) noexcept
+		template <class OTHER> STLAllocator_String(const STLAllocator_String<OTHER>& a_other) noexcept
 			:
 			size(a_other.size)
 		{
@@ -276,7 +276,7 @@ namespace NBlib
 
 		/** 代入。
 		*/
-		template < class OTHER > STLAllocator_String< T >&  operator =(const STLAllocator_String< OTHER >&)
+		template <class OTHER> STLAllocator_String<T>&  operator =(const STLAllocator_String<OTHER>&)
 		{
 			return (*this);
 		}
@@ -286,7 +286,7 @@ namespace NBlib
 		void construct(T* a_pointer)
 		{
 			//placement new
-			::new (static_cast< void* >(a_pointer)) T();
+			::new (static_cast<void*>(a_pointer)) T();
 		}
 
 		/** 明示的なコンストラクタの呼び出し。
@@ -306,7 +306,7 @@ namespace NBlib
 
 		/** 明示的なデストラクタの呼び出し。
 		*/
-		template < class U > void destroy(U* a_pointer)
+		template <class U> void destroy(U* a_pointer)
 		{
 			a_pointer->~U();
 		}
@@ -318,7 +318,7 @@ namespace NBlib
 			this->size += (a_count);
 
 			UNUSED(a_hint);
-			return reinterpret_cast< pointer >(STLAllocatorBase_String::Alloc(a_count * sizeof(T)));
+			return reinterpret_cast<pointer>(STLAllocatorBase_String::Alloc(a_count * sizeof(T)));
 		}
 
 		/** 領域開放。
@@ -337,28 +337,28 @@ namespace NBlib
 
 	/** 比較。アロケーターに互換性があるかどうか。
 	*/
-	template < class T1 , class T2 > inline bool operator ==(const STLAllocator< T1 >& /*a_allocator_1*/,const STLAllocator< T2 >& /*a_allocator_2*/) noexcept
+	template <class T1,class T2> inline bool operator ==(const STLAllocator<T1>& /*a_allocator_1*/,const STLAllocator<T2>& /*a_allocator_2*/) noexcept
 	{	
 		return true;
 	}
 
 	/** 比較。アロケーターに互換性があるかどうか。
 	*/
-	template < class T1 , class T2 > inline bool operator !=(const STLAllocator< T1 >& /*a_allocator_1*/,const STLAllocator< T2 >& /*a_allocator_2*/) noexcept
+	template <class T1,class T2> inline bool operator !=(const STLAllocator<T1>& /*a_allocator_1*/,const STLAllocator<T2>& /*a_allocator_2*/) noexcept
 	{
 		return false;
 	}
 
 	/** 比較。アロケーターに互換性があるかどうか。
 	*/
-	template < class T1 , class T2 > inline bool operator ==(const STLAllocator_String< T1 >& /*a_allocator_1*/,const STLAllocator_String< T2 >& /*a_allocator_2*/) noexcept
+	template <class T1,class T2> inline bool operator ==(const STLAllocator_String<T1>& /*a_allocator_1*/,const STLAllocator_String<T2>& /*a_allocator_2*/) noexcept
 	{	
 		return true;
 	}
 
 	/** 比較。アロケーターに互換性があるかどうか。
 	*/
-	template < class T1 , class T2 > inline bool operator !=(const STLAllocator_String< T1 >& /*a_allocator_1*/,const STLAllocator_String< T2 >& /*a_allocator_2*/) noexcept
+	template <class T1,class T2> inline bool operator !=(const STLAllocator_String<T1>& /*a_allocator_1*/,const STLAllocator_String<T2>& /*a_allocator_2*/) noexcept
 	{
 		return false;
 	}

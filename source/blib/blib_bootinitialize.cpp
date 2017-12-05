@@ -55,7 +55,7 @@ namespace NBlib
 
 	/** グローバル乱数。
 	*/
-	static RandomTemplate< Random_LinearCongruentialGenerators > s_globalrand;
+	static RandomTemplate<Random_LinearCongruentialGenerators> s_globalrand;
 
 	/** グローバル乱数。ロックオブジェクト。
 	*/
@@ -179,7 +179,7 @@ namespace NBlib
 
 	/** グローバル乱数。
 	*/
-	RandomTemplate< Random_LinearCongruentialGenerators >& GlobalRand_Get()
+	RandomTemplate<Random_LinearCongruentialGenerators>& GlobalRand_Get()
 	{
 		return s_globalrand;
 	}

@@ -37,13 +37,13 @@ namespace NBsys{namespace ND3d11
 
 		/** vertexbuffer
 		*/
-		sharedptr< D3d11_Impl_VertexBuffer > vertexbuffer;
+		sharedptr<D3d11_Impl_VertexBuffer> vertexbuffer;
 
 	public:
 
 		/** constructor
 		*/
-		D3d11_Impl_ActionBatching_VertexBuffer_Create(D3d11_Impl& a_d3d11_impl,sharedptr< D3d11_Impl_VertexBuffer >& a_vertexbuffer)
+		D3d11_Impl_ActionBatching_VertexBuffer_Create(D3d11_Impl& a_d3d11_impl,sharedptr<D3d11_Impl_VertexBuffer>& a_vertexbuffer)
 			:
 			d3d11_impl(a_d3d11_impl),
 			vertexbuffer(a_vertexbuffer)

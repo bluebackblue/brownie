@@ -35,7 +35,7 @@ namespace NBsys{namespace NFile
 
 	/** constructor
 	*/
-	File_WorkItem::File_WorkItem(LockObject& a_lockobject,const STLWString& a_filename_short,sharedptr< File_Allocator >& a_allocator,s32 a_add_allocatesize)
+	File_WorkItem::File_WorkItem(LockObject& a_lockobject,const STLWString& a_filename_short,sharedptr<File_Allocator>& a_allocator,s32 a_add_allocatesize)
 		:
 		lockobject(a_lockobject),
 		mainstep(MainStep::Open),
@@ -75,7 +75,7 @@ namespace NBsys{namespace NFile
 
 	/** GetData。
 	*/
-	sharedptr< u8 >& File_WorkItem::GetData()
+	sharedptr<u8>& File_WorkItem::GetData()
 	{
 		AutoLock t_autolock(this->lockobject);
 
@@ -84,7 +84,7 @@ namespace NBsys{namespace NFile
 				return this->data;
 			}
 		}
-		return sharedptr< u8 >::null();
+		return sharedptr<u8>::null();
 	}
 
 	/** GetSize
@@ -242,12 +242,12 @@ namespace NBsys{namespace NFile
 
 							if(this->allocator){
 								//アロケータ使用。
-								this->data.reset(reinterpret_cast< u8* >(this->allocator->Alloc(static_cast< u32 >(this->data_size + this->add_allocatesize))),File_Alloc_Deleter(this->allocator));
+								this->data.reset(reinterpret_cast<u8*>(this->allocator->Alloc(static_cast<u32>(this->data_size + this->add_allocatesize))),File_Alloc_Deleter(this->allocator));
 							}else{
 								//通常アロケート。
 								MemoryContainer t_memorycontainer(BSYS_FILE_MEMORYCONTAINER);
 
-								this->data.reset(new u8[static_cast< u32 >(this->data_size + this->add_allocatesize)],default_delete< u8[] >());
+								this->data.reset(new u8[static_cast<u32>(this->data_size + this->add_allocatesize)],default_delete<u8[]>());
 							}
 							this->mainstep = MainStep::Read;
 							break;

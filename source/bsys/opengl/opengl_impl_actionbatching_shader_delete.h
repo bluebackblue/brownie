@@ -42,13 +42,13 @@ namespace NBsys{namespace NOpengl
 
 		/** shaderstate
 		*/
-		sharedptr< Opengl_Impl_ShaderState > shaderstate;
+		sharedptr<Opengl_Impl_ShaderState> shaderstate;
 
 	public:
 
 		/** constructor
 		*/
-		Opengl_Impl_ActionBatching_Shader_Delete(Opengl_Impl& a_opengl_impl,sharedptr< Opengl_Impl_ShaderState >& a_shaderstate)
+		Opengl_Impl_ActionBatching_Shader_Delete(Opengl_Impl& a_opengl_impl,sharedptr<Opengl_Impl_ShaderState>& a_shaderstate)
 			:
 			opengl_impl(a_opengl_impl),
 			shaderstate(a_shaderstate)

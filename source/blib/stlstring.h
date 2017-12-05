@@ -32,10 +32,10 @@ namespace NBlib
 {
 	/** STLString
 	*/
-	typedef std::basic_string< char , std::char_traits< char > , STLAllocator_String< char > > STLString;
+	typedef std::basic_string<char,std::char_traits<char>,STLAllocator_String<char>> STLString;
 
 	/** STLWString
 	*/
-	typedef std::basic_string< wchar , std::char_traits< wchar > , STLAllocator_String< wchar > > STLWString;
+	typedef std::basic_string<wchar,std::char_traits<wchar>,STLAllocator_String<wchar>> STLWString;
 }
 

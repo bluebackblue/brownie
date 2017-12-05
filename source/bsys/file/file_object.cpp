@@ -34,10 +34,10 @@ namespace NBsys{namespace NFile
 
 	/** constructor
 	*/
-	File_Object::File_Object(s32 a_device_index,const STLWString& a_filename_short,s32 a_cachegroup_id,sharedptr< File_Allocator >& a_allocator,s32 a_add_allocatesize)
+	File_Object::File_Object(s32 a_device_index,const STLWString& a_filename_short,s32 a_cachegroup_id,sharedptr<File_Allocator>& a_allocator,s32 a_add_allocatesize)
 	{
 		//ロード開始。
-		sharedptr< ThreadTemplate< File_Thread > >& t_instance = GetSystemInstance(a_device_index);
+		sharedptr<ThreadTemplate<File_Thread>>& t_instance = GetSystemInstance(a_device_index);
 		this->workitem = (*t_instance)->LoadRequest(Path::Name(a_filename_short),a_cachegroup_id,a_allocator,a_add_allocatesize);
 	}
 
@@ -50,7 +50,7 @@ namespace NBsys{namespace NFile
 
 	/** データ取得。
 	*/
-	sharedptr< u8 >& File_Object::GetLoadData()
+	sharedptr<u8>& File_Object::GetLoadData()
 	{
 		return this->workitem->GetData();
 	}

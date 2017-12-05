@@ -35,12 +35,12 @@ namespace NBsys{namespace NFovehmd
 	private:
 		/** impl
 		*/
-		sharedptr< Fovehmd_Impl > impl;
+		sharedptr<Fovehmd_Impl> impl;
 
 	public:
 		/** GetImpl
 		*/
-		sharedptr< Fovehmd_Impl > GetImpl();
+		sharedptr<Fovehmd_Impl> GetImpl();
 
 	public:
 		/** constructor

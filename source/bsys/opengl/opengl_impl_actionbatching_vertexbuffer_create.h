@@ -43,13 +43,13 @@ namespace NBsys{namespace NOpengl
 
 		/** vertexbuffer
 		*/
-		sharedptr< Opengl_Impl_VertexBuffer > vertexbuffer;
+		sharedptr<Opengl_Impl_VertexBuffer> vertexbuffer;
 
 	public:
 
 		/** constructor
 		*/
-		Opengl_Impl_ActionBatching_VertexBuffer_Create(Opengl_Impl& a_opengl_impl,const sharedptr< Opengl_Impl_VertexBuffer >& a_vertexbuffer)
+		Opengl_Impl_ActionBatching_VertexBuffer_Create(Opengl_Impl& a_opengl_impl,const sharedptr<Opengl_Impl_VertexBuffer>& a_vertexbuffer)
 			:
 			opengl_impl(a_opengl_impl),
 			vertexbuffer(a_vertexbuffer)

@@ -113,8 +113,8 @@ namespace NBsys{namespace NFovehmd
 
 					//¬Œ÷B
 
-					this->singleeye_resolution.x = static_cast< f32 >(t_ret.x);
-					this->singleeye_resolution.y = static_cast< f32 >(t_ret.y);
+					this->singleeye_resolution.x = static_cast<f32>(t_ret.x);
+					this->singleeye_resolution.y = static_cast<f32>(t_ret.y);
 					return true;
 
 				}else{

@@ -36,12 +36,12 @@ namespace NBlib
 	private:
 		/** impl
 		*/
-		sharedptr< DirectoryHandle_Impl > impl;
+		sharedptr<DirectoryHandle_Impl> impl;
 
 	public:
 		/** GetImpl
 		*/
-		sharedptr< DirectoryHandle_Impl >& GetImpl();
+		sharedptr<DirectoryHandle_Impl>& GetImpl();
 
 	public:
 		/** DirectoryItem

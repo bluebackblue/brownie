@@ -31,16 +31,16 @@ namespace NBsys{namespace NFile
 	{
 		/** キャッシュしているワークアイテム。
 		*/
-		sharedptr< File_WorkItem > workitem;
+		sharedptr<File_WorkItem> workitem;
 
 		/** 参照ＩＤを列挙。
 		*/
-		typedef STLMap< s32 , bool >::Type IDListType;
+		typedef STLMap<s32,bool>::Type IDListType;
 		IDListType cachegroup_id_list;
 
 		/** constructor
 		*/
-		explicit File_Cache_Item(const sharedptr< File_WorkItem >& a_workitem);
+		explicit File_Cache_Item(const sharedptr<File_WorkItem>& a_workitem);
 
 		/** destructor
 		*/

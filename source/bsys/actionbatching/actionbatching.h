@@ -35,7 +35,7 @@ namespace NBsys{namespace NActionBatching
 
 		/** worklist
 		*/
-		STLList< sharedptr< ActionBatching_ActionList > >::Type worklist;
+		STLList<sharedptr<ActionBatching_ActionList>>::Type worklist;
 
 	public:
 
@@ -55,7 +55,7 @@ namespace NBsys{namespace NActionBatching
 
 		/** StartBatching
 		*/
-		void StartBatching(sharedptr< ActionBatching_ActionList >& a_actionlist);
+		void StartBatching(sharedptr<ActionBatching_ActionList>& a_actionlist);
 
 		/** IsBusy
 		*/

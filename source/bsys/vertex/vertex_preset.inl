@@ -26,16 +26,16 @@ namespace NBsys{namespace NVertex
 {
 	/** Preset_Plane
 	*/
-	template < typename T > inline sharedptr< Vertex< T > > Preset_Plane()
+	template <typename T> inline sharedptr<Vertex<T>> Preset_Plane()
 	{
-		sharedptr< Vertex< T > > t_plane(new Vertex< T >());
+		sharedptr<Vertex<T>> t_plane(new Vertex<T>());
 
 		t_plane->AddParts("plane");
 
 		{
 			T t_vertex;
 
-			SetColor< T >(t_vertex,1.0f,1.0f,1.0f,1.0f);
+			SetColor<T>(t_vertex,1.0f,1.0f,1.0f,1.0f);
 
 			f32 t_ww = 10.0f;
 			f32 t_hh = 10.0f;
@@ -49,38 +49,38 @@ namespace NBsys{namespace NVertex
 					f32 t_x1 = t_x0 + t_ww - 0.1f;
 
 					{
-						SetPos< T >(t_vertex,t_x0,0.0f,t_y0);
-						SetUv< T >(t_vertex,0.0f,0.0f);
+						SetPos<T>(t_vertex,t_x0,0.0f,t_y0);
+						SetUv<T>(t_vertex,0.0f,0.0f);
 						t_plane->AddVertex(t_vertex);
 					}
 
 					{
-						SetPos< T >(t_vertex,t_x1,0.0f,t_y0);
-						SetUv< T >(t_vertex,1.0f,0.0f);
+						SetPos<T>(t_vertex,t_x1,0.0f,t_y0);
+						SetUv<T>(t_vertex,1.0f,0.0f);
 						t_plane->AddVertex(t_vertex);
 					}
 
 					{
-						SetPos< T >(t_vertex,t_x0,0.0f,t_y1);
-						SetUv< T >(t_vertex,0.0f,1.0f);
+						SetPos<T>(t_vertex,t_x0,0.0f,t_y1);
+						SetUv<T>(t_vertex,0.0f,1.0f);
 						t_plane->AddVertex(t_vertex);
 					}
 
 					{
-						SetPos< T >(t_vertex,t_x1,0.0f,t_y1);
-						SetUv< T >(t_vertex,1.0f,1.0f);
+						SetPos<T>(t_vertex,t_x1,0.0f,t_y1);
+						SetUv<T>(t_vertex,1.0f,1.0f);
 						t_plane->AddVertex(t_vertex);
 					}
 
 					{
-						SetPos< T >(t_vertex,t_x0,0.0f,t_y1);
-						SetUv< T >(t_vertex,0.0f,1.0f);
+						SetPos<T>(t_vertex,t_x0,0.0f,t_y1);
+						SetUv<T>(t_vertex,0.0f,1.0f);
 						t_plane->AddVertex(t_vertex);
 					}
 
 					{
-						SetPos< T >(t_vertex,t_x1,0.0f,t_y0);
-						SetUv< T >(t_vertex,1.0f,0.0f);
+						SetPos<T>(t_vertex,t_x1,0.0f,t_y0);
+						SetUv<T>(t_vertex,1.0f,0.0f);
 						t_plane->AddVertex(t_vertex);
 					}
 				}
@@ -92,120 +92,120 @@ namespace NBsys{namespace NVertex
 
 	/** Preset_Box
 	*/
-	template < typename T > inline sharedptr< Vertex< T > > Preset_Box()
+	template <typename T> inline sharedptr<Vertex<T>> Preset_Box()
 	{
-		sharedptr< Vertex< T > > t_box(new Vertex< T >());
+		sharedptr<Vertex<T>> t_box(new Vertex<T>());
 
 		t_box->AddParts("box");
 
 		{
 			T t_vertex;
 
-			SetUv< T >(t_vertex,0.0f,0.0f);
+			SetUv<T>(t_vertex,0.0f,0.0f);
 
 			{
 				//z:blue.
-				SetColor< T >(t_vertex,0.0f,0.0f,1.0f,1.0f);
+				SetColor<T>(t_vertex,0.0f,0.0f,1.0f,1.0f);
 
-				SetPos< T >(t_vertex,-0.5f,-0.5f, 0.5f);//0
+				SetPos<T>(t_vertex,-0.5f,-0.5f, 0.5f);//0
 				t_box->AddVertex(t_vertex);
-				SetPos< T >(t_vertex, 0.5f,-0.5f, 0.5f);//1
+				SetPos<T>(t_vertex, 0.5f,-0.5f, 0.5f);//1
 				t_box->AddVertex(t_vertex);
-				SetPos< T >(t_vertex, 0.5f, 0.5f, 0.5f);//2
+				SetPos<T>(t_vertex, 0.5f, 0.5f, 0.5f);//2
 				t_box->AddVertex(t_vertex);
 
-				SetPos< T >(t_vertex,-0.5f, 0.5f, 0.5f);//3
+				SetPos<T>(t_vertex,-0.5f, 0.5f, 0.5f);//3
 				t_box->AddVertex(t_vertex);
-				SetPos< T >(t_vertex,-0.5f,-0.5f, 0.5f);//0
+				SetPos<T>(t_vertex,-0.5f,-0.5f, 0.5f);//0
 				t_box->AddVertex(t_vertex);
-				SetPos< T >(t_vertex, 0.5f, 0.5f, 0.5f);//2
+				SetPos<T>(t_vertex, 0.5f, 0.5f, 0.5f);//2
 				t_box->AddVertex(t_vertex);
 			}
 			{
-				SetColor< T >(t_vertex,1.0f,0.9f,0.9f,1.0f);
+				SetColor<T>(t_vertex,1.0f,0.9f,0.9f,1.0f);
 
-				SetPos< T >(t_vertex, 0.5f,-0.5f,-0.5f);//4
+				SetPos<T>(t_vertex, 0.5f,-0.5f,-0.5f);//4
 				t_box->AddVertex(t_vertex);
-				SetPos< T >(t_vertex,-0.5f,-0.5f,-0.5f);//5
+				SetPos<T>(t_vertex,-0.5f,-0.5f,-0.5f);//5
 				t_box->AddVertex(t_vertex);
-				SetPos< T >(t_vertex,-0.5f, 0.5f,-0.5f);//6
+				SetPos<T>(t_vertex,-0.5f, 0.5f,-0.5f);//6
 				t_box->AddVertex(t_vertex);
 
-				SetPos< T >(t_vertex, 0.5f, 0.5f,-0.5f);//7
+				SetPos<T>(t_vertex, 0.5f, 0.5f,-0.5f);//7
 				t_box->AddVertex(t_vertex);
-				SetPos< T >(t_vertex, 0.5f,-0.5f,-0.5f);//4
+				SetPos<T>(t_vertex, 0.5f,-0.5f,-0.5f);//4
 				t_box->AddVertex(t_vertex);
-				SetPos< T >(t_vertex,-0.5f, 0.5f,-0.5f);//6
+				SetPos<T>(t_vertex,-0.5f, 0.5f,-0.5f);//6
 				t_box->AddVertex(t_vertex);
 			}
 			{
 				//x:red.
-				SetColor< T >(t_vertex,1.0f,0.0f,0.0f,1.0f);
+				SetColor<T>(t_vertex,1.0f,0.0f,0.0f,1.0f);
 
-				SetPos< T >(t_vertex, 0.5f,-0.5f, 0.5f);//1
+				SetPos<T>(t_vertex, 0.5f,-0.5f, 0.5f);//1
 				t_box->AddVertex(t_vertex);
-				SetPos< T >(t_vertex, 0.5f,-0.5f,-0.5f);//4
+				SetPos<T>(t_vertex, 0.5f,-0.5f,-0.5f);//4
 				t_box->AddVertex(t_vertex);
-				SetPos< T >(t_vertex, 0.5f, 0.5f,-0.5f);//7
+				SetPos<T>(t_vertex, 0.5f, 0.5f,-0.5f);//7
 				t_box->AddVertex(t_vertex);
 
-				SetPos< T >(t_vertex, 0.5f, 0.5f, 0.5f);//2
+				SetPos<T>(t_vertex, 0.5f, 0.5f, 0.5f);//2
 				t_box->AddVertex(t_vertex);
-				SetPos< T >(t_vertex, 0.5f,-0.5f, 0.5f);//1
+				SetPos<T>(t_vertex, 0.5f,-0.5f, 0.5f);//1
 				t_box->AddVertex(t_vertex);
-				SetPos< T >(t_vertex, 0.5f, 0.5f,-0.5f);//7
+				SetPos<T>(t_vertex, 0.5f, 0.5f,-0.5f);//7
 				t_box->AddVertex(t_vertex);
 			}
 			{
-				SetColor< T >(t_vertex,0.9f,0.9f,1.0f,1.0f);
+				SetColor<T>(t_vertex,0.9f,0.9f,1.0f,1.0f);
 
-				SetPos< T >(t_vertex,-0.5f,-0.5f,-0.5f);//5
+				SetPos<T>(t_vertex,-0.5f,-0.5f,-0.5f);//5
 				t_box->AddVertex(t_vertex);
-				SetPos< T >(t_vertex,-0.5f,-0.5f, 0.5f);//0
+				SetPos<T>(t_vertex,-0.5f,-0.5f, 0.5f);//0
 				t_box->AddVertex(t_vertex);
-				SetPos< T >(t_vertex,-0.5f, 0.5f, 0.5f);//3
+				SetPos<T>(t_vertex,-0.5f, 0.5f, 0.5f);//3
 				t_box->AddVertex(t_vertex);
 
-				SetPos< T >(t_vertex,-0.5f, 0.5f,-0.5f);//6
+				SetPos<T>(t_vertex,-0.5f, 0.5f,-0.5f);//6
 				t_box->AddVertex(t_vertex);
-				SetPos< T >(t_vertex,-0.5f,-0.5f,-0.5f);//5
+				SetPos<T>(t_vertex,-0.5f,-0.5f,-0.5f);//5
 				t_box->AddVertex(t_vertex);
-				SetPos< T >(t_vertex,-0.5f, 0.5f, 0.5f);//3
+				SetPos<T>(t_vertex,-0.5f, 0.5f, 0.5f);//3
 				t_box->AddVertex(t_vertex);
 			}
 			{
 				//y:green
-				SetColor< T >(t_vertex,0.0f,1.0f,0.0f,1.0f);
+				SetColor<T>(t_vertex,0.0f,1.0f,0.0f,1.0f);
 
-				SetPos< T >(t_vertex,-0.5f, 0.5f, 0.5f);//3
+				SetPos<T>(t_vertex,-0.5f, 0.5f, 0.5f);//3
 				t_box->AddVertex(t_vertex);
-				SetPos< T >(t_vertex, 0.5f, 0.5f, 0.5f);//2
+				SetPos<T>(t_vertex, 0.5f, 0.5f, 0.5f);//2
 				t_box->AddVertex(t_vertex);
-				SetPos< T >(t_vertex, 0.5f, 0.5f,-0.5f);//7
+				SetPos<T>(t_vertex, 0.5f, 0.5f,-0.5f);//7
 				t_box->AddVertex(t_vertex);
 
-				SetPos< T >(t_vertex,-0.5f, 0.5f,-0.5f);//6
+				SetPos<T>(t_vertex,-0.5f, 0.5f,-0.5f);//6
 				t_box->AddVertex(t_vertex);
-				SetPos< T >(t_vertex,-0.5f, 0.5f, 0.5f);//3
+				SetPos<T>(t_vertex,-0.5f, 0.5f, 0.5f);//3
 				t_box->AddVertex(t_vertex);
-				SetPos< T >(t_vertex, 0.5f, 0.5f,-0.5f);//7
+				SetPos<T>(t_vertex, 0.5f, 0.5f,-0.5f);//7
 				t_box->AddVertex(t_vertex);
 			}
 			{
-				SetColor< T >(t_vertex,0.9f,1.0f,0.9f,1.0f);
+				SetColor<T>(t_vertex,0.9f,1.0f,0.9f,1.0f);
 
-				SetPos< T >(t_vertex, 0.5f,-0.5f, 0.5f);//1
+				SetPos<T>(t_vertex, 0.5f,-0.5f, 0.5f);//1
 				t_box->AddVertex(t_vertex);
-				SetPos< T >(t_vertex,-0.5f,-0.5f, 0.5f);//0
+				SetPos<T>(t_vertex,-0.5f,-0.5f, 0.5f);//0
 				t_box->AddVertex(t_vertex);
-				SetPos< T >(t_vertex,-0.5f,-0.5f,-0.5f);//5
+				SetPos<T>(t_vertex,-0.5f,-0.5f,-0.5f);//5
 				t_box->AddVertex(t_vertex);
 
-				SetPos< T >(t_vertex, 0.5f,-0.5f,-0.5f);//4
+				SetPos<T>(t_vertex, 0.5f,-0.5f,-0.5f);//4
 				t_box->AddVertex(t_vertex);
-				SetPos< T >(t_vertex, 0.5f,-0.5f, 0.5f);//1
+				SetPos<T>(t_vertex, 0.5f,-0.5f, 0.5f);//1
 				t_box->AddVertex(t_vertex);
-				SetPos< T >(t_vertex,-0.5f,-0.5f,-0.5f);//5
+				SetPos<T>(t_vertex,-0.5f,-0.5f,-0.5f);//5
 				t_box->AddVertex(t_vertex);
 			}
 		}

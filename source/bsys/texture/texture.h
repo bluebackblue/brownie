@@ -41,7 +41,7 @@ namespace NBsys{namespace NTexture
 	class Texture
 	{
 	private:
-		sharedptr< u8 > pixel;
+		sharedptr<u8> pixel;
 		s32 width;
 		s32 height;
 		s32 pitch;
@@ -52,7 +52,7 @@ namespace NBsys{namespace NTexture
 	public:
 		/** コンストラクタ。
 		*/
-		Texture(const sharedptr< u8 >& a_pixel,s32 a_width,s32 a_height,s32 a_pitch,TextureType::Id a_texturetype,const STLWString& a_name);
+		Texture(const sharedptr<u8>& a_pixel,s32 a_width,s32 a_height,s32 a_pitch,TextureType::Id a_texturetype,const STLWString& a_name);
 
 		/** デストラクタ。
 		*/
@@ -61,7 +61,7 @@ namespace NBsys{namespace NTexture
 	public:
 		/** GetPixel
 		*/
-		sharedptr< u8 >& GetPixel();
+		sharedptr<u8>& GetPixel();
 
 		/** GetWidth
 		*/
@@ -83,7 +83,7 @@ namespace NBsys{namespace NTexture
 
 	/** CreateTexture
 	*/
-	sharedptr< Texture > CreateTexture(const sharedptr< u8 >& a_data,s32 a_size,const STLWString& a_name);
+	sharedptr<Texture> CreateTexture(const sharedptr<u8>& a_data,s32 a_size,const STLWString& a_name);
 
 
 }}

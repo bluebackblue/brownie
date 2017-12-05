@@ -70,7 +70,7 @@ namespace NBsys{namespace NRootSearch
 
 		/** connect_index_list
 		*/
-		STLVector< s32 >::Type connect_index_list;
+		STLVector<s32>::Type connect_index_list;
 
 		/** constructor
 		*/
@@ -109,11 +109,11 @@ namespace NBsys{namespace NRootSearch
 	{
 		/** node_pool
 		*/
-		STLVector< RootSearch_Connect >::Type connect_pool;
+		STLVector<RootSearch_Connect>::Type connect_pool;
 
 		/** node_pool
 		*/
-		STLVector< RootSearch_Node >::Type node_pool;
+		STLVector<RootSearch_Node>::Type node_pool;
 
 		/** constructor
 		*/

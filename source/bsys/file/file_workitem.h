@@ -72,7 +72,7 @@ namespace NBsys{namespace NFile
 		/** ファイルハンドル。
 		*/
 		#if(BSYS_FILE_PACK_ENABLE)
-		sharedptr< File_Pack_FileHandle > pack_filehandle;
+		sharedptr<File_Pack_FileHandle> pack_filehandle;
 		#endif
 
 		/** ファイルハンドル。
@@ -85,7 +85,7 @@ namespace NBsys{namespace NFile
 
 		/** データ。
 		*/
-		sharedptr< u8 > data;
+		sharedptr<u8> data;
 
 		/** コンバートフラグ。
 		*/
@@ -109,7 +109,7 @@ namespace NBsys{namespace NFile
 
 		/** メモリ確保。
 		*/
-		sharedptr< File_Allocator > allocator;
+		sharedptr<File_Allocator> allocator;
 
 		/** メモリ確保時に余分に確保するサイズ。
 		*/
@@ -118,7 +118,7 @@ namespace NBsys{namespace NFile
 	public:
 		/** constructor
 		*/
-		File_WorkItem(LockObject& a_lockobject,const STLWString& a_filename_short,sharedptr< File_Allocator >& a_allocator,s32 a_add_allocatesize);
+		File_WorkItem(LockObject& a_lockobject,const STLWString& a_filename_short,sharedptr<File_Allocator>& a_allocator,s32 a_add_allocatesize);
 
 		/** destructor
 		*/
@@ -127,7 +127,7 @@ namespace NBsys{namespace NFile
 	public:
 		/** GetData
 		*/
-		sharedptr< u8 >& GetData();
+		sharedptr<u8>& GetData();
 
 		/** GetSize
 		*/

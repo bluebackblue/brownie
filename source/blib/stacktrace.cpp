@@ -82,7 +82,7 @@ namespace NBlib
 				IMAGEHLP_SYMBOL* t_symbol = nullptr;
 				{
 					static u8 s_symbol_data[sizeof(IMAGEHLP_SYMBOL) + 1024 * sizeof(char) + sizeof(char)] = {0};
-					t_symbol = reinterpret_cast< IMAGEHLP_SYMBOL* >(s_symbol_data);
+					t_symbol = reinterpret_cast<IMAGEHLP_SYMBOL*>(s_symbol_data);
 					t_symbol->MaxNameLength = sizeof(s_symbol_data) - sizeof(IMAGEHLP_SYMBOL) - sizeof(char);
 					t_symbol->SizeOfStruct = sizeof(IMAGEHLP_SYMBOL);
 				}
@@ -90,7 +90,7 @@ namespace NBlib
 				IMAGEHLP_LINE* t_line = nullptr;
 				{
 					static u8 s_line_data[sizeof(IMAGEHLP_LINE) + sizeof(char)] = {0};
-					t_line = reinterpret_cast< IMAGEHLP_LINE* >(s_line_data);
+					t_line = reinterpret_cast<IMAGEHLP_LINE*>(s_line_data);
 					t_line->SizeOfStruct = sizeof(IMAGEHLP_LINE);
 				}
 

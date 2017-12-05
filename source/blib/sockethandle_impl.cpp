@@ -337,7 +337,7 @@ namespace NBlib
 	
 	/** Accept
 	*/
-	sharedptr< SocketHandle > SocketHandle_Impl::Accept()
+	sharedptr<SocketHandle> SocketHandle_Impl::Accept()
 	{
 		if(this->isopen){
 
@@ -348,9 +348,9 @@ namespace NBlib
 
 				SOCKET t_rawhandle_client = ::accept(this->rawhandle,(struct sockaddr *)&t_addr_client,&t_addr_client_len);
 
-				sharedptr< SocketHandle_Impl > t_client_impl(new SocketHandle_Impl(t_rawhandle_client));
+				sharedptr<SocketHandle_Impl> t_client_impl(new SocketHandle_Impl(t_rawhandle_client));
 
-				sharedptr< SocketHandle > t_client(new SocketHandle(t_client_impl));
+				sharedptr<SocketHandle> t_client(new SocketHandle(t_client_impl));
 
 				return t_client;
 			}

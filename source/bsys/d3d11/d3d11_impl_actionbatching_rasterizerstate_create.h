@@ -37,13 +37,13 @@ namespace NBsys{namespace ND3d11
 
 		/** RasterizerState
 		*/
-		sharedptr< D3d11_Impl_RasterizerState > rasterizerstate;
+		sharedptr<D3d11_Impl_RasterizerState> rasterizerstate;
 
 	public:
 
 		/** constructor
 		*/
-		D3d11_Impl_ActionBatching_RasterizerState_Create(D3d11_Impl& a_d3d11_impl,sharedptr< D3d11_Impl_RasterizerState >& a_rasterizerstate)
+		D3d11_Impl_ActionBatching_RasterizerState_Create(D3d11_Impl& a_d3d11_impl,sharedptr<D3d11_Impl_RasterizerState>& a_rasterizerstate)
 			:
 			d3d11_impl(a_d3d11_impl),
 			rasterizerstate(a_rasterizerstate)

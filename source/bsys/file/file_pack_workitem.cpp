@@ -68,13 +68,13 @@ namespace NBsys{namespace NFile
 
 	/** ファイル検索。
 	*/
-	sharedptr< File_Pack_FileHandle >& File_Pack_WorkItem::FindFromFileNameShort(const STLWString& a_filename_short)
+	sharedptr<File_Pack_FileHandle>& File_Pack_WorkItem::FindFromFileNameShort(const STLWString& a_filename_short)
 	{
-		STLMap< STLWString , sharedptr< File_Pack_FileHandle > >::iterator t_it = this->filelist.find(a_filename_short);
+		STLMap<STLWString,sharedptr<File_Pack_FileHandle>>::iterator t_it = this->filelist.find(a_filename_short);
 		if(t_it != this->filelist.end()){
 			return t_it->second;
 		}
-		return sharedptr< File_Pack_FileHandle >::null();
+		return sharedptr<File_Pack_FileHandle>::null();
 	}
 
 	/** [スレッドから]更新。
@@ -129,11 +129,11 @@ namespace NBsys{namespace NFile
 
 				//ヘッダーサイズ。
 				u32 t_header_size = 0;
-				this->filehandle.Read(reinterpret_cast< u8* >(&t_header_size),sizeof(u32),0);
+				this->filehandle.Read(reinterpret_cast<u8*>(&t_header_size),sizeof(u32),0);
 				t_offset += sizeof(u32);
 
 				//ヘッダーデータ。
-				sharedptr< u8 > t_header(new u8[t_header_size],default_delete< u8[] >());
+				sharedptr<u8> t_header(new u8[t_header_size],default_delete<u8[]>());
 				this->filehandle.Read(t_header.get(),t_header_size,0);
 
 				//総数。
@@ -142,12 +142,12 @@ namespace NBsys{namespace NFile
 				t_offset += sizeof(u32);
 
 				//各ファイルサイズ。
-				sharedptr< u32 > t_file_size(new u32[t_all_count]);
+				sharedptr<u32> t_file_size(new u32[t_all_count]);
 				Memory::memcpy(t_file_size.get(),sizeof(u32) * t_all_count,&t_header.get()[t_offset],sizeof(u32) * t_all_count);
 				t_offset += sizeof(u32) * t_all_count;
 
 				//各ファイル名文字サイズ。
-				sharedptr< u16 > t_filename_length(new u16[t_all_count]);
+				sharedptr<u16> t_filename_length(new u16[t_all_count]);
 				Memory::memcpy(t_filename_length.get(),sizeof(u16) * t_all_count,&t_header.get()[t_offset],sizeof(u16) * t_all_count);
 				t_offset += sizeof(u16) * t_all_count;
 
@@ -166,7 +166,7 @@ namespace NBsys{namespace NFile
 						
 						STLWString t_filename_short = Path::DirAndName(this->pack_rootpath_short,t_buffer);
 
-						this->filelist.insert(STLMap< STLWString , sharedptr< File_Pack_FileHandle > >::value_type(t_filename_short,new File_Pack_FileHandle(this->filehandle,t_file_size.get()[ii],t_offset_data)));
+						this->filelist.insert(STLMap<STLWString,sharedptr<File_Pack_FileHandle>>::value_type(t_filename_short,new File_Pack_FileHandle(this->filehandle,t_file_size.get()[ii],t_offset_data)));
 
 						t_offset_data += t_file_size.get()[ii];
 					}

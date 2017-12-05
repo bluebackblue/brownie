@@ -38,7 +38,7 @@ namespace NBsys{namespace ND3d11
 
 	/** GetImpl
 	*/
-	sharedptr< D3d11_Impl >& D3d11::GetImpl()
+	sharedptr<D3d11_Impl>& D3d11::GetImpl()
 	{
 		return this->impl;
 	}
@@ -51,14 +51,14 @@ namespace NBsys{namespace ND3d11
 
 	/** CreateVertexShader
 	*/
-	s32 D3d11::CreateVertexShader(AsyncResult< bool >& a_asyncresult,sharedptr< NBsys::NFile::File_Object >& a_fileobject,sharedptr< STLVector< NBsys::ND3d11::D3d11_Layout >::Type >& a_layout)
+	s32 D3d11::CreateVertexShader(AsyncResult<bool>& a_asyncresult,sharedptr<NBsys::NFile::File_Object>& a_fileobject,sharedptr<STLVector<NBsys::ND3d11::D3d11_Layout>::Type>& a_layout)
 	{
 		return this->impl->CreateVertexShader(a_asyncresult,a_fileobject,a_layout);
 	}
 
 	/** CreatePixelShader
 	*/
-	s32 D3d11::CreatePixelShader(AsyncResult< bool >& a_asyncresult,sharedptr< NBsys::NFile::File_Object >& a_fileobject)
+	s32 D3d11::CreatePixelShader(AsyncResult<bool>& a_asyncresult,sharedptr<NBsys::NFile::File_Object>& a_fileobject)
 	{
 		return this->impl->CreatePixelShader(a_asyncresult,a_fileobject);
 	}
@@ -79,7 +79,7 @@ namespace NBsys{namespace ND3d11
 	
 	/** CreateTexture
 	*/
-	s32 D3d11::CreateTexture(sharedptr< NBsys::NTexture::Texture >& a_texture)
+	s32 D3d11::CreateTexture(sharedptr<NBsys::NTexture::Texture>& a_texture)
 	{
 		return this->impl->CreateTexture(a_texture);
 	}
@@ -100,7 +100,7 @@ namespace NBsys{namespace ND3d11
 
 	/** Render_Create
 	*/
-	void D3d11::Render_Create(sharedptr< NWindow::Window >& a_window,s32 a_width,s32 a_height)
+	void D3d11::Render_Create(sharedptr<NWindow::Window>& a_window,s32 a_width,s32 a_height)
 	{
 		return this->impl->Render_Create(a_window,a_width,a_height);
 	}

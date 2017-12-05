@@ -39,7 +39,7 @@ namespace NBlib
 
 		/** Copy
 		*/
-		template < typename T > static T Copy(const u8*& a_current_pointer,s32 a_increment = -1)
+		template <typename T> static T Copy(const u8*& a_current_pointer,s32 a_increment = -1)
 		{
 			T t_ret;
 			{
@@ -57,7 +57,7 @@ namespace NBlib
 		}
 		/** Copy
 		*/
-		template < typename T > static T Copy(u8*& a_current_pointer,s32 a_increment = -1)
+		template <typename T> static T Copy(u8*& a_current_pointer,s32 a_increment = -1)
 		{
 			T t_ret;
 			{

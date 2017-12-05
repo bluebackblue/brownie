@@ -44,20 +44,20 @@ namespace NBsys{namespace NFile
 
 	/** キャッシュへ登録。
 	*/
-	void File_Cache::SetCache(const sharedptr< File_WorkItem >& a_workitem,s32 a_cachegroup_id)
+	void File_Cache::SetCache(const sharedptr<File_WorkItem>& a_workitem,s32 a_cachegroup_id)
 	{
 		MemoryContainer t_memorycontainer(BSYS_FILE_MEMORYCONTAINER);
 
-		STLMap< STLWString , sharedptr< File_Cache_Item > >::iterator t_it_item = this->map.find(a_workitem->GetFileNameShort());
+		STLMap<STLWString,sharedptr<File_Cache_Item>>::iterator t_it_item = this->map.find(a_workitem->GetFileNameShort());
 		if(t_it_item == this->map.end()){
 			//新規。
-			sharedptr< File_Cache_Item > t_newitem(new File_Cache_Item(a_workitem));
+			sharedptr<File_Cache_Item> t_newitem(new File_Cache_Item(a_workitem));
 
 			//ＩＤ追加。
 			t_newitem->AddID(a_cachegroup_id);
 
 			//ワークアイテムをキャッシュに追加。
-			this->map.insert(STLMap< STLWString , sharedptr< File_Cache_Item > >::value_type(a_workitem->GetFileNameShort(),t_newitem));
+			this->map.insert(STLMap<STLWString,sharedptr<File_Cache_Item>>::value_type(a_workitem->GetFileNameShort(),t_newitem));
 		}else{
 			//既存。ＩＤのみ追加。
 			t_it_item->second->AddID(a_cachegroup_id);
@@ -66,14 +66,14 @@ namespace NBsys{namespace NFile
 
 	/** 名前からキャッシュを検索。
 	*/
-	const sharedptr< File_WorkItem >& File_Cache::GetCacheFromFileNameShort(const STLWString& a_filename_short) const
+	const sharedptr<File_WorkItem>& File_Cache::GetCacheFromFileNameShort(const STLWString& a_filename_short) const
 	{
-		STLMap< STLWString , sharedptr< File_Cache_Item > >::const_iterator t_it_item = this->map.find(a_filename_short);
+		STLMap<STLWString,sharedptr<File_Cache_Item>>::const_iterator t_it_item = this->map.find(a_filename_short);
 		if(t_it_item != this->map.end()){
 			return t_it_item->second->workitem;
 		}
 
-		return sharedptr< File_WorkItem >::null();
+		return sharedptr<File_WorkItem>::null();
 	}
 
 	/** キャッシュクリア。
@@ -82,15 +82,15 @@ namespace NBsys{namespace NFile
 	{
 		if(a_cachegroup_id <= File_CacheGroupID::NoCache){
 			//全部。削除。
-			STLMap< STLWString , sharedptr< File_Cache_Item > >::Type().swap(this->map);
+			STLMap<STLWString,sharedptr<File_Cache_Item>>::Type().swap(this->map);
 		}else{
-			STLMap< STLWString , sharedptr< File_Cache_Item > >::iterator t_it = this->map.begin();
+			STLMap<STLWString,sharedptr<File_Cache_Item>>::iterator t_it = this->map.begin();
 			while(t_it != this->map.end()){
 				t_it->second->KillID(a_cachegroup_id);
 
 				if(t_it->second->IsEmpty()){
 					//中身が空のものはキャッシュマップから削除。
-					STLMap< STLWString , sharedptr< File_Cache_Item > >::iterator t_it_erase = t_it;
+					STLMap<STLWString,sharedptr<File_Cache_Item>>::iterator t_it_erase = t_it;
 					t_it++;
 					this->map.erase(t_it_erase);
 					continue;
@@ -105,7 +105,7 @@ namespace NBsys{namespace NFile
 	*/
 	void File_Cache::LeakCheck() const
 	{
-		STLMap< STLWString , sharedptr< File_Cache_Item > >::const_iterator t_it = this->map.begin();
+		STLMap<STLWString,sharedptr<File_Cache_Item>>::const_iterator t_it = this->map.begin();
 		while(t_it != this->map.end()){
 			if(t_it->second.use_count() > 1){
 				//誰かから参照されている。

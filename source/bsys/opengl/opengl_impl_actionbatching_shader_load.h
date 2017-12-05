@@ -42,17 +42,17 @@ namespace NBsys{namespace NOpengl
 
 		/** shaderlayout
 		*/
-		sharedptr< Opengl_ShaderLayout > shaderlayout;
+		sharedptr<Opengl_ShaderLayout> shaderlayout;
 
 		/** asyncresult
 		*/
-		AsyncResult< bool > asyncresult;
+		AsyncResult<bool> asyncresult;
 
 	public:
 
 		/** constructor
 		*/
-		Opengl_Impl_ActionBatching_Shader_Load(Opengl_Impl& a_opengl_impl,const sharedptr< Opengl_ShaderLayout >& a_shaderlayout,AsyncResult< bool >& a_asyncresult)
+		Opengl_Impl_ActionBatching_Shader_Load(Opengl_Impl& a_opengl_impl,const sharedptr<Opengl_ShaderLayout>& a_shaderlayout,AsyncResult<bool>& a_asyncresult)
 			:
 			opengl_impl(a_opengl_impl),
 			shaderlayout(a_shaderlayout),

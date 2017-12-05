@@ -46,7 +46,7 @@ namespace NBsys{namespace NActionBatching
 	*/
 	void ActionBatching::Update(f32 a_delta)
 	{
-		STLList< sharedptr< ActionBatching_ActionList > >::iterator t_it = this->worklist.begin();
+		STLList<sharedptr<ActionBatching_ActionList>>::iterator t_it = this->worklist.begin();
 		while(t_it != this->worklist.end()){
 			if((*t_it)->Do(a_delta) == true){
 
@@ -61,7 +61,7 @@ namespace NBsys{namespace NActionBatching
 
 	/** StartBatching
 	*/
-	void ActionBatching::StartBatching(sharedptr< ActionBatching_ActionList >& a_actionlist)
+	void ActionBatching::StartBatching(sharedptr<ActionBatching_ActionList>& a_actionlist)
 	{
 		//ŠJŽnB
 		a_actionlist->Start();

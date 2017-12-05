@@ -37,7 +37,7 @@ namespace NBlib
 	/** グローバル固定長アロケータ。
 	*/
 	#if(BLIB_GLOBALFIXEDALLOCATOR_ENABLE)
-	typedef FixedAllocator< BLIB_GLOBALFIXEDALLOCATOR_BLOCKSIZE , BLIB_GLOBALFIXEDALLOCATOR_SIZE > GlobalFixedAllocator_Type;
+	typedef FixedAllocator<BLIB_GLOBALFIXEDALLOCATOR_BLOCKSIZE,BLIB_GLOBALFIXEDALLOCATOR_SIZE> GlobalFixedAllocator_Type;
 	GlobalFixedAllocator_Type& GlobalFixedAllocator_Get();
 	#endif
 
@@ -49,7 +49,7 @@ namespace NBlib
 
 	/** グローバル乱数。
 	*/
-	RandomTemplate< Random_LinearCongruentialGenerators >& GlobalRand_Get();
+	RandomTemplate<Random_LinearCongruentialGenerators>& GlobalRand_Get();
 
 	/** グローバル乱数。ロックオブジェクト。
 	*/

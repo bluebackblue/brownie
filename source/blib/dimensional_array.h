@@ -26,7 +26,7 @@ namespace NBlib
 {
 	/** dimensional_array_1
 	*/
-	template < typename T > class dimensional_array_1
+	template <typename T> class dimensional_array_1
 	{
 	private:
 		/** size
@@ -35,7 +35,7 @@ namespace NBlib
 
 		/** list
 		*/
-		sharedptr< T > list;
+		sharedptr<T> list;
 		T* list_cache;
 
 	public:
@@ -54,7 +54,7 @@ namespace NBlib
 		dimensional_array_1(s32 a_size)
 			:
 			size(a_size),
-			list(new T[(a_size)],default_delete< T[] >()),
+			list(new T[(a_size)],default_delete<T[]>()),
 			list_cache(this->list.get())
 		{
 		}
@@ -72,7 +72,7 @@ namespace NBlib
 		void Creaet(s32 a_size)
 		{
 			this->size = a_size;
-			this->list.reset(new T[(a_size)],default_delete< T[] >());
+			this->list.reset(new T[(a_size)],default_delete<T[]>());
 			this->list_cache = this->list.get();
 		}
 
@@ -128,7 +128,7 @@ namespace NBlib
 
 	/** dimensional_array_2
 	*/
-	template < typename T > class dimensional_array_2
+	template <typename T> class dimensional_array_2
 	{
 	private:
 		/** width
@@ -141,7 +141,7 @@ namespace NBlib
 
 		/** list
 		*/
-		sharedptr< T > list;
+		sharedptr<T> list;
 		T* list_cache;
 
 	public:
@@ -162,7 +162,7 @@ namespace NBlib
 			:
 			width(a_width),
 			height(a_height),
-			list(new T[(a_width * a_height)],default_delete< T[] >()),
+			list(new T[(a_width * a_height)],default_delete<T[]>()),
 			list_cache(this->list.get())
 		{
 		}
@@ -181,7 +181,7 @@ namespace NBlib
 		{
 			this->width = a_width;
 			this->height = a_height;
-			this->list.reset(new T[(a_width * a_height)],default_delete< T[] >());
+			this->list.reset(new T[(a_width * a_height)],default_delete<T[]>());
 			this->list_cache = this->list.get();
 		}
 
@@ -240,7 +240,7 @@ namespace NBlib
 		*/
 		void SetAll(const T& a_value)
 		{
-			for(s32 ii=0;ii<(this->width * this->height);ii++){
+			for(s32 ii = 0;ii < (this->width * this->height);ii++){
 				this->list_cache[ii] = a_value;
 			}
 		}

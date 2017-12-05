@@ -742,9 +742,9 @@ namespace NBlib
 
 		/** JSON文字からインデックスリストの作成[*,*,*]。
 		*/
-		sharedptr< STLVector< sharedptr< JsonItem > >::Type > CreateIndexArrayFromJsonString(const STLString& a_jsonstring)
+		sharedptr<STLVector<sharedptr<JsonItem>>::Type> CreateIndexArrayFromJsonString(const STLString& a_jsonstring)
 		{
-			sharedptr< STLVector< sharedptr< JsonItem > >::Type > t_indexlist(new STLVector< sharedptr< JsonItem > >::Type());
+			sharedptr<STLVector<sharedptr<JsonItem>>::Type> t_indexlist(new STLVector<sharedptr<JsonItem>>::Type());
 		
 			s32 t_index = 0;
 			while(t_index < static_cast<s32>(a_jsonstring.length())){
@@ -767,7 +767,7 @@ namespace NBlib
 						//不明。
 						ASSERT(0);
 
-						t_indexlist.reset(new STLVector< sharedptr< JsonItem > >::Type());
+						t_indexlist.reset(new STLVector<sharedptr<JsonItem>>::Type());
 						return t_indexlist;
 					}
 				}
@@ -810,14 +810,14 @@ namespace NBlib
 						//不明。
 						ASSERT(0);
 
-						t_indexlist.reset(new STLVector< sharedptr< JsonItem > >::Type());
+						t_indexlist.reset(new STLVector<sharedptr<JsonItem>>::Type());
 						return t_indexlist;
 					}break;
 				}
 			
 				//リストの最後に追加。
 				if(t_value_size > 0){
-					sharedptr< JsonItem > t_additem(new JsonItem());
+					sharedptr<JsonItem> t_additem(new JsonItem());
 					{
 						t_additem->SetJsonString(a_jsonstring.substr(t_index,t_value_size));
 					}
@@ -828,7 +828,7 @@ namespace NBlib
 				}else{
 					ASSERT(0);
 
-					t_indexlist.reset(new STLVector< sharedptr< JsonItem > >::Type());
+					t_indexlist.reset(new STLVector<sharedptr<JsonItem>>::Type());
 					return t_indexlist;
 				}
 			}
@@ -836,15 +836,15 @@ namespace NBlib
 			//範囲外。
 			ASSERT(0);
 
-			t_indexlist.reset(new STLVector< sharedptr< JsonItem > >::Type());
+			t_indexlist.reset(new STLVector<sharedptr<JsonItem>>::Type());
 			return t_indexlist;
 		}
 
 		/** JSON文字から連想配列の作成。
 		*/
-		sharedptr< STLMap< STLString , sharedptr< JsonItem > >::Type > CreateAssociativeArrayFromJsonString(const STLString& a_jsonstring)
+		sharedptr<STLMap<STLString,sharedptr<JsonItem>>::Type> CreateAssociativeArrayFromJsonString(const STLString& a_jsonstring)
 		{
-			sharedptr< STLMap< STLString , sharedptr< JsonItem > >::Type > t_associativelist(new STLMap< STLString , sharedptr< JsonItem > >::Type);
+			sharedptr<STLMap<STLString,sharedptr<JsonItem>>::Type> t_associativelist(new STLMap<STLString,sharedptr<JsonItem>>::Type);
 		
 			s32 t_index = 0;
 			while(t_index < static_cast<s32>(a_jsonstring.length())){
@@ -865,7 +865,7 @@ namespace NBlib
 						//不明。
 						ASSERT(0);
 
-						t_associativelist.reset(new STLMap< STLString , sharedptr< JsonItem > >::Type);
+						t_associativelist.reset(new STLMap<STLString,sharedptr<JsonItem>>::Type);
 						return t_associativelist;
 					}
 				}
@@ -881,14 +881,14 @@ namespace NBlib
 						//不明。
 						ASSERT(0);
 
-						t_associativelist.reset(new STLMap< STLString , sharedptr< JsonItem > >::Type);
+						t_associativelist.reset(new STLMap<STLString,sharedptr<JsonItem>>::Type);
 						return t_associativelist;
 					}
 				}else{
 					//不明。
 					ASSERT(0);
 
-					t_associativelist.reset(new STLMap< STLString , sharedptr< JsonItem > >::Type);
+					t_associativelist.reset(new STLMap<STLString,sharedptr<JsonItem>>::Type);
 					return t_associativelist;
 				}
 			
@@ -899,7 +899,7 @@ namespace NBlib
 					//不明。
 					ASSERT(0);
 
-					t_associativelist.reset(new STLMap< STLString , sharedptr< JsonItem > >::Type);
+					t_associativelist.reset(new STLMap<STLString,sharedptr<JsonItem>>::Type);
 					return t_associativelist;
 				}
 			
@@ -941,25 +941,25 @@ namespace NBlib
 						//不明。
 						ASSERT(0);
 
-						t_associativelist.reset(new STLMap< STLString , sharedptr< JsonItem > >::Type);
+						t_associativelist.reset(new STLMap<STLString,sharedptr<JsonItem>>::Type);
 						return t_associativelist;
 					}break;
 				}
 			
 				//リストに追加。
 				if(t_value_size > 0){
-					sharedptr< JsonItem > t_additem(new JsonItem());
+					sharedptr<JsonItem> t_additem(new JsonItem());
 					{
 						t_additem->SetJsonString(a_jsonstring.substr(t_index,t_value_size));
 					}
 
-					t_associativelist->insert(STLMap< STLString , sharedptr< JsonItem > >::value_type(t_name_string,t_additem));
+					t_associativelist->insert(STLMap<STLString,sharedptr<JsonItem>>::value_type(t_name_string,t_additem));
 
 					t_index += t_value_size;
 				}else{
 					ASSERT(0);
 
-					t_associativelist.reset(new STLMap< STLString , sharedptr< JsonItem > >::Type);
+					t_associativelist.reset(new STLMap<STLString,sharedptr<JsonItem>>::Type);
 					return t_associativelist;
 				}
 			}
@@ -967,15 +967,15 @@ namespace NBlib
 			//範囲外。
 			ASSERT(0);
 
-			t_associativelist.reset(new STLMap< STLString , sharedptr< JsonItem > >::Type);
+			t_associativelist.reset(new STLMap<STLString,sharedptr<JsonItem>>::Type);
 			return t_associativelist;
 		}
 
 		/** JSON文字からバイナリデータの作成。
 		*/
-		sharedptr< STLVector< u8 >::Type > CreateBinaryDataFromJsonString(const STLString& a_jsonstring)
+		sharedptr<STLVector<u8>::Type> CreateBinaryDataFromJsonString(const STLString& a_jsonstring)
 		{
-			sharedptr< STLVector< u8 >::Type > t_binarydata(new STLVector< u8 >::Type());
+			sharedptr<STLVector<u8>::Type> t_binarydata(new STLVector<u8>::Type());
 
 			t_binarydata->reserve(a_jsonstring.length() / 2);
 
@@ -995,7 +995,7 @@ namespace NBlib
 						//不明。
 						ASSERT(0);
 
-						t_binarydata.reset(new STLVector< u8 >::Type());
+						t_binarydata.reset(new STLVector<u8>::Type());
 						return t_binarydata;
 					}
 				}else{
@@ -1030,7 +1030,7 @@ namespace NBlib
 							//不明。
 							ASSERT(0);
 
-							t_binarydata.reset(new STLVector< u8 >::Type());
+							t_binarydata.reset(new STLVector<u8>::Type());
 							return t_binarydata;
 						}break;
 					}
@@ -1066,7 +1066,7 @@ namespace NBlib
 								//不明。
 								ASSERT(0);
 
-								t_binarydata.reset(new STLVector< u8 >::Type());
+								t_binarydata.reset(new STLVector<u8>::Type());
 								return t_binarydata;
 							}break;
 						}
@@ -1078,7 +1078,7 @@ namespace NBlib
 						//不明。
 						ASSERT(0);
 
-						t_binarydata.reset(new STLVector< u8 >::Type());
+						t_binarydata.reset(new STLVector<u8>::Type());
 						return t_binarydata;
 					}
 				}
@@ -1087,7 +1087,7 @@ namespace NBlib
 			//範囲外。
 			ASSERT(0);
 
-			t_binarydata.reset(new STLVector< u8 >::Type());
+			t_binarydata.reset(new STLVector<u8>::Type());
 			return t_binarydata;
 		}
 	}
@@ -1174,9 +1174,9 @@ namespace NBlib
 
 	/** ディープコピー。
 	*/
-	sharedptr< JsonItem > JsonItem::DeepCopy() const
+	sharedptr<JsonItem> JsonItem::DeepCopy() const
 	{
-		sharedptr< JsonItem > t_new_jsonitem(new JsonItem(this->ConvertJsonString()));
+		sharedptr<JsonItem> t_new_jsonitem(new JsonItem(this->ConvertJsonString()));
 		return t_new_jsonitem;
 	}
 
@@ -1240,7 +1240,7 @@ namespace NBlib
 	*/
 	void JsonItem::JsonStringToValue() const
 	{
-		sharedptr< STLString > t_jsonstring_temp = this->jsonstring;
+		sharedptr<STLString> t_jsonstring_temp = this->jsonstring;
 		this->jsonstring.reset();
 
 		this->value.Reset();
@@ -1381,7 +1381,7 @@ namespace NBlib
 
 	/** [取得]GetStringData
 	*/
-	const sharedptr< STLString >& JsonItem::GetStringData() const
+	const sharedptr<STLString>& JsonItem::GetStringData() const
 	{
 		ASSERT(this->valuetype == ValueType::StringData);
 
@@ -1446,7 +1446,7 @@ namespace NBlib
 
 	/** [取得][値]GetBinaryData
 	*/
-	sharedptr< STLVector< u8 >::Type >& JsonItem::GetBinaryData()
+	sharedptr<STLVector<u8>::Type>& JsonItem::GetBinaryData()
 	{
 		ASSERT(this->valuetype == ValueType::BinaryData);
 
@@ -1466,7 +1466,7 @@ namespace NBlib
 
 	/** [取得]連想リストのアイテム取得。
 	*/
-	sharedptr< JsonItem >& JsonItem::GetItem(const STLString& a_itemname)
+	sharedptr<JsonItem>& JsonItem::GetItem(const STLString& a_itemname)
 	{
 		ASSERT(this->valuetype == ValueType::AssociativeArray);
 
@@ -1475,7 +1475,7 @@ namespace NBlib
 		}
 
 		{
-			STLMap< STLString , sharedptr< JsonItem > >::iterator t_it = this->value.associative_array->find(a_itemname);
+			STLMap<STLString,sharedptr<JsonItem>>::iterator t_it = this->value.associative_array->find(a_itemname);
 			if(t_it != this->value.associative_array->end()){
 				return t_it->second;
 			}
@@ -1483,12 +1483,12 @@ namespace NBlib
 
 		ASSERT(0);
 
-		return sharedptr< JsonItem >::null();
+		return sharedptr<JsonItem>::null();
 	}
 
 	/** [取得]連想リストのアイテム取得。
 	*/
-	const sharedptr< JsonItem >& JsonItem::GetItem(const STLString& a_itemname) const
+	const sharedptr<JsonItem>& JsonItem::GetItem(const STLString& a_itemname) const
 	{
 		ASSERT(this->valuetype == ValueType::AssociativeArray);
 
@@ -1497,7 +1497,7 @@ namespace NBlib
 		}
 
 		{
-			STLMap< STLString , sharedptr< JsonItem > >::iterator t_it = this->value.associative_array->find(a_itemname);
+			STLMap<STLString,sharedptr<JsonItem>>::iterator t_it = this->value.associative_array->find(a_itemname);
 			if(t_it != this->value.associative_array->end()){
 				return t_it->second;
 			}
@@ -1505,7 +1505,7 @@ namespace NBlib
 
 		ASSERT(0);
 
-		return sharedptr< JsonItem >::null();
+		return sharedptr<JsonItem>::null();
 	}
 
 	/** [取得]連想リストのアイテムチェック。
@@ -1519,7 +1519,7 @@ namespace NBlib
 		}
 		
 		{
-			STLMap< STLString , sharedptr< JsonItem > >::iterator t_it = this->value.associative_array->find(a_itemname);
+			STLMap<STLString,sharedptr<JsonItem>>::iterator t_it = this->value.associative_array->find(a_itemname);
 			if(t_it != this->value.associative_array->end()){
 				return true;
 			}
@@ -1530,7 +1530,7 @@ namespace NBlib
 
 	/** [取得]インデックスリストのアイテム取得。
 	*/
-	sharedptr< JsonItem >& JsonItem::GetItem(s32 a_index)
+	sharedptr<JsonItem>& JsonItem::GetItem(s32 a_index)
 	{
 		ASSERT(this->valuetype == ValueType::IndexArray);
 
@@ -1538,18 +1538,18 @@ namespace NBlib
 			this->JsonStringToValue();
 		}
 		
-		if((0<=a_index) && (a_index<static_cast<s32>(this->value.index_array->size()))){
+		if((0 <= a_index) && (a_index < static_cast<s32>(this->value.index_array->size()))){
 			return (*(this->value.index_array))[a_index];
 		}
 		
 		ASSERT(0);
 
-		return sharedptr< JsonItem >::null();
+		return sharedptr<JsonItem>::null();
 	}
 
 	/** [取得]インデックスリストのアイテム取得。
 	*/
-	const sharedptr< JsonItem >& JsonItem::GetItem(s32 a_index) const
+	const sharedptr<JsonItem>& JsonItem::GetItem(s32 a_index) const
 	{
 		ASSERT(this->valuetype == ValueType::IndexArray);
 
@@ -1557,13 +1557,13 @@ namespace NBlib
 			this->JsonStringToValue();
 		}
 		
-		if((0<=a_index) && (a_index<static_cast<s32>(this->value.index_array->size()))){
+		if((0 <= a_index) && (a_index < static_cast<s32>(this->value.index_array->size()))){
 			return (*(this->value.index_array))[a_index];
 		}
 		
 		ASSERT(0);
 
-		return sharedptr< JsonItem >::null();
+		return sharedptr<JsonItem>::null();
 	}
 
 	/** [取得]インデックスリストのアイテムチェック。
@@ -1576,7 +1576,7 @@ namespace NBlib
 			this->JsonStringToValue();
 		}
 		
-		if((0<=a_index) && (a_index<static_cast<s32>(this->value.index_array->size()))){
+		if((0 <= a_index) && (a_index < static_cast<s32>(this->value.index_array->size()))){
 			return true;
 		}
 		
@@ -1585,7 +1585,7 @@ namespace NBlib
 
 	/** [設定]連想リストにアイテム追加。削除。
 	*/
-	void JsonItem::SetItem(const STLString& a_itemname,sharedptr< JsonItem >& a_item,bool a_deepcopy)
+	void JsonItem::SetItem(const STLString& a_itemname,sharedptr<JsonItem>& a_item,bool a_deepcopy)
 	{
 		ASSERT(this->valuetype == ValueType::AssociativeArray);
 
@@ -1595,9 +1595,9 @@ namespace NBlib
 
 		if(a_item != nullptr){
 			if(a_deepcopy == true){
-				this->value.associative_array->insert(STLMap< STLString , sharedptr< JsonItem > >::value_type(a_itemname,a_item->DeepCopy()));
+				this->value.associative_array->insert(STLMap<STLString,sharedptr<JsonItem>>::value_type(a_itemname,a_item->DeepCopy()));
 			}else{
-				this->value.associative_array->insert(STLMap< STLString , sharedptr< JsonItem > >::value_type(a_itemname,a_item));
+				this->value.associative_array->insert(STLMap<STLString,sharedptr<JsonItem>>::value_type(a_itemname,a_item));
 			}
 		}else{
 			this->value.associative_array->erase(a_itemname);
@@ -1606,7 +1606,7 @@ namespace NBlib
 
 	/** [設定]インデックスリストにアイテム追加。
 	*/
-	void JsonItem::AddItem(const sharedptr< JsonItem >& a_item,bool a_deepcopy)
+	void JsonItem::AddItem(const sharedptr<JsonItem>& a_item,bool a_deepcopy)
 	{
 		ASSERT(this->valuetype == ValueType::IndexArray);
 
@@ -1653,7 +1653,7 @@ namespace NBlib
 		this->value.Reset();
 		
 		this->valuetype = ValueType::AssociativeArray;
-		this->value.associative_array.reset(new STLMap< STLString , sharedptr< JsonItem > >::Type());
+		this->value.associative_array.reset(new STLMap<STLString,sharedptr<JsonItem>>::Type());
 	}
 
 	/** [設定]空インデックスリスト。
@@ -1664,7 +1664,7 @@ namespace NBlib
 		this->value.Reset();
 		
 		this->valuetype = ValueType::IndexArray;
-		this->value.index_array.reset(new STLVector< sharedptr< JsonItem > >::Type());
+		this->value.index_array.reset(new STLVector<sharedptr<JsonItem>>::Type());
 	}
 
 	/** [設定]整数セット。
@@ -1713,7 +1713,7 @@ namespace NBlib
 
 	/** [設定]バイナリ―データセット。
 	*/
-	void JsonItem::SetBinaryData(const sharedptr< STLVector< u8 >::Type >& a_binarydata)
+	void JsonItem::SetBinaryData(const sharedptr<STLVector<u8>::Type>& a_binarydata)
 	{
 		this->jsonstring.reset();
 		this->value.Reset();
@@ -1724,7 +1724,7 @@ namespace NBlib
 
 	/** 連想配列キーリスト作成。
 	*/
-	sharedptr< STLVector< STLString >::Type > JsonItem::CreateAssociativeKeyList()
+	sharedptr<STLVector<STLString>::Type> JsonItem::CreateAssociativeKeyList()
 	{
 		ASSERT(this->valuetype == ValueType::AssociativeArray);
 
@@ -1732,11 +1732,11 @@ namespace NBlib
 			this->JsonStringToValue();
 		}
 
-		STLMap< STLString , sharedptr< JsonItem > >::iterator t_start = this->value.associative_array->begin();
-		STLMap< STLString , sharedptr< JsonItem > >::iterator t_end = this->value.associative_array->end();
-		STLMap< STLString , sharedptr< JsonItem > >::iterator t_it = t_start;
+		STLMap<STLString,sharedptr<JsonItem>>::iterator t_start = this->value.associative_array->begin();
+		STLMap<STLString,sharedptr<JsonItem>>::iterator t_end = this->value.associative_array->end();
+		STLMap<STLString,sharedptr<JsonItem>>::iterator t_it = t_start;
 
-		sharedptr< STLVector< STLString >::Type > t_ret_keylist(new STLVector< STLString >::Type());
+		sharedptr<STLVector<STLString>::Type> t_ret_keylist(new STLVector<STLString>::Type());
 
 		for(;t_it!=t_end;++t_it){
 			t_ret_keylist->push_back(t_it->first);
@@ -1804,9 +1804,9 @@ namespace NBlib
 				STLString t_jsonstring = "[";
 				t_jsonstring.reserve(64);
 				{
-					STLVector< sharedptr< JsonItem > >::const_iterator t_start = this->value.index_array->begin();
-					STLVector< sharedptr< JsonItem > >::const_iterator t_end = this->value.index_array->end();
-					STLVector< sharedptr< JsonItem > >::const_iterator t_it = t_start;
+					STLVector<sharedptr<JsonItem>>::const_iterator t_start = this->value.index_array->begin();
+					STLVector<sharedptr<JsonItem>>::const_iterator t_end = this->value.index_array->end();
+					STLVector<sharedptr<JsonItem>>::const_iterator t_it = t_start;
 
 					//一つ目。
 					if(t_it != t_end){
@@ -1828,9 +1828,9 @@ namespace NBlib
 				STLString t_jsonstring = "{";
 				t_jsonstring.reserve(64);
 				{
-					STLMap< STLString , sharedptr< JsonItem > >::const_iterator t_start = this->value.associative_array->begin();
-					STLMap< STLString , sharedptr< JsonItem > >::const_iterator t_end = this->value.associative_array->end();
-					STLMap< STLString , sharedptr< JsonItem > >::const_iterator t_it = t_start;
+					STLMap<STLString,sharedptr<JsonItem>>::const_iterator t_start = this->value.associative_array->begin();
+					STLMap<STLString,sharedptr<JsonItem>>::const_iterator t_end = this->value.associative_array->end();
+					STLMap<STLString,sharedptr<JsonItem>>::const_iterator t_it = t_start;
 
 					if(t_it != t_end){
 						//一つ目。

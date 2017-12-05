@@ -27,7 +27,7 @@ namespace NBlib
 {
 	/** FixedAllocator
 	*/
-	template < s32 BLOCKSIZE , s32 BLOCKMAX > struct FixedAllocator
+	template <s32 BLOCKSIZE,s32 BLOCKMAX> struct FixedAllocator
 	{
 	public:
 		/** Config
@@ -110,7 +110,7 @@ namespace NBlib
 		{
 			s32 t_index = static_cast<s32>((reinterpret_cast<AddressType>(a_pointer)-reinterpret_cast<AddressType>(static_cast<const void*>(&this->data[0])))/Config::BlockSize);
 
-			if((0<=t_index)&&(t_index<COUNTOF(this->free_index))){
+			if((0 <= t_index)&&(t_index < COUNTOF(this->free_index))){
 				ASSERT(reinterpret_cast<AddressType>(a_pointer) == (reinterpret_cast<AddressType>(static_cast<const void*>(&this->data[0]))+t_index*Config::BlockSize));
 				return t_index;
 			}

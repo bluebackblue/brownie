@@ -60,7 +60,7 @@ namespace NBlib
 			if(t_wchar_use_len > 0){
 				//出力文字。終端を含む。
 				s32 t_alloca_size = t_wchar_use_len * sizeof(wchar);
-				wchar* t_wchar = reinterpret_cast< wchar* >(MALLOCA(t_alloca_size));
+				wchar* t_wchar = reinterpret_cast<wchar*>(MALLOCA(t_alloca_size));
 
 				if(t_wchar != nullptr){
 					//変換。
@@ -105,7 +105,7 @@ namespace NBlib
 			if(t_char_use_len > 0){
 				//出力文字。終端文字を含む。
 				s32 t_alloca_size = t_char_use_len * sizeof(char);
-				char* t_char = reinterpret_cast< char* >(MALLOCA(t_alloca_size));
+				char* t_char = reinterpret_cast<char*>(MALLOCA(t_alloca_size));
 
 				if(t_char != nullptr){
 					//変換。
@@ -147,7 +147,7 @@ namespace NBlib
 		
 		if(t_use_len>0){
 			//出力文字。
-			char* t_char = reinterpret_cast< char* >(MALLOCA(t_use_len * sizeof(char)));
+			char* t_char = reinterpret_cast<char*>(MALLOCA(t_use_len * sizeof(char)));
 			//出力文字数。終端文字含む。
 			s32 t_char_len = t_use_len;
 

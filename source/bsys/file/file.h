@@ -35,7 +35,7 @@ namespace NBsys{namespace NFile
 
 	/** システムのインスタンス取得。
 	*/
-	sharedptr< ThreadTemplate< File_Thread > >& GetSystemInstance(s32 a_device_index);
+	sharedptr<ThreadTemplate<File_Thread>>& GetSystemInstance(s32 a_device_index);
 
 	/** リークチェック。
 	*/
@@ -56,7 +56,7 @@ namespace NBsys{namespace NFile
 	/** [パック]作成。
 	*/
 	#if(BSYS_FILE_PACK_ENABLE)
-	sharedptr< ThreadTemplate< File_Pack_MakeThread > > Pack_Create(const STLWString& a_rootpath_full,const STLWString& a_pack_filename_full,const sharedptr< File_Allocator >& a_allocator);
+	sharedptr<ThreadTemplate<File_Pack_MakeThread>> Pack_Create(const STLWString& a_rootpath_full,const STLWString& a_pack_filename_full,const sharedptr<File_Allocator>& a_allocator);
 	#endif
 
 	/** [パック]ロードリクエスト。

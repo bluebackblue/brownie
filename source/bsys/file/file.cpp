@@ -32,7 +32,7 @@ namespace NBsys{namespace NFile
 {
 	/** s_thread
 	*/
-	sharedptr< STLVector< sharedptr< ThreadTemplate< File_Thread > > >::Type > s_thread_list;
+	sharedptr<STLVector<sharedptr<ThreadTemplate<File_Thread>>>::Type> s_thread_list;
 
 	/** システムの開始。
 	*/
@@ -41,7 +41,7 @@ namespace NBsys{namespace NFile
 		MemoryContainer t_memorycontainer(BSYS_FILE_MEMORYCONTAINER);
 
 		if(s_thread_list == nullptr){
-			s_thread_list.reset(new STLVector< sharedptr< ThreadTemplate< File_Thread > > >::Type());
+			s_thread_list.reset(new STLVector<sharedptr<ThreadTemplate<File_Thread>>>::Type());
 
 			for(s32 ii=0;ii<a_device_max;ii++){
 				s_thread_list->push_back(nullptr);
@@ -65,7 +65,7 @@ namespace NBsys{namespace NFile
 					t_threadargument.rootpath_full = Path::Dir(a_rootpath_full);
 				}
 
-				s_thread_list->at(a_device_index).reset(new ThreadTemplate< File_Thread >());
+				s_thread_list->at(a_device_index).reset(new ThreadTemplate<File_Thread>());
 				s_thread_list->at(a_device_index)->Start(t_threadargument);
 			}else{
 				ASSERT(0);
@@ -77,7 +77,7 @@ namespace NBsys{namespace NFile
 
 	/** システムのインスタンス取得。
 	*/
-	sharedptr< ThreadTemplate< File_Thread > >& GetSystemInstance(s32 a_device_index)
+	sharedptr<ThreadTemplate<File_Thread>>& GetSystemInstance(s32 a_device_index)
 	{
 		ASSERT((0 <= a_device_index)&&(a_device_index < static_cast<s32>(s_thread_list->size())));
 
@@ -89,8 +89,8 @@ namespace NBsys{namespace NFile
 	void LeakCheck()
 	{
 		if(s_thread_list != nullptr){
-			STLVector< sharedptr< ThreadTemplate< File_Thread > > >::iterator t_it = s_thread_list->begin();
-			STLVector< sharedptr< ThreadTemplate< File_Thread > > >::iterator t_it_end = s_thread_list->end();
+			STLVector<sharedptr<ThreadTemplate<File_Thread>>>::iterator t_it = s_thread_list->begin();
+			STLVector<sharedptr<ThreadTemplate<File_Thread>>>::iterator t_it_end = s_thread_list->end();
 
 			for(;t_it!=t_it_end;++t_it){
 				if(t_it->get() != nullptr){
@@ -120,8 +120,8 @@ namespace NBsys{namespace NFile
 	void EndSystemRequest()
 	{
 		if(s_thread_list != nullptr){
-			STLVector< sharedptr< ThreadTemplate< File_Thread > > >::iterator t_it = s_thread_list->begin();
-			STLVector< sharedptr< ThreadTemplate< File_Thread > > >::iterator t_it_end = s_thread_list->end();
+			STLVector<sharedptr<ThreadTemplate<File_Thread>>>::iterator t_it = s_thread_list->begin();
+			STLVector<sharedptr<ThreadTemplate<File_Thread>>>::iterator t_it_end = s_thread_list->end();
 
 			for(;t_it!=t_it_end;++t_it){
 				if(t_it->get() != nullptr){
@@ -145,7 +145,7 @@ namespace NBsys{namespace NFile
 	/** [パック]作成。
 	*/
 	#if(BSYS_FILE_PACK_ENABLE)
-	sharedptr< ThreadTemplate< File_Pack_MakeThread > > Pack_Create(const STLWString& a_rootpath_full,const STLWString& a_pack_filename_full,const sharedptr< File_Allocator >& a_allocator)
+	sharedptr<ThreadTemplate<File_Pack_MakeThread>> Pack_Create(const STLWString& a_rootpath_full,const STLWString& a_pack_filename_full,const sharedptr<File_Allocator>& a_allocator)
 	{
 		File_Pack_MakeThread::ThreadArgument t_threadargument;
 		{
@@ -154,7 +154,7 @@ namespace NBsys{namespace NFile
 			t_threadargument.allocator = a_allocator;
 		}
 
-		sharedptr< ThreadTemplate< File_Pack_MakeThread > > t_pack_makethread(new ThreadTemplate< File_Pack_MakeThread >());
+		sharedptr<ThreadTemplate<File_Pack_MakeThread>> t_pack_makethread(new ThreadTemplate<File_Pack_MakeThread>());
 		t_pack_makethread->Start(t_threadargument);
 
 		return t_pack_makethread;

@@ -53,7 +53,7 @@ namespace NBlib
 						t_threadlocal_reference.pointer = ::malloc(BLIB_VASTRING_DEBUG_SIZE);
 					}
 
-					return reinterpret_cast< char* >(t_threadlocal_reference.pointer);
+					return reinterpret_cast<char*>(t_threadlocal_reference.pointer);
 				}
 				#else
 				{

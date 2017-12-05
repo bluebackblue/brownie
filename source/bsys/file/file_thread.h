@@ -37,7 +37,7 @@ namespace NBsys{namespace NFile
 	private:
 		/** endrequest
 		*/
-		AtomicValue< bool > endrequest;
+		AtomicValue<bool> endrequest;
 
 		/** ロックオブジェクト。
 		*/
@@ -45,12 +45,12 @@ namespace NBsys{namespace NFile
 
 		/** 作業リスト。
 		*/
-		sharedptr< File_WorkItem > worklist[BSYS_FILE_LISTSIZE];
+		sharedptr<File_WorkItem> worklist[BSYS_FILE_LISTSIZE];
 
 		/** パック作業リスト。
 		*/
 		#if(BSYS_FILE_PACK_ENABLE)
-		sharedptr< File_Pack_WorkItem > worklist_pack[1];
+		sharedptr<File_Pack_WorkItem> worklist_pack[1];
 		#endif
 
 		/** [リクエスト]イベント。
@@ -141,7 +141,7 @@ namespace NBsys{namespace NFile
 
 		/** [メインスレッド]ロードリクエスト。
 		*/
-		const sharedptr< File_WorkItem > LoadRequest(const STLWString& a_filename_short,s32 a_cachegroup_id,sharedptr< File_Allocator >& a_allocator,s32 a_add_allocatesize);
+		const sharedptr<File_WorkItem> LoadRequest(const STLWString& a_filename_short,s32 a_cachegroup_id,sharedptr<File_Allocator>& a_allocator,s32 a_add_allocatesize);
 
 		/** [メインスレッド]キャッシュクリア。
 		*/

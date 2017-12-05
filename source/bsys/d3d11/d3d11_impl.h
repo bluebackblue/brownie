@@ -54,19 +54,19 @@ namespace NBsys{namespace ND3d11
 	{
 		/** vertexshader
 		*/
-		sharedptr< ID3D11VertexShader > vertexshader;
+		sharedptr<ID3D11VertexShader> vertexshader;
 		
 		/** inputlayout
 		*/
-		sharedptr< ID3D11InputLayout > inputlayout;
+		sharedptr<ID3D11InputLayout> inputlayout;
 
 		/** fileobject
 		*/
-		sharedptr< NBsys::NFile::File_Object > fileobject; 
+		sharedptr<NBsys::NFile::File_Object> fileobject; 
 
 		/** layout
 		*/
-		sharedptr< STLVector< NBsys::ND3d11::D3d11_Layout >::Type > layout;
+		sharedptr<STLVector<NBsys::ND3d11::D3d11_Layout>::Type> layout;
 	};
 
 	/** D3d11_Impl_PixelShader
@@ -75,11 +75,11 @@ namespace NBsys{namespace ND3d11
 	{
 		/** pixelshader
 		*/
-		sharedptr< ID3D11PixelShader > pixelshader;
+		sharedptr<ID3D11PixelShader> pixelshader;
 
 		/** fileobject
 		*/
-		sharedptr< NBsys::NFile::File_Object > fileobject; 
+		sharedptr<NBsys::NFile::File_Object> fileobject; 
 	};
 
 	/** D3d11_Impl_VertexBuffer
@@ -88,7 +88,7 @@ namespace NBsys{namespace ND3d11
 	{
 		/** buffer
 		*/
-		sharedptr< ID3D11Buffer > buffer;
+		sharedptr<ID3D11Buffer> buffer;
 
 		/** data
 		*/
@@ -117,7 +117,7 @@ namespace NBsys{namespace ND3d11
 	{
 		/** buffer
 		*/
-		sharedptr< ID3D11Buffer > buffer;
+		sharedptr<ID3D11Buffer> buffer;
 
 		/** size
 		*/
@@ -134,15 +134,15 @@ namespace NBsys{namespace ND3d11
 	{
 		/** texture2d
 		*/
-		sharedptr< ID3D11Texture2D > texture2d;
+		sharedptr<ID3D11Texture2D> texture2d;
 
 		/** texture
 		*/
-		sharedptr< NBsys::NTexture::Texture > texture;
+		sharedptr<NBsys::NTexture::Texture> texture;
 
 		/** resourceview
 		*/
-		sharedptr< ID3D11ShaderResourceView > resourceview;
+		sharedptr<ID3D11ShaderResourceView> resourceview;
 	};
 
 	/** D3d11_Impl_BlendState
@@ -151,7 +151,7 @@ namespace NBsys{namespace ND3d11
 	{
 		/** blendstate
 		*/
-		sharedptr< ID3D11BlendState > blendstate;
+		sharedptr<ID3D11BlendState> blendstate;
 
 		/** alpha_blend
 		*/
@@ -164,7 +164,7 @@ namespace NBsys{namespace ND3d11
 	{
 		/** rasterizerstate
 		*/
-		sharedptr< ID3D11RasterizerState > rasterizerstate;
+		sharedptr<ID3D11RasterizerState> rasterizerstate;
 
 		/** culltype
 		*/
@@ -191,65 +191,65 @@ namespace NBsys{namespace ND3d11
 
 		/** device
 		*/
-		sharedptr< ID3D11Device > device;
+		sharedptr<ID3D11Device> device;
 
 		/** devicecontext
 		*/
-		sharedptr< ID3D11DeviceContext > devicecontext;
+		sharedptr<ID3D11DeviceContext> devicecontext;
 		
 		/** swapchain
 		*/
-		sharedptr< IDXGISwapChain > swapchain;
+		sharedptr<IDXGISwapChain> swapchain;
 
 		/** backbuffer
 		*/
-		sharedptr< ID3D11Texture2D > backbuffer;
+		sharedptr<ID3D11Texture2D> backbuffer;
 
 		/** rendertargetview
 		*/
-		sharedptr< ID3D11RenderTargetView > rendertargetview;
+		sharedptr<ID3D11RenderTargetView> rendertargetview;
 
 		/** depthbuffer
 		*/
-		sharedptr< ID3D11Texture2D > depthbuffer;
+		sharedptr<ID3D11Texture2D> depthbuffer;
 
 		/** depthstencilstate
 		*/
-		sharedptr< ID3D11DepthStencilState > depthstencilstate;
+		sharedptr<ID3D11DepthStencilState> depthstencilstate;
 
 		/** depthstencilview
 		*/
-		sharedptr< ID3D11DepthStencilView > depthstencilview;
+		sharedptr<ID3D11DepthStencilView> depthstencilview;
 
 	private:
 
 		/** vertexshader_list
 		*/
-		STLMap< s32 , sharedptr< D3d11_Impl_VertexShader > >::Type vertexshader_list;
+		STLMap<s32,sharedptr<D3d11_Impl_VertexShader>>::Type vertexshader_list;
 
 		/** pixelshader_list
 		*/
-		STLMap< s32 , sharedptr< D3d11_Impl_PixelShader > >::Type pixelshader_list;
+		STLMap<s32,sharedptr<D3d11_Impl_PixelShader>>::Type pixelshader_list;
 
 		/** vertexbuffer_list
 		*/
-		STLMap< s32 , sharedptr< D3d11_Impl_VertexBuffer > >::Type vertexbuffer_list;
+		STLMap<s32,sharedptr<D3d11_Impl_VertexBuffer>>::Type vertexbuffer_list;
 
 		/** constantbuffer_list
 		*/
-		STLMap< s32 , sharedptr< D3d11_Impl_ConstantBuffer > >::Type constantbuffer_list;
+		STLMap<s32,sharedptr<D3d11_Impl_ConstantBuffer>>::Type constantbuffer_list;
 
 		/** texture_list
 		*/
-		STLMap< s32 , sharedptr< D3d11_Impl_Texture > >::Type texture_list;
+		STLMap<s32,sharedptr<D3d11_Impl_Texture>>::Type texture_list;
 
 		/** blendstate_list
 		*/
-		STLMap< s32 , sharedptr< D3d11_Impl_BlendState > >::Type blendstate_list;
+		STLMap<s32,sharedptr<D3d11_Impl_BlendState>>::Type blendstate_list;
 
 		/** rasterizerstate_list
 		*/
-		STLMap< s32 , sharedptr< D3d11_Impl_RasterizerState > >::Type rasterizerstate_list;
+		STLMap<s32,sharedptr<D3d11_Impl_RasterizerState>>::Type rasterizerstate_list;
 
 	public:
 		/** constructor
@@ -263,7 +263,7 @@ namespace NBsys{namespace ND3d11
 	public:
 		/** Render_Create
 		*/
-		void Render_Create(sharedptr< NWindow::Window >& a_window,s32 a_width,s32 a_height);
+		void Render_Create(sharedptr<NWindow::Window>& a_window,s32 a_width,s32 a_height);
 
 		/** Render_Delete
 		*/
@@ -271,75 +271,75 @@ namespace NBsys{namespace ND3d11
 
 		/** Render_GetDevice
 		*/
-		sharedptr< ID3D11Device >& GetDevice();
+		sharedptr<ID3D11Device>& GetDevice();
 
 		/** Render_GetDeviceContext
 		*/
-		sharedptr< ID3D11DeviceContext >& GetDeviceContext();
+		sharedptr<ID3D11DeviceContext>& GetDeviceContext();
 
 		/** Render_GetSwapChain
 		*/
-		sharedptr< IDXGISwapChain >& GetSwapChain();
+		sharedptr<IDXGISwapChain>& GetSwapChain();
 
 		/** Render_GetBackBuffer
 		*/
-		sharedptr< ID3D11Texture2D >& GetBackBuffer();
+		sharedptr<ID3D11Texture2D>& GetBackBuffer();
 
 		/** Render_GetRenderTargetView
 		*/
-		sharedptr< ID3D11RenderTargetView >& GetRenderTargetView();
+		sharedptr<ID3D11RenderTargetView>& GetRenderTargetView();
 
 		/** Render_GetDepthBuffer
 		*/
-		sharedptr< ID3D11Texture2D >& GetDepthBuffer();
+		sharedptr<ID3D11Texture2D>& GetDepthBuffer();
 
 		/** Render_GetDepthStencilState
 		*/
-		sharedptr< ID3D11DepthStencilState >& GetDepthStencilState();
+		sharedptr<ID3D11DepthStencilState>& GetDepthStencilState();
 
 		/** Render_GetDepthStencilView
 		*/
-		sharedptr< ID3D11DepthStencilView >& GetDepthStencilView();
+		sharedptr<ID3D11DepthStencilView>& GetDepthStencilView();
 
 	public:
 
 		/** GetVertexshader
 		*/
-		sharedptr< D3d11_Impl_VertexShader > GetVertexShader(s32 a_vertexshader_id);
+		sharedptr<D3d11_Impl_VertexShader> GetVertexShader(s32 a_vertexshader_id);
 
 		/** GetPixelshader
 		*/
-		sharedptr< D3d11_Impl_PixelShader > GetPixelShader(s32 a_pixelshader_id);
+		sharedptr<D3d11_Impl_PixelShader> GetPixelShader(s32 a_pixelshader_id);
 
 		/** GetVertexbuffer
 		*/
-		sharedptr< D3d11_Impl_VertexBuffer > GetVertexBuffer(s32 a_vertexbuffer_id);
+		sharedptr<D3d11_Impl_VertexBuffer> GetVertexBuffer(s32 a_vertexbuffer_id);
 
 		/** GetConstantBuffer
 		*/
-		sharedptr< D3d11_Impl_ConstantBuffer > GetConstantBuffer(s32 a_constantbuffer_id);
+		sharedptr<D3d11_Impl_ConstantBuffer> GetConstantBuffer(s32 a_constantbuffer_id);
 
 		/** GetTexture
 		*/
-		sharedptr< D3d11_Impl_Texture > GetTexture(s32 a_texture_id);
+		sharedptr<D3d11_Impl_Texture> GetTexture(s32 a_texture_id);
 
 		/** GetBlendState
 		*/
-		sharedptr< D3d11_Impl_BlendState > GetBlendState(s32 a_blendstate_id);
+		sharedptr<D3d11_Impl_BlendState> GetBlendState(s32 a_blendstate_id);
 
 		/** GetRasterizerState
 		*/
-		sharedptr< D3d11_Impl_RasterizerState > GetRasterizerState(s32 a_rasterizerstate_id);
+		sharedptr<D3d11_Impl_RasterizerState> GetRasterizerState(s32 a_rasterizerstate_id);
 
 	public:
 
 		/** CreateVertexShader
 		*/
-		s32 CreateVertexShader(AsyncResult< bool >& a_asyncresult,sharedptr< NBsys::NFile::File_Object >& a_fileobject,sharedptr< STLVector< NBsys::ND3d11::D3d11_Layout >::Type >& a_layout);
+		s32 CreateVertexShader(AsyncResult<bool>& a_asyncresult,sharedptr<NBsys::NFile::File_Object>& a_fileobject,sharedptr<STLVector<NBsys::ND3d11::D3d11_Layout>::Type>& a_layout);
 
 		/** CreatePixelShader
 		*/
-		s32 CreatePixelShader(AsyncResult< bool >& a_asyncresult,sharedptr< NBsys::NFile::File_Object >& a_fileobject);
+		s32 CreatePixelShader(AsyncResult<bool>& a_asyncresult,sharedptr<NBsys::NFile::File_Object>& a_fileobject);
 
 		/** CreateVertexBuffer
 		*/
@@ -351,7 +351,7 @@ namespace NBsys{namespace ND3d11
 
 		/** CreateTexture
 		*/
-		s32 CreateTexture(sharedptr< NBsys::NTexture::Texture >& a_texture);
+		s32 CreateTexture(sharedptr<NBsys::NTexture::Texture>& a_texture);
 
 		/** CreateBlendState
 		*/
@@ -365,31 +365,31 @@ namespace NBsys{namespace ND3d11
 
 		/** Render_CreateVertexShader
 		*/
-		void Render_CreateVertexShader(sharedptr< D3d11_Impl_VertexShader >& a_vertexshader);
+		void Render_CreateVertexShader(sharedptr<D3d11_Impl_VertexShader>& a_vertexshader);
 
 		/** Render_CreatePixelShader
 		*/
-		void Render_CreatePixelShader(sharedptr< D3d11_Impl_PixelShader >& a_pixelshader);
+		void Render_CreatePixelShader(sharedptr<D3d11_Impl_PixelShader>& a_pixelshader);
 
 		/** Render_CreateVertexBuffer
 		*/
-		void Render_CreateVertexBuffer(sharedptr< D3d11_Impl_VertexBuffer >& a_pixelshader);
+		void Render_CreateVertexBuffer(sharedptr<D3d11_Impl_VertexBuffer>& a_pixelshader);
 
 		/** Render_CreateConstantBuffer
 		*/
-		void Render_CreateConstantBuffer(sharedptr< D3d11_Impl_ConstantBuffer >& a_constantbuffer);
+		void Render_CreateConstantBuffer(sharedptr<D3d11_Impl_ConstantBuffer>& a_constantbuffer);
 
 		/** Render_CreateTexture
 		*/
-		void Render_CreateTexture(sharedptr< D3d11_Impl_Texture >& a_texture);
+		void Render_CreateTexture(sharedptr<D3d11_Impl_Texture>& a_texture);
 
 		/** Render_CreateBlendState
 		*/
-		void Render_CreateBlendState(sharedptr< D3d11_Impl_BlendState >& a_blendstate);
+		void Render_CreateBlendState(sharedptr<D3d11_Impl_BlendState>& a_blendstate);
 
 		/** Render_CreateRasterizerState
 		*/
-		void Render_CreateRasterizerState(sharedptr< D3d11_Impl_RasterizerState >& a_rasterizerstate);
+		void Render_CreateRasterizerState(sharedptr<D3d11_Impl_RasterizerState>& a_rasterizerstate);
 
 	public:
 
@@ -399,7 +399,7 @@ namespace NBsys{namespace ND3d11
 
 		/** StartBatching
 		*/
-		void StartBatching(sharedptr< NBsys::NActionBatching::ActionBatching_ActionList >& a_actionlist);
+		void StartBatching(sharedptr<NBsys::NActionBatching::ActionBatching_ActionList>& a_actionlist);
 
 		/** Render_ViewPortÅB
 		*/

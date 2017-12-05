@@ -103,11 +103,11 @@ namespace NBsys{namespace NOpengl
 
 		/** vertex_uniform_list
 		*/
-		STLMap< STLString , Opengl_Impl_ShaderState::Uniform >::Type uniform_list;
+		STLMap<STLString,Opengl_Impl_ShaderState::Uniform>::Type uniform_list;
 
 		/** attribute_list
 		*/
-		STLMap< STLString , Opengl_Impl_ShaderState::Attribute >::Type attribute_list;
+		STLMap<STLString,Opengl_Impl_ShaderState::Attribute>::Type attribute_list;
 
 		/** vertexarray_rawid
 		*/

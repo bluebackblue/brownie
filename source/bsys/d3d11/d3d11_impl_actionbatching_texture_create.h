@@ -37,13 +37,13 @@ namespace NBsys{namespace ND3d11
 
 		/** texture
 		*/
-		sharedptr< D3d11_Impl_Texture > texture;
+		sharedptr<D3d11_Impl_Texture> texture;
 
 	public:
 
 		/** constructor
 		*/
-		D3d11_Impl_ActionBatching_Texture_Create(D3d11_Impl& a_d3d11_impl,sharedptr< D3d11_Impl_Texture >& a_texture)
+		D3d11_Impl_ActionBatching_Texture_Create(D3d11_Impl& a_d3d11_impl,sharedptr<D3d11_Impl_Texture>& a_texture)
 			:
 			d3d11_impl(a_d3d11_impl),
 			texture(a_texture)

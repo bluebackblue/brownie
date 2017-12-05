@@ -60,7 +60,7 @@ void Test_Main()
 	NBsys::NFile::SetRoot(0,L"./project_test/test2");
 
 	//“Ç‚İ‚İŠJnB
-	sharedptr< NBsys::NFile::File_Object > t_fileobject(new NBsys::NFile::File_Object(0,L"test2.json",-1,sharedptr< NBsys::NFile::File_Allocator >(),1));
+	sharedptr<NBsys::NFile::File_Object> t_fileobject(new NBsys::NFile::File_Object(0,L"test2.json",-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
 
 	//“Ç‚İ‚İ’†B
 	while(t_fileobject->IsBusy()){
@@ -81,7 +81,7 @@ void Test_Main()
 	}
 
 	//‚i‚r‚n‚m‰ğÍB
-	sharedptr< JsonItem > t_json(new JsonItem(reinterpret_cast<char*>(t_fileobject->GetLoadData().get())));
+	sharedptr<JsonItem> t_json(new JsonItem(reinterpret_cast<char*>(t_fileobject->GetLoadData().get())));
 
 	//‚i‚r‚n‚mæ“¾B
 	if(t_json->GetValueType() == JsonItem::ValueType::AssociativeArray){
@@ -100,7 +100,7 @@ void Test_Main()
 		FileHandle t_filehandle;
 		t_filehandle.WriteOpen(L"./project_test/test2/out.json");
 		STLString t_jsonstring = t_json->ConvertJsonString();
-		t_filehandle.Write(reinterpret_cast< const u8* >(t_jsonstring.c_str()),t_jsonstring.size(),0);
+		t_filehandle.Write(reinterpret_cast<const u8*>(t_jsonstring.c_str()),t_jsonstring.size(),0);
 		t_filehandle.Close();
 	}
 

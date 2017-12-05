@@ -52,13 +52,13 @@ namespace NBsys{namespace NActionBatching
 
 		/** actionlist
 		*/
-		STLVector< sharedptr< ActionBatching_ActionItem_Base > >::Type actionlist;
+		STLVector<sharedptr<ActionBatching_ActionItem_Base>>::Type actionlist;
 
 	public:
 
 		/** Add
 		*/
-		void Add(const sharedptr< ActionBatching_ActionItem_Base >& a_actionitem);
+		void Add(const sharedptr<ActionBatching_ActionItem_Base>& a_actionitem);
 
 		/** アクション開始。
 		*/

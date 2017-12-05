@@ -26,11 +26,11 @@ namespace NBsys{namespace NVertex
 {
 	/** Preset_Plane
 	*/
-	template < typename T > sharedptr< Vertex< T > > Preset_Plane();
+	template <typename T> sharedptr<Vertex<T>> Preset_Plane();
 
 	/** Preset_Box
 	*/
-	template < typename T > sharedptr< Vertex< T > > Preset_Box();
+	template <typename T> sharedptr<Vertex<T>> Preset_Box();
 
 }}
 #endif

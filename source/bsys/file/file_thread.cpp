@@ -79,7 +79,7 @@ namespace NBsys{namespace NFile
 			#if(BSYS_FILE_PACK_ENABLE)
 			while(1){
 				//処理が必要なものを検索。
-				sharedptr< File_Pack_WorkItem > t_workitem_pack;
+				sharedptr<File_Pack_WorkItem> t_workitem_pack;
 				{
 					//■排他。
 					AutoLock t_autolock(this->lockobject);
@@ -119,7 +119,7 @@ namespace NBsys{namespace NFile
 			//読み込み。
 			{
 				//処理が必要なものを検索。
-				sharedptr< File_WorkItem > t_workitem;
+				sharedptr<File_WorkItem> t_workitem;
 				{
 					//■排他。
 					AutoLock t_autolock(this->lockobject);
@@ -187,7 +187,7 @@ namespace NBsys{namespace NFile
 		{
 			MemoryContainer t_memorycontainer(BSYS_FILE_MEMORYCONTAINER);
 
-			sharedptr< File_Pack_WorkItem > t_workitem_pack(new File_Pack_WorkItem(Path::Name(a_pack_filename_short),Path::Dir(a_pack_rootpath_short)));
+			sharedptr<File_Pack_WorkItem> t_workitem_pack(new File_Pack_WorkItem(Path::Name(a_pack_filename_short),Path::Dir(a_pack_rootpath_short)));
 
 			//作業リストに登録。
 			for(s32 ii=0;ii<COUNTOF(this->worklist_pack);ii++){
@@ -223,17 +223,17 @@ namespace NBsys{namespace NFile
 
 	/** [メインスレッド]ロードリクエスト。
 	*/
-	const sharedptr< File_WorkItem > File_Thread::LoadRequest(const STLWString& a_filename_short,s32 a_cachegroup_id,sharedptr< File_Allocator >& a_allocator,s32 a_add_allocatesize)
+	const sharedptr<File_WorkItem> File_Thread::LoadRequest(const STLWString& a_filename_short,s32 a_cachegroup_id,sharedptr<File_Allocator>& a_allocator,s32 a_add_allocatesize)
 	{
 		//■排他。
 		AutoLock t_autolock(this->lockobject);
 		{
 			MemoryContainer t_memorycontainer(BSYS_FILE_MEMORYCONTAINER);
 
-			sharedptr< File_WorkItem > t_workitem;
+			sharedptr<File_WorkItem> t_workitem;
 			
 			if(a_cachegroup_id > 0){
-				const sharedptr< File_WorkItem >& t_workitem_ref = this->cache.GetCacheFromFileNameShort(Path::Name(a_filename_short));
+				const sharedptr<File_WorkItem>& t_workitem_ref = this->cache.GetCacheFromFileNameShort(Path::Name(a_filename_short));
 				if(t_workitem_ref != nullptr){
 					//■キャッシュにあり。
 
@@ -270,7 +270,7 @@ namespace NBsys{namespace NFile
 			}
 
 			ASSERT(0);
-			return sharedptr< File_WorkItem >::null();
+			return sharedptr<File_WorkItem>::null();
 		}
 	}
 

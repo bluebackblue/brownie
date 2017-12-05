@@ -31,12 +31,12 @@ namespace NBsys{namespace NFile
 	class File_Object
 	{
 	private:
-		sharedptr< File_WorkItem > workitem;
+		sharedptr<File_WorkItem> workitem;
 
 	public:
 		/** constructor
 		*/
-		File_Object(s32 a_device_index,const STLWString& a_filename_short,s32 a_cachegroup_id,sharedptr< File_Allocator >& a_allocator,s32 a_add_allocatesize);
+		File_Object(s32 a_device_index,const STLWString& a_filename_short,s32 a_cachegroup_id,sharedptr<File_Allocator>& a_allocator,s32 a_add_allocatesize);
 
 		/** destructor
 		*/
@@ -45,7 +45,7 @@ namespace NBsys{namespace NFile
 	public:
 		/** ロードデータ取得。
 		*/
-		sharedptr< u8 >& GetLoadData();
+		sharedptr<u8>& GetLoadData();
 
 		/** ロードサイズ取得。
 		*/

@@ -52,34 +52,34 @@ namespace NBlib
 
 	/** クラスのスレッド化。
 	*/
-	template < typename T > class ThreadTemplate
+	template <typename T> class ThreadTemplate
 	{
 	private:
 		/** threadhandle
 		*/
 		#if(BLIB_STDTHREAD_ENABLE)
 
-		sharedptr< std::thread > threadhandle;
+		sharedptr<std::thread> threadhandle;
 
 		#endif
 
 		/** implimentation
 		*/
-		sharedptr< T > implimentation;
+		sharedptr<T> implimentation;
 
 		/** isopen
 		*/
-		AtomicValue< bool > isopen;
+		AtomicValue<bool> isopen;
 
 		/** スレッド開始時の引数。
 		*/
 		struct Argument
 		{
 			typename T::ThreadArgument	threadargument;
-			sharedptr< T >				implimentation;
+			sharedptr<T>				implimentation;
 			ThreadTemplate*				me;
 		};
-		sharedptr< Argument > argument;
+		sharedptr<Argument> argument;
 
 	public:
 		/** constructor
@@ -119,7 +119,7 @@ namespace NBlib
 					//スレッド起動。
 					#if(BLIB_STDTHREAD_ENABLE)
 					{
-						this->threadhandle.reset(new std::thread(&ThreadTemplate< T >::ThreadMain,*this->argument.get()));
+						this->threadhandle.reset(new std::thread(&ThreadTemplate<T>::ThreadMain,*this->argument.get()));
 					}
 					#else
 					{
@@ -166,24 +166,24 @@ namespace NBlib
 
 		/** ポインタのように振舞う。
 		*/
-		sharedptr< T >& operator ->()
+		sharedptr<T>& operator ->()
 		{
 			return this->implimentation;
 		}
 
 		/** ポインタのように振舞う。
 		*/
-		const sharedptr< T >& operator ->() const
+		const sharedptr<T>& operator ->() const
 		{
 			return this->implimentation;
 		}
 
-		sharedptr< T >& get()
+		sharedptr<T>& get()
 		{
 			return this->implimentation;
 		}
 
-		const sharedptr< T >& get() const
+		const sharedptr<T>& get() const
 		{
 			return this->implimentation;
 		}
@@ -244,11 +244,11 @@ namespace NBlib
 	private:
 		/** 代入禁止。
 		*/
-		ThreadTemplate< T >& operator =(const ThreadTemplate< T >& a_instance);
+		ThreadTemplate<T>& operator =(const ThreadTemplate<T>& a_instance);
 
 		/** 代入禁止。
 		*/
-		ThreadTemplate(const ThreadTemplate< T >& a_instance);
+		ThreadTemplate(const ThreadTemplate<T>& a_instance);
 
 	};
 }

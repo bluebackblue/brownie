@@ -45,11 +45,11 @@ namespace NBsys{namespace NFovehmd
 
 		/** headset
 		*/
-		sharedptr< Fove::IFVRHeadset > headset;
+		sharedptr<Fove::IFVRHeadset> headset;
 
 		/** compositor
 		*/
-		sharedptr< Fove::IFVRCompositor > compositor;
+		sharedptr<Fove::IFVRCompositor> compositor;
 
 		/** singleeye_resolution
 		*/

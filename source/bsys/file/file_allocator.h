@@ -48,11 +48,11 @@ namespace NBsys{namespace NFile
 	{
 		/** 削除に使用するアロケータ。
 		*/
-		sharedptr< File_Allocator > allocator;
+		sharedptr<File_Allocator> allocator;
 
 		/** constructor
 		*/
-		explicit File_Alloc_Deleter(sharedptr< File_Allocator >& a_allocator) noexcept
+		explicit File_Alloc_Deleter(sharedptr<File_Allocator>& a_allocator) noexcept
 			:
 			allocator(a_allocator)
 		{

@@ -37,13 +37,13 @@ namespace NBsys{namespace ND3d11
 
 		/** blendstate
 		*/
-		sharedptr< D3d11_Impl_BlendState > blendstate;
+		sharedptr<D3d11_Impl_BlendState> blendstate;
 
 	public:
 
 		/** constructor
 		*/
-		D3d11_Impl_ActionBatching_BlendState_Create(D3d11_Impl& a_d3d11_impl,sharedptr< D3d11_Impl_BlendState >& a_blendstate)
+		D3d11_Impl_ActionBatching_BlendState_Create(D3d11_Impl& a_d3d11_impl,sharedptr<D3d11_Impl_BlendState>& a_blendstate)
 			:
 			d3d11_impl(a_d3d11_impl),
 			blendstate(a_blendstate)

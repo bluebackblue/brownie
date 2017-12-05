@@ -41,7 +41,7 @@ namespace NBlib
 
 	/** constructor
 	*/
-	SocketHandle::SocketHandle(sharedptr< SocketHandle_Impl >& a_impl)
+	SocketHandle::SocketHandle(sharedptr<SocketHandle_Impl>& a_impl)
 		:
 		impl(a_impl)
 	{
@@ -49,7 +49,7 @@ namespace NBlib
 
 	/** GetImpl
 	*/
-	sharedptr< SocketHandle_Impl >& SocketHandle::GetImpl()
+	sharedptr<SocketHandle_Impl>& SocketHandle::GetImpl()
 	{
 		return this->impl;
 	}
@@ -119,7 +119,7 @@ namespace NBlib
 
 	/** Accept
 	*/
-	sharedptr< SocketHandle > SocketHandle::Accept()
+	sharedptr<SocketHandle> SocketHandle::Accept()
 	{
 		return this->impl->Accept();
 	}

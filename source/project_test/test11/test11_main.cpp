@@ -68,12 +68,12 @@ static s32 s_height = 600;
 
 /** s_window
 */
-static sharedptr< NBsys::NWindow::Window > s_window;
+static sharedptr<NBsys::NWindow::Window> s_window;
 
 
 /** s_d3d11
 */
-static sharedptr< NBsys::ND3d11::D3d11 > s_d3d11;
+static sharedptr<NBsys::ND3d11::D3d11> s_d3d11;
 
 
 /** App
@@ -100,7 +100,7 @@ private:
 
 	/** ライン描画。
 	*/
-	sharedptr< common::D3d11_DrawLine_Manager > drawline_manager;
+	sharedptr<common::D3d11_DrawLine_Manager> drawline_manager;
 
 	/** カメラ。
 	*/
@@ -265,7 +265,7 @@ public:
 
 /** s_app
 */
-static sharedptr< App > s_app;
+static sharedptr<App> s_app;
 
 
 /** Test_Main

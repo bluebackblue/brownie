@@ -41,7 +41,7 @@ namespace NBsys{namespace NFovehmd
 
 	/** GetImpl
 	*/
-	sharedptr< Fovehmd_Impl > Fovehmd::GetImpl()
+	sharedptr<Fovehmd_Impl> Fovehmd::GetImpl()
 	{
 		return this->impl;
 	}

@@ -70,7 +70,7 @@ namespace NBlib
 	private:
 		/** id
 		*/
-		sharedptr< Muid_Impl > id;
+		sharedptr<Muid_Impl> id;
 
 	public:
 		/** UniqueNameType

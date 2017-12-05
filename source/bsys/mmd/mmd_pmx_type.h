@@ -250,7 +250,7 @@ namespace NBsys{namespace NMmd
 		/** bone_ik_list
 		*/
 		u32 bone_ik_list_size;
-		STLVector< Mmd_Pmx_Bone_Ik >::Type bone_ik_list;
+		STLVector<Mmd_Pmx_Bone_Ik>::Type bone_ik_list;
 	};
 
 }}

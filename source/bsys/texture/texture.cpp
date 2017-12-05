@@ -31,7 +31,7 @@ namespace NBsys{namespace NTexture
 
 	/** コンストラクタ。
 	*/
-	Texture::Texture(const sharedptr< u8 >& a_pixel,s32 a_width,s32 a_height,s32 a_pitch,TextureType::Id a_texturetype,const STLWString& a_name)
+	Texture::Texture(const sharedptr<u8>& a_pixel,s32 a_width,s32 a_height,s32 a_pitch,TextureType::Id a_texturetype,const STLWString& a_name)
 		:
 		pixel(a_pixel),
 		width(a_width),
@@ -50,7 +50,7 @@ namespace NBsys{namespace NTexture
 
 	/** GetPixel
 	*/
-	sharedptr< u8 >& Texture::GetPixel()
+	sharedptr<u8>& Texture::GetPixel()
 	{
 		return this->pixel;
 	}
@@ -85,7 +85,7 @@ namespace NBsys{namespace NTexture
 
 	/** CreateTexture
 	*/
-	sharedptr< Texture > CreateTexture(const sharedptr< u8 >& a_data,s32 a_size,const STLWString& a_name)
+	sharedptr<Texture> CreateTexture(const sharedptr<u8>& a_data,s32 a_size,const STLWString& a_name)
 	{
 		#if(BSYS_TEXTURE_GDIPLUS_ENABLE)
 		return CreateTexture_GdiPlus(a_data,a_size,a_name);

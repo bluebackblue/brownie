@@ -59,7 +59,7 @@ namespace NBlib
 
 #else
 
-	#define STATIC_ASSERT(X) typedef NBlib::StaticAssertType< sizeof(NBlib::StaticAssertValue< static_cast<bool>(X) >) >	_static_assert_typedef_
+	#define STATIC_ASSERT(X) typedef NBlib::StaticAssertType<sizeof(NBlib::StaticAssertValue<static_cast<bool>(X)>)>	_static_assert_typedef_
 
 #endif
 

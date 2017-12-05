@@ -75,7 +75,7 @@ namespace NBsys{namespace ND3d11
 
 	/** Render_Create
 	*/
-	void D3d11_Impl::Render_Create(sharedptr< NWindow::Window >& a_window,s32 a_width,s32 a_height)
+	void D3d11_Impl::Render_Create(sharedptr<NWindow::Window>& a_window,s32 a_width,s32 a_height)
 	{
 
 		D3D_FEATURE_LEVEL t_featureLevel = D3D_FEATURE_LEVEL_11_0;
@@ -85,10 +85,10 @@ namespace NBsys{namespace ND3d11
 			ID3D11DeviceContext* t_raw_devicecontext = nullptr;
 			const HRESULT t_result = D3D11CreateDevice(nullptr,D3D_DRIVER_TYPE_HARDWARE,nullptr,0,&t_featureLevel,1,D3D11_SDK_VERSION,&t_raw_device,nullptr,&t_raw_devicecontext);
 			if(t_raw_device != nullptr){
-				this->device.reset(t_raw_device,release_delete< ID3D11Device >());
+				this->device.reset(t_raw_device,release_delete<ID3D11Device>());
 			}
 			if(t_raw_devicecontext != nullptr){
-				this->devicecontext.reset(t_raw_devicecontext,release_delete< ID3D11DeviceContext >());
+				this->devicecontext.reset(t_raw_devicecontext,release_delete<ID3D11DeviceContext>());
 			}
 			if(FAILED(t_result)){
 				this->device.reset();
@@ -97,29 +97,29 @@ namespace NBsys{namespace ND3d11
 		}
 
 		{
-			sharedptr< IDXGIFactory2 > t_factory;
+			sharedptr<IDXGIFactory2> t_factory;
 
 			{
-				sharedptr< IDXGIDevice > t_dxgidevice;
+				sharedptr<IDXGIDevice> t_dxgidevice;
 
 				if(this->device){
 					IDXGIDevice* t_raw = nullptr;
 					HRESULT t_result = this->device->QueryInterface(__uuidof(IDXGIDevice), reinterpret_cast<void**>(&t_raw));
 					if(t_raw != nullptr){
-						t_dxgidevice.reset(t_raw,release_delete< IDXGIDevice >());
+						t_dxgidevice.reset(t_raw,release_delete<IDXGIDevice>());
 					}
 					if(FAILED(t_result)){
 						t_dxgidevice.reset();
 					}
 				}
 
-				sharedptr< IDXGIAdapter > t_adapter;
+				sharedptr<IDXGIAdapter> t_adapter;
 
 				if(t_dxgidevice){
 					IDXGIAdapter* t_raw = nullptr;
 					HRESULT t_result = t_dxgidevice->GetAdapter(&t_raw);
 					if(t_raw != nullptr){
-						t_adapter.reset(t_raw,release_delete< IDXGIAdapter >());
+						t_adapter.reset(t_raw,release_delete<IDXGIAdapter>());
 					}
 					if(FAILED(t_result)){
 						t_adapter.reset();
@@ -130,7 +130,7 @@ namespace NBsys{namespace ND3d11
 					IDXGIFactory2* t_raw = nullptr;
 					HRESULT t_result = t_adapter->GetParent(__uuidof(IDXGIFactory2), reinterpret_cast<void**>(&t_raw));
 					if(t_raw != nullptr){
-						t_factory.reset(t_raw,release_delete< IDXGIFactory2 >());
+						t_factory.reset(t_raw,release_delete<IDXGIFactory2>());
 					}
 					if(FAILED(t_result)){
 						t_factory.reset();
@@ -153,12 +153,12 @@ namespace NBsys{namespace ND3d11
 			HWND t_hwnd = a_window->GetImpl()->GetHandle();
 			if(t_hwnd != INVALID_HANDLE_VALUE){
 
-				sharedptr< IDXGISwapChain1 > t_swapchain_1;
+				sharedptr<IDXGISwapChain1> t_swapchain_1;
 				{
 					IDXGISwapChain1* t_raw = nullptr;
 					HRESULT t_result = t_factory->CreateSwapChainForHwnd(this->device.get(),t_hwnd,&t_swapchain_desc_1,nullptr,nullptr,&t_raw);
 					if(t_raw != nullptr){
-						t_swapchain_1.reset(t_raw,release_delete< IDXGISwapChain1 >());
+						t_swapchain_1.reset(t_raw,release_delete<IDXGISwapChain1>());
 					}
 					if(FAILED(t_result)){
 						t_swapchain_1.reset();
@@ -169,7 +169,7 @@ namespace NBsys{namespace ND3d11
 					IDXGISwapChain* t_raw = nullptr;
 					HRESULT t_result = t_swapchain_1->QueryInterface(__uuidof(IDXGISwapChain),reinterpret_cast<void**>(&t_raw));
 					if(t_raw != nullptr){
-						this->swapchain.reset(t_raw,release_delete< IDXGISwapChain >());
+						this->swapchain.reset(t_raw,release_delete<IDXGISwapChain>());
 					}
 					if(FAILED(t_result)){
 						this->swapchain.reset();
@@ -182,7 +182,7 @@ namespace NBsys{namespace ND3d11
 			ID3D11Texture2D* t_raw = nullptr;
 			HRESULT t_result = this->swapchain->GetBuffer(0, __uuidof(ID3D11Texture2D),reinterpret_cast<void**>(&t_raw));
 			if(t_raw != nullptr){
-				this->backbuffer.reset(t_raw,release_delete< ID3D11Texture2D >());
+				this->backbuffer.reset(t_raw,release_delete<ID3D11Texture2D>());
 			}
 			if(FAILED(t_result)){
 				this->backbuffer.reset();
@@ -193,7 +193,7 @@ namespace NBsys{namespace ND3d11
 			ID3D11RenderTargetView* t_raw = nullptr;
 			HRESULT t_result = this->device->CreateRenderTargetView(this->backbuffer.get(),nullptr,&t_raw);
 			if(t_raw != nullptr){
-				this->rendertargetview.reset(t_raw,release_delete< ID3D11RenderTargetView >());
+				this->rendertargetview.reset(t_raw,release_delete<ID3D11RenderTargetView>());
 			}
 			if(FAILED(t_result)){
 				this->rendertargetview.reset();
@@ -219,7 +219,7 @@ namespace NBsys{namespace ND3d11
 			ID3D11Texture2D* t_raw = nullptr;
 			HRESULT t_result = this->device->CreateTexture2D(&t_desc,nullptr,&t_raw);
 			if(t_raw != nullptr){
-				this->depthbuffer.reset(t_raw,release_delete< ID3D11Texture2D >());
+				this->depthbuffer.reset(t_raw,release_delete<ID3D11Texture2D>());
 			}
 			if(FAILED(t_result)){
 				this->depthbuffer.reset();
@@ -237,7 +237,7 @@ namespace NBsys{namespace ND3d11
 			ID3D11DepthStencilState* t_raw = nullptr;
 			HRESULT t_result = this->device->CreateDepthStencilState(&t_desc,&t_raw);
 			if(t_raw != nullptr){
-				this->depthstencilstate.reset(t_raw,release_delete< ID3D11DepthStencilState >());
+				this->depthstencilstate.reset(t_raw,release_delete<ID3D11DepthStencilState>());
 			}
 			if(FAILED(t_result)){
 				this->depthstencilstate.reset();
@@ -254,7 +254,7 @@ namespace NBsys{namespace ND3d11
 			ID3D11DepthStencilView* t_raw = nullptr;
 			HRESULT t_result = this->device->CreateDepthStencilView(this->depthbuffer.get(),&t_desc,&t_raw);
 			if(t_raw != nullptr){
-				this->depthstencilview.reset(t_raw,release_delete< ID3D11DepthStencilView >());
+				this->depthstencilview.reset(t_raw,release_delete<ID3D11DepthStencilView>());
 			}
 			if(FAILED(t_result)){
 				this->depthstencilview.reset();
@@ -292,185 +292,185 @@ namespace NBsys{namespace ND3d11
 
 	/** Render_GetDevice
 	*/
-	sharedptr< ID3D11Device >& D3d11_Impl::GetDevice()
+	sharedptr<ID3D11Device>& D3d11_Impl::GetDevice()
 	{
 		return this->device;
 	}
 
 	/** Render_GetDeviceContext
 	*/
-	sharedptr< ID3D11DeviceContext >& D3d11_Impl::GetDeviceContext()
+	sharedptr<ID3D11DeviceContext>& D3d11_Impl::GetDeviceContext()
 	{
 		return this->devicecontext;
 	}
 
 	/** Render_GetSwapChain
 	*/
-	sharedptr< IDXGISwapChain >& D3d11_Impl::GetSwapChain()
+	sharedptr<IDXGISwapChain>& D3d11_Impl::GetSwapChain()
 	{
 		return this->swapchain;
 	}
 
 	/** Render_GetBackBuffer
 	*/
-	sharedptr< ID3D11Texture2D >& D3d11_Impl::GetBackBuffer()
+	sharedptr<ID3D11Texture2D>& D3d11_Impl::GetBackBuffer()
 	{
 		return this->backbuffer;
 	}
 
 	/** Render_GetRenderTargetView
 	*/
-	sharedptr< ID3D11RenderTargetView >& D3d11_Impl::GetRenderTargetView()
+	sharedptr<ID3D11RenderTargetView>& D3d11_Impl::GetRenderTargetView()
 	{
 		return this->rendertargetview;
 	}
 
 	/** Render_GetDepthBuffer
 	*/
-	sharedptr< ID3D11Texture2D >& D3d11_Impl::GetDepthBuffer()
+	sharedptr<ID3D11Texture2D>& D3d11_Impl::GetDepthBuffer()
 	{
 		return this->depthbuffer;
 	}
 
 	/** Render_GetDepthStencilState
 	*/
-	sharedptr< ID3D11DepthStencilState >& D3d11_Impl::GetDepthStencilState()
+	sharedptr<ID3D11DepthStencilState>& D3d11_Impl::GetDepthStencilState()
 	{
 		return this->depthstencilstate;
 	}
 
 	/** Render_GetDepthStencilView
 	*/
-	sharedptr< ID3D11DepthStencilView >& D3d11_Impl::GetDepthStencilView()
+	sharedptr<ID3D11DepthStencilView>& D3d11_Impl::GetDepthStencilView()
 	{
 		return this->depthstencilview;
 	}
 
 	/** GetVertexshader
 	*/
-	sharedptr< D3d11_Impl_VertexShader > D3d11_Impl::GetVertexShader(s32 a_vertexshader_id)
+	sharedptr<D3d11_Impl_VertexShader> D3d11_Impl::GetVertexShader(s32 a_vertexshader_id)
 	{
-		STLMap< s32 , sharedptr< D3d11_Impl_VertexShader > >::iterator t_it = this->vertexshader_list.find(a_vertexshader_id);
+		STLMap<s32,sharedptr<D3d11_Impl_VertexShader>>::iterator t_it = this->vertexshader_list.find(a_vertexshader_id);
 		if(t_it->second != nullptr){
 			return t_it->second;
 		}
-		return sharedptr< D3d11_Impl_VertexShader >::null();
+		return sharedptr<D3d11_Impl_VertexShader>::null();
 	}
 
 	/** GetPixelshader
 	*/
-	sharedptr< D3d11_Impl_PixelShader > D3d11_Impl::GetPixelShader(s32 a_pixelshader_id)
+	sharedptr<D3d11_Impl_PixelShader> D3d11_Impl::GetPixelShader(s32 a_pixelshader_id)
 	{
-		STLMap< s32 , sharedptr< D3d11_Impl_PixelShader > >::iterator t_it = this->pixelshader_list.find(a_pixelshader_id);
+		STLMap<s32,sharedptr<D3d11_Impl_PixelShader>>::iterator t_it = this->pixelshader_list.find(a_pixelshader_id);
 		if(t_it->second != nullptr){
 			return t_it->second;
 		}
-		return sharedptr< D3d11_Impl_PixelShader >::null();
+		return sharedptr<D3d11_Impl_PixelShader>::null();
 	}
 
 	/** GetVertexbuffer
 	*/
-	sharedptr< D3d11_Impl_VertexBuffer > D3d11_Impl::GetVertexBuffer(s32 a_vertexbuffer_id)
+	sharedptr<D3d11_Impl_VertexBuffer> D3d11_Impl::GetVertexBuffer(s32 a_vertexbuffer_id)
 	{
-		STLMap< s32 , sharedptr< D3d11_Impl_VertexBuffer > >::iterator t_it = this->vertexbuffer_list.find(a_vertexbuffer_id);
+		STLMap<s32,sharedptr<D3d11_Impl_VertexBuffer>>::iterator t_it = this->vertexbuffer_list.find(a_vertexbuffer_id);
 		if(t_it->second != nullptr){
 			return t_it->second;
 		}
-		return sharedptr< D3d11_Impl_VertexBuffer >::null();
+		return sharedptr<D3d11_Impl_VertexBuffer>::null();
 	}
 
 	/** GetConstantBuffer
 	*/
-	sharedptr< D3d11_Impl_ConstantBuffer > D3d11_Impl::GetConstantBuffer(s32 a_constantbuffer_id)
+	sharedptr<D3d11_Impl_ConstantBuffer> D3d11_Impl::GetConstantBuffer(s32 a_constantbuffer_id)
 	{
-		STLMap< s32 , sharedptr< D3d11_Impl_ConstantBuffer > >::iterator t_it = this->constantbuffer_list.find(a_constantbuffer_id);
+		STLMap<s32,sharedptr<D3d11_Impl_ConstantBuffer>>::iterator t_it = this->constantbuffer_list.find(a_constantbuffer_id);
 		if(t_it->second != nullptr){
 			return t_it->second;
 		}
-		return sharedptr< D3d11_Impl_ConstantBuffer >::null();
+		return sharedptr<D3d11_Impl_ConstantBuffer>::null();
 	}
 
 	/** GetTexture
 	*/
-	sharedptr< D3d11_Impl_Texture > D3d11_Impl::GetTexture(s32 a_texture_id)
+	sharedptr<D3d11_Impl_Texture> D3d11_Impl::GetTexture(s32 a_texture_id)
 	{
-		STLMap< s32 , sharedptr< D3d11_Impl_Texture > >::iterator t_it = this->texture_list.find(a_texture_id);
+		STLMap<s32,sharedptr<D3d11_Impl_Texture>>::iterator t_it = this->texture_list.find(a_texture_id);
 		if(t_it->second != nullptr){
 			return t_it->second;
 		}
-		return sharedptr< D3d11_Impl_Texture >::null();
+		return sharedptr<D3d11_Impl_Texture>::null();
 	}
 
 	/** GetBlendState
 	*/
-	sharedptr< D3d11_Impl_BlendState > D3d11_Impl::GetBlendState(s32 a_blendstate_id)
+	sharedptr<D3d11_Impl_BlendState> D3d11_Impl::GetBlendState(s32 a_blendstate_id)
 	{
-		STLMap< s32 , sharedptr< D3d11_Impl_BlendState > >::iterator t_it = this->blendstate_list.find(a_blendstate_id);
+		STLMap<s32,sharedptr<D3d11_Impl_BlendState>>::iterator t_it = this->blendstate_list.find(a_blendstate_id);
 		if(t_it->second != nullptr){
 			return t_it->second;
 		}
-		return sharedptr< D3d11_Impl_BlendState >::null();
+		return sharedptr<D3d11_Impl_BlendState>::null();
 	}
 
 	/** GetRasterizerState
 	*/
-	sharedptr< D3d11_Impl_RasterizerState > D3d11_Impl::GetRasterizerState(s32 a_rasterizerstate_id)
+	sharedptr<D3d11_Impl_RasterizerState> D3d11_Impl::GetRasterizerState(s32 a_rasterizerstate_id)
 	{
-		STLMap< s32 , sharedptr< D3d11_Impl_RasterizerState > >::iterator t_it = this->rasterizerstate_list.find(a_rasterizerstate_id);
+		STLMap<s32,sharedptr<D3d11_Impl_RasterizerState>>::iterator t_it = this->rasterizerstate_list.find(a_rasterizerstate_id);
 		if(t_it->second != nullptr){
 			return t_it->second;
 		}
-		return sharedptr< D3d11_Impl_RasterizerState >::null();
+		return sharedptr<D3d11_Impl_RasterizerState>::null();
 	}
 
 
 	/** CreateVertexShader
 	*/
-	s32 D3d11_Impl::CreateVertexShader(AsyncResult< bool >& a_asyncresult,sharedptr< NBsys::NFile::File_Object >& a_fileobject,sharedptr< STLVector< NBsys::ND3d11::D3d11_Layout >::Type >& a_layout)
+	s32 D3d11_Impl::CreateVertexShader(AsyncResult<bool>& a_asyncresult,sharedptr<NBsys::NFile::File_Object>& a_fileobject,sharedptr<STLVector<NBsys::ND3d11::D3d11_Layout>::Type>& a_layout)
 	{
 		//ＩＤ。
 		s32 t_vertexshader_id = this->id_maker.MakeID();
 
-		sharedptr< D3d11_Impl_VertexShader > t_vertexshader = new D3d11_Impl_VertexShader();
+		sharedptr<D3d11_Impl_VertexShader> t_vertexshader = new D3d11_Impl_VertexShader();
 		{
 			t_vertexshader->fileobject = a_fileobject;
 			t_vertexshader->layout = a_layout;
 		}
 
 		//レンダーコマンド。
-		sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
+		sharedptr<NBsys::NActionBatching::ActionBatching_ActionList> t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
 		{
 			t_actionlist->Add(new D3d11_Impl_ActionBatching_VertexShader_Create(*this,t_vertexshader,a_asyncresult));
 		}
 		this->StartBatching(t_actionlist);
 
 		//管理リスト。
-		this->vertexshader_list.insert(STLMap< s32 , sharedptr< D3d11_Impl_VertexShader > >::value_type(t_vertexshader_id,t_vertexshader));
+		this->vertexshader_list.insert(STLMap<s32,sharedptr<D3d11_Impl_VertexShader>>::value_type(t_vertexshader_id,t_vertexshader));
 
 		return t_vertexshader_id;
 	}
 
 	/** CreatePixelShader
 	*/
-	s32 D3d11_Impl::CreatePixelShader(AsyncResult< bool >& a_asyncresult,sharedptr< NBsys::NFile::File_Object >& a_fileobject)
+	s32 D3d11_Impl::CreatePixelShader(AsyncResult<bool>& a_asyncresult,sharedptr<NBsys::NFile::File_Object>& a_fileobject)
 	{
 		//ＩＤ。
 		s32 t_pixelshader_id = this->id_maker.MakeID();
 
-		sharedptr< D3d11_Impl_PixelShader > t_pixelshader = new D3d11_Impl_PixelShader();
+		sharedptr<D3d11_Impl_PixelShader> t_pixelshader = new D3d11_Impl_PixelShader();
 		{
 			t_pixelshader->fileobject = a_fileobject;
 		}
 
 		//レンダーコマンド。
-		sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
+		sharedptr<NBsys::NActionBatching::ActionBatching_ActionList> t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
 		{
 			t_actionlist->Add(new D3d11_Impl_ActionBatching_PixelShader_Create(*this,t_pixelshader,a_asyncresult));
 		}
 		this->StartBatching(t_actionlist);
 
 		//管理リスト。
-		this->pixelshader_list.insert(STLMap< s32 , sharedptr< D3d11_Impl_PixelShader > >::value_type(t_pixelshader_id,t_pixelshader));
+		this->pixelshader_list.insert(STLMap<s32,sharedptr<D3d11_Impl_PixelShader>>::value_type(t_pixelshader_id,t_pixelshader));
 
 		return t_pixelshader_id;
 	}
@@ -482,7 +482,7 @@ namespace NBsys{namespace ND3d11
 		//ＩＤ。
 		s32 t_vertexbuffer_id = this->id_maker.MakeID();
 
-		sharedptr< D3d11_Impl_VertexBuffer > t_vertexbuffer = new D3d11_Impl_VertexBuffer();
+		sharedptr<D3d11_Impl_VertexBuffer> t_vertexbuffer = new D3d11_Impl_VertexBuffer();
 		{
 			t_vertexbuffer->data = a_data;
 			t_vertexbuffer->stridebyte = a_stridebyte;
@@ -492,14 +492,14 @@ namespace NBsys{namespace ND3d11
 		}
 
 		//レンダーコマンド。
-		sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
+		sharedptr<NBsys::NActionBatching::ActionBatching_ActionList> t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
 		{
 			t_actionlist->Add(new D3d11_Impl_ActionBatching_VertexBuffer_Create(*this,t_vertexbuffer));
 		}
 		this->StartBatching(t_actionlist);
 
 		//管理リスト。
-		this->vertexbuffer_list.insert(STLMap< s32 , sharedptr< D3d11_Impl_VertexBuffer > >::value_type(t_vertexbuffer_id,t_vertexbuffer));
+		this->vertexbuffer_list.insert(STLMap<s32,sharedptr<D3d11_Impl_VertexBuffer>>::value_type(t_vertexbuffer_id,t_vertexbuffer));
 
 		return t_vertexbuffer_id;
 	}
@@ -511,46 +511,46 @@ namespace NBsys{namespace ND3d11
 		//ＩＤ。
 		s32 t_constantbuffer_id = this->id_maker.MakeID();
 
-		sharedptr< D3d11_Impl_ConstantBuffer > t_constantbuffer = new D3d11_Impl_ConstantBuffer();
+		sharedptr<D3d11_Impl_ConstantBuffer> t_constantbuffer = new D3d11_Impl_ConstantBuffer();
 		{
 			t_constantbuffer->size = a_size;
 			t_constantbuffer->register_b_index = a_register_b_index;
 		}
 
 		//レンダーコマンド。
-		sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
+		sharedptr<NBsys::NActionBatching::ActionBatching_ActionList> t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
 		{
 			t_actionlist->Add(new D3d11_Impl_ActionBatching_ConstantBuffer_Create(*this,t_constantbuffer));
 		}
 		this->StartBatching(t_actionlist);
 
 		//管理リスト。
-		this->constantbuffer_list.insert(STLMap< s32 , sharedptr< D3d11_Impl_ConstantBuffer > >::value_type(t_constantbuffer_id,t_constantbuffer));
+		this->constantbuffer_list.insert(STLMap<s32,sharedptr<D3d11_Impl_ConstantBuffer>>::value_type(t_constantbuffer_id,t_constantbuffer));
 
 		return t_constantbuffer_id;
 	}
 
 	/** CreateTexture
 	*/
-	s32 D3d11_Impl::CreateTexture(sharedptr< NBsys::NTexture::Texture >& a_texture)
+	s32 D3d11_Impl::CreateTexture(sharedptr<NBsys::NTexture::Texture>& a_texture)
 	{
 		//ＩＤ。
 		s32 t_texture_id = this->id_maker.MakeID();
 
-		sharedptr< D3d11_Impl_Texture > t_texture = new D3d11_Impl_Texture();
+		sharedptr<D3d11_Impl_Texture> t_texture = new D3d11_Impl_Texture();
 		{
 			t_texture->texture = a_texture;
 		}
 
 		//レンダーコマンド。
-		sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
+		sharedptr<NBsys::NActionBatching::ActionBatching_ActionList> t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
 		{ 
 			t_actionlist->Add(new D3d11_Impl_ActionBatching_Texture_Create(*this,t_texture));
 		}
 		this->StartBatching(t_actionlist);
 
 		//管理リスト。
-		this->texture_list.insert(STLMap< s32 , sharedptr< D3d11_Impl_Texture > >::value_type(t_texture_id,t_texture));
+		this->texture_list.insert(STLMap<s32,sharedptr<D3d11_Impl_Texture>>::value_type(t_texture_id,t_texture));
 
 		return t_texture_id;
 	}
@@ -562,20 +562,20 @@ namespace NBsys{namespace ND3d11
 		//ＩＤ。
 		s32 t_blendstate_id = this->id_maker.MakeID();
 
-		sharedptr< D3d11_Impl_BlendState > t_blendstate = new D3d11_Impl_BlendState();
+		sharedptr<D3d11_Impl_BlendState> t_blendstate = new D3d11_Impl_BlendState();
 		{
 			t_blendstate->alpha_blend = a_alpha_blend;
 		}
 
 		//レンダーコマンド。
-		sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
+		sharedptr<NBsys::NActionBatching::ActionBatching_ActionList> t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
 		{
 			t_actionlist->Add(new D3d11_Impl_ActionBatching_BlendState_Create(*this,t_blendstate));
 		}
 		this->StartBatching(t_actionlist);
 
 		//管理リスト。
-		this->blendstate_list.insert(STLMap< s32 , sharedptr< D3d11_Impl_BlendState > >::value_type(t_blendstate_id,t_blendstate));
+		this->blendstate_list.insert(STLMap<s32,sharedptr<D3d11_Impl_BlendState>>::value_type(t_blendstate_id,t_blendstate));
 
 		return t_blendstate_id;
 	}
@@ -587,29 +587,29 @@ namespace NBsys{namespace ND3d11
 		//ＩＤ。
 		s32 t_rasterizerstate_id = this->id_maker.MakeID();
 
-		sharedptr< D3d11_Impl_RasterizerState > t_rasterizerstate = new D3d11_Impl_RasterizerState();
+		sharedptr<D3d11_Impl_RasterizerState> t_rasterizerstate = new D3d11_Impl_RasterizerState();
 		{
 			t_rasterizerstate->culltype = a_culltype;
 		}
 
 		//レンダーコマンド。
-		sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
+		sharedptr<NBsys::NActionBatching::ActionBatching_ActionList> t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
 		{
 			t_actionlist->Add(new D3d11_Impl_ActionBatching_RasterizerState_Create(*this,t_rasterizerstate));
 		}
 		this->StartBatching(t_actionlist);
 
 		//管理リスト。
-		this->rasterizerstate_list.insert(STLMap< s32 , sharedptr< D3d11_Impl_RasterizerState > >::value_type(t_rasterizerstate_id,t_rasterizerstate));
+		this->rasterizerstate_list.insert(STLMap<s32,sharedptr<D3d11_Impl_RasterizerState>>::value_type(t_rasterizerstate_id,t_rasterizerstate));
 
 		return t_rasterizerstate_id;
 	}
 
 	/** Render_CreateVertexShader
 	*/
-	void D3d11_Impl::Render_CreateVertexShader(sharedptr< D3d11_Impl_VertexShader >& a_vertexshader)
+	void D3d11_Impl::Render_CreateVertexShader(sharedptr<D3d11_Impl_VertexShader>& a_vertexshader)
 	{
-		char* t_data = reinterpret_cast< char* >(a_vertexshader->fileobject->GetLoadData().get());
+		char* t_data = reinterpret_cast<char*>(a_vertexshader->fileobject->GetLoadData().get());
 		s32 t_size = static_cast<s32>(a_vertexshader->fileobject->GetLoadSize());
 
 		if(a_vertexshader->fileobject->GetAddAllocateSize() > 0){
@@ -620,17 +620,17 @@ namespace NBsys{namespace ND3d11
 
 		/** t_blob
 		*/
-		sharedptr< ID3DBlob > t_blob;
+		sharedptr<ID3DBlob> t_blob;
 		{
-			sharedptr< ID3DBlob > t_blob_error;
+			sharedptr<ID3DBlob> t_blob_error;
 			ID3DBlob* t_raw = nullptr;
 			ID3DBlob* t_raw_error = nullptr;
 			HRESULT t_result = D3DCompile(t_data,t_size,nullptr,nullptr,nullptr,"VS","vs_4_0",D3DCOMPILE_ENABLE_STRICTNESS|D3DCOMPILE_DEBUG,0,&t_raw,&t_raw_error);
 			if(t_raw != nullptr){
-				t_blob.reset(t_raw,release_delete< ID3DBlob >());
+				t_blob.reset(t_raw,release_delete<ID3DBlob>());
 			}
 			if(t_raw_error != nullptr){
-				t_blob_error.reset(t_raw_error,release_delete< ID3DBlob >());
+				t_blob_error.reset(t_raw_error,release_delete<ID3DBlob>());
 			}
 			if(FAILED(t_result)){
 				t_blob.reset();
@@ -655,7 +655,7 @@ namespace NBsys{namespace ND3d11
 			ID3D11VertexShader* t_raw = nullptr;
 			HRESULT t_result = this->device->CreateVertexShader(t_blob->GetBufferPointer(),t_blob->GetBufferSize(),nullptr,&t_raw);
 			if(t_raw != nullptr){
-				a_vertexshader->vertexshader.reset(t_raw,release_delete< ID3D11VertexShader >());
+				a_vertexshader->vertexshader.reset(t_raw,release_delete<ID3D11VertexShader>());
 			}
 			if(FAILED(t_result)){
 				a_vertexshader->vertexshader.reset();
@@ -667,7 +667,7 @@ namespace NBsys{namespace ND3d11
 		if(t_blob){
 			s32 t_layout_size = static_cast<s32>(a_vertexshader->layout->size());
 			D3D11_INPUT_ELEMENT_DESC* t_layout_data = new D3D11_INPUT_ELEMENT_DESC[t_layout_size];
-			sharedptr< D3D11_INPUT_ELEMENT_DESC > t_layout(t_layout_data,default_delete< D3D11_INPUT_ELEMENT_DESC[] >());
+			sharedptr<D3D11_INPUT_ELEMENT_DESC> t_layout(t_layout_data,default_delete<D3D11_INPUT_ELEMENT_DESC[]>());
 			{
 				 for(s32 ii=0;ii<t_layout_size;ii++){
 					t_layout_data[ii].SemanticName			= a_vertexshader->layout->at(ii).semantic_name.c_str();
@@ -689,7 +689,7 @@ namespace NBsys{namespace ND3d11
 			ID3D11InputLayout* t_raw = nullptr;
 			HRESULT t_result = this->device->CreateInputLayout(t_layout_data,static_cast<UINT>(t_layout_size),t_blob->GetBufferPointer(),t_blob->GetBufferSize(),&t_raw);
 			if(t_raw != nullptr){
-				a_vertexshader->inputlayout.reset(t_raw,release_delete< ID3D11InputLayout >());
+				a_vertexshader->inputlayout.reset(t_raw,release_delete<ID3D11InputLayout>());
 			}
 			if(FAILED(t_result)){
 				a_vertexshader->inputlayout.reset();
@@ -699,9 +699,9 @@ namespace NBsys{namespace ND3d11
 
 	/** Render_CreatePixelShader
 	*/
-	void D3d11_Impl::Render_CreatePixelShader(sharedptr< D3d11_Impl_PixelShader >& a_pixelshader)
+	void D3d11_Impl::Render_CreatePixelShader(sharedptr<D3d11_Impl_PixelShader>& a_pixelshader)
 	{
-		char* t_data = reinterpret_cast< char* >(a_pixelshader->fileobject->GetLoadData().get());
+		char* t_data = reinterpret_cast<char*>(a_pixelshader->fileobject->GetLoadData().get());
 		s32 t_size = static_cast<s32>(a_pixelshader->fileobject->GetLoadSize());
 
 		if(a_pixelshader->fileobject->GetAddAllocateSize() > 0){
@@ -710,17 +710,17 @@ namespace NBsys{namespace ND3d11
 			ASSERT(0);
 		}
 
-		sharedptr< ID3DBlob > t_blob;
+		sharedptr<ID3DBlob> t_blob;
 		{
-			sharedptr< ID3DBlob > t_blob_error;
+			sharedptr<ID3DBlob> t_blob_error;
 			ID3DBlob* t_raw = nullptr;
 			ID3DBlob* t_raw_error = nullptr;
 			HRESULT t_result = D3DCompile(t_data,t_size,nullptr,nullptr,nullptr,"PS","ps_4_0",D3DCOMPILE_ENABLE_STRICTNESS|D3DCOMPILE_DEBUG,0,&t_raw,&t_raw_error);
 			if(t_raw != nullptr){
-				t_blob.reset(t_raw,release_delete< ID3DBlob >());
+				t_blob.reset(t_raw,release_delete<ID3DBlob>());
 			}
 			if(t_raw_error != nullptr){
-				t_blob_error.reset(t_raw_error,release_delete< ID3DBlob >());
+				t_blob_error.reset(t_raw_error,release_delete<ID3DBlob>());
 			}
 			if(FAILED(t_result)){
 				t_blob.reset();
@@ -743,7 +743,7 @@ namespace NBsys{namespace ND3d11
 			ID3D11PixelShader* t_raw = nullptr;
 			HRESULT t_result = this->device->CreatePixelShader(t_blob->GetBufferPointer(),t_blob->GetBufferSize(),nullptr,&t_raw);
 			if(t_raw != nullptr){
-				a_pixelshader->pixelshader.reset(t_raw,release_delete< ID3D11PixelShader >());
+				a_pixelshader->pixelshader.reset(t_raw,release_delete<ID3D11PixelShader>());
 			}
 			if(FAILED(t_result)){
 				a_pixelshader->pixelshader.reset();
@@ -753,7 +753,7 @@ namespace NBsys{namespace ND3d11
 
 	/** Render_CreateVertexBuffer
 	*/
-	void D3d11_Impl::Render_CreateVertexBuffer(sharedptr< D3d11_Impl_VertexBuffer >& a_vertexbuffer)
+	void D3d11_Impl::Render_CreateVertexBuffer(sharedptr<D3d11_Impl_VertexBuffer>& a_vertexbuffer)
 	{
 		D3D11_BUFFER_DESC t_desc;
 		{
@@ -778,7 +778,7 @@ namespace NBsys{namespace ND3d11
 		ID3D11Buffer* t_raw;
 		HRESULT t_result = this->device->CreateBuffer(&t_desc,&t_subresource_data,&t_raw);
 		if(t_raw != nullptr){
-			a_vertexbuffer->buffer.reset(t_raw,release_delete< ID3D11Buffer >());
+			a_vertexbuffer->buffer.reset(t_raw,release_delete<ID3D11Buffer>());
 		}
 		if(FAILED(t_result)){
 			a_vertexbuffer->buffer.reset();
@@ -787,7 +787,7 @@ namespace NBsys{namespace ND3d11
 	
 	/** Render_CreateConstantBuffer
 	*/
-	void D3d11_Impl::Render_CreateConstantBuffer(sharedptr< D3d11_Impl_ConstantBuffer >& a_constantbuffer)
+	void D3d11_Impl::Render_CreateConstantBuffer(sharedptr<D3d11_Impl_ConstantBuffer>& a_constantbuffer)
 	{
 		D3D11_BUFFER_DESC t_desc;
 		{
@@ -801,7 +801,7 @@ namespace NBsys{namespace ND3d11
 		ID3D11Buffer* t_raw = nullptr;
 		HRESULT t_result = this->device->CreateBuffer(&t_desc,nullptr,&t_raw);
 		if(t_raw != nullptr){
-			a_constantbuffer->buffer.reset(t_raw,release_delete< ID3D11Buffer >());
+			a_constantbuffer->buffer.reset(t_raw,release_delete<ID3D11Buffer>());
 		}
 		if(FAILED(t_result)){
 			a_constantbuffer->buffer.reset();
@@ -810,7 +810,7 @@ namespace NBsys{namespace ND3d11
 
 	/** Render_CreateTexture
 	*/
-	void D3d11_Impl::Render_CreateTexture(sharedptr< D3d11_Impl_Texture >& a_texture)
+	void D3d11_Impl::Render_CreateTexture(sharedptr<D3d11_Impl_Texture>& a_texture)
 	{
 		{
 			D3D11_TEXTURE2D_DESC t_desc;
@@ -840,7 +840,7 @@ namespace NBsys{namespace ND3d11
 			ID3D11Texture2D* t_raw = nullptr;
 			HRESULT t_result = this->device->CreateTexture2D(&t_desc,&t_data,&t_raw);
 			if(t_raw != nullptr){
-				a_texture->texture2d.reset(t_raw,release_delete< ID3D11Texture2D >());
+				a_texture->texture2d.reset(t_raw,release_delete<ID3D11Texture2D>());
 			}
 			if(FAILED(t_result)){
 				a_texture->texture2d.reset();
@@ -859,7 +859,7 @@ namespace NBsys{namespace ND3d11
 			ID3D11ShaderResourceView* t_raw = nullptr;
 			HRESULT t_result = this->device->CreateShaderResourceView(a_texture->texture2d.get(),&t_desc,&t_raw);
 			if(t_raw != nullptr){
-				a_texture->resourceview.reset(t_raw,release_delete< ID3D11ShaderResourceView >());
+				a_texture->resourceview.reset(t_raw,release_delete<ID3D11ShaderResourceView>());
 			}
 			if(FAILED(t_result)){
 				a_texture->resourceview.reset();
@@ -869,7 +869,7 @@ namespace NBsys{namespace ND3d11
 
 	/** Render_CreateBlendState
 	*/
-	void D3d11_Impl::Render_CreateBlendState(sharedptr< D3d11_Impl_BlendState >& a_blendstate)
+	void D3d11_Impl::Render_CreateBlendState(sharedptr<D3d11_Impl_BlendState>& a_blendstate)
 	{
 		D3D11_BLEND_DESC t_desc;
 		{
@@ -908,7 +908,7 @@ namespace NBsys{namespace ND3d11
 		ID3D11BlendState* t_raw = nullptr;
 		HRESULT t_result = this->device->CreateBlendState(&t_desc,&t_raw);
 		if(t_raw != nullptr){
-			a_blendstate->blendstate.reset(t_raw,release_delete< ID3D11BlendState >());
+			a_blendstate->blendstate.reset(t_raw,release_delete<ID3D11BlendState>());
 		}
 		if(FAILED(t_result)){
 			a_blendstate->blendstate.reset();
@@ -917,7 +917,7 @@ namespace NBsys{namespace ND3d11
 
 	/** Render_CreateRasterizerState
 	*/
-	void D3d11_Impl::Render_CreateRasterizerState(sharedptr< D3d11_Impl_RasterizerState >& a_rasterizerstate)
+	void D3d11_Impl::Render_CreateRasterizerState(sharedptr<D3d11_Impl_RasterizerState>& a_rasterizerstate)
 	{
 		D3D11_RASTERIZER_DESC t_desc;
 		{
@@ -939,7 +939,7 @@ namespace NBsys{namespace ND3d11
 		ID3D11RasterizerState* t_raw = nullptr;
 		HRESULT t_result = this->device->CreateRasterizerState(&t_desc,&t_raw);
 		if(t_raw != nullptr){
-			a_rasterizerstate->rasterizerstate.reset(t_raw,release_delete< ID3D11RasterizerState >());
+			a_rasterizerstate->rasterizerstate.reset(t_raw,release_delete<ID3D11RasterizerState>());
 		}
 		if(FAILED(t_result)){
 			a_rasterizerstate->rasterizerstate.reset();
@@ -958,7 +958,7 @@ namespace NBsys{namespace ND3d11
 
 	/** StartBatching
 	*/
-	void D3d11_Impl::StartBatching(sharedptr< NBsys::NActionBatching::ActionBatching_ActionList >& a_actionlist)
+	void D3d11_Impl::StartBatching(sharedptr<NBsys::NActionBatching::ActionBatching_ActionList>& a_actionlist)
 	{
 		//アクションバッチング登録中はロック。
 		AutoLock t_autolock_actionbatching(this->actionbatching_lockobject);
@@ -1039,7 +1039,7 @@ namespace NBsys{namespace ND3d11
 	void D3d11_Impl::Render_UpdateSubresource(s32 a_constantbuffer_id,const void* a_data)
 	{
 		if(a_constantbuffer_id >= 0){
-			sharedptr< D3d11_Impl_ConstantBuffer >& t_constantbuffer = this->GetConstantBuffer(a_constantbuffer_id);
+			sharedptr<D3d11_Impl_ConstantBuffer>& t_constantbuffer = this->GetConstantBuffer(a_constantbuffer_id);
 			if(t_constantbuffer){
 
 				this->devicecontext->UpdateSubresource(t_constantbuffer->buffer.get(),0,nullptr,a_data,0,0);
@@ -1057,7 +1057,7 @@ namespace NBsys{namespace ND3d11
 	void D3d11_Impl::Render_VSSetShader(s32 a_vertexshader_id)
 	{
 		if(a_vertexshader_id){
-			sharedptr< D3d11_Impl_VertexShader >& t_vertexshader = this->GetVertexShader(a_vertexshader_id);
+			sharedptr<D3d11_Impl_VertexShader>& t_vertexshader = this->GetVertexShader(a_vertexshader_id);
 			if(t_vertexshader){
 
 				this->devicecontext->IASetInputLayout(t_vertexshader->inputlayout.get());
@@ -1076,7 +1076,7 @@ namespace NBsys{namespace ND3d11
 	void D3d11_Impl::Render_PSSetShader(s32 a_pixelshader_id)
 	{
 		if(a_pixelshader_id >= 0){
-			sharedptr< D3d11_Impl_PixelShader >& t_pixelshader = this->GetPixelShader(a_pixelshader_id);
+			sharedptr<D3d11_Impl_PixelShader>& t_pixelshader = this->GetPixelShader(a_pixelshader_id);
 			if(t_pixelshader){
 
 				this->devicecontext->PSSetShader(t_pixelshader->pixelshader.get(),nullptr,0);
@@ -1109,7 +1109,7 @@ namespace NBsys{namespace ND3d11
 	void D3d11_Impl::Render_VSSetConstantBuffers(s32 a_constantbuffer_id)
 	{
 		if(a_constantbuffer_id >= 0){
-			sharedptr< D3d11_Impl_ConstantBuffer >& t_constantbuffer = this->GetConstantBuffer(a_constantbuffer_id);
+			sharedptr<D3d11_Impl_ConstantBuffer>& t_constantbuffer = this->GetConstantBuffer(a_constantbuffer_id);
 			if(t_constantbuffer){
 
 				ID3D11Buffer* t_list[] = 
@@ -1132,7 +1132,7 @@ namespace NBsys{namespace ND3d11
 	void D3d11_Impl::Render_PSSetConstantBuffers(s32 a_constantbuffer_id)
 	{
 		if(a_constantbuffer_id >= 0){
-			sharedptr< D3d11_Impl_ConstantBuffer >& t_constantbuffer = this->GetConstantBuffer(a_constantbuffer_id);
+			sharedptr<D3d11_Impl_ConstantBuffer>& t_constantbuffer = this->GetConstantBuffer(a_constantbuffer_id);
 			if(t_constantbuffer){
 
 				ID3D11Buffer* t_list[] = 
@@ -1155,7 +1155,7 @@ namespace NBsys{namespace ND3d11
 	void D3d11_Impl::Render_SetVertexBuffer(s32 a_vertexbuffer_id)
 	{
 		if(a_vertexbuffer_id >= 0){
-			sharedptr< D3d11_Impl_VertexBuffer >& t_vertexbuffer = this->GetVertexBuffer(a_vertexbuffer_id);
+			sharedptr<D3d11_Impl_VertexBuffer>& t_vertexbuffer = this->GetVertexBuffer(a_vertexbuffer_id);
 			if(t_vertexbuffer){
 
 				ID3D11Buffer* t_list[] = {
@@ -1180,7 +1180,7 @@ namespace NBsys{namespace ND3d11
 	void D3d11_Impl::Render_ReMapVertexBuffer(s32 a_vertexbuffer_id,const void* a_data,s32 a_size)
 	{
 		if(a_vertexbuffer_id >= 0){
-			sharedptr< D3d11_Impl_VertexBuffer >& t_vertexbuffer = this->GetVertexBuffer(a_vertexbuffer_id);
+			sharedptr<D3d11_Impl_VertexBuffer>& t_vertexbuffer = this->GetVertexBuffer(a_vertexbuffer_id);
 			if(t_vertexbuffer){
 
 				D3D11_MAPPED_SUBRESOURCE t_mapped_resource;
@@ -1223,7 +1223,7 @@ namespace NBsys{namespace ND3d11
 	void D3d11_Impl::Render_SetTexture(s32 a_register_t_index,s32 a_texture_id)
 	{
 		if(a_texture_id >= 0){
-			sharedptr< D3d11_Impl_Texture >& t_texture = this->GetTexture(a_texture_id);
+			sharedptr<D3d11_Impl_Texture>& t_texture = this->GetTexture(a_texture_id);
 			if(t_texture){
 
 				ID3D11ShaderResourceView* t_resourceview_list[] = {
@@ -1251,7 +1251,7 @@ namespace NBsys{namespace ND3d11
 	void D3d11_Impl::Render_SetBlendState(s32 a_blendstate_id)
 	{
 		if(a_blendstate_id >= 0){
-			sharedptr< D3d11_Impl_BlendState >& t_blendstate = this->GetBlendState(a_blendstate_id);
+			sharedptr<D3d11_Impl_BlendState>& t_blendstate = this->GetBlendState(a_blendstate_id);
 			if(t_blendstate){
 
 				FLOAT t_blendfactor[4] = {
@@ -1276,7 +1276,7 @@ namespace NBsys{namespace ND3d11
 	void D3d11_Impl::Render_SetRasterizerState(s32 a_rasterizerstate_id)
 	{
 		if(a_rasterizerstate_id >= 0){
-			sharedptr< D3d11_Impl_RasterizerState >& t_rasterizerstate = this->GetRasterizerState(a_rasterizerstate_id);
+			sharedptr<D3d11_Impl_RasterizerState>& t_rasterizerstate = this->GetRasterizerState(a_rasterizerstate_id);
 			if(t_rasterizerstate){
 
 				this->devicecontext->RSSetState(t_rasterizerstate->rasterizerstate.get());

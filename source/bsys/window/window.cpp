@@ -38,7 +38,7 @@ namespace NBsys{namespace NWindow
 
 	/** GetImpl
 	*/
-	sharedptr< Window_Impl >& Window::GetImpl()
+	sharedptr<Window_Impl>& Window::GetImpl()
 	{
 		return this->impl;
 	}

@@ -67,7 +67,7 @@ namespace NBsys{namespace NMmd
 
 		/** Load
 		*/
-		bool Load(sharedptr< NFile::File_Object >& a_file);
+		bool Load(sharedptr<NFile::File_Object>& a_file);
 
 	};
 

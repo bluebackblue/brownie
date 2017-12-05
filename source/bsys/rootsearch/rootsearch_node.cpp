@@ -65,7 +65,7 @@ namespace NBsys{namespace NRootSearch
 
 	/** コネクトリスト。
 	*/
-	STLVector< RootSearch_ConnectIndex >::Type& RootSearch_Node::ConnectIndexList(bool a_root)
+	STLVector<RootSearch_ConnectIndex>::Type& RootSearch_Node::ConnectIndexList(bool a_root)
 	{
 		if(a_root){
 			//ルートどうしのコネクト。

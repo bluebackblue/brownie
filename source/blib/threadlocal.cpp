@@ -65,7 +65,7 @@ namespace NBlib
 	{
 		#if(BLIB_STDTHREADLOCAL_ENABLE)
 
-		ThreadLocalData* t_data = reinterpret_cast< ThreadLocalData* >(s_threadlocal);
+		ThreadLocalData* t_data = reinterpret_cast<ThreadLocalData*>(s_threadlocal);
 
 		#else
 
@@ -80,7 +80,7 @@ namespace NBlib
 
 			#if(BLIB_STDTHREADLOCAL_ENABLE)
 
-			s_threadlocal = reinterpret_cast< void* >(t_data);
+			s_threadlocal = reinterpret_cast<void*>(t_data);
 
 			#else
 

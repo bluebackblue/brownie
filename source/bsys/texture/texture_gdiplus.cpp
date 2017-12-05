@@ -46,13 +46,13 @@ namespace NBsys{namespace NTexture
 	/** CreateTexture_GdiPlus
 	*/
 	#if(BSYS_TEXTURE_GDIPLUS_ENABLE)
-	sharedptr< Texture > CreateTexture_GdiPlus(const sharedptr< u8 >& a_data,s32 a_size,const STLWString& a_name)
+	sharedptr<Texture> CreateTexture_GdiPlus(const sharedptr<u8>& a_data,s32 a_size,const STLWString& a_name)
 	{
 		ULONG_PTR t_token;
 		Gdiplus::GdiplusStartupInput t_gdiplus_startinput;
 		Gdiplus::GdiplusStartup(&t_token,&t_gdiplus_startinput,nullptr);
 
-		sharedptr< u8 > t_pixel;
+		sharedptr<u8> t_pixel;
 		s32 t_width = 0;
 		s32 t_height = 0;
 
@@ -69,7 +69,7 @@ namespace NBsys{namespace NTexture
 					IStream* t_stream = nullptr;
 					if(CreateStreamOnHGlobal(t_global_handle,FALSE,&t_stream) == S_OK){
 
-						sharedptr< Gdiplus::Bitmap > t_bitmap(Gdiplus::Bitmap::FromStream(t_stream));
+						sharedptr<Gdiplus::Bitmap> t_bitmap(Gdiplus::Bitmap::FromStream(t_stream));
 						t_stream->Release();
 
 						if(t_bitmap){
@@ -85,7 +85,7 @@ namespace NBsys{namespace NTexture
 
 								const uint8_t* t_bitmap_pixel_data = reinterpret_cast<const uint8_t*>(t_bitmap_data.Scan0);
 
-								t_pixel.reset(new u8[t_width * t_height * 4],default_delete< u8[] >());
+								t_pixel.reset(new u8[t_width * t_height * 4],default_delete<u8[]>());
 
 								for(s32 yy=0;yy<t_height;yy++){
 									for(s32 xx=0;xx<t_width;xx++){
@@ -108,7 +108,7 @@ namespace NBsys{namespace NTexture
 		}
 		Gdiplus::GdiplusShutdown(t_token);
 
-		sharedptr< Texture > t_texture(new Texture(t_pixel,t_width,t_height,t_width * 4,TextureType::R8G8B8A8,a_name));
+		sharedptr<Texture> t_texture(new Texture(t_pixel,t_width,t_height,t_width * 4,TextureType::R8G8B8A8,a_name));
 
 		return t_texture;
 	}

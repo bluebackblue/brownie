@@ -89,7 +89,7 @@ namespace NBlib
 
 	/** —”B
 	*/
-	template < typename T = Random_LinearCongruentialGenerators > class RandomTemplate
+	template <typename T=Random_LinearCongruentialGenerators> class RandomTemplate
 	{
 	private:
 		T impl;

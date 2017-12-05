@@ -111,7 +111,7 @@ namespace NBlib
 
 		/** Accept
 		*/
-		sharedptr< SocketHandle > Accept();
+		sharedptr<SocketHandle> Accept();
 
 		/** ブロードキャスト設定。
 		*/

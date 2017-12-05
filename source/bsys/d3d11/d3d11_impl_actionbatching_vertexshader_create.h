@@ -37,17 +37,17 @@ namespace NBsys{namespace ND3d11
 
 		/** vertexshader
 		*/
-		sharedptr< D3d11_Impl_VertexShader > vertexshader;
+		sharedptr<D3d11_Impl_VertexShader> vertexshader;
 
 		/** asyncresult
 		*/
-		AsyncResult< bool > asyncresult;
+		AsyncResult<bool> asyncresult;
 
 	public:
 
 		/** constructor
 		*/
-		D3d11_Impl_ActionBatching_VertexShader_Create(D3d11_Impl& a_d3d11_impl,sharedptr< D3d11_Impl_VertexShader >& a_vertexshader,AsyncResult< bool >& a_asyncresult)
+		D3d11_Impl_ActionBatching_VertexShader_Create(D3d11_Impl& a_d3d11_impl,sharedptr<D3d11_Impl_VertexShader>& a_vertexshader,AsyncResult<bool>& a_asyncresult)
 			:
 			d3d11_impl(a_d3d11_impl),
 			vertexshader(a_vertexshader),

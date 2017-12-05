@@ -63,12 +63,12 @@ namespace NBlib
 
 			t_threadlocal_reference.pointer = ::malloc(sizeof(MemoryContainer_Data));
 
-			t_data = reinterpret_cast< MemoryContainer_Data* >(t_threadlocal_reference.pointer);
+			t_data = reinterpret_cast<MemoryContainer_Data*>(t_threadlocal_reference.pointer);
 			t_data->Reset();
 
 		}else{
 
-			t_data = reinterpret_cast< MemoryContainer_Data* >(t_threadlocal_reference.pointer);
+			t_data = reinterpret_cast<MemoryContainer_Data*>(t_threadlocal_reference.pointer);
 
 		}
 

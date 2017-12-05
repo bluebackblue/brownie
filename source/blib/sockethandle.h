@@ -36,12 +36,12 @@ namespace NBlib
 	private:
 		/** impl
 		*/
-		sharedptr< SocketHandle_Impl > impl;
+		sharedptr<SocketHandle_Impl> impl;
 
 	public:
 		/** GetImpl
 		*/
-		sharedptr< SocketHandle_Impl >& GetImpl();
+		sharedptr<SocketHandle_Impl>& GetImpl();
 
 	public:
 		/** constructor
@@ -50,7 +50,7 @@ namespace NBlib
 
 		/** constructor
 		*/
-		SocketHandle(sharedptr< SocketHandle_Impl >& a_impl);
+		SocketHandle(sharedptr<SocketHandle_Impl>& a_impl);
 
 		/** destructor
 		*/
@@ -92,7 +92,7 @@ namespace NBlib
 
 		/** Accept
 		*/
-		sharedptr< SocketHandle > Accept();
+		sharedptr<SocketHandle> Accept();
 
 		/** ブロードキャスト設定。
 		*/

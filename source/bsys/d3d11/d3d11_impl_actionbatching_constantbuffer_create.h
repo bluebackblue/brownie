@@ -37,13 +37,13 @@ namespace NBsys{namespace ND3d11
 
 		/** constantbuffer
 		*/
-		sharedptr< D3d11_Impl_ConstantBuffer > constantbuffer;
+		sharedptr<D3d11_Impl_ConstantBuffer> constantbuffer;
 
 	public:
 
 		/** constructor
 		*/
-		D3d11_Impl_ActionBatching_ConstantBuffer_Create(D3d11_Impl& a_d3d11_impl,sharedptr< D3d11_Impl_ConstantBuffer >& a_constantbuffer)
+		D3d11_Impl_ActionBatching_ConstantBuffer_Create(D3d11_Impl& a_d3d11_impl,sharedptr<D3d11_Impl_ConstantBuffer>& a_constantbuffer)
 			:
 			d3d11_impl(a_d3d11_impl),
 			constantbuffer(a_constantbuffer)

@@ -30,12 +30,12 @@ namespace NBsys{namespace NWindow
 	private:
 		/** impl
 		*/
-		sharedptr< Window_Impl > impl;
+		sharedptr<Window_Impl> impl;
 
 	public:
 		/** GetImpl
 		*/
-		sharedptr< Window_Impl >& GetImpl();
+		sharedptr<Window_Impl>& GetImpl();
 
 	public:
 		/** constructor

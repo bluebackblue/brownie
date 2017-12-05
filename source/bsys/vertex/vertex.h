@@ -26,7 +26,7 @@ namespace NBsys{namespace NVertex
 {
 	/** Vertex
 	*/
-	template < typename T > class Vertex
+	template <typename T> class Vertex
 	{
 	private:
 
@@ -53,11 +53,11 @@ namespace NBsys{namespace NVertex
 
 		/** parts_list
 		*/
-		typename STLVector< sharedptr< Parts > >::Type parts_list;
+		typename STLVector<sharedptr<Parts>>::Type parts_list;
 
 		/** バーテックス。
 		*/
-		typename STLVector< VertexType >::Type vertex_list;
+		typename STLVector<VertexType>::Type vertex_list;
 
 	public:
 		/** constructor
@@ -66,7 +66,7 @@ namespace NBsys{namespace NVertex
 
 		/** constructor
 		*/
-		Vertex(const sharedptr< JsonItem >& a_jsonitem);
+		Vertex(const sharedptr<JsonItem>& a_jsonitem);
 
 		/** destructor
 		*/
@@ -101,7 +101,7 @@ namespace NBsys{namespace NVertex
 
 		/** GetVertexPointer。
 		*/
-		const typename Vertex< T >::VertexType* GetVertexPointer() const;
+		const typename Vertex<T>::VertexType* GetVertexPointer() const;
 
 		/** GetVertexStrideByte
 		*/

@@ -138,8 +138,8 @@ namespace NBlib
 		*/
 		struct Value_BinaryData
 		{
-			sharedptr< STLVector< u8 >::Type > value;
-			explicit Value_BinaryData(sharedptr< STLVector< u8 >::Type >& a_value)
+			sharedptr<STLVector<u8>::Type> value;
+			explicit Value_BinaryData(sharedptr<STLVector<u8>::Type>& a_value)
 				:
 				value(a_value)
 			{
@@ -153,13 +153,13 @@ namespace NBlib
 		{
 		public:
 
-			sharedptr< STLString >											string_data;
-			sharedptr< STLMap< STLString , sharedptr< JsonItem > >::Type >	associative_array;
-			sharedptr< STLVector< sharedptr< JsonItem > >::Type >			index_array;
-			s32																integer_number;
-			f32																float_number;
-			bool															bool_value;
-			sharedptr< STLVector< u8 >::Type >								binary_data;
+			sharedptr<STLString>										string_data;
+			sharedptr<STLMap<STLString,sharedptr<JsonItem>>::Type>		associative_array;
+			sharedptr<STLVector<sharedptr<JsonItem>>::Type>				index_array;
+			s32															integer_number;
+			f32															float_number;
+			bool														bool_value;
+			sharedptr<STLVector<u8>::Type>								binary_data;
 
 			/** リセット。
 			*/
@@ -177,7 +177,7 @@ namespace NBlib
 
 		/** ＪＳＯＮ文字列。
 		*/
-		mutable sharedptr< STLString > jsonstring;
+		mutable sharedptr<STLString> jsonstring;
 
 		/** バリアント型。タイプ。
 		*/
@@ -256,7 +256,7 @@ namespace NBlib
 
 		/** ディープコピー。
 		*/
-		sharedptr< JsonItem > DeepCopy() const;
+		sharedptr<JsonItem> DeepCopy() const;
 	
 		/** ＪＳＯＮ文字列をセット。
 		*/
@@ -274,7 +274,7 @@ namespace NBlib
 	
 		/** [取得][値]GetStringData
 		*/
-		const sharedptr< STLString >& GetStringData() const;
+		const sharedptr<STLString>& GetStringData() const;
 	
 		/** [取得][値]GetInteger
 		*/
@@ -294,7 +294,7 @@ namespace NBlib
 
 		/** [取得][値]GetBinaryData
 		*/
-		sharedptr< STLVector< u8 >::Type >& GetBinaryData();
+		sharedptr<STLVector<u8>::Type>& GetBinaryData();
 
 		/** [取得]GetValueType
 		*/
@@ -302,11 +302,11 @@ namespace NBlib
 
 		/** [取得]連想リストのアイテム取得。
 		*/
-		sharedptr< JsonItem >& GetItem(const STLString& a_itemname);
+		sharedptr<JsonItem>& GetItem(const STLString& a_itemname);
 
 		/** [取得]連想リストのアイテム取得。
 		*/
-		const sharedptr< JsonItem >& GetItem(const STLString& a_itemname) const;
+		const sharedptr<JsonItem>& GetItem(const STLString& a_itemname) const;
 
 		/** [取得]連想リストのアイテムチェック。
 		*/
@@ -314,11 +314,11 @@ namespace NBlib
 	
 		/** [取得]インデックスリストのアイテム取得。
 		*/
-		sharedptr< JsonItem >& GetItem(s32 a_index);
+		sharedptr<JsonItem>& GetItem(s32 a_index);
 
 		/** [取得]インデックスリストのアイテム取得。
 		*/
-		const sharedptr< JsonItem >& GetItem(s32 a_index) const;
+		const sharedptr<JsonItem>& GetItem(s32 a_index) const;
 
 		/** [取得]インデックスリストのアイテムチェック。
 		*/
@@ -326,11 +326,11 @@ namespace NBlib
 	
 		/** [設定]連想リストにアイテム追加。削除。
 		*/
-		void SetItem(const STLString& a_itemname,sharedptr< JsonItem >& a_item,bool a_deepcopy);
+		void SetItem(const STLString& a_itemname,sharedptr<JsonItem>& a_item,bool a_deepcopy);
 	
 		/** [設定]インデックスリストにアイテム追加。
 		*/
-		void AddItem(const sharedptr< JsonItem >& a_item,bool a_deepcopy);
+		void AddItem(const sharedptr<JsonItem>& a_item,bool a_deepcopy);
 	
 		/** [削除]インデックスリストからアイテム削除。
 		*/
@@ -366,11 +366,11 @@ namespace NBlib
 	
 		/** SetBinaryData
 		*/
-		void SetBinaryData(const sharedptr< STLVector< u8 >::Type >& a_binarydata);
+		void SetBinaryData(const sharedptr<STLVector<u8>::Type>& a_binarydata);
 
 		/** 連想配列キーリスト作成。
 		*/
-		sharedptr< STLVector< STLString >::Type > CreateAssociativeKeyList();
+		sharedptr<STLVector<STLString>::Type> CreateAssociativeKeyList();
 
 		/** JsonStringへコンバート。
 		*/

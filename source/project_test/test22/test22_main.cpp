@@ -80,25 +80,25 @@ static s32 s_height = 600*2;
 
 /** s_window
 */
-static sharedptr< NBsys::NWindow::Window > s_window;
+static sharedptr<NBsys::NWindow::Window> s_window;
 
 
 /** s_d3d11
 */
-static sharedptr< NBsys::ND3d11::D3d11 > s_d3d11;
+static sharedptr<NBsys::ND3d11::D3d11> s_d3d11;
 
 
 /** s_fovehmd
 */
 #if(USE_FOVE)
-static sharedptr< NBsys::NFovehmd::Fovehmd > s_fovehmd;
+static sharedptr<NBsys::NFovehmd::Fovehmd> s_fovehmd;
 #endif
 
 
 //s_vertex
-static sharedptr< NBsys::NVertex::Vertex< NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 > > s_vertex;
-static sharedptr< NBsys::NMmd::Mmd_Pmx > s_mmd_pmx;
-static sharedptr< NBsys::NMmd::Mmd_Vmd > s_mmd_vmd;
+static sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4>> s_vertex;
+static sharedptr<NBsys::NMmd::Mmd_Pmx> s_mmd_pmx;
+static sharedptr<NBsys::NMmd::Mmd_Vmd> s_mmd_vmd;
 
 
 //s_matrix
@@ -119,8 +119,8 @@ static f32 s_rotate2 = 0.0f;
 
 
 //asyncresult
-AsyncResult< bool > t_asyncresult_vertexshader;
-AsyncResult< bool > t_asyncresult_pixelshader;
+AsyncResult<bool> t_asyncresult_vertexshader;
+AsyncResult<bool> t_asyncresult_pixelshader;
 
 
 //id
@@ -190,16 +190,16 @@ struct ModelParts
 
 	s32 texture_index;
 	STLWString texture_filepath;
-	sharedptr< NBsys::NFile::File_Object > texture_file;
-	sharedptr< NBsys::NTexture::Texture > texture;
+	sharedptr<NBsys::NFile::File_Object> texture_file;
+	sharedptr<NBsys::NTexture::Texture> texture;
 
 	s32 texture_id;
 
 	bool cullfull;
 };
-sharedptr< STLVector< ModelParts >::Type > s_model;
+sharedptr<STLVector<ModelParts>::Type> s_model;
 
-sharedptr< common::D3d11_DrawLine_Manager > s_drawline_manager;
+sharedptr<common::D3d11_DrawLine_Manager> s_drawline_manager;
 
 
 void LoadPmx()
@@ -212,7 +212,7 @@ void LoadPmx()
 
 	//ÇoÇlÇwì«Ç›çûÇ›ÅB
 	{
-		sharedptr< NBsys::NFile::File_Object > t_fileobject_pmx(new NBsys::NFile::File_Object(1,t_pmx_path + t_pmx_name,-1,sharedptr< NBsys::NFile::File_Allocator >(),1));
+		sharedptr<NBsys::NFile::File_Object> t_fileobject_pmx(new NBsys::NFile::File_Object(1,t_pmx_path + t_pmx_name,-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
 		while(t_fileobject_pmx->IsBusy()){
 			ThreadSleep(10);
 		}
@@ -222,7 +222,7 @@ void LoadPmx()
 
 	//ÇuÇlÇcì«Ç›çûÇ›ÅB
 	{
-		sharedptr< NBsys::NFile::File_Object > t_fileobject_vmd(new NBsys::NFile::File_Object(1,t_vmd_path + t_vmd_name,-1,sharedptr< NBsys::NFile::File_Allocator >(),1));
+		sharedptr<NBsys::NFile::File_Object> t_fileobject_vmd(new NBsys::NFile::File_Object(1,t_vmd_path + t_vmd_name,-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
 		while(t_fileobject_vmd->IsBusy()){
 			ThreadSleep(10);
 		}
@@ -230,8 +230,8 @@ void LoadPmx()
 		s_mmd_vmd->Load(t_fileobject_vmd);
 	}
 
-	s_vertex = new NBsys::NVertex::Vertex< NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 >();
-	s_model = new STLVector< ModelParts >::Type();
+	s_vertex = new NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4>();
+	s_model = new STLVector<ModelParts>::Type();
 
 	for(u32 ii=0;ii<s_mmd_pmx->parts_list_size;ii++){
 		NBsys::NMmd::Mmd_Pmx_Parts& t_mmd_pmx_parts = s_mmd_pmx->parts_list[ii];
@@ -258,9 +258,9 @@ void LoadPmx()
 			f32 t_color_b = t_mmd_pmx_parts.diffuse.b;
 			f32 t_color_a = t_mmd_pmx_parts.diffuse.a;
 
-			NBsys::NVertex::SetColor< NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 >(t_vertex,t_color_r,t_color_g,t_color_b,t_color_a);
-			NBsys::NVertex::SetPos< NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 >(t_vertex,t_data.position.x,t_data.position.y,t_data.position.z);
-			NBsys::NVertex::SetUv< NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 >(t_vertex,t_data.uv.x,t_data.uv.y);
+			NBsys::NVertex::SetColor<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4>(t_vertex,t_color_r,t_color_g,t_color_b,t_color_a);
+			NBsys::NVertex::SetPos<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4>(t_vertex,t_data.position.x,t_data.position.y,t_data.position.z);
+			NBsys::NVertex::SetUv<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4>(t_vertex,t_data.uv.x,t_data.uv.y);
 
 			s_vertex->AddVertex(t_vertex);
 		}
@@ -274,10 +274,10 @@ void LoadPmx()
 		//ÉeÉNÉXÉ`ÉÉÅ[ì«Ç›çûÇ›äJénÅB
 		if(t_model_patrs.texture_index >= 0){
 			t_model_patrs.texture_filepath = Path::DirAndName(t_pmx_path,s_mmd_pmx->texturename_list[t_model_patrs.texture_index]);
-			t_model_patrs.texture_file = new NBsys::NFile::File_Object(1,t_model_patrs.texture_filepath,-1,sharedptr< NBsys::NFile::File_Allocator >(),1);
+			t_model_patrs.texture_file = new NBsys::NFile::File_Object(1,t_model_patrs.texture_filepath,-1,sharedptr<NBsys::NFile::File_Allocator>(),1);
 		}else{
 			t_model_patrs.texture_filepath = Path::DirAndName(L"",L"white.bmp");
-			t_model_patrs.texture_file = new NBsys::NFile::File_Object(1,t_model_patrs.texture_filepath,-1,sharedptr< NBsys::NFile::File_Allocator >(),1);
+			t_model_patrs.texture_file = new NBsys::NFile::File_Object(1,t_model_patrs.texture_filepath,-1,sharedptr<NBsys::NFile::File_Allocator>(),1);
 		}
 	}
 
@@ -435,13 +435,13 @@ void Test_Main()
 
 			//çÏê¨ÅB
 
-			sharedptr< NBsys::NFile::File_Object > t_simple_vertex_fx(	new NBsys::NFile::File_Object(0,L"simple_vertex.fx",	-1,sharedptr< NBsys::NFile::File_Allocator >(),1));
-			sharedptr< NBsys::NFile::File_Object > t_simple_pixel_fx(	new NBsys::NFile::File_Object(0,L"simple_pixel.fx",		-1,sharedptr< NBsys::NFile::File_Allocator >(),1));
+			sharedptr<NBsys::NFile::File_Object> t_simple_vertex_fx(	new NBsys::NFile::File_Object(0,L"simple_vertex.fx",	-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
+			sharedptr<NBsys::NFile::File_Object> t_simple_pixel_fx(	new NBsys::NFile::File_Object(0,L"simple_pixel.fx",		-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
 
 			t_asyncresult_vertexshader.Create(false);
 			t_asyncresult_pixelshader.Create(false);
 
-			sharedptr< STLVector< NBsys::ND3d11::D3d11_Layout >::Type > t_layout(new STLVector< NBsys::ND3d11::D3d11_Layout >::Type());
+			sharedptr<STLVector<NBsys::ND3d11::D3d11_Layout>::Type> t_layout(new STLVector<NBsys::ND3d11::D3d11_Layout>::Type());
 			{
 				s32 t_offset = 0;
 

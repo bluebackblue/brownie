@@ -128,16 +128,16 @@ namespace NBsys{namespace NVertex
 	namespace NImpl
 	{
 		//Vertex_SetPos_XX
-		template < typename T , bool EXIST > struct Vertex_SetPos_XX
+		template <typename T,bool EXIST> struct Vertex_SetPos_XX
 		{
 			static s32 GetOffset(){return 0;}
 			static void Set(T& a_vertex,f32 a_pos_xx){}
 		};
-		template < typename T > struct Vertex_SetPos_XX< T , true >
+		template <typename T> struct Vertex_SetPos_XX<T,true>
 		{
 			static s32 GetOffset()
 			{
-				return static_cast< s32 >(reinterpret_cast< std::size_t >(&(reinterpret_cast< T* >(nullptr)->pos_xx)));
+				return static_cast<s32>(reinterpret_cast<std::size_t>(&(reinterpret_cast<T*>(nullptr)->pos_xx)));
 			}
 			static void Set(T& a_vertex,f32 a_pos_xx)
 			{
@@ -145,16 +145,16 @@ namespace NBsys{namespace NVertex
 			}
 		};
 		//Vertex_SetPos_YY
-		template < typename T , bool EXIST > struct Vertex_SetPos_YY
+		template <typename T,bool EXIST> struct Vertex_SetPos_YY
 		{
 			static s32 GetOffset(){return 0;}
 			static void Set(T& a_vertex,f32 a_pos_yy){}
 		};
-		template < typename T > struct Vertex_SetPos_YY< T , true >
+		template <typename T> struct Vertex_SetPos_YY<T,true>
 		{
 			static s32 GetOffset()
 			{
-				return static_cast< s32 >(reinterpret_cast< std::size_t >(&(reinterpret_cast< T* >(nullptr)->pos_yy)));
+				return static_cast<s32>(reinterpret_cast<std::size_t>(&(reinterpret_cast<T*>(nullptr)->pos_yy)));
 			}
 			static void Set(T& a_vertex,f32 a_pos_yy)
 			{
@@ -162,16 +162,16 @@ namespace NBsys{namespace NVertex
 			}
 		};
 		//Vertex_SetPos_ZZ
-		template < typename T , bool EXIST > struct Vertex_SetPos_ZZ
+		template <typename T,bool EXIST> struct Vertex_SetPos_ZZ
 		{
 			static s32 GetOffset(){return 0;}
 			static void Set(T& a_vertex,f32 a_pos_zz){}
 		};
-		template < typename T > struct Vertex_SetPos_ZZ< T , true >
+		template <typename T> struct Vertex_SetPos_ZZ<T,true>
 		{
 			static s32 GetOffset()
 			{
-				return static_cast< s32 >(reinterpret_cast< std::size_t >(&(reinterpret_cast< T* >(nullptr)->pos_zz)));
+				return static_cast<s32>(reinterpret_cast<std::size_t>(&(reinterpret_cast<T*>(nullptr)->pos_zz)));
 			}
 			static void Set(T& a_vertex,f32 a_pos_zz)
 			{
@@ -179,16 +179,16 @@ namespace NBsys{namespace NVertex
 			}
 		};
 		//Vertex_SetPos_WW
-		template < typename T , bool EXIST > struct Vertex_SetPos_WW
+		template <typename T,bool EXIST> struct Vertex_SetPos_WW
 		{
 			static s32 GetOffset(){return 0;}
 			static void Set(T& a_vertex,f32 a_pos_ww){}
 		};
-		template < typename T > struct Vertex_SetPos_WW< T , true >
+		template <typename T> struct Vertex_SetPos_WW<T,true>
 		{
 			static s32 GetOffset()
 			{
-				return static_cast< s32 >(reinterpret_cast< std::size_t >(&(reinterpret_cast< T* >(nullptr)->pos_ww)));
+				return static_cast<s32>(reinterpret_cast<std::size_t>(&(reinterpret_cast<T*>(nullptr)->pos_ww)));
 			}
 			static void Set(T& a_vertex,f32 a_pos_ww)
 			{
@@ -198,16 +198,16 @@ namespace NBsys{namespace NVertex
 
 
 		//Vertex_SetColor_RR
-		template < typename T , bool EXIST > struct Vertex_SetColor_RR
+		template <typename T,bool EXIST> struct Vertex_SetColor_RR
 		{
 			static s32 GetOffset(){return 0;}
 			static void Set(T& a_vertex,f32 a_color_rr){}
 		};
-		template < typename T > struct Vertex_SetColor_RR< T , true >
+		template <typename T> struct Vertex_SetColor_RR<T,true>
 		{
 			static s32 GetOffset()
 			{
-				return static_cast< s32 >(reinterpret_cast< std::size_t >(&(reinterpret_cast< T* >(nullptr)->color_rr)));
+				return static_cast<s32>(reinterpret_cast<std::size_t>(&(reinterpret_cast<T*>(nullptr)->color_rr)));
 			}
 			static void Set(T& a_vertex,f32 a_color_rr)
 			{
@@ -215,16 +215,16 @@ namespace NBsys{namespace NVertex
 			}
 		};
 		//Vertex_SetColor_GG
-		template < typename T , bool EXIST > struct Vertex_SetColor_GG
+		template <typename T,bool EXIST> struct Vertex_SetColor_GG
 		{
 			static s32 GetOffset(){return 0;}
 			static void Set(T& a_vertex,f32 a_color_gg){}
 		};
-		template < typename T > struct Vertex_SetColor_GG< T , true >
+		template <typename T> struct Vertex_SetColor_GG<T,true>
 		{
 			static s32 GetOffset()
 			{
-				return static_cast< s32 >(reinterpret_cast< std::size_t >(&(reinterpret_cast< T* >(nullptr)->color_gg)));
+				return static_cast<s32>(reinterpret_cast<std::size_t>(&(reinterpret_cast<T*>(nullptr)->color_gg)));
 			}
 			static void Set(T& a_vertex,f32 a_color_gg)
 			{
@@ -232,16 +232,16 @@ namespace NBsys{namespace NVertex
 			}
 		};
 		//Vertex_SetColor_BB
-		template < typename T , bool EXIST > struct Vertex_SetColor_BB
+		template <typename T,bool EXIST> struct Vertex_SetColor_BB
 		{
 			static s32 GetOffset(){return 0;}
 			static void Set(T& a_vertex,f32 a_color_bb){}
 		};
-		template < typename T > struct Vertex_SetColor_BB< T , true >
+		template <typename T> struct Vertex_SetColor_BB<T,true>
 		{
 			static s32 GetOffset()
 			{
-				return static_cast< s32 >(reinterpret_cast< std::size_t >(&(reinterpret_cast< T* >(nullptr)->color_bb)));
+				return static_cast<s32>(reinterpret_cast<std::size_t>(&(reinterpret_cast<T*>(nullptr)->color_bb)));
 			}
 			static void Set(T& a_vertex,f32 a_color_bb)
 			{
@@ -249,16 +249,16 @@ namespace NBsys{namespace NVertex
 			}
 		};
 		//Vertex_SetColor_AA
-		template < typename T , bool EXIST > struct Vertex_SetColor_AA
+		template <typename T,bool EXIST> struct Vertex_SetColor_AA
 		{
 			static s32 GetOffset(){return 0;}
 			static void Set(T& a_vertex,f32 a_color_aa){}
 		};
-		template < typename T > struct Vertex_SetColor_AA< T , true >
+		template <typename T> struct Vertex_SetColor_AA<T,true>
 		{
 			static s32 GetOffset()
 			{
-				return static_cast< s32 >(reinterpret_cast< std::size_t >(&(reinterpret_cast< T* >(nullptr)->color_aa)));
+				return static_cast<s32>(reinterpret_cast<std::size_t>(&(reinterpret_cast<T*>(nullptr)->color_aa)));
 			}
 			static void Set(T& a_vertex,f32 a_color_aa)
 			{
@@ -268,16 +268,16 @@ namespace NBsys{namespace NVertex
 
 
 		//Vertex_SetUv_XX
-		template < typename T , bool EXIST > struct Vertex_SetUv_XX
+		template <typename T,bool EXIST> struct Vertex_SetUv_XX
 		{
 			static s32 GetOffset(){return 0;}
 			static void Set(T& a_vertex,f32 a_uv_xx){}
 		};
-		template < typename T > struct Vertex_SetUv_XX< T , true >
+		template <typename T> struct Vertex_SetUv_XX<T,true>
 		{
 			static s32 GetOffset()
 			{
-				return static_cast< s32 >(reinterpret_cast< std::size_t >(&(reinterpret_cast< T* >(nullptr)->uv_xx)));
+				return static_cast<s32>(reinterpret_cast<std::size_t>(&(reinterpret_cast<T*>(nullptr)->uv_xx)));
 			}
 			static void Set(T& a_vertex,f32 a_uv_xx)
 			{
@@ -285,16 +285,16 @@ namespace NBsys{namespace NVertex
 			}
 		};
 		//Vertex_SetUv_YY
-		template < typename T , bool EXIST > struct Vertex_SetUv_YY
+		template <typename T,bool EXIST> struct Vertex_SetUv_YY
 		{
 			static s32 GetOffset(){return 0;}
 			static void Set(T& a_vertex,f32 a_uv_yy){}
 		};
-		template < typename T > struct Vertex_SetUv_YY< T , true >
+		template <typename T> struct Vertex_SetUv_YY<T,true>
 		{
 			static s32 GetOffset()
 			{
-				return static_cast< s32 >(reinterpret_cast< std::size_t >(&(reinterpret_cast< T* >(nullptr)->uv_yy)));
+				return static_cast<s32>(reinterpret_cast<std::size_t>(&(reinterpret_cast<T*>(nullptr)->uv_yy)));
 			}
 			static void Set(T& a_vertex,f32 a_uv_yy)
 			{
@@ -304,16 +304,16 @@ namespace NBsys{namespace NVertex
 
 
 		//Vertex_SetMatrixindex4
-		template < typename T , bool EXIST > struct Vertex_SetMatrixindex4
+		template <typename T,bool EXIST> struct Vertex_SetMatrixindex4
 		{
 			static s32 GetOffset(){return 0;}
 			static void Set(T& a_vertex,s32 a_matrix_index_0,s32 a_matrix_index_1,s32 a_matrix_index_2,s32 a_matrix_index_3){}
 		};
-		template < typename T > struct Vertex_SetMatrixindex4< T , true >
+		template <typename T> struct Vertex_SetMatrixindex4<T,true>
 		{
 			static s32 GetOffset()
 			{
-				return static_cast< s32 >(reinterpret_cast< std::size_t >(&(reinterpret_cast< T* >(nullptr)->matrix_index_0)));
+				return static_cast<s32>(reinterpret_cast<std::size_t>(&(reinterpret_cast<T*>(nullptr)->matrix_index_0)));
 			}
 			static void Set(T& a_vertex,s32 a_matrix_index_0,s32 a_matrix_index_1,s32 a_matrix_index_2,s32 a_matrix_index_3)
 			{
@@ -325,16 +325,16 @@ namespace NBsys{namespace NVertex
 		};
 
 		//Vertex_SetMatrixweight4
-		template < typename T , bool EXIST > struct Vertex_SetMatrixweight4
+		template <typename T,bool EXIST> struct Vertex_SetMatrixweight4
 		{
 			static s32 GetOffset(){return 0;}
 			static void Set(T& a_vertex,f32 a_matrix_weight_0,f32 a_matrix_weight_1,f32 a_matrix_weight_2,f32 a_matrix_weight_3){}
 		};
-		template < typename T > struct Vertex_SetMatrixweight4< T , true >
+		template <typename T> struct Vertex_SetMatrixweight4<T,true>
 		{
 			static s32 GetOffset()
 			{
-				return static_cast< s32 >(reinterpret_cast< std::size_t >(&(reinterpret_cast< T* >(nullptr)->matrix_weight_0)));
+				return static_cast<s32>(reinterpret_cast<std::size_t>(&(reinterpret_cast<T*>(nullptr)->matrix_weight_0)));
 			}
 			static void Set(T& a_vertex,f32 a_matrix_weight_0,f32 a_matrix_weight_1,f32 a_matrix_weight_2,f32 a_matrix_weight_3)
 			{
@@ -346,16 +346,16 @@ namespace NBsys{namespace NVertex
 		};
 
 		//Vertex_SetDummy
-		template < typename T , bool EXIST > struct Vertex_SetDummy
+		template <typename T,bool EXIST> struct Vertex_SetDummy
 		{
 			static s32 GetOffset(){return 0;}
 			static void Set(T& a_vertex,f32 a_dummy){}
 		};
-		template < typename T > struct Vertex_SetDummy< T , true >
+		template <typename T> struct Vertex_SetDummy<T,true>
 		{
 			static s32 GetOffset()
 			{
-				return static_cast< s32 >(reinterpret_cast< std::size_t >(&(reinterpret_cast< T* >(nullptr)->dummy)));
+				return static_cast<s32>(reinterpret_cast<std::size_t>(&(reinterpret_cast<T*>(nullptr)->dummy)));
 			}
 			static void Set(T& a_vertex,f32 a_dummy)
 			{
@@ -365,73 +365,73 @@ namespace NBsys{namespace NVertex
 
 		/** Vertex_Convertible
 		*/
-		template < typename T > class Vertex_Convertible;
+		template <typename T> class Vertex_Convertible;
 
 		/** Vertex_Data_Pos3
 		*/
-		template < > class Vertex_Convertible< Vertex_Data_Pos3 >
+		template <> class Vertex_Convertible<Vertex_Data_Pos3>
 			:
-				public Vertex_SetPos_XX< Vertex_Data_Pos3 , true >,
-				public Vertex_SetPos_YY< Vertex_Data_Pos3 , true >,
-				public Vertex_SetPos_ZZ< Vertex_Data_Pos3 , true >
+				public Vertex_SetPos_XX<Vertex_Data_Pos3,true>,
+				public Vertex_SetPos_YY<Vertex_Data_Pos3,true>,
+				public Vertex_SetPos_ZZ<Vertex_Data_Pos3,true>
 		{
 		};
 
 		/** Vertex_Data_Pos3Color4
 		*/
-		template < > class Vertex_Convertible< Vertex_Data_Pos3Color4 >
+		template <> class Vertex_Convertible<Vertex_Data_Pos3Color4>
 			:
-				public Vertex_SetPos_XX< Vertex_Data_Pos3Color4 , true >,
-				public Vertex_SetPos_YY< Vertex_Data_Pos3Color4 , true >,
-				public Vertex_SetPos_ZZ< Vertex_Data_Pos3Color4 , true >,
-				public Vertex_SetColor_RR< Vertex_Data_Pos3Color4 , true >,
-				public Vertex_SetColor_GG< Vertex_Data_Pos3Color4 , true >,
-				public Vertex_SetColor_BB< Vertex_Data_Pos3Color4 , true >,
-				public Vertex_SetColor_AA< Vertex_Data_Pos3Color4 , true >
+				public Vertex_SetPos_XX<Vertex_Data_Pos3Color4,true>,
+				public Vertex_SetPos_YY<Vertex_Data_Pos3Color4,true>,
+				public Vertex_SetPos_ZZ<Vertex_Data_Pos3Color4,true>,
+				public Vertex_SetColor_RR<Vertex_Data_Pos3Color4,true>,
+				public Vertex_SetColor_GG<Vertex_Data_Pos3Color4,true>,
+				public Vertex_SetColor_BB<Vertex_Data_Pos3Color4,true>,
+				public Vertex_SetColor_AA<Vertex_Data_Pos3Color4,true>
 		{
 		};
 
 		/** Vertex_Data_Pos4Color3
 		*/
-		template < > class Vertex_Convertible< Vertex_Data_Pos4Color3 >
+		template <> class Vertex_Convertible<Vertex_Data_Pos4Color3>
 			:
-				public Vertex_SetPos_XX< Vertex_Data_Pos4Color3 , true >,
-				public Vertex_SetPos_YY< Vertex_Data_Pos4Color3 , true >,
-				public Vertex_SetPos_ZZ< Vertex_Data_Pos4Color3 , true >,
-				public Vertex_SetPos_WW< Vertex_Data_Pos4Color3 , true >,
-				public Vertex_SetColor_RR< Vertex_Data_Pos4Color3 , true >,
-				public Vertex_SetColor_GG< Vertex_Data_Pos4Color3 , true >,
-				public Vertex_SetColor_BB< Vertex_Data_Pos4Color3 , true >
+				public Vertex_SetPos_XX<Vertex_Data_Pos4Color3,true>,
+				public Vertex_SetPos_YY<Vertex_Data_Pos4Color3,true>,
+				public Vertex_SetPos_ZZ<Vertex_Data_Pos4Color3,true>,
+				public Vertex_SetPos_WW<Vertex_Data_Pos4Color3,true>,
+				public Vertex_SetColor_RR<Vertex_Data_Pos4Color3,true>,
+				public Vertex_SetColor_GG<Vertex_Data_Pos4Color3,true>,
+				public Vertex_SetColor_BB<Vertex_Data_Pos4Color3,true>
 		{
 		};
 
 		/** Vertex_Data_Pos3Uv2Color4
 		*/
-		template < > class Vertex_Convertible< Vertex_Data_Pos3Uv2Color4 >
+		template <> class Vertex_Convertible<Vertex_Data_Pos3Uv2Color4>
 			:
-				public Vertex_SetPos_XX< Vertex_Data_Pos3Uv2Color4 , true >,
-				public Vertex_SetPos_YY< Vertex_Data_Pos3Uv2Color4 , true >,
-				public Vertex_SetPos_ZZ< Vertex_Data_Pos3Uv2Color4 , true >,
-				public Vertex_SetUv_XX< Vertex_Data_Pos3Uv2Color4 , true >,
-				public Vertex_SetUv_YY< Vertex_Data_Pos3Uv2Color4 , true >,
-				public Vertex_SetColor_RR< Vertex_Data_Pos3Uv2Color4 , true >,
-				public Vertex_SetColor_GG< Vertex_Data_Pos3Uv2Color4 , true >,
-				public Vertex_SetColor_BB< Vertex_Data_Pos3Uv2Color4 , true >,
-				public Vertex_SetColor_AA< Vertex_Data_Pos3Uv2Color4 , true >
+				public Vertex_SetPos_XX<Vertex_Data_Pos3Uv2Color4,true>,
+				public Vertex_SetPos_YY<Vertex_Data_Pos3Uv2Color4,true>,
+				public Vertex_SetPos_ZZ<Vertex_Data_Pos3Uv2Color4,true>,
+				public Vertex_SetUv_XX<Vertex_Data_Pos3Uv2Color4,true>,
+				public Vertex_SetUv_YY<Vertex_Data_Pos3Uv2Color4,true>,
+				public Vertex_SetColor_RR<Vertex_Data_Pos3Uv2Color4,true>,
+				public Vertex_SetColor_GG<Vertex_Data_Pos3Uv2Color4,true>,
+				public Vertex_SetColor_BB<Vertex_Data_Pos3Uv2Color4,true>,
+				public Vertex_SetColor_AA<Vertex_Data_Pos3Uv2Color4,true>
 		{
 		};
 
 		/** Vertex_Data_Pos3Uv2Matrixindex4Matrixweight4
 		*/
-		template < > class Vertex_Convertible< Vertex_Data_Pos3Uv2Matrixindex4Matrixweight4 >
+		template <> class Vertex_Convertible<Vertex_Data_Pos3Uv2Matrixindex4Matrixweight4>
 			:
-				public Vertex_SetPos_XX< Vertex_Data_Pos3Uv2Matrixindex4Matrixweight4 , true >,
-				public Vertex_SetPos_YY< Vertex_Data_Pos3Uv2Matrixindex4Matrixweight4 , true >,
-				public Vertex_SetPos_ZZ< Vertex_Data_Pos3Uv2Matrixindex4Matrixweight4 , true >,
-				public Vertex_SetUv_XX< Vertex_Data_Pos3Uv2Matrixindex4Matrixweight4 , true >,
-				public Vertex_SetUv_YY< Vertex_Data_Pos3Uv2Matrixindex4Matrixweight4 , true >,
-				public Vertex_SetMatrixindex4< Vertex_Data_Pos3Uv2Matrixindex4Matrixweight4 , true >,
-				public Vertex_SetMatrixweight4< Vertex_Data_Pos3Uv2Matrixindex4Matrixweight4 , true >
+				public Vertex_SetPos_XX<Vertex_Data_Pos3Uv2Matrixindex4Matrixweight4,true>,
+				public Vertex_SetPos_YY<Vertex_Data_Pos3Uv2Matrixindex4Matrixweight4,true>,
+				public Vertex_SetPos_ZZ<Vertex_Data_Pos3Uv2Matrixindex4Matrixweight4,true>,
+				public Vertex_SetUv_XX<Vertex_Data_Pos3Uv2Matrixindex4Matrixweight4,true>,
+				public Vertex_SetUv_YY<Vertex_Data_Pos3Uv2Matrixindex4Matrixweight4,true>,
+				public Vertex_SetMatrixindex4<Vertex_Data_Pos3Uv2Matrixindex4Matrixweight4,true>,
+				public Vertex_SetMatrixweight4<Vertex_Data_Pos3Uv2Matrixindex4Matrixweight4,true>
 		{
 		};
 	}
@@ -439,166 +439,166 @@ namespace NBsys{namespace NVertex
 
 	/** SetPos_XX
 	*/
-	template < typename T > inline void SetPos_XX(T& a_vertex,f32 a_pos_xx)
+	template <typename T> inline void SetPos_XX(T& a_vertex,f32 a_pos_xx)
 	{
-		NImpl::Vertex_SetPos_XX< T , is_convertible< NImpl::Vertex_Convertible< T >*, NImpl::Vertex_SetPos_XX< T , true >* >::value >::Set(a_vertex,a_pos_xx);
+		NImpl::Vertex_SetPos_XX<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetPos_XX<T,true>*>::value>::Set(a_vertex,a_pos_xx);
 	}
-	template < typename T > inline s32 GetPosOffset_XX()
+	template <typename T> inline s32 GetPosOffset_XX()
 	{
-		return NImpl::Vertex_SetPos_XX< T , is_convertible< NImpl::Vertex_Convertible< T >*, NImpl::Vertex_SetPos_XX< T , true >* >::value >::GetOffset();
+		return NImpl::Vertex_SetPos_XX<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetPos_XX<T,true>*>::value>::GetOffset();
 	}
 	/** SetPos_YY
 	*/
-	template < typename T > inline void SetPos_YY(T& a_vertex,f32 a_pos_yy)
+	template <typename T> inline void SetPos_YY(T& a_vertex,f32 a_pos_yy)
 	{
-		NImpl::Vertex_SetPos_YY< T , is_convertible< NImpl::Vertex_Convertible< T >*, NImpl::Vertex_SetPos_YY< T , true >* >::value >::Set(a_vertex,a_pos_yy);
+		NImpl::Vertex_SetPos_YY<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetPos_YY<T,true>*>::value>::Set(a_vertex,a_pos_yy);
 	}
-	template < typename T > inline s32 GetPosOffset_YY()
+	template <typename T> inline s32 GetPosOffset_YY()
 	{
-		return NImpl::Vertex_SetPos_YY< T , is_convertible< NImpl::Vertex_Convertible< T >*, NImpl::Vertex_SetPos_YY< T , true >* >::value >::GetOffset();
+		return NImpl::Vertex_SetPos_YY<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetPos_YY<T,true>*>::value>::GetOffset();
 	}
 	/** SetPos_ZZ
 	*/
-	template < typename T > inline void SetPos_ZZ(T& a_vertex,f32 a_pos_zz)
+	template <typename T> inline void SetPos_ZZ(T& a_vertex,f32 a_pos_zz)
 	{
-		NImpl::Vertex_SetPos_ZZ< T , is_convertible< NImpl::Vertex_Convertible< T >*, NImpl::Vertex_SetPos_ZZ< T , true >* >::value >::Set(a_vertex,a_pos_zz);
+		NImpl::Vertex_SetPos_ZZ<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetPos_ZZ<T,true>*>::value>::Set(a_vertex,a_pos_zz);
 	}
-	template < typename T > inline s32 GetPosOffset_ZZ()
+	template <typename T> inline s32 GetPosOffset_ZZ()
 	{
-		return NImpl::Vertex_SetPos_ZZ< T , is_convertible< NImpl::Vertex_Convertible< T >*, NImpl::Vertex_SetPos_ZZ< T , true >* >::value >::GetOffset();
+		return NImpl::Vertex_SetPos_ZZ<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetPos_ZZ<T,true>*>::value>::GetOffset();
 	}
 	/** SetPos_WW
 	*/
-	template < typename T > inline void SetPos_WW(T& a_vertex,f32 a_pos_ww)
+	template <typename T> inline void SetPos_WW(T& a_vertex,f32 a_pos_ww)
 	{
-		NImpl::Vertex_SetPos_WW< T , is_convertible< NImpl::Vertex_Convertible< T >*, NImpl::Vertex_SetPos_WW< T , true >* >::value >::Set(a_vertex,a_pos_ww);
+		NImpl::Vertex_SetPos_WW<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetPos_WW<T,true>*>::value>::Set(a_vertex,a_pos_ww);
 	}
-	template < typename T > inline s32 GetPosOffset_WW()
+	template <typename T> inline s32 GetPosOffset_WW()
 	{
-		return NImpl::Vertex_SetPos_WW< T , is_convertible< NImpl::Vertex_Convertible< T >*, NImpl::Vertex_SetPos_WW< T , true >* >::value >::GetOffset();
+		return NImpl::Vertex_SetPos_WW<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetPos_WW<T,true>*>::value>::GetOffset();
 	}
 	/** SetColor
 	*/
-	template < typename T > inline void SetPos(T& a_vertex,f32 a_pos_xx = 0.0f,f32 a_pos_yy = 0.0f,f32 a_pos_zz = 0.0f,f32 a_pos_ww = 0.0f)
+	template <typename T> inline void SetPos(T& a_vertex,f32 a_pos_xx = 0.0f,f32 a_pos_yy = 0.0f,f32 a_pos_zz = 0.0f,f32 a_pos_ww = 0.0f)
 	{
-		SetPos_XX< T >(a_vertex,a_pos_xx);
-		SetPos_YY< T >(a_vertex,a_pos_yy);
-		SetPos_ZZ< T >(a_vertex,a_pos_zz);
-		SetPos_WW< T >(a_vertex,a_pos_ww);
+		SetPos_XX<T>(a_vertex,a_pos_xx);
+		SetPos_YY<T>(a_vertex,a_pos_yy);
+		SetPos_ZZ<T>(a_vertex,a_pos_zz);
+		SetPos_WW<T>(a_vertex,a_pos_ww);
 	}
 
 
 	/** SetColor_RR
 	*/
-	template < typename T > inline void SetColor_RR(T& a_vertex,f32 a_color_rr)
+	template <typename T> inline void SetColor_RR(T& a_vertex,f32 a_color_rr)
 	{
-		NImpl::Vertex_SetColor_RR< T , is_convertible< NImpl::Vertex_Convertible< T >*, NImpl::Vertex_SetColor_RR< T , true >* >::value >::Set(a_vertex,a_color_rr);
+		NImpl::Vertex_SetColor_RR<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetColor_RR<T,true>*>::value>::Set(a_vertex,a_color_rr);
 	}
-	template < typename T > inline s32 GetColorOffset_RR()
+	template <typename T> inline s32 GetColorOffset_RR()
 	{
-		return NImpl::Vertex_SetColor_RR< T , is_convertible< NImpl::Vertex_Convertible< T >*, NImpl::Vertex_SetColor_RR< T , true >* >::value >::GetOffset();
+		return NImpl::Vertex_SetColor_RR<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetColor_RR<T,true>*>::value>::GetOffset();
 	}
 	/** SetColor_GG
 	*/
-	template < typename T > inline void SetColor_GG(T& a_vertex,f32 a_color_gg)
+	template <typename T> inline void SetColor_GG(T& a_vertex,f32 a_color_gg)
 	{
-		NImpl::Vertex_SetColor_GG< T , is_convertible< NImpl::Vertex_Convertible< T >*, NImpl::Vertex_SetColor_GG< T , true >* >::value >::Set(a_vertex,a_color_gg);
+		NImpl::Vertex_SetColor_GG<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetColor_GG<T,true>*>::value>::Set(a_vertex,a_color_gg);
 	}
-	template < typename T > inline s32 GetColorOffset_GG()
+	template <typename T> inline s32 GetColorOffset_GG()
 	{
-		return NImpl::Vertex_SetColor_GG< T , is_convertible< NImpl::Vertex_Convertible< T >*, NImpl::Vertex_SetColor_GG< T , true >* >::value >::GetOffset();
+		return NImpl::Vertex_SetColor_GG<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetColor_GG<T,true>*>::value>::GetOffset();
 	}
 	/** SetColor_BB
 	*/
-	template < typename T > inline void SetColor_BB(T& a_vertex,f32 a_color_bb)
+	template <typename T> inline void SetColor_BB(T& a_vertex,f32 a_color_bb)
 	{
-		NImpl::Vertex_SetColor_BB< T , is_convertible< NImpl::Vertex_Convertible< T >*, NImpl::Vertex_SetColor_BB< T , true >* >::value >::Set(a_vertex,a_color_bb);
+		NImpl::Vertex_SetColor_BB<T,is_convertible<NImpl::Vertex_Convertible<T>*, NImpl::Vertex_SetColor_BB<T,true>*>::value>::Set(a_vertex,a_color_bb);
 	}
-	template < typename T > inline s32 GetColorOffset_BB()
+	template <typename T> inline s32 GetColorOffset_BB()
 	{
-		return NImpl::Vertex_SetColor_BB< T , is_convertible< NImpl::Vertex_Convertible< T >*, NImpl::Vertex_SetColor_BB< T , true >* >::value >::GetOffset();
+		return NImpl::Vertex_SetColor_BB<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetColor_BB<T,true>*>::value>::GetOffset();
 	}
 	/** SetColor_AA
 	*/
-	template < typename T > inline void SetColor_AA(T& a_vertex,f32 a_color_aa)
+	template <typename T> inline void SetColor_AA(T& a_vertex,f32 a_color_aa)
 	{
-		NImpl::Vertex_SetColor_AA< T , is_convertible< NImpl::Vertex_Convertible< T >*, NImpl::Vertex_SetColor_AA< T , true >* >::value >::Set(a_vertex,a_color_aa);
+		NImpl::Vertex_SetColor_AA<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetColor_AA<T,true>*>::value>::Set(a_vertex,a_color_aa);
 	}
-	template < typename T > inline s32 GetColorOffset_AA()
+	template <typename T> inline s32 GetColorOffset_AA()
 	{
-		return NImpl::Vertex_SetColor_AA< T , is_convertible< NImpl::Vertex_Convertible< T >*, NImpl::Vertex_SetColor_AA< T , true >* >::value >::GetOffset();
+		return NImpl::Vertex_SetColor_AA<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetColor_AA<T,true>*>::value>::GetOffset();
 	}
 	/** SetColor
 	*/
-	template < typename T > inline void SetColor(T& a_vertex,f32 a_color_rr = 0.0f,f32 a_color_gg = 0.0f,f32 a_color_bb = 0.0f,f32 a_color_aa = 0.0f)
+	template <typename T> inline void SetColor(T& a_vertex,f32 a_color_rr = 0.0f,f32 a_color_gg = 0.0f,f32 a_color_bb = 0.0f,f32 a_color_aa = 0.0f)
 	{
-		SetColor_RR< T >(a_vertex,a_color_rr);
-		SetColor_GG< T >(a_vertex,a_color_gg);
-		SetColor_BB< T >(a_vertex,a_color_bb);
-		SetColor_AA< T >(a_vertex,a_color_aa);
+		SetColor_RR<T>(a_vertex,a_color_rr);
+		SetColor_GG<T>(a_vertex,a_color_gg);
+		SetColor_BB<T>(a_vertex,a_color_bb);
+		SetColor_AA<T>(a_vertex,a_color_aa);
 	}
 
 
 	/** SetUv_XX
 	*/
-	template < typename T > inline void SetUv_XX(T& a_vertex,f32 a_uv_xx)
+	template <typename T> inline void SetUv_XX(T& a_vertex,f32 a_uv_xx)
 	{
-		NImpl::Vertex_SetUv_XX< T , is_convertible< NImpl::Vertex_Convertible< T >*, NImpl::Vertex_SetUv_XX< T , true >* >::value >::Set(a_vertex,a_uv_xx);
+		NImpl::Vertex_SetUv_XX<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetUv_XX<T,true>*>::value>::Set(a_vertex,a_uv_xx);
 	}
-	template < typename T > inline s32 GetUvOffset_XX()
+	template <typename T> inline s32 GetUvOffset_XX()
 	{
-		return NImpl::Vertex_SetUv_XX< T , is_convertible< NImpl::Vertex_Convertible< T >*, NImpl::Vertex_SetUv_XX< T , true >* >::value >::GetOffset();
+		return NImpl::Vertex_SetUv_XX<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetUv_XX<T,true>*>::value>::GetOffset();
 	}
 	/** SetUv_YY
 	*/
-	template < typename T > inline void SetUv_YY(T& a_vertex,f32 a_uv_yy)
+	template <typename T> inline void SetUv_YY(T& a_vertex,f32 a_uv_yy)
 	{
-		NImpl::Vertex_SetUv_YY< T , is_convertible< NImpl::Vertex_Convertible< T >*, NImpl::Vertex_SetUv_YY< T , true >* >::value >::Set(a_vertex,a_uv_yy);
+		NImpl::Vertex_SetUv_YY<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetUv_YY<T,true>*>::value>::Set(a_vertex,a_uv_yy);
 	}
-	template < typename T > inline s32 GetUvOffset_YY()
+	template <typename T> inline s32 GetUvOffset_YY()
 	{
-		return NImpl::Vertex_SetUv_YY< T , is_convertible< NImpl::Vertex_Convertible< T >*, NImpl::Vertex_SetUv_YY< T , true >* >::value >::GetOffset();
+		return NImpl::Vertex_SetUv_YY<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetUv_YY<T,true>*>::value>::GetOffset();
 	}
 	/** SetUv
 	*/
-	template < typename T > inline void SetUv(T& a_vertex,f32 a_uv_xx = 0.0f,f32 a_uv_yy = 0.0f)
+	template <typename T> inline void SetUv(T& a_vertex,f32 a_uv_xx = 0.0f,f32 a_uv_yy = 0.0f)
 	{
-		SetUv_XX< T >(a_vertex,a_uv_xx);
-		SetUv_YY< T >(a_vertex,a_uv_yy);
+		SetUv_XX<T>(a_vertex,a_uv_xx);
+		SetUv_YY<T>(a_vertex,a_uv_yy);
 	}
 
 
 	/** SetMatrixIndex
 	*/
-	template < typename T > inline void SetMatrixIndex(T& a_vertex,s32 a_matrix_index_0,s32 a_matrix_index_1,s32 a_matrix_index_2,s32 a_matrix_index_3)
+	template <typename T> inline void SetMatrixIndex(T& a_vertex,s32 a_matrix_index_0,s32 a_matrix_index_1,s32 a_matrix_index_2,s32 a_matrix_index_3)
 	{
-		NImpl::Vertex_SetMatrixIndex< T , is_convertible< NImpl::Vertex_Convertible< T >*, NImpl::Vertex_SetMatrixIndex< T , true >* >::value >::Set(a_vertex,a_matrix_index_0,a_matrix_index_1,a_matrix_index_2,a_matrix_index_3);
+		NImpl::Vertex_SetMatrixIndex<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetMatrixIndex<T,true>*>::value>::Set(a_vertex,a_matrix_index_0,a_matrix_index_1,a_matrix_index_2,a_matrix_index_3);
 	}
-	template < typename T > inline s32 GetMatrixIndexOffset()
+	template <typename T> inline s32 GetMatrixIndexOffset()
 	{
-		return NImpl::Vertex_SetMatrixIndex< T , is_convertible< NImpl::Vertex_Convertible< T >*, NImpl::Vertex_SetMatrixIndex< T , true >* >::value >::GetOffset();
+		return NImpl::Vertex_SetMatrixIndex<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetMatrixIndex<T,true>*>::value>::GetOffset();
 	}
 
 	/** SetMatrixWeight
 	*/
-	template < typename T > inline void SetMatrixWeight(T& a_vertex,f32 a_matrix_weight_0,f32 a_matrix_weight_1,f32 a_matrix_weight_2,f32 a_matrix_weight_3)
+	template <typename T> inline void SetMatrixWeight(T& a_vertex,f32 a_matrix_weight_0,f32 a_matrix_weight_1,f32 a_matrix_weight_2,f32 a_matrix_weight_3)
 	{
-		NImpl::Vertex_SetMatrixWeight< T , is_convertible< NImpl::Vertex_Convertible< T >* , NImpl::Vertex_SetMatrixWeight< T , true >* >::value >::Set(a_vertex,a_matrix_weight_0,a_matrix_weight_1,a_matrix_weight_2,a_matrix_weight_3);
+		NImpl::Vertex_SetMatrixWeight<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetMatrixWeight<T,true>*>::value>::Set(a_vertex,a_matrix_weight_0,a_matrix_weight_1,a_matrix_weight_2,a_matrix_weight_3);
 	}
-	template < typename T > inline s32 GetMatrixWeightOffset()
+	template <typename T> inline s32 GetMatrixWeightOffset()
 	{
-		return NImpl::Vertex_SetMatrixWeight< T , is_convertible< NImpl::Vertex_Convertible< T >* , NImpl::Vertex_SetMatrixWeight< T , true >* >::value >::GetOffset();
+		return NImpl::Vertex_SetMatrixWeight<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetMatrixWeight<T,true>*>::value>::GetOffset();
 	}
 
 	/** SetDummy
 	*/
-	template < typename T > inline void SetDummy(T& a_vertex,f32 a_dummy)
+	template <typename T> inline void SetDummy(T& a_vertex,f32 a_dummy)
 	{
-		NImpl::Vertex_SetDummy< T , is_convertible< NImpl::Vertex_Convertible< T >* , NImpl::Vertex_SetDummy< T , true >* >::value >::Set(a_vertex,a_dummy);
+		NImpl::Vertex_SetDummy<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetDummy<T,true>*>::value>::Set(a_vertex,a_dummy);
 	}
-	template < typename T > inline s32 GetDummyOffset()
+	template <typename T> inline s32 GetDummyOffset()
 	{
-		return NImpl::Vertex_SetDummy< T , is_convertible< NImpl::Vertex_Convertible< T >*, NImpl::Vertex_SetDummy< T , true >* >::value >::GetOffset();
+		return NImpl::Vertex_SetDummy<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetDummy<T,true>*>::value>::GetOffset();
 	}
 }}
 #endif

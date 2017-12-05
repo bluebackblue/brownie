@@ -32,11 +32,11 @@ namespace NBsys{namespace NRootSearch
 	{
 		/** node_pool
 		*/
-		STLVector< RootSearch_Node >::Type node_pool;
+		STLVector<RootSearch_Node>::Type node_pool;
 
 		/** connect_pool
 		*/
-		STLVector< RootSearch_Connect >::Type connect_pool;
+		STLVector<RootSearch_Connect>::Type connect_pool;
 
 	public:
 		/** constructor

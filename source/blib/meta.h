@@ -26,7 +26,7 @@ namespace NBlib
 {
 	/** 削除子。
 	*/
-	template < typename T > struct default_delete
+	template <typename T> struct default_delete
 	{
 		default_delete() noexcept
 		{
@@ -41,7 +41,7 @@ namespace NBlib
 
 	/** 削除子。
 	*/
-	template < typename T > struct default_delete< T[] >
+	template <typename T> struct default_delete<T[]>
 	{
 		default_delete() noexcept
 		{
@@ -68,7 +68,7 @@ namespace NBlib
 
 	/** 削除子。voidは禁止。
 	*/
-	template < > struct default_delete< void >
+	template <> struct default_delete<void>
 	{
 	private:
 		default_delete() noexcept = delete;
@@ -80,7 +80,7 @@ namespace NBlib
 	「placement new」によって確保されたクラスポインターは明示的にデストラクターを呼び出す必要があります。
 
 	*/
-	template < class T > struct placement_delete
+	template <class T> struct placement_delete
 	{
 		placement_delete() noexcept
 		{
@@ -93,7 +93,7 @@ namespace NBlib
 
 	/** 削除子。release
 	*/
-	template < class T > struct release_delete
+	template <class T> struct release_delete
 	{
 		release_delete() noexcept
 		{
@@ -106,17 +106,17 @@ namespace NBlib
 
 	/** B==trueの場合のみtypeの宣言が確定する。
 	*/
-	template < bool B , class T = void > struct enable_if
+	template <bool B,class T=void> struct enable_if
 	{
 	};
-	template < class T > struct enable_if < true , T >
+	template <class T> struct enable_if <true,T>
 	{
 		typedef T type;
 	};
 
 	/** 一方の型をもう一方の型に変換できるかどうかをテストします。
 	*/
-	template < class FROM , class TO > struct is_convertible
+	template <class FROM,class TO> struct is_convertible
 	{
 	private:
 
@@ -150,23 +150,23 @@ namespace NBlib
 
 	/** is_void
 	*/
-	template < typename T > struct is_void
+	template <typename T> struct is_void
 	{
 		static const bool value = false;
 	};
-	template <> struct is_void< void >
+	template <> struct is_void<void>
 	{
 		static const bool value = true;
 	};
 
 	/** reference_type
 	*/
-	template < typename T , bool = (is_void< T >::value) > struct reference_type
+	template <typename T,bool=(is_void<T>::value)> struct reference_type
 	{
 		typedef T type;
 	};
 
-	template < typename T > struct reference_type< T , false >
+	template <typename T> struct reference_type<T,false>
 	{
 		typedef T& type;
 	};

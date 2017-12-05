@@ -132,7 +132,7 @@ namespace NBlib
 
 				#if defined(PLATFORM_VCWIN)
 				{
-					s32 t_ret = _InterlockedDecrement(reinterpret_cast< volatile long* >(&(this->use)));
+					s32 t_ret = _InterlockedDecrement(reinterpret_cast<volatile long*>(&(this->use)));
 					if(t_ret <= 0){
 						t_delete = true;
 					}
@@ -156,13 +156,13 @@ namespace NBlib
 				{
 					for(;;){
 						//最新の状態を取得。
-						s32 t_count = static_cast< volatile s32& >(this->use);
+						s32 t_count = static_cast<volatile s32&>(this->use);
 						if(t_count == 0){
 							//すでに死んでいる。
 							return false;
 						}else{
 							//カウントが「t_count」の場合は「t_count+1」にする。
-							if(static_cast< s32 >(_InterlockedCompareExchange(reinterpret_cast< volatile long* >(&(this->use)),t_count+1,t_count) == t_count)){
+							if(static_cast<s32>(_InterlockedCompareExchange(reinterpret_cast<volatile long*>(&(this->use)),t_count+1,t_count) == t_count)){
 								//延命に成功。
 								return true;
 							}else{
@@ -184,8 +184,8 @@ namespace NBlib
 			{
 				#if defined(PLATFORM_VCWIN)
 				{
-					_InterlockedIncrement(reinterpret_cast< volatile long* >(&(this->use)));
-					_InterlockedIncrement(reinterpret_cast< volatile long* >(&(this->weak)));
+					_InterlockedIncrement(reinterpret_cast<volatile long*>(&(this->use)));
+					_InterlockedIncrement(reinterpret_cast<volatile long*>(&(this->weak)));
 				}
 				#else
 				{
@@ -200,7 +200,7 @@ namespace NBlib
 			{
 				#if defined(PLATFORM_VCWIN)
 				{
-					s32 t_ret = _InterlockedDecrement(reinterpret_cast< volatile long* >(&(this->weak)));
+					s32 t_ret = _InterlockedDecrement(reinterpret_cast<volatile long*>(&(this->weak)));
 					if(t_ret <= 0){
 						//※誰も使用していない、誰も参照していない。
 						return true;
@@ -221,7 +221,7 @@ namespace NBlib
 			{
 				#if defined(PLATFORM_VCWIN)
 				{
-					_InterlockedIncrement(reinterpret_cast< volatile long* >(&(this->weak)));
+					_InterlockedIncrement(reinterpret_cast<volatile long*>(&(this->weak)));
 				}
 				#else
 				{
@@ -236,7 +236,7 @@ namespace NBlib
 			カウント、インスタンス、削除子の管理。
 
 		*/
-		template < typename T , typename D > class sharedptr_impl
+		template <typename T,typename D> class sharedptr_impl
 			:
 			public sharedptrbase
 		{
@@ -363,11 +363,11 @@ namespace NBlib
 
 		/** weakptr
 		*/
-		template < typename T > class weakptr;
+		template <typename T> class weakptr;
 
 		/** sharedptr
 		*/
-		template < typename T > class sharedptr
+		template <typename T> class sharedptr
 		{
 		public:
 			//カウント、インスタンス、削除子の管理。
@@ -377,13 +377,13 @@ namespace NBlib
 			T* cache;
 			#endif
 
-			friend class weakptr< T >;
+			friend class weakptr<T>;
 
 			/** null。
 			*/
-			static sharedptr< T >& null()
+			static sharedptr<T>& null()
 			{
-				static sharedptr< T > s_nullsharedptr(nullsharedptr_impl::null_impl());
+				static sharedptr<T> s_nullsharedptr(nullsharedptr_impl::null_impl());
 				return s_nullsharedptr;
 			}
 
@@ -484,7 +484,7 @@ namespace NBlib
 				impl(&a_impl)
 			{
 				#if(BLIB_SHAREDPTR_CACHE_ENABLE)
-				this->cache = reinterpret_cast< T* >(this->impl->GetInstance());
+				this->cache = reinterpret_cast<T*>(this->impl->GetInstance());
 				#endif
 
 				this->impl->UseAndWeak_Increment();
@@ -496,10 +496,10 @@ namespace NBlib
 			{
 				//開始時は使用数１、参照数１。
 				if(a_instance != nullptr){
-					this->impl = new sharedptr_impl< T , default_delete< T > >(a_instance,default_delete< T >());
+					this->impl = new sharedptr_impl<T,default_delete<T>>(a_instance,default_delete<T>());
 
 					#if(BLIB_SHAREDPTR_CACHE_ENABLE)
-					this->cache = const_cast< T* >(a_instance);
+					this->cache = const_cast<T*>(a_instance);
 					#endif
 				}else{
 					this->impl = nullptr;
@@ -512,14 +512,14 @@ namespace NBlib
 
 			/** [constructor]新規。削除子あり。
 			*/
-			template < typename T2 , typename D > sharedptr(const T2* a_instance,D a_deleter) noexcept
+			template <typename T2,typename D> sharedptr(const T2* a_instance,D a_deleter) noexcept
 			{
 				//開始時は使用数１、参照数１。
 				if(a_instance != nullptr){
-					this->impl = new sharedptr_impl< T2 , D >(a_instance,a_deleter);
+					this->impl = new sharedptr_impl<T2,D>(a_instance,a_deleter);
 
 					#if(BLIB_SHAREDPTR_CACHE_ENABLE)
-					this->cache = const_cast< T2* >(a_instance);
+					this->cache = const_cast<T2*>(a_instance);
 					#endif
 				}else{
 					this->impl = nullptr;
@@ -532,12 +532,12 @@ namespace NBlib
 
 			/** [constructor]「weakptr」から「sharedptr」を作成。
 			*/
-			sharedptr(const weakptr< T >& a_weakptr);
+			sharedptr(const weakptr<T>& a_weakptr);
 
 			/** [constructor]move constructor
 			*/
 			#if(BLIB_STDMOVE_ENABLE)
-			sharedptr(sharedptr< T >&& a_sharedptr) noexcept
+			sharedptr(sharedptr<T>&& a_sharedptr) noexcept
 				:
 				impl(a_sharedptr.impl)
 				#if(BLIB_SHAREDPTR_CACHE_ENABLE)
@@ -553,7 +553,7 @@ namespace NBlib
 
 			/** [constructor]copy constructor。
 			*/
-			sharedptr(const sharedptr< T >& a_sharedptr) noexcept
+			sharedptr(const sharedptr<T>& a_sharedptr) noexcept
 				:
 				impl(a_sharedptr.impl)
 			{
@@ -581,7 +581,7 @@ namespace NBlib
 
 			/** [constructor]copy constructor。
 			*/
-			template < class T2 > sharedptr(const sharedptr< T2 >& a_sharedptr,typename enable_if< is_convertible< T2* , T* >::value , bool >::type check = true) noexcept
+			template <class T2> sharedptr(const sharedptr<T2>& a_sharedptr,typename enable_if<is_convertible<T2*,T*>::value,bool>::type a_check=true) noexcept
 				:
 				impl(a_sharedptr.impl)
 			{
@@ -612,7 +612,7 @@ namespace NBlib
 
 			/** 代入。
 			*/
-			sharedptr< T >& operator =(const sharedptr< T >& a_sharedptr) noexcept
+			sharedptr<T>& operator =(const sharedptr<T>& a_sharedptr) noexcept
 			{
 				//新しい「sharedptrbase」の使用数、参照数をインクリメント。
 
@@ -649,7 +649,7 @@ namespace NBlib
 
 				//開始時は使用数１、参照数１。
 				if(a_instance != nullptr){
-					this->impl = new sharedptr_impl< T , default_delete< T > >(a_instance,default_delete< T >());
+					this->impl = new sharedptr_impl<T,default_delete<T>>(a_instance,default_delete<T>());
 
 					#if(BLIB_SHAREDPTR_CACHE_ENABLE)
 					this->cache = a_instance;
@@ -660,7 +660,7 @@ namespace NBlib
 			/** 新規。削除子あり。
 			*/
 			#if(BLIB_STDNULLPTR_ENABLE)
-			template < typename D > void reset(nullptr_t,D a_deleter)
+			template <typename D> void reset(nullptr_t,D a_deleter)
 			{
 				this->reset_impl(nullptr);
 			}
@@ -668,13 +668,13 @@ namespace NBlib
 
 			/** 新規。削除子あり。
 			*/
-			template < typename T2 , typename D > void reset(T2* a_instance,D a_deleter)
+			template <typename T2,typename D> void reset(T2* a_instance,D a_deleter)
 			{
 				this->reset_impl(nullptr);
 
 				//開始時は使用数１、参照数１。
 				if(a_instance != nullptr){
-					this->impl = new sharedptr_impl< T2 , D >(a_instance,a_deleter);
+					this->impl = new sharedptr_impl<T2,D>(a_instance,a_deleter);
 
 					#if(BLIB_SHAREDPTR_CACHE_ENABLE)
 					this->cache = a_instance;
@@ -684,7 +684,7 @@ namespace NBlib
 
 			/** スワップ。
 			*/
-			void swap(sharedptr< T >& a_sharedptr)
+			void swap(sharedptr<T>& a_sharedptr)
 			{
 				sharedptrbase* t_temp = this->impl;
 				this->impl = a_sharedptr->impl;
@@ -738,7 +738,7 @@ namespace NBlib
 
 			/** ポインタのように振舞う。
 			*/
-			typename reference_type< T >::type operator *() noexcept
+			typename reference_type<T>::type operator *() noexcept
 			{
 				return *(this->get());
 			}
@@ -752,7 +752,7 @@ namespace NBlib
 
 			/** ポインタのように振舞う。
 			*/
-			typename reference_type< const T >::type operator *() const noexcept
+			typename reference_type<const T>::type operator *() const noexcept
 			{
 				return *(this->get());
 			}
@@ -773,14 +773,14 @@ namespace NBlib
 
 			/** 比較。
 			*/
-			template < typename T2 > bool operator ==(const NBlib::sharedptr< T2 >& a_sharedptr_b) const noexcept
+			template <typename T2> bool operator ==(const NBlib::sharedptr<T2>& a_sharedptr_b) const noexcept
 			{
 				return (this->get() == a_sharedptr_b.get());
 			}
 
 			/** 比較。
 			*/
-			template < typename T2 > bool operator !=(const NBlib::sharedptr< T2 >& a_sharedptr_b) const noexcept
+			template <typename T2> bool operator !=(const NBlib::sharedptr<T2>& a_sharedptr_b) const noexcept
 			{
 				return (this->get() != a_sharedptr_b.get());
 			}
@@ -813,12 +813,12 @@ namespace NBlib
 
 		/** weakptr
 		*/
-		template < typename T > class weakptr
+		template <typename T> class weakptr
 		{
 		public:
 			//カウント、インスタンス、削除子の管理。
 			sharedptrbase* impl;
-			friend class sharedptr< T >;
+			friend class sharedptr<T>;
 
 		public:
 			/** 空。
@@ -831,7 +831,7 @@ namespace NBlib
 
 			/** [constructor]copy constructor。
 			*/
-			template < class T2 > weakptr(const sharedptr< T2 >& a_sharedptr,typename enable_if< is_convertible< T2* , T* >::value , bool >::type check = true) noexcept
+			template <class T2> weakptr(const sharedptr<T2>& a_sharedptr,typename enable_if<is_convertible<T2*,T*>::value,bool>::type a_check=true) noexcept
 			{
 				//新しい「sharedptrbase」の参照数をインクリメント。
 				this->impl = a_sharedptr.impl;
@@ -842,7 +842,7 @@ namespace NBlib
 
 			/** 代入。
 			*/
-			template < class T2 > weakptr& operator =(const sharedptr< T2 >& a_sharedptr) noexcept
+			template <class T2> weakptr& operator =(const sharedptr<T2>& a_sharedptr) noexcept
 			{
 				//現在保持している「sharedptrbase」の参照数のデクリメント。
 				if(this->impl){
@@ -868,16 +868,16 @@ namespace NBlib
 
 			/** 「weakptr」から「sharedptr」を作成。
 			*/
-			sharedptr< T > lock() noexcept
+			sharedptr<T> lock() noexcept
 			{
-				return sharedptr< T >(*this);
+				return sharedptr<T>(*this);
 			}
 
 			/** 「weakptr」から「sharedptr」を作成。
 			*/
-			const sharedptr< T > lock() const noexcept
+			const sharedptr<T> lock() const noexcept
 			{
-				return sharedptr< T >(*this);
+				return sharedptr<T>(*this);
 			}
 
 			/** reset
@@ -906,7 +906,7 @@ namespace NBlib
 
 		/** [constructor]「weakptr」から「sharedptr」を作成。
 		*/
-		template < typename T > inline sharedptr< T >::sharedptr(const weakptr< T >& a_weakptr)
+		template <typename T> inline sharedptr<T>::sharedptr(const weakptr<T>& a_weakptr)
 			:
 			impl(a_weakptr.impl)
 		{
@@ -934,7 +934,7 @@ namespace NBlib
 		削除子なし。
 
 		*/
-		template < typename T > class scopedptr
+		template <typename T> class scopedptr
 		{
 		private:
 			/** pointer
@@ -993,14 +993,14 @@ namespace NBlib
 		
 			/** 
 			*/
-			typename reference_type< T >::type operator *()
+			typename reference_type<T>::type operator *()
 			{
 				return *this->pointer;
 			}
 
 			/** 
 			*/
-			const typename reference_type< T >::type operator *() const
+			const typename reference_type<T>::type operator *() const
 			{
 				return *(this->get());
 			}
@@ -1035,7 +1035,7 @@ namespace NBlib
      
 			/** swap
 			*/
-			void swap(scopedptr< T >& a_scopedptr)
+			void swap(scopedptr<T>& a_scopedptr)
 			{
 				T* t_temp = this->pointer;
 				this->pointer = a_scopedptr.pointer;
@@ -1053,28 +1053,28 @@ namespace NBlib
 
 	/** 比較。
 	*/
-	template < typename T2 > inline bool operator ==(const void* a_sharedptr_a,const NBlib::sharedptr< T2 >& a_sharedptr_b) noexcept
+	template <typename T2> inline bool operator ==(const void* a_sharedptr_a,const NBlib::sharedptr<T2>& a_sharedptr_b) noexcept
 	{
 		return (a_sharedptr_a == a_sharedptr_b.get());
 	}
 
 	/** 比較。
 	*/
-	template < typename T2 > inline bool operator !=(const void* a_sharedptr_a,const NBlib::sharedptr< T2 >& a_sharedptr_b) noexcept
+	template <typename T2> inline bool operator !=(const void* a_sharedptr_a,const NBlib::sharedptr<T2>& a_sharedptr_b) noexcept
 	{
 		return (a_sharedptr_a != a_sharedptr_b.get());
 	}
 
 	/** 比較。
 	*/
-	template < typename T2 > inline bool operator ==(const NBlib::sharedptr< T2 >& a_sharedptr_a,const void* a_sharedptr_b) noexcept
+	template <typename T2> inline bool operator ==(const NBlib::sharedptr<T2>& a_sharedptr_a,const void* a_sharedptr_b) noexcept
 	{
 		return (a_sharedptr_a.get() == a_sharedptr_b);
 	}
 
 	/** 比較。
 	*/
-	template < typename T2 > inline bool operator !=(const NBlib::sharedptr< T2 >& a_sharedptr_a,const void* a_sharedptr_b) noexcept
+	template <typename T2> inline bool operator !=(const NBlib::sharedptr<T2>& a_sharedptr_a,const void* a_sharedptr_b) noexcept
 	{
 		return (a_sharedptr_a.get() != a_sharedptr_b);
 	}

@@ -47,7 +47,7 @@ namespace NBsys{namespace NOpengl
 
 	/** GetImpl
 	*/
-	sharedptr< Opengl_Impl >& Opengl::GetImpl()
+	sharedptr<Opengl_Impl>& Opengl::GetImpl()
 	{
 		return this->impl;
 	}
@@ -69,7 +69,7 @@ namespace NBsys{namespace NOpengl
 
 	/** バーテックスバッファ作成。
 	*/
-	s32 Opengl::CreateVertexBuffer(const sharedptr< u8 >& a_data_byte,s32 a_size_byte,s32 a_stride_byte)
+	s32 Opengl::CreateVertexBuffer(const sharedptr<u8>& a_data_byte,s32 a_size_byte,s32 a_stride_byte)
 	{
 		return this->impl->CreateVertexBuffer(a_data_byte,a_size_byte,a_stride_byte);
 	}
@@ -83,7 +83,7 @@ namespace NBsys{namespace NOpengl
 
 	/** シェーダーロード開始。
 	*/
-	void Opengl::LoadShaderRequest(const sharedptr< Opengl_ShaderLayout >& a_shaderlayout,AsyncResult< bool >& a_asyncresult)
+	void Opengl::LoadShaderRequest(const sharedptr<Opengl_ShaderLayout>& a_shaderlayout,AsyncResult<bool>& a_asyncresult)
 	{
 		this->impl->LoadShaderRequest(a_shaderlayout,a_asyncresult);
 	}
@@ -106,7 +106,7 @@ namespace NBsys{namespace NOpengl
 
 	/** テクスチャ―登録。
 	*/
-	s32 Opengl::CreateTexture(const sharedptr< NBsys::NTexture::Texture >& a_texture)
+	s32 Opengl::CreateTexture(const sharedptr<NBsys::NTexture::Texture>& a_texture)
 	{
 		return this->impl->CreateTexture(a_texture);
 	}
@@ -143,7 +143,7 @@ namespace NBsys{namespace NOpengl
 
 	/** SetFont
 	*/
-	void Opengl::SetFont(sharedptr< NBsys::NFont::Font >& a_font,s32 a_texture_width,const STLString& a_name)
+	void Opengl::SetFont(sharedptr<NBsys::NFont::Font>& a_font,s32 a_texture_width,const STLString& a_name)
 	{
 		this->impl->SetFont(a_font,a_texture_width,a_name);
 	}

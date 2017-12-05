@@ -32,7 +32,7 @@ namespace NBlib
 	private:
 		/** アンロックのネスト用。
 		*/
-		AtomicValue< s32 > nestvalue;
+		AtomicValue<s32> nestvalue;
 
 		/** lockobject
 		*/

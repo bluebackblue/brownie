@@ -57,27 +57,27 @@ namespace NBsys{namespace NMmd
 		/** vertex_list
 		*/
 		u32 vertex_list_size;
-		sharedptr< Mmd_Pmx_VertexData > vertex_list;
+		sharedptr<Mmd_Pmx_VertexData> vertex_list;
 
 		/** index_list
 		*/
 		u32 index_list_size;
-		sharedptr< u32 > index_list;
+		sharedptr<u32> index_list;
 
 		/** texturename_list
 		*/
 		u32 texturename_list_size;
-		STLVector< STLWString >::Type texturename_list;
+		STLVector<STLWString>::Type texturename_list;
 
 		/** parts_list
 		*/
 		u32 parts_list_size;
-		STLVector< Mmd_Pmx_Parts >::Type parts_list;
+		STLVector<Mmd_Pmx_Parts>::Type parts_list;
 
 		/** bone_list
 		*/
 		u32 bone_list_size;
-		STLVector< Mmd_Pmx_Bone >::Type bone_list;
+		STLVector<Mmd_Pmx_Bone>::Type bone_list;
 
 	public:
 		/** constructor
@@ -122,7 +122,7 @@ namespace NBsys{namespace NMmd
 
 		/** Load
 		*/
-		bool Load(sharedptr< NFile::File_Object >& a_file);
+		bool Load(sharedptr<NFile::File_Object>& a_file);
 
 	};
 

@@ -74,7 +74,7 @@ void Test_Main()
 	f64 t_f64 = 0.0l;
 
 	//address
-	AddressType t_address = reinterpret_cast< AddressType >(&t_u32);
+	AddressType t_address = reinterpret_cast<AddressType>(&t_u32);
 
 	//char
 	char t_char = nullchar;
@@ -89,7 +89,7 @@ void Test_Main()
 	STLWString t_wstring = L"abcd";
 
 	//vector
-	STLVector< s32 >::Type t_vector;
+	STLVector<s32>::Type t_vector;
 	t_vector.push_back(1);
 	t_vector.push_back(2);
 	t_vector.push_back(3);
@@ -98,7 +98,7 @@ void Test_Main()
 	});
 
 	//map
-	STLMap< s16 , s64 >::Type t_map;
+	STLMap<s16,s64>::Type t_map;
 	t_map.insert(decltype(t_map)::value_type(t_s16,t_s64));
 	decltype(t_map)::iterator t_it = t_map.find(t_s16);
 	if(t_it != t_map.end()){
@@ -106,7 +106,7 @@ void Test_Main()
 	}
 
 	//list
-	STLList< s32 >::Type t_list;
+	STLList<s32>::Type t_list;
 	t_list.push_back(1);
 	t_list.push_front(2);
 	t_list.push_back(3);

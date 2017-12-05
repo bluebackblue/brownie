@@ -88,8 +88,8 @@ namespace NBsys{namespace NRootSearch
 		f32 t_length_min = -1;
 
 		s32 t_node_index = 0;
-		STLVector< RootSearch_Node >::iterator t_it_end = this->node_pool.end();
-		for(STLVector< RootSearch_Node >::iterator t_it = this->node_pool.begin();t_it != t_it_end;++t_it){
+		STLVector<RootSearch_Node>::iterator t_it_end = this->node_pool.end();
+		for(STLVector<RootSearch_Node>::iterator t_it = this->node_pool.begin();t_it != t_it_end;++t_it){
 			f32 t_length = (t_it->pos - a_pos).Length();
 			if(t_index < 0 || t_length < t_length_min){
 				t_index = t_node_index;
@@ -107,15 +107,15 @@ namespace NBsys{namespace NRootSearch
 	NGeometry::Geometry_Vector3 RootSearch::SearchRoot(const NGeometry::Geometry_Vector3& a_start,const NGeometry::Geometry_Vector3& a_end)
 	{
 		//計算結果代入。
-		sharedptr< RootSearch_CalcTemp > t_calctemp_list_ptr(new RootSearch_CalcTemp[this->node_pool.size()],default_delete< RootSearch_CalcTemp[] >());
+		sharedptr<RootSearch_CalcTemp> t_calctemp_list_ptr(new RootSearch_CalcTemp[this->node_pool.size()],default_delete<RootSearch_CalcTemp[]>());
 		RootSearch_CalcTemp* t_calctemp_list = t_calctemp_list_ptr.get();
 
 		//計算順序管理。
-		STLVector< s32 >::Type t_list_temp_1;
-		STLVector< s32 >::Type t_list_temp_2;
+		STLVector<s32>::Type t_list_temp_1;
+		STLVector<s32>::Type t_list_temp_2;
 
-		STLVector< s32 >::Type* t_current_list = &t_list_temp_1;
-		STLVector< s32 >::Type* t_next_list = &t_list_temp_2;
+		STLVector<s32>::Type* t_current_list = &t_list_temp_1;
+		STLVector<s32>::Type* t_next_list = &t_list_temp_2;
 
 		//終端。
 		s32 t_node_index_end = this->GetNodeIndexFromPos(a_end);
@@ -128,15 +128,15 @@ namespace NBsys{namespace NRootSearch
 		}
 
 		while(t_current_list->size()){
-			STLVector< s32 >::iterator t_it_node_end = t_current_list->end();
-			for(STLVector< s32 >::iterator t_it_node = t_current_list->begin();t_it_node != t_it_node_end;++t_it_node){
+			STLVector<s32>::iterator t_it_node_end = t_current_list->end();
+			for(STLVector<s32>::iterator t_it_node = t_current_list->begin();t_it_node != t_it_node_end;++t_it_node){
 
 				RootSearch_Node& t_node = this->node_pool.at(*t_it_node);
 				RootSearch_CalcTemp& t_calctemp = t_calctemp_list[*t_it_node];
 
-				STLVector< s32 >::Type& t_connect_index_list = t_node.connect_index_list;
-				STLVector< s32 >::iterator t_it_connect_end = t_connect_index_list.end();
-				for(STLVector< s32 >::iterator t_it_connect = t_connect_index_list.begin();t_it_connect != t_it_connect_end;++t_it_connect){
+				STLVector<s32>::Type& t_connect_index_list = t_node.connect_index_list;
+				STLVector<s32>::iterator t_it_connect_end = t_connect_index_list.end();
+				for(STLVector<s32>::iterator t_it_connect = t_connect_index_list.begin();t_it_connect != t_it_connect_end;++t_it_connect){
 
 					RootSearch_Connect& t_connect = this->connect_pool.at(*t_it_connect);
 					
@@ -157,7 +157,7 @@ namespace NBsys{namespace NRootSearch
 
 			//予約リストをカレントに。
 			{
-				STLVector< s32 >::Type* t_temp = t_current_list;
+				STLVector<s32>::Type* t_temp = t_current_list;
 				t_current_list = t_next_list;
 				t_next_list = t_temp;
 			}

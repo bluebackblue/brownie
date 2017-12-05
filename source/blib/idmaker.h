@@ -31,7 +31,7 @@ namespace NBlib
 	private:
 		/** free_list
 		*/
-		STLVector< s32 >::Type free_list;
+		STLVector<s32>::Type free_list;
 
 		/** size
 		*/

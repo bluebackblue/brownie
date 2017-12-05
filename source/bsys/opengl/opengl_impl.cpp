@@ -77,7 +77,7 @@ namespace NBsys{namespace NOpengl
 					if(t_status == GL_FALSE){
 						GLint t_infoLogLength;
 						glGetShaderiv(t_shader_rawid.rawid,GL_INFO_LOG_LENGTH,&t_infoLogLength);
-						sharedptr< GLchar > t_logbuffer(new GLchar[t_infoLogLength],default_delete< GLchar[] >());
+						sharedptr<GLchar> t_logbuffer(new GLchar[t_infoLogLength],default_delete<GLchar[]>());
 						glGetShaderInfoLog(t_shader_rawid.rawid,t_infoLogLength,NULL,t_logbuffer.get());
 						TAGLOG("CreateShader","%ls %s",a_name.c_str(),t_logbuffer.get());
 						return false;
@@ -122,7 +122,7 @@ namespace NBsys{namespace NOpengl
 					if(t_status == GL_FALSE){
 						GLint t_infoLogLength;
 						glGetProgramiv(t_shaderprogram_rawid.rawid,GL_INFO_LOG_LENGTH,&t_infoLogLength);
-						sharedptr< GLchar > t_logbuffer(new GLchar[t_infoLogLength],default_delete< GLchar[] >());
+						sharedptr<GLchar> t_logbuffer(new GLchar[t_infoLogLength],default_delete<GLchar[]>());
 						glGetProgramInfoLog(t_shaderprogram_rawid.rawid,t_infoLogLength,NULL,t_logbuffer.get());
 						TAGLOG("LinkShader","%ls %ls %s",a_vertex_name.c_str(),a_fragment_name.c_str(),t_logbuffer.get());
 						return false;
@@ -186,7 +186,7 @@ namespace NBsys{namespace NOpengl
 	{
 		this->shaderstate_list.reserve(BSYS_OPENGL_SHADERIDMAX);
 		for(s32 ii=0;ii<BSYS_OPENGL_SHADERIDMAX;ii++){
-			this->shaderstate_list.push_back(sharedptr< Opengl_Impl_ShaderState >());
+			this->shaderstate_list.push_back(sharedptr<Opengl_Impl_ShaderState>());
 		}
 
 
@@ -385,7 +385,7 @@ namespace NBsys{namespace NOpengl
 
 	/** StartBatching
 	*/
-	void Opengl_Impl::StartBatching(sharedptr< NBsys::NActionBatching::ActionBatching_ActionList >& a_actionlist)
+	void Opengl_Impl::StartBatching(sharedptr<NBsys::NActionBatching::ActionBatching_ActionList>& a_actionlist)
 	{
 		AutoLock t_autolock_actionbatching(this->actionbatching_lockobject);
 
@@ -396,7 +396,7 @@ namespace NBsys{namespace NOpengl
 
 	/** バーテックスバッファ作成。
 	*/
-	s32 Opengl_Impl::CreateVertexBuffer(const sharedptr< u8 >& a_data_byte,s32 a_size_byte,s32 a_stride_byte)
+	s32 Opengl_Impl::CreateVertexBuffer(const sharedptr<u8>& a_data_byte,s32 a_size_byte,s32 a_stride_byte)
 	{
 		AutoLock t_autolock(this->lockobject);
 
@@ -405,17 +405,17 @@ namespace NBsys{namespace NOpengl
 			s32 t_vertexbuffer_id = this->id_maker.MakeID();
 
 			//バーテックスバッファ。
-			sharedptr< Opengl_Impl_VertexBuffer > t_vertexbuffer(new Opengl_Impl_VertexBuffer(a_data_byte,a_size_byte,a_stride_byte));
+			sharedptr<Opengl_Impl_VertexBuffer> t_vertexbuffer(new Opengl_Impl_VertexBuffer(a_data_byte,a_size_byte,a_stride_byte));
 
 			//レンダーコマンド。
-			sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
+			sharedptr<NBsys::NActionBatching::ActionBatching_ActionList> t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
 			{
 				t_actionlist->Add(new Opengl_Impl_ActionBatching_VertexBuffer_Create(*this,t_vertexbuffer));
 			}
 			this->StartBatching(t_actionlist);
 
 			//管理リスト。
-			this->vertexbuffer_list.insert(STLMap< s32 , sharedptr< Opengl_Impl_VertexBuffer > >::value_type(t_vertexbuffer_id,t_vertexbuffer));
+			this->vertexbuffer_list.insert(STLMap<s32,sharedptr<Opengl_Impl_VertexBuffer>>::value_type(t_vertexbuffer_id,t_vertexbuffer));
 
 			return t_vertexbuffer_id;
 		}
@@ -429,11 +429,11 @@ namespace NBsys{namespace NOpengl
 
 		{
 			//バーテックスバッファ。
-			STLMap< s32 , sharedptr< Opengl_Impl_VertexBuffer > >::iterator t_it = this->vertexbuffer_list.find(a_vertexbufferid);
-			sharedptr< Opengl_Impl_VertexBuffer >& t_vertexbuffer = t_it->second;
+			STLMap<s32,sharedptr<Opengl_Impl_VertexBuffer>>::iterator t_it = this->vertexbuffer_list.find(a_vertexbufferid);
+			sharedptr<Opengl_Impl_VertexBuffer>& t_vertexbuffer = t_it->second;
 
 			//レンダーコマンド。
-			sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
+			sharedptr<NBsys::NActionBatching::ActionBatching_ActionList> t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
 			{
 				t_actionlist->Add(new Opengl_Impl_ActionBatching_VertexBuffer_Delete(*this,t_vertexbuffer));
 			}
@@ -446,13 +446,13 @@ namespace NBsys{namespace NOpengl
 
 	/** シェーダーロード開始。
 	*/
-	void Opengl_Impl::LoadShaderRequest(const sharedptr< Opengl_ShaderLayout >& a_shaderlayout,AsyncResult< bool >& a_asyncresult)
+	void Opengl_Impl::LoadShaderRequest(const sharedptr<Opengl_ShaderLayout>& a_shaderlayout,AsyncResult<bool>& a_asyncresult)
 	{
 		AutoLock t_autolock(this->lockobject);
 		
 		{
 			//レンダーコマンド。
-			sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
+			sharedptr<NBsys::NActionBatching::ActionBatching_ActionList> t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
 			{
 				t_actionlist->Add(new Opengl_Impl_ActionBatching_Shader_Load(*this,a_shaderlayout,a_asyncresult));
 			}
@@ -468,10 +468,10 @@ namespace NBsys{namespace NOpengl
 		
 		{
 			//シェーダーステータス。
-			sharedptr< Opengl_Impl_ShaderState > t_shaderstate = this->shaderstate_list[a_shaderid];
+			sharedptr<Opengl_Impl_ShaderState> t_shaderstate = this->shaderstate_list[a_shaderid];
 
 			//レンダーコマンド。
-			sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
+			sharedptr<NBsys::NActionBatching::ActionBatching_ActionList> t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
 			{
 				t_actionlist->Add(new Opengl_Impl_ActionBatching_Shader_Delete(*this,t_shaderstate));
 			}
@@ -513,16 +513,16 @@ namespace NBsys{namespace NOpengl
 
 	/** [メインスレッド]テクスチャ―作成。
 	*/
-	s32 Opengl_Impl::CreateTexture(const sharedptr< NBsys::NTexture::Texture >& a_texture)
+	s32 Opengl_Impl::CreateTexture(const sharedptr<NBsys::NTexture::Texture>& a_texture)
 	{
 		AutoLock t_autolock(this->lockobject);
 
 		{
 			//テクスチャー。
-			sharedptr< Opengl_Impl_Texture > t_texture(new Opengl_Impl_Texture(a_texture));
+			sharedptr<Opengl_Impl_Texture> t_texture(new Opengl_Impl_Texture(a_texture));
 
 			//レンダーコマンド。
-			sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
+			sharedptr<NBsys::NActionBatching::ActionBatching_ActionList> t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
 			{
 				t_batching->Add(new Opengl_Impl_ActionBatching_CreateTexture(*this,t_texture));
 			}
@@ -532,7 +532,7 @@ namespace NBsys{namespace NOpengl
 			s32 t_texture_id = this->id_maker.MakeID();
 
 			//管理リストに登録。
-			this->texture_list.insert(STLMap< s32 , sharedptr< Opengl_Impl_Texture > >::value_type(t_texture_id,t_texture));
+			this->texture_list.insert(STLMap<s32,sharedptr<Opengl_Impl_Texture>>::value_type(t_texture_id,t_texture));
 
 			return t_texture_id;
 		}
@@ -546,11 +546,11 @@ namespace NBsys{namespace NOpengl
 
 		{
 			//テクスチャー。
-			STLMap< s32 , sharedptr< Opengl_Impl_Texture > >::iterator t_it = this->texture_list.find(a_textureid);
-			sharedptr< Opengl_Impl_Texture >& t_texture = t_it->second;
+			STLMap<s32,sharedptr<Opengl_Impl_Texture>>::iterator t_it = this->texture_list.find(a_textureid);
+			sharedptr<Opengl_Impl_Texture>& t_texture = t_it->second;
 
 			//レンダーコマンド。
-			sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
+			sharedptr<NBsys::NActionBatching::ActionBatching_ActionList> t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
 			{
 				t_batching->Add(new Opengl_Impl_ActionBatching_DeleteTexture(*this,t_texture));
 			}
@@ -568,12 +568,12 @@ namespace NBsys{namespace NOpengl
 		AutoLock t_autolock(this->lockobject);
 
 		{
-			sharedptr< Opengl_Impl_Texture > t_texture_depth;
-			sharedptr< Opengl_Impl_Texture > t_texture_color0;
+			sharedptr<Opengl_Impl_Texture> t_texture_depth;
+			sharedptr<Opengl_Impl_Texture> t_texture_color0;
 
 			//テクスチャー。Depth。
 			{
-				STLMap< s32 , sharedptr< Opengl_Impl_Texture > >::iterator t_it = this->texture_list.find(a_textureid_depth);
+				STLMap<s32,sharedptr<Opengl_Impl_Texture>>::iterator t_it = this->texture_list.find(a_textureid_depth);
 				if(t_it != this->texture_list.end()){
 					t_texture_depth = t_it->second;
 				}
@@ -581,17 +581,17 @@ namespace NBsys{namespace NOpengl
 		
 			//テクスチャー。Color0。
 			{
-				STLMap< s32 , sharedptr< Opengl_Impl_Texture > >::iterator t_it = this->texture_list.find(a_textureid_color0);
+				STLMap<s32,sharedptr<Opengl_Impl_Texture>>::iterator t_it = this->texture_list.find(a_textureid_color0);
 				if(t_it != this->texture_list.end()){
 					t_texture_color0 = t_it->second;
 				}
 			}
 
 			//フレームバッファ。
-			sharedptr< Opengl_Impl_FrameBuffer > t_framebuffer(new Opengl_Impl_FrameBuffer(t_texture_depth,t_texture_color0));
+			sharedptr<Opengl_Impl_FrameBuffer> t_framebuffer(new Opengl_Impl_FrameBuffer(t_texture_depth,t_texture_color0));
 
 			//レンダーコマンド。
-			sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
+			sharedptr<NBsys::NActionBatching::ActionBatching_ActionList> t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
 			{
 				t_batching->Add(new Opengl_Impl_ActionBatching_CreateFrameBuffer(*this,t_framebuffer));
 			}
@@ -601,7 +601,7 @@ namespace NBsys{namespace NOpengl
 			s32 t_framebuffer_id = this->id_maker.MakeID();
 
 			//管理リストに登録。
-			this->framebuffer_list.insert(STLMap< s32 , sharedptr< Opengl_Impl_FrameBuffer > >::value_type(t_framebuffer_id,t_framebuffer));
+			this->framebuffer_list.insert(STLMap<s32,sharedptr<Opengl_Impl_FrameBuffer>>::value_type(t_framebuffer_id,t_framebuffer));
 
 			return t_framebuffer_id;
 		}
@@ -635,7 +635,7 @@ namespace NBsys{namespace NOpengl
 
 	/** SetFont
 	*/
-	void Opengl_Impl::SetFont(sharedptr< NBsys::NFont::Font >& a_font,s32 a_texture_width,const STLString& a_name)
+	void Opengl_Impl::SetFont(sharedptr<NBsys::NFont::Font>& a_font,s32 a_texture_width,const STLString& a_name)
 	{
 		AutoLock t_autolock(this->lockobject);
 
@@ -651,7 +651,7 @@ namespace NBsys{namespace NOpengl
 		AutoLock t_autolock(this->lockobject);
 
 		{
-			STLMap< s32 , sharedptr< Opengl_Impl_Texture > >::iterator t_it = this->texture_list.find(a_textureid);
+			STLMap<s32,sharedptr<Opengl_Impl_Texture>>::iterator t_it = this->texture_list.find(a_textureid);
 
 			if(t_it != this->texture_list.end()){
 				return(t_it->second)->GetTexture_RawID();
@@ -775,7 +775,7 @@ namespace NBsys{namespace NOpengl
 
 	/** [描画命令]バーテックスバッファ作成。
 	*/
-	void Opengl_Impl::Render_CreateVertexBuffer(sharedptr< Opengl_Impl_VertexBuffer >& a_vertexbuffer)
+	void Opengl_Impl::Render_CreateVertexBuffer(sharedptr<Opengl_Impl_VertexBuffer>& a_vertexbuffer)
 	{
 		//AutoLock t_autolock(this->lockobject);
 
@@ -834,7 +834,7 @@ namespace NBsys{namespace NOpengl
 
 	/** [描画命令]バーテックスバッファ削除。
 	*/
-	void Opengl_Impl::Render_DeleteVertexBuffer(sharedptr< Opengl_Impl_VertexBuffer >& a_vertexbuffer)
+	void Opengl_Impl::Render_DeleteVertexBuffer(sharedptr<Opengl_Impl_VertexBuffer>& a_vertexbuffer)
 	{
 		//AutoLock t_autolock(this->lockobject);
 
@@ -862,7 +862,7 @@ namespace NBsys{namespace NOpengl
 
 	/** [描画命令]シェーダーロード。
 	*/
-	void Opengl_Impl::Render_LoadShader(sharedptr< Opengl_ShaderLayout >& a_shaderlayout)
+	void Opengl_Impl::Render_LoadShader(sharedptr<Opengl_ShaderLayout>& a_shaderlayout)
 	{
 		AutoLock t_autolock(this->lockobject);
 
@@ -871,7 +871,7 @@ namespace NBsys{namespace NOpengl
 			for(s32 ii=0;ii<ii_max;ii++){
 				Opengl_ShaderLayout::Item& t_item = a_shaderlayout->GetItem(ii);
 
-				sharedptr< Opengl_Impl_ShaderState > t_shaderstate(new Opengl_Impl_ShaderState());
+				sharedptr<Opengl_Impl_ShaderState> t_shaderstate(new Opengl_Impl_ShaderState());
 
 				bool t_isload = true;
 				if(t_item.vertex_fileobject->GetErrorCode() == ErrorCode::Id::Success){
@@ -896,10 +896,10 @@ namespace NBsys{namespace NOpengl
 					//読み込み成功。
 
 					const GLchar* t_vertex_source[] = {
-						reinterpret_cast< GLchar* >(t_item.vertex_fileobject->GetLoadData().get())
+						reinterpret_cast<GLchar*>(t_item.vertex_fileobject->GetLoadData().get())
 					};
 					const GLchar* t_fragment_source[] = {
-						reinterpret_cast< GLchar* >(t_item.fragment_fileobject->GetLoadData().get())
+						reinterpret_cast<GLchar*>(t_item.fragment_fileobject->GetLoadData().get())
 					};
 
 					bool t_enable = false;
@@ -938,7 +938,7 @@ namespace NBsys{namespace NOpengl
 								Opengl_ShaderLayout::Uniform& t_value = t_item.uniform_list->at(jj);
 								GLint t_location = glGetUniformLocation(t_shaderstate->shaderprogram_rawid.rawid,t_value.name.c_str());
 								t_shaderstate->uniform_list.insert(
-									STLMap< STLString , Opengl_Impl_ShaderState::Uniform >::value_type(
+									STLMap<STLString,Opengl_Impl_ShaderState::Uniform>::value_type(
 										t_value.name,
 										Opengl_Impl_ShaderState::Uniform(
 											t_location,
@@ -957,7 +957,7 @@ namespace NBsys{namespace NOpengl
 								Opengl_ShaderLayout::Attribute& t_value = t_item.attribute_list->at(jj);
 								GLint t_location = glGetAttribLocation(t_shaderstate->shaderprogram_rawid.rawid,t_value.name.c_str());
 								t_shaderstate->attribute_list.insert(
-									STLMap< STLString , Opengl_Impl_ShaderState::Attribute >::value_type(
+									STLMap<STLString,Opengl_Impl_ShaderState::Attribute>::value_type(
 										t_value.name,
 										Opengl_Impl_ShaderState::Attribute(
 											t_location,
@@ -982,7 +982,7 @@ namespace NBsys{namespace NOpengl
 
 	/** [描画命令]シェーダー削除。
 	*/
-	void Opengl_Impl::Render_DeleteShader(sharedptr< Opengl_Impl_ShaderState >& a_shaderstate)
+	void Opengl_Impl::Render_DeleteShader(sharedptr<Opengl_Impl_ShaderState>& a_shaderstate)
 	{
 		AutoLock t_autolock(this->lockobject);
 
@@ -1008,7 +1008,7 @@ namespace NBsys{namespace NOpengl
 
 				//設定。
 
-				sharedptr< Opengl_Impl_ShaderState >& t_shaderstate = this->shaderstate_list[a_shaderid];
+				sharedptr<Opengl_Impl_ShaderState>& t_shaderstate = this->shaderstate_list[a_shaderid];
 
 				if(t_shaderstate){
 
@@ -1086,7 +1086,7 @@ namespace NBsys{namespace NOpengl
 
 			if(a_vertexbufferid >= 0){
 				RawID t_vertexbuffer_rawid;
-				STLMap< s32 , sharedptr< Opengl_Impl_VertexBuffer > >::iterator t_it_vertexbuffer = this->vertexbuffer_list.find(a_vertexbufferid);
+				STLMap<s32,sharedptr<Opengl_Impl_VertexBuffer>>::iterator t_it_vertexbuffer = this->vertexbuffer_list.find(a_vertexbufferid);
 				if(t_it_vertexbuffer != this->vertexbuffer_list.end()){
 					t_vertexbuffer_rawid = t_it_vertexbuffer->second->GetVertexBuffer_RawID();
 				}
@@ -1131,11 +1131,11 @@ namespace NBsys{namespace NOpengl
 		{
 			s32 t_use_byte = 0;
 
-			sharedptr< Opengl_Impl_ShaderState >& t_shaderstate = this->shaderstate_list[a_shaderid];
+			sharedptr<Opengl_Impl_ShaderState>& t_shaderstate = this->shaderstate_list[a_shaderid];
 
 			if(t_shaderstate){
 
-				STLMap< STLString , Opengl_Impl_ShaderState::Attribute >::const_iterator t_it = t_shaderstate->attribute_list.find(a_name);
+				STLMap<STLString,Opengl_Impl_ShaderState::Attribute>::const_iterator t_it = t_shaderstate->attribute_list.find(a_name);
 				if(t_it != t_shaderstate->attribute_list.end()){
 
 					s32 t_size = 1;
@@ -1230,7 +1230,7 @@ namespace NBsys{namespace NOpengl
 					}
 					#endif
 
-					glVertexAttribPointer(t_it->second.location,t_size,t_type,GL_FALSE,a_stride_byte,(static_cast< char* >(nullptr) + (a_offset_byte)));
+					glVertexAttribPointer(t_it->second.location,t_size,t_type,GL_FALSE,a_stride_byte,(static_cast<char*>(nullptr) + (a_offset_byte)));
 				}
 			}else{
 				ASSERT(0);
@@ -1293,10 +1293,10 @@ namespace NBsys{namespace NOpengl
 		AutoLock t_autolock(this->lockobject);
 
 		{
-			sharedptr< Opengl_Impl_ShaderState >& t_shaderstate = this->shaderstate_list[a_shaderid];
+			sharedptr<Opengl_Impl_ShaderState>& t_shaderstate = this->shaderstate_list[a_shaderid];
 
 			if(t_shaderstate){
-				STLMap< STLString , Opengl_Impl_ShaderState::Uniform >::const_iterator t_it = t_shaderstate->uniform_list.find(a_name);
+				STLMap<STLString,Opengl_Impl_ShaderState::Uniform>::const_iterator t_it = t_shaderstate->uniform_list.find(a_name);
 				if(t_it != t_shaderstate->uniform_list.end()){
 
 					ASSERT(a_countof <= t_it->second.countof);
@@ -1310,7 +1310,7 @@ namespace NBsys{namespace NOpengl
 							}
 							#endif
 
-							glUniform1fv(t_it->second.location,a_countof,reinterpret_cast< const GLfloat* >(a_data_byte));
+							glUniform1fv(t_it->second.location,a_countof,reinterpret_cast<const GLfloat*>(a_data_byte));
 						}break;
 					case Opengl_ShaderValueType::Float2:
 					case Opengl_ShaderValueType::Vector2:
@@ -1321,7 +1321,7 @@ namespace NBsys{namespace NOpengl
 							}
 							#endif
 
-							glUniform2fv(t_it->second.location,a_countof,reinterpret_cast< const GLfloat* >(a_data_byte));
+							glUniform2fv(t_it->second.location,a_countof,reinterpret_cast<const GLfloat*>(a_data_byte));
 						}break;
 					case Opengl_ShaderValueType::Float3:
 					case Opengl_ShaderValueType::Vector3:
@@ -1332,7 +1332,7 @@ namespace NBsys{namespace NOpengl
 							}
 							#endif
 
-							glUniform3fv(t_it->second.location,a_countof,reinterpret_cast< const GLfloat* >(a_data_byte));
+							glUniform3fv(t_it->second.location,a_countof,reinterpret_cast<const GLfloat*>(a_data_byte));
 						}break;
 					case Opengl_ShaderValueType::Float4:
 					case Opengl_ShaderValueType::Vector4:
@@ -1343,7 +1343,7 @@ namespace NBsys{namespace NOpengl
 							}
 							#endif
 
-							glUniform4fv(t_it->second.location,a_countof,reinterpret_cast< const GLfloat* >(a_data_byte));
+							glUniform4fv(t_it->second.location,a_countof,reinterpret_cast<const GLfloat*>(a_data_byte));
 						}break;
 					case Opengl_ShaderValueType::Float16:
 					case Opengl_ShaderValueType::Matrix:
@@ -1354,7 +1354,7 @@ namespace NBsys{namespace NOpengl
 							}
 							#endif
 
-							glUniformMatrix4fv(t_it->second.location,a_countof,GL_FALSE,reinterpret_cast< const GLfloat* >(a_data_byte));
+							glUniformMatrix4fv(t_it->second.location,a_countof,GL_FALSE,reinterpret_cast<const GLfloat*>(a_data_byte));
 						}break;
 					case Opengl_ShaderValueType::IntToFloat:
 						{
@@ -1417,7 +1417,7 @@ namespace NBsys{namespace NOpengl
 
 	/** Render_CreateFrameBuffer。
 	*/
-	void Opengl_Impl::Render_CreateFrameBuffer(sharedptr< Opengl_Impl_FrameBuffer >& a_framebuffer)
+	void Opengl_Impl::Render_CreateFrameBuffer(sharedptr<Opengl_Impl_FrameBuffer>& a_framebuffer)
 	{
 		AutoLock t_autolock(this->lockobject);
 
@@ -1525,7 +1525,7 @@ namespace NBsys{namespace NOpengl
 
 	/** Render_CreateTexture。
 	*/
-	void Opengl_Impl::Render_CreateTexture(sharedptr< Opengl_Impl_Texture >& a_texture)
+	void Opengl_Impl::Render_CreateTexture(sharedptr<Opengl_Impl_Texture>& a_texture)
 	{
 		AutoLock t_autolock(this->lockobject);
 
@@ -1688,7 +1688,7 @@ namespace NBsys{namespace NOpengl
 
 	/** Render_DeleteTexture。
 	*/
-	void Opengl_Impl::Render_DeleteTexture(sharedptr< Opengl_Impl_Texture >& a_texture)
+	void Opengl_Impl::Render_DeleteTexture(sharedptr<Opengl_Impl_Texture>& a_texture)
 	{
 		//AutoLock t_autolock(this->lockobject);
 
@@ -1829,7 +1829,7 @@ namespace NBsys{namespace NOpengl
 			}
 
 			if(a_textureid >= 0){
-				STLMap< s32 , sharedptr< Opengl_Impl_Texture > >::iterator t_it = this->texture_list.find(a_textureid);
+				STLMap<s32,sharedptr<Opengl_Impl_Texture>>::iterator t_it = this->texture_list.find(a_textureid);
 				if(t_it != this->texture_list.end()){
 					RawID t_texture_rawid = (t_it->second)->GetTexture_RawID();
 					if(t_texture_rawid.IsInvalid() == false){
@@ -1882,7 +1882,7 @@ namespace NBsys{namespace NOpengl
 
 		{
 			if(a_framebufferid >= 0){
-				STLMap< s32 , sharedptr< Opengl_Impl_FrameBuffer > >::iterator t_it = this->framebuffer_list.find(a_framebufferid);
+				STLMap<s32,sharedptr<Opengl_Impl_FrameBuffer>>::iterator t_it = this->framebuffer_list.find(a_framebufferid);
 				if(t_it != this->framebuffer_list.end()){
 					RawID t_framebuffer_rawid = (t_it->second)->GetFrameBuffer_RawID();
 					if(t_framebuffer_rawid.IsInvalid() == false){
@@ -2025,13 +2025,13 @@ namespace NBsys{namespace NOpengl
 		{
 			if(this->shaderstate_list[a_shaderid].enable == true){
 
-				STLMap< STLString , Opengl_Impl::Uniform >::const_iterator t_it = this->shaderstate_list[a_shaderid].uniform_list.find(a_name);
+				STLMap<STLString,Opengl_Impl::Uniform>::const_iterator t_it = this->shaderstate_list[a_shaderid].uniform_list.find(a_name);
 				if(t_it != this->shaderstate_list[a_shaderid].uniform_list.end()){
 
 					RawID t_texture_rawid;
 					{
 						if(a_textureid >= 0){
-							STLMap< s32 , sharedptr< Opengl_Impl_Texture > >::iterator t_it = this->texture_list.find(a_textureid);
+							STLMap<s32,sharedptr<Opengl_Impl_Texture>>::iterator t_it = this->texture_list.find(a_textureid);
 							if(t_it != this->texture_list.end()){
 								t_texture_rawid = (t_it->second)->GetTexture_RawID();
 							}

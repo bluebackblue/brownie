@@ -31,13 +31,13 @@ namespace NBsys{namespace NActionBatching
 	private:
 		/** actionlist
 		*/
-		sharedptr< NBsys::NActionBatching::ActionBatching_ActionList > actionlist;
+		sharedptr<NBsys::NActionBatching::ActionBatching_ActionList> actionlist;
 
 	public:
 
 		/** constructor
 		*/
-		ActionBatching_Action_Call(sharedptr< NBsys::NActionBatching::ActionBatching_ActionList >& a_actionlist)
+		ActionBatching_Action_Call(sharedptr<NBsys::NActionBatching::ActionBatching_ActionList>& a_actionlist)
 			:
 			actionlist(a_actionlist)
 		{

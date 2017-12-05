@@ -71,7 +71,7 @@ namespace NBsys{namespace NFile
 
 		/** filelist
 		*/
-		STLMap< STLWString , sharedptr< File_Pack_FileHandle > >::Type filelist;
+		STLMap<STLWString,sharedptr<File_Pack_FileHandle>>::Type filelist;
 
 public:
 		/** constructor
@@ -94,7 +94,7 @@ public:
 
 		/** ファイル検索。
 		*/
-		sharedptr< File_Pack_FileHandle >& FindFromFileNameShort(const STLWString& a_filename_short);
+		sharedptr<File_Pack_FileHandle>& FindFromFileNameShort(const STLWString& a_filename_short);
 
 		/** 更新。
 		*/

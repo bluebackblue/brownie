@@ -32,7 +32,7 @@ namespace NBsys{namespace NOpengl
 	private:
 		/** data_byte
 		*/
-		sharedptr< u8 > data_byte;
+		sharedptr<u8> data_byte;
 
 		/** size_byte
 		*/
@@ -49,7 +49,7 @@ namespace NBsys{namespace NOpengl
 	public:
 		/** constructor
 		*/
-		Opengl_Impl_VertexBuffer(const sharedptr< u8 >& a_data_byte,s32 a_size_byte,s32 a_stride_byte)
+		Opengl_Impl_VertexBuffer(const sharedptr<u8>& a_data_byte,s32 a_size_byte,s32 a_stride_byte)
 			:
 			data_byte(a_data_byte),
 			size_byte(a_size_byte),
@@ -79,7 +79,7 @@ namespace NBsys{namespace NOpengl
 
 		/** GetDataByte
 		*/
-		const sharedptr< u8 >& GetDataByte()
+		const sharedptr<u8>& GetDataByte()
 		{
 			return this->data_byte;
 		}

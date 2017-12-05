@@ -43,7 +43,7 @@ namespace NBsys{namespace NRootSearch
 	*/
 	bool RootSearch_Data::ConnectCheck(RootSearch_NodeIndex& a_nodeindex_from,RootSearch_NodeIndex& a_nodeindex_to,bool a_root)
 	{
-		STLVector< RootSearch_ConnectIndex >::Type& t_connectindex_list = this->node_pool[a_nodeindex_from.GetValue()].ConnectIndexList(a_root);
+		STLVector<RootSearch_ConnectIndex>::Type& t_connectindex_list = this->node_pool[a_nodeindex_from.GetValue()].ConnectIndexList(a_root);
 
 		s32 ii_max = t_connectindex_list.size();
 		for(s32 ii=0;ii<ii_max;ii++){
@@ -119,7 +119,7 @@ namespace NBsys{namespace NRootSearch
 	*/
 	void RootSearch_Data::CalcRootNode()
 	{
-		STLVector< RootSearch_Node* >::Type t_root_node_list;
+		STLVector<RootSearch_Node*>::Type t_root_node_list;
 
 		s32 ii_max = this->node_pool.size();
 		for(s32 ii=0;ii<ii_max;ii++){

@@ -83,12 +83,12 @@ namespace common
 
 		/** d3d11
 		*/
-		sharedptr< NBsys::ND3d11::D3d11 > d3d11;
+		sharedptr<NBsys::ND3d11::D3d11> d3d11;
 
 		/** asyncresult
 		*/
-		AsyncResult< bool > asyncresult_vertexshader;
-		AsyncResult< bool > asyncresult_pixelshader;
+		AsyncResult<bool> asyncresult_vertexshader;
+		AsyncResult<bool> asyncresult_pixelshader;
 
 		/** id
 		*/
@@ -116,7 +116,7 @@ namespace common
 
 		/** vertex
 		*/
-		sharedptr< VertexItem > vertex_pointer;
+		sharedptr<VertexItem> vertex_pointer;
 		s32 vertex_stride;
 		s32 vertex_allcountof;
 		s32 vertex_index;
@@ -124,7 +124,7 @@ namespace common
 	public:
 		/** constructor
 		*/
-		D3d11_DrawLine_Manager(sharedptr< NBsys::ND3d11::D3d11 >& a_d3d11)
+		D3d11_DrawLine_Manager(sharedptr<NBsys::ND3d11::D3d11>& a_d3d11)
 			:
 			step(0),
 			isbusy(true),
@@ -153,7 +153,7 @@ namespace common
 			case 0:
 				{
 					//レイアウト。
-					sharedptr< STLVector< NBsys::ND3d11::D3d11_Layout >::Type > t_layout(new STLVector< NBsys::ND3d11::D3d11_Layout >::Type());
+					sharedptr<STLVector<NBsys::ND3d11::D3d11_Layout>::Type> t_layout(new STLVector<NBsys::ND3d11::D3d11_Layout>::Type());
 					{
 						s32 t_offset = 0;
 
@@ -165,8 +165,8 @@ namespace common
 					}
 
 					//シェーダー。
-					sharedptr< NBsys::NFile::File_Object > t_vertex_fx(new NBsys::NFile::File_Object(0,L"common/drawline_vertex.fx",-1,sharedptr< NBsys::NFile::File_Allocator >(),1));
-					sharedptr< NBsys::NFile::File_Object > t_pixel_fx(new NBsys::NFile::File_Object(0,L"common/drawline_pixel.fx",-1,sharedptr< NBsys::NFile::File_Allocator >(),1));
+					sharedptr<NBsys::NFile::File_Object> t_vertex_fx(new NBsys::NFile::File_Object(0,L"common/drawline_vertex.fx",-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
+					sharedptr<NBsys::NFile::File_Object> t_pixel_fx(new NBsys::NFile::File_Object(0,L"common/drawline_pixel.fx",-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
 					this->asyncresult_vertexshader.Create(false);
 					this->asyncresult_pixelshader.Create(false);
 					this->vertexshader_id = this->d3d11->CreateVertexShader(this->asyncresult_vertexshader,t_vertex_fx,t_layout);
@@ -179,7 +179,7 @@ namespace common
 					//バーテックスバッファ。
 					this->vertex_allcountof = 2 * 1024;
 					this->vertex_stride = sizeof(VertexItem);
-					this->vertex_pointer.reset(new VertexItem[this->vertex_allcountof],default_delete< VertexItem[] >());
+					this->vertex_pointer.reset(new VertexItem[this->vertex_allcountof],default_delete<VertexItem[]>());
 					this->vertexbuffer_id = this->d3d11->CreateVertexBuffer(this->vertex_pointer.get(),this->vertex_stride,0,this->vertex_allcountof,true);
 
 					//ブレンドステータス。

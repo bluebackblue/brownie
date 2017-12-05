@@ -35,21 +35,21 @@ namespace NBlib
 {
 	/** 使用可能な型の列挙。
 	*/
-	template < typename T > class AtomicValue_Check;
-	template < > class AtomicValue_Check<s8>{};
-	template < > class AtomicValue_Check<u8>{};
-	template < > class AtomicValue_Check<s16>{};
-	template < > class AtomicValue_Check<u16>{};
-	template < > class AtomicValue_Check<s32>{};
-	template < > class AtomicValue_Check<u32>{};
-	template < > class AtomicValue_Check<s64>{};
-	template < > class AtomicValue_Check<u64>{};
-	template < > class AtomicValue_Check<bool>{};
+	template <typename T> class AtomicValue_Check;
+	template <> class AtomicValue_Check<s8>{};
+	template <> class AtomicValue_Check<u8>{};
+	template <> class AtomicValue_Check<s16>{};
+	template <> class AtomicValue_Check<u16>{};
+	template <> class AtomicValue_Check<s32>{};
+	template <> class AtomicValue_Check<u32>{};
+	template <> class AtomicValue_Check<s64>{};
+	template <> class AtomicValue_Check<u64>{};
+	template <> class AtomicValue_Check<bool>{};
 
 
 	/** AtomicValue。
 	*/
-	template < typename T > class AtomicValue
+	template <typename T> class AtomicValue
 	{
 	private:
 
@@ -57,7 +57,7 @@ namespace NBlib
 		*/
 		#if(BLIB_STDATOMIC_ENABLE)
 
-		std::atomic< T > atomicvalue;
+		std::atomic<T> atomicvalue;
 
 		#endif
 
@@ -68,7 +68,7 @@ namespace NBlib
 			:
 			atomicvalue(0)
 		{
-			STATIC_ASSERT(sizeof(AtomicValue_Check< T >) > 0);
+			STATIC_ASSERT(sizeof(AtomicValue_Check<T>) > 0);
 		}
 
 		/** constructor。
@@ -187,7 +187,7 @@ namespace NBlib
 
 	/** AtomicValue。
 	*/
-	template < > class AtomicValue< bool >
+	template <> class AtomicValue<bool>
 	{
 	private:
 
@@ -195,7 +195,7 @@ namespace NBlib
 		*/
 		#if(BLIB_STDATOMIC_ENABLE)
 
-		std::atomic< bool > atomicvalue;
+		std::atomic<bool> atomicvalue;
 
 		#endif
 
@@ -208,7 +208,7 @@ namespace NBlib
 			atomicvalue(false)
 			#endif
 		{
-			STATIC_ASSERT(sizeof(AtomicValue_Check< bool >) > 0);
+			STATIC_ASSERT(sizeof(AtomicValue_Check<bool>) > 0);
 			STATIC_ASSERT(sizeof(bool) == sizeof(s8));
 		}
 

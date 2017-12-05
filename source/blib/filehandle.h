@@ -36,12 +36,12 @@ namespace NBlib
 	private:
 		/** impl
 		*/
-		sharedptr< FileHandle_Impl > impl;
+		sharedptr<FileHandle_Impl> impl;
 
 	public:
 		/** GetImpl
 		*/
-		sharedptr< FileHandle_Impl >& GetImpl();
+		sharedptr<FileHandle_Impl>& GetImpl();
 
 	public:
 		/** constructor

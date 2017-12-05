@@ -27,12 +27,12 @@ namespace NBlib
 {
 	/** AsyncResult
 	*/
-	template < typename T > class AsyncResult
+	template <typename T> class AsyncResult
 	{
 	private:
 		/** instance
 		*/
-		sharedptr< T > instance;
+		sharedptr<T> instance;
 
 	public:
 		/** constructorÅB

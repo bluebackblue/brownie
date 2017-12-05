@@ -35,8 +35,8 @@
 
 /*
 
-	STLBtMap< KEY , T , PR , STLALLOCATOR >::Type
-	STLMap< KEY , T , H , KEYEQ , STLALLOCATOR >::Type
+	STLBtMap<KEY,T,PR,STLALLOCATOR>::Type
+	STLMap<KEY,T,H,KEYEQ,STLALLOCATOR>::Type
 	std::map / std::unordered_mapのアロケータ指定バージョン。
 
 */
@@ -48,13 +48,13 @@ namespace NBlib
 {
 	/** STLBtMap
 	*/
-	template < typename KEY , typename T , typename PR = std::less< KEY > , typename STLALLOCATOR = STLAllocator< std::pair< const KEY , T > > > class STLBtMap
+	template <typename KEY,typename T,typename PR=std::less<KEY>,typename STLALLOCATOR=STLAllocator<std::pair<const KEY,T>>> class STLBtMap
 	{
 	public:
-		typedef std::map< KEY , T , PR , STLALLOCATOR >								Type;
-		typedef typename std::map< KEY , T , PR , STLALLOCATOR >::value_type		value_type;
-		typedef typename std::map< KEY , T , PR , STLALLOCATOR >::iterator			iterator;
-		typedef typename std::map< KEY , T , PR , STLALLOCATOR >::const_iterator	const_iterator;
+		typedef std::map<KEY,T,PR,STLALLOCATOR>								Type;
+		typedef typename std::map<KEY,T,PR,STLALLOCATOR>::value_type		value_type;
+		typedef typename std::map<KEY,T,PR,STLALLOCATOR>::iterator			iterator;
+		typedef typename std::map<KEY,T,PR,STLALLOCATOR>::const_iterator	const_iterator;
 
 	private:
 		STLBtMap();
@@ -66,7 +66,7 @@ namespace NBlib
 	*/
 	#if(BLIB_STDALIASTEMPLATE_ENABLE)
 
-		template < typename KEY , typename T , typename PR = std::less< KEY > , typename STLALLOCATOR = STLAllocator< std::pair< const KEY , T > > > using STLBtMapType = typename STLBtMap< KEY , T , PR , STLALLOCATOR >::Type;
+		template <typename KEY,typename T,typename PR=std::less<KEY>,typename STLALLOCATOR=STLAllocator<std::pair<const KEY,T>>> using STLBtMapType=typename STLBtMap<KEY,T,PR,STLALLOCATOR>::Type;
 
 	#endif
 
@@ -74,13 +74,13 @@ namespace NBlib
 	*/
 	#if(BLIB_STDUNORDEREDMAP_ENABLE)
 
-		template < typename KEY , typename T, typename H = std::hash< KEY > , typename KEYEQ = std::equal_to< KEY > , class STLALLOCATOR = STLAllocator< std::pair< const KEY , T > > > class STLMap
+		template <typename KEY,typename T,typename H=std::hash<KEY>,typename KEYEQ=std::equal_to<KEY>,class STLALLOCATOR=STLAllocator<std::pair<const KEY,T>>> class STLMap
 		{
 		public:
-			typedef std::unordered_map< KEY , T , H , KEYEQ , STLALLOCATOR >							Type;
-			typedef typename std::unordered_map< KEY , T , H , KEYEQ , STLALLOCATOR >::value_type		value_type;
-			typedef typename std::unordered_map< KEY , T , H , KEYEQ , STLALLOCATOR >::iterator			iterator;
-			typedef typename std::unordered_map< KEY , T , H , KEYEQ , STLALLOCATOR >::const_iterator	const_iterator;
+			typedef std::unordered_map<KEY,T,H,KEYEQ,STLALLOCATOR>								Type;
+			typedef typename std::unordered_map<KEY,T,H,KEYEQ,STLALLOCATOR>::value_type			value_type;
+			typedef typename std::unordered_map<KEY,T,H,KEYEQ,STLALLOCATOR>::iterator			iterator;
+			typedef typename std::unordered_map<KEY,T,H,KEYEQ,STLALLOCATOR>::const_iterator		const_iterator;
 
 		private:
 			STLMap();
@@ -98,7 +98,7 @@ namespace NBlib
 	*/
 	#if(BLIB_STDALIASTEMPLATE_ENABLE)
 
-		template < typename KEY , typename T, typename H = std::hash< KEY > , typename KEYEQ = std::equal_to< KEY > , class STLALLOCATOR = STLAllocator< std::pair< const KEY , T > > > using STLMapType = typename STLMap< KEY , T , H , KEYEQ , STLALLOCATOR >::Type;
+		template <typename KEY,typename T,typename H=std::hash<KEY>,typename KEYEQ=std::equal_to<KEY>,class STLALLOCATOR=STLAllocator<std::pair<const KEY,T>>> using STLMapType=typename STLMap<KEY,T,H,KEYEQ,STLALLOCATOR>::Type;
 
 	#endif
 }

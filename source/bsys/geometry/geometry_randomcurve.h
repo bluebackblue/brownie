@@ -106,7 +106,7 @@ namespace NBsys{namespace NGeometry
 			this->speed_inverse_range = a_speed_inverse_range;
 			this->speed_inverse = a_speed_inverse;
 
-			NBlib::RandomTemplate< > t_rand;
+			NBlib::RandomTemplate<> t_rand;
 			t_rand.SetSeed(static_cast<u32>(a_k1));
 
 			//-1000 - 0

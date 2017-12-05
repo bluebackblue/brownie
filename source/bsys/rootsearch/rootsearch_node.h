@@ -48,11 +48,11 @@ namespace NBsys{namespace NRootSearch
 
 		/** コネクトインデックスリスト。
 		*/
-		STLVector< RootSearch_ConnectIndex >::Type connectindex_list;
+		STLVector<RootSearch_ConnectIndex>::Type connectindex_list;
 
 		/** コネクトインデックスリスト。ルート。
 		*/
-		STLVector< RootSearch_ConnectIndex >::Type connectindex_root_list;
+		STLVector<RootSearch_ConnectIndex>::Type connectindex_root_list;
 
 	public:
 		/** constructor
@@ -79,7 +79,7 @@ namespace NBsys{namespace NRootSearch
 
 		/** コネクトリスト。
 		*/
-		STLVector< RootSearch_ConnectIndex >::Type& ConnectIndexList(bool a_root);
+		STLVector<RootSearch_ConnectIndex>::Type& ConnectIndexList(bool a_root);
 
 
 	};

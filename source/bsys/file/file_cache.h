@@ -32,7 +32,7 @@ namespace NBsys{namespace NFile
 	private:
 		/** キャッシュマップ。
 		*/
-		STLMap< STLWString , sharedptr< File_Cache_Item > >::Type map;
+		STLMap<STLWString,sharedptr<File_Cache_Item>>::Type map;
 	
 	public:
 		/** constructor
@@ -45,11 +45,11 @@ namespace NBsys{namespace NFile
 
 		/** キャッシュへ登録。
 		*/
-		void SetCache(const sharedptr< File_WorkItem >& a_workitem,s32 a_cachegroup_id);
+		void SetCache(const sharedptr<File_WorkItem>& a_workitem,s32 a_cachegroup_id);
 
 		/** 名前からキャッシュを検索。
 		*/
-		const sharedptr< File_WorkItem >& GetCacheFromFileNameShort(const STLWString& a_filename_short) const;
+		const sharedptr<File_WorkItem>& GetCacheFromFileNameShort(const STLWString& a_filename_short) const;
 
 		/** キャッシュクリア。
 		*/

@@ -28,7 +28,7 @@
 
 /*
 
-	STLList< TYPE >::Type
+	STLList<TYPE>::Type
 	std::listのアロケータ指定バージョン。
 
 */
@@ -40,12 +40,12 @@ namespace NBlib
 {
 	/** STLList
 	*/
-	template < typename T , typename STLALLOCATOR = STLAllocator< T > > class STLList
+	template <typename T,typename STLALLOCATOR=STLAllocator<T>> class STLList
 	{
 	public:
-		typedef std::list< T , STLALLOCATOR >									Type;
-		typedef typename std::list< T , STLALLOCATOR >::iterator				iterator;
-		typedef typename std::list< T , STLALLOCATOR >::const_iterator			const_iterator;
+		typedef std::list<T,STLALLOCATOR>									Type;
+		typedef typename std::list<T,STLALLOCATOR>::iterator				iterator;
+		typedef typename std::list<T,STLALLOCATOR>::const_iterator			const_iterator;
 
 	private:
 		STLList();
@@ -56,7 +56,7 @@ namespace NBlib
 	/** STLListType
 	*/
 	#if(BLIB_STDALIASTEMPLATE_ENABLE)
-	template < typename T > using STLListType = typename STLList< T >::Type;
+	template <typename T> using STLListType = typename STLList<T>::Type;
 	#endif
 }
 

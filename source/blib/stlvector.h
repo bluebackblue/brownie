@@ -28,7 +28,7 @@
 
 /*
 
-	STLVector< TYPE >::Type
+	STLVector<TYPE>::Type
 	std::vectorのアロケータ指定バージョン。
 
 */
@@ -40,12 +40,12 @@ namespace NBlib
 {
 	/** STLVector
 	*/
-	template < typename T , typename STLALLOCATOR = STLAllocator< T > > class STLVector
+	template <typename T,typename STLALLOCATOR=STLAllocator<T> > class STLVector
 	{
 	public:
-		typedef std::vector< T , STLALLOCATOR >									Type;
-		typedef typename std::vector< T , STLALLOCATOR >::iterator				iterator;
-		typedef typename std::vector< T , STLALLOCATOR >::const_iterator		const_iterator;
+		typedef std::vector<T,STLALLOCATOR>									Type;
+		typedef typename std::vector<T,STLALLOCATOR>::iterator				iterator;
+		typedef typename std::vector<T,STLALLOCATOR>::const_iterator		const_iterator;
 
 	private:
 		STLVector();
@@ -56,7 +56,7 @@ namespace NBlib
 	/** STLVectorType
 	*/
 	#if(BLIB_STDALIASTEMPLATE_ENABLE)
-	template < typename T , typename STLALLOCATOR = STLAllocator< T > > using STLVectorType = typename STLVector< T , STLALLOCATOR >::Type;
+	template <typename T,typename STLALLOCATOR=STLAllocator<T>> using STLVectorType=typename STLVector<T,STLALLOCATOR>::Type;
 	#endif
 }
 

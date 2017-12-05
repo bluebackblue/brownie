@@ -75,7 +75,7 @@ namespace NBsys{namespace NFile
 
 			/** allocator
 			*/
-			sharedptr< File_Allocator > allocator;
+			sharedptr<File_Allocator> allocator;
 
 			/** constructor
 			*/

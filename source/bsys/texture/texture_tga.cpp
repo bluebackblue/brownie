@@ -104,14 +104,14 @@ namespace NBsys{namespace NTexture
 
 	/** CreateTexture_Tga
 	*/
-	sharedptr< Texture > CreateTexture_Tga(const sharedptr< u8 >& a_data,s32 a_size,const STLWString& a_name)
+	sharedptr<Texture> CreateTexture_Tga(const sharedptr<u8>& a_data,s32 a_size,const STLWString& a_name)
 	{
-		const HEADER_TGA* t_header = reinterpret_cast< const HEADER_TGA* >(a_data.get());
+		const HEADER_TGA* t_header = reinterpret_cast<const HEADER_TGA*>(a_data.get());
 
-		sharedptr< u8 > t_pixel(new u8[t_header->h_w * t_header->h_h * 4],default_delete< u8[] >());
+		sharedptr<u8> t_pixel(new u8[t_header->h_w * t_header->h_h * 4],default_delete<u8[]>());
 		{
 			const u8* t_src = a_data.get() + (sizeof(HEADER_TGA) + t_header->h_IDLength);
-			u32* t_dst = reinterpret_cast< u32* >(t_pixel.get());
+			u32* t_dst = reinterpret_cast<u32*>(t_pixel.get());
 			u32* t_dst_end = t_dst + (t_header->h_w * t_header->h_h);
 
 			s32 stride = t_header->h_bitDepth / 8;
@@ -181,7 +181,7 @@ namespace NBsys{namespace NTexture
 			}
 		}
 
-		sharedptr< Texture > t_texture(new Texture(t_pixel,t_header->h_w,t_header->h_h,t_header->h_w * 4,TextureType::R8G8B8A8,a_name));
+		sharedptr<Texture> t_texture(new Texture(t_pixel,t_header->h_w,t_header->h_h,t_header->h_w * 4,TextureType::R8G8B8A8,a_name));
 
 		return t_texture;
 	}
