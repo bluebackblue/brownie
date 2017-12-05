@@ -18,7 +18,7 @@ mid-level library
 * ___ blib [低レベルライブラリ]
 * ___ bsys [中レベルライブラリ]
 * ___ premake.bat
-* ___ project_test [サンプルプロジェクト]
+* ___ project_test [テストプロジェクト]
 * _____ brownie_config
 * _______ brownie_config.h
 * _______ user_customize.h
@@ -46,7 +46,7 @@ mid-level library
 * ./sdk
 
 ## sample solution
-サンプル起動までの手順。
+テストプロジェクト起動までの手順。
 * step 1: RUN  ./brownie/source/premake.bat
 * step 2: OPEN ./brownie/source/brownie.sln
 * step 3: EDIT ./brownie/source/project_test/brownie_config/user_customize.h
