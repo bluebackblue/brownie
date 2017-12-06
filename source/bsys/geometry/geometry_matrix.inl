@@ -305,7 +305,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
-	/** [反映]スケール。
+	/** [設定]スケール。
 	*/
 	inline void Geometry_Matrix_44::Calc_Scale(f32 a_x,f32 a_y,f32 a_z)
 	{
