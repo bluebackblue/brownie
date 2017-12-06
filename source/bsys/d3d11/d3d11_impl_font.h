@@ -62,7 +62,7 @@ namespace NBsys{namespace ND3d11
 
 		/** font
 		*/
-		sharedptr< NFont::Font > font;
+		sharedptr< NBsys::NFont::Font > font;
 
 		/** texturewidth
 		*/
@@ -91,7 +91,7 @@ namespace NBsys{namespace ND3d11
 	public:
 		/** constructor
 		*/
-		D3d11_Impl_Font(D3d11_Impl& a_opengl_impl,const sharedptr< NBsys::NFont::Font >& a_font,s32 a_texture_width,const STLString& a_name)
+		D3d11_Impl_Font(D3d11_Impl& a_opengl_impl,const sharedptr< NBsys::NFont::Font >& a_font,s32 a_texture_width,const STLWString& a_name)
 			:
 			d3d11_impl(a_opengl_impl),
 			font(a_font),
@@ -107,9 +107,9 @@ namespace NBsys{namespace ND3d11
 				NBsys::NTexture::TextureType::R8G8B8A8,
 				a_name
 				)
-				);
+			);
 
-			this->textureid = this->d3d11_impl.CreateTexture(this->texture);
+			this->textureid = this->d3d11_impl.CreateTexture(this->texture,true);
 
 			for(s32 ii=0;ii<BSYS_D3D11_FONT_DRAWTYPEMAX;ii++){
 				this->list.push_back(Item(nullwchar));
@@ -154,12 +154,20 @@ namespace NBsys{namespace ND3d11
 			}
 		}
 
-		/** DrawFont
+		/** GetTexture
 		*/
-		void DrawFont(const STLWString& a_string,f32 a_font_size,f32 a_x,f32 a_y,const NBsys::NColor::Color_F& a_color)
+		s32 GetTexture()
 		{
-			//テクスチャー設定。
-			///todo:this->d3d11_impl.Render_SetTextureDirect(0,this->textureid);
+			return this->textureid;
+		}
+		
+		/** UpdateFontTexture
+		*/
+		void UpdateFontTexture(const STLWString& a_string)
+		{
+			bool t_change = false;
+			s32 t_change_min = 0;
+			s32 t_change_max = BSYS_D3D11_FONT_DRAWTYPEMAX - 1;
 
 			for(s32 ii=0;ii<static_cast<s32>(a_string.length());ii++){
 
@@ -196,9 +204,8 @@ namespace NBsys{namespace ND3d11
 
 							//テクスチャーに書き込み。
 							NBsys::NFont::Font_State t_font_state = this->font->GetPixel_R8G8B8A8(this->texture->GetPixel(),t_font_index * (this->texturewidth * this->texturewidth * 4),this->texturewidth,this->texturewidth,t_code);
-							u8* t_pixel = &this->texture->GetPixel().get()[t_font_index * (this->texturewidth * this->texturewidth * 4)];
-							///todo:glTexSubImage2D(GL_TEXTURE_2D,0,0,t_font_index * this->texturewidth,this->texturewidth,this->texturewidth,GL_RGBA,GL_UNSIGNED_BYTE,t_pixel);
-
+							t_change = true;
+							
 							//登録。
 							this->list[t_font_index].code = t_code;
 							this->list[t_font_index].lock = true;
@@ -211,6 +218,34 @@ namespace NBsys{namespace ND3d11
 				}
 			}
 
+			if(t_change){
+
+				sharedptr<D3d11_Impl_Texture>& t_texture = this->d3d11_impl.GetTexture(this->textureid);
+				if(t_texture){
+					D3D11_MAPPED_SUBRESOURCE t_mapped_resource;
+					HRESULT t_result = this->d3d11_impl.GetDeviceContext()->Map(t_texture->texture2d.get(),0,D3D11_MAP_WRITE_DISCARD,0,&t_mapped_resource);
+
+					if(SUCCEEDED(t_result)){
+
+						s32 t_start = t_change_min * (this->texturewidth * this->texturewidth * 4);
+						s32 t_end = (t_change_max + 1) * (this->texturewidth * this->texturewidth * 4);
+						s32 t_max = BSYS_D3D11_FONT_DRAWTYPEMAX * (this->texturewidth * this->texturewidth * 4);
+
+						u8* t_to_pointer = &reinterpret_cast<u8*>(t_mapped_resource.pData)[t_start];
+						u8* t_from_pointer = &this->texture->GetPixel().get()[t_start];
+
+						Memory::memcpy(t_to_pointer,t_max - t_start,t_from_pointer,t_end - t_start);
+
+						this->d3d11_impl.GetDeviceContext()->Unmap(t_texture->texture2d.get(),0);
+					}
+				}
+			}
+		}
+
+		/** DrawFont
+		*/
+		void DrawFont(const STLWString& a_string,f32 a_font_size,f32 a_x,f32 a_y,const NBsys::NColor::Color_F& a_color)
+		{
 			f32 t_scale = a_font_size / this->texturewidth;
 
 			///todo:glBegin(GL_QUADS);

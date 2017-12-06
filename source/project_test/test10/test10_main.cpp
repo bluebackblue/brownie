@@ -100,7 +100,7 @@ private:
 
 	/** ライン描画。
 	*/
-	sharedptr<common::D3d11_DrawLine_Manager> drawline_manager;
+	sharedptr<NCommon::D3d11_DrawLine_Manager> drawline_manager;
 
 	/** カメラ。
 	*/
@@ -135,7 +135,7 @@ public:
 		this->rasterizerstate_cull_none_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::NONE);
 
 		//ライン描画。
-		this->drawline_manager.reset(new common::D3d11_DrawLine_Manager(s_d3d11));
+		this->drawline_manager.reset(new NCommon::D3d11_DrawLine_Manager(s_d3d11));
 	}
 
 	/** destructor

@@ -39,14 +39,19 @@ namespace NBsys{namespace ND3d11
 		*/
 		sharedptr<D3d11_Impl_Texture> texture;
 
+		/** write_flag
+		*/
+		bool write_flag;
+
 	public:
 
 		/** constructor
 		*/
-		D3d11_Impl_ActionBatching_Texture_Create(D3d11_Impl& a_d3d11_impl,sharedptr<D3d11_Impl_Texture>& a_texture)
+		D3d11_Impl_ActionBatching_Texture_Create(D3d11_Impl& a_d3d11_impl,sharedptr<D3d11_Impl_Texture>& a_texture,bool a_write_flag)
 			:
 			d3d11_impl(a_d3d11_impl),
-			texture(a_texture)
+			texture(a_texture),
+			write_flag(a_write_flag)
 		{
 		}
 
@@ -73,7 +78,7 @@ namespace NBsys{namespace ND3d11
 			}
 
 			//Render_CreateTexture
-			this->d3d11_impl.Render_CreateTexture(this->texture);
+			this->d3d11_impl.Render_CreateTexture(this->texture,this->write_flag);
 
 			//ê¨å˜ÅB
 			return 1;

@@ -84,9 +84,9 @@ namespace NBsys{namespace ND3d11
 	
 	/** CreateTexture
 	*/
-	s32 D3d11::CreateTexture(sharedptr<NBsys::NTexture::Texture>& a_texture)
+	s32 D3d11::CreateTexture(sharedptr<NBsys::NTexture::Texture>& a_texture,bool a_write_flag)
 	{
-		return this->impl->CreateTexture(a_texture);
+		return this->impl->CreateTexture(a_texture,a_write_flag);
 	}
 
 	/** CreateBlendState
@@ -155,7 +155,7 @@ namespace NBsys{namespace ND3d11
 	/** Render_SetFont
 	*/
 	#if(BSYS_FONT_ENABLE)
-	void D3d11::Render_SetFont(sharedptr<NBsys::NFont::Font>& a_font,s32 a_texture_width,const STLString& a_name)
+	void D3d11::Render_SetFont(sharedptr<NBsys::NFont::Font>& a_font,s32 a_texture_width,const STLWString& a_name)
 	{
 		this->impl->Render_SetFont(a_font,a_texture_width,a_name);
 	}
@@ -170,12 +170,30 @@ namespace NBsys{namespace ND3d11
 	}
 	#endif
 
+	/** Render_UpdateFontTexture
+	*/
+	#if(BSYS_FONT_ENABLE)
+	void D3d11::Render_UpdateFontTexture(const STLWString& a_string)
+	{
+		this->impl->Render_UpdateFontTexture(a_string);
+	}
+	#endif
+
 	/** Render_DrawFont
 	*/
 	#if(BSYS_FONT_ENABLE)
 	void D3d11::Render_DrawFont(const STLWString& a_string,f32 a_font_size,f32 a_x,f32 a_y,const NBsys::NColor::Color_F& a_color)
 	{
 		this->impl->Render_DrawFont(a_string,a_font_size,a_x,a_y,a_color);
+	}
+	#endif
+
+	/** Render_GetFontTexture
+	*/
+	#if(BSYS_FONT_ENABLE)
+	s32 D3d11::Render_GetFontTexture()
+	{
+		return this->impl->Render_GetFontTexture();
 	}
 	#endif
 
@@ -262,15 +280,6 @@ namespace NBsys{namespace ND3d11
 	{
 		this->impl->Render_SetRasterizerState(a_rasterizerstate_id);
 	}
-
-	/** Render_DrawLine
-	*/
-	void D3d11::Render_DrawLine()
-	{
-		this->impl->Render_DrawLine();
-	}
-
-
 }}
 #endif
 

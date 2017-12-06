@@ -5,7 +5,7 @@
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief コモン。Ｄ３Ｄ１１。ライン描画。
+ * @brief コモン。Ｄ３Ｄ１１。フォント描画。
 */
 
 
@@ -18,26 +18,26 @@
 */
 namespace NCommon
 {
-	/** DrawLine_VS_ConstantBuffer_B0
+	/** DrawFont_VS_ConstantBuffer_B0
 	*/
-	struct DrawLine_VS_ConstantBuffer_B0
+	struct DrawFont_VS_ConstantBuffer_B0
 	{
 		NBsys::NGeometry::Geometry_Matrix_44 view_projection;
 
-		DrawLine_VS_ConstantBuffer_B0()
+		DrawFont_VS_ConstantBuffer_B0()
 			:
 			view_projection(NBsys::NGeometry::Geometry_Identity())
 		{
 		}
 
-		~DrawLine_VS_ConstantBuffer_B0()
+		~DrawFont_VS_ConstantBuffer_B0()
 		{
 		}
 	};
 	
-	/** DrawLine_PS_ConstantBuffer_B0
+	/** DrawFont_PS_ConstantBuffer_B0
 	*/
-	struct DrawLine_PS_ConstantBuffer_B0 //TODO:未使用。
+	struct DrawFont_PS_ConstantBuffer_B0 //TODO:未使用。
 	{
 		/**
 
@@ -56,7 +56,7 @@ namespace NCommon
 		u32 flag3;
 		u32 flag4;
 
-		DrawLine_PS_ConstantBuffer_B0()
+		DrawFont_PS_ConstantBuffer_B0()
 			:
 			flag1(0),
 			flag2(0),
@@ -65,14 +65,14 @@ namespace NCommon
 		{
 		}
 
-		~DrawLine_PS_ConstantBuffer_B0()
+		~DrawFont_PS_ConstantBuffer_B0()
 		{
 		}
 	};
 
-	/** D3d11_DrawLine_Manager
+	/** D3d11_DrawFont_Manager
 	*/
-	class D3d11_DrawLine_Manager
+	class D3d11_DrawFont_Manager
 	{
 	private:
 		/** step
@@ -114,6 +114,9 @@ namespace NCommon
 			f32 g;
 			f32 b;
 			f32 a;
+
+			f32 uv_x;
+			f32 uv_y;
 		};
 
 		/** vertex
@@ -126,7 +129,7 @@ namespace NCommon
 	public:
 		/** constructor
 		*/
-		D3d11_DrawLine_Manager(sharedptr<NBsys::ND3d11::D3d11>& a_d3d11)
+		D3d11_DrawFont_Manager(sharedptr<NBsys::ND3d11::D3d11>& a_d3d11)
 			:
 			step(0),
 			isbusy(true),
@@ -136,7 +139,7 @@ namespace NCommon
 
 		/** destructor
 		*/
-		~D3d11_DrawLine_Manager()
+		~D3d11_DrawFont_Manager()
 		{
 		}
 
@@ -164,19 +167,22 @@ namespace NCommon
 
 						t_layout->push_back(NBsys::ND3d11::D3d11_Layout("COLOR",0,NBsys::ND3d11::D3d11_LayoutFormatType::R32G32B32A32_FLOAT,0,t_offset));
 						t_offset += sizeof(f32) * 4;
+
+						t_layout->push_back(NBsys::ND3d11::D3d11_Layout("TEXCOORD",0,NBsys::ND3d11::D3d11_LayoutFormatType::R32G32_FLOAT,0,t_offset));
+						t_offset += sizeof(f32) * 2;
 					}
 
 					//シェーダー。
-					sharedptr<NBsys::NFile::File_Object> t_vertex_fx(new NBsys::NFile::File_Object(0,L"common/drawline_vertex.fx",-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
-					sharedptr<NBsys::NFile::File_Object> t_pixel_fx(new NBsys::NFile::File_Object(0,L"common/drawline_pixel.fx",-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
+					sharedptr<NBsys::NFile::File_Object> t_vertex_fx(new NBsys::NFile::File_Object(0,L"common/drawfont_vertex.fx",-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
+					sharedptr<NBsys::NFile::File_Object> t_pixel_fx(new NBsys::NFile::File_Object(0,L"common/drawfont_pixel.fx",-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
 					this->asyncresult_vertexshader.Create(false);
 					this->asyncresult_pixelshader.Create(false);
 					this->vertexshader_id = this->d3d11->CreateVertexShader(this->asyncresult_vertexshader,t_vertex_fx,t_layout);
 					this->pixelshader_id = this->d3d11->CreatePixelShader(this->asyncresult_pixelshader,t_pixel_fx);
 
 					//コンスタントバッファ。
-					this->vs_constantbuffer_b0_id = this->d3d11->CreateConstantBuffer(0,sizeof(DrawLine_VS_ConstantBuffer_B0));
-					this->ps_constantbuffer_b0_id = this->d3d11->CreateConstantBuffer(1,sizeof(DrawLine_PS_ConstantBuffer_B0));
+					this->vs_constantbuffer_b0_id = this->d3d11->CreateConstantBuffer(0,sizeof(DrawFont_VS_ConstantBuffer_B0));
+					this->ps_constantbuffer_b0_id = this->d3d11->CreateConstantBuffer(1,sizeof(DrawFont_PS_ConstantBuffer_B0));
 
 					//バーテックスバッファ。
 					this->vertex_allcountof = 2 * 1024;
@@ -208,26 +214,76 @@ namespace NCommon
 			}
 		}
 
-		/** DrawLine
+		/** DrawFont
 		*/
-		void DrawLine(const NBsys::NGeometry::Geometry_Vector3& a_start,const NBsys::NGeometry::Geometry_Vector3& a_end,const NBsys::NColor::Color_F& a_color)
+		void DrawFont(const STLWString& a_string,f32 a_font_size,f32 a_x,f32 a_y,const NBsys::NColor::Color_F& a_color)
 		{
-			this->vertex_pointer.get()[this->vertex_index].x = a_start.x;
-			this->vertex_pointer.get()[this->vertex_index].y = a_start.y;
-			this->vertex_pointer.get()[this->vertex_index].z = a_start.z;
+			this->d3d11->Render_UpdateFontTexture(a_string);
+
+			this->vertex_pointer.get()[this->vertex_index].x = a_x;
+			this->vertex_pointer.get()[this->vertex_index].y = a_y;
+			this->vertex_pointer.get()[this->vertex_index].z = 0.0f;
 			this->vertex_pointer.get()[this->vertex_index].r = a_color.r;
 			this->vertex_pointer.get()[this->vertex_index].g = a_color.g;
 			this->vertex_pointer.get()[this->vertex_index].b = a_color.b;
 			this->vertex_pointer.get()[this->vertex_index].a = a_color.a;
+			this->vertex_pointer.get()[this->vertex_index].uv_x = 0.0f;
+			this->vertex_pointer.get()[this->vertex_index].uv_y = 0.0f;
 			this->vertex_index++;
 
-			this->vertex_pointer.get()[this->vertex_index].x = a_end.x;
-			this->vertex_pointer.get()[this->vertex_index].y = a_end.y;
-			this->vertex_pointer.get()[this->vertex_index].z = a_end.z;
+			this->vertex_pointer.get()[this->vertex_index].x = a_x;
+			this->vertex_pointer.get()[this->vertex_index].y = a_y + 300.0f;
+			this->vertex_pointer.get()[this->vertex_index].z = 0.0f;
 			this->vertex_pointer.get()[this->vertex_index].r = a_color.r;
 			this->vertex_pointer.get()[this->vertex_index].g = a_color.g;
 			this->vertex_pointer.get()[this->vertex_index].b = a_color.b;
 			this->vertex_pointer.get()[this->vertex_index].a = a_color.a;
+			this->vertex_pointer.get()[this->vertex_index].uv_x = 0.0f;
+			this->vertex_pointer.get()[this->vertex_index].uv_y = 0.03f;
+			this->vertex_index++;
+
+			this->vertex_pointer.get()[this->vertex_index].x = a_x + 400.0f;
+			this->vertex_pointer.get()[this->vertex_index].y = a_y;
+			this->vertex_pointer.get()[this->vertex_index].z = 0.0f;
+			this->vertex_pointer.get()[this->vertex_index].r = a_color.r;
+			this->vertex_pointer.get()[this->vertex_index].g = a_color.g;
+			this->vertex_pointer.get()[this->vertex_index].b = a_color.b;
+			this->vertex_pointer.get()[this->vertex_index].a = a_color.a;
+			this->vertex_pointer.get()[this->vertex_index].uv_x = 1.0f;
+			this->vertex_pointer.get()[this->vertex_index].uv_y = 0.0f;
+			this->vertex_index++;
+
+			this->vertex_pointer.get()[this->vertex_index].x = a_x;
+			this->vertex_pointer.get()[this->vertex_index].y = a_y + 300.0f;
+			this->vertex_pointer.get()[this->vertex_index].z = 0.0f;
+			this->vertex_pointer.get()[this->vertex_index].r = a_color.r;
+			this->vertex_pointer.get()[this->vertex_index].g = a_color.g;
+			this->vertex_pointer.get()[this->vertex_index].b = a_color.b;
+			this->vertex_pointer.get()[this->vertex_index].a = a_color.a;
+			this->vertex_pointer.get()[this->vertex_index].uv_x = 0.0f;
+			this->vertex_pointer.get()[this->vertex_index].uv_y = 0.03f;
+			this->vertex_index++;
+
+			this->vertex_pointer.get()[this->vertex_index].x = a_x + 400.0f;
+			this->vertex_pointer.get()[this->vertex_index].y = a_y;
+			this->vertex_pointer.get()[this->vertex_index].z = 0.0f;
+			this->vertex_pointer.get()[this->vertex_index].r = a_color.r;
+			this->vertex_pointer.get()[this->vertex_index].g = a_color.g;
+			this->vertex_pointer.get()[this->vertex_index].b = a_color.b;
+			this->vertex_pointer.get()[this->vertex_index].a = a_color.a;
+			this->vertex_pointer.get()[this->vertex_index].uv_x = 1.0f;
+			this->vertex_pointer.get()[this->vertex_index].uv_y = 0.0f;
+			this->vertex_index++;
+
+			this->vertex_pointer.get()[this->vertex_index].x = a_x + 400.0f;
+			this->vertex_pointer.get()[this->vertex_index].y = a_y + 300.0f;
+			this->vertex_pointer.get()[this->vertex_index].z = 0.0f;
+			this->vertex_pointer.get()[this->vertex_index].r = a_color.r;
+			this->vertex_pointer.get()[this->vertex_index].g = a_color.g;
+			this->vertex_pointer.get()[this->vertex_index].b = a_color.b;
+			this->vertex_pointer.get()[this->vertex_index].a = a_color.a;
+			this->vertex_pointer.get()[this->vertex_index].uv_x = 1.0f;
+			this->vertex_pointer.get()[this->vertex_index].uv_y = 0.03f;
 			this->vertex_index++;
 		}
 
@@ -251,15 +307,18 @@ namespace NCommon
 						this->d3d11->Render_VSSetShader(this->vertexshader_id);
 						this->d3d11->Render_PSSetShader(this->pixelshader_id);
 
+						//テクスチャー設定。
+						this->d3d11->Render_SetTexture(0,this->d3d11->Render_GetFontTexture());
+
 						//トポロジー。
-						this->d3d11->Render_SetPrimitiveTopology(NBsys::ND3d11::D3d11_TopologyType::Id::LineList);
+						this->d3d11->Render_SetPrimitiveTopology(NBsys::ND3d11::D3d11_TopologyType::Id::TriangleList);
 
 						//ブレンドステータス。
 						this->d3d11->Render_SetBlendState(this->blendstate_id);
 
 						//コンスタントバッファ。
-						DrawLine_VS_ConstantBuffer_B0 t_vs_constantbuffer_b0;
-						DrawLine_PS_ConstantBuffer_B0 t_ps_constantbuffer_b0;
+						DrawFont_VS_ConstantBuffer_B0 t_vs_constantbuffer_b0;
+						DrawFont_PS_ConstantBuffer_B0 t_ps_constantbuffer_b0;
 						{
 							t_vs_constantbuffer_b0.view_projection = t_view_projection.Make_Transpose();
 						}

@@ -199,7 +199,7 @@ struct ModelParts
 };
 sharedptr<STLVector<ModelParts>::Type> s_model;
 
-sharedptr<common::D3d11_DrawLine_Manager> s_drawline_manager;
+sharedptr<NCommon::D3d11_DrawLine_Manager> s_drawline_manager;
 
 
 void LoadPmx()
@@ -401,7 +401,7 @@ void Test_Main()
 
 	LoadPmx();
 
-	s_drawline_manager.reset(new common::D3d11_DrawLine_Manager(s_d3d11));
+	s_drawline_manager.reset(new NCommon::D3d11_DrawLine_Manager(s_d3d11));
 
 	while (true)
 	{

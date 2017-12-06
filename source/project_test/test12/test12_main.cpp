@@ -27,6 +27,7 @@
 /** include
 */
 #include "../common/d3d11_drawline.h"
+#include "../common/d3d11_drawfont.h"
 
 
 /** Blib_DebugAssert_Callback
@@ -81,6 +82,13 @@ static sharedptr<NBsys::ND3d11::D3d11> s_d3d11;
 sharedptr< NBsys::NFont::Font > s_font;
 
 
+//asyncresult
+AsyncResult<bool> t_vertexshader_asyncresult;
+AsyncResult<bool> t_pixelshader_asyncresult;
+s32 t_vertexshader_id = -1;
+s32 t_pixelshader_id = -1;
+
+
 /** App
 */
 class App
@@ -105,7 +113,11 @@ private:
 
 	/** ライン描画。
 	*/
-	sharedptr<common::D3d11_DrawLine_Manager> drawline_manager;
+	sharedptr<NCommon::D3d11_DrawLine_Manager> drawline_manager;
+
+	/** フォント描画。
+	*/
+	sharedptr<NCommon::D3d11_DrawFont_Manager> drawfont_manager;
 
 	/** カメラ。
 	*/
@@ -134,7 +146,10 @@ public:
 		this->rasterizerstate_cull_none_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::NONE);
 
 		//ライン描画。
-		this->drawline_manager.reset(new common::D3d11_DrawLine_Manager(s_d3d11));
+		this->drawline_manager.reset(new NCommon::D3d11_DrawLine_Manager(s_d3d11));
+
+		//フォント描画。
+		this->drawfont_manager.reset(new NCommon::D3d11_DrawFont_Manager(s_d3d11));
 	}
 
 	/** destructor
@@ -151,10 +166,17 @@ public:
 		//ライン描画。
 		this->drawline_manager->PreUpdate();
 
+		//フォント描画。
+		this->drawfont_manager->PreUpdate();
+
 		switch(this->step){
 		case 0:
 			{
 				if(this->drawline_manager->IsBusy() == true){
+					break;
+				}
+
+				if(this->drawfont_manager->IsBusy() == true){
 					break;
 				}
 
@@ -199,6 +221,10 @@ public:
 		s_d3d11->Render_ClearDepthStencilView();
 
 		if(this->draw){
+
+			//フォント描画。開始。
+			s_d3d11->Render_DrawFont_StartClear();
+
 			//プロジェクション。
 			NBsys::NGeometry::Geometry_Matrix_44 t_projection;
 			t_projection.Set_PerspectiveProjectionMatrix(static_cast<f32>(s_width),static_cast<f32>(s_height),this->camera_fov_deg,this->camera_near,this->camera_far);
@@ -207,28 +233,28 @@ public:
 			NBsys::NGeometry::Geometry_Matrix_44 t_view;
 			t_view.Set_ViewMatrix(this->camera_target,this->camera_position,this->camera_up);
 
-			//ライン描画。
-			this->drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(-100,0,0),NBsys::NGeometry::Geometry_Vector3(100,0,0),NBsys::NColor::Color_F(1.0f,0.0f,0.0f,1.0f));
-			this->drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(0,-100,0),NBsys::NGeometry::Geometry_Vector3(0,100,0),NBsys::NColor::Color_F(0.0f,1.0f,0.0f,1.0f));
-			this->drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(0,0,-100),NBsys::NGeometry::Geometry_Vector3(0,0,100),NBsys::NColor::Color_F(0.0f,0.0f,1.0f,1.0f));
-
 			{
-				//this->rootsearch.SearchRoot(NBsys::NGeometry::Geometry_Vector3(0,0,0),NBsys::NGeometry::Geometry_Vector3(10,0,-10));
+				//ライン描画。
+				this->drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(-100,0,0),NBsys::NGeometry::Geometry_Vector3(100,0,0),NBsys::NColor::Color_F(1.0f,0.0f,0.0f,1.0f));
+				this->drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(0,-100,0),NBsys::NGeometry::Geometry_Vector3(0,100,0),NBsys::NColor::Color_F(0.0f,1.0f,0.0f,1.0f));
+				this->drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(0,0,-100),NBsys::NGeometry::Geometry_Vector3(0,0,100),NBsys::NColor::Color_F(0.0f,0.0f,1.0f,1.0f));
 
-				/*
-				for(s32 ii=0;ii<static_cast<s32>(this->rootsearch.node_pool.size());ii++){
-					NBsys::NGeometry::Geometry_Vector3 t_start = this->rootsearch.node_pool[ii].pos;
-					for(s32 jj=0;jj<static_cast<s32>(this->rootsearch.node_pool[ii].connect_index_list.size());jj++){
-						s32 t_end_index = this->rootsearch.node_pool[ii].connect_index_list[jj];
-						NBsys::NGeometry::Geometry_Vector3 t_end = this->rootsearch.node_pool[t_end_index].pos;
-						this->drawline_manager->DrawLine(t_start,t_end,NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
-					}
-				}
-				*/
+				//ライン描画。
+				this->drawline_manager->Update(t_view * t_projection);
 			}
 
-			//ライン描画。
-			this->drawline_manager->Update(t_view * t_projection);
+			{
+				//プロジェクション。
+				t_projection.Set_OrthographicProjectionMatrix(0,static_cast<f32>(s_width),0,static_cast<f32>(s_height),0.0f,1.0f);
+
+				//ビュー。
+				t_view.Set_Identity();
+
+				//文字描画。
+				this->drawfont_manager->DrawFont(L"あいうえお",16.0f,0.0f,0.0f,NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
+				this->drawfont_manager->Update(t_view * t_projection);
+			}
+
 		}
 	}
 };
@@ -256,7 +282,7 @@ void Test_Main()
 	s_d3d11->Render_Create(s_window,s_width,s_height);
 
 	s_font.reset(new NBsys::NFont::Font(L"MS ゴシック",16));
-	s_d3d11->Render_SetFont(s_font,16,"font");
+	s_d3d11->Render_SetFont(s_font,16,L"font");
 
 	//パフォーマンスカウンター。
 	u64 t_pcounter = 0ULL;

@@ -22,6 +22,7 @@
 /** include
 */
 #include "./d3d11_impl.h"
+#include "./d3d11_impl_font.h"
 
 
 /** include
@@ -537,7 +538,7 @@ namespace NBsys{namespace ND3d11
 
 	/** CreateTexture
 	*/
-	s32 D3d11_Impl::CreateTexture(sharedptr<NBsys::NTexture::Texture>& a_texture)
+	s32 D3d11_Impl::CreateTexture(sharedptr<NBsys::NTexture::Texture>& a_texture,bool a_write_flag)
 	{
 		//ＩＤ。
 		s32 t_texture_id = this->id_maker.MakeID();
@@ -550,7 +551,7 @@ namespace NBsys{namespace ND3d11
 		//レンダーコマンド。
 		sharedptr<NBsys::NActionBatching::ActionBatching_ActionList> t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
 		{ 
-			t_actionlist->Add(new D3d11_Impl_ActionBatching_Texture_Create(*this,t_texture));
+			t_actionlist->Add(new D3d11_Impl_ActionBatching_Texture_Create(*this,t_texture,a_write_flag));
 		}
 		this->StartBatching(t_actionlist);
 
@@ -815,7 +816,7 @@ namespace NBsys{namespace ND3d11
 
 	/** Render_CreateTexture
 	*/
-	void D3d11_Impl::Render_CreateTexture(sharedptr<D3d11_Impl_Texture>& a_texture)
+	void D3d11_Impl::Render_CreateTexture(sharedptr<D3d11_Impl_Texture>& a_texture,bool a_write_flag)
 	{
 		{
 			D3D11_TEXTURE2D_DESC t_desc;
@@ -828,9 +829,19 @@ namespace NBsys{namespace ND3d11
 				t_desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 				t_desc.SampleDesc.Count = 1;
 				t_desc.SampleDesc.Quality = 0;
-				t_desc.Usage = D3D11_USAGE_DEFAULT;
+				if(a_write_flag){
+					//GPU (読み取りのみ) と CPU (書き込みのみ) によるアクセスが可能なリソース。
+					t_desc.Usage = D3D11_USAGE_DYNAMIC;
+				}else{
+					t_desc.Usage = D3D11_USAGE_DEFAULT;
+				}
 				t_desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
-				t_desc.CPUAccessFlags = 0;
+				if(a_write_flag){
+					//リソースをマップ可能にし、CPU がそのリソースの内容を変更できるようにします。
+					t_desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+				}else{
+					t_desc.CPUAccessFlags = 0;
+				}
 				t_desc.MiscFlags = 0;
 			}
 
@@ -954,9 +965,9 @@ namespace NBsys{namespace ND3d11
 	/** Render_SetFont
 	*/
 	#if(BSYS_FONT_ENABLE)
-	void D3d11_Impl::Render_SetFont(sharedptr<NBsys::NFont::Font>& a_font,s32 a_texture_width,const STLString& a_name)
+	void D3d11_Impl::Render_SetFont(sharedptr<NBsys::NFont::Font>& a_font,s32 a_texture_width,const STLWString& a_name)
 	{
-		//TODO:
+		this->font.reset(new D3d11_Impl_Font(*this,a_font,a_texture_width,a_name));
 	}
 	#endif
 
@@ -965,7 +976,20 @@ namespace NBsys{namespace ND3d11
 	#if(BSYS_FONT_ENABLE)
 	void D3d11_Impl::Render_DrawFont_StartClear()
 	{
-		//TODO:
+		if(this->font != nullptr){
+			this->font->ResetLock();
+		}
+	}
+	#endif
+
+	/** Render_UpdateFontTexture
+	*/
+	#if(BSYS_FONT_ENABLE)
+	void D3d11_Impl::Render_UpdateFontTexture(const STLWString& a_string)
+	{
+		if(this->font != nullptr){
+			this->font->UpdateFontTexture(a_string);
+		}
 	}
 	#endif
 
@@ -974,7 +998,21 @@ namespace NBsys{namespace ND3d11
 	#if(BSYS_FONT_ENABLE)
 	void D3d11_Impl::Render_DrawFont(const STLWString& a_string,f32 a_font_size,f32 a_x,f32 a_y,const NBsys::NColor::Color_F& a_color)
 	{
-		//TODO:
+		if(this->font != nullptr){
+			this->font->DrawFont(a_string,a_font_size,a_x,a_y,a_color);
+		}
+	}
+	#endif
+
+	/** Render_GetFontTexture
+	*/
+	#if(BSYS_FONT_ENABLE)
+	s32 D3d11_Impl::Render_GetFontTexture()
+	{
+		if(this->font != nullptr){
+			return this->font->GetTexture();
+		}
+		return -1;
 	}
 	#endif
 
@@ -1319,15 +1357,6 @@ namespace NBsys{namespace ND3d11
 
 		ASSERT(0);
 	}
-
-	/** Render_DrawLine
-	*/
-	void D3d11_Impl::Render_DrawLine()
-	{
-		this->devicecontext->DrawAuto();
-	}
-
-
 }}
 #endif
 
