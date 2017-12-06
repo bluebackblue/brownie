@@ -78,7 +78,7 @@ namespace NBsys{namespace NOpengl
 						GLint t_infoLogLength;
 						glGetShaderiv(t_shader_rawid.rawid,GL_INFO_LOG_LENGTH,&t_infoLogLength);
 						sharedptr<GLchar> t_logbuffer(new GLchar[t_infoLogLength],default_delete<GLchar[]>());
-						glGetShaderInfoLog(t_shader_rawid.rawid,t_infoLogLength,NULL,t_logbuffer.get());
+						glGetShaderInfoLog(t_shader_rawid.rawid,t_infoLogLength,nullptr,t_logbuffer.get());
 						TAGLOG("CreateShader","%ls %s",a_name.c_str(),t_logbuffer.get());
 						return false;
 					}else{
@@ -123,7 +123,7 @@ namespace NBsys{namespace NOpengl
 						GLint t_infoLogLength;
 						glGetProgramiv(t_shaderprogram_rawid.rawid,GL_INFO_LOG_LENGTH,&t_infoLogLength);
 						sharedptr<GLchar> t_logbuffer(new GLchar[t_infoLogLength],default_delete<GLchar[]>());
-						glGetProgramInfoLog(t_shaderprogram_rawid.rawid,t_infoLogLength,NULL,t_logbuffer.get());
+						glGetProgramInfoLog(t_shaderprogram_rawid.rawid,t_infoLogLength,nullptr,t_logbuffer.get());
 						TAGLOG("LinkShader","%ls %ls %s",a_vertex_name.c_str(),a_fragment_name.c_str(),t_logbuffer.get());
 						return false;
 					}else{
