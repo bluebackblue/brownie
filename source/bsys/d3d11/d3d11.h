@@ -20,6 +20,7 @@
 #include "../color/color.h"
 #include "../file/file.h"
 #include "../texture/texture.h"
+#include "../font/font.h"
 
 
 /** include
@@ -118,6 +119,24 @@ namespace NBsys{namespace ND3d11
 		/** Render_Present
 		*/
 		bool Render_Present();
+
+		/** Render_SetFont
+		*/
+		#if(BSYS_FONT_ENABLE)
+		void Render_SetFont(sharedptr<NBsys::NFont::Font>& a_font,s32 a_texture_width,const STLString& a_name);
+		#endif
+
+		/** Render_DrawFont_StartClear
+		*/
+		#if(BSYS_FONT_ENABLE)
+		void Render_DrawFont_StartClear();
+		#endif
+
+		/** Render_DrawFont
+		*/
+		#if(BSYS_FONT_ENABLE)
+		void Render_DrawFont(const STLWString& a_string,f32 a_font_size,f32 a_x,f32 a_y,const NBsys::NColor::Color_F& a_color);
+		#endif
 
 	public:
 		/** Render_UpdateSubresource

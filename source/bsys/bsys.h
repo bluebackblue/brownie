@@ -82,5 +82,9 @@
 #endif
 
 
-
+/** include
+*/
+#if(BSYS_FONT_ENABLE)
+#include "./font/font.h"
+#endif
 

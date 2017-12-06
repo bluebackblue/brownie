@@ -384,10 +384,17 @@
 
 	d3d11
 
+	BSYS_D3D11_FONT_DRAWTYPEMAX		: 同時描画可能な文字種類数
+
 */
 #if !defined(BSYS_D3D11_ENABLE)
 	#define BSYS_D3D11_ENABLE								(0)
 #endif
+#if !defined(BSYS_D3D11_FONT_DRAWTYPEMAX)
+	#define BSYS_D3D11_FONT_DRAWTYPEMAX						(128)
+#endif
+
+
 
 /*
 
@@ -421,3 +428,13 @@
 #if !defined(BSYS_ROOTSEARCH_ENABLE)
 	#define BSYS_ROOTSEARCH_ENABLE							(0)
 #endif
+
+/*
+
+	フォント。
+
+*/
+#if !defined(BSYS_FONT_ENABLE)
+	#define BSYS_FONT_ENABLE								(0)
+#endif
+

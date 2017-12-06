@@ -28,11 +28,17 @@
 #include "../actionbatching/actionbatching.h"
 #include "../file/file.h"
 #include "../texture/texture.h"
+#include "../font/font.h"
 
 
 /** include
 */
 #include "./d3d11_layout.h"
+
+
+/** include
+*/
+#include "./d3d11_impl_font_decl.h"
 
 
 /** include
@@ -221,6 +227,10 @@ namespace NBsys{namespace ND3d11
 		*/
 		sharedptr<ID3D11DepthStencilView> depthstencilview;
 
+		/** font
+		*/
+		sharedptr<D3d11_Impl_Font> font;
+
 	private:
 
 		/** vertexshader_list
@@ -390,6 +400,26 @@ namespace NBsys{namespace ND3d11
 		/** Render_CreateRasterizerState
 		*/
 		void Render_CreateRasterizerState(sharedptr<D3d11_Impl_RasterizerState>& a_rasterizerstate);
+
+	public:
+
+		/** Render_SetFont
+		*/
+		#if(BSYS_FONT_ENABLE)
+		void Render_SetFont(sharedptr<NBsys::NFont::Font>& a_font,s32 a_texture_width,const STLString& a_name);
+		#endif
+
+		/** Render_DrawFont_StartClear
+		*/
+		#if(BSYS_FONT_ENABLE)
+		void Render_DrawFont_StartClear();
+		#endif
+
+		/** Render_DrawFont
+		*/
+		#if(BSYS_FONT_ENABLE)
+		void Render_DrawFont(const STLWString& a_string,f32 a_font_size,f32 a_x,f32 a_y,const NBsys::NColor::Color_F& a_color);
+		#endif
 
 	public:
 

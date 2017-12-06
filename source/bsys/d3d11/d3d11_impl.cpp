@@ -951,6 +951,33 @@ namespace NBsys{namespace ND3d11
 		}
 	}
 
+	/** Render_SetFont
+	*/
+	#if(BSYS_FONT_ENABLE)
+	void D3d11_Impl::Render_SetFont(sharedptr<NBsys::NFont::Font>& a_font,s32 a_texture_width,const STLString& a_name)
+	{
+		//TODO:
+	}
+	#endif
+
+	/** Render_DrawFont_StartClear
+	*/
+	#if(BSYS_FONT_ENABLE)
+	void D3d11_Impl::Render_DrawFont_StartClear()
+	{
+		//TODO:
+	}
+	#endif
+
+	/** Render_DrawFont
+	*/
+	#if(BSYS_FONT_ENABLE)
+	void D3d11_Impl::Render_DrawFont(const STLWString& a_string,f32 a_font_size,f32 a_x,f32 a_y,const NBsys::NColor::Color_F& a_color)
+	{
+		//TODO:
+	}
+	#endif
+
 	/** リクエスト処理。
 	*/
 	void D3d11_Impl::Render_Main()
