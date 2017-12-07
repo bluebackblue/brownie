@@ -73,7 +73,11 @@ void main(int a_argc,char** a_argv)
 		NBlib::BootInitialize();
 	}
 
-	Test_Main();
+	try{
+		Test_Main();
+	}catch(...){
+		DEBUGBREAK();
+	}
 }
 
 

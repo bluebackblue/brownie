@@ -39,6 +39,7 @@
 #include "./d3d11_impl_actionbatching_texture_create.h"
 #include "./d3d11_impl_actionbatching_blendstate_create.h"
 #include "./d3d11_impl_actionbatching_rasterizerstate_create.h"
+#include "./d3d11_impl_actionbatching_depthstencilstate_create.h"
 
 
 /** lib
@@ -68,7 +69,15 @@ namespace NBsys{namespace ND3d11
 		depthbuffer(),
 		depthstencilstate(),
 		depthstencilview(),
-		vertexshader_list()
+		//font_list(),
+		vertexshader_list(),
+		pixelshader_list(),
+		vertexbuffer_list(),
+		constantbuffer_list(),
+		texture_list(),
+		blendstate_list(),
+		rasterizerstate_list(),
+		depthstencilstate_list()
 	{
 	}
 
@@ -236,7 +245,7 @@ namespace NBsys{namespace ND3d11
 			D3D11_DEPTH_STENCIL_DESC t_desc;
 			{
 				Memory::memset(&t_desc,0,sizeof(t_desc));
-				t_desc.DepthEnable = true;
+				t_desc.DepthEnable = TRUE;
 				t_desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
 				t_desc.DepthFunc = D3D11_COMPARISON_LESS;
 			}
@@ -429,6 +438,16 @@ namespace NBsys{namespace ND3d11
 		return sharedptr<D3d11_Impl_RasterizerState>::null();
 	}
 
+	/** GetDepthStencilState
+	*/
+	sharedptr<D3d11_Impl_DepthStencilState> D3d11_Impl::GetDepthStencilState(s32 a_depthstencilstate_id)
+	{
+		STLMap<s32,sharedptr<D3d11_Impl_DepthStencilState>>::iterator t_it = this->depthstencilstate_list.find(a_depthstencilstate_id);
+		if(t_it->second != nullptr){
+			return t_it->second;
+		}
+		return sharedptr<D3d11_Impl_DepthStencilState>::null();
+	}
 
 	/** CreateVertexShader
 	*/
@@ -609,6 +628,32 @@ namespace NBsys{namespace ND3d11
 		this->rasterizerstate_list.insert(STLMap<s32,sharedptr<D3d11_Impl_RasterizerState>>::value_type(t_rasterizerstate_id,t_rasterizerstate));
 
 		return t_rasterizerstate_id;
+	}
+
+	/** CreateDepthStencilState
+	*/
+	s32 D3d11_Impl::CreateDepthStencilState(bool a_depthtest_flag,bool a_depthwrie_flag)
+	{
+		//ＩＤ。
+		s32 t_depthstencilstate_id = this->id_maker.MakeID();
+
+		sharedptr<D3d11_Impl_DepthStencilState> t_depthstencilstate = new D3d11_Impl_DepthStencilState();
+		{
+			t_depthstencilstate->depthtest_flag = a_depthtest_flag;
+			t_depthstencilstate->depthwrie_flag = a_depthwrie_flag;
+		}
+
+		//レンダーコマンド。
+		sharedptr<NBsys::NActionBatching::ActionBatching_ActionList> t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
+		{
+			t_actionlist->Add(new D3d11_Impl_ActionBatching_DepthStencilState_Create(*this,t_depthstencilstate));
+		}
+		this->StartBatching(t_actionlist);
+
+		//管理リスト。
+		this->depthstencilstate_list.insert(STLMap<s32,sharedptr<D3d11_Impl_DepthStencilState>>::value_type(t_depthstencilstate_id,t_depthstencilstate));
+
+		return t_depthstencilstate_id;
 	}
 
 	/** Render_CreateVertexShader
@@ -962,22 +1007,61 @@ namespace NBsys{namespace ND3d11
 		}
 	}
 
+	/** Render_CreateDepthStencilState
+	*/
+	void D3d11_Impl::Render_CreateDepthStencilState(sharedptr<D3d11_Impl_DepthStencilState>& a_depthstencilstate)
+	{
+		D3D11_DEPTH_STENCIL_DESC t_desc;
+		{
+			Memory::memset(&t_desc,0,sizeof(t_desc));
+
+			if(a_depthstencilstate->depthtest_flag){
+				//深度テストを使用する。
+				t_desc.DepthEnable = TRUE;
+			}else{
+				//深度テストを使用しない。
+				t_desc.DepthEnable = FALSE;
+			}
+
+			if(a_depthstencilstate->depthwrie_flag){
+				//深度ステンシル バッファーへの書き込みをオンにします。
+				t_desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+			}else{
+				//深度ステンシル バッファーへの書き込みをオフにします。
+				t_desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+			}
+
+
+			//ソース データが対象データよりも小さい場合、比較に合格します。
+			t_desc.DepthFunc = D3D11_COMPARISON_LESS;
+		}
+
+		ID3D11DepthStencilState* t_raw = nullptr;
+		HRESULT t_result = this->device->CreateDepthStencilState(&t_desc,&t_raw);
+		if(t_raw != nullptr){
+			a_depthstencilstate->depthstencilstate.reset(t_raw,release_delete<ID3D11DepthStencilState>());
+		}
+		if(FAILED(t_result)){
+			a_depthstencilstate->depthstencilstate.reset();
+		}
+	}
+
 	/** Render_SetFont
 	*/
 	#if(BSYS_FONT_ENABLE)
-	void D3d11_Impl::Render_SetFont(sharedptr<NBsys::NFont::Font>& a_font,s32 a_texture_width,const STLWString& a_name)
+	void D3d11_Impl::Render_SetFont(s32 a_fontindex,sharedptr<NBsys::NFont::Font>& a_font,s32 a_texture_width,const STLWString& a_name)
 	{
-		this->font.reset(new D3d11_Impl_Font(*this,a_font,a_texture_width,a_name));
+		this->font_list[a_fontindex].reset(new D3d11_Impl_Font(*this,a_font,a_texture_width,a_name));
 	}
 	#endif
 
 	/** Render_DrawFont_StartClear
 	*/
 	#if(BSYS_FONT_ENABLE)
-	void D3d11_Impl::Render_DrawFont_StartClear()
+	void D3d11_Impl::Render_DrawFont_StartClear(s32 a_fontindex)
 	{
-		if(this->font != nullptr){
-			this->font->ResetLock();
+		if(this->font_list[a_fontindex] != nullptr){
+			this->font_list[a_fontindex]->ResetLock();
 		}
 	}
 	#endif
@@ -985,21 +1069,21 @@ namespace NBsys{namespace ND3d11
 	/** Render_UpdateFontTexture
 	*/
 	#if(BSYS_FONT_ENABLE)
-	void D3d11_Impl::Render_UpdateFontTexture(const STLWString& a_string)
+	void D3d11_Impl::Render_UpdateFontTexture(s32 a_fontindex,const STLWString& a_string)
 	{
-		if(this->font != nullptr){
-			this->font->UpdateFontTexture(a_string);
+		if(this->font_list[a_fontindex] != nullptr){
+			this->font_list[a_fontindex]->UpdateFontTexture(a_string);
 		}
 	}
 	#endif
 
-	/** Render_DrawFont
+	/** Render_MakeFontVertex
 	*/
 	#if(BSYS_FONT_ENABLE)
-	void D3d11_Impl::Render_DrawFont(const STLWString& a_string,f32 a_font_size,f32 a_x,f32 a_y,const NBsys::NColor::Color_F& a_color)
+	void D3d11_Impl::Render_MakeFontVertex(s32 a_fontindex,const STLWString& a_string,sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4>>& a_vertex,f32 a_x,f32 a_y,f32 a_font_size,const NBsys::NColor::Color_F& a_color)
 	{
-		if(this->font != nullptr){
-			this->font->DrawFont(a_string,a_font_size,a_x,a_y,a_color);
+		if(this->font_list[a_fontindex] != nullptr){
+			this->font_list[a_fontindex]->MakeFontVertex(a_string,a_vertex,a_x,a_y,a_font_size,a_color);
 		}
 	}
 	#endif
@@ -1007,10 +1091,10 @@ namespace NBsys{namespace ND3d11
 	/** Render_GetFontTexture
 	*/
 	#if(BSYS_FONT_ENABLE)
-	s32 D3d11_Impl::Render_GetFontTexture()
+	s32 D3d11_Impl::Render_GetFontTexture(s32 a_fontindex)
 	{
-		if(this->font != nullptr){
-			return this->font->GetTexture();
+		if(this->font_list[a_fontindex] != nullptr){
+			return this->font_list[a_fontindex]->GetTexture();
 		}
 		return -1;
 	}
@@ -1126,7 +1210,7 @@ namespace NBsys{namespace ND3d11
 	*/
 	void D3d11_Impl::Render_VSSetShader(s32 a_vertexshader_id)
 	{
-		if(a_vertexshader_id){
+		if(a_vertexshader_id >= 0){
 			sharedptr<D3d11_Impl_VertexShader>& t_vertexshader = this->GetVertexShader(a_vertexshader_id);
 			if(t_vertexshader){
 
@@ -1357,6 +1441,24 @@ namespace NBsys{namespace ND3d11
 
 		ASSERT(0);
 	}
+
+	/** Render_SetDepthStencilState
+	*/
+	void D3d11_Impl::Render_SetDepthStencilState(s32 a_depthstencilstate_id)
+	{
+		if(a_depthstencilstate_id >= 0){
+			sharedptr<D3d11_Impl_DepthStencilState>& t_depthstencilstate = this->GetDepthStencilState(a_depthstencilstate_id);
+			if(t_depthstencilstate){
+
+				this->devicecontext->OMSetDepthStencilState(t_depthstencilstate->depthstencilstate.get(),0);
+
+				return;
+			}
+		}
+
+		ASSERT(0);
+	}
+
 }}
 #endif
 

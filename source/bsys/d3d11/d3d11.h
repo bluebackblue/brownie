@@ -21,6 +21,7 @@
 #include "../file/file.h"
 #include "../texture/texture.h"
 #include "../font/font.h"
+#include "../vertex/vertex.h"
 
 
 /** include
@@ -90,6 +91,10 @@ namespace NBsys{namespace ND3d11
 		*/
 		s32 CreateRasterizerState(D3d11_CullType::Id a_culltype);
 
+		/** CreateDepthStencilState
+		*/
+		s32 CreateDepthStencilState(bool a_depthtest_flag,bool a_depthwrie_flag);
+
 	public:
 		/** çÏê¨ÅB
 		*/
@@ -123,31 +128,31 @@ namespace NBsys{namespace ND3d11
 		/** Render_SetFont
 		*/
 		#if(BSYS_FONT_ENABLE)
-		void Render_SetFont(sharedptr<NBsys::NFont::Font>& a_font,s32 a_texture_width,const STLWString& a_name);
+		void Render_SetFont(s32 a_fontindex,sharedptr<NBsys::NFont::Font>& a_font,s32 a_texture_width,const STLWString& a_name);
 		#endif
 
 		/** Render_DrawFont_StartClear
 		*/
 		#if(BSYS_FONT_ENABLE)
-		void Render_DrawFont_StartClear();
+		void Render_DrawFont_StartClear(s32 a_fontindex);
 		#endif
 
 		/** Render_UpdateFontTexture
 		*/
 		#if(BSYS_FONT_ENABLE)
-		void Render_UpdateFontTexture(const STLWString& a_string);
+		void Render_UpdateFontTexture(s32 a_fontindex,const STLWString& a_string);
 		#endif
 
-		/** Render_DrawFont
+		/** Render_MakeFontVertex
 		*/
 		#if(BSYS_FONT_ENABLE)
-		void Render_DrawFont(const STLWString& a_string,f32 a_font_size,f32 a_x,f32 a_y,const NBsys::NColor::Color_F& a_color);
+		void Render_MakeFontVertex(s32 a_fontindex,const STLWString& a_string,sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4>>& a_vertex,f32 a_x,f32 a_y,f32 a_font_size,const NBsys::NColor::Color_F& a_color);
 		#endif
 
 		/** Render_GetFontTexture
 		*/
 		#if(BSYS_FONT_ENABLE)
-		s32 Render_GetFontTexture();
+		s32 Render_GetFontTexture(s32 a_fontindex);
 		#endif
 
 	public:
@@ -198,6 +203,10 @@ namespace NBsys{namespace ND3d11
 		/** Render_SetRasterizerState
 		*/
 		void Render_SetRasterizerState(s32 a_rasterizerstate_id);
+
+		/** Render_SetDepthStencilState
+		*/
+		void Render_SetDepthStencilState(s32 a_depthstencilstate_id);
 	};
 
 }}

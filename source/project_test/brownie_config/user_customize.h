@@ -17,9 +17,10 @@
 
 	DEF_TEST10	:	Ｄ３Ｄ１１。
 	DEF_TEST11	:	ダイクストラ法。
+	DEF_TEST12	:	デバッグメニュー。
 
 */
-#define DEF_TEST11
+#define DEF_TEST12
 
 
 #if defined(DEF_TEST0)
@@ -40,6 +41,12 @@
 	#define BSYS_WINDOW_ENABLE								(1)
 	#define BSYS_D3D11_ENABLE								(1)
 	#define BSYS_ROOTSEARCH_ENABLE							(1)
+
+#elif defined(DEF_TEST12)
+
+	#define BSYS_WINDOW_ENABLE								(1)
+	#define BSYS_D3D11_ENABLE								(1)
+	#define BSYS_FONT_ENABLE								(1)
 
 #elif defined(DEF_TEST22)
 

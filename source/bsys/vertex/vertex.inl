@@ -128,8 +128,25 @@ namespace NBsys{namespace NVertex
 	*/
 	template <typename T> void Vertex<T>::AddVertex(const T& a_vertex)
 	{
+		ASSERT(this->vertex_list.capacity() > this->vertex_list.size());
+
 		this->vertex_list.push_back(a_vertex);
 		this->parts_list[this->parts_list.size() - 1]->vertex_countof++;
+	}
+
+	/** バーテックスの容量確保。
+	*/
+	template <typename T> void Vertex<T>::ReserveVertex(s32 a_count_of)
+	{
+		this->vertex_list.reserve(a_count_of);
+	}
+
+	/** バーテクスのクリア。
+	*/
+	template <typename T> void Vertex<T>::ClearVertex()
+	{
+		this->vertex_list.clear();
+		this->parts_list[0]->vertex_countof = 0;
 	}
 
 	/** GetMaxParts

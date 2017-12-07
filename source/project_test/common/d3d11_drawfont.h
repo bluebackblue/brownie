@@ -87,6 +87,10 @@ namespace NCommon
 		*/
 		sharedptr<NBsys::ND3d11::D3d11> d3d11;
 
+		/** fontindex
+		*/
+		s32 fontindex;
+
 		/** asyncresult
 		*/
 		AsyncResult<bool> asyncresult_vertexshader;
@@ -102,38 +106,19 @@ namespace NCommon
 		s32 blendstate_id;
 		s32 rasterizerstate_cull_none_id;
 
-		/** VertexItem
-		*/
-		struct VertexItem
-		{
-			f32 x;
-			f32 y;
-			f32 z;
-
-			f32 r;
-			f32 g;
-			f32 b;
-			f32 a;
-
-			f32 uv_x;
-			f32 uv_y;
-		};
-
 		/** vertex
 		*/
-		sharedptr<VertexItem> vertex_pointer;
-		s32 vertex_stride;
-		s32 vertex_allcountof;
-		s32 vertex_index;
+		sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4>> vertex;
 
 	public:
 		/** constructor
 		*/
-		D3d11_DrawFont_Manager(sharedptr<NBsys::ND3d11::D3d11>& a_d3d11)
+		D3d11_DrawFont_Manager(sharedptr<NBsys::ND3d11::D3d11>& a_d3d11,s32 a_fontindex)
 			:
 			step(0),
 			isbusy(true),
-			d3d11(a_d3d11)
+			d3d11(a_d3d11),
+			fontindex(a_fontindex)
 		{
 		}
 
@@ -165,11 +150,11 @@ namespace NCommon
 						t_layout->push_back(NBsys::ND3d11::D3d11_Layout("POSITION",0,NBsys::ND3d11::D3d11_LayoutFormatType::R32G32B32_FLOAT,0,t_offset));
 						t_offset += sizeof(f32) * 3;
 
-						t_layout->push_back(NBsys::ND3d11::D3d11_Layout("COLOR",0,NBsys::ND3d11::D3d11_LayoutFormatType::R32G32B32A32_FLOAT,0,t_offset));
-						t_offset += sizeof(f32) * 4;
-
 						t_layout->push_back(NBsys::ND3d11::D3d11_Layout("TEXCOORD",0,NBsys::ND3d11::D3d11_LayoutFormatType::R32G32_FLOAT,0,t_offset));
 						t_offset += sizeof(f32) * 2;
+
+						t_layout->push_back(NBsys::ND3d11::D3d11_Layout("COLOR",0,NBsys::ND3d11::D3d11_LayoutFormatType::R32G32B32A32_FLOAT,0,t_offset));
+						t_offset += sizeof(f32) * 4;
 					}
 
 					//シェーダー。
@@ -185,10 +170,15 @@ namespace NCommon
 					this->ps_constantbuffer_b0_id = this->d3d11->CreateConstantBuffer(1,sizeof(DrawFont_PS_ConstantBuffer_B0));
 
 					//バーテックスバッファ。
-					this->vertex_allcountof = 2 * 1024;
-					this->vertex_stride = sizeof(VertexItem);
-					this->vertex_pointer.reset(new VertexItem[this->vertex_allcountof],default_delete<VertexItem[]>());
-					this->vertexbuffer_id = this->d3d11->CreateVertexBuffer(this->vertex_pointer.get(),this->vertex_stride,0,this->vertex_allcountof,true);
+					this->vertex = new NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4>();
+					this->vertex->AddParts("root");
+					s32 t_vertex_allcountof = 2 * 1024;
+					this->vertex->ReserveVertex(t_vertex_allcountof);
+
+					NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 t_vertex_dummy = {0};
+					this->vertex->AddVertex(t_vertex_dummy);
+					this->vertexbuffer_id = this->d3d11->CreateVertexBuffer(this->vertex->GetVertexPointer(),this->vertex->GetVertexStrideByte(),0,t_vertex_allcountof,true);
+					this->vertex->ClearVertex();
 
 					//ブレンドステータス。
 					this->blendstate_id = this->d3d11->CreateBlendState(true);
@@ -209,7 +199,7 @@ namespace NCommon
 				}break;
 			case 2:
 				{
-					this->vertex_index = 0;
+					this->vertex->ClearVertex();
 				}break;
 			}
 		}
@@ -218,73 +208,8 @@ namespace NCommon
 		*/
 		void DrawFont(const STLWString& a_string,f32 a_font_size,f32 a_x,f32 a_y,const NBsys::NColor::Color_F& a_color)
 		{
-			this->d3d11->Render_UpdateFontTexture(a_string);
-
-			this->vertex_pointer.get()[this->vertex_index].x = a_x;
-			this->vertex_pointer.get()[this->vertex_index].y = a_y;
-			this->vertex_pointer.get()[this->vertex_index].z = 0.0f;
-			this->vertex_pointer.get()[this->vertex_index].r = a_color.r;
-			this->vertex_pointer.get()[this->vertex_index].g = a_color.g;
-			this->vertex_pointer.get()[this->vertex_index].b = a_color.b;
-			this->vertex_pointer.get()[this->vertex_index].a = a_color.a;
-			this->vertex_pointer.get()[this->vertex_index].uv_x = 0.0f;
-			this->vertex_pointer.get()[this->vertex_index].uv_y = 0.0f;
-			this->vertex_index++;
-
-			this->vertex_pointer.get()[this->vertex_index].x = a_x;
-			this->vertex_pointer.get()[this->vertex_index].y = a_y + 300.0f;
-			this->vertex_pointer.get()[this->vertex_index].z = 0.0f;
-			this->vertex_pointer.get()[this->vertex_index].r = a_color.r;
-			this->vertex_pointer.get()[this->vertex_index].g = a_color.g;
-			this->vertex_pointer.get()[this->vertex_index].b = a_color.b;
-			this->vertex_pointer.get()[this->vertex_index].a = a_color.a;
-			this->vertex_pointer.get()[this->vertex_index].uv_x = 0.0f;
-			this->vertex_pointer.get()[this->vertex_index].uv_y = 0.03f;
-			this->vertex_index++;
-
-			this->vertex_pointer.get()[this->vertex_index].x = a_x + 400.0f;
-			this->vertex_pointer.get()[this->vertex_index].y = a_y;
-			this->vertex_pointer.get()[this->vertex_index].z = 0.0f;
-			this->vertex_pointer.get()[this->vertex_index].r = a_color.r;
-			this->vertex_pointer.get()[this->vertex_index].g = a_color.g;
-			this->vertex_pointer.get()[this->vertex_index].b = a_color.b;
-			this->vertex_pointer.get()[this->vertex_index].a = a_color.a;
-			this->vertex_pointer.get()[this->vertex_index].uv_x = 1.0f;
-			this->vertex_pointer.get()[this->vertex_index].uv_y = 0.0f;
-			this->vertex_index++;
-
-			this->vertex_pointer.get()[this->vertex_index].x = a_x;
-			this->vertex_pointer.get()[this->vertex_index].y = a_y + 300.0f;
-			this->vertex_pointer.get()[this->vertex_index].z = 0.0f;
-			this->vertex_pointer.get()[this->vertex_index].r = a_color.r;
-			this->vertex_pointer.get()[this->vertex_index].g = a_color.g;
-			this->vertex_pointer.get()[this->vertex_index].b = a_color.b;
-			this->vertex_pointer.get()[this->vertex_index].a = a_color.a;
-			this->vertex_pointer.get()[this->vertex_index].uv_x = 0.0f;
-			this->vertex_pointer.get()[this->vertex_index].uv_y = 0.03f;
-			this->vertex_index++;
-
-			this->vertex_pointer.get()[this->vertex_index].x = a_x + 400.0f;
-			this->vertex_pointer.get()[this->vertex_index].y = a_y;
-			this->vertex_pointer.get()[this->vertex_index].z = 0.0f;
-			this->vertex_pointer.get()[this->vertex_index].r = a_color.r;
-			this->vertex_pointer.get()[this->vertex_index].g = a_color.g;
-			this->vertex_pointer.get()[this->vertex_index].b = a_color.b;
-			this->vertex_pointer.get()[this->vertex_index].a = a_color.a;
-			this->vertex_pointer.get()[this->vertex_index].uv_x = 1.0f;
-			this->vertex_pointer.get()[this->vertex_index].uv_y = 0.0f;
-			this->vertex_index++;
-
-			this->vertex_pointer.get()[this->vertex_index].x = a_x + 400.0f;
-			this->vertex_pointer.get()[this->vertex_index].y = a_y + 300.0f;
-			this->vertex_pointer.get()[this->vertex_index].z = 0.0f;
-			this->vertex_pointer.get()[this->vertex_index].r = a_color.r;
-			this->vertex_pointer.get()[this->vertex_index].g = a_color.g;
-			this->vertex_pointer.get()[this->vertex_index].b = a_color.b;
-			this->vertex_pointer.get()[this->vertex_index].a = a_color.a;
-			this->vertex_pointer.get()[this->vertex_index].uv_x = 1.0f;
-			this->vertex_pointer.get()[this->vertex_index].uv_y = 0.03f;
-			this->vertex_index++;
+			this->d3d11->Render_UpdateFontTexture(this->fontindex,a_string);
+			this->d3d11->Render_MakeFontVertex(this->fontindex,a_string,this->vertex,a_x,a_y,a_font_size,a_color);
 		}
 
 		/** 更新。
@@ -300,46 +225,48 @@ namespace NCommon
 				}break;
 			case 2:
 				{
-					if(this->vertex_index > 0){
-						NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = a_view_projection;
+					if(this->vertex.get()){
+						if(this->vertex->GetVertexCountOf(0) > 0){
+							NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = a_view_projection;
 
-						//シェーダー。
-						this->d3d11->Render_VSSetShader(this->vertexshader_id);
-						this->d3d11->Render_PSSetShader(this->pixelshader_id);
+							//シェーダー。
+							this->d3d11->Render_VSSetShader(this->vertexshader_id);
+							this->d3d11->Render_PSSetShader(this->pixelshader_id);
 
-						//テクスチャー設定。
-						this->d3d11->Render_SetTexture(0,this->d3d11->Render_GetFontTexture());
+							//テクスチャー設定。
+							this->d3d11->Render_SetTexture(0,this->d3d11->Render_GetFontTexture(this->fontindex));
 
-						//トポロジー。
-						this->d3d11->Render_SetPrimitiveTopology(NBsys::ND3d11::D3d11_TopologyType::Id::TriangleList);
+							//トポロジー。
+							this->d3d11->Render_SetPrimitiveTopology(NBsys::ND3d11::D3d11_TopologyType::Id::TriangleList);
 
-						//ブレンドステータス。
-						this->d3d11->Render_SetBlendState(this->blendstate_id);
+							//ブレンドステータス。
+							this->d3d11->Render_SetBlendState(this->blendstate_id);
 
-						//コンスタントバッファ。
-						DrawFont_VS_ConstantBuffer_B0 t_vs_constantbuffer_b0;
-						DrawFont_PS_ConstantBuffer_B0 t_ps_constantbuffer_b0;
-						{
-							t_vs_constantbuffer_b0.view_projection = t_view_projection.Make_Transpose();
+							//コンスタントバッファ。
+							DrawFont_VS_ConstantBuffer_B0 t_vs_constantbuffer_b0;
+							DrawFont_PS_ConstantBuffer_B0 t_ps_constantbuffer_b0;
+							{
+								t_vs_constantbuffer_b0.view_projection = t_view_projection.Make_Transpose();
+							}
+
+							//コンスタントバッファーの内容更新。
+							this->d3d11->Render_UpdateSubresource(this->vs_constantbuffer_b0_id,&t_vs_constantbuffer_b0);
+							this->d3d11->Render_UpdateSubresource(this->ps_constantbuffer_b0_id,&t_ps_constantbuffer_b0);
+
+							//コンスタントバッファーをシェーダーに設定。
+							this->d3d11->Render_VSSetConstantBuffers(this->vs_constantbuffer_b0_id);
+							this->d3d11->Render_PSSetConstantBuffers(this->ps_constantbuffer_b0_id);
+
+							//ラスタライザー。
+							this->d3d11->Render_SetRasterizerState(this->rasterizerstate_cull_none_id);
+
+							//バーテックスバッファ。
+							this->d3d11->Render_ReMapVertexBuffer(this->vertexbuffer_id,this->vertex->GetVertexPointer(),this->vertex->GetVertexStrideByte() * this->vertex->GetVertexCountOf(0));
+							this->d3d11->Render_SetVertexBuffer(this->vertexbuffer_id);
+
+							//描画。
+							this->d3d11->Render_Draw(this->vertex->GetVertexCountOf(0),0);
 						}
-
-						//コンスタントバッファーの内容更新。
-						this->d3d11->Render_UpdateSubresource(this->vs_constantbuffer_b0_id,&t_vs_constantbuffer_b0);
-						this->d3d11->Render_UpdateSubresource(this->ps_constantbuffer_b0_id,&t_ps_constantbuffer_b0);
-
-						//コンスタントバッファーをシェーダーに設定。
-						this->d3d11->Render_VSSetConstantBuffers(this->vs_constantbuffer_b0_id);
-						this->d3d11->Render_PSSetConstantBuffers(this->ps_constantbuffer_b0_id);
-
-						//ラスタライザー。
-						this->d3d11->Render_SetRasterizerState(this->rasterizerstate_cull_none_id);
-
-						//バーテックスバッファ。
-						this->d3d11->Render_ReMapVertexBuffer(this->vertexbuffer_id,this->vertex_pointer.get(),this->vertex_index * this->vertex_stride);
-						this->d3d11->Render_SetVertexBuffer(this->vertexbuffer_id);
-
-						//描画。
-						this->d3d11->Render_Draw(this->vertex_index,0);
 					}
 				}break;
 			}

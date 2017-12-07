@@ -88,6 +88,20 @@ namespace NBlib
 		return std::sqrtf(a_value);
 	}
 
+	/** [static]2を底とする対数。
+	*/
+	f32 Math::log2f(f32 a_value)
+	{
+		return std::log2f(a_value);
+	}
+
+	/** [static]切り上げ。
+	*/
+	f32 Math::ceilf(f32 a_value)
+	{
+		return std::ceilf(a_value);
+	}
+
 	/** [static]絶対値。
 	*/
 	f32 Math::absf(f32 a_value)

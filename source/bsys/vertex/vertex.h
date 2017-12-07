@@ -82,6 +82,14 @@ namespace NBsys{namespace NVertex
 		*/
 		void AddVertex(const T& a_vertex);
 
+		/** バーテックスの容量確保。
+		*/
+		void ReserveVertex(s32 a_count_of);
+
+		/** バーテクスのクリア。
+		*/
+		void ClearVertex();
+
 	public:
 		/** GetMaxParts
 		*/

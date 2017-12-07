@@ -103,6 +103,13 @@ namespace NBsys{namespace ND3d11
 		return this->impl->CreateRasterizerState(a_culltype);
 	}
 
+	/** CreateDepthStencilState
+	*/
+	s32 D3d11::CreateDepthStencilState(bool a_depthtest_flag,bool a_depthwrie_flag)
+	{
+		return this->impl->CreateDepthStencilState(a_depthtest_flag,a_depthwrie_flag);
+	}
+
 	/** Render_Create
 	*/
 	void D3d11::Render_Create(sharedptr<NWindow::Window>& a_window,s32 a_width,s32 a_height)
@@ -155,45 +162,43 @@ namespace NBsys{namespace ND3d11
 	/** Render_SetFont
 	*/
 	#if(BSYS_FONT_ENABLE)
-	void D3d11::Render_SetFont(sharedptr<NBsys::NFont::Font>& a_font,s32 a_texture_width,const STLWString& a_name)
+	void D3d11::Render_SetFont(s32 a_fontindex,sharedptr<NBsys::NFont::Font>& a_font,s32 a_texture_width,const STLWString& a_name)
 	{
-		this->impl->Render_SetFont(a_font,a_texture_width,a_name);
+		this->impl->Render_SetFont(a_fontindex,a_font,a_texture_width,a_name);
 	}
 	#endif
 
 	/** Render_DrawFont_StartClear
 	*/
 	#if(BSYS_FONT_ENABLE)
-	void D3d11::Render_DrawFont_StartClear()
+	void D3d11::Render_DrawFont_StartClear(s32 a_fontindex)
 	{
-		this->impl->Render_DrawFont_StartClear();
+		this->impl->Render_DrawFont_StartClear(a_fontindex);
 	}
 	#endif
 
 	/** Render_UpdateFontTexture
 	*/
 	#if(BSYS_FONT_ENABLE)
-	void D3d11::Render_UpdateFontTexture(const STLWString& a_string)
+	void D3d11::Render_UpdateFontTexture(s32 a_fontindex,const STLWString& a_string)
 	{
-		this->impl->Render_UpdateFontTexture(a_string);
+		this->impl->Render_UpdateFontTexture(a_fontindex,a_string);
 	}
 	#endif
 
-	/** Render_DrawFont
+	/** Render_MakeFontVertex
 	*/
-	#if(BSYS_FONT_ENABLE)
-	void D3d11::Render_DrawFont(const STLWString& a_string,f32 a_font_size,f32 a_x,f32 a_y,const NBsys::NColor::Color_F& a_color)
+	void D3d11::Render_MakeFontVertex(s32 a_fontindex,const STLWString& a_string,sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4>>& a_vertex,f32 a_x,f32 a_y,f32 a_font_size,const NBsys::NColor::Color_F& a_color)
 	{
-		this->impl->Render_DrawFont(a_string,a_font_size,a_x,a_y,a_color);
+		this->impl->Render_MakeFontVertex(a_fontindex,a_string,a_vertex,a_x,a_y,a_font_size,a_color);
 	}
-	#endif
 
 	/** Render_GetFontTexture
 	*/
 	#if(BSYS_FONT_ENABLE)
-	s32 D3d11::Render_GetFontTexture()
+	s32 D3d11::Render_GetFontTexture(s32 a_fontindex)
 	{
-		return this->impl->Render_GetFontTexture();
+		return this->impl->Render_GetFontTexture(a_fontindex);
 	}
 	#endif
 
@@ -280,6 +285,14 @@ namespace NBsys{namespace ND3d11
 	{
 		this->impl->Render_SetRasterizerState(a_rasterizerstate_id);
 	}
+
+	/** Render_SetDepthStencilState
+	*/
+	void D3d11::Render_SetDepthStencilState(s32 a_depthstencilstate_id)
+	{
+		this->impl->Render_SetDepthStencilState(a_depthstencilstate_id);
+	}
+
 }}
 #endif
 

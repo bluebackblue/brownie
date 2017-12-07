@@ -79,14 +79,22 @@ static sharedptr<NBsys::ND3d11::D3d11> s_d3d11;
 
 /** s_font
 */
-sharedptr< NBsys::NFont::Font > s_font;
+sharedptr< NBsys::NFont::Font > s_font16;
+sharedptr< NBsys::NFont::Font > s_font32;
+sharedptr< NBsys::NFont::Font > s_font64;
+
+/** fontindex
+*/
+s32 s_fontindex_16 = 0;
+s32 s_fontindex_32 = 1;
+s32 s_fontindex_64 = 2;
 
 
 //asyncresult
-AsyncResult<bool> t_vertexshader_asyncresult;
-AsyncResult<bool> t_pixelshader_asyncresult;
-s32 t_vertexshader_id = -1;
-s32 t_pixelshader_id = -1;
+//AsyncResult<bool> t_vertexshader_asyncresult;
+//AsyncResult<bool> t_pixelshader_asyncresult;
+//s32 t_vertexshader_id = -1;
+//s32 t_pixelshader_id = -1;
 
 
 /** App
@@ -111,13 +119,20 @@ private:
 	s32 rasterizerstate_cull_back_id;
 	s32 rasterizerstate_cull_none_id;
 
+	/** depthstencilstate
+	*/
+	s32 depthstencilstate_write_on_id;
+	s32 depthstencilstate_write_off_id;
+
 	/** ライン描画。
 	*/
 	sharedptr<NCommon::D3d11_DrawLine_Manager> drawline_manager;
 
 	/** フォント描画。
 	*/
-	sharedptr<NCommon::D3d11_DrawFont_Manager> drawfont_manager;
+	sharedptr<NCommon::D3d11_DrawFont_Manager> drawfont16_manager;
+	sharedptr<NCommon::D3d11_DrawFont_Manager> drawfont32_manager;
+	sharedptr<NCommon::D3d11_DrawFont_Manager> drawfont64_manager;
 
 	/** カメラ。
 	*/
@@ -145,11 +160,18 @@ public:
 		this->rasterizerstate_cull_back_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::BACK);
 		this->rasterizerstate_cull_none_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::NONE);
 
+		/** 深度ステンシル。
+		*/
+		this->depthstencilstate_write_on_id = s_d3d11->CreateDepthStencilState(true,true);
+		this->depthstencilstate_write_off_id = s_d3d11->CreateDepthStencilState(true,false);
+
 		//ライン描画。
 		this->drawline_manager.reset(new NCommon::D3d11_DrawLine_Manager(s_d3d11));
 
 		//フォント描画。
-		this->drawfont_manager.reset(new NCommon::D3d11_DrawFont_Manager(s_d3d11));
+		this->drawfont16_manager.reset(new NCommon::D3d11_DrawFont_Manager(s_d3d11,s_fontindex_16));
+		this->drawfont32_manager.reset(new NCommon::D3d11_DrawFont_Manager(s_d3d11,s_fontindex_32));
+		this->drawfont64_manager.reset(new NCommon::D3d11_DrawFont_Manager(s_d3d11,s_fontindex_64));
 	}
 
 	/** destructor
@@ -167,7 +189,9 @@ public:
 		this->drawline_manager->PreUpdate();
 
 		//フォント描画。
-		this->drawfont_manager->PreUpdate();
+		this->drawfont16_manager->PreUpdate();
+		this->drawfont32_manager->PreUpdate();
+		this->drawfont64_manager->PreUpdate();
 
 		switch(this->step){
 		case 0:
@@ -176,7 +200,15 @@ public:
 					break;
 				}
 
-				if(this->drawfont_manager->IsBusy() == true){
+				if(this->drawfont16_manager->IsBusy() == true){
+					break;
+				}
+
+				if(this->drawfont32_manager->IsBusy() == true){
+					break;
+				}
+
+				if(this->drawfont64_manager->IsBusy() == true){
 					break;
 				}
 
@@ -223,7 +255,9 @@ public:
 		if(this->draw){
 
 			//フォント描画。開始。
-			s_d3d11->Render_DrawFont_StartClear();
+			s_d3d11->Render_DrawFont_StartClear(s_fontindex_16);
+			s_d3d11->Render_DrawFont_StartClear(s_fontindex_32);
+			s_d3d11->Render_DrawFont_StartClear(s_fontindex_64);
 
 			//プロジェクション。
 			NBsys::NGeometry::Geometry_Matrix_44 t_projection;
@@ -250,11 +284,21 @@ public:
 				//ビュー。
 				t_view.Set_Identity();
 
-				//文字描画。
-				this->drawfont_manager->DrawFont(L"あいうえお",16.0f,0.0f,0.0f,NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
-				this->drawfont_manager->Update(t_view * t_projection);
-			}
+				//クリア。
+				s_d3d11->Render_ClearDepthStencilView();
 
+				//深度ステンシル。
+				s_d3d11->Render_SetDepthStencilState(this->depthstencilstate_write_off_id);
+			
+				//文字描画。
+				this->drawfont16_manager->DrawFont(L"あいうえおかきくけこさしすせそたちつてと",		16.0f,	0.0f,			0.0f,			NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f));
+				this->drawfont32_manager->DrawFont(L"あいうえおかきくけこさしすせそたちつてと",		32.0f,	100.0f,			100.0f,			NBsys::NColor::Color_F(1.0f,0.0f,1.0f,1.0f));
+				this->drawfont64_manager->DrawFont(L"あいうえおかきくけこさしすせそたちつてと",		64.0f,	s_width/2.0f,	s_height/2.0f,	NBsys::NColor::Color_F(1.0f,1.0f,0.0f,1.0f));
+
+				this->drawfont16_manager->Update(t_view * t_projection);
+				this->drawfont32_manager->Update(t_view * t_projection);
+				this->drawfont64_manager->Update(t_view * t_projection);
+			}
 		}
 	}
 };
@@ -281,8 +325,14 @@ void Test_Main()
 	s_window->Create(L"sample",s_width,s_height);
 	s_d3d11->Render_Create(s_window,s_width,s_height);
 
-	s_font.reset(new NBsys::NFont::Font(L"MS ゴシック",16));
-	s_d3d11->Render_SetFont(s_font,16,L"font");
+	s_font16.reset(new NBsys::NFont::Font(L"MS ゴシック",14));
+	s_d3d11->Render_SetFont(s_fontindex_16,s_font16,16,L"font16");
+
+	s_font32.reset(new NBsys::NFont::Font(L"MS ゴシック",28));
+	s_d3d11->Render_SetFont(s_fontindex_32,s_font32,32,L"font32");
+
+	s_font64.reset(new NBsys::NFont::Font(L"MS ゴシック",60));
+	s_d3d11->Render_SetFont(s_fontindex_64,s_font64,64,L"font64");
 
 	//パフォーマンスカウンター。
 	u64 t_pcounter = 0ULL;

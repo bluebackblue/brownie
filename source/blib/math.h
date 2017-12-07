@@ -80,6 +80,14 @@ namespace NBlib
 		*/
 		static f32 sqrtf(f32 a_value);
 
+		/** [static]2を底とする対数。
+		*/
+		static f32 log2f(f32 a_value);
+
+		/** [static]切り上げ。
+		*/
+		static f32 ceilf(f32 a_value);
+
 		/** [static]絶対値。
 		*/
 		static f32 absf(f32 a_value);

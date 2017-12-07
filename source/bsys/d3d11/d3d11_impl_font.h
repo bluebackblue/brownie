@@ -18,6 +18,7 @@
 */
 #include "../font/font.h"
 #include "../texture/texture.h"
+#include "../vertex/vertex.h"
 
 
 /** include
@@ -67,6 +68,10 @@ namespace NBsys{namespace ND3d11
 		/** texturewidth
 		*/
 		s32 texturewidth;
+
+		/** textureheight
+		*/
+		s32 textureheight;
 	
 		/** texture
 		*/
@@ -94,15 +99,17 @@ namespace NBsys{namespace ND3d11
 		D3d11_Impl_Font(D3d11_Impl& a_opengl_impl,const sharedptr< NBsys::NFont::Font >& a_font,s32 a_texture_width,const STLWString& a_name)
 			:
 			d3d11_impl(a_opengl_impl),
-			font(a_font),
-			texturewidth(a_texture_width)
+			font(a_font)
 		{
-			sharedptr<u8> t_pixel(new u8[this->texturewidth * this->texturewidth * BSYS_D3D11_FONT_DRAWTYPEMAX * 4]);
+			this->texturewidth = static_cast<s32>(NBlib::Math::powf(2,NBlib::Math::ceilf(NBlib::Math::log2f(static_cast<f32>(a_texture_width)))));
+			this->textureheight = static_cast<s32>(NBlib::Math::powf(2,NBlib::Math::ceilf(NBlib::Math::log2f(static_cast<f32>(this->texturewidth * BSYS_D3D11_FONT_DRAWTYPEMAX)))));
+
+			sharedptr<u8> t_pixel(new u8[this->texturewidth * this->textureheight * 4]);
 
 			this->texture.reset(new NBsys::NTexture::Texture(
 				t_pixel,
 				this->texturewidth,
-				this->texturewidth * BSYS_D3D11_FONT_DRAWTYPEMAX,
+				this->textureheight,
 				this->texturewidth * 4,
 				NBsys::NTexture::TextureType::R8G8B8A8,
 				a_name
@@ -166,8 +173,8 @@ namespace NBsys{namespace ND3d11
 		void UpdateFontTexture(const STLWString& a_string)
 		{
 			bool t_change = false;
-			s32 t_change_min = 0;
-			s32 t_change_max = BSYS_D3D11_FONT_DRAWTYPEMAX - 1;
+			s32 t_change_min = BSYS_D3D11_FONT_DRAWTYPEMAX;
+			s32 t_change_max = -1;
 
 			for(s32 ii=0;ii<static_cast<s32>(a_string.length());ii++){
 
@@ -205,6 +212,13 @@ namespace NBsys{namespace ND3d11
 							//テクスチャーに書き込み。
 							NBsys::NFont::Font_State t_font_state = this->font->GetPixel_R8G8B8A8(this->texture->GetPixel(),t_font_index * (this->texturewidth * this->texturewidth * 4),this->texturewidth,this->texturewidth,t_code);
 							t_change = true;
+
+							if(t_change_min > t_font_index){
+								t_change_min = t_font_index;
+							}
+							if(t_change_max < t_font_index){
+								t_change_max = t_font_index;
+							}
 							
 							//登録。
 							this->list[t_font_index].code = t_code;
@@ -219,39 +233,46 @@ namespace NBsys{namespace ND3d11
 			}
 
 			if(t_change){
-
 				sharedptr<D3d11_Impl_Texture>& t_texture = this->d3d11_impl.GetTexture(this->textureid);
 				if(t_texture){
 					D3D11_MAPPED_SUBRESOURCE t_mapped_resource;
 					HRESULT t_result = this->d3d11_impl.GetDeviceContext()->Map(t_texture->texture2d.get(),0,D3D11_MAP_WRITE_DISCARD,0,&t_mapped_resource);
 
 					if(SUCCEEDED(t_result)){
+						if(t_mapped_resource.RowPitch == this->texturewidth * 4){
 
-						s32 t_start = t_change_min * (this->texturewidth * this->texturewidth * 4);
-						s32 t_end = (t_change_max + 1) * (this->texturewidth * this->texturewidth * 4);
-						s32 t_max = BSYS_D3D11_FONT_DRAWTYPEMAX * (this->texturewidth * this->texturewidth * 4);
+							u8* t_to = &reinterpret_cast<u8*>(t_mapped_resource.pData)[t_change_min * this->texturewidth * this->texturewidth * 4];
+							u8* t_from = &this->texture->GetPixel().get()[t_change_min * this->texturewidth * this->texturewidth * 4];
 
-						u8* t_to_pointer = &reinterpret_cast<u8*>(t_mapped_resource.pData)[t_start];
-						u8* t_from_pointer = &this->texture->GetPixel().get()[t_start];
+							s32 t_size = (t_change_max - t_change_min + 1) * this->texturewidth * this->texturewidth * 4;
+							Memory::memcpy(t_to,t_size,t_from,t_size);
 
-						Memory::memcpy(t_to_pointer,t_max - t_start,t_from_pointer,t_end - t_start);
+						}else{
+							for(s32 ii=t_change_min;ii<=t_change_max;ii++){
+								s32 t_blocksize_to = ii*t_mapped_resource.RowPitch*this->texturewidth;
+								s32 t_blocksize_from = ii*this->texturewidth*this->texturewidth*4;
+
+								for(s32 yy=0;yy<this->texturewidth;yy++){
+									u8* t_to = &reinterpret_cast<u8*>(t_mapped_resource.pData)[yy*t_mapped_resource.RowPitch + t_blocksize_to];
+									u8* t_from = &this->texture->GetPixel().get()[yy*this->texturewidth*4 + t_blocksize_from];
+
+									s32 t_size = this->texturewidth*4;
+									Memory::memcpy(t_to,t_size,t_from,t_size);
+								}
+							}
+						}
 
 						this->d3d11_impl.GetDeviceContext()->Unmap(t_texture->texture2d.get(),0);
 					}
 				}
 			}
 		}
-
-		/** DrawFont
+		
+		/** MakeFontVertex
 		*/
-		void DrawFont(const STLWString& a_string,f32 a_font_size,f32 a_x,f32 a_y,const NBsys::NColor::Color_F& a_color)
+		void MakeFontVertex(const STLWString& a_string,sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4>>& a_vertex,f32 a_x,f32 a_y,f32 a_font_size,const NBsys::NColor::Color_F& a_color)
 		{
-			f32 t_scale = a_font_size / this->texturewidth;
-
-			///todo:glBegin(GL_QUADS);
 			{
-				///todo:glColor4f(a_color.r,a_color.g,a_color.b,a_color.a);
-
 				f32 t_x = a_x;
 				f32 t_y = a_y;
 
@@ -267,40 +288,98 @@ namespace NBsys{namespace ND3d11
 							NBsys::NFont::Font_State& t_font_state = this->list[t_font_index].fontstate;
 
 							{
-								f32 t_width = 1.0f / BSYS_D3D11_FONT_DRAWTYPEMAX;
-								f32 t_pix = t_width / this->texturewidth;
+								f32 t_cell_y_rate = static_cast<f32>(this->texturewidth) / this->textureheight;
 
 								f32 t_uv_x0 = 0.0f;
-								f32 t_uv_y0 = t_width * t_font_index;
 								f32 t_uv_x1 = 1.0f;
-								f32 t_uv_y1 = t_width * (t_font_index + 1) - t_pix;
+								f32 t_uv_y0 = t_cell_y_rate * t_font_index;
+								f32 t_uv_y1 = t_cell_y_rate * (t_font_index + 1);
 
-								f32 t_rect_x0 = t_x + (t_font_state.x * t_scale);
+								f32 t_rect_x0 = t_x + (t_font_state.x * a_font_size / this->texturewidth);
 								f32 t_rect_x1 = t_rect_x0 + a_font_size;
-								f32 t_rect_y0 = t_y + (t_font_state.y * t_scale);
+								f32 t_rect_y0 = t_y + (t_font_state.y * a_font_size / this->texturewidth);
 								f32 t_rect_y1 = t_rect_y0 + a_font_size;
 
-								///todo:glTexCoord2f(t_uv_x0,t_uv_y0);
-								///todo:glVertex2f(t_rect_x0,t_rect_y0);
+								NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 t_vertex;
+								t_vertex.color_rr = a_color.r;
+								t_vertex.color_gg = a_color.g;
+								t_vertex.color_bb = a_color.b;
+								t_vertex.color_aa = a_color.a;
 
-								///todo:glTexCoord2f(t_uv_x1,t_uv_y0);
-								///todo:glVertex2f(t_rect_x1,t_rect_y0);
+								{
+									t_vertex.pos_xx = t_rect_x0;
+									t_vertex.pos_yy = t_rect_y0;
+									t_vertex.pos_zz = 0.0f;
 
-								///todo:glTexCoord2f(t_uv_x1,t_uv_y1);
-								///todo:glVertex2f(t_rect_x1,t_rect_y1);
+									t_vertex.uv_xx = t_uv_x0;
+									t_vertex.uv_yy = t_uv_y0;
 
-								///todo:glTexCoord2f(t_uv_x0,t_uv_y1);
-								///todo:glVertex2f(t_rect_x0,t_rect_y1);
+									a_vertex->AddVertex(t_vertex);
+								}
+
+								{
+									t_vertex.pos_xx = t_rect_x1;
+									t_vertex.pos_yy = t_rect_y0;
+									t_vertex.pos_zz = 0.0f;
+
+									t_vertex.uv_xx = t_uv_x1;
+									t_vertex.uv_yy = t_uv_y0;
+
+									a_vertex->AddVertex(t_vertex);
+								}
+
+
+								{
+									t_vertex.pos_xx = t_rect_x0;
+									t_vertex.pos_yy = t_rect_y1;
+									t_vertex.pos_zz = 0.0f;
+
+									t_vertex.uv_xx = t_uv_x0;
+									t_vertex.uv_yy = t_uv_y1;
+
+									a_vertex->AddVertex(t_vertex);
+								}
+
+								{
+									t_vertex.pos_xx = t_rect_x0;
+									t_vertex.pos_yy = t_rect_y1;
+									t_vertex.pos_zz = 0.0f;
+
+									t_vertex.uv_xx = t_uv_x0;
+									t_vertex.uv_yy = t_uv_y1;
+
+									a_vertex->AddVertex(t_vertex);
+								}
+
+								{
+									t_vertex.pos_xx = t_rect_x1;
+									t_vertex.pos_yy = t_rect_y0;
+									t_vertex.pos_zz = 0.0f;
+
+									t_vertex.uv_xx = t_uv_x1;
+									t_vertex.uv_yy = t_uv_y0;
+
+									a_vertex->AddVertex(t_vertex);
+								}
+
+								{
+									t_vertex.pos_xx = t_rect_x1;
+									t_vertex.pos_yy = t_rect_y1;
+									t_vertex.pos_zz = 0.0f;
+
+									t_vertex.uv_xx = t_uv_x1;
+									t_vertex.uv_yy = t_uv_y1;
+
+									a_vertex->AddVertex(t_vertex);
+								}
 							}
 
-							t_x += (t_font_state.cell_inc_x * t_scale);
+							t_x += (t_font_state.cell_inc_x * a_font_size / this->texturewidth);
 						}
 					}
 				}
 			}
-			///todo:glEnd();
 		}
-
 	};
 
 }}
