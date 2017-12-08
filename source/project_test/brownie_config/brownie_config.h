@@ -437,3 +437,14 @@
 	#define BSYS_FONT_ENABLE								(0)
 #endif
 
+
+/*
+
+	パッド。
+
+*/
+#if !defined(BSYS_PAD_ENABLE)
+	#define BSYS_PAD_ENABLE									(0)
+#endif
+
+

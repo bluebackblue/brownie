@@ -138,7 +138,7 @@ public:
 
 	/** destructor
 	*/
-	~App()
+	nonvirtual ~App()
 	{
 	}
 

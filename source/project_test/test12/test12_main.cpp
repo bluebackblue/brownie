@@ -28,6 +28,7 @@
 */
 #include "../common/d3d11_drawline.h"
 #include "../common/d3d11_drawfont.h"
+#include "../common/pad_device.h"
 
 
 /** Blib_DebugAssert_Callback
@@ -59,12 +60,12 @@ void Blib_DebugLog_Callback(const char* a_tag,const char* a_string)
 
 /** s_width
 */
-static s32 s_width = 800;
+static s32 s_width = 1600;
 
 
 /** s_height
 */
-static s32 s_height = 600;
+static s32 s_height = 900;
 
 
 /** s_window
@@ -79,9 +80,10 @@ static sharedptr<NBsys::ND3d11::D3d11> s_d3d11;
 
 /** s_font
 */
-sharedptr< NBsys::NFont::Font > s_font16;
-sharedptr< NBsys::NFont::Font > s_font32;
-sharedptr< NBsys::NFont::Font > s_font64;
+sharedptr<NBsys::NFont::Font> s_font16;
+sharedptr<NBsys::NFont::Font> s_font32;
+sharedptr<NBsys::NFont::Font> s_font64;
+
 
 /** fontindex
 */
@@ -90,11 +92,6 @@ s32 s_fontindex_32 = 1;
 s32 s_fontindex_64 = 2;
 
 
-//asyncresult
-//AsyncResult<bool> t_vertexshader_asyncresult;
-//AsyncResult<bool> t_pixelshader_asyncresult;
-//s32 t_vertexshader_id = -1;
-//s32 t_pixelshader_id = -1;
 
 
 /** App
@@ -176,7 +173,7 @@ public:
 
 	/** destructor
 	*/
-	~App()
+	nonvirtual ~App()
 	{
 	}
 
@@ -289,12 +286,22 @@ public:
 
 				//深度ステンシル。
 				s_d3d11->Render_SetDepthStencilState(this->depthstencilstate_write_off_id);
+
+				//マウス。
+				NBsys::NPad::TouchValue t_mouse_l = NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->GetTouchValue(NBsys::NPad::Pad_Virtual::TouchType::MOUSEL);
 			
 				//文字描画。
-				this->drawfont16_manager->DrawFont(L"あいうえおかきくけこさしすせそたちつてと",		16.0f,	0.0f,			0.0f,			NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f));
-				this->drawfont32_manager->DrawFont(L"あいうえおかきくけこさしすせそたちつてと",		32.0f,	100.0f,			100.0f,			NBsys::NColor::Color_F(1.0f,0.0f,1.0f,1.0f));
-				this->drawfont64_manager->DrawFont(L"あいうえおかきくけこさしすせそたちつてと",		64.0f,	s_width/2.0f,	s_height/2.0f,	NBsys::NColor::Color_F(1.0f,1.0f,0.0f,1.0f));
+				if(t_mouse_l.flag){
+					char t_buffer[32];
+					STLWString t_string = VASTRING(t_buffer,sizeof(t_buffer),L"%d %d",static_cast<s32>(t_mouse_l.x),static_cast<s32>(t_mouse_l.y));
+					this->drawfont16_manager->DrawFont(t_string,16.0f,t_mouse_l.x+30,t_mouse_l.y+30,NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f));
+					this->drawfont16_manager->DrawFont(t_string,16.0f,t_mouse_l.x-30,t_mouse_l.y-30,NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f));
+				}
 
+				this->drawfont32_manager->DrawFont(L"あいうえお",	32.0f,	100.0f,			100.0f,			NBsys::NColor::Color_F(1.0f,0.0f,1.0f,1.0f));
+				this->drawfont64_manager->DrawFont(L"あいうえお",	64.0f,	s_width/2.0f,	s_height/2.0f,	NBsys::NColor::Color_F(1.0f,1.0f,0.0f,1.0f));
+
+				//文字描画。
 				this->drawfont16_manager->Update(t_view * t_projection);
 				this->drawfont32_manager->Update(t_view * t_projection);
 				this->drawfont64_manager->Update(t_view * t_projection);
@@ -318,6 +325,8 @@ void Test_Main()
 	NBsys::NFile::StartSystem(1);
 	NBsys::NFile::SetRoot(0,L"./project_test");
 
+	NBsys::NPad::StartSystem(1);
+
 	s_window.reset(new NBsys::NWindow::Window());
 	s_d3d11.reset(new NBsys::ND3d11::D3d11());
 	s_app.reset(new App());
@@ -325,14 +334,20 @@ void Test_Main()
 	s_window->Create(L"sample",s_width,s_height);
 	s_d3d11->Render_Create(s_window,s_width,s_height);
 
-	s_font16.reset(new NBsys::NFont::Font(L"MS ゴシック",14));
+	s_font16.reset(new NBsys::NFont::Font(L"Arial",14));
 	s_d3d11->Render_SetFont(s_fontindex_16,s_font16,16,L"font16");
 
-	s_font32.reset(new NBsys::NFont::Font(L"MS ゴシック",28));
+	s_font32.reset(new NBsys::NFont::Font(L"Arial",28));
 	s_d3d11->Render_SetFont(s_fontindex_32,s_font32,32,L"font32");
 
-	s_font64.reset(new NBsys::NFont::Font(L"MS ゴシック",60));
+	s_font64.reset(new NBsys::NFont::Font(L"Arial",60));
 	s_d3d11->Render_SetFont(s_fontindex_64,s_font64,64,L"font64");
+
+	sharedptr<NBsys::NPad::Pad_Device_Base> t_pad_device(new NCommon::Pad_Device(s_window,s_d3d11));
+	NBsys::NPad::AddDevice(t_pad_device);
+	NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->AddTouch(NBsys::NPad::Pad_Virtual::TouchType::MOUSEL,NBsys::NPad::Pad_Device_Base::TouchType::DeviceTouch_1,t_pad_device);
+	NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->AddTouch(NBsys::NPad::Pad_Virtual::TouchType::MOUSER,NBsys::NPad::Pad_Device_Base::TouchType::DeviceTouch_2,t_pad_device);
+	NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->SetEnable(true);
 
 	//パフォーマンスカウンター。
 	u64 t_pcounter = 0ULL;
@@ -357,6 +372,9 @@ void Test_Main()
 			t_pcounter = t_pcounter_now;
 		}
 
+		//パッド。
+		NBsys::NPad::Update(true);
+
 		//更新。
 		s_app->Update(t_delta);
 
@@ -378,6 +396,8 @@ void Test_Main()
 	s_window.reset();
 
 	s_app.reset();
+
+	NBsys::NPad::EndSystem();
 
 	NBsys::NFile::EndSystemRequest();
 	NBsys::NFile::EndWaitSystem();

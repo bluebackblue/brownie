@@ -68,18 +68,32 @@ namespace NBsys{namespace NWindow
 		this->impl->Delete();
 	}
 
-	/** GetDefaultWidth
+	/** GetClientWidth
 	*/
-	s32 Window::GetDefaultWidth()
+	s32 Window::GetClientWidth()
 	{
-		return this->impl->GetDefaultWidth();
+		return this->impl->GetClientWidth();
 	}
 
-	/** GetDefaultHeight
+	/** GetClientHeight
 	*/
-	s32 Window::GetDefaultHeight()
+	s32 Window::GetClientHeight()
 	{
-		return this->impl->GetDefaultHeight();
+		return this->impl->GetClientHeight();
+	}
+
+	/** GetMouseX
+	*/
+	s32 Window::GetMouseX()
+	{
+		return this->impl->GetMouseX();
+	}
+
+	/** GetMouseY
+	*/
+	s32 Window::GetMouseY()
+	{
+		return this->impl->GetMouseY();
 	}
 
 	/** XVB

@@ -58,6 +58,8 @@ namespace NBsys{namespace ND3d11
 	*/
 	D3d11_Impl::D3d11_Impl()
 		:
+		width(),
+		height(),
 		id_maker(),
 		actionbatching_lockobject(),
 		actionbatching(),
@@ -88,10 +90,26 @@ namespace NBsys{namespace ND3d11
 		this->Render_Delete();
 	}
 
+	/** GetWidth
+	*/
+	s32 D3d11_Impl::GetWidth()
+	{
+		return this->width;
+	}
+
+	/** GetHeight
+	*/
+	s32 D3d11_Impl::GetHeight()
+	{
+		return this->height;
+	}
+
 	/** Render_Create
 	*/
 	void D3d11_Impl::Render_Create(sharedptr<NWindow::Window>& a_window,s32 a_width,s32 a_height)
 	{
+		this->width = a_width;
+		this->height = a_height;
 
 		D3D_FEATURE_LEVEL t_featureLevel = D3D_FEATURE_LEVEL_11_0;
 
@@ -156,8 +174,8 @@ namespace NBsys{namespace ND3d11
 			DXGI_SWAP_CHAIN_DESC1 t_swapchain_desc_1;
 			{
 				Memory::memset(&t_swapchain_desc_1,0,sizeof(t_swapchain_desc_1));
-				t_swapchain_desc_1.Width = static_cast<UINT>(a_width);
-				t_swapchain_desc_1.Height = static_cast<UINT>(a_height);
+				t_swapchain_desc_1.Width = static_cast<UINT>(this->width);
+				t_swapchain_desc_1.Height = static_cast<UINT>(this->height);
 				t_swapchain_desc_1.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 				t_swapchain_desc_1.SampleDesc.Count = 1;
 				t_swapchain_desc_1.SampleDesc.Quality = 0;
@@ -219,8 +237,8 @@ namespace NBsys{namespace ND3d11
 			D3D11_TEXTURE2D_DESC t_desc;
 			{
 				Memory::memset(&t_desc,0,sizeof(t_desc));
-				t_desc.Width = static_cast<UINT>(a_width);
-				t_desc.Height = static_cast<UINT>(a_height);
+				t_desc.Width = static_cast<UINT>(this->width);
+				t_desc.Height = static_cast<UINT>(this->height);
 				t_desc.MipLevels = 0;
 				t_desc.ArraySize = 1;
 				t_desc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;

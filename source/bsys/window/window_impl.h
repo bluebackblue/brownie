@@ -54,6 +54,11 @@ namespace NBsys{namespace NWindow
 		s32 default_width;
 		s32 default_height;
 
+		/** client
+		*/
+		s32 client_width;
+		s32 client_height;
+
 	public:
 		/** constructor
 		*/
@@ -72,13 +77,21 @@ namespace NBsys{namespace NWindow
 		*/
 		void Delete();
 
-		/** GetDefaultWidth
+		/** GetClientWidth
 		*/
-		s32 GetDefaultWidth();
+		s32 GetClientWidth();
 
-		/** GetDefaultHeight
+		/** GetClientHeight
 		*/
-		s32 GetDefaultHeight();
+		s32 GetClientHeight();
+
+		/** GetMouseX
+		*/
+		s32 GetMouseX();
+
+		/** GetMouseY
+		*/
+		s32 GetMouseY();
 
 		/** Update
 		*/
@@ -107,14 +120,6 @@ namespace NBsys{namespace NWindow
 		#if defined(PLATFORM_VCWIN)
 		HWND GetHandle();
 		#endif
-
-		/** GetMouseX
-		*/
-		s32 GetMouseX();
-
-		/** GetMouseY
-		*/
-		s32 GetMouseY();
 
 		/** StaticCallBackProc
 		*/

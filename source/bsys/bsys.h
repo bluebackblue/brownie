@@ -88,3 +88,10 @@
 #include "./font/font.h"
 #endif
 
+
+/** include
+*/
+#if(BSYS_PAD_ENABLE)
+#include "./pad/pad.h"
+#endif
+

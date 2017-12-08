@@ -35,12 +35,12 @@ namespace NBsys{namespace NFont
 	private:
 		/** impl
 		*/
-		sharedptr< Font_Impl > impl;
+		sharedptr<Font_Impl> impl;
 
 	public:
 		/** GetImpl
 		*/
-		const sharedptr< Font_Impl >& GetImpl() const;
+		const sharedptr<Font_Impl>& GetImpl() const;
 
 	public:
 		/** constructor
@@ -54,7 +54,7 @@ namespace NBsys{namespace NFont
 	public:
 		/** GetPixel_R8G8B8A8
 		*/
-		Font_State GetPixel_R8G8B8A8(sharedptr< u8 >& a_dest_data,s32 a_offset,s32 a_dest_width,s32 a_dest_height,wchar a_wchar);
+		Font_State GetPixel_R8G8B8A8(sharedptr<u8>& a_dest_data,s32 a_offset,s32 a_dest_width,s32 a_dest_height,wchar a_wchar);
 
 	};
 

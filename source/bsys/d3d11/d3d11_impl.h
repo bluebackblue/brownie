@@ -200,6 +200,13 @@ namespace NBsys{namespace ND3d11
 	class D3d11_Impl
 	{
 	private:
+		/** width
+		*/
+		s32 width;
+
+		/** height
+		*/
+		s32 height;
 
 		/** id_maker
 		*/
@@ -293,6 +300,14 @@ namespace NBsys{namespace ND3d11
 		nonvirtual ~D3d11_Impl();
 
 	public:
+		/** GetWidth
+		*/
+		s32 GetWidth();
+
+		/** GetHeight
+		*/
+		s32 GetHeight();
+
 		/** Render_Create
 		*/
 		void Render_Create(sharedptr<NWindow::Window>& a_window,s32 a_width,s32 a_height);

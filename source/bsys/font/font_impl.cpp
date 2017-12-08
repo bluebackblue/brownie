@@ -75,7 +75,7 @@ namespace NBsys{namespace NFont
 
 	/** GetPixel_R8G8B8A8
 	*/
-	Font_State Font_Impl::GetPixel_R8G8B8A8(sharedptr< u8 >& a_dest_data,s32 a_offset,s32 a_dest_width,s32 a_dest_height,wchar a_wchar)
+	Font_State Font_Impl::GetPixel_R8G8B8A8(sharedptr<u8>& a_dest_data,s32 a_offset,s32 a_dest_width,s32 a_dest_height,wchar a_wchar)
 	{
 		GLYPHMETRICS t_glyphmetrics = {0};
 		TEXTMETRIC t_text_metric = {0};
@@ -136,9 +136,9 @@ namespace NBsys{namespace NFont
 		*/
 		{
 			u8* t_dest_data = &a_dest_data.get()[a_offset];
-			Memory::memset(t_dest_data,0x00,a_dest_width*a_dest_height*4);
+			Memory::memset(t_dest_data,0x00,a_dest_width * a_dest_height * 4);
 
-			s32 t_buffer_alignment = static_cast<u16>(t_font_state.black_box_x+3) & 0xFFFC;
+			s32 t_buffer_alignment = static_cast<u16>(t_font_state.black_box_x + 3) & 0xFFFC;
 
 			s32 xx_max = t_font_state.black_box_x;
 			s32 yy_max = t_font_state.black_box_y;
@@ -157,7 +157,8 @@ namespace NBsys{namespace NFont
 
 					u8 t_alpha = t_buffer[t_buffer_offset];
 					if(t_alpha > 0){
-						t_alpha = static_cast<u8>((static_cast<s32>(t_alpha) << 2) - 1);
+						s32 t_alpha_32 = static_cast<s32>(t_alpha) * 4;
+						t_alpha = (t_alpha_32 <= 0xFF ? static_cast<u8>(t_alpha_32) : 0xFF);
 
 						t_dest_data[t_dest_offset+0] = 0xFF;
 						t_dest_data[t_dest_offset+1] = 0xFF;

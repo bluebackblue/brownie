@@ -55,13 +55,21 @@ namespace NBsys{namespace NWindow
 		*/
 		void Delete();
 
-		/** GetDefaultWidth
+		/** GetClientWidth
 		*/
-		s32 GetDefaultWidth();
+		s32 GetClientWidth();
 
-		/** GetDefaultHeight
+		/** GetClientHeight
 		*/
-		s32 GetDefaultHeight();
+		s32 GetClientHeight();
+
+		/** GetMouseX
+		*/
+		s32 GetMouseX();
+
+		/** GetMouseY
+		*/
+		s32 GetMouseY();
 
 		/** çXêVÅB
 		*/

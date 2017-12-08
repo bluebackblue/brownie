@@ -43,7 +43,9 @@ namespace NBsys{namespace NWindow
 		isactive(false),
 		isopen(false),
 		default_width(0),
-		default_height(0)
+		default_height(0),
+		client_width(0),
+		client_height(0)
 	{
 	}
 
@@ -54,18 +56,32 @@ namespace NBsys{namespace NWindow
 		this->Delete();
 	}
 
-	/** GetDefaultWidth
+	/** GetClientWidth
 	*/
-	s32 Window_Impl::GetDefaultWidth()
+	s32 Window_Impl::GetClientWidth()
 	{
-		return this->default_width;
+		return this->client_width;
 	}
 
-	/** GetDefaultHeight
+	/** GetClientHeight
 	*/
-	s32 Window_Impl::GetDefaultHeight()
+	s32 Window_Impl::GetClientHeight()
 	{
-		return this->default_height;
+		return this->client_height;
+	}
+
+	/** GetMouseX
+	*/
+	s32 Window_Impl::GetMouseX()
+	{
+		return this->mouse_x;
+	}
+
+	/** GetMouseY
+	*/
+	s32 Window_Impl::GetMouseY()
+	{
+		return this->mouse_y;
 	}
 
 	/** Create
@@ -78,8 +94,13 @@ namespace NBsys{namespace NWindow
 
 		this->default_width = a_width;
 		this->default_height = a_height;
+		this->client_width = a_width;
+		this->client_height = a_height;
 
 		const wchar_t* t_classname = L"brownie window class";
+
+		RECT t_rect = { 0, 0, a_width, a_height };
+		::AdjustWindowRect(&t_rect,WS_OVERLAPPEDWINDOW,FALSE);
 
 		WNDCLASSEX t_wndclass;
 		{
@@ -99,7 +120,7 @@ namespace NBsys{namespace NWindow
 
 		::RegisterClassEx(&t_wndclass);
 
-		HWND t_handle = ::CreateWindowEx(0,t_classname,a_title.c_str(),WS_OVERLAPPEDWINDOW,CW_USEDEFAULT,CW_USEDEFAULT,a_width+16,a_height+38,(HWND)WIN_NULL,(HMENU)WIN_NULL,t_instance,(LPSTR)WIN_NULL);
+		HWND t_handle = ::CreateWindowEx(0,t_classname,a_title.c_str(),WS_OVERLAPPEDWINDOW,CW_USEDEFAULT,CW_USEDEFAULT,t_rect.right - t_rect.left,t_rect.bottom - t_rect.top,(HWND)WIN_NULL,(HMENU)WIN_NULL,t_instance,(LPSTR)WIN_NULL);
 		if(t_handle != WIN_NULL){
 
 			#if defined(ROM_64BIT)
@@ -186,31 +207,11 @@ namespace NBsys{namespace NWindow
 	}
 	#endif
 	
-	/** GetMouseX
-	*/
-	s32 Window_Impl::GetMouseX()
-	{
-		return this->mouse_x;
-	}
-
-	/** GetMouseY
-	*/
-	s32 Window_Impl::GetMouseY()
-	{
-		return this->mouse_y;
-	}
-
 	/** CallBackProc
 	*/
 	#if defined(PLATFORM_VCWIN)
 	LRESULT Window_Impl::CallBackProc(HWND a_hwnd,UINT a_msg,WPARAM a_wparam,LPARAM a_lparam)
 	{
-		/*
-		auto l_getinput = [&](void){
-			return NInput::CInput::GetInstance();
-		};
-		*/
-
 		switch(a_msg){
 		case WM_CLOSE:
 			{
@@ -241,17 +242,16 @@ namespace NBsys{namespace NWindow
 			}break;
 		case WM_SIZE:
 			{
-				//this->width = LOWORD(a_lparam);
-				//this->height = HIWORD(a_lparam);
 				if((a_wparam == SIZE_MINIMIZED)||(a_wparam == SIZE_MAXHIDE)){
 					this->isview  = false;
 				}else{
+					this->client_width = static_cast<s32>(LOWORD(a_lparam));
+					this->client_height = static_cast<s32>(HIWORD(a_lparam));
 					this->isview  = true;
 				}
 			}break;
 		case WM_NCMOUSEMOVE:
 			{
-				//l_getinput()->SetMousePos(-1,-1);
 			}break;
 		case WM_MOUSEMOVE:
 			{

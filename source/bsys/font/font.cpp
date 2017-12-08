@@ -49,14 +49,14 @@ namespace NBsys{namespace NFont
 
 	/** GetImpl
 	*/
-	const sharedptr< Font_Impl >& Font::GetImpl() const
+	const sharedptr<Font_Impl>& Font::GetImpl() const
 	{
 		return this->impl;
 	}
 
 	/** GetPixel_R8G8B8A8
 	*/
-	Font_State Font::GetPixel_R8G8B8A8(sharedptr< u8 >& a_dest_data,s32 a_offset,s32 a_dest_width,s32 a_dest_height,wchar a_wchar)
+	Font_State Font::GetPixel_R8G8B8A8(sharedptr<u8>& a_dest_data,s32 a_offset,s32 a_dest_width,s32 a_dest_height,wchar a_wchar)
 	{
 		return this->impl->GetPixel_R8G8B8A8(a_dest_data,a_offset,a_dest_width,a_dest_height,a_wchar);
 	}
