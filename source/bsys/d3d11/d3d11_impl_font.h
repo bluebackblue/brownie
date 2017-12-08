@@ -269,7 +269,7 @@ namespace NBsys{namespace ND3d11
 		
 		/** MakeFontVertex
 		*/
-		void MakeFontVertex(const STLWString& a_string,sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4>>& a_vertex,f32 a_x,f32 a_y,f32 a_font_size,const NBsys::NColor::Color_F& a_color)
+		void MakeFontVertex(const STLWString& a_string,sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4>>& a_vertex,f32 a_x,f32 a_y,f32 a_z,f32 a_font_size,const NBsys::NColor::Color_F& a_color)
 		{
 			{
 				f32 t_scale = a_font_size / static_cast<f32>(this->texturewidth);
@@ -307,10 +307,11 @@ namespace NBsys{namespace ND3d11
 								t_vertex.color_bb = a_color.b;
 								t_vertex.color_aa = a_color.a;
 
+								//00
 								{
 									t_vertex.pos_xx = t_rect_x0;
 									t_vertex.pos_yy = t_rect_y0;
-									t_vertex.pos_zz = 0.0f;
+									t_vertex.pos_zz = a_z;
 
 									t_vertex.uv_xx = t_uv_x0;
 									t_vertex.uv_yy = t_uv_y0;
@@ -318,10 +319,11 @@ namespace NBsys{namespace ND3d11
 									a_vertex->AddVertex(t_vertex);
 								}
 
+								//10
 								{
 									t_vertex.pos_xx = t_rect_x1;
 									t_vertex.pos_yy = t_rect_y0;
-									t_vertex.pos_zz = 0.0f;
+									t_vertex.pos_zz = a_z;
 
 									t_vertex.uv_xx = t_uv_x1;
 									t_vertex.uv_yy = t_uv_y0;
@@ -329,10 +331,11 @@ namespace NBsys{namespace ND3d11
 									a_vertex->AddVertex(t_vertex);
 								}
 
+								//01
 								{
 									t_vertex.pos_xx = t_rect_x0;
 									t_vertex.pos_yy = t_rect_y1;
-									t_vertex.pos_zz = 0.0f;
+									t_vertex.pos_zz = a_z;
 
 									t_vertex.uv_xx = t_uv_x0;
 									t_vertex.uv_yy = t_uv_y1;
@@ -340,10 +343,11 @@ namespace NBsys{namespace ND3d11
 									a_vertex->AddVertex(t_vertex);
 								}
 
+								//01
 								{
 									t_vertex.pos_xx = t_rect_x0;
 									t_vertex.pos_yy = t_rect_y1;
-									t_vertex.pos_zz = 0.0f;
+									t_vertex.pos_zz = a_z;
 
 									t_vertex.uv_xx = t_uv_x0;
 									t_vertex.uv_yy = t_uv_y1;
@@ -351,10 +355,11 @@ namespace NBsys{namespace ND3d11
 									a_vertex->AddVertex(t_vertex);
 								}
 
+								//10
 								{
 									t_vertex.pos_xx = t_rect_x1;
 									t_vertex.pos_yy = t_rect_y0;
-									t_vertex.pos_zz = 0.0f;
+									t_vertex.pos_zz = a_z;
 
 									t_vertex.uv_xx = t_uv_x1;
 									t_vertex.uv_yy = t_uv_y0;
@@ -362,10 +367,11 @@ namespace NBsys{namespace ND3d11
 									a_vertex->AddVertex(t_vertex);
 								}
 
+								//11
 								{
 									t_vertex.pos_xx = t_rect_x1;
 									t_vertex.pos_yy = t_rect_y1;
-									t_vertex.pos_zz = 0.0f;
+									t_vertex.pos_zz = a_z;
 
 									t_vertex.uv_xx = t_uv_x1;
 									t_vertex.uv_yy = t_uv_y1;

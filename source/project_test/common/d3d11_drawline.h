@@ -30,7 +30,7 @@ namespace NCommon
 		{
 		}
 
-		~DrawLine_VS_ConstantBuffer_B0()
+		nonvirtual ~DrawLine_VS_ConstantBuffer_B0()
 		{
 		}
 	};
@@ -65,7 +65,7 @@ namespace NCommon
 		{
 		}
 
-		~DrawLine_PS_ConstantBuffer_B0()
+		nonvirtual ~DrawLine_PS_ConstantBuffer_B0()
 		{
 		}
 	};
@@ -136,7 +136,7 @@ namespace NCommon
 
 		/** destructor
 		*/
-		~D3d11_DrawLine_Manager()
+		nonvirtual ~D3d11_DrawLine_Manager()
 		{
 		}
 

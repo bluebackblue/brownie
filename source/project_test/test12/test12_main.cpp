@@ -27,6 +27,7 @@
 /** include
 */
 #include "../common/d3d11_drawline.h"
+#include "../common/d3d11_drawrect.h"
 #include "../common/d3d11_drawfont.h"
 #include "../common/pad_device.h"
 
@@ -109,6 +110,10 @@ private:
 	*/
 	sharedptr<NCommon::D3d11_DrawLine_Manager> drawline_manager;
 
+	/** レクト描画。
+	*/
+	sharedptr<NCommon::D3d11_DrawRect_Manager> drawrect_manager;
+
 	/** フォント描画。
 	*/
 	sharedptr<NCommon::D3d11_DrawFont_Manager> drawfont_manager;
@@ -147,6 +152,9 @@ public:
 		//ライン描画。
 		this->drawline_manager.reset(new NCommon::D3d11_DrawLine_Manager(s_d3d11));
 
+		//レクト描画。
+		this->drawrect_manager.reset(new NCommon::D3d11_DrawRect_Manager(s_d3d11));
+
 		//フォント描画。
 		this->drawfont_manager.reset(new NCommon::D3d11_DrawFont_Manager(s_d3d11));
 	}
@@ -165,6 +173,9 @@ public:
 		//ライン描画。
 		this->drawline_manager->PreUpdate();
 
+		//レクト描画。
+		this->drawrect_manager->PreUpdate();
+
 		//フォント描画。
 		this->drawfont_manager->PreUpdate();
 
@@ -172,6 +183,10 @@ public:
 		case 0:
 			{
 				if(this->drawline_manager->IsBusy() == true){
+					break;
+				}
+
+				if(this->drawrect_manager->IsBusy() == true){
 					break;
 				}
 
@@ -259,17 +274,22 @@ public:
 				if(t_mouse_l.flag){
 					char t_buffer[32];
 					STLWString t_string = VASTRING(t_buffer,sizeof(t_buffer),L"%d %d",static_cast<s32>(t_mouse_l.x),static_cast<s32>(t_mouse_l.y));
-					this->drawfont_manager->DrawFont16(t_string,16.0f,t_mouse_l.x+30,t_mouse_l.y+30,NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f));
-					this->drawfont_manager->DrawFont16(t_string,16.0f,t_mouse_l.x-30,t_mouse_l.y-30,NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f));
+					this->drawfont_manager->DrawFont16(t_string,16.0f,t_mouse_l.x+30,t_mouse_l.y+30,0.0f,NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f));
+					this->drawfont_manager->DrawFont16(t_string,16.0f,t_mouse_l.x-30,t_mouse_l.y-30,0.0f,NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f));
 				}
 
-				this->drawfont_manager->DrawFont32(L"あいうえお",	32.0f,	100.0f,			100.0f,			NBsys::NColor::Color_F(1.0f,0.0f,1.0f,1.0f));
-				this->drawfont_manager->DrawFont64(L"あいうえお",	64.0f,	s_width/2.0f,	s_height/2.0f,	NBsys::NColor::Color_F(1.0f,1.0f,0.0f,1.0f));
+				this->drawfont_manager->DrawFont32(L"あいうえお",	32.0f,	100.0f,			100.0f,			0.0f,NBsys::NColor::Color_F(1.0f,0.0f,1.0f,1.0f));
+				this->drawfont_manager->DrawFont64(L"あいうえお",	64.0f,	s_width/2.0f,	s_height/2.0f,	0.0f,NBsys::NColor::Color_F(1.0f,1.0f,0.0f,1.0f));
+
+				//レクト描画。
+				this->drawrect_manager->DrawRect(NBsys::NGeometry::Geometry_Vector2(0,0),NBsys::NGeometry::Geometry_Vector2(100,100),0.0f,NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
 
 				//文字描画。
 				this->drawfont_manager->Update(t_view * t_projection);
-				this->drawfont_manager->Update(t_view * t_projection);
-				this->drawfont_manager->Update(t_view * t_projection);
+
+				//レクト描画。
+				this->drawrect_manager->Update(t_view * t_projection);
+
 			}
 		}
 	}

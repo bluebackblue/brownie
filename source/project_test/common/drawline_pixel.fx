@@ -12,7 +12,7 @@ SamplerState DiffuseSampler
 
 /** PS_ConstantBuffer_B1
 */
-cbuffer PS_ConstantBuffer_B1 : register( b0 )
+cbuffer PS_ConstantBuffer_B1 : register(b0)
 {
 	uint flag1;
 	uint flag2;

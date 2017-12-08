@@ -30,7 +30,7 @@ namespace NCommon
 		{
 		}
 
-		~DrawFont_VS_ConstantBuffer_B0()
+		nonvirtual ~DrawFont_VS_ConstantBuffer_B0()
 		{
 		}
 	};
@@ -65,7 +65,7 @@ namespace NCommon
 		{
 		}
 
-		~DrawFont_PS_ConstantBuffer_B0()
+		nonvirtual ~DrawFont_PS_ConstantBuffer_B0()
 		{
 		}
 	};
@@ -125,7 +125,7 @@ namespace NCommon
 
 		/** destructor
 		*/
-		~D3d11_DrawFont_Manager()
+		nonvirtual ~D3d11_DrawFont_Manager()
 		{
 		}
 
@@ -222,26 +222,26 @@ namespace NCommon
 
 		/** DrawFont16
 		*/
-		void DrawFont16(const STLWString& a_string,f32 a_font_size,f32 a_x,f32 a_y,const NBsys::NColor::Color_F& a_color)
+		void DrawFont16(const STLWString& a_string,f32 a_font_size,f32 a_x,f32 a_y,f32 a_z,const NBsys::NColor::Color_F& a_color)
 		{
 			this->d3d11->Render_UpdateFontTexture(0,a_string);
-			this->d3d11->Render_MakeFontVertex(0,a_string,this->vertex[0],a_x,a_y,a_font_size,a_color);
+			this->d3d11->Render_MakeFontVertex(0,a_string,this->vertex[0],a_x,a_y,a_z,a_font_size,a_color);
 		}
 
 		/** DrawFont32
 		*/
-		void DrawFont32(const STLWString& a_string,f32 a_font_size,f32 a_x,f32 a_y,const NBsys::NColor::Color_F& a_color)
+		void DrawFont32(const STLWString& a_string,f32 a_font_size,f32 a_x,f32 a_y,f32 a_z,const NBsys::NColor::Color_F& a_color)
 		{
 			this->d3d11->Render_UpdateFontTexture(1,a_string);
-			this->d3d11->Render_MakeFontVertex(1,a_string,this->vertex[1],a_x,a_y,a_font_size,a_color);
+			this->d3d11->Render_MakeFontVertex(1,a_string,this->vertex[1],a_x,a_y,a_z,a_font_size,a_color);
 		}
 
 		/** DrawFont64
 		*/
-		void DrawFont64(const STLWString& a_string,f32 a_font_size,f32 a_x,f32 a_y,const NBsys::NColor::Color_F& a_color)
+		void DrawFont64(const STLWString& a_string,f32 a_font_size,f32 a_x,f32 a_y,f32 a_z,const NBsys::NColor::Color_F& a_color)
 		{
 			this->d3d11->Render_UpdateFontTexture(2,a_string);
-			this->d3d11->Render_MakeFontVertex(2,a_string,this->vertex[2],a_x,a_y,a_font_size,a_color);
+			this->d3d11->Render_MakeFontVertex(2,a_string,this->vertex[2],a_x,a_y,a_z,a_font_size,a_color);
 		}
 
 		/** XVB

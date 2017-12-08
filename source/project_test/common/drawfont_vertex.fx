@@ -2,7 +2,7 @@
 
 /** VS_ConstantBuffer_B0
 */
-cbuffer VS_ConstantBuffer_B0 : register( b0 )
+cbuffer VS_ConstantBuffer_B0 : register(b0)
 {
 	float4x4 view_projection;
 }
