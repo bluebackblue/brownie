@@ -78,22 +78,6 @@ static sharedptr<NBsys::NWindow::Window> s_window;
 static sharedptr<NBsys::ND3d11::D3d11> s_d3d11;
 
 
-/** s_font
-*/
-sharedptr<NBsys::NFont::Font> s_font16;
-sharedptr<NBsys::NFont::Font> s_font32;
-sharedptr<NBsys::NFont::Font> s_font64;
-
-
-/** fontindex
-*/
-s32 s_fontindex_16 = 0;
-s32 s_fontindex_32 = 1;
-s32 s_fontindex_64 = 2;
-
-
-
-
 /** App
 */
 class App
@@ -127,9 +111,7 @@ private:
 
 	/** フォント描画。
 	*/
-	sharedptr<NCommon::D3d11_DrawFont_Manager> drawfont16_manager;
-	sharedptr<NCommon::D3d11_DrawFont_Manager> drawfont32_manager;
-	sharedptr<NCommon::D3d11_DrawFont_Manager> drawfont64_manager;
+	sharedptr<NCommon::D3d11_DrawFont_Manager> drawfont_manager;
 
 	/** カメラ。
 	*/
@@ -166,9 +148,7 @@ public:
 		this->drawline_manager.reset(new NCommon::D3d11_DrawLine_Manager(s_d3d11));
 
 		//フォント描画。
-		this->drawfont16_manager.reset(new NCommon::D3d11_DrawFont_Manager(s_d3d11,s_fontindex_16));
-		this->drawfont32_manager.reset(new NCommon::D3d11_DrawFont_Manager(s_d3d11,s_fontindex_32));
-		this->drawfont64_manager.reset(new NCommon::D3d11_DrawFont_Manager(s_d3d11,s_fontindex_64));
+		this->drawfont_manager.reset(new NCommon::D3d11_DrawFont_Manager(s_d3d11));
 	}
 
 	/** destructor
@@ -186,9 +166,7 @@ public:
 		this->drawline_manager->PreUpdate();
 
 		//フォント描画。
-		this->drawfont16_manager->PreUpdate();
-		this->drawfont32_manager->PreUpdate();
-		this->drawfont64_manager->PreUpdate();
+		this->drawfont_manager->PreUpdate();
 
 		switch(this->step){
 		case 0:
@@ -197,15 +175,7 @@ public:
 					break;
 				}
 
-				if(this->drawfont16_manager->IsBusy() == true){
-					break;
-				}
-
-				if(this->drawfont32_manager->IsBusy() == true){
-					break;
-				}
-
-				if(this->drawfont64_manager->IsBusy() == true){
+				if(this->drawfont_manager->IsBusy() == true){
 					break;
 				}
 
@@ -251,11 +221,6 @@ public:
 
 		if(this->draw){
 
-			//フォント描画。開始。
-			s_d3d11->Render_DrawFont_StartClear(s_fontindex_16);
-			s_d3d11->Render_DrawFont_StartClear(s_fontindex_32);
-			s_d3d11->Render_DrawFont_StartClear(s_fontindex_64);
-
 			//プロジェクション。
 			NBsys::NGeometry::Geometry_Matrix_44 t_projection;
 			t_projection.Set_PerspectiveProjectionMatrix(static_cast<f32>(s_width),static_cast<f32>(s_height),this->camera_fov_deg,this->camera_near,this->camera_far);
@@ -294,17 +259,17 @@ public:
 				if(t_mouse_l.flag){
 					char t_buffer[32];
 					STLWString t_string = VASTRING(t_buffer,sizeof(t_buffer),L"%d %d",static_cast<s32>(t_mouse_l.x),static_cast<s32>(t_mouse_l.y));
-					this->drawfont16_manager->DrawFont(t_string,16.0f,t_mouse_l.x+30,t_mouse_l.y+30,NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f));
-					this->drawfont16_manager->DrawFont(t_string,16.0f,t_mouse_l.x-30,t_mouse_l.y-30,NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f));
+					this->drawfont_manager->DrawFont16(t_string,16.0f,t_mouse_l.x+30,t_mouse_l.y+30,NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f));
+					this->drawfont_manager->DrawFont16(t_string,16.0f,t_mouse_l.x-30,t_mouse_l.y-30,NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f));
 				}
 
-				this->drawfont32_manager->DrawFont(L"あいうえお",	32.0f,	100.0f,			100.0f,			NBsys::NColor::Color_F(1.0f,0.0f,1.0f,1.0f));
-				this->drawfont64_manager->DrawFont(L"あいうえお",	64.0f,	s_width/2.0f,	s_height/2.0f,	NBsys::NColor::Color_F(1.0f,1.0f,0.0f,1.0f));
+				this->drawfont_manager->DrawFont32(L"あいうえお",	32.0f,	100.0f,			100.0f,			NBsys::NColor::Color_F(1.0f,0.0f,1.0f,1.0f));
+				this->drawfont_manager->DrawFont64(L"あいうえお",	64.0f,	s_width/2.0f,	s_height/2.0f,	NBsys::NColor::Color_F(1.0f,1.0f,0.0f,1.0f));
 
 				//文字描画。
-				this->drawfont16_manager->Update(t_view * t_projection);
-				this->drawfont32_manager->Update(t_view * t_projection);
-				this->drawfont64_manager->Update(t_view * t_projection);
+				this->drawfont_manager->Update(t_view * t_projection);
+				this->drawfont_manager->Update(t_view * t_projection);
+				this->drawfont_manager->Update(t_view * t_projection);
 			}
 		}
 	}
@@ -333,15 +298,6 @@ void Test_Main()
 
 	s_window->Create(L"sample",s_width,s_height);
 	s_d3d11->Render_Create(s_window,s_width,s_height);
-
-	s_font16.reset(new NBsys::NFont::Font(L"Arial",14));
-	s_d3d11->Render_SetFont(s_fontindex_16,s_font16,16,L"font16");
-
-	s_font32.reset(new NBsys::NFont::Font(L"Arial",28));
-	s_d3d11->Render_SetFont(s_fontindex_32,s_font32,32,L"font32");
-
-	s_font64.reset(new NBsys::NFont::Font(L"Arial",60));
-	s_d3d11->Render_SetFont(s_fontindex_64,s_font64,64,L"font64");
 
 	sharedptr<NBsys::NPad::Pad_Device_Base> t_pad_device(new NCommon::Pad_Device(s_window,s_d3d11));
 	NBsys::NPad::AddDevice(t_pad_device);
