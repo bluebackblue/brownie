@@ -448,3 +448,13 @@
 #endif
 
 
+/*
+
+	デバッグメニュー。
+
+*/
+#if !defined(BSYS_DEBUGMENU_ENABLE)
+	#define BSYS_DEBUGMENU_ENABLE							(0)
+#endif
+
+

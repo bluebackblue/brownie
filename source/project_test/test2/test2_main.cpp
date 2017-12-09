@@ -24,33 +24,6 @@
 #include "./test2_main.h"
 
 
-/** Blib_DebugAssert_Callback
-*/
-#if(BLIB_DEBUGASSERT_CALLBACK_ENABLE)
-void Blib_DebugAssert_Callback(const char* a_message,const char* a_filename,s32 a_line)
-{
-}
-#endif
-
-
-/** Blib_DebugBreak_Callback
-*/
-#if(BLIB_DEBUGBREAK_CALLBACK_ENABLE)
-void Blib_DebugBreak_Callback()
-{
-}
-#endif
-
-
-/** Blib_DebugLog_Callback
-*/
-#if(BLIB_DEBUGLOG_CALLBACK_ENABLE)
-void Blib_DebugLog_Callback(const char* a_tag,const char* a_string)
-{
-}
-#endif
-
-
 /** Test_Main
 */
 void Test_Main()
@@ -68,15 +41,25 @@ void Test_Main()
 	}
 
 	//コンバート。
-	{
+	for(;;){
 		NBsys::NFile::File_ConvertLock_ReturnType::Id t_ret = t_fileobject->ConvertLock();
 		if(t_ret == NBsys::NFile::File_ConvertLock_ReturnType::Locked){
 			//未コンバート => コンバート中。
 			t_fileobject->GetLoadData().get()[static_cast<s32>(t_fileobject->GetLoadSize())] = 0x00;
+
+			//コンバート中 => コンバート済み。
 			t_fileobject->ConvertUnlock();
-		}else{
+			
+			break;
+		}else if(t_ret == NBsys::NFile::File_ConvertLock_ReturnType::ConvertNow){
 			//コンバート中。
+
+			//ロックに成功していないのでアンロック不要。
+		}else{
 			//コンバート済み。
+
+			//ロックに成功していないのでアンロック不要。
+			break;
 		}
 	}
 

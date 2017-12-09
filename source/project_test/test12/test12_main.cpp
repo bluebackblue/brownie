@@ -30,33 +30,7 @@
 #include "../common/d3d11_drawrect.h"
 #include "../common/d3d11_drawfont.h"
 #include "../common/pad_device.h"
-
-
-/** Blib_DebugAssert_Callback
-*/
-#if(BLIB_DEBUGASSERT_CALLBACK_ENABLE)
-void Blib_DebugAssert_Callback(const char* a_message,const char* a_filename,s32 a_line)
-{
-}
-#endif
-
-
-/** Blib_DebugBreak_Callback
-*/
-#if(BLIB_DEBUGBREAK_CALLBACK_ENABLE)
-void Blib_DebugBreak_Callback()
-{
-}
-#endif
-
-
-/** Blib_DebugLog_Callback
-*/
-#if(BLIB_DEBUGLOG_CALLBACK_ENABLE)
-void Blib_DebugLog_Callback(const char* a_tag,const char* a_string)
-{
-}
-#endif
+#include "../common/debugmenu_callback.h"
 
 
 /** s_width
@@ -77,6 +51,24 @@ static sharedptr<NBsys::NWindow::Window> s_window;
 /** s_d3d11
 */
 static sharedptr<NBsys::ND3d11::D3d11> s_d3d11;
+
+
+/** s_debugmenu_callback
+*/
+sharedptr<NBsys::NDebugMenu::DebugMenu_Callback_Base> s_debugmenu_callback;
+
+
+/** ライン描画。
+*/
+sharedptr<NCommon::D3d11_DrawLine_Manager> s_drawline_manager;
+
+/** レクト描画。
+*/
+sharedptr<NCommon::D3d11_DrawRect_Manager> s_drawrect_manager;
+
+/** フォント描画。
+*/
+sharedptr<NCommon::D3d11_DrawFont_Manager> s_drawfont_manager;
 
 
 /** App
@@ -106,18 +98,6 @@ private:
 	s32 depthstencilstate_write_on_id;
 	s32 depthstencilstate_write_off_id;
 
-	/** ライン描画。
-	*/
-	sharedptr<NCommon::D3d11_DrawLine_Manager> drawline_manager;
-
-	/** レクト描画。
-	*/
-	sharedptr<NCommon::D3d11_DrawRect_Manager> drawrect_manager;
-
-	/** フォント描画。
-	*/
-	sharedptr<NCommon::D3d11_DrawFont_Manager> drawfont_manager;
-
 	/** カメラ。
 	*/
 	NBsys::NGeometry::Geometry_Vector3 camera_position;
@@ -144,19 +124,15 @@ public:
 		this->rasterizerstate_cull_back_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::BACK);
 		this->rasterizerstate_cull_none_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::NONE);
 
-		/** 深度ステンシル。
-		*/
+		//深度ステンシル。
 		this->depthstencilstate_write_on_id = s_d3d11->CreateDepthStencilState(true,true);
 		this->depthstencilstate_write_off_id = s_d3d11->CreateDepthStencilState(true,false);
 
-		//ライン描画。
-		this->drawline_manager.reset(new NCommon::D3d11_DrawLine_Manager(s_d3d11));
-
-		//レクト描画。
-		this->drawrect_manager.reset(new NCommon::D3d11_DrawRect_Manager(s_d3d11));
-
-		//フォント描画。
-		this->drawfont_manager.reset(new NCommon::D3d11_DrawFont_Manager(s_d3d11));
+		//カメラ。
+		this->camera_fov_deg = 0.0f;
+		this->camera_near = 0.0f;
+		this->camera_far = 0.0f;
+		this->camera_time = 0.0f;
 	}
 
 	/** destructor
@@ -171,26 +147,26 @@ public:
 	void Update(f32 a_delta)
 	{
 		//ライン描画。
-		this->drawline_manager->PreUpdate();
+		s_drawline_manager->PreUpdate();
 
 		//レクト描画。
-		this->drawrect_manager->PreUpdate();
+		s_drawrect_manager->PreUpdate();
 
 		//フォント描画。
-		this->drawfont_manager->PreUpdate();
+		s_drawfont_manager->PreUpdate();
 
 		switch(this->step){
 		case 0:
 			{
-				if(this->drawline_manager->IsBusy() == true){
+				if(s_drawline_manager->IsBusy() == true){
 					break;
 				}
 
-				if(this->drawrect_manager->IsBusy() == true){
+				if(s_drawrect_manager->IsBusy() == true){
 					break;
 				}
 
-				if(this->drawfont_manager->IsBusy() == true){
+				if(s_drawfont_manager->IsBusy() == true){
 					break;
 				}
 
@@ -232,28 +208,41 @@ public:
 
 		//クリア。
 		s_d3d11->Render_ClearRenderTargetView(NBsys::NColor::Color_F(0.3f,0.3f,0.8f,1.0f));
+
+		//深度ステンシルクリア。
 		s_d3d11->Render_ClearDepthStencilView();
 
 		if(this->draw){
 
 			//プロジェクション。
 			NBsys::NGeometry::Geometry_Matrix_44 t_projection;
-			t_projection.Set_PerspectiveProjectionMatrix(static_cast<f32>(s_width),static_cast<f32>(s_height),this->camera_fov_deg,this->camera_near,this->camera_far);
 
 			//ビュー。
 			NBsys::NGeometry::Geometry_Matrix_44 t_view;
-			t_view.Set_ViewMatrix(this->camera_target,this->camera_position,this->camera_up);
 
+			//３Ｄ描画。
 			{
-				//ライン描画。
-				this->drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(-100,0,0),NBsys::NGeometry::Geometry_Vector3(100,0,0),NBsys::NColor::Color_F(1.0f,0.0f,0.0f,1.0f));
-				this->drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(0,-100,0),NBsys::NGeometry::Geometry_Vector3(0,100,0),NBsys::NColor::Color_F(0.0f,1.0f,0.0f,1.0f));
-				this->drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(0,0,-100),NBsys::NGeometry::Geometry_Vector3(0,0,100),NBsys::NColor::Color_F(0.0f,0.0f,1.0f,1.0f));
+				//プロジェクション。
+				t_projection.Set_PerspectiveProjectionMatrix(static_cast<f32>(s_width),static_cast<f32>(s_height),this->camera_fov_deg,this->camera_near,this->camera_far);
 
-				//ライン描画。
-				this->drawline_manager->Update(t_view * t_projection);
+				//ビュー。
+				t_view.Set_ViewMatrix(this->camera_target,this->camera_position,this->camera_up);
+
+				{
+					//ライン描画。
+					s_drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(-100,0,0),NBsys::NGeometry::Geometry_Vector3(100,0,0),NBsys::NColor::Color_F(1.0f,0.0f,0.0f,1.0f));
+					s_drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(0,-100,0),NBsys::NGeometry::Geometry_Vector3(0,100,0),NBsys::NColor::Color_F(0.0f,1.0f,0.0f,1.0f));
+					s_drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(0,0,-100),NBsys::NGeometry::Geometry_Vector3(0,0,100),NBsys::NColor::Color_F(0.0f,0.0f,1.0f,1.0f));
+
+					//深度ステンシル。深度書き込みあり。
+					s_d3d11->Render_SetDepthStencilState(this->depthstencilstate_write_on_id);
+
+					//ライン描画。
+					s_drawline_manager->Render(t_view * t_projection);
+				}
 			}
 
+			//２Ｄ描画。
 			{
 				//プロジェクション。
 				t_projection.Set_OrthographicProjectionMatrix(0,static_cast<f32>(s_width),0,static_cast<f32>(s_height),0.0f,1.0f);
@@ -264,9 +253,6 @@ public:
 				//クリア。
 				s_d3d11->Render_ClearDepthStencilView();
 
-				//深度ステンシル。
-				s_d3d11->Render_SetDepthStencilState(this->depthstencilstate_write_off_id);
-
 				//マウス。
 				NBsys::NPad::TouchValue t_mouse_l = NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->GetTouchValue(NBsys::NPad::Pad_Virtual::TouchType::MOUSEL);
 			
@@ -274,22 +260,31 @@ public:
 				if(t_mouse_l.flag){
 					char t_buffer[32];
 					STLWString t_string = VASTRING(t_buffer,sizeof(t_buffer),L"%d %d",static_cast<s32>(t_mouse_l.x),static_cast<s32>(t_mouse_l.y));
-					this->drawfont_manager->DrawFont16(t_string,16.0f,t_mouse_l.x+30,t_mouse_l.y+30,0.0f,NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f));
-					this->drawfont_manager->DrawFont16(t_string,16.0f,t_mouse_l.x-30,t_mouse_l.y-30,0.0f,NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f));
+					s_drawfont_manager->DrawFont16(t_string,16.0f,t_mouse_l.x+50,t_mouse_l.y+50,0.0f,NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f));
+					s_drawfont_manager->DrawFont16(t_string,16.0f,t_mouse_l.x-50,t_mouse_l.y-50,0.0f,NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f));
 				}
 
-				this->drawfont_manager->DrawFont32(L"あいうえお",	32.0f,	100.0f,			100.0f,			0.0f,NBsys::NColor::Color_F(1.0f,0.0f,1.0f,1.0f));
-				this->drawfont_manager->DrawFont64(L"あいうえお",	64.0f,	s_width/2.0f,	s_height/2.0f,	0.0f,NBsys::NColor::Color_F(1.0f,1.0f,0.0f,1.0f));
+				s_drawfont_manager->DrawFont32(L"あいうえお",	32.0f,	100.0f,			100.0f,			0.0f,NBsys::NColor::Color_F(1.0f,0.0f,1.0f,1.0f));
+				s_drawfont_manager->DrawFont64(L"あいうえお",	64.0f,	s_width/2.0f,	s_height/2.0f,	0.0f,NBsys::NColor::Color_F(1.0f,1.0f,0.0f,1.0f));
 
 				//レクト描画。
-				this->drawrect_manager->DrawRect(NBsys::NGeometry::Geometry_Vector2(0,0),NBsys::NGeometry::Geometry_Vector2(100,100),0.0f,NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
+				s_drawrect_manager->DrawRect(NBsys::NGeometry::Geometry_Vector2(0,0),NBsys::NGeometry::Geometry_Vector2(100,100),0.0f,NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
 
-				//文字描画。
-				this->drawfont_manager->Update(t_view * t_projection);
+				{
+					//深度ステンシル。深度書き込みあり。
+					s_d3d11->Render_SetDepthStencilState(this->depthstencilstate_write_on_id);
 
-				//レクト描画。
-				this->drawrect_manager->Update(t_view * t_projection);
+					//レクト描画。
+					s_drawrect_manager->Render(t_view * t_projection);
+				}
 
+				{
+					//深度ステンシル。深度書き込みなし。
+					s_d3d11->Render_SetDepthStencilState(this->depthstencilstate_write_off_id);
+
+					//文字描画。
+					s_drawfont_manager->Render(t_view * t_projection);
+				}
 			}
 		}
 	}
@@ -324,6 +319,18 @@ void Test_Main()
 	NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->AddTouch(NBsys::NPad::Pad_Virtual::TouchType::MOUSEL,NBsys::NPad::Pad_Device_Base::TouchType::DeviceTouch_1,t_pad_device);
 	NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->AddTouch(NBsys::NPad::Pad_Virtual::TouchType::MOUSER,NBsys::NPad::Pad_Device_Base::TouchType::DeviceTouch_2,t_pad_device);
 	NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->SetEnable(true);
+
+	s_debugmenu_callback.reset(new NCommon::DebugMenu_Callback());
+	NBsys::NDebugMenu::StartSystem(s_debugmenu_callback);
+
+	//ライン描画。
+	s_drawline_manager.reset(new NCommon::D3d11_DrawLine_Manager(s_d3d11));
+
+	//レクト描画。
+	s_drawrect_manager.reset(new NCommon::D3d11_DrawRect_Manager(s_d3d11));
+
+	//フォント描画。
+	s_drawfont_manager.reset(new NCommon::D3d11_DrawFont_Manager(s_d3d11));
 
 	//パフォーマンスカウンター。
 	u64 t_pcounter = 0ULL;
@@ -372,6 +379,8 @@ void Test_Main()
 	s_window.reset();
 
 	s_app.reset();
+
+	NBsys::NDebugMenu::EndSystem();
 
 	NBsys::NPad::EndSystem();
 

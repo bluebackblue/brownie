@@ -16,6 +16,7 @@
 
 /** NCommon
 */
+#if(BSYS_PAD_ENABLE)
 namespace NCommon
 {
 	/** Pad_Device
@@ -79,4 +80,5 @@ namespace NCommon
 		virtual NBsys::NPad::TouchValue GetTouch(s32 a_virtualpad_index,NBsys::NPad::Pad_Device_Base::TouchType::Id a_device_touch);
 	};
 }
+#endif
 

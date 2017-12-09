@@ -20,7 +20,7 @@
 	DEF_TEST12	:	デバッグメニュー。
 
 */
-#define DEF_TEST12
+#define DEF_TEST2
 
 
 #if defined(DEF_TEST0)
@@ -48,6 +48,7 @@
 	#define BSYS_D3D11_ENABLE								(1)
 	#define BSYS_FONT_ENABLE								(1)
 	#define BSYS_PAD_ENABLE									(1)
+	#define BSYS_DEBUGMENU_ENABLE							(1)
 
 #elif defined(DEF_TEST22)
 

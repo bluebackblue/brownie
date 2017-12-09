@@ -61,6 +61,7 @@
 
 /** NCommon
 */
+#if(BSYS_PAD_ENABLE)
 namespace NCommon
 {
 	/** constructorÅB
@@ -140,4 +141,5 @@ namespace NCommon
 		return NBsys::NPad::TouchValue::Zero();
 	}
 }
+#endif
 

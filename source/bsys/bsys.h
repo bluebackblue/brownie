@@ -95,3 +95,10 @@
 #include "./pad/pad.h"
 #endif
 
+
+/** include
+*/
+#if(BSYS_DEBUGMENU_ENABLE)
+#include "./debugmenu/debugmenu.h"
+#endif
+

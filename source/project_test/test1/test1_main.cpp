@@ -24,33 +24,6 @@
 #include "./test1_main.h"
 
 
-/** Blib_DebugAssert_Callback
-*/
-#if(BLIB_DEBUGASSERT_CALLBACK_ENABLE)
-void Blib_DebugAssert_Callback(const char* a_message,const char* a_filename,s32 a_line)
-{
-}
-#endif
-
-
-/** Blib_DebugBreak_Callback
-*/
-#if(BLIB_DEBUGBREAK_CALLBACK_ENABLE)
-void Blib_DebugBreak_Callback()
-{
-}
-#endif
-
-
-/** Blib_DebugLog_Callback
-*/
-#if(BLIB_DEBUGLOG_CALLBACK_ENABLE)
-void Blib_DebugLog_Callback(const char* a_tag,const char* a_string)
-{
-}
-#endif
-
-
 /** Test_Main
 */
 void Test_Main()
