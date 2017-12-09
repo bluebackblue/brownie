@@ -330,8 +330,6 @@ void DrawOnce(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeome
 */
 void Test_Main()
 {
-	TAGLOG("main","DEF_TEST2");
-
 	NBsys::NFile::StartSystem(2);
 	NBsys::NFile::SetRoot(0,L"./project_test");
 	NBsys::NFile::SetRoot(1,L"../../sdk/mmd");
@@ -355,10 +353,10 @@ void Test_Main()
 	s_d3d11.reset(new NBsys::ND3d11::D3d11());
 
 	#if(USE_FOVE)
-	s_window->Create(L"sample",static_cast<s32>(s_fovehmd->GetSingleEyeResolution().x * 2)/3,static_cast<s32>(s_fovehmd->GetSingleEyeResolution().y)/3);
+	s_window->Create(DEF_TEST_TITLE,static_cast<s32>(s_fovehmd->GetSingleEyeResolution().x * 2)/3,static_cast<s32>(s_fovehmd->GetSingleEyeResolution().y)/3);
 	s_d3d11->Render_Create(s_window,static_cast<s32>(s_fovehmd->GetSingleEyeResolution().x * 2),static_cast<s32>(s_fovehmd->GetSingleEyeResolution().y));
 	#else
-	s_window->Create(L"sample",s_width,s_height);
+	s_window->Create(DEF_TEST_TITLE,s_width,s_height);
 	s_d3d11->Render_Create(s_window,s_width,s_height);
 	#endif
 

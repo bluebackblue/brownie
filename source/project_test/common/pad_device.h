@@ -53,6 +53,14 @@ namespace NCommon
 		*/
 		f32 mouse_y;
 
+		/** mouse_l
+		*/
+		bool mouse_l;
+
+		/** mouse_r
+		*/
+		bool mouse_r;
+
 	public:
 		/** constructorB
 		*/

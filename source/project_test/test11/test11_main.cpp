@@ -193,6 +193,9 @@ public:
 	*/
 	void Draw()
 	{
+		//リクエスト処理。
+		s_d3d11->Render_Main();
+
 		s_d3d11->Render_ViewPort(0.0f,0.0f,static_cast<f32>(s_width),static_cast<f32>(s_height));
 
 		//クリア。
@@ -246,8 +249,6 @@ static sharedptr<App> s_app;
 */
 void Test_Main()
 {
-	TAGLOG("main","DEF_TEST11");
-
 	NBsys::NFile::StartSystem(1);
 	NBsys::NFile::SetRoot(0,L"./project_test");
 
@@ -255,7 +256,7 @@ void Test_Main()
 	s_d3d11.reset(new NBsys::ND3d11::D3d11());
 	s_app.reset(new App());
 
-	s_window->Create(L"sample",s_width,s_height);
+	s_window->Create(DEF_TEST_TITLE,s_width,s_height);
 	s_d3d11->Render_Create(s_window,s_width,s_height);
 
 	//ライン描画。
@@ -286,9 +287,6 @@ void Test_Main()
 
 		//更新。
 		s_app->Update(t_delta);
-
-		//リクエスト処理。
-		s_d3d11->Render_Main();
 
 		//描画。
 		s_app->Draw();

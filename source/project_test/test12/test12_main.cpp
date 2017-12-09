@@ -53,6 +53,11 @@ static sharedptr<NBsys::NWindow::Window> s_window;
 static sharedptr<NBsys::ND3d11::D3d11> s_d3d11;
 
 
+/** s_pad_device
+*/
+sharedptr<NBsys::NPad::Pad_Device_Base> s_pad_device;
+
+
 /** s_debugmenu_callback
 */
 sharedptr<NBsys::NDebugMenu::DebugMenu_Callback_Base> s_debugmenu_callback;
@@ -130,6 +135,12 @@ public:
 	*/
 	void Update(f32 a_delta)
 	{
+		//パッド。
+		NBsys::NPad::Update(true);
+
+		//デバッグメニュー。
+		NBsys::NDebugMenu::GetSystemInstance()->Update();
+
 		//ライン描画。
 		s_drawline_manager->PreUpdate();
 
@@ -199,6 +210,9 @@ public:
 	*/
 	void Draw()
 	{
+		//リクエスト処理。
+		s_d3d11->Render_Main();
+
 		s_d3d11->Render_ViewPort(0.0f,0.0f,static_cast<f32>(s_width),static_cast<f32>(s_height));
 
 		//クリア。
@@ -249,7 +263,7 @@ public:
 				s_d3d11->Render_ClearDepthStencilView();
 
 				//マウス。
-				NBsys::NPad::TouchValue t_mouse_l = NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->GetTouchValue(NBsys::NPad::Pad_Virtual::TouchType::MOUSEL);
+				const NBsys::NPad::TouchValue& t_mouse_l = NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->GetTouchValue(NBsys::NPad::Pad_Virtual::TouchType::MOUSEL);
 			
 				//文字描画。
 				if(t_mouse_l.flag){
@@ -263,7 +277,10 @@ public:
 				s_drawfont_manager->DrawFont64(L"あいうえお",	64.0f,	s_width/2.0f,	s_height/2.0f,	0.0f,NBsys::NColor::Color_F(1.0f,1.0f,0.0f,1.0f));
 
 				//レクト描画。
-				s_drawrect_manager->DrawRect(NBsys::NGeometry::Geometry_Vector2(0,0),NBsys::NGeometry::Geometry_Vector2(100,100),0.0f,NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
+				s_drawrect_manager->DrawRect(0.0f,0.0f,100.0f,100.0f,0.0f,-1,NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
+
+				//デバッグメニュー。
+				NBsys::NDebugMenu::GetSystemInstance()->Update();
 
 				{
 					//深度ステンシル。深度書き込みあり。
@@ -295,8 +312,6 @@ static sharedptr<App> s_app;
 */
 void Test_Main()
 {
-	TAGLOG("main","DEF_TEST12");
-
 	NBsys::NFile::StartSystem(1);
 	NBsys::NFile::SetRoot(0,L"./project_test");
 
@@ -306,16 +321,18 @@ void Test_Main()
 	s_d3d11.reset(new NBsys::ND3d11::D3d11());
 	s_app.reset(new App());
 
-	s_window->Create(L"sample",s_width,s_height);
+	s_window->Create(DEF_TEST_TITLE,s_width,s_height);
 	s_d3d11->Render_Create(s_window,s_width,s_height);
 
-	sharedptr<NBsys::NPad::Pad_Device_Base> t_pad_device(new NCommon::Pad_Device(s_window,s_d3d11));
-	NBsys::NPad::AddDevice(t_pad_device);
-	NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->AddTouch(NBsys::NPad::Pad_Virtual::TouchType::MOUSEL,NBsys::NPad::Pad_Device_Base::TouchType::DeviceTouch_1,t_pad_device);
-	NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->AddTouch(NBsys::NPad::Pad_Virtual::TouchType::MOUSER,NBsys::NPad::Pad_Device_Base::TouchType::DeviceTouch_2,t_pad_device);
+	s_pad_device.reset(new NCommon::Pad_Device(s_window,s_d3d11));
+	NBsys::NPad::AddDevice(s_pad_device);
+	NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->AddButton(NBsys::NPad::Pad_Virtual::ButtonType::MOUSEL,NBsys::NPad::Pad_Device_Base::ButtonType::DeviceButton_14,s_pad_device);
+	NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->AddButton(NBsys::NPad::Pad_Virtual::ButtonType::MOUSER,NBsys::NPad::Pad_Device_Base::ButtonType::DeviceButton_15,s_pad_device);
+	NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->AddTouch(NBsys::NPad::Pad_Virtual::TouchType::MOUSEL,NBsys::NPad::Pad_Device_Base::TouchType::DeviceTouch_1,s_pad_device);
+	NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->AddTouch(NBsys::NPad::Pad_Virtual::TouchType::MOUSER,NBsys::NPad::Pad_Device_Base::TouchType::DeviceTouch_2,s_pad_device);
 	NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->SetEnable(true);
 
-	s_debugmenu_callback.reset(new NCommon::DebugMenu_Callback());
+	s_debugmenu_callback.reset(new NCommon::DebugMenu_Callback(s_drawrect_manager,s_drawfont_manager));
 	NBsys::NDebugMenu::StartSystem(s_debugmenu_callback);
 
 	//ライン描画。
@@ -350,14 +367,8 @@ void Test_Main()
 			t_pcounter = t_pcounter_now;
 		}
 
-		//パッド。
-		NBsys::NPad::Update(true);
-
 		//更新。
 		s_app->Update(t_delta);
-
-		//リクエスト処理。
-		s_d3d11->Render_Main();
 
 		//描画。
 		s_app->Draw();

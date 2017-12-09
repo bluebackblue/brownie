@@ -40,7 +40,15 @@ namespace NBsys{namespace NFont
 
 		/** font_handle
 		*/
+		#if defined(PLATFORM_VCWIN)
 		HFONT font_handle;
+		#endif
+
+		/** hdc
+		*/
+		#if defined(PLATFORM_VCWIN)
+		HDC hdc;
+		#endif
 
 		/** font_size
 		*/
@@ -49,10 +57,6 @@ namespace NBsys{namespace NFont
 		/** font_name
 		*/
 		STLWString font_name;
-
-		/** hdc
-		*/
-		HDC hdc;
 
 	public:
 		/** constructor

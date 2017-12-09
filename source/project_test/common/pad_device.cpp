@@ -71,7 +71,9 @@ namespace NCommon
 		window(a_window),
 		d3d11(a_d3d11),
 		mouse_x(0.0f),
-		mouse_y(0.0f)
+		mouse_y(0.0f),
+		mouse_l(false),
+		mouse_r(false)
 	{
 	}
 
@@ -87,12 +89,41 @@ namespace NCommon
 	{
 		this->mouse_x = static_cast<f32>(this->window->GetImpl()->GetMouseX() * this->d3d11->GetWidth()) / this->window->GetImpl()->GetClientWidth();
 		this->mouse_y = static_cast<f32>(this->window->GetImpl()->GetMouseY() * this->d3d11->GetHeight()) / this->window->GetImpl()->GetClientHeight();
+
+		this->mouse_l = false;
+		#if defined(PLATFORM_VCWIN)
+		if(::GetAsyncKeyState(VK_LBUTTON) != 0){
+			this->mouse_l = true;
+		}
+		#endif
+
+		this->mouse_r = false;
+		#if defined(PLATFORM_VCWIN)
+		if(::GetAsyncKeyState(VK_RBUTTON) != 0){
+			this->mouse_r = true;
+		}
+		#endif
+
+		
 	}
 
 	/** ƒ{ƒ^ƒ“Žæ“¾B
 	*/
 	bool Pad_Device::GetButton(s32 a_virtualpad_index,NBsys::NPad::Pad_Device_Base::ButtonType::Id a_device_button)
 	{
+		switch(a_device_button){
+		case NBsys::NPad::Pad_Device_Base::ButtonType::DeviceButton_14:
+			{
+				//mouse l
+				return this->mouse_l;
+			}break;
+		case NBsys::NPad::Pad_Device_Base::ButtonType::DeviceButton_15:
+			{
+				//mouse r
+				return this->mouse_r;
+			}break;
+		}
+
 		return false;
 	}
 
@@ -112,29 +143,13 @@ namespace NCommon
 			{
 				//mouse l
 
-				bool t_button = false;
-
-				#if defined(PLATFORM_VCWIN)
-				if(::GetAsyncKeyState(VK_LBUTTON) != 0){
-					t_button = true;
-				}
-				#endif
-
-				return NBsys::NPad::TouchValue(this->mouse_x,this->mouse_y,t_button);
+				return NBsys::NPad::TouchValue(this->mouse_x,this->mouse_y,this->mouse_l);
 			}break;
 		case NBsys::NPad::Pad_Device_Base::TouchType::DeviceTouch_2:
 			{
 				//mouse r
 
-				bool t_button = false;
-
-				#if defined(PLATFORM_VCWIN)
-				if(::GetAsyncKeyState(VK_RBUTTON) != 0){
-					t_button = true;
-				}
-				#endif
-
-				return NBsys::NPad::TouchValue(this->mouse_x,this->mouse_y,t_button);
+				return NBsys::NPad::TouchValue(this->mouse_x,this->mouse_y,this->mouse_r);
 			}break;
 		}
 

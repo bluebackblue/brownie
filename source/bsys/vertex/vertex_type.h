@@ -477,7 +477,7 @@ namespace NBsys{namespace NVertex
 	{
 		return NImpl::Vertex_SetPos_WW<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetPos_WW<T,true>*>::value>::GetOffset();
 	}
-	/** SetColor
+	/** SetPos
 	*/
 	template <typename T> inline void SetPos(T& a_vertex,f32 a_pos_xx = 0.0f,f32 a_pos_yy = 0.0f,f32 a_pos_zz = 0.0f,f32 a_pos_ww = 0.0f)
 	{

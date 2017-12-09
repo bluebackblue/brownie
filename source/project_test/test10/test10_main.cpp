@@ -246,8 +246,6 @@ static sharedptr<App> s_app;
 */
 void Test_Main()
 {
-	TAGLOG("main","DEF_TEST10");
-
 	NBsys::NFile::StartSystem(1);
 	NBsys::NFile::SetRoot(0,L"./project_test");
 
@@ -255,7 +253,7 @@ void Test_Main()
 	s_d3d11.reset(new NBsys::ND3d11::D3d11());
 	s_app.reset(new App());
 
-	s_window->Create(L"sample",s_width,s_height);
+	s_window->Create(DEF_TEST_TITLE,s_width,s_height);
 	s_d3d11->Render_Create(s_window,s_width,s_height);
 
 	//ƒ‰ƒCƒ“•`‰æB

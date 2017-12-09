@@ -241,7 +241,7 @@ namespace NCommon
 
 		/** DrawRect
 		*/
-		void DrawRect(const NBsys::NGeometry::Geometry_Vector2& a_start,const NBsys::NGeometry::Geometry_Vector2& a_end,f32 a_z,const NBsys::NColor::Color_F& a_color)
+		void DrawRect(f32 a_x,f32 a_y,f32 a_w,f32 a_h,f32 a_z,s32 a_texture_id,const NBsys::NColor::Color_F& a_color)
 		{
 			NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 t_vector;
 
@@ -252,8 +252,8 @@ namespace NCommon
 
 			//00
 			{
-				t_vector.pos_xx = a_start.x;
-				t_vector.pos_yy = a_start.y;
+				t_vector.pos_xx = a_x;
+				t_vector.pos_yy = a_y;
 				t_vector.pos_zz = a_z;
 
 				t_vector.uv_xx = 0.0f;
@@ -264,8 +264,8 @@ namespace NCommon
 
 			//10
 			{
-				t_vector.pos_xx = a_end.x;
-				t_vector.pos_yy = a_start.y;
+				t_vector.pos_xx = a_x + a_w;
+				t_vector.pos_yy = a_y;
 				t_vector.pos_zz = a_z;
 
 				t_vector.uv_xx = 0.0f;
@@ -276,8 +276,8 @@ namespace NCommon
 
 			//01
 			{
-				t_vector.pos_xx = a_start.x;
-				t_vector.pos_yy = a_end.y;
+				t_vector.pos_xx = a_x;
+				t_vector.pos_yy = a_y + a_h;
 				t_vector.pos_zz = a_z;
 
 				t_vector.uv_xx = 0.0f;
@@ -288,8 +288,8 @@ namespace NCommon
 
 			//01
 			{
-				t_vector.pos_xx = a_start.x;
-				t_vector.pos_yy = a_end.y;
+				t_vector.pos_xx = a_x;
+				t_vector.pos_yy = a_y + a_h;
 				t_vector.pos_zz = a_z;
 
 				t_vector.uv_xx = 0.0f;
@@ -300,8 +300,8 @@ namespace NCommon
 
 			//10
 			{
-				t_vector.pos_xx = a_end.x;
-				t_vector.pos_yy = a_start.y;
+				t_vector.pos_xx = a_x + a_w;
+				t_vector.pos_yy = a_y;
 				t_vector.pos_zz = a_z;
 
 				t_vector.uv_xx = 0.0f;
@@ -312,8 +312,8 @@ namespace NCommon
 
 			//11
 			{
-				t_vector.pos_xx = a_end.x;
-				t_vector.pos_yy = a_end.y;
+				t_vector.pos_xx = a_x + a_w;
+				t_vector.pos_yy = a_y + a_h;
 				t_vector.pos_zz = a_z;
 
 				t_vector.uv_xx = 0.0f;
