@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒWƒIƒƒgƒŠB
+ * @brief ã‚¸ã‚ªãƒ¡ãƒˆãƒªã€‚
 */
 
 
@@ -37,21 +37,21 @@ namespace NBsys{namespace NGeometry
 	{
 	}
 
-	/** –Ê‚ÌŒü‚«B
+	/** é¢ã®å‘ãã€‚
 	*/
 	inline const Geometry_Vector3& Geometry_Plane::GetNormal()
 	{
 		return this->normal;
 	}
 
-	/** Œ´“_‚Æ–Ê‚Æ‚Ì‹——£B
+	/** åŸç‚¹ã¨é¢ã¨ã®è·é›¢ã€‚
 	*/
 	inline f32 Geometry_Plane::GetDistance()
 	{
 		return this->distance;
 	}
 
-	/** SetPlanePointB
+	/** SetPlanePointã€‚
 	*/
 	inline void Geometry_Plane::SetPlanePoint(NBsys::NGeometry::Geometry_Vector3& a_planepoint_1,NBsys::NGeometry::Geometry_Vector3& a_planepoint_2,NBsys::NGeometry::Geometry_Vector3& a_planepoint_3)
 	{
@@ -64,7 +64,7 @@ namespace NBsys{namespace NGeometry
 		this->distance = this->normal.Dot(a_planepoint_2);
 	}
 
-	/** ŒW”İ’èB
+	/** ä¿‚æ•°è¨­å®šã€‚
 	*/
 	inline void Geometry_Plane::SetABCD(f32 a_normal_x,f32 a_normal_y,f32 a_normal_z,f32 a_d)
 	{
@@ -80,7 +80,7 @@ namespace NBsys{namespace NGeometry
 	}
 
 
-	/** “_‚Æ–Ê‚Æ‚Ì‹——£B
+	/** ç‚¹ã¨é¢ã¨ã®è·é›¢ã€‚
 	*/
 	inline f32 Geometry_Plane::Distance(NBsys::NGeometry::Geometry_Vector3 &a_position)
 	{

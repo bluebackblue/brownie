@@ -1,11 +1,11 @@
-
+Ôªø
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ÇrÇsÇkÉAÉçÉPÅ[É^ÅB
+ * @brief Ôº≥Ôº¥Ôº¨„Ç¢„É≠„Ç±„Éº„Çø„ÄÇ
 */
 
 
@@ -32,7 +32,7 @@
 */
 namespace NBlib
 {
-	/** [static]ämï€ÅB
+	/** [static]Á¢∫‰øù„ÄÇ
 	*/
 	void* STLAllocatorBase::Alloc(size_t a_size)
 	{
@@ -65,7 +65,7 @@ namespace NBlib
 		return nullptr;
 	}
 
-	/** [static]âï˙ÅB
+	/** [static]Ëß£Êîæ„ÄÇ
 	*/
 	void STLAllocatorBase::Free(void* a_pointer)
 	{
@@ -85,7 +85,7 @@ namespace NBlib
 		delete [] t_pointer;
 	}
 
-	/** [static]ämï€ÅB
+	/** [static]Á¢∫‰øù„ÄÇ
 	*/
 	void* STLAllocatorBase_String::Alloc(size_t a_size)
 	{
@@ -110,7 +110,7 @@ namespace NBlib
 		return nullptr;
 	}
 
-	/** [static]âï˙ÅB
+	/** [static]Ëß£Êîæ„ÄÇ
 	*/
 	void STLAllocatorBase_String::Free(void* a_pointer)
 	{

@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒWƒIƒƒgƒŠB
+ * @brief ã‚¸ã‚ªãƒ¡ãƒˆãƒªã€‚
 */
 
 
@@ -24,7 +24,7 @@
 #if(BSYS_GEOMETRY_ENABLE)
 namespace NBsys{namespace NGeometry
 {
-	/** [ì¬]æZB
+	/** [ä½œæˆ]ä¹—ç®—ã€‚
 	*/
 	inline Geometry_Vector2 operator *(f32 a_scale,const Geometry_Vector2& a_vector)
 	{
@@ -36,7 +36,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
-	/** [ì¬]æZB
+	/** [ä½œæˆ]ä¹—ç®—ã€‚
 	*/
 	inline Geometry_Vector3 operator *(f32 a_scale,const Geometry_Vector3& a_vector)
 	{
@@ -49,7 +49,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
-	/** [ì¬]æZB
+	/** [ä½œæˆ]ä¹—ç®—ã€‚
 	*/
 	inline Geometry_Vector4 operator *(f32 a_scale,const Geometry_Vector4& a_vector)
 	{
@@ -113,7 +113,7 @@ namespace NBsys{namespace NGeometry
 	{
 	}
 
-	/** [static]ZeroB
+	/** [static]Zeroã€‚
 	*/
 	inline const Geometry_Vector2& Geometry_Vector2::Zero()
 	{
@@ -122,7 +122,7 @@ namespace NBsys{namespace NGeometry
 		return s_zero;
 	}
 
-	/** [static]OneB
+	/** [static]Oneã€‚
 	*/
 	inline const Geometry_Vector2& Geometry_Vector2::One()
 	{
@@ -131,7 +131,7 @@ namespace NBsys{namespace NGeometry
 		return s_one;
 	}
 
-	/** [İ’è]B
+	/** [è¨­å®š]ã€‚
 	*/
 	inline Geometry_Vector2& Geometry_Vector2::Set(f32 a_x,f32 a_y)
 	{
@@ -141,7 +141,7 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
-	/** [İ’è]B
+	/** [è¨­å®š]ã€‚
 	*/
 	inline Geometry_Vector2& Geometry_Vector2::Set(const Geometry_Vector2& a_vector)
 	{
@@ -151,7 +151,7 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
-	/** [İ’è]Set_ZeroB
+	/** [è¨­å®š]Set_Zeroã€‚
 	*/
 	inline Geometry_Vector2& Geometry_Vector2::Set_Zero()
 	{
@@ -160,14 +160,14 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
-	/** [ƒLƒƒƒXƒg]B
+	/** [ã‚­ãƒ£ã‚¹ãƒˆ]ã€‚
 	*/
 	inline Geometry_Vector2::operator f32*()
 	{
 		return &this->v[0];
 	}
 
-	/** [ƒLƒƒƒXƒg]B
+	/** [ã‚­ãƒ£ã‚¹ãƒˆ]ã€‚
 	*/
 	inline Geometry_Vector2::operator const f32*() const
 	{
@@ -229,7 +229,7 @@ namespace NBsys{namespace NGeometry
 	{
 	}
 
-	/** [static]ZeroB
+	/** [static]Zeroã€‚
 	*/
 	inline const Geometry_Vector3& Geometry_Vector3::Zero()
 	{
@@ -238,7 +238,7 @@ namespace NBsys{namespace NGeometry
 		return s_zero;
 	}
 
-	/** [static]OneB
+	/** [static]Oneã€‚
 	*/
 	inline const Geometry_Vector3& Geometry_Vector3::One()
 	{
@@ -247,7 +247,7 @@ namespace NBsys{namespace NGeometry
 		return s_one;
 	}
 
-	/** [İ’è]B
+	/** [è¨­å®š]ã€‚
 	*/
 	inline Geometry_Vector3& Geometry_Vector3::Set(f32 a_x,f32 a_y,f32 a_z)
 	{
@@ -258,7 +258,7 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
-	/** [İ’è]B
+	/** [è¨­å®š]ã€‚
 	*/
 	inline Geometry_Vector3& Geometry_Vector3::Set(const Geometry_Vector3& a_vector)
 	{
@@ -269,7 +269,7 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
-	/** [İ’è]Set_ZeroB
+	/** [è¨­å®š]Set_Zeroã€‚
 	*/
 	inline Geometry_Vector3& Geometry_Vector3::Set_Zero()
 	{
@@ -278,21 +278,21 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
-	/** [ƒLƒƒƒXƒg]B
+	/** [ã‚­ãƒ£ã‚¹ãƒˆ]ã€‚
 	*/
 	inline Geometry_Vector3::operator f32*()
 	{
 		return &this->v[0];
 	}
 
-	/** [ƒLƒƒƒXƒg]B
+	/** [ã‚­ãƒ£ã‚¹ãƒˆ]ã€‚
 	*/
 	inline Geometry_Vector3::operator const f32*() const
 	{
 		return &this->v[0];
 	}
 
-	/** [ì¬]ŠOÏB
+	/** [ä½œæˆ]å¤–ç©ã€‚
 	*/
 	inline Geometry_Vector3 Geometry_Vector3::Make_Cross(const Geometry_Vector3& a_vector) const
 	{
@@ -305,7 +305,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
-	/** [İ’è]ŠOÏB
+	/** [è¨­å®š]å¤–ç©ã€‚
 	*/
 	inline Geometry_Vector3& Geometry_Vector3::Set_Cross(const Geometry_Vector3& a_vector)
 	{
@@ -320,7 +320,7 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
-	/** [İ’è]ŠOÏB
+	/** [è¨­å®š]å¤–ç©ã€‚
 	*/
 	inline Geometry_Vector3& Geometry_Vector3::Set_Cross(const Geometry_Vector3& a_vector_1,const Geometry_Vector3& a_vector_2)
 	{
@@ -335,7 +335,7 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
-	/** [İ’è]³‹K‰»B
+	/** [è¨­å®š]æ­£è¦åŒ–ã€‚
 	*/
 	inline Geometry_Vector3& Geometry_Vector3::Set_Normalize()
 	{
@@ -354,7 +354,7 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
-	/** [İ’è]³‹K‰»B
+	/** [è¨­å®š]æ­£è¦åŒ–ã€‚
 	*/
 	inline Geometry_Vector3& Geometry_Vector3::Set_Normalize_Safe(const Geometry_Vector3& a_vector_safe)
 	{
@@ -379,7 +379,7 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
-	/** [İ’è]³‹K‰»B
+	/** [è¨­å®š]æ­£è¦åŒ–ã€‚
 	*/
 	inline f32 Geometry_Vector3::Set_Normalize_GetLength()
 	{
@@ -404,7 +404,7 @@ namespace NBsys{namespace NGeometry
 		return t_length;
 	}
 
-	/** [ì¬]³‹K‰»B
+	/** [ä½œæˆ]æ­£è¦åŒ–ã€‚
 	*/
 	inline Geometry_Vector3 Geometry_Vector3::Make_Normalize() const
 	{
@@ -425,7 +425,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
-	/** [ì¬]³‹K‰»B
+	/** [ä½œæˆ]æ­£è¦åŒ–ã€‚
 	*/
 	inline Geometry_Vector3 Geometry_Vector3::Make_Normalize_Safe(const Geometry_Vector3& a_vector_safe) const
 	{
@@ -450,7 +450,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
-	/** [İ’è]‰ÁZB
+	/** [è¨­å®š]åŠ ç®—ã€‚
 	*/
 	inline Geometry_Vector3& Geometry_Vector3::operator +=(const Geometry_Vector3& a_vector)
 	{
@@ -461,7 +461,7 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
-	/** [İ’è]Œ¸ZB
+	/** [è¨­å®š]æ¸›ç®—ã€‚
 	*/
 	inline Geometry_Vector3& Geometry_Vector3::operator -=(const Geometry_Vector3& a_vector)
 	{
@@ -472,7 +472,7 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
-	/** [İ’è]æZB
+	/** [è¨­å®š]ä¹—ç®—ã€‚
 	*/
 	inline Geometry_Vector3& Geometry_Vector3::operator *=(f32 a_value)
 	{
@@ -483,7 +483,7 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
-	/** [İ’è]æZB
+	/** [è¨­å®š]ä¹—ç®—ã€‚
 	*/
 	inline Geometry_Vector3& Geometry_Vector3::operator *=(const Geometry_Vector3& a_vector)
 	{
@@ -494,7 +494,7 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
-	/** [İ’è]œZB
+	/** [è¨­å®š]é™¤ç®—ã€‚
 	*/
 	inline Geometry_Vector3& Geometry_Vector3::operator /=(f32 a_value)
 	{
@@ -503,14 +503,14 @@ namespace NBsys{namespace NGeometry
 		return operator *=(1.0f / a_value);
 	}
 
-	/** [ì¬]©g‚ÌƒxƒNƒgƒ‹‚ğ•Ô‚µ‚Ü‚·B
+	/** [ä½œæˆ]è‡ªèº«ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’è¿”ã—ã¾ã™ã€‚
 	*/
 	inline Geometry_Vector3 Geometry_Vector3::operator +() const
 	{
 		return *this;
 	}
 
-	/** [ì¬]‹tŒü‚«ƒxƒNƒgƒ‹B
+	/** [ä½œæˆ]é€†å‘ããƒ™ã‚¯ãƒˆãƒ«ã€‚
 	*/
 	inline Geometry_Vector3 Geometry_Vector3::operator -() const
 	{
@@ -519,7 +519,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
-	/** [ì¬]‰ÁZB
+	/** [ä½œæˆ]åŠ ç®—ã€‚
 	*/
 	inline Geometry_Vector3 Geometry_Vector3::operator +(const Geometry_Vector3& a_vector) const
 	{
@@ -533,7 +533,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
-	/** [ì¬]Œ¸ZB
+	/** [ä½œæˆ]æ¸›ç®—ã€‚
 	*/
 	inline Geometry_Vector3 Geometry_Vector3::operator -(const Geometry_Vector3& a_vector) const
 	{
@@ -547,7 +547,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
-	/** [ì¬]æZB
+	/** [ä½œæˆ]ä¹—ç®—ã€‚
 	*/
 	inline Geometry_Vector3 Geometry_Vector3::operator *(f32 a_value) const
 	{
@@ -561,7 +561,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
-	/** [ì¬]œZB
+	/** [ä½œæˆ]é™¤ç®—ã€‚
 	*/
 	inline Geometry_Vector3 Geometry_Vector3::operator /(f32 a_value) const
 	{
@@ -572,21 +572,21 @@ namespace NBsys{namespace NGeometry
 		return operator *(t_value);
 	}
 
-	/** [”äŠr]B
+	/** [æ¯”è¼ƒ]ã€‚
 	*/
 	inline bool Geometry_Vector3::operator ==(const Geometry_Vector3& a_vector) const
 	{
 		return (this->x == a_vector.x) && (this->y == a_vector.y) && (this->z == a_vector.z);
 	}
 
-	/** [”äŠr]B
+	/** [æ¯”è¼ƒ]ã€‚
 	*/
 	inline bool Geometry_Vector3::operator !=(const Geometry_Vector3& a_vector) const
 	{
 		return (x != a_vector.x) || (y != a_vector.y) || (z != a_vector.z);
 	}
 
-	/** [“àÏ]length(this)*length(a_vector)*cos(ƒÆ)B
+	/** [å†…ç©]length(this)*length(a_vector)*cos(Î¸)ã€‚
 	*/
 	inline f32 Geometry_Vector3::Dot(const Geometry_Vector3& a_vector) const
 	{
@@ -595,14 +595,14 @@ namespace NBsys{namespace NGeometry
 		return t_value;
 	}
 
-	/** [ƒ`ƒFƒbƒN]B
+	/** [ãƒã‚§ãƒƒã‚¯]ã€‚
 	*/
 	inline bool Geometry_Vector3::IsZero() const
 	{
 		return (this->x == 0.0f)&&(this->y == 0.0f)&&(this->z == 0.0f);
 	}
 
-	/** [ì¬]’·‚³B
+	/** [ä½œæˆ]é•·ã•ã€‚
 	*/
 	inline f32 Geometry_Vector3::Length() const
 	{
@@ -613,14 +613,14 @@ namespace NBsys{namespace NGeometry
 		return t_value;
 	}
 
-	/** [ì¬]’·‚³‚Ì‚QæB
+	/** [ä½œæˆ]é•·ã•ã®ï¼’ä¹—ã€‚
 	*/
 	inline f32 Geometry_Vector3::SquareLength() const
 	{
 		return (this->x * this->x) + (this->y * this->y) + (this->z * this->z);
 	}
 
-	/** [ì¬]‚Q“_ŠÔ‚Ì‹——£‚Ì‚QæB
+	/** [ä½œæˆ]ï¼’ç‚¹é–“ã®è·é›¢ã®ï¼’ä¹—ã€‚
 	*/
 	inline f32 Geometry_Vector3::SquareDistance(const Geometry_Vector3& a_vector) const
 	{
@@ -633,7 +633,7 @@ namespace NBsys{namespace NGeometry
 		return t_value;
 	}
 
-	/** [ì¬]Make_LerpB
+	/** [ä½œæˆ]Make_Lerpã€‚
 
 	a_per = 0.0f : return = this
 	a_per = 1.0f : return = a_vector
@@ -650,7 +650,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
-	/** [static][ì¬]Lerp
+	/** [static][ä½œæˆ]Lerp
 
 	a_per = 0.0f : return = this
 	a_per = 1.0f : return = a_vector
@@ -667,7 +667,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
-	/** [İ’è]Set_LerpB
+	/** [è¨­å®š]Set_Lerpã€‚
 
 	a_per = 0.0f : this = this
 	a_per = 1.0f : this = a_vector
@@ -680,7 +680,7 @@ namespace NBsys{namespace NGeometry
 		this->z += (a_vector.z - this->z) * a_per;
 	}
 
-	/** [İ’è]LerpB
+	/** [è¨­å®š]Lerpã€‚
 
 	a_per = 0.0f : this = a_vector_1
 	a_per = 1.0f : this = a_vector_2
@@ -742,7 +742,7 @@ namespace NBsys{namespace NGeometry
 	{
 	}
 
-	/** [static]ZeroB
+	/** [static]Zeroã€‚
 	*/
 	inline const Geometry_Vector4& Geometry_Vector4::Zero()
 	{
@@ -751,7 +751,7 @@ namespace NBsys{namespace NGeometry
 		return s_zero;
 	}
 
-	/** [static]OneB
+	/** [static]Oneã€‚
 	*/
 	inline const Geometry_Vector4& Geometry_Vector4::One()
 	{
@@ -760,7 +760,7 @@ namespace NBsys{namespace NGeometry
 		return s_one;
 	}
 
-	/** [İ’è]B
+	/** [è¨­å®š]ã€‚
 	*/
 	inline Geometry_Vector4& Geometry_Vector4::Set(f32 a_x,f32 a_y,f32 a_z,f32 a_w)
 	{
@@ -772,7 +772,7 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
-	/** [İ’è]B
+	/** [è¨­å®š]ã€‚
 	*/
 	inline Geometry_Vector4& Geometry_Vector4::Set(const Geometry_Vector4& a_vector)
 	{
@@ -784,7 +784,7 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
-	/** [İ’è]Set_ZeroB
+	/** [è¨­å®š]Set_Zeroã€‚
 	*/
 	inline Geometry_Vector4& Geometry_Vector4::Set_Zero()
 	{
@@ -793,14 +793,14 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
-	/** [ƒLƒƒƒXƒg]B
+	/** [ã‚­ãƒ£ã‚¹ãƒˆ]ã€‚
 	*/
 	inline Geometry_Vector4::operator f32*()
 	{
 		return &this->v[0];
 	}
 
-	/** [ƒLƒƒƒXƒg]B
+	/** [ã‚­ãƒ£ã‚¹ãƒˆ]ã€‚
 	*/
 	inline Geometry_Vector4::operator const f32*() const
 	{

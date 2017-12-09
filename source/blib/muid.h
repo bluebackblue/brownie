@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒvƒƒZƒX‹óŠÔ“à‚Åƒ†ƒj[ƒN‚È‚h‚cB
+ * @brief ãƒ—ãƒ­ã‚»ã‚¹ç©ºé–“å†…ã§ãƒ¦ãƒ‹ãƒ¼ã‚¯ãªï¼©ï¼¤ã€‚
 */
 
 
@@ -22,7 +22,7 @@
 
 /*
 
-	ƒ†ƒj[ƒN–¼‚ª—LŒø‚È‚Ì‚Íuidv‚ª¶‘¶‚µ‚Ä‚¢‚éŠÔB
+	ãƒ¦ãƒ‹ãƒ¼ã‚¯åãŒæœ‰åŠ¹ãªã®ã¯ã€Œidã€ãŒç”Ÿå­˜ã—ã¦ã„ã‚‹é–“ã€‚
 
 */
 
@@ -37,11 +37,11 @@ namespace NBlib
 	{
 	private:
 
-		/** Šm•ÛB
+		/** ç¢ºä¿ã€‚
 		*/
 		static void* Alloc(size_t a_size);
 
-		/** ‰ğ•úB
+		/** è§£æ”¾ã€‚
 		*/
 		static void Free(void* a_pointer);
 
@@ -138,28 +138,28 @@ namespace NBlib
 		}
 
 	public:
-		/** ì¬B
+		/** ä½œæˆã€‚
 		*/
 		void Create()
 		{
 			this->id.reset(new Muid_Impl());
 		}
 
-		/** íœB
+		/** å‰Šé™¤ã€‚
 		*/
 		void Delete()
 		{
 			this->id.reset();
 		}
 
-		/** ƒŠƒZƒbƒgB
+		/** ãƒªã‚»ãƒƒãƒˆã€‚
 		*/
 		void Reset()
 		{
 			this->id.reset();
 		}
 
-		/** ì¬‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©B
+		/** ä½œæˆã—ã¦ã„ã‚‹ã‹ã©ã†ã‹ã€‚
 		*/
 		bool IsCreate() const
 		{
@@ -169,14 +169,14 @@ namespace NBlib
 			return false;
 		}
 
-		/** ƒ†ƒj[ƒN–¼‚ğæ“¾B
+		/** ãƒ¦ãƒ‹ãƒ¼ã‚¯åã‚’å–å¾—ã€‚
 		*/
 		UniqueNameType GetName() const
 		{
 			return reinterpret_cast<UniqueNameType>(this->id.get());
 		}
 
-		/** g—p”æ“¾B
+		/** ä½¿ç”¨æ•°å–å¾—ã€‚
 		*/
 		s32 GetUseCount() const
 		{

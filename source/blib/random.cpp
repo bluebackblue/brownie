@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief —”B
+ * @brief ä¹±æ•°ã€‚
 */
 
 
@@ -37,7 +37,7 @@
 */
 namespace NBlib
 {
-	/** ”ñŒˆ’è˜_“I—”B
+	/** éæ±ºå®šè«–çš„ä¹±æ•°ã€‚
 	*/
 	u32 GetRandFromDevice()
 	{

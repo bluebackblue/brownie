@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒtƒ@ƒCƒ‹B
+ * @brief ãƒ•ã‚¡ã‚¤ãƒ«ã€‚
 */
 
 
@@ -46,27 +46,27 @@ namespace NBsys{namespace NFile
 	*/
 	File_Pack_WorkItem::~File_Pack_WorkItem()
 	{
-		//¡[ˆ—]•Â‚¶‚éB
+		//â– [å‡¦ç†]é–‰ã˜ã‚‹ã€‚
 		{
 			this->filehandle.Close();
 		}
 	}
 
-	/** ƒGƒ‰[ƒR[ƒhæ“¾B
+	/** ã‚¨ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰å–å¾—ã€‚
 	*/
 	ErrorCode::Id File_Pack_WorkItem::GetErrorCode() const
 	{
 		return this->errorcode;
 	}
 
-	/** ƒpƒbƒNƒtƒ@ƒCƒ‹–¼æ“¾B
+	/** ãƒ‘ãƒƒã‚¯ãƒ•ã‚¡ã‚¤ãƒ«åå–å¾—ã€‚
 	*/
 	const STLWString& File_Pack_WorkItem::GetPackFileNameShort()
 	{
 		return this->pack_filename_short;
 	}
 
-	/** ƒtƒ@ƒCƒ‹ŒŸõB
+	/** ãƒ•ã‚¡ã‚¤ãƒ«æ¤œç´¢ã€‚
 	*/
 	sharedptr<File_Pack_FileHandle>& File_Pack_WorkItem::FindFromFileNameShort(const STLWString& a_filename_short)
 	{
@@ -77,9 +77,9 @@ namespace NBsys{namespace NFile
 		return sharedptr<File_Pack_FileHandle>::null();
 	}
 
-	/** [ƒXƒŒƒbƒh‚©‚ç]XVB
+	/** [ã‚¹ãƒ¬ãƒƒãƒ‰ã‹ã‚‰]æ›´æ–°ã€‚
 
-		@return : true = Š®—¹ / false = ì‹Æ’†
+		@return : true = å®Œäº† / false = ä½œæ¥­ä¸­
 
 	*/
 	bool File_Pack_WorkItem::Update(const STLWString& a_rootpath_full)
@@ -87,19 +87,19 @@ namespace NBsys{namespace NFile
 		switch(this->mainstep){
 		case MainStep::Open:
 			{
-				//ŠJ‚­B
+				//é–‹ãã€‚
 
 				STLWString t_pack_filename_full = Path::DirAndName(a_rootpath_full,this->pack_filename_short);
 
 				bool t_ret_open = false;
 				{
-					//¡[ˆ—]ŠJ‚­B
+					//â– [å‡¦ç†]é–‹ãã€‚
 					t_ret_open = this->filehandle.ReadOpen(t_pack_filename_full);
 				}
 
 				if(t_ret_open){
 
-					//¡[ˆ—]ƒtƒ@ƒCƒ‹ƒTƒCƒYB
+					//â– [å‡¦ç†]ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºã€‚
 					{
 						this->data_size = this->filehandle.GetSize();
 					}
@@ -109,13 +109,13 @@ namespace NBsys{namespace NFile
 							this->mainstep = MainStep::Read;
 							break;
 						}else{
-							//ƒtƒ@ƒCƒ‹ƒTƒCƒYæ“¾‚É¸”sB
+							//ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºå–å¾—ã«å¤±æ•—ã€‚
 							this->errorcode = ErrorCode::Load_OpenError;
 							this->mainstep = MainStep::Error;
 						}
 					}
 				}else{
-					//ƒtƒ@ƒCƒ‹‚ğŠJ‚­‚Ì‚É¸”sB
+					//ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ãã®ã«å¤±æ•—ã€‚
 					this->errorcode = ErrorCode::Load_OpenError;
 					this->mainstep = MainStep::Error;
 					break;
@@ -123,35 +123,35 @@ namespace NBsys{namespace NFile
 			}break;
 		case MainStep::Read:
 			{
-				//“Ç‚İ‚ŞB
+				//èª­ã¿è¾¼ã‚€ã€‚
 
 				s64 t_offset = 0;
 
-				//ƒwƒbƒ_[ƒTƒCƒYB
+				//ãƒ˜ãƒƒãƒ€ãƒ¼ã‚µã‚¤ã‚ºã€‚
 				u32 t_header_size = 0;
 				this->filehandle.Read(reinterpret_cast<u8*>(&t_header_size),sizeof(u32),0);
 				t_offset += sizeof(u32);
 
-				//ƒwƒbƒ_[ƒf[ƒ^B
+				//ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ‡ãƒ¼ã‚¿ã€‚
 				sharedptr<u8> t_header(new u8[t_header_size],default_delete<u8[]>());
 				this->filehandle.Read(t_header.get(),t_header_size,0);
 
-				//‘”B
+				//ç·æ•°ã€‚
 				u32 t_all_count = 0;
 				Memory::memcpy(&t_all_count,sizeof(u32),&t_header.get()[t_offset],sizeof(u32));
 				t_offset += sizeof(u32);
 
-				//Šeƒtƒ@ƒCƒ‹ƒTƒCƒYB
+				//å„ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºã€‚
 				sharedptr<u32> t_file_size(new u32[t_all_count]);
 				Memory::memcpy(t_file_size.get(),sizeof(u32) * t_all_count,&t_header.get()[t_offset],sizeof(u32) * t_all_count);
 				t_offset += sizeof(u32) * t_all_count;
 
-				//Šeƒtƒ@ƒCƒ‹–¼•¶šƒTƒCƒYB
+				//å„ãƒ•ã‚¡ã‚¤ãƒ«åæ–‡å­—ã‚µã‚¤ã‚ºã€‚
 				sharedptr<u16> t_filename_length(new u16[t_all_count]);
 				Memory::memcpy(t_filename_length.get(),sizeof(u16) * t_all_count,&t_header.get()[t_offset],sizeof(u16) * t_all_count);
 				t_offset += sizeof(u16) * t_all_count;
 
-				//Šeƒtƒ@ƒCƒ‹–¼‚ğ‚Ü‚Æ‚ß‚½‚à‚ÌB
+				//å„ãƒ•ã‚¡ã‚¤ãƒ«åã‚’ã¾ã¨ã‚ãŸã‚‚ã®ã€‚
 				{
 					s64 t_offset_path = t_offset;
 					s64 t_offset_data = t_header_size;
@@ -178,19 +178,19 @@ namespace NBsys{namespace NFile
 		case MainStep::End:
 			{
 				{
-					//Š®—¹B
+					//å®Œäº†ã€‚
 					return true;
 				}
 			}break;
 		case MainStep::Error:
 			{
-				//¡[ˆ—]•Â‚¶‚éB
+				//â– [å‡¦ç†]é–‰ã˜ã‚‹ã€‚
 				{
 					this->filehandle.Close();
 				}
 
 				{
-					//ƒGƒ‰[Š®—¹B
+					//ã‚¨ãƒ©ãƒ¼å®Œäº†ã€‚
 					return true;
 				}
 			}break;

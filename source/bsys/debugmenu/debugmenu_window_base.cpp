@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒfƒoƒbƒOƒƒjƒ…[B
+ * @brief ãƒ‡ãƒãƒƒã‚°ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã€‚
 */
 
 
@@ -112,10 +112,10 @@ namespace NBsys{namespace NDebugMenu
 	*/
 	f32 DebugMenu_Window_Base::CalcWidthFromParent()
 	{
-		//©•ª‚ÌƒTƒCƒY‚ğg—pB
+		//è‡ªåˆ†ã®ã‚µã‚¤ã‚ºã‚’ä½¿ç”¨ã€‚
 		f32 t_width = this->width;
 
-		//e‚ÌƒTƒCƒY‚ğg—pB
+		//è¦ªã®ã‚µã‚¤ã‚ºã‚’ä½¿ç”¨ã€‚
 		if(t_width < 0.0f){
 			if(this->parent != nullptr){
 				t_width = this->parent->CalcWidthFromParent();
@@ -128,10 +128,10 @@ namespace NBsys{namespace NDebugMenu
 	*/
 	f32 DebugMenu_Window_Base::CalcHeightFromParent()
 	{
-		//©•ª‚ÌƒTƒCƒY‚ğg—pB
+		//è‡ªåˆ†ã®ã‚µã‚¤ã‚ºã‚’ä½¿ç”¨ã€‚
 		f32 t_height = this->height;
 
-		//e‚ÌƒTƒCƒY‚ğg—pB
+		//è¦ªã®ã‚µã‚¤ã‚ºã‚’ä½¿ç”¨ã€‚
 		if(t_height < 0.0f){
 			if(this->parent != nullptr){
 				t_height = this->parent->CalcHeightFromParent();
@@ -145,10 +145,10 @@ namespace NBsys{namespace NDebugMenu
 	*/
 	f32 DebugMenu_Window_Base::CalcWidthFromChild()
 	{
-		//©•ª‚ÌƒTƒCƒY‚ğg—pB
+		//è‡ªåˆ†ã®ã‚µã‚¤ã‚ºã‚’ä½¿ç”¨ã€‚
 		f32 t_width = this->width;
 
-		//q‚ÌƒTƒCƒY‚ğg—pB
+		//å­ã®ã‚µã‚¤ã‚ºã‚’ä½¿ç”¨ã€‚
 		if(t_width < 0.0f){
 
 			t_width = 0.0f;
@@ -158,7 +158,7 @@ namespace NBsys{namespace NDebugMenu
 			switch(this->mode){
 			case Mode::Free:
 				{
-					//©—R”z’uB
+					//è‡ªç”±é…ç½®ã€‚
 					for(STLVector<sharedptr<DebugMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 						f32 t_width_temp = (*t_it)->CalcWidthFromChild();
 						if(t_width_temp > t_width){
@@ -168,7 +168,7 @@ namespace NBsys{namespace NDebugMenu
 				}break;
 			case Mode::Vertical:
 				{
-					//cB
+					//ç¸¦ã€‚
 					for(STLVector<sharedptr<DebugMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 						f32 t_width_temp = (*t_it)->CalcWidthFromChild();
 						if(t_width_temp > t_width){
@@ -178,7 +178,7 @@ namespace NBsys{namespace NDebugMenu
 				}break;
 			case Mode::Horizontal:
 				{
-					//‰¡B
+					//æ¨ªã€‚
 					for(STLVector<sharedptr<DebugMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 						t_width += (*t_it)->CalcWidthFromChild();
 					}
@@ -193,10 +193,10 @@ namespace NBsys{namespace NDebugMenu
 	*/
 	f32 DebugMenu_Window_Base::CalcHeightFromChild()
 	{
-		//©•ª‚ÌƒTƒCƒY‚ğg—pB
+		//è‡ªåˆ†ã®ã‚µã‚¤ã‚ºã‚’ä½¿ç”¨ã€‚
 		f32 t_height = this->height;
 
-		//q‚ÌƒTƒCƒY‚ğg—pB
+		//å­ã®ã‚µã‚¤ã‚ºã‚’ä½¿ç”¨ã€‚
 		if(t_height < 0.0f){
 
 			t_height = 0.0f;
@@ -206,7 +206,7 @@ namespace NBsys{namespace NDebugMenu
 			switch(this->mode){
 			case Mode::Free:
 				{
-					//©—R”z’uB
+					//è‡ªç”±é…ç½®ã€‚
 					for(STLVector<sharedptr<DebugMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 						f32 t_height_temp = (*t_it)->CalcHeightFromChild();
 						if(t_height_temp > t_height){
@@ -216,14 +216,14 @@ namespace NBsys{namespace NDebugMenu
 				}break;
 			case Mode::Vertical:
 				{
-					//cB
+					//ç¸¦ã€‚
 					for(STLVector<sharedptr<DebugMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 						t_height += (*t_it)->CalcHeightFromChild();
 					}
 				}break;
 			case Mode::Horizontal:
 				{
-					//‰¡B
+					//æ¨ªã€‚
 					for(STLVector<sharedptr<DebugMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 						f32 t_height_temp = (*t_it)->CalcHeightFromChild();
 						if(t_height_temp > t_height){
@@ -246,19 +246,19 @@ namespace NBsys{namespace NDebugMenu
 		this->child_list[this->child_list.size()-1]->CallBack_SetParent();
 	}
 
-	/** •\¦ˆÊ’uŒvZB
+	/** è¡¨ç¤ºä½ç½®è¨ˆç®—ã€‚
 	*/
 	void DebugMenu_Window_Base::CalcRect(f32 a_parent_offset_x,f32 a_parent_offset_y)
 	{
-		//[ŒvZŒ‹‰Ê]e‚ÌˆÊ’uB
+		//[è¨ˆç®—çµæœ]è¦ªã®ä½ç½®ã€‚
 		this->calc_parent_x = a_parent_offset_x;
 		this->calc_parent_y = a_parent_offset_y;
 
-		//[ŒvZŒ‹‰Ê]©•ª‚ÌˆÊ’uB
+		//[è¨ˆç®—çµæœ]è‡ªåˆ†ã®ä½ç½®ã€‚
 		this->calc_x = this->calc_parent_x + this->offset_x;
 		this->calc_y = this->calc_parent_y + this->offset_y;
 
-		//[ŒvZŒ‹‰Ê]©•ª‚ÌƒTƒCƒYB
+		//[è¨ˆç®—çµæœ]è‡ªåˆ†ã®ã‚µã‚¤ã‚ºã€‚
 		this->calc_w = this->CalcWidth();
 		this->calc_h = this->CalcHeight();
 
@@ -267,14 +267,14 @@ namespace NBsys{namespace NDebugMenu
 		switch(this->mode){
 		case Mode::Free:
 			{
-				//©—R”z’uB
+				//è‡ªç”±é…ç½®ã€‚
 				for(STLVector<sharedptr<DebugMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 					(*t_it)->CalcRect(this->calc_x,this->calc_y);
 				}
 			}break;
 		case Mode::Vertical:
 			{
-				//cB
+				//ç¸¦ã€‚
 				f32 t_y = this->calc_y;
 				for(STLVector<sharedptr<DebugMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 					(*t_it)->CalcRect(this->calc_x,t_y);
@@ -283,7 +283,7 @@ namespace NBsys{namespace NDebugMenu
 			}break;
 		case Mode::Horizontal:
 			{
-				//‰¡B
+				//æ¨ªã€‚
 				f32 t_x = this->calc_x;
 				for(STLVector<sharedptr<DebugMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 					(*t_it)->CalcRect(t_x,this->calc_y);
@@ -293,7 +293,7 @@ namespace NBsys{namespace NDebugMenu
 		}
 	}
 
-	/** XVB
+	/** æ›´æ–°ã€‚
 	*/
 	void DebugMenu_Window_Base::Update()
 	{
@@ -303,7 +303,7 @@ namespace NBsys{namespace NDebugMenu
 		}
 	}
 
-	/** •`‰æB
+	/** æç”»ã€‚
 	*/
 	void DebugMenu_Window_Base::Draw()
 	{
@@ -313,14 +313,14 @@ namespace NBsys{namespace NDebugMenu
 		}
 	}
 
-	/** e‚ÌíœƒŠƒNƒGƒXƒgBæ“¾B
+	/** è¦ªã®å‰Šé™¤ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚å–å¾—ã€‚
 	*/
 	bool DebugMenu_Window_Base::GetDeleteRequest()
 	{
 		return false;
 	}
 
-	/** ƒR[ƒ‹ƒoƒbƒNBe‚ªÚ‘±‚³‚ê‚½’¼Œã‚ÉŒÄ‚Ño‚³‚ê‚éB
+	/** ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã€‚è¦ªãŒæ¥ç¶šã•ã‚ŒãŸç›´å¾Œã«å‘¼ã³å‡ºã•ã‚Œã‚‹ã€‚
 	*/
 	void DebugMenu_Window_Base::CallBack_SetParent()
 	{

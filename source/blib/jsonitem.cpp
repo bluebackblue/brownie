@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ‚i‚r‚n‚mƒAƒCƒeƒ€B
+ * @brief ï¼ªï¼³ï¼¯ï¼®ã‚¢ã‚¤ãƒ†ãƒ ã€‚
 */
 
 
@@ -46,7 +46,7 @@ namespace NBlib
 
 	#if(BLIB_JSONITEM_ENABLE)
 
-	/** [static]Šm•ÛB
+	/** [static]ç¢ºä¿ã€‚
 	*/
 	void* JsonItem::Alloc(size_t a_size)
 	{
@@ -71,7 +71,7 @@ namespace NBlib
 		return nullptr;
 	}
 
-	/** [static]‰ğ•úB
+	/** [static]è§£æ”¾ã€‚
 	*/
 	void JsonItem::Free(void* a_pointer)
 	{
@@ -93,7 +93,7 @@ namespace NBlib
 	*/
 	namespace NImpl
 	{
-		/** Å‰‚Ìˆê•¶š‚©‚çƒ^ƒCƒv‚ğ„‘ªB
+		/** æœ€åˆã®ä¸€æ–‡å­—ã‹ã‚‰ã‚¿ã‚¤ãƒ—ã‚’æ¨æ¸¬ã€‚
 		*/
 		JsonItem::ValueType::Id GetValueTypeFromChar(char a_char)
 		{
@@ -141,7 +141,7 @@ namespace NBlib
 				}break;
 			default:
 				{
-					//•s–¾‚ÈŠJn•¶šB
+					//ä¸æ˜ãªé–‹å§‹æ–‡å­—ã€‚
 					ASSERT(0);
 
 					return JsonItem::ValueType::None;
@@ -149,7 +149,7 @@ namespace NBlib
 			}
 		}
 
-		/** ®”ƒ`ƒFƒbƒNB
+		/** æ•´æ•°ãƒã‚§ãƒƒã‚¯ã€‚
 		*/
 		bool IsInteger(const STLString& a_string)
 		{
@@ -213,7 +213,7 @@ namespace NBlib
 			#endif
 		}
 
-		/** ƒGƒXƒP[ƒvƒV[ƒPƒ“ƒX•¶š‚ğu{•¶šv‚É•ÏŠ·B
+		/** ã‚¨ã‚¹ã‚±ãƒ¼ãƒ—ã‚·ãƒ¼ã‚±ãƒ³ã‚¹æ–‡å­—ã‚’ã€Œï¿¥ï¼‹æ–‡å­—ã€ã«å¤‰æ›ã€‚
 		*/
 		const char* CheckEscapeSequence(char a_char)
 		{
@@ -239,11 +239,11 @@ namespace NBlib
 				}break;
 			}
 
-			//’Êí•¶šB
+			//é€šå¸¸æ–‡å­—ã€‚
 			return nullptr;
 		}
 
-		/** u{•¶šv‚ğƒV[ƒPƒ“ƒX•¶š‚É•ÏŠ·B
+		/** ã€Œï¿¥ï¼‹æ–‡å­—ã€ã‚’ã‚·ãƒ¼ã‚±ãƒ³ã‚¹æ–‡å­—ã«å¤‰æ›ã€‚
 		*/
 		const char* ToSequenceString(const STLString& a_string,s32 a_index)
 		{
@@ -253,63 +253,63 @@ namespace NBlib
 						switch(a_string[a_index+1]){
 						case '\"':
 							{
-								//ƒ_ƒuƒ‹ƒNƒH[ƒe[ƒVƒ‡ƒ“B
+								//ãƒ€ãƒ–ãƒ«ã‚¯ã‚©ãƒ¼ãƒ†ãƒ¼ã‚·ãƒ§ãƒ³ã€‚
 								return "\"";
 							}break;
 						case '\'':
 							{
-								//ƒVƒ“ƒOƒ‹ƒNƒH[ƒe[ƒVƒ‡ƒ“B
+								//ã‚·ãƒ³ã‚°ãƒ«ã‚¯ã‚©ãƒ¼ãƒ†ãƒ¼ã‚·ãƒ§ãƒ³ã€‚
 								return "\'";
 							}break;
 						case '\\':
 							{
-								//B
+								//ï¿¥ã€‚
 								return "\\";
 							}break;
 						case 'n':
 							{
-								//‰üsB
+								//æ”¹è¡Œã€‚
 								return "\n";
 							}break;
 						case '/':
 							{
-								//ƒXƒ‰ƒbƒVƒ…B
+								//ã‚¹ãƒ©ãƒƒã‚·ãƒ¥ã€‚
 								return "/";
 							}break;
 						default:
 							{
-								//’m‚ç‚È‚¢ƒGƒXƒP[ƒvƒV[ƒPƒ“ƒXB
+								//çŸ¥ã‚‰ãªã„ã‚¨ã‚¹ã‚±ãƒ¼ãƒ—ã‚·ãƒ¼ã‚±ãƒ³ã‚¹ã€‚
 								ASSERT(0);
 
 								return nullptr;
 							}break;
 						}
 					}else{
-						//”ÍˆÍŠOB
+						//ç¯„å›²å¤–ã€‚
 						ASSERT(0);
 
 						return nullptr;
 					}
 				}else{
-					//’Êí•¶šB
+					//é€šå¸¸æ–‡å­—ã€‚
 					ASSERT(0);
 
 					return nullptr;
 				}
 			}else{
-				//”ÍˆÍŠOB
+				//ç¯„å›²å¤–ã€‚
 				ASSERT(0);
 
 				return nullptr;
 			}
 
-			//•s–¾B
+			//ä¸æ˜ã€‚
 			ASSERT(0);
 
 			return nullptr;
 		}
 
-		/** •¶š‚ÌƒTƒCƒYB
+		/** æ–‡å­—ã®ã‚µã‚¤ã‚ºã€‚
 		*/
 		s32 GetMojiSize(const STLString& a_string,s32 a_index,bool a_escape)
 		{
@@ -317,20 +317,20 @@ namespace NBlib
 				if(a_string[a_index] == '\\'){
 					if(a_escape == true){
 						if(static_cast<s32>(a_string.length()) >= (2 + a_index)){
-							//ƒGƒXƒP[ƒvƒV[ƒPƒ“ƒX‚ÌŒã‚ë‚Í‚PƒoƒCƒg•¶šB
+							//ã‚¨ã‚¹ã‚±ãƒ¼ãƒ—ã‚·ãƒ¼ã‚±ãƒ³ã‚¹ã®å¾Œã‚ã¯ï¼‘ãƒã‚¤ãƒˆæ–‡å­—ã€‚
 							return 2;
 						}else{
-							//•¶š”‚ª‘«‚è‚È‚¢B
+							//æ–‡å­—æ•°ãŒè¶³ã‚Šãªã„ã€‚
 							ASSERT(0);
 
 							return 0;
 						}
 					}else{
-						//ƒGƒXƒP[ƒvƒV[ƒPƒ“ƒX‚Æ‚µ‚Äˆ—‚µ‚È‚¢B
+						//ã‚¨ã‚¹ã‚±ãƒ¼ãƒ—ã‚·ãƒ¼ã‚±ãƒ³ã‚¹ã¨ã—ã¦å‡¦ç†ã—ãªã„ã€‚
 						return 1;
 					}
 				}else{
-					//ƒGƒXƒP[ƒvƒV[ƒPƒ“ƒXˆÈŠOB
+					//ã‚¨ã‚¹ã‚±ãƒ¼ãƒ—ã‚·ãƒ¼ã‚±ãƒ³ã‚¹ä»¥å¤–ã€‚
 
 					u8 t_char = a_string[a_index];
 
@@ -357,14 +357,14 @@ namespace NBlib
 					}
 				}
 			}else{
-				//”ÍˆÍŠOB
+				//ç¯„å›²å¤–ã€‚
 				ASSERT(0);
 
 				return 0;
 			}
 		}
 
-		/** •¶š—ñJSON‚Ì’·‚³B
+		/** æ–‡å­—åˆ—JSONã®é•·ã•ã€‚
 		*/
 		s32 GetLength_StringData(const STLString& a_string,s32 a_index)
 		{
@@ -373,15 +373,15 @@ namespace NBlib
 					s32 t_index = a_index + 1;
 					while(t_index < static_cast<s32>(a_string.length())){
 						if((a_string[t_index] == '"')||(a_string[t_index] == '\'')){
-							//I’[B
+							//çµ‚ç«¯ã€‚
 							return t_index - a_index + 1;
 						}else{
-							//Ÿ‚Ì•¶š‚ÖB
+							//æ¬¡ã®æ–‡å­—ã¸ã€‚
 							s32 t_add = GetMojiSize(a_string,t_index,true);
 							if(t_add > 0){
 								t_index += t_add;
 							}else{
-								//—\‘zŠO‚Ì•¶šƒR[ƒhB
+								//äºˆæƒ³å¤–ã®æ–‡å­—ã‚³ãƒ¼ãƒ‰ã€‚
 								ASSERT(0);
 
 								return 0;
@@ -389,25 +389,25 @@ namespace NBlib
 						}
 					}
 				
-					//—\‘zŠO‚ÌI’[B
+					//äºˆæƒ³å¤–ã®çµ‚ç«¯ã€‚
 					ASSERT(0);
 
 					return 0;
 				}else{
-					//•¶š—ñˆÈŠOB
+					//æ–‡å­—åˆ—ä»¥å¤–ã€‚
 					ASSERT(0);
 
 					return 0;
 				}
 			}else{
-				//”ÍˆÍŠOB
+				//ç¯„å›²å¤–ã€‚
 				ASSERT(0);
 
 				return 0;
 			}
 		}
 
-		/** ”šJSON‚Ì’·‚³B
+		/** æ•°å­—JSONã®é•·ã•ã€‚
 		*/
 		s32 GetLength_Number(const STLString& a_string,s32 a_index)
 		{
@@ -419,7 +419,7 @@ namespace NBlib
 					case ']':
 					case ',':
 						{
-							//I’[B
+							//çµ‚ç«¯ã€‚
 							return t_index - a_index;
 						}break;
 					case '0':
@@ -436,12 +436,12 @@ namespace NBlib
 					case '+':
 					case '-':
 						{
-							//”’lB
+							//æ•°å€¤ã€‚
 							t_index++;
 						}break;
 					default:
 						{
-							//•s–¾B
+							//ä¸æ˜ã€‚
 							ASSERT(0);
 
 							return 0;
@@ -449,17 +449,17 @@ namespace NBlib
 					}
 				}
 			
-				//I’[B
+				//çµ‚ç«¯ã€‚
 				return t_index - a_index;
 			}else{
-				//”ÍˆÍŠOB
+				//ç¯„å›²å¤–ã€‚
 				ASSERT(0);
 
 				return 0;
 			}
 		}
 
-		/** ˜A‘zƒŠƒXƒgJSON‚Ì’·‚³B
+		/** é€£æƒ³ãƒªã‚¹ãƒˆJSONã®é•·ã•ã€‚
 		*/
 		s32 GetLength_AssociateArray(const STLString& a_string,s32 a_index)
 		{
@@ -471,53 +471,53 @@ namespace NBlib
 					while(t_index < static_cast<s32>(a_string.length())){
 						if(a_string[t_index] == '}'){
 							if(t_nest <= 1){
-								//I’[B
+								//çµ‚ç«¯ã€‚
 								return t_index - a_index + 1;
 							}else{
-								//ƒlƒXƒgB
+								//ãƒã‚¹ãƒˆã€‚
 								t_nest--;
 								t_index++;
 							}
 						}else if(a_string[t_index] == '{'){
-							//ƒlƒXƒgB
+							//ãƒã‚¹ãƒˆã€‚
 							t_nest++;
 							t_index++;
 						}else if((a_string[t_index] == '"')||(a_string[t_index] == '\'')){
-							//•¶š—ñB
+							//æ–‡å­—åˆ—ã€‚
 							s32 t_add = GetLength_StringData(a_string,t_index);
 							if(t_add > 0){
 								t_index += t_add;
 							}else{
-								//—\‘zŠO‚Ì•¶šƒR[ƒhB
+								//äºˆæƒ³å¤–ã®æ–‡å­—ã‚³ãƒ¼ãƒ‰ã€‚
 								ASSERT(0);
 
 								return 0;
 							}
 						}else{
-							//Ÿ‚ÖB
+							//æ¬¡ã¸ã€‚
 							t_index++;
 						}
 					}
 				
-					//I’[‚ª‚È‚¢B
+					//çµ‚ç«¯ãŒãªã„ã€‚
 					ASSERT(0);
 
 					return 0;
 				}else{
-					//˜A‘z”z—ñˆÈŠOB
+					//é€£æƒ³é…åˆ—ä»¥å¤–ã€‚
 					ASSERT(0);
 
 					return 0;
 				}
 			}else{
-				//”ÍˆÍŠOB
+				//ç¯„å›²å¤–ã€‚
 				ASSERT(0);
 
 				return 0;
 			}
 		}
 
-		/** ƒCƒ“ƒfƒbƒNƒXƒŠƒXƒgJSON‚Ì’·‚³B
+		/** ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒªã‚¹ãƒˆJSONã®é•·ã•ã€‚
 		*/
 		s32 GetLength_IndexArray(const STLString& a_string,s32 a_index)
 		{
@@ -529,53 +529,53 @@ namespace NBlib
 					while(t_index < static_cast<s32>(a_string.length())){
 						if(a_string[t_index] == ']'){
 							if(t_nest <= 1){
-								//I’[B
+								//çµ‚ç«¯ã€‚
 								return t_index - a_index + 1;
 							}else{
-								//ƒlƒXƒgB
+								//ãƒã‚¹ãƒˆã€‚
 								t_nest--;
 								t_index++;
 							}
 						}else if(a_string[t_index] == '['){
-							//ƒlƒXƒgB
+							//ãƒã‚¹ãƒˆã€‚
 							t_nest++;
 							t_index++;
 						}else if((a_string[t_index] == '"')||(a_string[t_index] == '\'')){
-							//•¶š—ñB
+							//æ–‡å­—åˆ—ã€‚
 							s32 t_add = GetLength_StringData(a_string,t_index);
 							if(t_add > 0){
 								t_index += t_add;
 							}else{
-								//—\‘zŠO‚Ì•¶šƒR[ƒhB
+								//äºˆæƒ³å¤–ã®æ–‡å­—ã‚³ãƒ¼ãƒ‰ã€‚
 								ASSERT(0);
 
 								return 0;
 							}
 						}else{
-							//Ÿ‚ÖB
+							//æ¬¡ã¸ã€‚
 							t_index++;
 						}
 					}
 				
-					//I’[‚ª‚È‚¢B
+					//çµ‚ç«¯ãŒãªã„ã€‚
 					ASSERT(0);
 
 					return 0;	
 				}else{
-					//”z—ñˆÈŠOB
+					//é…åˆ—ä»¥å¤–ã€‚
 					ASSERT(0);
 
 					return 0;
 				}
 			}else{
-				//”ÍˆÍŠOB
+				//ç¯„å›²å¤–ã€‚
 				ASSERT(0);
 
 				return 0;
 			}
 		}
 
-		/** TRUEJSON‚Ì’·‚³B
+		/** TRUEJSONã®é•·ã•ã€‚
 		*/
 		s32 GetLength_BoolTrue(const STLString& a_string,s32 a_index)
 		{
@@ -587,13 +587,13 @@ namespace NBlib
 				if((0 <= t_index) && (t_index < static_cast<s32>(a_string.length()))){
 					if((a_string[t_index] == t_true_1[ii])||(a_string[t_index] == t_true_2[ii])){
 					}else{
-						//TRUEˆÈŠOB
+						//TRUEä»¥å¤–ã€‚
 						ASSERT(0);
 						
 						return 0;
 					}
 				}else{
-					//TRUEˆÈŠOB
+					//TRUEä»¥å¤–ã€‚
 					ASSERT(0);
 
 					return 0;
@@ -605,16 +605,16 @@ namespace NBlib
 
 				if((0 <= t_index) && (t_index < static_cast<s32>(a_string.length()))){
 					if((a_string[t_index] == '}')||(a_string[t_index] == ']')||(a_string[t_index] == ',')){
-						//I’[B
+						//çµ‚ç«¯ã€‚
 						return COUNTOF(t_true_1);
 					}else{
-						//TRUEˆÈŠOB
+						//TRUEä»¥å¤–ã€‚
 						ASSERT(0);
 
 						return 0;					
 					}
 				}else{
-					//TRUEˆÈŠOB
+					//TRUEä»¥å¤–ã€‚
 					ASSERT(0);
 
 					return 0;
@@ -622,7 +622,7 @@ namespace NBlib
 			}
 		}
 
-		/** FALSEJSON‚Ì’·‚³B
+		/** FALSEJSONã®é•·ã•ã€‚
 		*/
 		s32 GetLength_BoolFalse(const STLString& a_string,s32 a_index)
 		{
@@ -634,13 +634,13 @@ namespace NBlib
 				if((0 <= t_index) && (t_index < static_cast<s32>(a_string.length()))){
 					if((a_string[t_index] == t_true_1[ii])||(a_string[t_index] == t_true_2[ii])){
 					}else{
-						//FALSEˆÈŠOB
+						//FALSEä»¥å¤–ã€‚
 						ASSERT(0);
 						
 						return 0;
 					}
 				}else{
-					//FALSEˆÈŠOB
+					//FALSEä»¥å¤–ã€‚
 					ASSERT(0);
 
 					return 0;
@@ -652,16 +652,16 @@ namespace NBlib
 
 				if((0 <= t_index) && (t_index < static_cast<s32>(a_string.length()))){
 					if((a_string[t_index] == '}')||(a_string[t_index] == ']')||(a_string[t_index] == ',')){
-						//I’[B
+						//çµ‚ç«¯ã€‚
 						return COUNTOF(t_true_1);
 					}else{
-						//FALSEˆÈŠOB
+						//FALSEä»¥å¤–ã€‚
 						ASSERT(0);
 
 						return 0;					
 					}
 				}else{
-					//FALSEˆÈŠOB
+					//FALSEä»¥å¤–ã€‚
 					ASSERT(0);
 
 					return 0;
@@ -669,7 +669,7 @@ namespace NBlib
 			}
 		}
 
-		/** BinaryData‚Ì’·‚³B
+		/** BinaryDataã®é•·ã•ã€‚
 		*/
 		s32 GetLength_BinaryData(const STLString& a_string,s32 a_index)
 		{
@@ -682,7 +682,7 @@ namespace NBlib
 						switch(a_string[t_index]){
 						case '>':
 							{
-								//I’[B
+								//çµ‚ç«¯ã€‚
 								return t_index - a_index + 1;
 							}break;
 						case '0':
@@ -708,12 +708,12 @@ namespace NBlib
 						case 'f':
 						case 'F':
 							{
-								//Ÿ‚ÖB
+								//æ¬¡ã¸ã€‚
 								t_index++;
 							}break;
 						default:
 							{
-								//•s–¾B
+								//ä¸æ˜ã€‚
 								ASSERT(0);
 
 								return 0;
@@ -721,18 +721,18 @@ namespace NBlib
 						}
 					}
 				
-					//I’[‚ª‚È‚¢B
+					//çµ‚ç«¯ãŒãªã„ã€‚
 					ASSERT(0);
 
 					return 0;	
 				}else{
-					//ƒoƒCƒiƒŠƒf[ƒ^ˆÈŠOB
+					//ãƒã‚¤ãƒŠãƒªãƒ‡ãƒ¼ã‚¿ä»¥å¤–ã€‚
 					ASSERT(0);
 
 					return 0;
 				}
 			}else{
-				//”ÍˆÍŠOB
+				//ç¯„å›²å¤–ã€‚
 				ASSERT(0);
 
 				return 0;
@@ -740,7 +740,7 @@ namespace NBlib
 
 		}
 
-		/** JSON•¶š‚©‚çƒCƒ“ƒfƒbƒNƒXƒŠƒXƒg‚Ìì¬[*,*,*]B
+		/** JSONæ–‡å­—ã‹ã‚‰ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒªã‚¹ãƒˆã®ä½œæˆ[*,*,*]ã€‚
 		*/
 		sharedptr<STLVector<sharedptr<JsonItem>>::Type> CreateIndexArrayFromJsonString(const STLString& a_jsonstring)
 		{
@@ -749,22 +749,22 @@ namespace NBlib
 			s32 t_index = 0;
 			while(t_index < static_cast<s32>(a_jsonstring.length())){
 				if(a_jsonstring[t_index] == ']'){
-					//I’[B
+					//çµ‚ç«¯ã€‚
 					ASSERT(t_index + 1 == static_cast<s32>(a_jsonstring.length()));
 
 					return t_indexlist;
 				}else if(a_jsonstring[t_index] == ','){
-					//Ÿ‚Ì€–Ú‚ ‚èB
+					//æ¬¡ã®é …ç›®ã‚ã‚Šã€‚
 					t_index++;
 				}else if(a_jsonstring[t_index] == '['){
 					if(t_index == 0){
-						//ŠJnB
+						//é–‹å§‹ã€‚
 						t_index++;
 						continue;
 					}else if(t_index == 1){
-						//ƒCƒ“ƒfƒbƒNƒXƒŠƒXƒg‚Ì’†‚ÉƒCƒ“ƒfƒbƒNƒXƒŠƒXƒgB
+						//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒªã‚¹ãƒˆã®ä¸­ã«ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒªã‚¹ãƒˆã€‚
 					}else{
-						//•s–¾B
+						//ä¸æ˜ã€‚
 						ASSERT(0);
 
 						t_indexlist.reset(new STLVector<sharedptr<JsonItem>>::Type());
@@ -772,7 +772,7 @@ namespace NBlib
 					}
 				}
 		
-				//’lB
+				//å€¤ã€‚
 				s32 t_value_size = 0;
 				switch(GetValueTypeFromChar(a_jsonstring[t_index])){
 				case JsonItem::ValueType::StringData:
@@ -807,7 +807,7 @@ namespace NBlib
 					}break;
 				default:
 					{
-						//•s–¾B
+						//ä¸æ˜ã€‚
 						ASSERT(0);
 
 						t_indexlist.reset(new STLVector<sharedptr<JsonItem>>::Type());
@@ -815,7 +815,7 @@ namespace NBlib
 					}break;
 				}
 			
-				//ƒŠƒXƒg‚ÌÅŒã‚É’Ç‰ÁB
+				//ãƒªã‚¹ãƒˆã®æœ€å¾Œã«è¿½åŠ ã€‚
 				if(t_value_size > 0){
 					sharedptr<JsonItem> t_additem(new JsonItem());
 					{
@@ -833,14 +833,14 @@ namespace NBlib
 				}
 			}
 		
-			//”ÍˆÍŠOB
+			//ç¯„å›²å¤–ã€‚
 			ASSERT(0);
 
 			t_indexlist.reset(new STLVector<sharedptr<JsonItem>>::Type());
 			return t_indexlist;
 		}
 
-		/** JSON•¶š‚©‚ç˜A‘z”z—ñ‚Ìì¬B
+		/** JSONæ–‡å­—ã‹ã‚‰é€£æƒ³é…åˆ—ã®ä½œæˆã€‚
 		*/
 		sharedptr<STLMap<STLString,sharedptr<JsonItem>>::Type> CreateAssociativeArrayFromJsonString(const STLString& a_jsonstring)
 		{
@@ -849,20 +849,20 @@ namespace NBlib
 			s32 t_index = 0;
 			while(t_index < static_cast<s32>(a_jsonstring.length())){
 				if(a_jsonstring[t_index] == '}'){
-					//I’[B
+					//çµ‚ç«¯ã€‚
 					ASSERT(t_index + 1 == static_cast<s32>(a_jsonstring.length()));
 
 					return t_associativelist;
 				}else if(a_jsonstring[t_index] == ','){
-					//Ÿ‚Ì€–Ú‚ ‚èB
+					//æ¬¡ã®é …ç›®ã‚ã‚Šã€‚
 					t_index++;
 				}else if(a_jsonstring[t_index] == '{'){
 					if(t_index == 0){
-						//ŠJnB
+						//é–‹å§‹ã€‚
 						t_index++;
 						continue;
 					}else{
-						//•s–¾B
+						//ä¸æ˜ã€‚
 						ASSERT(0);
 
 						t_associativelist.reset(new STLMap<STLString,sharedptr<JsonItem>>::Type);
@@ -870,7 +870,7 @@ namespace NBlib
 					}
 				}
 			
-				//–¼‘OB
+				//åå‰ã€‚
 				STLString t_name_string;
 				if((a_jsonstring[t_index] == '"')||(a_jsonstring[t_index] == '\'')){
 					s32 t_name_size = GetLength_StringData(a_jsonstring,t_index);
@@ -878,32 +878,32 @@ namespace NBlib
 						t_name_string = a_jsonstring.substr(t_index+1,t_name_size-2);
 						t_index += t_name_size;
 					}else{
-						//•s–¾B
+						//ä¸æ˜ã€‚
 						ASSERT(0);
 
 						t_associativelist.reset(new STLMap<STLString,sharedptr<JsonItem>>::Type);
 						return t_associativelist;
 					}
 				}else{
-					//•s–¾B
+					//ä¸æ˜ã€‚
 					ASSERT(0);
 
 					t_associativelist.reset(new STLMap<STLString,sharedptr<JsonItem>>::Type);
 					return t_associativelist;
 				}
 			
-				//u:vB
+				//ã€Œ:ã€ã€‚
 				if(a_jsonstring[t_index] == ':'){
 					t_index++;
 				}else{
-					//•s–¾B
+					//ä¸æ˜ã€‚
 					ASSERT(0);
 
 					t_associativelist.reset(new STLMap<STLString,sharedptr<JsonItem>>::Type);
 					return t_associativelist;
 				}
 			
-				//’lB
+				//å€¤ã€‚
 				s32 t_value_size = 0;
 				switch(GetValueTypeFromChar(a_jsonstring[t_index])){
 				case JsonItem::ValueType::StringData:
@@ -938,7 +938,7 @@ namespace NBlib
 					}break;
 				default:
 					{
-						//•s–¾B
+						//ä¸æ˜ã€‚
 						ASSERT(0);
 
 						t_associativelist.reset(new STLMap<STLString,sharedptr<JsonItem>>::Type);
@@ -946,7 +946,7 @@ namespace NBlib
 					}break;
 				}
 			
-				//ƒŠƒXƒg‚É’Ç‰ÁB
+				//ãƒªã‚¹ãƒˆã«è¿½åŠ ã€‚
 				if(t_value_size > 0){
 					sharedptr<JsonItem> t_additem(new JsonItem());
 					{
@@ -964,14 +964,14 @@ namespace NBlib
 				}
 			}
 		
-			//”ÍˆÍŠOB
+			//ç¯„å›²å¤–ã€‚
 			ASSERT(0);
 
 			t_associativelist.reset(new STLMap<STLString,sharedptr<JsonItem>>::Type);
 			return t_associativelist;
 		}
 
-		/** JSON•¶š‚©‚çƒoƒCƒiƒŠƒf[ƒ^‚Ìì¬B
+		/** JSONæ–‡å­—ã‹ã‚‰ãƒã‚¤ãƒŠãƒªãƒ‡ãƒ¼ã‚¿ã®ä½œæˆã€‚
 		*/
 		sharedptr<STLVector<u8>::Type> CreateBinaryDataFromJsonString(const STLString& a_jsonstring)
 		{
@@ -982,17 +982,17 @@ namespace NBlib
 			s32 t_index = 0;
 			while(t_index < static_cast<s32>(a_jsonstring.length())){
 				if(a_jsonstring[t_index] == '>'){
-					//I’[B
+					//çµ‚ç«¯ã€‚
 					ASSERT(t_index + 1 == static_cast<s32>(a_jsonstring.length()));
 
 					return t_binarydata;
 				}else if(a_jsonstring[t_index] == '<'){
 					if(t_index == 0){
-						//ŠJnB
+						//é–‹å§‹ã€‚
 						t_index++;
 						continue;
 					}else{
-						//•s–¾B
+						//ä¸æ˜ã€‚
 						ASSERT(0);
 
 						t_binarydata.reset(new STLVector<u8>::Type());
@@ -1027,7 +1027,7 @@ namespace NBlib
 					case 'F':t_binary = 0xF0;break;
 					default:
 						{
-							//•s–¾B
+							//ä¸æ˜ã€‚
 							ASSERT(0);
 
 							t_binarydata.reset(new STLVector<u8>::Type());
@@ -1063,7 +1063,7 @@ namespace NBlib
 						case 'F':t_binary |= 0x0F;break;
 						default:
 							{
-								//•s–¾B
+								//ä¸æ˜ã€‚
 								ASSERT(0);
 
 								t_binarydata.reset(new STLVector<u8>::Type());
@@ -1075,7 +1075,7 @@ namespace NBlib
 
 						t_binarydata->push_back(t_binary);
 					}else{
-						//•s–¾B
+						//ä¸æ˜ã€‚
 						ASSERT(0);
 
 						t_binarydata.reset(new STLVector<u8>::Type());
@@ -1084,7 +1084,7 @@ namespace NBlib
 				}
 			}
 
-			//”ÍˆÍŠOB
+			//ç¯„å›²å¤–ã€‚
 			ASSERT(0);
 
 			t_binarydata.reset(new STLVector<u8>::Type());
@@ -1172,7 +1172,7 @@ namespace NBlib
 		this->SetBinaryData(a_value.value);
 	}
 
-	/** ƒfƒB[ƒvƒRƒs[B
+	/** ãƒ‡ã‚£ãƒ¼ãƒ—ã‚³ãƒ”ãƒ¼ã€‚
 	*/
 	sharedptr<JsonItem> JsonItem::DeepCopy() const
 	{
@@ -1181,7 +1181,7 @@ namespace NBlib
 	}
 
 
-	/** ‚i‚r‚n‚m•¶š—ñ‚ğƒZƒbƒgB
+	/** ï¼ªï¼³ï¼¯ï¼®æ–‡å­—åˆ—ã‚’ã‚»ãƒƒãƒˆã€‚
 	*/
 	void JsonItem::SetJsonString(const STLString& a_jsonstring)
 	{
@@ -1236,7 +1236,7 @@ namespace NBlib
 	}
 
 
-	/** ’l‰»B
+	/** å€¤åŒ–ã€‚
 	*/
 	void JsonItem::JsonStringToValue() const
 	{
@@ -1259,27 +1259,27 @@ namespace NBlib
 						s32 t_add = NImpl::GetMojiSize((*t_jsonstring_temp),t_index,true);
 						if(t_add == 2){
 							if((*t_jsonstring_temp)[t_index] == '\\'){
-								//ƒGƒXƒP[ƒvƒV[ƒPƒ“ƒX•¶š‚ğƒV[ƒPƒ“ƒX•¶š‚É•ÏŠ·B
+								//ã‚¨ã‚¹ã‚±ãƒ¼ãƒ—ã‚·ãƒ¼ã‚±ãƒ³ã‚¹æ–‡å­—ã‚’ã‚·ãƒ¼ã‚±ãƒ³ã‚¹æ–‡å­—ã«å¤‰æ›ã€‚
 								const char* t_add_string = NImpl::ToSequenceString((*t_jsonstring_temp),t_index);
 								if(t_add_string != nullptr){
-									//•ÏŠ·Œã•¶š—ñ‚ğ’Ç‰ÁB
+									//å¤‰æ›å¾Œæ–‡å­—åˆ—ã‚’è¿½åŠ ã€‚
 									this->value.string_data->append(t_add_string);
 								}else{
-									//•s–¾B
+									//ä¸æ˜ã€‚
 									ASSERT(0);
 
 									*(this->value.string_data) = "";
 									return;
 								}
 							}else{
-								//’Êí•¶ši‚Q•¶šj‚ğ’Ç‰ÁB
+								//é€šå¸¸æ–‡å­—ï¼ˆï¼’æ–‡å­—ï¼‰ã‚’è¿½åŠ ã€‚
 								this->value.string_data->append(t_jsonstring_temp->substr(t_index,t_add));
 							}
 						}else if(t_add > 0){
-							//’Êí•¶ši•¡”•¶šj‚ğ’Ç‰ÁB
+							//é€šå¸¸æ–‡å­—ï¼ˆè¤‡æ•°æ–‡å­—ï¼‰ã‚’è¿½åŠ ã€‚
 							this->value.string_data->append(t_jsonstring_temp->substr(t_index,t_add));
 						}else{
-							//•s–¾‚ÈƒGƒ“ƒR[ƒhB
+							//ä¸æ˜ãªã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã€‚
 							ASSERT(0);
 
 							*(this->value.string_data) = "";
@@ -1290,7 +1290,7 @@ namespace NBlib
 					}
 
 					if(t_index != t_max){
-						//•s–¾‚ÈƒGƒ“ƒR[ƒhB
+						//ä¸æ˜ãªã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã€‚
 						ASSERT(0);
 
 						*(this->value.string_data) = "";
@@ -1335,7 +1335,7 @@ namespace NBlib
 				}break;
 			default:
 				{
-					//•s–¾B
+					//ä¸æ˜ã€‚
 					ASSERT(0);
 
 					this->value.Reset();
@@ -1344,14 +1344,14 @@ namespace NBlib
 			}
 		}
 
-		//•s–¾B
+		//ä¸æ˜ã€‚
 		ASSERT(0);
 
 		this->value.Reset();
 		return;
 	}
 
-	/** [æ“¾]GetListMax
+	/** [å–å¾—]GetListMax
 	*/
 	s32 JsonItem::GetListMax() const
 	{
@@ -1379,7 +1379,7 @@ namespace NBlib
 		return 0;
 	}
 
-	/** [æ“¾]GetStringData
+	/** [å–å¾—]GetStringData
 	*/
 	const sharedptr<STLString>& JsonItem::GetStringData() const
 	{
@@ -1392,7 +1392,7 @@ namespace NBlib
 		return this->value.string_data;
 	}
 
-	/** [æ“¾]GetInteger
+	/** [å–å¾—]GetInteger
 	*/
 	s32 JsonItem::GetInteger() const
 	{
@@ -1405,7 +1405,7 @@ namespace NBlib
 		return this->value.integer_number;
 	}
 
-	/** [æ“¾]GetUnsignedInteger
+	/** [å–å¾—]GetUnsignedInteger
 	*/
 	u32 JsonItem::GetUnsignedInteger() const
 	{
@@ -1418,7 +1418,7 @@ namespace NBlib
 		return static_cast<u32>(this->value.integer_number);
 	}
 
-	/** [æ“¾]GetFloat
+	/** [å–å¾—]GetFloat
 	*/
 	f32 JsonItem::GetFloat() const
 	{
@@ -1431,7 +1431,7 @@ namespace NBlib
 		return this->value.float_number;
 	}
 
-	/** [æ“¾][’l]GetBool
+	/** [å–å¾—][å€¤]GetBool
 	*/
 	bool JsonItem::GetBool() const
 	{
@@ -1444,7 +1444,7 @@ namespace NBlib
 		return this->value.bool_value;
 	}
 
-	/** [æ“¾][’l]GetBinaryData
+	/** [å–å¾—][å€¤]GetBinaryData
 	*/
 	sharedptr<STLVector<u8>::Type>& JsonItem::GetBinaryData()
 	{
@@ -1457,14 +1457,14 @@ namespace NBlib
 		return this->value.binary_data;
 	}
 
-	/** [æ“¾]GetValueType
+	/** [å–å¾—]GetValueType
 	*/
 	JsonItem::ValueType::Id JsonItem::GetValueType() const
 	{
 		return this->valuetype;
 	}
 
-	/** [æ“¾]˜A‘zƒŠƒXƒg‚ÌƒAƒCƒeƒ€æ“¾B
+	/** [å–å¾—]é€£æƒ³ãƒªã‚¹ãƒˆã®ã‚¢ã‚¤ãƒ†ãƒ å–å¾—ã€‚
 	*/
 	sharedptr<JsonItem>& JsonItem::GetItem(const STLString& a_itemname)
 	{
@@ -1486,7 +1486,7 @@ namespace NBlib
 		return sharedptr<JsonItem>::null();
 	}
 
-	/** [æ“¾]˜A‘zƒŠƒXƒg‚ÌƒAƒCƒeƒ€æ“¾B
+	/** [å–å¾—]é€£æƒ³ãƒªã‚¹ãƒˆã®ã‚¢ã‚¤ãƒ†ãƒ å–å¾—ã€‚
 	*/
 	const sharedptr<JsonItem>& JsonItem::GetItem(const STLString& a_itemname) const
 	{
@@ -1508,7 +1508,7 @@ namespace NBlib
 		return sharedptr<JsonItem>::null();
 	}
 
-	/** [æ“¾]˜A‘zƒŠƒXƒg‚ÌƒAƒCƒeƒ€ƒ`ƒFƒbƒNB
+	/** [å–å¾—]é€£æƒ³ãƒªã‚¹ãƒˆã®ã‚¢ã‚¤ãƒ†ãƒ ãƒã‚§ãƒƒã‚¯ã€‚
 	*/
 	bool JsonItem::IsExistItem(const STLString& a_itemname)
 	{
@@ -1528,7 +1528,7 @@ namespace NBlib
 		return false;
 	}
 
-	/** [æ“¾]ƒCƒ“ƒfƒbƒNƒXƒŠƒXƒg‚ÌƒAƒCƒeƒ€æ“¾B
+	/** [å–å¾—]ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒªã‚¹ãƒˆã®ã‚¢ã‚¤ãƒ†ãƒ å–å¾—ã€‚
 	*/
 	sharedptr<JsonItem>& JsonItem::GetItem(s32 a_index)
 	{
@@ -1547,7 +1547,7 @@ namespace NBlib
 		return sharedptr<JsonItem>::null();
 	}
 
-	/** [æ“¾]ƒCƒ“ƒfƒbƒNƒXƒŠƒXƒg‚ÌƒAƒCƒeƒ€æ“¾B
+	/** [å–å¾—]ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒªã‚¹ãƒˆã®ã‚¢ã‚¤ãƒ†ãƒ å–å¾—ã€‚
 	*/
 	const sharedptr<JsonItem>& JsonItem::GetItem(s32 a_index) const
 	{
@@ -1566,7 +1566,7 @@ namespace NBlib
 		return sharedptr<JsonItem>::null();
 	}
 
-	/** [æ“¾]ƒCƒ“ƒfƒbƒNƒXƒŠƒXƒg‚ÌƒAƒCƒeƒ€ƒ`ƒFƒbƒNB
+	/** [å–å¾—]ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒªã‚¹ãƒˆã®ã‚¢ã‚¤ãƒ†ãƒ ãƒã‚§ãƒƒã‚¯ã€‚
 	*/
 	bool JsonItem::IsExistItem(s32 a_index)
 	{
@@ -1583,7 +1583,7 @@ namespace NBlib
 		return false;
 	}
 
-	/** [İ’è]˜A‘zƒŠƒXƒg‚ÉƒAƒCƒeƒ€’Ç‰ÁBíœB
+	/** [è¨­å®š]é€£æƒ³ãƒªã‚¹ãƒˆã«ã‚¢ã‚¤ãƒ†ãƒ è¿½åŠ ã€‚å‰Šé™¤ã€‚
 	*/
 	void JsonItem::SetItem(const STLString& a_itemname,sharedptr<JsonItem>& a_item,bool a_deepcopy)
 	{
@@ -1604,7 +1604,7 @@ namespace NBlib
 		}
 	}
 
-	/** [İ’è]ƒCƒ“ƒfƒbƒNƒXƒŠƒXƒg‚ÉƒAƒCƒeƒ€’Ç‰ÁB
+	/** [è¨­å®š]ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒªã‚¹ãƒˆã«ã‚¢ã‚¤ãƒ†ãƒ è¿½åŠ ã€‚
 	*/
 	void JsonItem::AddItem(const sharedptr<JsonItem>& a_item,bool a_deepcopy)
 	{
@@ -1621,7 +1621,7 @@ namespace NBlib
 		}
 	}
 
-	/** [íœ]ƒCƒ“ƒfƒbƒNƒXƒŠƒXƒg‚©‚çƒAƒCƒeƒ€íœB
+	/** [å‰Šé™¤]ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒªã‚¹ãƒˆã‹ã‚‰ã‚¢ã‚¤ãƒ†ãƒ å‰Šé™¤ã€‚
 	*/
 	void JsonItem::RemoveItem(s32 a_index)
 	{
@@ -1634,7 +1634,7 @@ namespace NBlib
 		this->value.index_array->erase(this->value.index_array->begin()+a_index);
 	}
 
-	/** [İ’è]•¶šƒf[ƒ^B
+	/** [è¨­å®š]æ–‡å­—ãƒ‡ãƒ¼ã‚¿ã€‚
 	*/
 	void JsonItem::SetStringData(const STLString& a_string)
 	{
@@ -1645,7 +1645,7 @@ namespace NBlib
 		this->value.string_data.reset(new STLString(a_string));
 	}
 
-	/** [İ’è]‹ó˜A‘zƒŠƒXƒgB
+	/** [è¨­å®š]ç©ºé€£æƒ³ãƒªã‚¹ãƒˆã€‚
 	*/
 	void JsonItem::SetAssociativeArray()
 	{
@@ -1656,7 +1656,7 @@ namespace NBlib
 		this->value.associative_array.reset(new STLMap<STLString,sharedptr<JsonItem>>::Type());
 	}
 
-	/** [İ’è]‹óƒCƒ“ƒfƒbƒNƒXƒŠƒXƒgB
+	/** [è¨­å®š]ç©ºã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒªã‚¹ãƒˆã€‚
 	*/
 	void JsonItem::SetIndexArray()
 	{
@@ -1667,7 +1667,7 @@ namespace NBlib
 		this->value.index_array.reset(new STLVector<sharedptr<JsonItem>>::Type());
 	}
 
-	/** [İ’è]®”ƒZƒbƒgB
+	/** [è¨­å®š]æ•´æ•°ã‚»ãƒƒãƒˆã€‚
 	*/
 	void JsonItem::SetInteger(s32 a_integer)
 	{
@@ -1678,7 +1678,7 @@ namespace NBlib
 		this->value.integer_number = a_integer;
 	}
 
-	/** [İ’è]®”ƒZƒbƒgB
+	/** [è¨­å®š]æ•´æ•°ã‚»ãƒƒãƒˆã€‚
 	*/
 	void JsonItem::SetUnsignedInteger(u32 a_unsignedinteger)
 	{
@@ -1689,7 +1689,7 @@ namespace NBlib
 		this->value.integer_number = static_cast<s32>(a_unsignedinteger);
 	}
 
-	/** [İ’è]­”ƒZƒbƒgB
+	/** [è¨­å®š]å°‘æ•°ã‚»ãƒƒãƒˆã€‚
 	*/
 	void JsonItem::SetFloat(f32 a_float)
 	{
@@ -1700,7 +1700,7 @@ namespace NBlib
 		this->value.float_number = a_float;
 	}
 
-	/** [İ’è]BoolƒZƒbƒgB
+	/** [è¨­å®š]Boolã‚»ãƒƒãƒˆã€‚
 	*/
 	void JsonItem::SetBool(bool a_bool)
 	{
@@ -1711,7 +1711,7 @@ namespace NBlib
 		this->value.bool_value = a_bool;
 	}
 
-	/** [İ’è]ƒoƒCƒiƒŠ\ƒf[ƒ^ƒZƒbƒgB
+	/** [è¨­å®š]ãƒã‚¤ãƒŠãƒªâ€•ãƒ‡ãƒ¼ã‚¿ã‚»ãƒƒãƒˆã€‚
 	*/
 	void JsonItem::SetBinaryData(const sharedptr<STLVector<u8>::Type>& a_binarydata)
 	{
@@ -1722,7 +1722,7 @@ namespace NBlib
 		this->value.binary_data = a_binarydata;
 	}
 
-	/** ˜A‘z”z—ñƒL[ƒŠƒXƒgì¬B
+	/** é€£æƒ³é…åˆ—ã‚­ãƒ¼ãƒªã‚¹ãƒˆä½œæˆã€‚
 	*/
 	sharedptr<STLVector<STLString>::Type> JsonItem::CreateAssociativeKeyList()
 	{
@@ -1745,7 +1745,7 @@ namespace NBlib
 		return t_ret_keylist;
 	}
 
-	/** JsonString‚ÖƒRƒ“ƒo[ƒgB
+	/** JsonStringã¸ã‚³ãƒ³ãƒãƒ¼ãƒˆã€‚
 	*/
 	const STLString JsonItem::ConvertJsonString() const
 	{
@@ -1763,19 +1763,19 @@ namespace NBlib
 					s32 t_max = static_cast<s32>(this->value.string_data->length());
 
 					while(t_index < t_max){
-						//‚P•¶šæ“¾B
+						//ï¼‘æ–‡å­—å–å¾—ã€‚
 						s32 t_add = NImpl::GetMojiSize(*this->value.string_data,t_index,true);
 						if(t_add == 1){
 							const char* t_add_string = NImpl::CheckEscapeSequence((*(this->value.string_data))[t_index]);
 							if(t_add_string == nullptr){
-								//’Êí•¶šB
+								//é€šå¸¸æ–‡å­—ã€‚
 							}else{
 								t_jsonstring += t_add_string;
 								t_index++;
 								continue;
 							}
 						}else if(t_add <= 0){
-							//•s–¾B
+							//ä¸æ˜ã€‚
 							ASSERT(0);
 
 							return "";
@@ -1808,12 +1808,12 @@ namespace NBlib
 					STLVector<sharedptr<JsonItem>>::const_iterator t_end = this->value.index_array->end();
 					STLVector<sharedptr<JsonItem>>::const_iterator t_it = t_start;
 
-					//ˆê‚Â–ÚB
+					//ä¸€ã¤ç›®ã€‚
 					if(t_it != t_end){
 						t_jsonstring += (*t_it)->ConvertJsonString();
 						++t_it;
 
-						//“ñ‚Â–ÚˆÈ~B
+						//äºŒã¤ç›®ä»¥é™ã€‚
 						for(;t_it!=t_end;++t_it){
 							t_jsonstring += ",";
 							t_jsonstring += (*t_it)->ConvertJsonString();
@@ -1833,14 +1833,14 @@ namespace NBlib
 					STLMap<STLString,sharedptr<JsonItem>>::const_iterator t_it = t_start;
 
 					if(t_it != t_end){
-						//ˆê‚Â–ÚB
+						//ä¸€ã¤ç›®ã€‚
 						t_jsonstring += "\"";
 						t_jsonstring += t_it->first;
 						t_jsonstring += "\":";
 						t_jsonstring += (t_it->second)->ConvertJsonString();
 						++t_it;
 
-						//“ñ‚Â–ÚˆÈ~B
+						//äºŒã¤ç›®ä»¥é™ã€‚
 						for(;t_it!=t_end;++t_it){
 							t_jsonstring += ",\"";
 							t_jsonstring += t_it->first;
@@ -1864,14 +1864,14 @@ namespace NBlib
 			}break;
 		default:
 			{
-				//•s–¾B
+				//ä¸æ˜ã€‚
 				ASSERT(0);
 
 				return "";
 			}break;
 		}
 
-		//•s–¾B
+		//ä¸æ˜ã€‚
 		ASSERT(0);
 
 		return "";

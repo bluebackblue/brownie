@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒAƒNƒVƒ‡ƒ“‚Ìƒoƒbƒ`ˆ—B
+ * @brief ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã®ãƒãƒƒãƒå‡¦ç†ã€‚
 */
 
 
@@ -39,14 +39,14 @@ namespace NBsys{namespace NActionBatching
 
 	public:
 
-		/** ƒAƒNƒVƒ‡ƒ“ŠJnB
+		/** ã‚¢ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹ã€‚
 		*/
 		virtual void Start() = 0;
 
-		/** ƒAƒNƒVƒ‡ƒ“’†B
+		/** ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ä¸­ã€‚
 
-		return : 1 == Ÿ‚ÌƒCƒ“ƒfƒbƒNƒXB0 == Œp‘±B-1 == –ß‚éB
-		a_delta : 0 < ˆ—ŠÔc—ÊB0 == ˜A‘±ˆ—‚ğˆê’†’fB
+		return : 1 == æ¬¡ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã€‚0 == ç¶™ç¶šã€‚-1 == æˆ»ã‚‹ã€‚
+		a_delta : 0 < å‡¦ç†æ™‚é–“æ®‹é‡ã€‚0 == é€£ç¶šå‡¦ç†ã‚’ä¸€æ™‚ä¸­æ–­ã€‚
 		
 		*/
 		virtual s32 Do(f32& a_delta,bool a_endrequest) = 0;

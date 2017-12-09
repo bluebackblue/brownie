@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒI[ƒgƒƒbƒNB
+ * @brief ã‚ªãƒ¼ãƒˆãƒ­ãƒƒã‚¯ã€‚
 */
 
 
@@ -30,7 +30,7 @@ namespace NBlib
 	class AutoLock
 	{
 	private:
-		/** ƒAƒ“ƒƒbƒN‚ÌƒlƒXƒg—pB
+		/** ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã®ãƒã‚¹ãƒˆç”¨ã€‚
 		*/
 		AtomicValue<s32> nestvalue;
 
@@ -64,7 +64,7 @@ namespace NBlib
 			if(this->nestvalue.Load() >= 0){
 				this->lockobject.Lock();
 			}else{
-				//•¡”‰ñƒAƒ“ƒƒbƒN‚ªŒÄ‚Î‚ê‚Ä‚¢‚é‚½‚ßƒƒbƒN‚µ‚È‚¢B
+				//è¤‡æ•°å›ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ãŒå‘¼ã°ã‚Œã¦ã„ã‚‹ãŸã‚ãƒ­ãƒƒã‚¯ã—ãªã„ã€‚
 			}
 
 			this->nestvalue.Add(1);
@@ -82,18 +82,18 @@ namespace NBlib
 		}
 
 	private:
-		/** copy constructor‹Ö~B
+		/** copy constructorç¦æ­¢ã€‚
 		*/
 		AutoLock(const AutoLock& a_this) = delete;
 
 	private:
-		/** ƒRƒs[‹Ö~B
+		/** ã‚³ãƒ”ãƒ¼ç¦æ­¢ã€‚
 		*/
 		void operator =(const AutoLock& a_this) = delete;
 
 	};
 
-	/** ƒI[ƒgƒƒbƒN’†‚Éˆê“I‚ÉƒAƒ“ƒƒbƒN‚·‚éB
+	/** ã‚ªãƒ¼ãƒˆãƒ­ãƒƒã‚¯ä¸­ã«ä¸€æ™‚çš„ã«ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹ã€‚
 	*/
 	class AutoUnlock
 	{

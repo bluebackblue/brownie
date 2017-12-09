@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒWƒIƒƒgƒŠB
+ * @brief ã‚¸ã‚ªãƒ¡ãƒˆãƒªã€‚
 */
 
 
@@ -64,15 +64,15 @@ namespace NBsys{namespace NGeometry
 		*/
 		inline ~Geometry_Matrix_44();
 
-		/** [static]IdentityB
+		/** [static]Identityã€‚
 		*/
 		static inline const Geometry_Matrix_44& Identity();
 
-		/** [İ’è]IdentityB
+		/** [è¨­å®š]Identityã€‚
 		*/
 		inline void Set_Identity();
 
-		/** [İ’è]B
+		/** [è¨­å®š]ã€‚
 		*/
 		inline void Set(
 			f32 a_ax_x,f32 a_ax_y,f32 a_ax_z,f32 a_ax_w,
@@ -81,175 +81,175 @@ namespace NBsys{namespace NGeometry
 			f32 a_tr_x,f32 a_tr_y,f32 a_tr_z,f32 a_tr_w
 		);
 
-		/** [ì¬]‚w²B
+		/** [ä½œæˆ]ï¼¸è»¸ã€‚
 		*/
 		inline Geometry_Vector3 Make_AxisX() const;
 
-		/** [ì¬]‚x²B
+		/** [ä½œæˆ]ï¼¹è»¸ã€‚
 		*/
 		inline Geometry_Vector3 Make_AxisY() const;
 
-		/** [ì¬]‚y²B
+		/** [ä½œæˆ]ï¼ºè»¸ã€‚
 		*/
 		inline Geometry_Vector3 Make_AxisZ() const;
 
-		/** [İ’è]‚w²B
+		/** [è¨­å®š]ï¼¸è»¸ã€‚
 		*/
 		inline void Set_AxisX(const Geometry_Vector3& a_vector);
 
-		/** [İ’è]‚x²B
+		/** [è¨­å®š]ï¼¹è»¸ã€‚
 		*/
 		inline void Set_AxisY(const Geometry_Vector3& a_vector);
 
-		/** [İ’è]‚y²B
+		/** [è¨­å®š]ï¼ºè»¸ã€‚
 		*/
 		inline void Set_AxisZ(const Geometry_Vector3& a_vector);
 
-		/** [İ’è]•½sˆÚ“®B
+		/** [è¨­å®š]å¹³è¡Œç§»å‹•ã€‚
 		*/
 		inline void Set_Translate(f32 a_x,f32 a_y,f32 a_z);
 
-		/** [İ’è]•½sˆÚ“®B
+		/** [è¨­å®š]å¹³è¡Œç§»å‹•ã€‚
 		*/
 		inline void Set_Translate(const Geometry_Vector3& a_vector);
 
-		/** [static][ì¬]•½sˆÚ“®B
+		/** [static][ä½œæˆ]å¹³è¡Œç§»å‹•ã€‚
 		*/
 		static inline Geometry_Matrix_44 Make_Translate(f32 a_x,f32 a_y,f32 a_z);
 
-		/** [ì¬]•½sˆÚ“®B
+		/** [ä½œæˆ]å¹³è¡Œç§»å‹•ã€‚
 		*/
 		inline Geometry_Vector3 Make_Translate_Vector() const;
 
-		/** [ì¬]•½sˆÚ“®B
+		/** [ä½œæˆ]å¹³è¡Œç§»å‹•ã€‚
 		*/
 		inline Geometry_Matrix_44 Make_Translate() const;
 
-		/** [İ’è]ƒXƒP[ƒ‹B
+		/** [è¨­å®š]ã‚¹ã‚±ãƒ¼ãƒ«ã€‚
 		*/
 		inline void Calc_Scale(f32 a_x,f32 a_y,f32 a_z);
 
-		/** [İ’è]ƒXƒP[ƒ‹B
+		/** [è¨­å®š]ã‚¹ã‚±ãƒ¼ãƒ«ã€‚
 		*/
 		inline void Calc_Scale(const Geometry_Vector3& a_vector);
 
-		/** [ì¬]Še²‚ÌƒXƒP[ƒ‹B
+		/** [ä½œæˆ]å„è»¸ã®ã‚¹ã‚±ãƒ¼ãƒ«ã€‚
 		*/
 		inline Geometry_Vector3 Make_Scale_Vector() const;
 
-		/** [static][ì¬]‰ñ“]s—ñB
+		/** [static][ä½œæˆ]å›è»¢è¡Œåˆ—ã€‚
 		*/
 		static inline Geometry_Matrix_44 Make_RotationXYZ(f32 a_rad_x,f32 a_rad_y,f32 a_rad_z);
 
-		/** [ì¬]‰ñ“]s—ñB
+		/** [ä½œæˆ]å›è»¢è¡Œåˆ—ã€‚
 		*/
 		inline Geometry_Matrix_44 Make_Rotation() const;
 
-		/** [static][ì¬]‰ñ“]s—ñB
+		/** [static][ä½œæˆ]å›è»¢è¡Œåˆ—ã€‚
 		*/
 		static inline Geometry_Matrix_44 Make_RotationX(f32 a_rad);
 
-		/** [static][ì¬]‰ñ“]s—ñB
+		/** [static][ä½œæˆ]å›è»¢è¡Œåˆ—ã€‚
 		*/
 		static inline Geometry_Matrix_44 Make_RotationY(f32 a_rad);
 
-		/** [static][ì¬]‰ñ“]s—ñB
+		/** [static][ä½œæˆ]å›è»¢è¡Œåˆ—ã€‚
 		*/
 		static inline Geometry_Matrix_44 Make_RotationZ(f32 a_rad);
 
-		/** [İ’è]‰ñ“]s—ñB
+		/** [è¨­å®š]å›è»¢è¡Œåˆ—ã€‚
 		*/
 		inline void Set_RotationX(f32 a_rad);
 
-		/** [İ’è]‰ñ“]s—ñB
+		/** [è¨­å®š]å›è»¢è¡Œåˆ—ã€‚
 		*/
 		inline void Set_RotationY(f32 a_rad);
 
-		/** [İ’è]‰ñ“]s—ñB
+		/** [è¨­å®š]å›è»¢è¡Œåˆ—ã€‚
 		*/
 		inline void Set_RotationZ(f32 a_rad);
 
-		/** [İ’è]‰ñ“]s—ñB
+		/** [è¨­å®š]å›è»¢è¡Œåˆ—ã€‚
 		*/
 		inline void Set_RotationVector(const Geometry_Vector3& a_vector,f32 a_rad);
 
-		/** [ì¬]‹ts—ñB
+		/** [ä½œæˆ]é€†è¡Œåˆ—ã€‚
 		*/
 		inline Geometry_Matrix_44 Make_Inverse() const;
 
-		/** [İ’è]‹ts—ñB
+		/** [è¨­å®š]é€†è¡Œåˆ—ã€‚
 		*/
 		inline void Set_Inverse();
 
-		/** [ì¬]“]’us—ñB
+		/** [ä½œæˆ]è»¢ç½®è¡Œåˆ—ã€‚
 		*/
 		inline Geometry_Matrix_44 Make_Transpose();
 
-		/** [İ’è]“]’us—ñB
+		/** [è¨­å®š]è»¢ç½®è¡Œåˆ—ã€‚
 		*/
 		inline void Set_Transpose();
 
-		/** [İ’è]Set_LookatB
+		/** [è¨­å®š]Set_Lookatã€‚
 		*/
 		inline void Set_Lookat(const Geometry_Vector3& a_position,const Geometry_Vector3& a_target,const Geometry_Vector3& a_up);
 
-		/** [İ’è]Set_LookatLimitB
+		/** [è¨­å®š]Set_LookatLimitã€‚
 		*/
 		inline void Set_LookatLimit(const Geometry_Vector3& a_position,const Geometry_Vector3& a_target,const Geometry_Vector3& a_up);
 
-		/** [ì¬]ƒNƒI[ƒ^ƒjƒIƒ“B
+		/** [ä½œæˆ]ã‚¯ã‚ªãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã€‚
 		*/
 		inline Geometry_Quaternion Make_Quaternion() const;
 
-		/** [ì¬]ƒNƒI[ƒ^ƒjƒIƒ“B
+		/** [ä½œæˆ]ã‚¯ã‚ªãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã€‚
 		*/
 		inline Geometry_Quaternion Make_Quaternion_Safe() const;
 
-		/** [İ’è]ƒNƒI[ƒ^ƒjƒIƒ“B
+		/** [è¨­å®š]ã‚¯ã‚ªãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã€‚
 		*/
 		inline void Set_Quaternion(const Geometry_Quaternion& a_quaternion);
 
-		/** [İ’è]ƒvƒƒWƒFƒNƒVƒ‡ƒ“B“§‹“Š‰eB
+		/** [è¨­å®š]ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³ã€‚é€è¦–æŠ•å½±ã€‚
 		*/
 		inline void Set_PerspectiveProjectionMatrix(f32 a_width,f32 a_height,f32 a_fov_deg,f32 a_near,f32 a_far);
 
-		/** [İ’è]ƒvƒƒWƒFƒNƒVƒ‡ƒ“B³Ë‰eB
+		/** [è¨­å®š]ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³ã€‚æ­£å°„å½±ã€‚
 		*/
 		inline void Set_OrthographicProjectionMatrix(f32 a_right,f32 a_left,f32 a_top,f32 a_bottom,f32 a_near,f32 a_far);
 
-		/** [İ’è]ƒrƒ…[B
+		/** [è¨­å®š]ãƒ“ãƒ¥ãƒ¼ã€‚
 		*/
 		inline void Set_ViewMatrix(const Geometry_Vector3& a_camera_target,const Geometry_Vector3& a_camera_position,const Geometry_Vector3& a_camera_up);
 
-		/** [İ’è]ƒrƒ…[ƒ|[ƒgA
+		/** [è¨­å®š]ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆã€
 		*/
 		inline void Set_ViewPortMatrix(f32 a_width,f32 a_height);
 
-		/** [İ’è]’PˆÊŒ^B
+		/** [è¨­å®š]å˜ä½å‹ã€‚
 		*/
 		inline Geometry_Matrix_44& operator =(const Geometry_Identity_Type& /*a_identity*/);
 
-		/** [İ’è]æZB
+		/** [è¨­å®š]ä¹—ç®—ã€‚
 		*/
 		inline Geometry_Matrix_44& operator *=(const Geometry_Matrix_44& a_matrix);
 
-		/** [ì¬]æZB
+		/** [ä½œæˆ]ä¹—ç®—ã€‚
 		*/
 		inline Geometry_Matrix_44 operator *(const Geometry_Matrix_44& a_matrix) const;
 
-		/** [İ’è]æZB
+		/** [è¨­å®š]ä¹—ç®—ã€‚
 		*/
 		inline Geometry_Matrix_44& operator *=(f32 a_value);
 
-		/** [ì¬]æZB
+		/** [ä½œæˆ]ä¹—ç®—ã€‚
 		*/
 		inline Geometry_Matrix_44 operator *(f32 a_value);
 
-		/** [İ’è]‰ÁZB
+		/** [è¨­å®š]åŠ ç®—ã€‚
 		*/
 		inline Geometry_Matrix_44& operator +=(const Geometry_Matrix_44& a_matrix);
 
-		/** [ì¬]‰ÁZB
+		/** [ä½œæˆ]åŠ ç®—ã€‚
 		*/
 		inline Geometry_Matrix_44 operator +(const Geometry_Matrix_44& a_matrix) const;
 	};

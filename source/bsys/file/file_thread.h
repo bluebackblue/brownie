@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒtƒ@ƒCƒ‹B
+ * @brief ãƒ•ã‚¡ã‚¤ãƒ«ã€‚
 */
 
 
@@ -39,31 +39,31 @@ namespace NBsys{namespace NFile
 		*/
 		AtomicValue<bool> endrequest;
 
-		/** ƒƒbƒNƒIƒuƒWƒFƒNƒgB
+		/** ãƒ­ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã€‚
 		*/
 		LockObject lockobject;
 
-		/** ì‹ÆƒŠƒXƒgB
+		/** ä½œæ¥­ãƒªã‚¹ãƒˆã€‚
 		*/
 		sharedptr<File_WorkItem> worklist[BSYS_FILE_LISTSIZE];
 
-		/** ƒpƒbƒNì‹ÆƒŠƒXƒgB
+		/** ãƒ‘ãƒƒã‚¯ä½œæ¥­ãƒªã‚¹ãƒˆã€‚
 		*/
 		#if(BSYS_FILE_PACK_ENABLE)
 		sharedptr<File_Pack_WorkItem> worklist_pack[1];
 		#endif
 
-		/** [ƒŠƒNƒGƒXƒg]ƒCƒxƒ“ƒgB
+		/** [ãƒªã‚¯ã‚¨ã‚¹ãƒˆ]ã‚¤ãƒ™ãƒ³ãƒˆã€‚
 		*/
 		SimpleEvent request_event;
 
-		/** ƒpƒbƒNB
+		/** ãƒ‘ãƒƒã‚¯ã€‚
 		*/
 		#if(BSYS_FILE_PACK_ENABLE)
 		File_Pack pack;
 		#endif
 
-		/** ƒLƒƒƒbƒVƒ…B
+		/** ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã€‚
 		*/
 		File_Cache cache;
 
@@ -77,7 +77,7 @@ namespace NBsys{namespace NFile
 		nonvirtual ~File_Thread();
 
 	public:
-		/** ˆø”B
+		/** å¼•æ•°ã€‚
 		*/
 		struct ThreadArgument
 		{
@@ -115,45 +115,45 @@ namespace NBsys{namespace NFile
 			}
 		};
 
-		/** ƒXƒŒƒbƒhƒƒCƒ“B
+		/** ã‚¹ãƒ¬ãƒƒãƒ‰ãƒ¡ã‚¤ãƒ³ã€‚
 		*/
 		void ThreadMain(ThreadArgument& a_threadargument);
 
-		/** [ƒƒCƒ“ƒXƒŒƒbƒh]I—¹ƒŠƒNƒGƒXƒgB
+		/** [ãƒ¡ã‚¤ãƒ³ã‚¹ãƒ¬ãƒƒãƒ‰]çµ‚äº†ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚
 		*/
 		void EndRequest();
 
-		/** [ƒƒCƒ“ƒXƒŒƒbƒh]ƒƒbƒNƒIƒuƒWƒFƒNƒg‚Ìæ“¾B
+		/** [ãƒ¡ã‚¤ãƒ³ã‚¹ãƒ¬ãƒƒãƒ‰]ãƒ­ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å–å¾—ã€‚
 		*/
 		LockObject& GetLockObject();
 
-		/** [ƒƒCƒ“ƒXƒŒƒbƒh][ƒpƒbƒN]ƒ[ƒhƒŠƒNƒGƒXƒgB
+		/** [ãƒ¡ã‚¤ãƒ³ã‚¹ãƒ¬ãƒƒãƒ‰][ãƒ‘ãƒƒã‚¯]ãƒ­ãƒ¼ãƒ‰ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚
 		*/
 		#if(BSYS_FILE_PACK_ENABLE)
 		void Pack_LoadRequest(const STLWString& a_pack_filename_short,const STLWString& a_pack_rootpath_short);
 		#endif
 
-		/** [ƒƒCƒ“ƒXƒŒƒbƒh][ƒpƒbƒN]“Ç‚İ‚İÏ‚İƒ`ƒFƒbƒNB
+		/** [ãƒ¡ã‚¤ãƒ³ã‚¹ãƒ¬ãƒƒãƒ‰][ãƒ‘ãƒƒã‚¯]èª­ã¿è¾¼ã¿æ¸ˆã¿ãƒã‚§ãƒƒã‚¯ã€‚
 		*/
 		#if(BSYS_FILE_PACK_ENABLE)
 		bool Pack_IsExist(const STLWString& a_pack_filename_short);
 		#endif
 
-		/** [ƒƒCƒ“ƒXƒŒƒbƒh]ƒ[ƒhƒŠƒNƒGƒXƒgB
+		/** [ãƒ¡ã‚¤ãƒ³ã‚¹ãƒ¬ãƒƒãƒ‰]ãƒ­ãƒ¼ãƒ‰ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚
 		*/
 		const sharedptr<File_WorkItem> LoadRequest(const STLWString& a_filename_short,s32 a_cachegroup_id,sharedptr<File_Allocator>& a_allocator,s32 a_add_allocatesize);
 
-		/** [ƒƒCƒ“ƒXƒŒƒbƒh]ƒLƒƒƒbƒVƒ…ƒNƒŠƒAB
+		/** [ãƒ¡ã‚¤ãƒ³ã‚¹ãƒ¬ãƒƒãƒ‰]ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚¯ãƒªã‚¢ã€‚
 		*/
 		void CacheClear(s32 a_cachegroup_id);
 
-		/** [ƒƒCƒ“ƒXƒŒƒbƒh]ƒŠ[ƒNƒ`ƒFƒbƒNB
+		/** [ãƒ¡ã‚¤ãƒ³ã‚¹ãƒ¬ãƒƒãƒ‰]ãƒªãƒ¼ã‚¯ãƒã‚§ãƒƒã‚¯ã€‚
 		*/
 		void LeakCheck();
 
-		/** [ƒtƒ@ƒCƒ‹ƒXƒŒƒbƒh]Pack_GetInstanceB
+		/** [ãƒ•ã‚¡ã‚¤ãƒ«ã‚¹ãƒ¬ãƒƒãƒ‰]Pack_GetInstanceã€‚
 
-		”r‘¼‚È‚µB“à•”‚©‚ç‚ÌŒÄ‚Ño‚µB
+		æ’ä»–ãªã—ã€‚å†…éƒ¨ã‹ã‚‰ã®å‘¼ã³å‡ºã—ã€‚
 
 		*/
 		#if(BSYS_FILE_PACK_ENABLE)

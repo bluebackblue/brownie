@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ushareptrvuweakptrvB
+ * @brief ã€Œshareptrã€ã€Œweakptrã€ã€‚
 */
 
 
@@ -49,19 +49,19 @@ namespace NBlib
 
 	#else
 
-		/** sharedptrbaseB
+		/** sharedptrbaseã€‚
 	
-			ƒJƒEƒ“ƒg‚ÌŠÇ—B
+			ã‚«ã‚¦ãƒ³ãƒˆã®ç®¡ç†ã€‚
 
 		*/
 		class sharedptrbase
 		{
 		private:
-			/** g—p”B
+			/** ä½¿ç”¨æ•°ã€‚
 			*/
 			volatile s32	use;
 
-			/** QÆ”B
+			/** å‚ç…§æ•°ã€‚
 			*/
 			volatile s32	weak;
 
@@ -92,23 +92,23 @@ namespace NBlib
 
 		protected:
 
-			/** Šm•ÛB
+			/** ç¢ºä¿ã€‚
 			*/
 			static void* Alloc(size_t a_size);
 
-			/** ‰ğ•úB
+			/** è§£æ”¾ã€‚
 			*/
 			static void Free(void* a_pointer);
 
 		public:
-			/** g—p”‚Ìæ“¾B
+			/** ä½¿ç”¨æ•°ã®å–å¾—ã€‚
 			*/
 			s32 GetUseCount() const
 			{
 				return this->use;
 			}
 
-			/** QÆ”‚Ìæ“¾B
+			/** å‚ç…§æ•°ã®å–å¾—ã€‚
 			*/
 			s32 GetWeakCount() const
 			{
@@ -116,15 +116,15 @@ namespace NBlib
 			}
 
 		public:
-			/** íœq‚ÌÀsB
+			/** å‰Šé™¤å­ã®å®Ÿè¡Œã€‚
 			*/
 			virtual void Delete() = 0;
 
-			/** ƒCƒ“ƒXƒ^ƒ“ƒX‚Ìæ“¾B
+			/** ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®å–å¾—ã€‚
 			*/
 			virtual void* GetInstance() = 0;
 
-			/** g—p”ƒfƒNƒŠƒƒ“ƒgB
+			/** ä½¿ç”¨æ•°ãƒ‡ã‚¯ãƒªãƒ¡ãƒ³ãƒˆã€‚
 			*/
 			void Use_Decrement()
 			{
@@ -148,25 +148,25 @@ namespace NBlib
 				}
 			}
 
-			/** g—p”‚ª‚O‚Å‚È‚¢‚È‚ç‚Î‰„–½B
+			/** ä½¿ç”¨æ•°ãŒï¼ã§ãªã„ãªã‚‰ã°å»¶å‘½ã€‚
 			*/
 			bool Use_Increment_IfNoZero()
 			{
 				#if defined(PLATFORM_VCWIN)
 				{
 					for(;;){
-						//ÅV‚Ìó‘Ô‚ğæ“¾B
+						//æœ€æ–°ã®çŠ¶æ…‹ã‚’å–å¾—ã€‚
 						s32 t_count = static_cast<volatile s32&>(this->use);
 						if(t_count == 0){
-							//‚·‚Å‚É€‚ñ‚Å‚¢‚éB
+							//ã™ã§ã«æ­»ã‚“ã§ã„ã‚‹ã€‚
 							return false;
 						}else{
-							//ƒJƒEƒ“ƒg‚ªut_countv‚Ìê‡‚Íut_count+1v‚É‚·‚éB
+							//ã‚«ã‚¦ãƒ³ãƒˆãŒã€Œt_countã€ã®å ´åˆã¯ã€Œt_count+1ã€ã«ã™ã‚‹ã€‚
 							if(static_cast<s32>(_InterlockedCompareExchange(reinterpret_cast<volatile long*>(&(this->use)),t_count+1,t_count) == t_count)){
-								//‰„–½‚É¬Œ÷B
+								//å»¶å‘½ã«æˆåŠŸã€‚
 								return true;
 							}else{
-								//uthis->usev‚Ì‰Šú’l‚ªut_countvˆÈŠO‚¾‚Á‚½B
+								//ã€Œthis->useã€ã®åˆæœŸå€¤ãŒã€Œt_countã€ä»¥å¤–ã ã£ãŸã€‚
 							}
 						}
 					}
@@ -178,7 +178,7 @@ namespace NBlib
 				#endif
 			}
 
-			/** g—p”AQÆ”‚ğƒCƒ“ƒNƒŠƒƒ“ƒgB 
+			/** ä½¿ç”¨æ•°ã€å‚ç…§æ•°ã‚’ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆã€‚ 
 			*/
 			void UseAndWeak_Increment()
 			{
@@ -194,7 +194,7 @@ namespace NBlib
 				#endif
 			}
 
-			/** QÆ”‚ğƒfƒNƒŠƒƒ“ƒgB
+			/** å‚ç…§æ•°ã‚’ãƒ‡ã‚¯ãƒªãƒ¡ãƒ³ãƒˆã€‚
 			*/
 			bool Weak_Decrement()
 			{
@@ -202,7 +202,7 @@ namespace NBlib
 				{
 					s32 t_ret = _InterlockedDecrement(reinterpret_cast<volatile long*>(&(this->weak)));
 					if(t_ret <= 0){
-						//¦’N‚àg—p‚µ‚Ä‚¢‚È‚¢A’N‚àQÆ‚µ‚Ä‚¢‚È‚¢B
+						//â€»èª°ã‚‚ä½¿ç”¨ã—ã¦ã„ãªã„ã€èª°ã‚‚å‚ç…§ã—ã¦ã„ãªã„ã€‚
 						return true;
 					}
 				}
@@ -215,7 +215,7 @@ namespace NBlib
 				return false;
 			}
 
-			/** QÆ”‚ğƒCƒ“ƒNƒŠƒƒ“ƒgB
+			/** å‚ç…§æ•°ã‚’ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆã€‚
 			*/
 			void Weak_Increment()
 			{
@@ -231,9 +231,9 @@ namespace NBlib
 			}
 		};
 
-		/** sharedptr_implB
+		/** sharedptr_implã€‚
 
-			ƒJƒEƒ“ƒgAƒCƒ“ƒXƒ^ƒ“ƒXAíœq‚ÌŠÇ—B
+			ã‚«ã‚¦ãƒ³ãƒˆã€ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã€å‰Šé™¤å­ã®ç®¡ç†ã€‚
 
 		*/
 		template <typename T,typename D> class sharedptr_impl
@@ -241,11 +241,11 @@ namespace NBlib
 			public sharedptrbase
 		{
 		private:
-			/** ƒCƒ“ƒXƒ^ƒ“ƒXB
+			/** ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã€‚
 			*/
 			T*		instance;
 
-			/** íœqB
+			/** å‰Šé™¤å­ã€‚
 			*/
 			D		deleter;
 
@@ -254,9 +254,9 @@ namespace NBlib
 			*/
 			sharedptr_impl(const T* a_instance,D a_deleter)
 				:
-				sharedptrbase(),						// ƒJƒEƒ“ƒg‚ÌŠÇ—B
-				instance(const_cast<T*>(a_instance)),	// ƒCƒ“ƒXƒ^ƒ“ƒX‚ÌŠÇ—B
-				deleter(a_deleter)						// íœq‚ÌŠÇ—B
+				sharedptrbase(),						// ã‚«ã‚¦ãƒ³ãƒˆã®ç®¡ç†ã€‚
+				instance(const_cast<T*>(a_instance)),	// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®ç®¡ç†ã€‚
+				deleter(a_deleter)						// å‰Šé™¤å­ã®ç®¡ç†ã€‚
 			{
 			}
 
@@ -283,7 +283,7 @@ namespace NBlib
 			}
 
 		private:
-			/** íœq‚ÌÀsB
+			/** å‰Šé™¤å­ã®å®Ÿè¡Œã€‚
 			*/
 			virtual void Delete()
 			{
@@ -291,7 +291,7 @@ namespace NBlib
 				this->instance = nullptr;
 			}
 
-			/** ƒCƒ“ƒXƒ^ƒ“ƒX‚Ìæ“¾B
+			/** ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®å–å¾—ã€‚
 			*/
 			virtual void* GetInstance()
 			{
@@ -299,7 +299,7 @@ namespace NBlib
 			}
 		};
 
-		/** nullsharedptrB
+		/** nullsharedptrã€‚
 		*/
 		class nullsharedptr_impl : public sharedptrbase
 		{
@@ -346,14 +346,14 @@ namespace NBlib
 			}
 
 		private:
-			/** íœq‚ÌÀsB
+			/** å‰Šé™¤å­ã®å®Ÿè¡Œã€‚
 			*/
 			virtual void Delete()
 			{
 				ASSERT(0);
 			}
 
-			/** ƒCƒ“ƒXƒ^ƒ“ƒX‚Ìæ“¾B
+			/** ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®å–å¾—ã€‚
 			*/
 			virtual void* GetInstance()
 			{
@@ -370,7 +370,7 @@ namespace NBlib
 		template <typename T> class sharedptr
 		{
 		public:
-			//ƒJƒEƒ“ƒgAƒCƒ“ƒXƒ^ƒ“ƒXAíœq‚ÌŠÇ—B
+			//ã‚«ã‚¦ãƒ³ãƒˆã€ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã€å‰Šé™¤å­ã®ç®¡ç†ã€‚
 			sharedptrbase* impl;
 
 			#if(BLIB_SHAREDPTR_CACHE_ENABLE)
@@ -379,7 +379,7 @@ namespace NBlib
 
 			friend class weakptr<T>;
 
-			/** nullB
+			/** nullã€‚
 			*/
 			static sharedptr<T>& null()
 			{
@@ -392,7 +392,7 @@ namespace NBlib
 			*/
 			void reset_impl(sharedptrbase* a_sharedptrbase)
 			{
-				//nullsharedptrƒ`ƒFƒbƒNB
+				//nullsharedptrãƒã‚§ãƒƒã‚¯ã€‚
 				#if defined(ROM_MASTER)
 
 				#else
@@ -410,15 +410,15 @@ namespace NBlib
 			*/
 			void reset_impl_from_destructor(sharedptrbase* a_sharedptrbase)
 			{
-				//Œ»İ•Û‚µ‚Ä‚¢‚éusharedptrbasev‚ÌQÆ”Ag—p”‚ÌƒfƒNƒŠƒƒ“ƒgB
+				//ç¾åœ¨ä¿æŒã—ã¦ã„ã‚‹ã€Œsharedptrbaseã€ã®å‚ç…§æ•°ã€ä½¿ç”¨æ•°ã®ãƒ‡ã‚¯ãƒªãƒ¡ãƒ³ãƒˆã€‚
 				if(this->impl){
 					if(this->impl == a_sharedptrbase){
-						//•Ï‰»‚È‚µB
+						//å¤‰åŒ–ãªã—ã€‚
 						return;
 					}else{
-						//g—p”‚ª‚O‚É‚È‚Á‚½ê‡‚Ííœq‚ªŒÄ‚Ño‚³‚ê‚éB
+						//ä½¿ç”¨æ•°ãŒï¼ã«ãªã£ãŸå ´åˆã¯å‰Šé™¤å­ãŒå‘¼ã³å‡ºã•ã‚Œã‚‹ã€‚
 						this->impl->Use_Decrement();
-						//ÅŒã‚ÌQÆ‚Ìê‡‚ÍíœB
+						//æœ€å¾Œã®å‚ç…§ã®å ´åˆã¯å‰Šé™¤ã€‚
 						if(this->impl->Weak_Decrement()){
 							delete this->impl;
 						}
@@ -441,7 +441,7 @@ namespace NBlib
 			}
 
 		public:
-			/** [constructor]nullptrB
+			/** [constructor]nullptrã€‚
 			*/
 			sharedptr() noexcept
 				:
@@ -458,7 +458,7 @@ namespace NBlib
 			{
 			}
 
-			/** [constructor]nullptrB
+			/** [constructor]nullptrã€‚
 			*/
 			#if(BLIB_STDNULLPTR_ENABLE)
 			sharedptr(nullptr_t) noexcept
@@ -477,7 +477,7 @@ namespace NBlib
 			}
 			#endif
 
-			/** [constructor]nullsharedptrB
+			/** [constructor]nullsharedptrã€‚
 			*/
 			explicit sharedptr(nullsharedptr_impl& a_impl) noexcept
 				:
@@ -490,11 +490,11 @@ namespace NBlib
 				this->impl->UseAndWeak_Increment();
 			}
 
-			/** [constructor]V‹KBíœq‚È‚µB
+			/** [constructor]æ–°è¦ã€‚å‰Šé™¤å­ãªã—ã€‚
 			*/
 			sharedptr(const T* a_instance) noexcept
 			{
-				//ŠJn‚Íg—p”‚PAQÆ”‚PB
+				//é–‹å§‹æ™‚ã¯ä½¿ç”¨æ•°ï¼‘ã€å‚ç…§æ•°ï¼‘ã€‚
 				if(a_instance != nullptr){
 					this->impl = new sharedptr_impl<T,default_delete<T>>(a_instance,default_delete<T>());
 
@@ -510,11 +510,11 @@ namespace NBlib
 				}
 			}
 
-			/** [constructor]V‹KBíœq‚ ‚èB
+			/** [constructor]æ–°è¦ã€‚å‰Šé™¤å­ã‚ã‚Šã€‚
 			*/
 			template <typename T2,typename D> sharedptr(const T2* a_instance,D a_deleter) noexcept
 			{
-				//ŠJn‚Íg—p”‚PAQÆ”‚PB
+				//é–‹å§‹æ™‚ã¯ä½¿ç”¨æ•°ï¼‘ã€å‚ç…§æ•°ï¼‘ã€‚
 				if(a_instance != nullptr){
 					this->impl = new sharedptr_impl<T2,D>(a_instance,a_deleter);
 
@@ -530,7 +530,7 @@ namespace NBlib
 				}
 			}
 
-			/** [constructor]uweakptrv‚©‚çusharedptrv‚ğì¬B
+			/** [constructor]ã€Œweakptrã€ã‹ã‚‰ã€Œsharedptrã€ã‚’ä½œæˆã€‚
 			*/
 			sharedptr(const weakptr<T>& a_weakptr);
 
@@ -545,7 +545,7 @@ namespace NBlib
 				cache(a_sharedptr.cache)
 				#endif
 			{
-				//cŠ[‚àƒfƒXƒgƒ‰ƒNƒ^‚ÌŒÄ‚Ño‚µ‚Ís‚í‚ê‚éB
+				//æ®‹éª¸ã‚‚ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã®å‘¼ã³å‡ºã—ã¯è¡Œã‚ã‚Œã‚‹ã€‚
 				a_sharedptr.impl = nullptr;
 				a_sharedptr.cache = nullptr;
 			}
@@ -565,7 +565,7 @@ namespace NBlib
 				}
 				#endif
 
-				//V‚µ‚¢usharedptrbasev‚Ìg—p”AQÆ”‚ğƒCƒ“ƒNƒŠƒƒ“ƒgB
+				//æ–°ã—ã„ã€Œsharedptrbaseã€ã®ä½¿ç”¨æ•°ã€å‚ç…§æ•°ã‚’ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆã€‚
 				if(this->impl){
 					if(this->get() != nullptr){
 						this->impl->UseAndWeak_Increment();
@@ -587,7 +587,7 @@ namespace NBlib
 			{
 				UNUSED(a_check);
 
-				//V‚µ‚¢usharedptrbasev‚Ìg—p”AQÆ”‚ğƒCƒ“ƒNƒŠƒƒ“ƒgB
+				//æ–°ã—ã„ã€Œsharedptrbaseã€ã®ä½¿ç”¨æ•°ã€å‚ç…§æ•°ã‚’ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆã€‚
 				if(this->impl){
 
 					#if(BLIB_SHAREDPTR_CACHE_ENABLE)
@@ -610,11 +610,11 @@ namespace NBlib
 				this->reset_impl_from_destructor(nullptr);
 			}
 
-			/** ‘ã“üB
+			/** ä»£å…¥ã€‚
 			*/
 			sharedptr<T>& operator =(const sharedptr<T>& a_sharedptr) noexcept
 			{
-				//V‚µ‚¢usharedptrbasev‚Ìg—p”AQÆ”‚ğƒCƒ“ƒNƒŠƒƒ“ƒgB
+				//æ–°ã—ã„ã€Œsharedptrbaseã€ã®ä½¿ç”¨æ•°ã€å‚ç…§æ•°ã‚’ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆã€‚
 
 				if(a_sharedptr.get() != nullptr){
 					this->reset_impl(a_sharedptr.impl);
@@ -625,14 +625,14 @@ namespace NBlib
 				return *this;
 			}
 
-			/** ƒŠƒZƒbƒgB
+			/** ãƒªã‚»ãƒƒãƒˆã€‚
 			*/
 			void reset()
 			{
 				this->reset_impl(nullptr);
 			}
 
-			/** ƒŠƒZƒbƒgB
+			/** ãƒªã‚»ãƒƒãƒˆã€‚
 			*/
 			#if(BLIB_STDNULLPTR_ENABLE)
 			void reset(nullptr_t)
@@ -641,13 +641,13 @@ namespace NBlib
 			}
 			#endif
 
-			/** ƒŠƒZƒbƒgBíœq‚È‚µB
+			/** ãƒªã‚»ãƒƒãƒˆã€‚å‰Šé™¤å­ãªã—ã€‚
 			*/
 			void reset(T* a_instance)
 			{
 				this->reset_impl(nullptr);
 
-				//ŠJn‚Íg—p”‚PAQÆ”‚PB
+				//é–‹å§‹æ™‚ã¯ä½¿ç”¨æ•°ï¼‘ã€å‚ç…§æ•°ï¼‘ã€‚
 				if(a_instance != nullptr){
 					this->impl = new sharedptr_impl<T,default_delete<T>>(a_instance,default_delete<T>());
 
@@ -657,7 +657,7 @@ namespace NBlib
 				}
 			}
 
-			/** V‹KBíœq‚ ‚èB
+			/** æ–°è¦ã€‚å‰Šé™¤å­ã‚ã‚Šã€‚
 			*/
 			#if(BLIB_STDNULLPTR_ENABLE)
 			template <typename D> void reset(nullptr_t,D a_deleter)
@@ -666,13 +666,13 @@ namespace NBlib
 			}
 			#endif
 
-			/** V‹KBíœq‚ ‚èB
+			/** æ–°è¦ã€‚å‰Šé™¤å­ã‚ã‚Šã€‚
 			*/
 			template <typename T2,typename D> void reset(T2* a_instance,D a_deleter)
 			{
 				this->reset_impl(nullptr);
 
-				//ŠJn‚Íg—p”‚PAQÆ”‚PB
+				//é–‹å§‹æ™‚ã¯ä½¿ç”¨æ•°ï¼‘ã€å‚ç…§æ•°ï¼‘ã€‚
 				if(a_instance != nullptr){
 					this->impl = new sharedptr_impl<T2,D>(a_instance,a_deleter);
 
@@ -682,7 +682,7 @@ namespace NBlib
 				}
 			}
 
-			/** ƒXƒƒbƒvB
+			/** ã‚¹ãƒ¯ãƒƒãƒ—ã€‚
 			*/
 			void swap(sharedptr<T>& a_sharedptr)
 			{
@@ -700,7 +700,7 @@ namespace NBlib
 			}
 
 		public:
-			/** ƒ|ƒCƒ“ƒ^‚Ìæ“¾B
+			/** ãƒã‚¤ãƒ³ã‚¿ã®å–å¾—ã€‚
 			*/
 			T* get()
 			{
@@ -718,7 +718,7 @@ namespace NBlib
 				#endif
 			}
 
-			/** ƒRƒ“ƒXƒgƒ|ƒCƒ“ƒ^‚Ìæ“¾B
+			/** ã‚³ãƒ³ã‚¹ãƒˆãƒã‚¤ãƒ³ã‚¿ã®å–å¾—ã€‚
 			*/
 			const T* get() const
 			{
@@ -736,63 +736,63 @@ namespace NBlib
 				#endif
 			}
 
-			/** ƒ|ƒCƒ“ƒ^‚Ì‚æ‚¤‚ÉU•‘‚¤B
+			/** ãƒã‚¤ãƒ³ã‚¿ã®ã‚ˆã†ã«æŒ¯èˆã†ã€‚
 			*/
 			typename reference_type<T>::type operator *() noexcept
 			{
 				return *(this->get());
 			}
 
-			/** ƒ|ƒCƒ“ƒ^‚Ì‚æ‚¤‚ÉU•‘‚¤B
+			/** ãƒã‚¤ãƒ³ã‚¿ã®ã‚ˆã†ã«æŒ¯èˆã†ã€‚
 			*/
 			T* operator ->() noexcept
 			{
 				return this->get();
 			}
 
-			/** ƒ|ƒCƒ“ƒ^‚Ì‚æ‚¤‚ÉU•‘‚¤B
+			/** ãƒã‚¤ãƒ³ã‚¿ã®ã‚ˆã†ã«æŒ¯èˆã†ã€‚
 			*/
 			typename reference_type<const T>::type operator *() const noexcept
 			{
 				return *(this->get());
 			}
 
-			/** ƒ|ƒCƒ“ƒ^‚Ì‚æ‚¤‚ÉU•‘‚¤B
+			/** ãƒã‚¤ãƒ³ã‚¿ã®ã‚ˆã†ã«æŒ¯èˆã†ã€‚
 			*/
 			const T* operator ->() const noexcept
 			{
 				return this->get();
 			}
 
-			/** ƒ|ƒCƒ“ƒ^‚Ì‚æ‚¤‚ÉU•‘‚¤B
+			/** ãƒã‚¤ãƒ³ã‚¿ã®ã‚ˆã†ã«æŒ¯èˆã†ã€‚
 			*/
 			operator bool() const noexcept
 			{
 				return (this->get()!=nullptr) ? true : false;
 			}
 
-			/** ”äŠrB
+			/** æ¯”è¼ƒã€‚
 			*/
 			template <typename T2> bool operator ==(const NBlib::sharedptr<T2>& a_sharedptr_b) const noexcept
 			{
 				return (this->get() == a_sharedptr_b.get());
 			}
 
-			/** ”äŠrB
+			/** æ¯”è¼ƒã€‚
 			*/
 			template <typename T2> bool operator !=(const NBlib::sharedptr<T2>& a_sharedptr_b) const noexcept
 			{
 				return (this->get() != a_sharedptr_b.get());
 			}
 
-			/** ”äŠrB
+			/** æ¯”è¼ƒã€‚
 			*/
 			bool operator ==(const void* a_sharedptr_b) const noexcept
 			{
 				return (this->get() == a_sharedptr_b);
 			}
 
-			/** ”äŠrB
+			/** æ¯”è¼ƒã€‚
 			*/
 			bool operator !=(const void* a_sharedptr_b) const noexcept
 			{
@@ -800,7 +800,7 @@ namespace NBlib
 			}
 
 		public:
-			/** g—p”‚ğæ“¾B
+			/** ä½¿ç”¨æ•°ã‚’å–å¾—ã€‚
 			*/
 			s32 use_count() const
 			{
@@ -816,12 +816,12 @@ namespace NBlib
 		template <typename T> class weakptr
 		{
 		public:
-			//ƒJƒEƒ“ƒgAƒCƒ“ƒXƒ^ƒ“ƒXAíœq‚ÌŠÇ—B
+			//ã‚«ã‚¦ãƒ³ãƒˆã€ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã€å‰Šé™¤å­ã®ç®¡ç†ã€‚
 			sharedptrbase* impl;
 			friend class sharedptr<T>;
 
 		public:
-			/** ‹óB
+			/** ç©ºã€‚
 			*/
 			weakptr()
 				:
@@ -833,31 +833,31 @@ namespace NBlib
 			*/
 			template <class T2> weakptr(const sharedptr<T2>& a_sharedptr,typename enable_if<is_convertible<T2*,T*>::value,bool>::type a_check=true) noexcept
 			{
-				//V‚µ‚¢usharedptrbasev‚ÌQÆ”‚ğƒCƒ“ƒNƒŠƒƒ“ƒgB
+				//æ–°ã—ã„ã€Œsharedptrbaseã€ã®å‚ç…§æ•°ã‚’ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆã€‚
 				this->impl = a_sharedptr.impl;
 				if(this->impl){
 					this->impl->Weak_Increment();
 				}
 			}
 
-			/** ‘ã“üB
+			/** ä»£å…¥ã€‚
 			*/
 			template <class T2> weakptr& operator =(const sharedptr<T2>& a_sharedptr) noexcept
 			{
-				//Œ»İ•Û‚µ‚Ä‚¢‚éusharedptrbasev‚ÌQÆ”‚ÌƒfƒNƒŠƒƒ“ƒgB
+				//ç¾åœ¨ä¿æŒã—ã¦ã„ã‚‹ã€Œsharedptrbaseã€ã®å‚ç…§æ•°ã®ãƒ‡ã‚¯ãƒªãƒ¡ãƒ³ãƒˆã€‚
 				if(this->impl){
 					if(this->impl == a_sharedptr.impl){
-						//•Ï‰»‚È‚µB
+						//å¤‰åŒ–ãªã—ã€‚
 						return (*this);
 					}else{
-						//ÅŒã‚ÌQÆ‚Ìê‡‚ÍíœB
+						//æœ€å¾Œã®å‚ç…§ã®å ´åˆã¯å‰Šé™¤ã€‚
 						if(this->impl->Weak_Decrement()){
 							delete this->impl;
 						}
 					}
 				}
 
-				//V‚µ‚¢usharedptrbasev‚ÌQÆ”‚ğƒCƒ“ƒNƒŠƒƒ“ƒgB
+				//æ–°ã—ã„ã€Œsharedptrbaseã€ã®å‚ç…§æ•°ã‚’ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆã€‚
 				this->impl = a_sharedptr.impl;
 				if(this->impl){
 					this->impl->Weak_Increment();
@@ -866,14 +866,14 @@ namespace NBlib
 				return (*this);
 			}
 
-			/** uweakptrv‚©‚çusharedptrv‚ğì¬B
+			/** ã€Œweakptrã€ã‹ã‚‰ã€Œsharedptrã€ã‚’ä½œæˆã€‚
 			*/
 			sharedptr<T> lock() noexcept
 			{
 				return sharedptr<T>(*this);
 			}
 
-			/** uweakptrv‚©‚çusharedptrv‚ğì¬B
+			/** ã€Œweakptrã€ã‹ã‚‰ã€Œsharedptrã€ã‚’ä½œæˆã€‚
 			*/
 			const sharedptr<T> lock() const noexcept
 			{
@@ -884,16 +884,16 @@ namespace NBlib
 			*/
 			void reset() noexcept
 			{
-				//Œ»İ•Û‚µ‚Ä‚¢‚éusharedptrbasev‚ÌQÆ”‚ÌƒfƒNƒŠƒƒ“ƒgB
+				//ç¾åœ¨ä¿æŒã—ã¦ã„ã‚‹ã€Œsharedptrbaseã€ã®å‚ç…§æ•°ã®ãƒ‡ã‚¯ãƒªãƒ¡ãƒ³ãƒˆã€‚
 				if(this->impl){
-					//ÅŒã‚ÌQÆ‚Ìê‡‚ÍíœB
+					//æœ€å¾Œã®å‚ç…§ã®å ´åˆã¯å‰Šé™¤ã€‚
 					if(this->impl->Weak_Decrement()){
 						delete this->impl;
 					}
 				}
 			}
 
-			/** g—p”‚ğæ“¾B
+			/** ä½¿ç”¨æ•°ã‚’å–å¾—ã€‚
 			*/
 			s32 use_count() const
 			{
@@ -904,7 +904,7 @@ namespace NBlib
 			}
 		};
 
-		/** [constructor]uweakptrv‚©‚çusharedptrv‚ğì¬B
+		/** [constructor]ã€Œweakptrã€ã‹ã‚‰ã€Œsharedptrã€ã‚’ä½œæˆã€‚
 		*/
 		template <typename T> inline sharedptr<T>::sharedptr(const weakptr<T>& a_weakptr)
 			:
@@ -912,10 +912,10 @@ namespace NBlib
 		{
 			if(this->impl){
 				if(this->impl->Use_Increment_IfNoZero()){
-					//‰„–½‚É¬Œ÷B
+					//å»¶å‘½ã«æˆåŠŸã€‚
 					this->impl->Weak_Increment();
 				}else{
-					//‰„–½‚É¸”sB
+					//å»¶å‘½ã«å¤±æ•—ã€‚
 					this->impl = nullptr;
 				}
 			}
@@ -931,7 +931,7 @@ namespace NBlib
 
 		/** scopedptr
 
-		íœq‚È‚µB
+		å‰Šé™¤å­ãªã—ã€‚
 
 		*/
 		template <typename T> class scopedptr
@@ -1005,14 +1005,14 @@ namespace NBlib
 				return *(this->get());
 			}
 
-			/** ƒ|ƒCƒ“ƒ^‚Ì‚æ‚¤‚ÉU•‘‚¤B
+			/** ãƒã‚¤ãƒ³ã‚¿ã®ã‚ˆã†ã«æŒ¯èˆã†ã€‚
 			*/
 			T* operator ->()
 			{
 				return this->get();
 			}
 
-			/** ƒ|ƒCƒ“ƒ^‚Ì‚æ‚¤‚ÉU•‘‚¤B
+			/** ãƒã‚¤ãƒ³ã‚¿ã®ã‚ˆã†ã«æŒ¯èˆã†ã€‚
 			*/
 			const T* operator ->() const
 			{
@@ -1051,28 +1051,28 @@ namespace NBlib
 
 #else
 
-	/** ”äŠrB
+	/** æ¯”è¼ƒã€‚
 	*/
 	template <typename T2> inline bool operator ==(const void* a_sharedptr_a,const NBlib::sharedptr<T2>& a_sharedptr_b) noexcept
 	{
 		return (a_sharedptr_a == a_sharedptr_b.get());
 	}
 
-	/** ”äŠrB
+	/** æ¯”è¼ƒã€‚
 	*/
 	template <typename T2> inline bool operator !=(const void* a_sharedptr_a,const NBlib::sharedptr<T2>& a_sharedptr_b) noexcept
 	{
 		return (a_sharedptr_a != a_sharedptr_b.get());
 	}
 
-	/** ”äŠrB
+	/** æ¯”è¼ƒã€‚
 	*/
 	template <typename T2> inline bool operator ==(const NBlib::sharedptr<T2>& a_sharedptr_a,const void* a_sharedptr_b) noexcept
 	{
 		return (a_sharedptr_a.get() == a_sharedptr_b);
 	}
 
-	/** ”äŠrB
+	/** æ¯”è¼ƒã€‚
 	*/
 	template <typename T2> inline bool operator !=(const NBlib::sharedptr<T2>& a_sharedptr_a,const void* a_sharedptr_b) noexcept
 	{

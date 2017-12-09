@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒWƒIƒƒgƒŠB
+ * @brief ã‚¸ã‚ªãƒ¡ãƒˆãƒªã€‚
 */
 
 
@@ -43,16 +43,16 @@ namespace NBsys{namespace NGeometry
 	struct Geometry_RandomCurve
 	{
 	public:
-		/** ‘¬“xB
+		/** é€Ÿåº¦ã€‚
 		*/
 		s32 speed_inverse_range;
 		s32 speed_inverse;
 
-		/** ƒIƒtƒZƒbƒgB
+		/** ã‚ªãƒ•ã‚»ãƒƒãƒˆã€‚
 		*/
 		f32 value_0;
 
-		/** ”ä—¦—pB
+		/** æ¯”ç‡ç”¨ã€‚
 		*/
 		f32 value_1;
 		f32 value_2;
@@ -61,7 +61,7 @@ namespace NBsys{namespace NGeometry
 		f32 value_5;
 		f32 value_6;
 
-		/** ƒTƒCƒ“”g—pB
+		/** ã‚µã‚¤ãƒ³æ³¢ç”¨ã€‚
 		*/
 		f32 value_11;
 		f32 value_12;
@@ -99,7 +99,7 @@ namespace NBsys{namespace NGeometry
 		{
 		}
 
-		/** İ’èB
+		/** è¨­å®šã€‚
 		*/
 		void SetParam(s32 a_k1,s32 a_k2,s32 a_k3,s32 a_k4,s32 a_k5,s32 a_k6,s32 a_k7,s32 a_k8,s32 a_k9,s32 a_k10,s32 a_k11,s32 a_k12,s32 a_k13,s32 a_speed_inverse_range,s32 a_speed_inverse)
 		{
@@ -154,7 +154,7 @@ namespace NBsys{namespace NGeometry
 			this->value_17 = (1 + Math::sinf_fast(t_rand_value * a_k13 * (Math::PI - 0.001f))) * 0.5f * this->speed_inverse_range;
 		}
 
-		/** æ“¾B
+		/** å–å¾—ã€‚
 		*/
 		f32 Get(f32 a_time)
 		{

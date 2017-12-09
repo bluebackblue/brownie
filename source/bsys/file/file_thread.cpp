@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒtƒ@ƒCƒ‹B
+ * @brief ãƒ•ã‚¡ã‚¤ãƒ«ã€‚
 */
 
 
@@ -55,7 +55,7 @@ namespace NBsys{namespace NFile
 	{
 	}
 
-	/** ƒXƒŒƒbƒhƒƒCƒ“B
+	/** ã‚¹ãƒ¬ãƒƒãƒ‰ãƒ¡ã‚¤ãƒ³ã€‚
 	*/
 	void File_Thread::ThreadMain(ThreadArgument& a_threadargument)
 	{
@@ -66,22 +66,22 @@ namespace NBsys{namespace NFile
 		while(1){
 
 			{
-				//ƒŠƒNƒGƒXƒg‘Ò‚¿B
+				//ãƒªã‚¯ã‚¨ã‚¹ãƒˆå¾…ã¡ã€‚
 				if(t_request == false){
 					this->request_event.Wait();
 				}
 
-				//ƒŠƒNƒGƒXƒgó•tŠJnB
+				//ãƒªã‚¯ã‚¨ã‚¹ãƒˆå—ä»˜é–‹å§‹ã€‚
 				this->request_event.Clear();
 			}
 
-			//ƒpƒbƒNB
+			//ãƒ‘ãƒƒã‚¯ã€‚
 			#if(BSYS_FILE_PACK_ENABLE)
 			while(1){
-				//ˆ—‚ª•K—v‚È‚à‚Ì‚ğŒŸõB
+				//å‡¦ç†ãŒå¿…è¦ãªã‚‚ã®ã‚’æ¤œç´¢ã€‚
 				sharedptr<File_Pack_WorkItem> t_workitem_pack;
 				{
-					//¡”r‘¼B
+					//â– æ’ä»–ã€‚
 					AutoLock t_autolock(this->lockobject);
 
 					t_request = false;
@@ -95,15 +95,15 @@ namespace NBsys{namespace NFile
 					}
 				}
 
-				//ˆ—B
+				//å‡¦ç†ã€‚
 				if(t_workitem_pack){
 					while(1){
 						if(t_workitem_pack->Update(Path::Dir(a_threadargument.rootpath_full))){
 							if(t_workitem_pack->GetErrorCode() == ErrorCode::Success){
-								//ƒpƒbƒNƒtƒ@ƒCƒ‹Bƒwƒbƒ_[“Ç‚İ‚İŠ®—¹B
+								//ãƒ‘ãƒƒã‚¯ãƒ•ã‚¡ã‚¤ãƒ«ã€‚ãƒ˜ãƒƒãƒ€ãƒ¼èª­ã¿è¾¼ã¿å®Œäº†ã€‚
 								this->pack.Resist(t_workitem_pack);
 							}else{
-								//ƒpƒbƒNƒtƒ@ƒCƒ‹B“Ç‚İ‚İ¸”sB
+								//ãƒ‘ãƒƒã‚¯ãƒ•ã‚¡ã‚¤ãƒ«ã€‚èª­ã¿è¾¼ã¿å¤±æ•—ã€‚
 								ASSERT(0);
 							}
 							break;
@@ -116,12 +116,12 @@ namespace NBsys{namespace NFile
 			}
 			#endif
 
-			//“Ç‚İ‚İB
+			//èª­ã¿è¾¼ã¿ã€‚
 			{
-				//ˆ—‚ª•K—v‚È‚à‚Ì‚ğŒŸõB
+				//å‡¦ç†ãŒå¿…è¦ãªã‚‚ã®ã‚’æ¤œç´¢ã€‚
 				sharedptr<File_WorkItem> t_workitem;
 				{
-					//¡”r‘¼B
+					//â– æ’ä»–ã€‚
 					AutoLock t_autolock(this->lockobject);
 
 					t_request = false;
@@ -135,7 +135,7 @@ namespace NBsys{namespace NFile
 					}
 				}
 
-				//ˆ—B
+				//å‡¦ç†ã€‚
 				if(t_workitem){
 					while(1){
 						bool t_cancel = false;
@@ -152,47 +152,47 @@ namespace NBsys{namespace NFile
 				}
 			}
 
-			//I—¹ƒ`ƒFƒbƒNB
+			//çµ‚äº†ãƒã‚§ãƒƒã‚¯ã€‚
 			if(this->endrequest.Load()){
 				return;
 			}
 		}
 	}
 
-	/** [ƒƒCƒ“ƒXƒŒƒbƒh]EndRequest
+	/** [ãƒ¡ã‚¤ãƒ³ã‚¹ãƒ¬ãƒƒãƒ‰]EndRequest
 	*/
 	void File_Thread::EndRequest()
 	{
-		//¡”r‘¼B
+		//â– æ’ä»–ã€‚
 		AutoLock t_autolock(this->lockobject);
 
 		this->endrequest.Store(true);
 		this->request_event.Signal();
 	}
 
-	/** [ƒƒCƒ“ƒXƒŒƒbƒh]ƒƒbƒNƒIƒuƒWƒFƒNƒg‚Ìæ“¾B
+	/** [ãƒ¡ã‚¤ãƒ³ã‚¹ãƒ¬ãƒƒãƒ‰]ãƒ­ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å–å¾—ã€‚
 	*/
 	LockObject& File_Thread::GetLockObject()
 	{
 		return this->lockobject;
 	}
 	
-	/** [ƒƒCƒ“ƒXƒŒƒbƒh][ƒpƒbƒN]ƒ[ƒhƒŠƒNƒGƒXƒgB
+	/** [ãƒ¡ã‚¤ãƒ³ã‚¹ãƒ¬ãƒƒãƒ‰][ãƒ‘ãƒƒã‚¯]ãƒ­ãƒ¼ãƒ‰ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚
 	*/
 	#if(BSYS_FILE_PACK_ENABLE)
 	void File_Thread::Pack_LoadRequest(const STLWString& a_pack_filename_short,const STLWString& a_pack_rootpath_short)
 	{
-		//¡”r‘¼B
+		//â– æ’ä»–ã€‚
 		AutoLock t_autolock(this->lockobject);
 		{
 			MemoryContainer t_memorycontainer(BSYS_FILE_MEMORYCONTAINER);
 
 			sharedptr<File_Pack_WorkItem> t_workitem_pack(new File_Pack_WorkItem(Path::Name(a_pack_filename_short),Path::Dir(a_pack_rootpath_short)));
 
-			//ì‹ÆƒŠƒXƒg‚É“o˜^B
+			//ä½œæ¥­ãƒªã‚¹ãƒˆã«ç™»éŒ²ã€‚
 			for(s32 ii=0;ii<COUNTOF(this->worklist_pack);ii++){
 				if(this->worklist_pack[ii] == nullptr){
-					//ì‹ÆƒŠƒXƒg‚É‹ó‚«‚ ‚èB
+					//ä½œæ¥­ãƒªã‚¹ãƒˆã«ç©ºãã‚ã‚Šã€‚
 
 					this->worklist_pack[ii] = t_workitem_pack;
 					this->request_event.Signal();
@@ -206,12 +206,12 @@ namespace NBsys{namespace NFile
 	}
 	#endif
 
-	/** [ƒƒCƒ“ƒXƒŒƒbƒh]“Ç‚İ‚İÏ‚İƒ`ƒFƒbƒNB
+	/** [ãƒ¡ã‚¤ãƒ³ã‚¹ãƒ¬ãƒƒãƒ‰]èª­ã¿è¾¼ã¿æ¸ˆã¿ãƒã‚§ãƒƒã‚¯ã€‚
 	*/
 	#if(BSYS_FILE_PACK_ENABLE)
 	bool File_Thread::Pack_IsExist(const STLWString& a_pack_filename_short)
 	{
-		//¡”r‘¼B
+		//â– æ’ä»–ã€‚
 		AutoLock t_autolock(this->lockobject);
 		{
 			return this->pack.IsExist(Path::Name(a_pack_filename_short));
@@ -221,11 +221,11 @@ namespace NBsys{namespace NFile
 	}
 	#endif
 
-	/** [ƒƒCƒ“ƒXƒŒƒbƒh]ƒ[ƒhƒŠƒNƒGƒXƒgB
+	/** [ãƒ¡ã‚¤ãƒ³ã‚¹ãƒ¬ãƒƒãƒ‰]ãƒ­ãƒ¼ãƒ‰ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚
 	*/
 	const sharedptr<File_WorkItem> File_Thread::LoadRequest(const STLWString& a_filename_short,s32 a_cachegroup_id,sharedptr<File_Allocator>& a_allocator,s32 a_add_allocatesize)
 	{
-		//¡”r‘¼B
+		//â– æ’ä»–ã€‚
 		AutoLock t_autolock(this->lockobject);
 		{
 			MemoryContainer t_memorycontainer(BSYS_FILE_MEMORYCONTAINER);
@@ -235,31 +235,31 @@ namespace NBsys{namespace NFile
 			if(a_cachegroup_id > 0){
 				const sharedptr<File_WorkItem>& t_workitem_ref = this->cache.GetCacheFromFileNameShort(Path::Name(a_filename_short));
 				if(t_workitem_ref != nullptr){
-					//¡ƒLƒƒƒbƒVƒ…‚É‚ ‚èB
+					//â– ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã«ã‚ã‚Šã€‚
 
-					//ƒLƒƒƒbƒVƒ…ƒOƒ‹[ƒv‚h‚c’Ç‰ÁB
+					//ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚°ãƒ«ãƒ¼ãƒ—ï¼©ï¼¤è¿½åŠ ã€‚
 					this->cache.SetCache(t_workitem_ref,a_cachegroup_id);
 
 					return t_workitem_ref;
 				}else{
-					//¡ƒLƒƒƒbƒVƒ…‚É‚È‚µB
+					//â– ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã«ãªã—ã€‚
 					t_workitem.reset(new File_WorkItem(this->lockobject,Path::Name(a_filename_short),a_allocator,a_add_allocatesize));
 
-					//ƒLƒƒƒbƒVƒ…ƒOƒ‹[ƒv‚h‚c’Ç‰ÁB
+					//ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚°ãƒ«ãƒ¼ãƒ—ï¼©ï¼¤è¿½åŠ ã€‚
 					this->cache.SetCache(t_workitem,a_cachegroup_id);
 				}
 			}else{
 				ASSERT(a_cachegroup_id == -1);
 
-				//¡ƒLƒƒƒbƒVƒ…‚ğg‚í‚È‚¢B
+				//â– ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’ä½¿ã‚ãªã„ã€‚
 				t_workitem.reset(new File_WorkItem(this->lockobject,Path::Name(a_filename_short),a_allocator,a_add_allocatesize));
 			}
 
-			//ì‹ÆƒŠƒXƒg‚É“o˜^B
+			//ä½œæ¥­ãƒªã‚¹ãƒˆã«ç™»éŒ²ã€‚
 			if(t_workitem != nullptr){
 				for(s32 ii=0;ii<COUNTOF(this->worklist);ii++){
 					if(this->worklist[ii] == nullptr){
-						//ì‹ÆƒŠƒXƒg‚É‹ó‚«‚ ‚èB
+						//ä½œæ¥­ãƒªã‚¹ãƒˆã«ç©ºãã‚ã‚Šã€‚
 
 						this->worklist[ii] = t_workitem;
 						this->request_event.Signal();
@@ -274,31 +274,31 @@ namespace NBsys{namespace NFile
 		}
 	}
 
-	/** [ƒƒCƒ“ƒXƒŒƒbƒh]ƒLƒƒƒbƒVƒ…ƒNƒŠƒAB
+	/** [ãƒ¡ã‚¤ãƒ³ã‚¹ãƒ¬ãƒƒãƒ‰]ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚¯ãƒªã‚¢ã€‚
 	*/
 	void File_Thread::CacheClear(s32 a_cachegroup_id)
 	{
-		//¡”r‘¼B
+		//â– æ’ä»–ã€‚
 		AutoLock t_autolock(this->lockobject);
 		{
 			this->cache.CacheClear(a_cachegroup_id);
 		}
 	}
 
-	/** [ƒƒCƒ“ƒXƒŒƒbƒh]ƒŠ[ƒNƒ`ƒFƒbƒNB
+	/** [ãƒ¡ã‚¤ãƒ³ã‚¹ãƒ¬ãƒƒãƒ‰]ãƒªãƒ¼ã‚¯ãƒã‚§ãƒƒã‚¯ã€‚
 	*/
 	void File_Thread::LeakCheck()
 	{
-		//¡”r‘¼B
+		//â– æ’ä»–ã€‚
 		AutoLock t_autolock(this->lockobject);
 		{
 			this->cache.LeakCheck();
 		}
 	}
 
-	/** [ƒtƒ@ƒCƒ‹ƒXƒŒƒbƒh]Pack_GetInstance
+	/** [ãƒ•ã‚¡ã‚¤ãƒ«ã‚¹ãƒ¬ãƒƒãƒ‰]Pack_GetInstance
 
-	”r‘¼‚È‚µB
+	æ’ä»–ãªã—ã€‚
 
 	*/
 	#if(BSYS_FILE_PACK_ENABLE)

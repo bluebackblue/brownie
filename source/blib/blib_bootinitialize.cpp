@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ‰Šú‰»B
+ * @brief åˆæœŸåŒ–ã€‚
 */
 
 
@@ -37,36 +37,36 @@
 namespace NBlib
 {
 
-	/** ‰Šú‰»Ï‚İƒtƒ‰ƒOB
+	/** åˆæœŸåŒ–æ¸ˆã¿ãƒ•ãƒ©ã‚°ã€‚
 	*/
 	static bool s_is_boot_initialize = false;
 
-	/** ƒOƒ[ƒoƒ‹ŒÅ’è’·ƒAƒƒP[ƒ^B
+	/** ã‚°ãƒ­ãƒ¼ãƒãƒ«å›ºå®šé•·ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿ã€‚
 	*/
 	#if(BLIB_GLOBALFIXEDALLOCATOR_ENABLE)
 	static GlobalFixedAllocator_Type s_globalfixedallocator;
 	#endif
 
-	/** ƒOƒ[ƒoƒ‹ŒÅ’è’·ƒAƒƒP[ƒ^BƒƒbƒNƒIƒuƒWƒFƒNƒgB
+	/** ã‚°ãƒ­ãƒ¼ãƒãƒ«å›ºå®šé•·ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿ã€‚ãƒ­ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã€‚
 	*/
 	#if(BLIB_GLOBALFIXEDALLOCATOR_ENABLE)
 	static LockObject s_globalfixedallocator_lockobject;
 	#endif
 
-	/** ƒOƒ[ƒoƒ‹—”B
+	/** ã‚°ãƒ­ãƒ¼ãƒãƒ«ä¹±æ•°ã€‚
 	*/
 	static RandomTemplate<Random_LinearCongruentialGenerators> s_globalrand;
 
-	/** ƒOƒ[ƒoƒ‹—”BƒƒbƒNƒIƒuƒWƒFƒNƒgB
+	/** ã‚°ãƒ­ãƒ¼ãƒãƒ«ä¹±æ•°ã€‚ãƒ­ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã€‚
 	*/
 	static LockObject s_globalrand_lockobject;
 
 
-	/** ‹N“®‰Šú‰»B
+	/** èµ·å‹•æ™‚åˆæœŸåŒ–ã€‚
 	*/
 	void BootInitialize()
 	{
-		//ƒOƒ[ƒoƒ‹ŒÅ’è’·ƒAƒƒP[ƒ^‚Ì‰Šú‰»B
+		//ã‚°ãƒ­ãƒ¼ãƒãƒ«å›ºå®šé•·ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿ã®åˆæœŸåŒ–ã€‚
 		#if(BLIB_GLOBALFIXEDALLOCATOR_ENABLE)
 		{
 			AutoLock t_autolock(s_globalfixedallocator_lockobject);
@@ -152,14 +152,14 @@ namespace NBlib
 		s_is_boot_initialize = true;
 	}
 
-	/** ‰Šú‰»Ï‚İ‚©‚Ç‚¤‚©B
+	/** åˆæœŸåŒ–æ¸ˆã¿ã‹ã©ã†ã‹ã€‚
 	*/
 	bool IsBootInitialize()
 	{
 		return s_is_boot_initialize;
 	}
 
-	/** ƒOƒ[ƒoƒ‹ŒÅ’è’·ƒAƒƒP[ƒ^B
+	/** ã‚°ãƒ­ãƒ¼ãƒãƒ«å›ºå®šé•·ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿ã€‚
 	*/
 	#if(BLIB_GLOBALFIXEDALLOCATOR_ENABLE)
 	GlobalFixedAllocator_Type& GlobalFixedAllocator_Get()
@@ -168,7 +168,7 @@ namespace NBlib
 	}
 	#endif
 
-	/** ƒOƒ[ƒoƒ‹ŒÅ’è’·ƒAƒƒP[ƒ^BƒƒbƒNƒIƒuƒWƒFƒNƒgB
+	/** ã‚°ãƒ­ãƒ¼ãƒãƒ«å›ºå®šé•·ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿ã€‚ãƒ­ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã€‚
 	*/
 	#if(BLIB_GLOBALFIXEDALLOCATOR_ENABLE)
 	LockObject& GlobalFixedAllocator_LockObject()
@@ -177,14 +177,14 @@ namespace NBlib
 	}
 	#endif
 
-	/** ƒOƒ[ƒoƒ‹—”B
+	/** ã‚°ãƒ­ãƒ¼ãƒãƒ«ä¹±æ•°ã€‚
 	*/
 	RandomTemplate<Random_LinearCongruentialGenerators>& GlobalRand_Get()
 	{
 		return s_globalrand;
 	}
 
-	/** ƒOƒ[ƒoƒ‹—”BƒƒbƒNƒIƒuƒWƒFƒNƒgB
+	/** ã‚°ãƒ­ãƒ¼ãƒãƒ«ä¹±æ•°ã€‚ãƒ­ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã€‚
 	*/
 	LockObject& GlobalRand_LockObject()
 	{

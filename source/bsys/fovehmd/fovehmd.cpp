@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief FoveHMDB
+ * @brief FoveHMDã€‚
 */
 
 
@@ -65,28 +65,28 @@ namespace NBsys{namespace NFovehmd
 		return this->impl->GetErrorCode();
 	}
 
-	/** Ú‘±ŠJnB
+	/** æ¥ç¶šé–‹å§‹ã€‚
 	*/
 	void Fovehmd::ConnectStart()
 	{
 		this->impl->ConnectStart();
 	}
 
-	/** Ú‘±’†B
+	/** æ¥ç¶šä¸­ã€‚
 	*/
 	bool Fovehmd::ConnectUpdate()
 	{
 		return this->impl->ConnectUpdate();
 	}
 
-	/** ƒTƒCƒYæ“¾B
+	/** ã‚µã‚¤ã‚ºå–å¾—ã€‚
 	*/
 	NGeometry::Geometry_Vector2& Fovehmd::GetSingleEyeResolution()
 	{
 		return this->impl->GetSingleEyeResolution();
 	}
 
-	/** XVB
+	/** æ›´æ–°ã€‚
  	*/
 	void Fovehmd::Update()
 	{

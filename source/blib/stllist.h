@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ‚r‚s‚kƒŠƒXƒgB
+ * @brief ï¼³ï¼´ï¼¬ãƒªã‚¹ãƒˆã€‚
 */
 
 
@@ -29,7 +29,7 @@
 /*
 
 	STLList<TYPE>::Type
-	std::list‚ÌƒAƒƒP[ƒ^w’èƒo[ƒWƒ‡ƒ“B
+	std::listã®ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿æŒ‡å®šãƒãƒ¼ã‚¸ãƒ§ãƒ³ã€‚
 
 */
 

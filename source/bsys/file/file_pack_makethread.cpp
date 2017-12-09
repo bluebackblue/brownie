@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒtƒ@ƒCƒ‹B
+ * @brief ãƒ•ã‚¡ã‚¤ãƒ«ã€‚
 */
 
 
@@ -43,7 +43,7 @@ namespace NBsys{namespace NFile
 	{
 	}
 
-	/** ƒXƒŒƒbƒhƒƒCƒ“B
+	/** ã‚¹ãƒ¬ãƒƒãƒ‰ãƒ¡ã‚¤ãƒ³ã€‚
 	*/
 	void File_Pack_MakeThread::ThreadMain(ThreadArgument& a_threadargument)
 	{
@@ -52,15 +52,15 @@ namespace NBsys{namespace NFile
 		MemoryContainer t_memorycontainer(BSYS_FILE_MEMORYCONTAINER);
 
 		{
-			/** ƒ[ƒNƒAƒCƒeƒ€B
+			/** ãƒ¯ãƒ¼ã‚¯ã‚¢ã‚¤ãƒ†ãƒ ã€‚
 			*/
 			struct WorkItem
 			{
-				/** ƒpƒbƒN‚©‚ç‚Ì’ZkƒpƒXB
+				/** ãƒ‘ãƒƒã‚¯ã‹ã‚‰ã®çŸ­ç¸®ãƒ‘ã‚¹ã€‚
 				*/
 				STLWString path_pack_short;
 
-				/** â‘ÎƒpƒXB
+				/** çµ¶å¯¾ãƒ‘ã‚¹ã€‚
 				*/
 				STLWString path_full;
 
@@ -77,11 +77,11 @@ namespace NBsys{namespace NFile
 				t_worklist.push_back(WorkItem(L"",a_threadargument.rootpath_full));
 			}
 
-			/** ƒtƒ@ƒCƒ‹–¼BƒpƒbƒN‚©‚ç‚Ì’ZkƒpƒXB
+			/** ãƒ•ã‚¡ã‚¤ãƒ«åã€‚ãƒ‘ãƒƒã‚¯ã‹ã‚‰ã®çŸ­ç¸®ãƒ‘ã‚¹ã€‚
 			*/
 			STLVector<STLWString>::Type t_filename_pack_short_list;
 
-			/** ƒtƒ@ƒCƒ‹–¼Bâ‘ÎƒpƒXB
+			/** ãƒ•ã‚¡ã‚¤ãƒ«åã€‚çµ¶å¯¾ãƒ‘ã‚¹ã€‚
 			*/
 			STLVector<STLWString>::Type t_filename_fullpath_list;
 
@@ -96,10 +96,10 @@ namespace NBsys{namespace NFile
 				for(s32 ii=0;ii<ii_max;ii++){
 					DirectoryHandle::DirectoryItem& t_item = t_directoryhandle.GetItem(ii);
 					if(t_item.is_directory == true){
-						//ƒfƒBƒŒƒNƒgƒŠB
+						//ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã€‚
 						t_worklist.push_back(WorkItem(Path::DirAndDir(t_workitem.path_pack_short,t_item.name),Path::DirAndDir(t_directoryhandle.GetFullPath(),t_item.name)));
 					}else{
-						//ƒtƒ@ƒCƒ‹B
+						//ãƒ•ã‚¡ã‚¤ãƒ«ã€‚
 						t_filename_pack_short_list.push_back(Path::DirAndName(t_workitem.path_pack_short,t_item.name));
 						t_filename_fullpath_list.push_back(Path::DirAndName(t_directoryhandle.GetFullPath(),t_item.name));
 					}
@@ -115,33 +115,33 @@ namespace NBsys{namespace NFile
 
 					/*
 					------------------------------------------------------------------
-					4 Byte                                    : ƒwƒbƒ_[ƒTƒCƒY
-					4 Byte                                    : ƒtƒ@ƒCƒ‹‘”
-					ƒtƒ@ƒCƒ‹‘” * 4 Byte                     : Šeƒtƒ@ƒCƒ‹ƒTƒCƒY
-					ƒtƒ@ƒCƒ‹‘” * 2 Byte                     : Šeƒtƒ@ƒCƒ‹ƒpƒX•¶š”i‘ÎÛƒtƒHƒ‹ƒ_‚©‚ç‚Ì‘Š‘ÎƒpƒXj
-					(Šeƒtƒ@ƒCƒ‹ƒpƒX•¶š”(‡Œv) + 1) * 2 Byte : wcharŒ^A0x0000‹æØ‚è
-					Šeƒtƒ@ƒCƒ‹ƒTƒCƒY(‡Œv) Byte               : ƒf[ƒ^
+					4 Byte                                    : ãƒ˜ãƒƒãƒ€ãƒ¼ã‚µã‚¤ã‚º
+					4 Byte                                    : ãƒ•ã‚¡ã‚¤ãƒ«ç·æ•°
+					ãƒ•ã‚¡ã‚¤ãƒ«ç·æ•° * 4 Byte                     : å„ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
+					ãƒ•ã‚¡ã‚¤ãƒ«ç·æ•° * 2 Byte                     : å„ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹æ–‡å­—æ•°ï¼ˆå¯¾è±¡ãƒ•ã‚©ãƒ«ãƒ€ã‹ã‚‰ã®ç›¸å¯¾ãƒ‘ã‚¹ï¼‰
+					(å„ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹æ–‡å­—æ•°(åˆè¨ˆ) + 1) * 2 Byte : wcharå‹ã€0x0000åŒºåˆ‡ã‚Š
+					å„ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º(åˆè¨ˆ) Byte               : ãƒ‡ãƒ¼ã‚¿
 					------------------------------------------------------------------ 
 					*/
 
 					s64 t_offset = 0;
 
-					//ƒwƒbƒ_[ƒTƒCƒYB
+					//ãƒ˜ãƒƒãƒ€ãƒ¼ã‚µã‚¤ã‚ºã€‚
 					s64 t_header_size_offset = t_offset;
 					u32 t_header_size = 0;
 					t_offset += sizeof(u32);
 
-					//ƒtƒ@ƒCƒ‹‘”B
+					//ãƒ•ã‚¡ã‚¤ãƒ«ç·æ•°ã€‚
 					s64 t_all_count_offset = t_offset;
 					u32 t_all_count = static_cast<u32>(t_filename_pack_short_list.size());
 					t_offset += sizeof(u32);
 
-					//Šeƒtƒ@ƒCƒ‹ƒTƒCƒYB
+					//å„ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºã€‚
 					s64 t_file_size_offset = t_offset;
 					sharedptr<u32> t_file_size(new u32[t_all_count],default_delete<u32[]>());
 					t_offset += sizeof(u32) * t_all_count;
 
-					//Šeƒtƒ@ƒCƒ‹–¼•¶š”B
+					//å„ãƒ•ã‚¡ã‚¤ãƒ«åæ–‡å­—æ•°ã€‚
 					s64 t_filename_length_offset = t_offset;
 					sharedptr<u16> t_filename_length(new u16[t_all_count],default_delete<u16[]>());
 					for(s32 ii=0;ii<static_cast<s32>(t_filename_pack_short_list.size());ii++){
@@ -149,7 +149,7 @@ namespace NBsys{namespace NFile
 					}
 					t_offset += sizeof(u16) * t_all_count;
 
-					//Šeƒtƒ@ƒCƒ‹–¼‚ğ‚Ü‚Æ‚ß‚½‚à‚ÌB
+					//å„ãƒ•ã‚¡ã‚¤ãƒ«åã‚’ã¾ã¨ã‚ãŸã‚‚ã®ã€‚
 					s64 t_all_filename_offset = t_offset;
 					STLVector<wchar>::Type t_all_filename;
 					for(s32 ii=0;ii<static_cast<s32>(t_filename_pack_short_list.size());ii++){
@@ -160,26 +160,26 @@ namespace NBsys{namespace NFile
 					}
 					t_offset += sizeof(wchar) * t_all_filename.size();
 
-					//ƒwƒbƒ_[ƒTƒCƒYB
+					//ãƒ˜ãƒƒãƒ€ãƒ¼ã‚µã‚¤ã‚ºã€‚
 					t_header_size = static_cast<s32>(t_offset);
 
 					{
-						//ƒwƒbƒ_[ƒTƒCƒYB
+						//ãƒ˜ãƒƒãƒ€ãƒ¼ã‚µã‚¤ã‚ºã€‚
 						if(t_filehandle_write.Write(reinterpret_cast<u8*>(&t_header_size),sizeof(t_header_size),t_header_size_offset) == false){
 							ASSERT(0);
 						}
 
-						//‘”B
+						//ç·æ•°ã€‚
 						if(t_filehandle_write.Write(reinterpret_cast<u8*>(&t_all_count),sizeof(t_all_count),t_all_count_offset) == false){
 							ASSERT(0);
 						}
 
-						//Šeƒtƒ@ƒCƒ‹–¼•¶šƒTƒCƒYB
+						//å„ãƒ•ã‚¡ã‚¤ãƒ«åæ–‡å­—ã‚µã‚¤ã‚ºã€‚
 						if(t_filehandle_write.Write(reinterpret_cast<u8*>(t_filename_length.get()),sizeof(u16) * t_all_count,t_filename_length_offset) == false){
 							ASSERT(0);
 						}
 
-						//Šeƒtƒ@ƒCƒ‹–¼‚ğ‚Ğ‚Æ‚Ü‚Æ‚ß‚É‚µ‚½‚à‚ÌB
+						//å„ãƒ•ã‚¡ã‚¤ãƒ«åã‚’ã²ã¨ã¾ã¨ã‚ã«ã—ãŸã‚‚ã®ã€‚
 						if(t_filehandle_write.Write(reinterpret_cast<u8*>(&t_all_filename[0]),sizeof(wchar) * t_all_filename.size(),t_all_filename_offset) == false){
 							ASSERT(0);
 						}
@@ -192,19 +192,19 @@ namespace NBsys{namespace NFile
 
 							s64 t_filesize_read = t_filehandle_read.GetSize();
 							
-							//ƒtƒ@ƒCƒ‹ƒTƒCƒYB
+							//ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºã€‚
 							t_file_size.get()[ii] = static_cast<u32>(t_filesize_read);
 
 							sharedptr<u8> t_filedata(new u8[static_cast<s32>(t_filesize_read)],default_delete<u8[]>());
 
-							//“Ç‚İ‚İB
+							//èª­ã¿è¾¼ã¿ã€‚
 							if(t_filehandle_read.Read(t_filedata.get(),t_filesize_read,0) == false){
 								ASSERT(0);
 							}
 
 							t_filehandle_read.Close();
 
-							//Šeƒf[ƒ^B
+							//å„ãƒ‡ãƒ¼ã‚¿ã€‚
 							if(t_filehandle_write.Write(reinterpret_cast<u8*>(t_filedata.get()),t_filesize_read,t_offset) == false){
 								ASSERT(0);
 							}
@@ -214,7 +214,7 @@ namespace NBsys{namespace NFile
 					}
 
 					{
-						//Šeƒtƒ@ƒCƒ‹ƒTƒCƒYB
+						//å„ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºã€‚
 						if(t_filehandle_write.Write(reinterpret_cast<u8*>(t_file_size.get()),sizeof(u32) * t_all_count,t_file_size_offset) == false){
 							ASSERT(0);
 						}

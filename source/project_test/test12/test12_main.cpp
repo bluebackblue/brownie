@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒCƒ“ƒNƒ‹[ƒhB
+ * @brief ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ã€‚
 */
 
 
@@ -64,22 +64,22 @@ sharedptr<NBsys::NPad::Pad_Device_Base> s_pad_device;
 sharedptr<NBsys::NDebugMenu::DebugMenu_Callback_Base> s_debugmenu_callback;
 
 
-/** ƒ‰ƒCƒ“•`‰æB
+/** ãƒ©ã‚¤ãƒ³æç”»ã€‚
 */
 sharedptr<NCommon::D3d11_DrawLine_Manager> s_drawline_manager;
 
 
-/** ƒŒƒNƒg•`‰æB
+/** ãƒ¬ã‚¯ãƒˆæç”»ã€‚
 */
 sharedptr<NCommon::D3d11_DrawRect_Manager> s_drawrect_manager;
 
 
-/** ƒtƒHƒ“ƒg•`‰æB
+/** ãƒ•ã‚©ãƒ³ãƒˆæç”»ã€‚
 */
 sharedptr<NCommon::D3d11_DrawFont_Manager> s_drawfont_manager;
 
 
-/** ƒfƒoƒbƒOƒEƒBƒ“ƒhƒEB
+/** ãƒ‡ãƒãƒƒã‚°ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã€‚
 */
 sharedptr<Test12_DebugWindow> s_test12_debugwindow;
 
@@ -110,7 +110,7 @@ private:
 	s32 depthstencilstate_write_on_id;
 	s32 depthstencilstate_write_off_id;
 
-	/** ƒJƒƒ‰B
+	/** ã‚«ãƒ¡ãƒ©ã€‚
 	*/
 	NBsys::NGeometry::Geometry_Vector3 camera_position;
 	NBsys::NGeometry::Geometry_Vector3 camera_up;
@@ -138,23 +138,23 @@ public:
 	}
 
 public:
-	/** XVB
+	/** æ›´æ–°ã€‚
 	*/
 	void Update(f32 a_delta)
 	{
-		//ƒpƒbƒhB
+		//ãƒ‘ãƒƒãƒ‰ã€‚
 		NBsys::NPad::Update(true);
 
-		//ƒfƒoƒbƒOƒƒjƒ…[B
+		//ãƒ‡ãƒãƒƒã‚°ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã€‚
 		NBsys::NDebugMenu::GetSystemInstance()->Update();
 
-		//ƒ‰ƒCƒ“•`‰æB
+		//ãƒ©ã‚¤ãƒ³æç”»ã€‚
 		s_drawline_manager->PreUpdate();
 
-		//ƒŒƒNƒg•`‰æB
+		//ãƒ¬ã‚¯ãƒˆæç”»ã€‚
 		s_drawrect_manager->PreUpdate();
 
-		//ƒtƒHƒ“ƒg•`‰æB
+		//ãƒ•ã‚©ãƒ³ãƒˆæç”»ã€‚
 		s_drawfont_manager->PreUpdate();
 
 		switch(this->step){
@@ -172,18 +172,18 @@ public:
 					break;
 				}
 
-				//ƒuƒŒƒ“ƒhƒXƒe[ƒ^ƒXB
+				//ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã€‚
 				this->blendstate_id = s_d3d11->CreateBlendState(true);
 
-				//ƒ‰ƒXƒ^ƒ‰ƒCƒU[B
+				//ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ãƒ¼ã€‚
 				this->rasterizerstate_cull_back_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::BACK);
 				this->rasterizerstate_cull_none_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::NONE);
 
-				//[“xƒXƒeƒ“ƒVƒ‹B
+				//æ·±åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ã€‚
 				this->depthstencilstate_write_on_id = s_d3d11->CreateDepthStencilState(true,true);
 				this->depthstencilstate_write_off_id = s_d3d11->CreateDepthStencilState(true,false);
 
-				//ƒJƒƒ‰B
+				//ã‚«ãƒ¡ãƒ©ã€‚
 				{
 					this->camera_position = NBsys::NGeometry::Geometry_Vector3(1.0f,10.0f,-20.0f);
 					this->camera_up = NBsys::NGeometry::Geometry_Vector3(0.0f,1.0f,0.0f);
@@ -201,7 +201,7 @@ public:
 				this->step++;
 				this->draw = true;
 
-				//ƒfƒoƒbƒOƒEƒBƒ“ƒhƒEB
+				//ãƒ‡ãƒãƒƒã‚°ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã€‚
 				s_test12_debugwindow.reset(new Test12_DebugWindow(100.0f,100.0f));
 				NBsys::NDebugMenu::GetSystemInstance()->Add(s_test12_debugwindow);
 			}break;
@@ -209,7 +209,7 @@ public:
 			{
 				this->camera_time += a_delta;
 
-				//ƒJƒƒ‰‰ñ“]B
+				//ã‚«ãƒ¡ãƒ©å›è»¢ã€‚
 				this->camera_position.x = Math::cosf(this->camera_time / 10) * 20;
 				this->camera_position.z = Math::sinf(this->camera_time / 10) * 20;
 
@@ -217,66 +217,66 @@ public:
 		}
 	}
 
-	/** •`‰æB
+	/** æç”»ã€‚
 	*/
 	void Draw()
 	{
-		//ƒŠƒNƒGƒXƒgˆ—B
+		//ãƒªã‚¯ã‚¨ã‚¹ãƒˆå‡¦ç†ã€‚
 		s_d3d11->Render_Main();
 
 		s_d3d11->Render_ViewPort(0.0f,0.0f,static_cast<f32>(s_width),static_cast<f32>(s_height));
 
-		//ƒNƒŠƒAB
+		//ã‚¯ãƒªã‚¢ã€‚
 		s_d3d11->Render_ClearRenderTargetView(NBsys::NColor::Color_F(0.3f,0.3f,0.8f,1.0f));
 
-		//[“xƒXƒeƒ“ƒVƒ‹ƒNƒŠƒAB
+		//æ·±åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ã‚¯ãƒªã‚¢ã€‚
 		s_d3d11->Render_ClearDepthStencilView();
 
 		if(this->draw){
 
-			//ƒvƒƒWƒFƒNƒVƒ‡ƒ“B
+			//ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³ã€‚
 			NBsys::NGeometry::Geometry_Matrix_44 t_projection;
 
-			//ƒrƒ…[B
+			//ãƒ“ãƒ¥ãƒ¼ã€‚
 			NBsys::NGeometry::Geometry_Matrix_44 t_view;
 
-			//‚R‚c•`‰æB
+			//ï¼“ï¼¤æç”»ã€‚
 			{
-				//ƒvƒƒWƒFƒNƒVƒ‡ƒ“B
+				//ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³ã€‚
 				t_projection.Set_PerspectiveProjectionMatrix(static_cast<f32>(s_width),static_cast<f32>(s_height),this->camera_fov_deg,this->camera_near,this->camera_far);
 
-				//ƒrƒ…[B
+				//ãƒ“ãƒ¥ãƒ¼ã€‚
 				t_view.Set_ViewMatrix(this->camera_target,this->camera_position,this->camera_up);
 
 				{
-					//ƒ‰ƒCƒ“•`‰æB
+					//ãƒ©ã‚¤ãƒ³æç”»ã€‚
 					s_drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(-100,0,0),NBsys::NGeometry::Geometry_Vector3(100,0,0),NBsys::NColor::Color_F(1.0f,0.0f,0.0f,1.0f));
 					s_drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(0,-100,0),NBsys::NGeometry::Geometry_Vector3(0,100,0),NBsys::NColor::Color_F(0.0f,1.0f,0.0f,1.0f));
 					s_drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(0,0,-100),NBsys::NGeometry::Geometry_Vector3(0,0,100),NBsys::NColor::Color_F(0.0f,0.0f,1.0f,1.0f));
 
-					//[“xƒXƒeƒ“ƒVƒ‹B[“x‘‚«‚İ‚ ‚èB
+					//æ·±åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ã€‚æ·±åº¦æ›¸ãè¾¼ã¿ã‚ã‚Šã€‚
 					s_d3d11->Render_SetDepthStencilState(this->depthstencilstate_write_on_id);
 
-					//ƒ‰ƒCƒ“•`‰æB
+					//ãƒ©ã‚¤ãƒ³æç”»ã€‚
 					s_drawline_manager->Render(t_view * t_projection);
 				}
 			}
 
-			//‚Q‚c•`‰æB
+			//ï¼’ï¼¤æç”»ã€‚
 			{
-				//ƒvƒƒWƒFƒNƒVƒ‡ƒ“B
+				//ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³ã€‚
 				t_projection.Set_OrthographicProjectionMatrix(0,static_cast<f32>(s_width),0,static_cast<f32>(s_height),0.0f,1.0f);
 
-				//ƒrƒ…[B
+				//ãƒ“ãƒ¥ãƒ¼ã€‚
 				t_view.Set_Identity();
 
-				//ƒNƒŠƒAB
+				//ã‚¯ãƒªã‚¢ã€‚
 				s_d3d11->Render_ClearDepthStencilView();
 
-				//ƒ}ƒEƒXB
+				//ãƒã‚¦ã‚¹ã€‚
 				const NBsys::NPad::TouchValue& t_mouse_l = NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->GetTouchValue(NBsys::NPad::Pad_Virtual::TouchType::MOUSEL);
 			
-				//•¶š•`‰æB
+				//æ–‡å­—æç”»ã€‚
 				if(t_mouse_l.flag){
 					char t_buffer[32];
 					STLWString t_string = VASTRING(t_buffer,sizeof(t_buffer),L"%d %d",static_cast<s32>(t_mouse_l.x),static_cast<s32>(t_mouse_l.y));
@@ -284,29 +284,29 @@ public:
 					s_drawfont_manager->DrawFont16(t_string,16.0f,t_mouse_l.x-50,t_mouse_l.y-50,0.0f,NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f));
 				}
 
-				s_drawfont_manager->DrawFont32(L"‚ ‚¢‚¤‚¦‚¨",	32.0f,	100.0f,			100.0f,			0.0f,NBsys::NColor::Color_F(1.0f,0.0f,1.0f,1.0f));
-				s_drawfont_manager->DrawFont64(L"‚ ‚¢‚¤‚¦‚¨",	64.0f,	s_width/2.0f,	s_height/2.0f,	0.0f,NBsys::NColor::Color_F(1.0f,1.0f,0.0f,1.0f));
+				s_drawfont_manager->DrawFont32(L"ã‚ã„ã†ãˆãŠ",	32.0f,	100.0f,			100.0f,			0.0f,NBsys::NColor::Color_F(1.0f,0.0f,1.0f,1.0f));
+				s_drawfont_manager->DrawFont64(L"ã‚ã„ã†ãˆãŠ",	64.0f,	s_width/2.0f,	s_height/2.0f,	0.0f,NBsys::NColor::Color_F(1.0f,1.0f,0.0f,1.0f));
 
-				//ƒŒƒNƒg•`‰æB
+				//ãƒ¬ã‚¯ãƒˆæç”»ã€‚
 				//s_drawrect_manager->DrawRect(0.0f,0.0f,100.0f,100.0f,0.0f,-1,NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
 
-				//ƒfƒoƒbƒOƒƒjƒ…[B
+				//ãƒ‡ãƒãƒƒã‚°ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã€‚
 				NBsys::NDebugMenu::GetSystemInstance()->Update();
 				NBsys::NDebugMenu::GetSystemInstance()->Draw();
 
 				{
-					//[“xƒXƒeƒ“ƒVƒ‹B[“x‘‚«‚İ‚ ‚èB
+					//æ·±åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ã€‚æ·±åº¦æ›¸ãè¾¼ã¿ã‚ã‚Šã€‚
 					s_d3d11->Render_SetDepthStencilState(this->depthstencilstate_write_on_id);
 
-					//ƒŒƒNƒg•`‰æB
+					//ãƒ¬ã‚¯ãƒˆæç”»ã€‚
 					s_drawrect_manager->Render(t_view * t_projection);
 				}
 
 				{
-					//[“xƒXƒeƒ“ƒVƒ‹B[“x‘‚«‚İ‚È‚µB
+					//æ·±åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ã€‚æ·±åº¦æ›¸ãè¾¼ã¿ãªã—ã€‚
 					s_d3d11->Render_SetDepthStencilState(this->depthstencilstate_write_off_id);
 
-					//•¶š•`‰æB
+					//æ–‡å­—æç”»ã€‚
 					s_drawfont_manager->Render(t_view * t_projection);
 				}
 			}
@@ -344,20 +344,20 @@ void Test_Main()
 	NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->AddTouch(NBsys::NPad::Pad_Virtual::TouchType::MOUSER,NBsys::NPad::Pad_Device_Base::TouchType::DeviceTouch_2,s_pad_device);
 	NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->SetEnable(true);
 
-	//ƒ‰ƒCƒ“•`‰æB
+	//ãƒ©ã‚¤ãƒ³æç”»ã€‚
 	s_drawline_manager.reset(new NCommon::D3d11_DrawLine_Manager(s_d3d11));
 
-	//ƒŒƒNƒg•`‰æB
+	//ãƒ¬ã‚¯ãƒˆæç”»ã€‚
 	s_drawrect_manager.reset(new NCommon::D3d11_DrawRect_Manager(s_d3d11));
 
-	//ƒtƒHƒ“ƒg•`‰æB
+	//ãƒ•ã‚©ãƒ³ãƒˆæç”»ã€‚
 	s_drawfont_manager.reset(new NCommon::D3d11_DrawFont_Manager(s_d3d11));
 
-	//ƒfƒoƒbƒOƒƒjƒ…[B
+	//ãƒ‡ãƒãƒƒã‚°ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã€‚
 	s_debugmenu_callback.reset(new NCommon::DebugMenu_Callback(s_drawrect_manager,s_drawfont_manager));
 	NBsys::NDebugMenu::StartSystem(s_debugmenu_callback);
 
-	//ƒpƒtƒH[ƒ}ƒ“ƒXƒJƒEƒ“ƒ^[B
+	//ãƒ‘ãƒ•ã‚©ãƒ¼ãƒãƒ³ã‚¹ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã€‚
 	u64 t_pcounter = 0ULL;
 
 	while(true){
@@ -368,7 +368,7 @@ void Test_Main()
 			break;
 		}
 
-		//ƒpƒtƒH[ƒ}ƒ“ƒXƒJƒEƒ“ƒ^[B
+		//ãƒ‘ãƒ•ã‚©ãƒ¼ãƒãƒ³ã‚¹ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã€‚
 		float t_delta = 0.0f;
 		{
 			u64 t_pcounter_now = PerformanceCounter::GetPerformanceCounter();
@@ -380,10 +380,10 @@ void Test_Main()
 			t_pcounter = t_pcounter_now;
 		}
 
-		//XVB
+		//æ›´æ–°ã€‚
 		s_app->Update(t_delta);
 
-		//•`‰æB
+		//æç”»ã€‚
 		s_app->Draw();
 
 		if(s_d3d11->Render_Present() == false){

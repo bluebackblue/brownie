@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒWƒIƒƒgƒŠB
+ * @brief ã‚¸ã‚ªãƒ¡ãƒˆãƒªã€‚
 */
 
 
@@ -133,7 +133,7 @@ namespace NBsys{namespace NGeometry
 	{
 	}
 
-	/** [static]IdentityB
+	/** [static]Identityã€‚
 	*/
 	inline const Geometry_Matrix_44& Geometry_Matrix_44::Identity()
 	{
@@ -147,14 +147,14 @@ namespace NBsys{namespace NGeometry
 		return s_identity;
 	}
 
-	/** [İ’è]IdentityB
+	/** [è¨­å®š]Identityã€‚
 	*/
 	inline void Geometry_Matrix_44::Set_Identity()
 	{
 		*this = Geometry_Matrix_44::Identity();
 	}
 
-	/** [İ’è]B
+	/** [è¨­å®š]ã€‚
 	*/
 	inline void Geometry_Matrix_44::Set(
 		f32 a_ax_x,f32 a_ax_y,f32 a_ax_z,f32 a_ax_w,
@@ -184,7 +184,7 @@ namespace NBsys{namespace NGeometry
 		this->tr_w = a_tr_w;
 	}
 
-	/** [ì¬]‚w²B
+	/** [ä½œæˆ]ï¼¸è»¸ã€‚
 	*/
 	inline Geometry_Vector3 Geometry_Matrix_44::Make_AxisX() const
 	{
@@ -197,7 +197,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
-	/** [ì¬]‚x²B
+	/** [ä½œæˆ]ï¼¹è»¸ã€‚
 	*/
 	inline Geometry_Vector3 Geometry_Matrix_44::Make_AxisY() const
 	{
@@ -210,7 +210,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
-	/** [ì¬]‚y²B
+	/** [ä½œæˆ]ï¼ºè»¸ã€‚
 	*/
 	inline Geometry_Vector3 Geometry_Matrix_44::Make_AxisZ() const
 	{
@@ -223,7 +223,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
-	/** [İ’è]‚w²B
+	/** [è¨­å®š]ï¼¸è»¸ã€‚
 	*/
 	inline void Geometry_Matrix_44::Set_AxisX(const Geometry_Vector3& a_vector)
 	{
@@ -232,7 +232,7 @@ namespace NBsys{namespace NGeometry
 		this->ax_z = a_vector.z;
 	}
 
-	/** [İ’è]‚x²B
+	/** [è¨­å®š]ï¼¹è»¸ã€‚
 	*/
 	inline void Geometry_Matrix_44::Set_AxisY(const Geometry_Vector3& a_vector)
 	{
@@ -241,7 +241,7 @@ namespace NBsys{namespace NGeometry
 		this->ay_z = a_vector.z;
 	}
 
-	/** [İ’è]‚y²B
+	/** [è¨­å®š]ï¼ºè»¸ã€‚
 	*/
 	inline void Geometry_Matrix_44::Set_AxisZ(const Geometry_Vector3& a_vector)
 	{
@@ -250,7 +250,7 @@ namespace NBsys{namespace NGeometry
 		this->az_z = a_vector.z;
 	}
 
-	/** [İ’è]•½sˆÚ“®B
+	/** [è¨­å®š]å¹³è¡Œç§»å‹•ã€‚
 	*/
 	inline void Geometry_Matrix_44::Set_Translate(f32 a_x,f32 a_y,f32 a_z)
 	{
@@ -259,7 +259,7 @@ namespace NBsys{namespace NGeometry
 		this->tr_z = a_z;
 	}
 
-	/** [İ’è]•½sˆÚ“®B
+	/** [è¨­å®š]å¹³è¡Œç§»å‹•ã€‚
 	*/
 	inline void Geometry_Matrix_44::Set_Translate(const Geometry_Vector3& a_vector)
 	{
@@ -268,7 +268,7 @@ namespace NBsys{namespace NGeometry
 		this->tr_z = a_vector.z;
 	}
 
-	/** [static][ì¬]•½sˆÚ“®B
+	/** [static][ä½œæˆ]å¹³è¡Œç§»å‹•ã€‚
 	*/
 	inline Geometry_Matrix_44 Geometry_Matrix_44::Make_Translate(f32 a_x,f32 a_y,f32 a_z)
 	{
@@ -282,7 +282,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
-	/** [ì¬]•½sˆÚ“®B
+	/** [ä½œæˆ]å¹³è¡Œç§»å‹•ã€‚
 	*/
 	inline Geometry_Vector3 Geometry_Matrix_44::Make_Translate_Vector() const
 	{
@@ -291,7 +291,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
-	/** [ì¬]•½sˆÚ“®B
+	/** [ä½œæˆ]å¹³è¡Œç§»å‹•ã€‚
 	*/
 	inline Geometry_Matrix_44 Geometry_Matrix_44::Make_Translate() const
 	{
@@ -305,7 +305,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
-	/** [İ’è]ƒXƒP[ƒ‹B
+	/** [è¨­å®š]ã‚¹ã‚±ãƒ¼ãƒ«ã€‚
 	*/
 	inline void Geometry_Matrix_44::Calc_Scale(f32 a_x,f32 a_y,f32 a_z)
 	{
@@ -322,14 +322,14 @@ namespace NBsys{namespace NGeometry
 		this->Set_AxisZ(t_axis_z * a_z);
 	}
 
-	/** [İ’è]ƒXƒP[ƒ‹B
+	/** [è¨­å®š]ã‚¹ã‚±ãƒ¼ãƒ«ã€‚
 	*/
 	inline void Geometry_Matrix_44::Calc_Scale(const Geometry_Vector3& a_vector)
 	{
 		this->Calc_Scale(a_vector.x,a_vector.y,a_vector.z);
 	}
 
-	/** [ì¬]Še²‚ÌƒXƒP[ƒ‹B
+	/** [ä½œæˆ]å„è»¸ã®ã‚¹ã‚±ãƒ¼ãƒ«ã€‚
 	*/
 	inline Geometry_Vector3 Geometry_Matrix_44::Make_Scale_Vector() const
 	{
@@ -344,7 +344,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
-	/** [static][ì¬]‰ñ“]s—ñB
+	/** [static][ä½œæˆ]å›è»¢è¡Œåˆ—ã€‚
 	*/
 	inline Geometry_Matrix_44 Geometry_Matrix_44::Make_RotationXYZ(f32 a_rad_x,f32 a_rad_y,f32 a_rad_z)
 	{
@@ -353,7 +353,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
-	/** [ì¬]‰ñ“]s—ñB
+	/** [ä½œæˆ]å›è»¢è¡Œåˆ—ã€‚
 	*/
 	inline Geometry_Matrix_44 Geometry_Matrix_44::Make_Rotation() const
 	{
@@ -389,7 +389,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
-	/** [static][ì¬]‰ñ“]s—ñB
+	/** [static][ä½œæˆ]å›è»¢è¡Œåˆ—ã€‚
 	*/
 	inline Geometry_Matrix_44 Geometry_Matrix_44::Make_RotationX(f32 a_rad)
 	{
@@ -421,7 +421,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
-	/** [static][ì¬]‰ñ“]s—ñB
+	/** [static][ä½œæˆ]å›è»¢è¡Œåˆ—ã€‚
 	*/
 	inline Geometry_Matrix_44 Geometry_Matrix_44::Make_RotationY(f32 a_rad)
 	{
@@ -453,7 +453,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
-	/** [static][ì¬]‰ñ“]s—ñB
+	/** [static][ä½œæˆ]å›è»¢è¡Œåˆ—ã€‚
 	*/
 	inline Geometry_Matrix_44 Geometry_Matrix_44::Make_RotationZ(f32 a_rad)
 	{
@@ -485,7 +485,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
-	/** [İ’è]‰ñ“]s—ñB
+	/** [è¨­å®š]å›è»¢è¡Œåˆ—ã€‚
 	*/
 	inline void Geometry_Matrix_44::Set_RotationX(f32 a_rad)
 	{
@@ -513,7 +513,7 @@ namespace NBsys{namespace NGeometry
 		this->tr_w = 1.0f;
 	}
 
-	/** [İ’è]‰ñ“]s—ñB
+	/** [è¨­å®š]å›è»¢è¡Œåˆ—ã€‚
 	*/
 	inline void Geometry_Matrix_44::Set_RotationY(f32 a_rad)
 	{
@@ -541,7 +541,7 @@ namespace NBsys{namespace NGeometry
 		this->tr_w = 1.0f;
 	}
 
-	/** [İ’è]‰ñ“]s—ñB
+	/** [è¨­å®š]å›è»¢è¡Œåˆ—ã€‚
 	*/
 	inline void Geometry_Matrix_44::Set_RotationZ(f32 a_rad)
 	{
@@ -569,7 +569,7 @@ namespace NBsys{namespace NGeometry
 		this->tr_w = 1.0f;
 	}
 
-	/** [İ’è]‰ñ“]s—ñB
+	/** [è¨­å®š]å›è»¢è¡Œåˆ—ã€‚
 	*/
 	inline void Geometry_Matrix_44::Set_RotationVector(const Geometry_Vector3& a_vector,f32 a_rad)
 	{
@@ -600,7 +600,7 @@ namespace NBsys{namespace NGeometry
 		this->tr_w = 1.0f;
 	}
 
-	/** [ì¬]‹ts—ñB
+	/** [ä½œæˆ]é€†è¡Œåˆ—ã€‚
 	*/
 	inline Geometry_Matrix_44 Geometry_Matrix_44::Make_Inverse() const
 	{
@@ -649,7 +649,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
-	/** [İ’è]‹ts—ñB
+	/** [è¨­å®š]é€†è¡Œåˆ—ã€‚
 	*/
 	inline void Geometry_Matrix_44::Set_Inverse()
 	{
@@ -695,7 +695,7 @@ namespace NBsys{namespace NGeometry
 		}
 	}
 
-	/** [ì¬]“]’us—ñB
+	/** [ä½œæˆ]è»¢ç½®è¡Œåˆ—ã€‚
 	*/
 	inline Geometry_Matrix_44 Geometry_Matrix_44::Make_Transpose()
 	{
@@ -725,7 +725,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
-	/** [İ’è]“]’us—ñB
+	/** [è¨­å®š]è»¢ç½®è¡Œåˆ—ã€‚
 	*/
 	inline void Geometry_Matrix_44::Set_Transpose()
 	{
@@ -755,14 +755,14 @@ namespace NBsys{namespace NGeometry
 		this->m[3][2] = t_m_2_3;
 	}
 
-	/** [İ’è]Set_LookatB
+	/** [è¨­å®š]Set_Lookatã€‚
 	*/
 	inline void Geometry_Matrix_44::Set_Lookat(const Geometry_Vector3& a_position,const Geometry_Vector3& a_target,const Geometry_Vector3& a_up)
 	{
 		Geometry_Vector3 t_z = a_target - a_position;
 		t_z.Set_Normalize();
 
-		//a_up‚Í•â•B
+		//a_upã¯è£œåŠ©ã€‚
 		Geometry_Vector3 t_x = a_up.Make_Cross(t_z);
 		t_x.Set_Normalize();
 
@@ -792,11 +792,11 @@ namespace NBsys{namespace NGeometry
 		}
 	}
 	
-	/** [İ’è]Set_LookatLimitB
+	/** [è¨­å®š]Set_LookatLimitã€‚
 	*/
 	inline void Geometry_Matrix_44::Set_LookatLimit(const Geometry_Vector3& a_position,const Geometry_Vector3& a_target,const Geometry_Vector3& a_up)
 	{
-		//t_dir‚Í•â•B
+		//t_dirã¯è£œåŠ©ã€‚
 		Geometry_Vector3 t_dir = a_target - a_position;
 		t_dir.Set_Normalize();
 
@@ -832,7 +832,7 @@ namespace NBsys{namespace NGeometry
 		}
 	}
 
-	/** [ì¬]ƒNƒI[ƒ^ƒjƒIƒ“B
+	/** [ä½œæˆ]ã‚¯ã‚ªãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã€‚
 	*/
 	inline Geometry_Quaternion Geometry_Matrix_44::Make_Quaternion() const
 	{
@@ -886,7 +886,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp_quaternion;
 	}
 
-	/** [ì¬]ƒNƒI[ƒ^ƒjƒIƒ“B
+	/** [ä½œæˆ]ã‚¯ã‚ªãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã€‚
 	*/
 	inline Geometry_Quaternion Geometry_Matrix_44::Make_Quaternion_Safe() const
 	{
@@ -894,7 +894,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp.Make_Quaternion();
 	}
 
-	/** [İ’è]ƒNƒI[ƒ^ƒjƒIƒ“B
+	/** [è¨­å®š]ã‚¯ã‚ªãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã€‚
 	*/
 	inline void Geometry_Matrix_44::Set_Quaternion(const Geometry_Quaternion& a_quaternion)
 	{
@@ -933,7 +933,7 @@ namespace NBsys{namespace NGeometry
 		this->tr_w = 1.0f;
 	}
 
-	/** [İ’è]ƒvƒƒWƒFƒNƒVƒ‡ƒ“B“§‹“Š‰eB
+	/** [è¨­å®š]ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³ã€‚é€è¦–æŠ•å½±ã€‚
 	*/
 	inline void Geometry_Matrix_44::Set_PerspectiveProjectionMatrix(f32 a_width,f32 a_height,f32 a_fov_deg,f32 a_near,f32 a_far)
 	{
@@ -1061,7 +1061,7 @@ namespace NBsys{namespace NGeometry
 		#endif
 	}
 
-	/** [İ’è]ƒvƒƒWƒFƒNƒVƒ‡ƒ“B³Ë‰eB
+	/** [è¨­å®š]ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³ã€‚æ­£å°„å½±ã€‚
 	*/
 	inline void Geometry_Matrix_44::Set_OrthographicProjectionMatrix(f32 a_left,f32 a_right,f32 a_top,f32 a_bottom,f32 a_near,f32 a_far)
 	{
@@ -1073,7 +1073,7 @@ namespace NBsys{namespace NGeometry
 		);
 	}
 
-	/** [İ’è]ƒrƒ…[B
+	/** [è¨­å®š]ãƒ“ãƒ¥ãƒ¼ã€‚
 	*/
 	inline void Geometry_Matrix_44::Set_ViewMatrix(const Geometry_Vector3& a_camera_target,const Geometry_Vector3& a_camera_position,const Geometry_Vector3& a_camera_up)
 	{
@@ -1143,7 +1143,7 @@ namespace NBsys{namespace NGeometry
 		#endif
 	}
 
-	/** [İ’è]ƒrƒ…[ƒ|[ƒgA
+	/** [è¨­å®š]ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆã€
 	*/
 	inline void Geometry_Matrix_44::Set_ViewPortMatrix(f32 a_width,f32 a_height)
 	{
@@ -1155,7 +1155,7 @@ namespace NBsys{namespace NGeometry
 		);
 	}
 
-	/** [İ’è]’PˆÊŒ^B
+	/** [è¨­å®š]å˜ä½å‹ã€‚
 	*/
 	inline Geometry_Matrix_44& Geometry_Matrix_44::operator =(const Geometry_Identity_Type& /*a_identity*/)
 	{
@@ -1164,7 +1164,7 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
-	/** [İ’è]æZB
+	/** [è¨­å®š]ä¹—ç®—ã€‚
 	*/
 	inline Geometry_Matrix_44& Geometry_Matrix_44::operator *=(const Geometry_Matrix_44& a_matrix)
 	{
@@ -1211,7 +1211,7 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
-	/** [ì¬]æZB
+	/** [ä½œæˆ]ä¹—ç®—ã€‚
 	*/
 	inline Geometry_Matrix_44 Geometry_Matrix_44::operator *(const Geometry_Matrix_44& a_matrix) const
 	{
@@ -1240,7 +1240,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
-	/** [İ’è]æZB
+	/** [è¨­å®š]ä¹—ç®—ã€‚
 	*/
 	inline Geometry_Matrix_44& Geometry_Matrix_44::operator *=(f32 a_value)
 	{
@@ -1267,7 +1267,7 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
-	/** [ì¬]æZB
+	/** [ä½œæˆ]ä¹—ç®—ã€‚
 	*/
 	inline Geometry_Matrix_44 Geometry_Matrix_44::operator *(f32 a_value)
 	{
@@ -1296,7 +1296,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
-	/** [İ’è]‰ÁZB
+	/** [è¨­å®š]åŠ ç®—ã€‚
 	*/
 	inline Geometry_Matrix_44& Geometry_Matrix_44::operator +=(const Geometry_Matrix_44& a_matrix)
 	{
@@ -1323,7 +1323,7 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
-	/** [ì¬]‰ÁZB
+	/** [ä½œæˆ]åŠ ç®—ã€‚
 	*/
 	inline Geometry_Matrix_44 Geometry_Matrix_44::operator +(const Geometry_Matrix_44& a_matrix) const
 	{

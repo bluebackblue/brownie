@@ -1,11 +1,11 @@
-#pragma once
+﻿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief OpenGL�B
+ * @brief OpenGL。
 */
 
 
@@ -26,11 +26,11 @@ namespace NBsys{namespace NOpengl
 	{
 		enum Id
 		{
-			/** �o�[�e�b�N�X�B
+			/** バーテックス。
 			*/
 			Vertex,
 
-			/** �t���O�����g�B
+			/** フラグメント。
 			*/
 			Fragment
 		};
@@ -75,7 +75,7 @@ namespace NBsys{namespace NOpengl
 			Texture30,
 			Texture31,
 
-			/** Float�B
+			/** Float。
 			*/
 			Float,
 
@@ -99,19 +99,19 @@ namespace NBsys{namespace NOpengl
 			Float16,
 			Matrix,
 
-			/** ���_���s32 => �V�F�[�_�[�p�����[�^f32�B
+			/** 頂点情報s32 => シェーダーパラメータf32。
 			*/
 			IntToFloat,
 
-			/** ���_���s32 => �V�F�[�_�[�p�����[�^f32�B
+			/** 頂点情報s32 => シェーダーパラメータf32。
 			*/
 			Int2ToFloat2,
 
-			/** ���_���s32 => �V�F�[�_�[�p�����[�^f32�B
+			/** 頂点情報s32 => シェーダーパラメータf32。
 			*/
 			Int3ToFloat3,
 
-			/** ���_���s32 => �V�F�[�_�[�p�����[�^f32�B
+			/** 頂点情報s32 => シェーダーパラメータf32。
 			*/
 			Int4ToFloat4,
 
@@ -126,15 +126,15 @@ namespace NBsys{namespace NOpengl
 		{
 			/**
 
-			�X���[�X�V���[�e�B���O�̏ꍇ�A�|���S���̉A�e�����炩�ɕ\������`�悳���B
+			スムースシューティングの場合、ポリゴンの陰影が滑らかに表現され描画される。
 
 			*/
 			Smooth,
 
 			/**
 
-			�t���b�g�V���[�e�B���O�ɐݒ肵���ꍇ�A�ʂ��Ƃ̖��邳�����̏�ԂƂ��ĕ`�悳���B
-			�����`�悪�\�B
+			フラットシューティングに設定した場合、面ごとの明るさが一定の状態として描画される。
+			高速描画が可能。
 
 			*/
 			Flat

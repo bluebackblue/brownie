@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒtƒ@ƒCƒ‹B
+ * @brief ãƒ•ã‚¡ã‚¤ãƒ«ã€‚
 */
 
 
@@ -25,13 +25,13 @@ namespace NBsys{namespace NFile
 	{
 		enum Id
 		{
-			//–¢ƒRƒ“ƒo[ƒg => ƒRƒ“ƒo[ƒg’†B
+			//æœªã‚³ãƒ³ãƒãƒ¼ãƒˆ => ã‚³ãƒ³ãƒãƒ¼ãƒˆä¸­ã€‚
 			Locked = 0,
 
-			//ƒRƒ“ƒo[ƒg’†B
+			//ã‚³ãƒ³ãƒãƒ¼ãƒˆä¸­ã€‚
 			ConvertNow,
 
-			//ƒRƒ“ƒo[ƒgÏ‚ÝB
+			//ã‚³ãƒ³ãƒãƒ¼ãƒˆæ¸ˆã¿ã€‚
 			AlreadyConverted,
 		};
 	};

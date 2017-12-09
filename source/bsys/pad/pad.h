@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒpƒbƒhB
+ * @brief ãƒ‘ãƒƒãƒ‰ã€‚
 */
 
 
@@ -25,27 +25,27 @@
 */
 namespace NBsys{namespace NPad
 {
-	/** ƒVƒXƒeƒ€‚ÌŠJnB
+	/** ã‚·ã‚¹ãƒ†ãƒ ã®é–‹å§‹ã€‚
 	*/
 	void StartSystem(s32 a_virtualpad_max);
 
-	/** ƒVƒXƒeƒ€‚ÌƒCƒ“ƒXƒ^ƒ“ƒXæ“¾B
+	/** ã‚·ã‚¹ãƒ†ãƒ ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å–å¾—ã€‚
 	*/
 	sharedptr<Pad_List>& GetSystemInstance();
 
-	/** ƒfƒoƒCƒX’Ç‰ÁB
+	/** ãƒ‡ãƒã‚¤ã‚¹è¿½åŠ ã€‚
 	*/
 	void AddDevice(sharedptr<Pad_Device_Base>& a_device_instance);
 
-	/** ‰¼‘zƒpƒbƒhæ“¾B
+	/** ä»®æƒ³ãƒ‘ãƒƒãƒ‰å–å¾—ã€‚
 	*/
 	sharedptr<Pad_Virtual>& GetVirtualPad(s32 a_virtualpad_index);
 
-	/** XVB
+	/** æ›´æ–°ã€‚
 	*/
 	void Update(bool a_device_update);
 
-	/** ƒVƒXƒeƒ€‚ÌI—¹B
+	/** ã‚·ã‚¹ãƒ†ãƒ ã®çµ‚äº†ã€‚
 	*/
 	void EndSystem();
 }}

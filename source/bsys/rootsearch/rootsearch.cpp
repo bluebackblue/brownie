@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief Œo˜H’T¸B
+ * @brief çµŒè·¯æ¢æŸ»ã€‚
 */
 
 
@@ -50,7 +50,7 @@ namespace NBsys{namespace NRootSearch
 	{
 	}
 
-	/** ƒNƒŠƒAB
+	/** ã‚¯ãƒªã‚¢ã€‚
 	*/
 	void RootSearch::Clear()
 	{
@@ -58,7 +58,7 @@ namespace NBsys{namespace NRootSearch
 		this->connect_pool.clear();
 	}
 
-	/** Ú‘±B
+	/** æ¥ç¶šã€‚
 	*/
 	void RootSearch::Connect(s32 a_node_index_a,s32 a_node_index_b)
 	{
@@ -76,7 +76,7 @@ namespace NBsys{namespace NRootSearch
 		t_node_b.connect_index_list.push_back(t_connect_index_b);
 	}
 
-	/** ƒm[ƒh’Ç‰ÁB
+	/** ãƒãƒ¼ãƒ‰è¿½åŠ ã€‚
 	*/
 	s32 RootSearch::AddNode(const NGeometry::Geometry_Vector3& a_pos)
 	{
@@ -85,7 +85,7 @@ namespace NBsys{namespace NRootSearch
 		return static_cast<s32>(this->node_pool.size() - 1);
 	}
 
-	/** ƒm[ƒhƒCƒ“ƒfƒbƒNƒXæ“¾B
+	/** ãƒãƒ¼ãƒ‰ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹å–å¾—ã€‚
 	*/
 	s32 RootSearch::GetNodeIndexFromPos(const NGeometry::Geometry_Vector3& a_pos)
 	{
@@ -107,26 +107,26 @@ namespace NBsys{namespace NRootSearch
 		return t_index;
 	}
 
-	/** Œo˜H’T¸B
+	/** çµŒè·¯æ¢æŸ»ã€‚
 	*/
 	NGeometry::Geometry_Vector3 RootSearch::SearchRoot(const NGeometry::Geometry_Vector3& a_start,const NGeometry::Geometry_Vector3& a_end)
 	{
-		//ŒvZŒ‹‰Ê‘ã“üB
+		//è¨ˆç®—çµæœä»£å…¥ã€‚
 		sharedptr<RootSearch_CalcTemp> t_calctemp_list_ptr(new RootSearch_CalcTemp[this->node_pool.size()],default_delete<RootSearch_CalcTemp[]>());
 		RootSearch_CalcTemp* t_calctemp_list = t_calctemp_list_ptr.get();
 
-		//ŒvZ‡˜ŠÇ—B
+		//è¨ˆç®—é †åºç®¡ç†ã€‚
 		STLVector<s32>::Type t_list_temp_1;
 		STLVector<s32>::Type t_list_temp_2;
 
 		STLVector<s32>::Type* t_current_list = &t_list_temp_1;
 		STLVector<s32>::Type* t_next_list = &t_list_temp_2;
 
-		//I’[B
+		//çµ‚ç«¯ã€‚
 		s32 t_node_index_end = this->GetNodeIndexFromPos(a_end);
 
 		if(t_node_index_end >= 0){
-			//I’[‚©‚çŒvZB
+			//çµ‚ç«¯ã‹ã‚‰è¨ˆç®—ã€‚
 			t_calctemp_list[t_node_index_end].cost = 0;
 			t_calctemp_list[t_node_index_end].to_node_index = -1;
 			t_current_list->push_back(t_node_index_end);
@@ -154,20 +154,20 @@ namespace NBsys{namespace NRootSearch
 						t_to_calctemp.cost = t_total_cost;
 						t_to_calctemp.to_node_index = *t_it_node;
 
-						//—\–ñƒŠƒXƒg‚É’Ç‰ÁB
+						//äºˆç´„ãƒªã‚¹ãƒˆã«è¿½åŠ ã€‚
 						t_next_list->push_back(t_connect.node_index);
 					}
 				}
 			}
 
-			//—\–ñƒŠƒXƒg‚ğƒJƒŒƒ“ƒg‚ÉB
+			//äºˆç´„ãƒªã‚¹ãƒˆã‚’ã‚«ãƒ¬ãƒ³ãƒˆã«ã€‚
 			{
 				STLVector<s32>::Type* t_temp = t_current_list;
 				t_current_list = t_next_list;
 				t_next_list = t_temp;
 			}
 
-			//—\–ñƒŠƒXƒg‚ğƒNƒŠƒAB
+			//äºˆç´„ãƒªã‚¹ãƒˆã‚’ã‚¯ãƒªã‚¢ã€‚
 			t_next_list->clear();
 		}
 		

@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒpƒbƒhB
+ * @brief ãƒ‘ãƒƒãƒ‰ã€‚
 */
 
 
@@ -44,25 +44,25 @@ namespace NBsys{namespace NPad
 	{
 	}
 
-	/** ƒfƒoƒCƒX’Ç‰ÁB
+	/** ãƒ‡ãƒã‚¤ã‚¹è¿½åŠ ã€‚
 	*/
 	void Pad_List::AddDevice(sharedptr<Pad_Device_Base>& a_device_instance)
 	{
 		this->device_list.push_back(a_device_instance);
 	}
 
-	/** ‰¼‘zƒpƒbƒhæ“¾B
+	/** ä»®æƒ³ãƒ‘ãƒƒãƒ‰å–å¾—ã€‚
 	*/
 	sharedptr<Pad_Virtual>& Pad_List::GetVirtualPad(s32 a_virtualpad_index)
 	{
 		return this->virtual_list[a_virtualpad_index];
 	}
 
-	/** XVB
+	/** æ›´æ–°ã€‚
 	*/
 	void Pad_List::Update(bool a_device_update)
 	{
-		//ƒfƒoƒCƒX‚ÌXVB
+		//ãƒ‡ãƒã‚¤ã‚¹ã®æ›´æ–°ã€‚
 		if(a_device_update == true){
 			STLVector<sharedptr<Pad_Device_Base>>::iterator t_it_end = this->device_list.end();
 			for(STLVector<sharedptr<Pad_Device_Base>>::iterator t_it = this->device_list.begin();t_it!=t_it_end;++t_it){
@@ -72,7 +72,7 @@ namespace NBsys{namespace NPad
 			}
 		}
 
-		//‰¼‘zƒpƒbƒhXVB
+		//ä»®æƒ³ãƒ‘ãƒƒãƒ‰æ›´æ–°ã€‚
 		{
 			STLVector<sharedptr<Pad_Virtual>>::iterator t_it_end = this->virtual_list.end();
 			for(STLVector<sharedptr<Pad_Virtual>>::iterator t_it = this->virtual_list.begin();t_it!=t_it_end;++t_it){

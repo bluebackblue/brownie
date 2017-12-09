@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒ^ƒCƒvB
+ * @brief ã‚¿ã‚¤ãƒ—ã€‚
 */
 
 
@@ -49,7 +49,7 @@ namespace NBlib
 	typedef uintptr_t				AddressType;
 }
 
-/** —v‘f”B
+/** è¦ç´ æ•°ã€‚
 */
 #if !defined(COUNTOF)
 
@@ -57,7 +57,7 @@ namespace NBlib
 
 #endif
 
-/** –¢g—p•Ï”B
+/** æœªä½¿ç”¨å¤‰æ•°ã€‚
 */
 #if !defined(UNUSED)
 
@@ -65,7 +65,7 @@ namespace NBlib
 
 #endif
 
-/** ‰¼‘zŠÖ”‚Å‚È‚¢‚±‚Æ‚Ì–¾¦B
+/** ä»®æƒ³é–¢æ•°ã§ãªã„ã“ã¨ã®æ˜ç¤ºã€‚
 */
 #if !defined(nonvirtual)
 
@@ -73,7 +73,7 @@ namespace NBlib
 
 #endif
 
-/** I’[•¶šB
+/** çµ‚ç«¯æ–‡å­—ã€‚
 */
 #if !defined(nullchar)
 
@@ -81,7 +81,7 @@ namespace NBlib
 
 #endif
 
-/** I’[•¶šB
+/** çµ‚ç«¯æ–‡å­—ã€‚
 */
 #if !defined(nullwchar)
 
@@ -89,7 +89,7 @@ namespace NBlib
 
 #endif
 
-/** ƒEƒBƒ“ƒhƒEƒY‚`‚o‚h‚Ég—p‚·‚éNULLB
+/** ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚ºï¼¡ï¼°ï¼©ã«ä½¿ç”¨ã™ã‚‹NULLã€‚
 */
 #if defined(PLATFORM_VCWIN)
 

@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒtƒ@ƒCƒ‹ƒnƒ“ƒhƒ‹B
+ * @brief ãƒ•ã‚¡ã‚¤ãƒ«ãƒãƒ³ãƒ‰ãƒ«ã€‚
 */
 
 
@@ -54,35 +54,35 @@ namespace NBlib
 
 	public:
 		
-		/** “Ç‚İ‚İƒ‚[ƒh‚ÅŠJ‚­B
+		/** èª­ã¿è¾¼ã¿ãƒ¢ãƒ¼ãƒ‰ã§é–‹ãã€‚
 		*/
 		bool ReadOpen(const STLWString& a_filename);
 
-		/** ‘‚«‚İƒ‚[ƒh‚ÅŠJ‚­B
+		/** æ›¸ãè¾¼ã¿ãƒ¢ãƒ¼ãƒ‰ã§é–‹ãã€‚
 		*/
 		bool WriteOpen(const STLWString& a_filename);
 
-		/** •Â‚¶‚éB
+		/** é–‰ã˜ã‚‹ã€‚
 		*/
 		void Close();
 
-		/** “Ç‚İ‚İB
+		/** èª­ã¿è¾¼ã¿ã€‚
 		*/
 		bool Read(u8* a_buffer,s64 a_size,s64 a_offset);
 
-		/** ‘‚«‚İB
+		/** æ›¸ãè¾¼ã¿ã€‚
 		*/
 		bool Write(const u8* a_buffer,s64 a_size,s64 a_offset);
 
-		/** ƒtƒ@ƒCƒ‹ƒTƒCƒYæ“¾B
+		/** ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºå–å¾—ã€‚
 		*/
 		s64 GetSize() const;
 
-		/** ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“ƒ`ƒFƒbƒNB
+		/** ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³ãƒã‚§ãƒƒã‚¯ã€‚
 		*/
 		bool IsOpen() const;
 
-		/** ‚d‚n‚eİ’èB
+		/** ï¼¥ï¼¯ï¼¦è¨­å®šã€‚
 		*/
 		void SetEOF(s64 a_offset);
 

@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒŠƒ“ƒOƒoƒbƒtƒ@B
+ * @brief ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã€‚
 */
 
 
@@ -78,65 +78,65 @@ namespace NBlib
 		}
 	};
 
-	/** ƒŠƒ“ƒOƒoƒbƒtƒ@Bƒx[ƒXB
+	/** ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã€‚ãƒ™ãƒ¼ã‚¹ã€‚
 	*/
 	template <typename T> class RingBufferBase
 	{
 	public:
-		/** g—pƒTƒCƒYæ“¾B
+		/** ä½¿ç”¨ã‚µã‚¤ã‚ºå–å¾—ã€‚
 		*/
 		virtual s32 GetUseSize() const = 0;
 
-		/** ‹ó‚«ƒTƒCƒYæ“¾B
+		/** ç©ºãã‚µã‚¤ã‚ºå–å¾—ã€‚
 		*/
 		virtual s32 GetFreeSize() const = 0;
 
-		/** ‘SƒTƒCƒY‚ğæ“¾B
+		/** å…¨ã‚µã‚¤ã‚ºã‚’å–å¾—ã€‚
 		*/
 		virtual s32 GetTotalSize() const = 0;
 
-		/** ˜A‘±‚µ‚½g—pƒTƒCƒYB
+		/** é€£ç¶šã—ãŸä½¿ç”¨ã‚µã‚¤ã‚ºã€‚
 		*/
 		virtual s32 GetContinuousUseSize() const = 0;
 
-		/** ˜A‘±‚µ‚½‹ó‚«ƒTƒCƒYB
+		/** é€£ç¶šã—ãŸç©ºãã‚µã‚¤ã‚ºã€‚
 		*/
 		virtual s32 GetContinuousFreeSize() const = 0;
 
 	public:
 
-		/** ƒŠƒXƒg‚Ìæ“ª‚©‚çƒAƒCƒeƒ€‚ğæ“¾‚·‚éB
+		/** ãƒªã‚¹ãƒˆã®å…ˆé ­ã‹ã‚‰ã‚¢ã‚¤ãƒ†ãƒ ã‚’å–å¾—ã™ã‚‹ã€‚
 		*/
 		virtual T* GetItemFromListStart() = 0;
 
-		/** g—pƒŠƒXƒg‚©‚ç‚ÌƒAƒCƒeƒ€‚ğæ“¾‚·‚éB
+		/** ä½¿ç”¨ãƒªã‚¹ãƒˆã‹ã‚‰ã®ã‚¢ã‚¤ãƒ†ãƒ ã‚’å–å¾—ã™ã‚‹ã€‚
 		*/
 		virtual T* GetItemFromUseList(s32 a_offset) = 0;
 
-		/** ‹ó‚«ƒŠƒXƒg‚©‚çƒAƒCƒeƒ€‚ğæ“¾‚·‚éB
+		/** ç©ºããƒªã‚¹ãƒˆã‹ã‚‰ã‚¢ã‚¤ãƒ†ãƒ ã‚’å–å¾—ã™ã‚‹ã€‚
 		*/
 		virtual T* GetItemFromFreeList(s32 a_offset) = 0;
 
 	public:
 
-		/** g—p—Ìˆææ“ª‚ğ‹ó‚«—Ìˆæ‚É‚·‚éB
+		/** ä½¿ç”¨é ˜åŸŸå…ˆé ­ã‚’ç©ºãé ˜åŸŸã«ã™ã‚‹ã€‚
 		*/
 		virtual void AddFree(s32 a_count) = 0;
 
-		/** ‹ó‚«—Ìˆææ“ª‚ğg—p—Ìˆæ‚É‚·‚éB
+		/** ç©ºãé ˜åŸŸå…ˆé ­ã‚’ä½¿ç”¨é ˜åŸŸã«ã™ã‚‹ã€‚
 		*/
 		virtual void AddUse(s32 a_count) = 0;
 
-		/** ƒŠƒ“ƒOƒoƒbƒtƒ@‚ÉƒRƒs[B
+		/** ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã«ã‚³ãƒ”ãƒ¼ã€‚
 		*/
 		virtual void CopyToBuffer(T* a_from_data,s32 a_from_count) = 0;
 
-		/** ƒŠƒ“ƒOƒoƒbƒtƒ@‚©‚çƒRƒs[B
+		/** ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã‹ã‚‰ã‚³ãƒ”ãƒ¼ã€‚
 		*/
 		virtual void CopyFromBuffer(T* a_to_data,s32 a_to_count) = 0;
 	};
 
-	/** ƒŠƒ“ƒOƒoƒbƒtƒ@B
+	/** ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã€‚
 	*/
 	template <typename T,s32 SIZE,bool RAWCOPYMODE> class RingBuffer : public RingBufferBase<T>
 	{
@@ -149,15 +149,15 @@ namespace NBlib
 		*/
 		T list[SIZE];
 
-		/** g—p—ÌˆæŠJnƒCƒ“ƒfƒbƒNƒXB
+		/** ä½¿ç”¨é ˜åŸŸé–‹å§‹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã€‚
 		*/
 		s32 index_usestart;
 
-		/** ‹ó‚«—ÌˆæŠJnƒCƒ“ƒfƒbƒNƒXB
+		/** ç©ºãé ˜åŸŸé–‹å§‹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã€‚
 		*/
 		s32 index_freestart;
 
-		/** g—pƒTƒCƒYB
+		/** ä½¿ç”¨ã‚µã‚¤ã‚ºã€‚
 		*/
 		s32 usesize;
 
@@ -189,79 +189,79 @@ namespace NBlib
 
 	public:
 
-		/** g—pƒTƒCƒYæ“¾B
+		/** ä½¿ç”¨ã‚µã‚¤ã‚ºå–å¾—ã€‚
 		*/
 		s32 GetUseSize() const
 		{
 			return this->usesize;
 		}
 
-		/** ‹ó‚«ƒTƒCƒYæ“¾B
+		/** ç©ºãã‚µã‚¤ã‚ºå–å¾—ã€‚
 		*/
 		s32 GetFreeSize() const
 		{
 			return COUNTOF(this->list) - this->usesize;
 		}
 
-		/** ‘SƒTƒCƒY‚ğæ“¾B
+		/** å…¨ã‚µã‚¤ã‚ºã‚’å–å¾—ã€‚
 		*/
 		s32 GetTotalSize() const
 		{
 			return COUNTOF(this->list);
 		}
 
-		/** ˜A‘±‚µ‚½g—pƒTƒCƒYB
+		/** é€£ç¶šã—ãŸä½¿ç”¨ã‚µã‚¤ã‚ºã€‚
 		*/
 		s32 GetContinuousUseSize() const
 		{
 			if(this->usesize <= 0){
-				//          
+				//â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡
 				return 0;
 			}else if(this->index_usestart < this->index_freestart){
 				//    u2      f6
-				//  ¡¡¡¡    
+				//â–¡â–¡â– â– â– â– â–¡â–¡â–¡â–¡
 				return this->index_freestart - this->index_usestart;
 			}else{
 				//        uf4
-				//¡¡¡¡¡¡¡¡¡¡
+				//â– â– â– â– â– â– â– â– â– â– 
 
 				//    f2      u6
-				//¡¡    ¡¡¡¡
+				//â– â– â–¡â–¡â–¡â–¡â– â– â– â– 
 				return COUNTOF(this->list) - this->index_usestart;
 			}
 		}
 
-		/** ˜A‘±‚µ‚½‹ó‚«ƒTƒCƒYB
+		/** é€£ç¶šã—ãŸç©ºãã‚µã‚¤ã‚ºã€‚
 		*/
 		s32 GetContinuousFreeSize() const
 		{
 			if(this->usesize >= COUNTOF(this->list)){
-				//¡¡¡¡¡¡¡¡¡¡
+				//â– â– â– â– â– â– â– â– â– â– 
 				return 0;
 			}else if(this->index_freestart < this->index_usestart){
 				//    f2      u6
-				//¡¡    ¡¡¡¡
+				//â– â– â–¡â–¡â–¡â–¡â– â– â– â– 
 				return this->index_usestart - this->index_freestart;
 			}else{
 				//        uf4
-				//          
+				//â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡
 
 				//    u2      f6
-				//  ¡¡¡¡    
+				//â–¡â–¡â– â– â– â– â–¡â–¡â–¡â–¡
 				return COUNTOF(this->list) - this->index_freestart;
 			}
 		}
 
 	public:
 
-		/** ƒŠƒXƒg‚Ìæ“ª‚©‚çƒAƒCƒeƒ€‚ğæ“¾‚·‚éB
+		/** ãƒªã‚¹ãƒˆã®å…ˆé ­ã‹ã‚‰ã‚¢ã‚¤ãƒ†ãƒ ã‚’å–å¾—ã™ã‚‹ã€‚
 		*/
 		T* GetItemFromListStart()
 		{
 			return &this->list[0];
 		}
 
-		/** g—pƒŠƒXƒg‚©‚ç‚ÌƒAƒCƒeƒ€‚ğæ“¾‚·‚éB
+		/** ä½¿ç”¨ãƒªã‚¹ãƒˆã‹ã‚‰ã®ã‚¢ã‚¤ãƒ†ãƒ ã‚’å–å¾—ã™ã‚‹ã€‚
 		*/
 		T* GetItemFromUseList(s32 a_offset)
 		{
@@ -269,7 +269,7 @@ namespace NBlib
 			return &this->list[t_index];
 		}
 
-		/** ‹ó‚«ƒŠƒXƒg‚©‚çƒAƒCƒeƒ€‚ğæ“¾‚·‚éB
+		/** ç©ºããƒªã‚¹ãƒˆã‹ã‚‰ã‚¢ã‚¤ãƒ†ãƒ ã‚’å–å¾—ã™ã‚‹ã€‚
 		*/
 		T* GetItemFromFreeList(s32 a_offset)
 		{
@@ -279,7 +279,7 @@ namespace NBlib
 
 	public:
 
-		/** g—p—Ìˆææ“ª‚ğ‹ó‚«—Ìˆæ‚É‚·‚éB
+		/** ä½¿ç”¨é ˜åŸŸå…ˆé ­ã‚’ç©ºãé ˜åŸŸã«ã™ã‚‹ã€‚
 		*/
 		void AddFree(s32 a_count)
 		{
@@ -294,7 +294,7 @@ namespace NBlib
 			}
 		}
 
-		/** ‹ó‚«—Ìˆææ“ª‚ğg—p—Ìˆæ‚É‚·‚éB
+		/** ç©ºãé ˜åŸŸå…ˆé ­ã‚’ä½¿ç”¨é ˜åŸŸã«ã™ã‚‹ã€‚
 		*/
 		void AddUse(s32 a_count)
 		{
@@ -304,7 +304,7 @@ namespace NBlib
 			this->index_freestart = (this->index_freestart + a_count) % COUNTOF(this->list);
 		}
 
-		/** ƒŠƒ“ƒOƒoƒbƒtƒ@‚ÉƒRƒs[B
+		/** ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã«ã‚³ãƒ”ãƒ¼ã€‚
 		*/
 		void CopyToBuffer(T* a_from_data,s32 a_from_count)
 		{
@@ -321,14 +321,14 @@ namespace NBlib
 					this->AddUse(t_copycount);
 					t_copy_fixcount += t_copycount;
 				}else{
-					//ƒRƒs[æ‚ª‚È‚¢B
+					//ã‚³ãƒ”ãƒ¼å…ˆãŒãªã„ã€‚
 					ASSERT(0);
 					break;
 				}
 			}
 		}
 
-		/** ƒŠƒ“ƒOƒoƒbƒtƒ@‚©‚çƒRƒs[B
+		/** ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã‹ã‚‰ã‚³ãƒ”ãƒ¼ã€‚
 		*/
 		void CopyFromBuffer(T* a_to_data,s32 a_to_count)
 		{
@@ -345,7 +345,7 @@ namespace NBlib
 					this->AddFree(t_copycount);
 					t_copy_fixcount += t_copycount;
 				}else{
-					//ƒRƒs[Œ³‚ª‚È‚¢B
+					//ã‚³ãƒ”ãƒ¼å…ƒãŒãªã„ã€‚
 					ASSERT(0);
 					break;
 				}

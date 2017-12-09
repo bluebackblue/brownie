@@ -1,23 +1,23 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒ†[ƒU[ƒJƒXƒ^ƒ}ƒCƒY—pƒwƒbƒ_[B
+ * @brief ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚«ã‚¹ã‚¿ãƒžã‚¤ã‚ºç”¨ãƒ˜ãƒƒãƒ€ãƒ¼ã€‚
 */
 
 
 /** DEF_TEST
 
-	DEF_TEST0	:	ƒfƒoƒbƒOƒƒOAƒfƒoƒbƒOƒuƒŒƒCƒNAƒAƒT[ƒgB
-	DEF_TEST1	:	Œ^AƒŠƒXƒgB
-	DEF_TEST2	:	ƒtƒ@ƒCƒ‹A‚i‚r‚n‚mB
+	DEF_TEST0	:	ãƒ‡ãƒãƒƒã‚°ãƒ­ã‚°ã€ãƒ‡ãƒãƒƒã‚°ãƒ–ãƒ¬ã‚¤ã‚¯ã€ã‚¢ã‚µãƒ¼ãƒˆã€‚
+	DEF_TEST1	:	åž‹ã€ãƒªã‚¹ãƒˆã€‚
+	DEF_TEST2	:	ãƒ•ã‚¡ã‚¤ãƒ«ã€ï¼ªï¼³ï¼¯ï¼®ã€‚
 
-	DEF_TEST10	:	‚c‚R‚c‚P‚PB
-	DEF_TEST11	:	ƒ_ƒCƒNƒXƒgƒ‰–@B
-	DEF_TEST12	:	ƒfƒoƒbƒOƒƒjƒ…[B
+	DEF_TEST10	:	ï¼¤ï¼“ï¼¤ï¼‘ï¼‘ã€‚
+	DEF_TEST11	:	ãƒ€ã‚¤ã‚¯ã‚¹ãƒˆãƒ©æ³•ã€‚
+	DEF_TEST12	:	ãƒ‡ãƒãƒƒã‚°ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã€‚
 
 */
 #define DEF_TEST12

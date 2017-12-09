@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒ\ƒPƒbƒgƒnƒ“ƒhƒ‹B
+ * @brief ã‚½ã‚±ãƒƒãƒˆãƒãƒ³ãƒ‰ãƒ«ã€‚
 */
 
 
@@ -68,42 +68,42 @@ namespace NBlib
 		return SocketHandle_Impl::GetHostIp(a_ip_name);
 	}
 
-	/** ŠJ‚­B
+	/** é–‹ãã€‚
 	*/
 	bool SocketHandle::OpenTcp()
 	{
 		return this->impl->OpenTcp();
 	}
 
-	/** ŠJ‚­B
+	/** é–‹ãã€‚
 	*/
 	bool SocketHandle::OpenUdp()
 	{
 		return this->impl->OpenUdp();
 	}
 
-	/** •Â‚¶‚éB
+	/** é–‰ã˜ã‚‹ã€‚
 	*/
 	void SocketHandle::Close()
 	{
 		this->impl->Close();
 	}
 
-	/** Ú‘±B
+	/** æ¥ç¶šã€‚
 	*/
 	bool SocketHandle::ConnectTcp(const STLString& a_ip,s32 a_port)
 	{
 		return this->impl->ConnectTcp(a_ip,a_port);
 	}
 
-	/** Ú‘±B
+	/** æ¥ç¶šã€‚
 	*/
 	bool SocketHandle::ConnectUdp(const STLString& a_ip,s32 a_port)
 	{
 		return this->impl->ConnectUdp(a_ip,a_port);
 	}
 
-	/** ƒoƒCƒ“ƒhB
+	/** ãƒã‚¤ãƒ³ãƒ‰ã€‚
 	*/
 	bool SocketHandle::Bind(s32 a_port)
 	{
@@ -124,42 +124,42 @@ namespace NBlib
 		return this->impl->Accept();
 	}
 
-	/** ƒuƒ[ƒhƒLƒƒƒXƒgİ’èB
+	/** ãƒ–ãƒ­ãƒ¼ãƒ‰ã‚­ãƒ£ã‚¹ãƒˆè¨­å®šã€‚
 	*/
 	void SocketHandle::SetBroadcast(bool a_flag)
 	{
 		this->impl->SetBroadcast(a_flag);
 	}
 
-	/** ƒmƒ“ƒuƒƒbƒNİ’èB
+	/** ãƒãƒ³ãƒ–ãƒ­ãƒƒã‚¯è¨­å®šã€‚
 	*/
 	void SocketHandle::SetNonblock(bool a_flag)
 	{
 		this->impl->SetNonblock(a_flag);
 	}
 
-	/** ‘—MB
+	/** é€ä¿¡ã€‚
 	*/
 	bool SocketHandle::Send(const u8* a_data,s64 a_size,s64 a_offsets)
 	{
 		return this->impl->Send(a_data,a_size,a_offsets);
 	}
 
-	/** ‘—MB
+	/** é€ä¿¡ã€‚
 	*/
 	bool SocketHandle::SendUdp(const u8* a_data,s64 a_size,s64 a_offset)
 	{
 		return this->impl->SendUdp(a_data,a_size,a_offset);
 	}
 
-	/** óMB
+	/** å—ä¿¡ã€‚
 	*/
 	s64 SocketHandle::Recv(u8* a_data,s64 a_size,s64 a_offset,bool a_complete)
 	{
 		return this->impl->Recv(a_data,a_size,a_offset,a_complete);
 	}
 
-	/** ŠJ‚¢‚Ä‚¢‚é‚©‚Ç‚¤‚©B
+	/** é–‹ã„ã¦ã„ã‚‹ã‹ã©ã†ã‹ã€‚
 	*/
 	bool SocketHandle::IsOpen() const
 	{

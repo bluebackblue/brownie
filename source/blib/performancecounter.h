@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒpƒtƒH[ƒ}ƒ“ƒXƒJƒEƒ“ƒ^[B
+ * @brief ãƒ‘ãƒ•ã‚©ãƒ¼ãƒãƒ³ã‚¹ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã€‚
 */
 
 
@@ -25,7 +25,7 @@ namespace NBlib
 	{
 	public:
 
-		/** [static]uBootInitializev‚©‚çŒÄ‚Ño‚³‚ê‚éB
+		/** [static]ã€ŒBootInitializeã€ã‹ã‚‰å‘¼ã³å‡ºã•ã‚Œã‚‹ã€‚
 		*/
 		static void InitPerformanceCounter();
 
@@ -33,11 +33,11 @@ namespace NBlib
 		*/
 		static u64 GetPerformanceCounter();
 
-		/** [static]‚P•b‚É•K—v‚ÈƒJƒEƒ“ƒg”‚ğæ“¾B
+		/** [static]ï¼‘ç§’ã«å¿…è¦ãªã‚«ã‚¦ãƒ³ãƒˆæ•°ã‚’å–å¾—ã€‚
 		*/
 		static u64 GetPerformanceSecCounter();
 
-		/** [static]‚Pƒ}ƒCƒNƒ•b‚É•K—v‚ÈƒJƒEƒ“ƒg”‚ğæ“¾B
+		/** [static]ï¼‘ãƒã‚¤ã‚¯ãƒ­ç§’ã«å¿…è¦ãªã‚«ã‚¦ãƒ³ãƒˆæ•°ã‚’å–å¾—ã€‚
 		*/
 		static u64 GetPerformanceMicroSecCounter();
 

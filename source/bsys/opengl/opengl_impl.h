@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief OpenGLB
+ * @brief OpenGLã€‚
 */
 
 
@@ -50,7 +50,7 @@ namespace NBsys{namespace NOpengl
 	{
 	private:
 
-		/** ƒƒbƒNƒIƒuƒWƒFƒNƒgB
+		/** ãƒ­ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã€‚
 		*/
 		LockObject lockobject;
 
@@ -90,15 +90,15 @@ namespace NBsys{namespace NOpengl
 		*/
 		IDMaker id_maker;
 
-		/** ƒAƒNƒVƒ‡ƒ“ƒoƒbƒ`ƒ“ƒOBƒƒbƒNƒIƒuƒWƒFƒNƒgB
+		/** ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ãƒãƒƒãƒãƒ³ã‚°ã€‚ãƒ­ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã€‚
 		*/
 		LockObject actionbatching_lockobject;
 
-		/** ƒAƒNƒVƒ‡ƒ“ƒoƒbƒ`ƒ“ƒOB
+		/** ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ãƒãƒƒãƒãƒ³ã‚°ã€‚
 		*/
 		NBsys::NActionBatching::ActionBatching actionbatching;
 
-		/** ƒo[ƒeƒbƒNƒXƒoƒbƒtƒ@ƒŠƒXƒgB
+		/** ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ãƒªã‚¹ãƒˆã€‚
 		*/
 		STLMap<s32,sharedptr<Opengl_Impl_VertexBuffer>>::Type vertexbuffer_list;
 
@@ -155,11 +155,11 @@ namespace NBsys{namespace NOpengl
 
 	public:
 
-		/** InitB
+		/** Initã€‚
 		*/
 		void Init(bool (*a_update_proc)(f32 a_delta,bool a_endrequest),void (*a_draw_proc)());
 
-		/** MainB
+		/** Mainã€‚
 		*/
 		void Main();
 
@@ -167,19 +167,19 @@ namespace NBsys{namespace NOpengl
 		*/
 		void StartBatching(sharedptr<NBsys::NActionBatching::ActionBatching_ActionList>& a_actionlist);
 
-		/** ƒo[ƒeƒbƒNƒXƒoƒbƒtƒ@ì¬B
+		/** ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ä½œæˆã€‚
 		*/
 		s32 CreateVertexBuffer(const sharedptr<u8>& a_data_byte,s32 a_size_byte,s32 a_stride_byte);
 
-		/** ƒo[ƒeƒbƒNƒXƒoƒbƒtƒ@íœB
+		/** ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡å‰Šé™¤ã€‚
 		*/
 		void DeleteVertexBuffer(s32 a_vertexbufferid);
 
-		/** ƒVƒF[ƒ_[ƒ[ƒhŠJnB
+		/** ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒ­ãƒ¼ãƒ‰é–‹å§‹ã€‚
 		*/
 		void LoadShaderRequest(const sharedptr<Opengl_ShaderLayout>& a_shaderlayout,AsyncResult<bool>& a_asyncresult);
 
-		/** ƒVƒF[ƒ_[íœB
+		/** ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼å‰Šé™¤ã€‚
 		*/
 		void DeleteShader(s32 a_shaderid);
 
@@ -189,19 +189,19 @@ namespace NBsys{namespace NOpengl
 		*/
 		void SetShadeModel(Opengl_ShadeModelType::Id a_shademodeltype);
 
-		/** [ƒƒCƒ“ƒXƒŒƒbƒh]ƒeƒNƒXƒ`ƒƒ\ì¬B
+		/** [ãƒ¡ã‚¤ãƒ³ã‚¹ãƒ¬ãƒƒãƒ‰]ãƒ†ã‚¯ã‚¹ãƒãƒ£â€•ä½œæˆã€‚
 		*/
 		s32 CreateTexture(const sharedptr<NBsys::NTexture::Texture>& a_texture);
 
-		/** [ƒƒCƒ“ƒXƒŒƒbƒh]ƒeƒNƒXƒ`ƒƒ[íœB
+		/** [ãƒ¡ã‚¤ãƒ³ã‚¹ãƒ¬ãƒƒãƒ‰]ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼å‰Šé™¤ã€‚
 		*/
 		void DeleteTexture(s32 a_textureid);
 
-		/** [ƒƒCƒ“ƒXƒŒƒbƒh]ƒtƒŒ[ƒ€ƒoƒbƒtƒ@ì¬B
+		/** [ãƒ¡ã‚¤ãƒ³ã‚¹ãƒ¬ãƒƒãƒ‰]ãƒ•ãƒ¬ãƒ¼ãƒ ãƒãƒƒãƒ•ã‚¡ä½œæˆã€‚
 		*/
 		s32 CreateFrameBuffer(s32 a_textureid_depth,s32 a_textureid_color0);
 
-		/** [ƒƒCƒ“ƒXƒŒƒbƒh]ƒtƒŒ[ƒ€ƒoƒbƒtƒ@íœB
+		/** [ãƒ¡ã‚¤ãƒ³ã‚¹ãƒ¬ãƒƒãƒ‰]ãƒ•ãƒ¬ãƒ¼ãƒ ãƒãƒƒãƒ•ã‚¡å‰Šé™¤ã€‚
 		*/
 		//void DeleteFrameBuffer(s32 a_framebufferid);
 
@@ -219,7 +219,7 @@ namespace NBsys{namespace NOpengl
 
 		#if(0)
 
-		/** ‚q‚`‚vƒeƒNƒXƒ`ƒƒ[‚h‚cæ“¾B
+		/** ï¼²ï¼¡ï¼·ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ï¼©ï¼¤å–å¾—ã€‚
 		*/
 		RawID GetTexture_RawID(s32 a_textureid);
 
@@ -229,19 +229,19 @@ namespace NBsys{namespace NOpengl
 
 		#if(0)
 
-		/** ƒAƒNƒVƒ‡ƒ“ƒoƒbƒ`ƒ“ƒOXVB
+		/** ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ãƒãƒƒãƒãƒ³ã‚°æ›´æ–°ã€‚
 		*/
 		void Render_UpdateActionBatching();
 	
-		/** Render_CreateFrameBufferB
+		/** Render_CreateFrameBufferã€‚
 		*/
 		void Render_CreateFrameBuffer(sharedptr<Opengl_Impl_FrameBuffer>& a_framebuffer);
 
-		/** Render_CreateTextureB
+		/** Render_CreateTextureã€‚
 		*/
 		void Render_CreateTexture(sharedptr<Opengl_Impl_Texture>& a_texture);
 
-		/** Render_DeleteTextureB
+		/** Render_DeleteTextureã€‚
 		*/
 		void Render_DeleteTexture(sharedptr<Opengl_Impl_Texture>& a_texture);
 
@@ -249,110 +249,110 @@ namespace NBsys{namespace NOpengl
 
 	public:
 
-		/** [•`‰æ–½—ß]ƒNƒŠƒAƒJƒ‰[İ’èB
+		/** [æç”»å‘½ä»¤]ã‚¯ãƒªã‚¢ã‚«ãƒ©ãƒ¼è¨­å®šã€‚
 		*/
 		void Render_SetClearColor(const NBsys::NColor::Color_F& a_color);
 
-		/** [•`‰æ–½—ß]ƒNƒŠƒAƒoƒbƒtƒ@B
+		/** [æç”»å‘½ä»¤]ã‚¯ãƒªã‚¢ãƒãƒƒãƒ•ã‚¡ã€‚
 		*/
 		void Render_ClearBuffer(bool a_depth,bool a_color);
 
-		/** [•`‰æ–½—ß]ƒ[ƒ‹ƒhƒ‰ƒCƒ“•`‰æB
+		/** [æç”»å‘½ä»¤]ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒ©ã‚¤ãƒ³æç”»ã€‚
 		*/
 		#if(ROM_DEVELOP)
 		void Render_DrawWorldLine();
 		#endif
 
-		/** [•`‰æ–½—ß]ƒo[ƒeƒbƒNƒXƒoƒbƒtƒ@ì¬B
+		/** [æç”»å‘½ä»¤]ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ä½œæˆã€‚
 		*/
 		void Render_CreateVertexBuffer(sharedptr<Opengl_Impl_VertexBuffer>& a_vertexbuffer);
 
-		/** [•`‰æ–½—ß]ƒo[ƒeƒbƒNƒXƒoƒbƒtƒ@íœB
+		/** [æç”»å‘½ä»¤]ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡å‰Šé™¤ã€‚
 		*/
 		void Render_DeleteVertexBuffer(sharedptr<Opengl_Impl_VertexBuffer>& a_vertexbuffer);
 
-		/** [•`‰æ–½—ß]ƒVƒF[ƒ_[ƒ[ƒhB
+		/** [æç”»å‘½ä»¤]ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒ­ãƒ¼ãƒ‰ã€‚
 		*/
 		void Render_LoadShader(sharedptr<Opengl_ShaderLayout>& a_shaderlayout);
 
-		/** [•`‰æ–½—ß]ƒVƒF[ƒ_[íœB
+		/** [æç”»å‘½ä»¤]ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼å‰Šé™¤ã€‚
 		*/
 		void Render_DeleteShader(sharedptr<Opengl_Impl_ShaderState>& a_shaderstate);
 
-		/** [•`‰æ–½—ß]ƒVƒF[ƒ_[İ’èB
+		/** [æç”»å‘½ä»¤]ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼è¨­å®šã€‚
 		*/
 		void Render_SetShader(s32 a_shaderid);
 	
-		/** [•`‰æ–½—ß]ƒo[ƒeƒbƒNƒXƒoƒbƒtƒ@İ’èB
+		/** [æç”»å‘½ä»¤]ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡è¨­å®šã€‚
 		*/
 		void Render_SetVertexBuffer(s32 a_vertexbufferid);
 
-		/** Render_SetAttributeParameterB
+		/** Render_SetAttributeParameterã€‚
 
-		return : g—pƒoƒCƒg”B
+		return : ä½¿ç”¨ãƒã‚¤ãƒˆæ•°ã€‚
 
 		*/
 		s32 Render_SetAttributeParameter(s32 a_shaderid,const STLString& a_name,s32 a_stride_byte,s32 a_offset_byte);
 
-		/** Render_DrawArray_TriangleB
+		/** Render_DrawArray_Triangleã€‚
 		*/
 		void Render_DrawArray_Triangle(s32 a_vertex_offset,s32 a_vertex_countof);
 
-		/** Render_ViewPortB
+		/** Render_ViewPortã€‚
 		*/
 		void Render_ViewPort(f32 a_x,f32 a_y,f32 a_width,f32 a_height);
 
-		/** Render_SetVertexUniformB
+		/** Render_SetVertexUniformã€‚
 		*/
 		void Render_SetUniformParameter(s32 a_shaderid,const STLString& a_name,const void* a_data_byte,s32 a_countof);
 
-		/** Render_SetDepthTestB
+		/** Render_SetDepthTestã€‚
 		*/
 		void Render_SetDepthTest(bool a_flag);
 
 		#if(0)
 
-		/** [ƒŒƒ“ƒ_[ƒXƒŒƒbƒhRender_SetColorMaskB
+		/** [ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¹ãƒ¬ãƒƒãƒ‰Render_SetColorMaskã€‚
 		*/
 		void Render_SetColorMask(bool a_r,bool a_g,bool a_b,bool a_a);
 
-		/** Render_SetPolygonOffsetB
+		/** Render_SetPolygonOffsetã€‚
 		*/
 		void Render_SetPolygonOffset(bool a_flag,f32 a_factor,f32 a_unit);
 
-		/** Render_SetTextureDirectB
+		/** Render_SetTextureDirectã€‚
 		*/
 		void Render_SetTextureDirect(s32 a_textureunitid,s32 a_textureid);
 
-		/** Render_SetFrameBufferB
+		/** Render_SetFrameBufferã€‚
 		*/
 		void Render_SetFrameBuffer(s32 a_framebufferid);
 
-		/** Render_SetProjectionMatrixB
+		/** Render_SetProjectionMatrixã€‚
 		*/
 		void Render_SetProjectionMatrix(const NBsys::NGeometry::Geometry_Matrix_44& a_projection);
 
-		/** Render_SetViewMatrixB
+		/** Render_SetViewMatrixã€‚
 		*/
 		void Render_SetViewMatrix(const NBsys::NGeometry::Geometry_Matrix_44& a_view);
 
 
 
 
-		/** Render_SetAlphaBlendB
+		/** Render_SetAlphaBlendã€‚
 		*/
 		void Render_SetAlphaBlend(bool a_flag);
 
-		/** Render_SetShaderB
+		/** Render_SetShaderã€‚
 		*/
 		void Render_SetShader(s32 a_vertex_shader_index);
 
 
-		/** Render_SetUniformTextureB
+		/** Render_SetUniformTextureã€‚
 		*/
 		void Render_SetUniformTexture(s32 a_shaderid,const STLString& a_name,s32 a_textureid);
 
-		/** Render_DrawArray_QuadsB
+		/** Render_DrawArray_Quadsã€‚
 		*/
 		void Render_DrawArray_Quads(s32 a_vertex_offset,s32 a_vertex_countof);
 
@@ -360,11 +360,11 @@ namespace NBsys{namespace NOpengl
 		*/
 		void Render_DrawFont_StartClear();
 
-		/** Render_DrawFontB
+		/** Render_DrawFontã€‚
 		*/
 		void Render_DrawFont(const STLWString& a_string,f32 a_font_size,f32 a_x,f32 a_y,const NBsys::NColor::Color_F& a_color);
 
-		/** Render_DrawRectB
+		/** Render_DrawRectã€‚
 		*/
 		void Render_DrawRect(f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_textureid,const NBsys::NColor::Color_F& a_color);
 

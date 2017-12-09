@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief FoveHMDB
+ * @brief FoveHMDã€‚
 */
 
 
@@ -96,19 +96,19 @@ namespace NBsys{namespace NFovehmd
 		*/
 		ErrorCode GetErrorCode();
 
-		/** Ú‘±ŠJnB
+		/** æ¥ç¶šé–‹å§‹ã€‚
 		*/
 		void ConnectStart();
 
-		/** Ú‘±’†B
+		/** æ¥ç¶šä¸­ã€‚
 		*/
 		bool ConnectUpdate();
 
-		/** ƒTƒCƒYæ“¾B
+		/** ã‚µã‚¤ã‚ºå–å¾—ã€‚
 		*/
 		NGeometry::Geometry_Vector2& GetSingleEyeResolution(); 
 
-		/** XVB
+		/** æ›´æ–°ã€‚
  		*/
 		void Update();
 

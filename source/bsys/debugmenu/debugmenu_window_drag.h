@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒfƒoƒbƒOƒƒjƒ…[B
+ * @brief ãƒ‡ãƒãƒƒã‚°ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã€‚
 */
 
 
@@ -24,7 +24,7 @@
 */
 namespace NBsys{namespace NDebugMenu
 {
-	/** ƒhƒ‰ƒbƒOB
+	/** ãƒ‰ãƒ©ãƒƒã‚°ã€‚
 	*/
 	class DebugMenu_Window_Drag : public DebugMenu_Window_Base
 	{
@@ -52,7 +52,7 @@ namespace NBsys{namespace NDebugMenu
 		*/
 		virtual ~DebugMenu_Window_Drag();
 
-		/** XVB
+		/** æ›´æ–°ã€‚
 		*/
 		virtual void Update();
 	};

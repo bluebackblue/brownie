@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ŒÅ’è’·ƒAƒƒP[ƒ^B
+ * @brief å›ºå®šé•·ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿ã€‚
 */
 
 
@@ -38,26 +38,26 @@ namespace NBlib
 			*/
 			enum Id
 			{
-				/** ƒuƒƒbƒNƒTƒCƒY’·B
+				/** ãƒ–ãƒ­ãƒƒã‚¯ã‚µã‚¤ã‚ºé•·ã€‚
 				*/
 				BlockSize = BLOCKSIZE,
 
-				/** ƒuƒƒbƒN”B
+				/** ãƒ–ãƒ­ãƒƒã‚¯æ•°ã€‚
 				*/
 				BlockMax = BLOCKMAX,
 			};
 		};
 
 	private:
-		/** ƒf[ƒ^”z—ñB
+		/** ãƒ‡ãƒ¼ã‚¿é…åˆ—ã€‚
 		*/
 		u8 data[Config::BlockSize * Config::BlockMax];
 
-		/** ‹ó‚«BƒCƒ“ƒfƒbƒNƒXB
+		/** ç©ºãã€‚ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã€‚
 		*/
 		s32 free_index[Config::BlockMax];
 
-		/** ‹ó‚«ƒTƒCƒYB
+		/** ç©ºãã‚µã‚¤ã‚ºã€‚
 		*/
 		s32 free_size;
 
@@ -76,7 +76,7 @@ namespace NBlib
 		{
 		}
 
-		/** ƒŠƒZƒbƒgB
+		/** ãƒªã‚»ãƒƒãƒˆã€‚
 		*/
 		void Reset()
 		{
@@ -86,14 +86,14 @@ namespace NBlib
 			this->free_size = COUNTOF(this->free_index);
 		}
 
-		/** ƒCƒ“ƒfƒbƒNƒX‘”B
+		/** ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç·æ•°ã€‚
 		*/
 		s32 GetMaxIndex() const
 		{
 			return COUNTOF(this->flag);
 		}
 
-		/** ƒCƒ“ƒfƒbƒNƒX‚©‚çƒ|ƒCƒ“ƒ^[æ“¾B
+		/** ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‹ã‚‰ãƒã‚¤ãƒ³ã‚¿ãƒ¼å–å¾—ã€‚
 		*/
 		void* GetPointerFromIndex(s32 a_index)
 		{
@@ -104,7 +104,7 @@ namespace NBlib
 			return nullptr;
 		}
 
-		/** ƒ|ƒCƒ“ƒ^[‚©‚çƒCƒ“ƒfƒbƒNƒX‚ğæ“¾B
+		/** ãƒã‚¤ãƒ³ã‚¿ãƒ¼ã‹ã‚‰ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å–å¾—ã€‚
 		*/
 		s32 GetIndexFromPointer(const void* a_pointer) const
 		{
@@ -115,11 +115,11 @@ namespace NBlib
 				return t_index;
 			}
 
-			//ŠÇ—ŠOƒ|ƒCƒ“ƒ^B
+			//ç®¡ç†å¤–ãƒã‚¤ãƒ³ã‚¿ã€‚
 			return -1;
 		}
 
-		/** ‹ó‚«ƒCƒ“ƒfƒbƒNƒX‚ğæ“¾B
+		/** ç©ºãã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å–å¾—ã€‚
 		*/
 		s32 PopFreeIndex()
 		{
@@ -133,7 +133,7 @@ namespace NBlib
 			return -1;
 		}
 
-		/** ‹ó‚«ƒCƒ“ƒfƒbƒNƒX‚ğİ’èB
+		/** ç©ºãã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’è¨­å®šã€‚
 		*/
 		void PushFreeIndex(s32 a_index)
 		{
@@ -141,37 +141,37 @@ namespace NBlib
 			this->free_size++;
 		}
 
-		/** Šm•ÛB
+		/** ç¢ºä¿ã€‚
 		*/
 		void* Alloc()
 		{
-			//‹ó‚«ƒCƒ“ƒfƒbƒNƒX‚Ìæ“¾B
+			//ç©ºãã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®å–å¾—ã€‚
 			s32 t_index = this->PopFreeIndex();
 			
-			//Šm•ÛB
+			//ç¢ºä¿ã€‚
 			if(t_index >= 0){
 				return this->GetPointerFromIndex(t_index);
 			}
 
-			//‹ó‚«‚È‚µB
+			//ç©ºããªã—ã€‚
 			return nullptr;
 		}
 
-		/** ‰ğ•úB
+		/** è§£æ”¾ã€‚
 		*/
 		bool Free(void* a_pointer)
 		{
-			//ƒ|ƒCƒ“ƒ^[‚©‚çƒCƒ“ƒfƒbƒNƒXæ“¾B
+			//ãƒã‚¤ãƒ³ã‚¿ãƒ¼ã‹ã‚‰ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹å–å¾—ã€‚
 			s32 t_index = this->GetIndexFromPointer(a_pointer);
 
-			//‰ğ•úB
+			//è§£æ”¾ã€‚
 			if(t_index >= 0){
-				//‹ó‚«ƒCƒ“ƒfƒbƒNƒX‚Ìİ’èB
+				//ç©ºãã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®è¨­å®šã€‚
 				this->PushFreeIndex(t_index);
 				return true;
 			}
 
-			//ŠÇ—ŠOƒ|ƒCƒ“ƒ^B
+			//ç®¡ç†å¤–ãƒã‚¤ãƒ³ã‚¿ã€‚
 			return false;
 		}
 	};

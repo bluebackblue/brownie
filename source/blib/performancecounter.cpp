@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒpƒtƒH[ƒ}ƒ“ƒXƒJƒEƒ“ƒ^[B
+ * @brief ãƒ‘ãƒ•ã‚©ãƒ¼ãƒãƒ³ã‚¹ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã€‚
 */
 
 
@@ -54,7 +54,7 @@ namespace NBlib
 	{
 		#if defined(PLATFORM_VCWIN)
 		{
-			/** ‚P•bŠÔ‚ ‚½‚è‚ÌƒJƒEƒ“ƒg”B
+			/** ï¼‘ç§’é–“ã‚ãŸã‚Šã®ã‚«ã‚¦ãƒ³ãƒˆæ•°ã€‚
 			*/
 			if(::QueryPerformanceFrequency(&NImpl::s_frequency) == TRUE){
 			}else{
@@ -68,7 +68,7 @@ namespace NBlib
 		#endif
 	}
 
-	/** [static]1•b = 1000 * 1000 ƒ}ƒCƒNƒ•bB
+	/** [static]1ç§’ = 1000 * 1000 ãƒã‚¤ã‚¯ãƒ­ç§’ã€‚
 	*/
 	u64 PerformanceCounter::GetPerformanceCounter()
 	{

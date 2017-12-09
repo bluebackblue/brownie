@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒƒbƒNƒIƒuƒWƒFƒNƒgB
+ * @brief ãƒ­ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã€‚
 */
 
 
@@ -32,7 +32,7 @@ namespace NBlib
 	class LockObject
 	{
 	private:
-		/** Ä‹AƒƒbƒN‰Â”\‚Èƒ~ƒ…[ƒeƒbƒNƒXB
+		/** å†å¸°ãƒ­ãƒƒã‚¯å¯èƒ½ãªãƒŸãƒ¥ãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ã€‚
 		*/
 		#if(BLIB_STDMUTEX_ENABLE)
 

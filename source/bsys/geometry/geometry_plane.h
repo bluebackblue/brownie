@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒWƒIƒƒgƒŠB
+ * @brief ã‚¸ã‚ªãƒ¡ãƒˆãƒªã€‚
 */
 
 
@@ -44,33 +44,33 @@ namespace NBsys{namespace NGeometry
 
 	public:
 
-		/** –Ê‚ÌŒü‚«B
+		/** é¢ã®å‘ãã€‚
 		*/
 		Geometry_Vector3 normal;
 
-		/** Œ´“_‚Æ–Ê‚Æ‚Ì‹——£B
+		/** åŸç‚¹ã¨é¢ã¨ã®è·é›¢ã€‚
 		*/
 		f32 distance;
 
 	public:
 
-		/** –Ê‚ÌŒü‚«B
+		/** é¢ã®å‘ãã€‚
 		*/
 		inline const Geometry_Vector3& GetNormal();
 
-		/** Œ´“_‚Æ–Ê‚Æ‚Ì‹——£B
+		/** åŸç‚¹ã¨é¢ã¨ã®è·é›¢ã€‚
 		*/
 		inline f32 GetDistance();
 
-		/** SetPlanePointB
+		/** SetPlanePointã€‚
 		*/
 		inline void SetPlanePoint(NBsys::NGeometry::Geometry_Vector3& a_planepoint_1,NBsys::NGeometry::Geometry_Vector3& a_planepoint_2,NBsys::NGeometry::Geometry_Vector3& a_planepoint_3);
 
-		/** ŒW”İ’èB
+		/** ä¿‚æ•°è¨­å®šã€‚
 		*/
 		inline void SetABCD(f32 a_normal_x,f32 a_normal_y,f32 a_normal_z,f32 a_d);
 
-		/** “_‚Æ–Ê‚Æ‚Ì‹——£B
+		/** ç‚¹ã¨é¢ã¨ã®è·é›¢ã€‚
 		*/
 		inline f32 Distance(NBsys::NGeometry::Geometry_Vector3 &a_position);
 	};

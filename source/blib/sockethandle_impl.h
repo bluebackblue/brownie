@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒ\ƒPƒbƒgƒnƒ“ƒhƒ‹BÀ‘••”•ªB
+ * @brief ã‚½ã‚±ãƒƒãƒˆãƒãƒ³ãƒ‰ãƒ«ã€‚å®Ÿè£…éƒ¨åˆ†ã€‚
 */
 
 
@@ -81,27 +81,27 @@ namespace NBlib
 		static bool GetHostIp(STLString& a_ip_name);
 
 	public:
-		/** ŠJ‚­B
+		/** é–‹ãã€‚
 		*/
 		bool OpenTcp();
 
-		/** ŠJ‚­B
+		/** é–‹ãã€‚
 		*/
 		bool OpenUdp();
 
-		/** •Â‚¶‚éB
+		/** é–‰ã˜ã‚‹ã€‚
 		*/
 		void Close();
 
-		/** Ú‘±B
+		/** æ¥ç¶šã€‚
 		*/
 		bool ConnectTcp(const STLString& a_ip,s32 a_port);
 
-		/** Ú‘±B
+		/** æ¥ç¶šã€‚
 		*/
 		bool ConnectUdp(const STLString& a_ip,s32 a_port);
 
-		/** ƒoƒCƒ“ƒhB
+		/** ãƒã‚¤ãƒ³ãƒ‰ã€‚
 		*/
 		bool Bind(s32 a_port);
 
@@ -113,27 +113,27 @@ namespace NBlib
 		*/
 		sharedptr<SocketHandle> Accept();
 
-		/** ƒuƒ[ƒhƒLƒƒƒXƒgİ’èB
+		/** ãƒ–ãƒ­ãƒ¼ãƒ‰ã‚­ãƒ£ã‚¹ãƒˆè¨­å®šã€‚
 		*/
 		void SetBroadcast(bool a_flag);
 		
-		/** ƒmƒ“ƒuƒƒbƒNİ’èB
+		/** ãƒãƒ³ãƒ–ãƒ­ãƒƒã‚¯è¨­å®šã€‚
 		*/
 		void SetNonblock(bool a_flag);
 
-		/** ‘—MB
+		/** é€ä¿¡ã€‚
 		*/
 		bool SendUdp(const u8* a_data,s64 a_size,s64 a_offset);
 
-		/** ‘—MB
+		/** é€ä¿¡ã€‚
 		*/
 		bool Send(const u8* a_data,s64 a_size,s64 a_offset);
 
-		/** óMB
+		/** å—ä¿¡ã€‚
 		*/
 		s64 Recv(u8* a_data,s64 a_size,s64 a_offset,bool a_complete);
 
-		/** ŠJ‚¢‚Ä‚¢‚é‚©‚Ç‚¤‚©B
+		/** é–‹ã„ã¦ã„ã‚‹ã‹ã©ã†ã‹ã€‚
 		*/
 		bool IsOpen() const;
 

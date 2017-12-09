@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ZpB
+ * @brief ç®—è¡“ã€‚
 */
 
 
@@ -42,7 +42,7 @@ namespace NBlib
 		f32 cos_val;
 	};
 
-	/** sincosƒe[ƒuƒ‹B
+	/** sincosãƒ†ãƒ¼ãƒ–ãƒ«ã€‚
 	*/
 	static SinCosSample s_sin_cos_table[BLIB_MATH_SINCOSFAST_TABLESIZE + 1] = {0};
 
@@ -50,7 +50,7 @@ namespace NBlib
 	*/
 	f32 Math::PI = (3.141592653589793f);
 
-	/** ‰Šú‰»B
+	/** åˆæœŸåŒ–ã€‚
 	*/
 	void Math::Initialize()
 	{
@@ -61,104 +61,104 @@ namespace NBlib
 		}
 	}
 
-	/** [static]”ñ”ƒ`ƒFƒbƒNB
+	/** [static]éæ•°ãƒã‚§ãƒƒã‚¯ã€‚
 	*/
 	bool Math::is_nan(f32 a_value)
 	{
 		return std::isnan(a_value);
 	}
 
-	/** [static]a_x/a_y‚Ì—]èB
+	/** [static]a_x/a_yã®ä½™å‰°ã€‚
 	*/
 	f32 Math::modf(f32 a_x,f32 a_y)
 	{
 		return std::fmodf(a_x,a_y);
 	}
-	/** [static]x‚ÌyæB
+	/** [static]xã®yä¹—ã€‚
 	*/
 	f32 Math::powf(f32 a_x,f32 a_y)
 	{
 		return std::powf(a_x,a_y);
 	}
 
-	/** [static]•½•ûªB
+	/** [static]å¹³æ–¹æ ¹ã€‚
 	*/
 	f32 Math::sqrtf(f32 a_value)
 	{
 		return std::sqrtf(a_value);
 	}
 
-	/** [static]2‚ğ’ê‚Æ‚·‚é‘Î”B
+	/** [static]2ã‚’åº•ã¨ã™ã‚‹å¯¾æ•°ã€‚
 	*/
 	f32 Math::log2f(f32 a_value)
 	{
 		return std::log2f(a_value);
 	}
 
-	/** [static]Ø‚èã‚°B
+	/** [static]åˆ‡ã‚Šä¸Šã’ã€‚
 	*/
 	f32 Math::ceilf(f32 a_value)
 	{
 		return std::ceilf(a_value);
 	}
 
-	/** [static]â‘Î’lB
+	/** [static]çµ¶å¯¾å€¤ã€‚
 	*/
 	f32 Math::absf(f32 a_value)
 	{
 		return std::fabsf(a_value);
 	}
 
-	/** [static]©‘R‘Î”‚Ì’ê‚Ìa_valueæB
+	/** [static]è‡ªç„¶å¯¾æ•°ã®åº•ã®a_valueä¹—ã€‚
 	*/
 	f32 Math::expf(f32 a_value)
 	{
 		return std::expf(a_value);
 	}
 
-	/** [static]ƒTƒCƒ“B
+	/** [static]ã‚µã‚¤ãƒ³ã€‚
 	*/
 	f32 Math::sinf(f32 a_rad)
 	{
 		return std::sinf(a_rad);
 	}
 
-	/** [static]ƒRƒTƒCƒ“B
+	/** [static]ã‚³ã‚µã‚¤ãƒ³ã€‚
 	*/
 	f32 Math::cosf(f32 a_rad)
 	{
 		return std::cosf(a_rad);
 	}
 
-	/** [static]ƒ^ƒ“ƒWƒFƒ“ƒgB
+	/** [static]ã‚¿ãƒ³ã‚¸ã‚§ãƒ³ãƒˆã€‚
 	*/
 	f32 Math::tanf(f32 a_rad)
 	{
 		return std::tanf(a_rad);
 	}
 
-	/** [static]ƒA[ƒNƒTƒCƒ“B
+	/** [static]ã‚¢ãƒ¼ã‚¯ã‚µã‚¤ãƒ³ã€‚
 	*/
 	f32 Math::asinf(f32 a_value)
 	{
 		return std::asinf(a_value);
 	}
 
-	/** [static]ƒA[ƒNƒRƒTƒCƒ“B
+	/** [static]ã‚¢ãƒ¼ã‚¯ã‚³ã‚µã‚¤ãƒ³ã€‚
 	*/
 	f32 Math::acosf(f32 a_value)
 	{
 		return std::acosf(a_value);
 	}
 
-	/** [static]ƒA[ƒNƒ^ƒ“ƒWƒFƒ“ƒgB
+	/** [static]ã‚¢ãƒ¼ã‚¯ã‚¿ãƒ³ã‚¸ã‚§ãƒ³ãƒˆã€‚
 	*/
 	f32 Math::atanf(f32 a_value)
 	{
 		return std::atanf(a_value);
 	}
 
-	/** [static]ƒTƒCƒ“iƒe[ƒuƒ‹QÆjB
+	/** [static]ã‚µã‚¤ãƒ³ï¼ˆãƒ†ãƒ¼ãƒ–ãƒ«å‚ç…§ï¼‰ã€‚
 	*/
 	f32 Math::sinf_fast(f32 a_rad)
 	{
@@ -171,7 +171,7 @@ namespace NBlib
 		}
 	}
 
-	/** [static]ƒRƒTƒCƒ“iƒe[ƒuƒ‹QÆjB
+	/** [static]ã‚³ã‚µã‚¤ãƒ³ï¼ˆãƒ†ãƒ¼ãƒ–ãƒ«å‚ç…§ï¼‰ã€‚
 	*/
 	f32 Math::cosf_fast(f32 a_rad)
 	{
@@ -184,7 +184,7 @@ namespace NBlib
 		}
 	}
 
-	/** [static]ƒ^ƒ“ƒWƒFƒ“ƒgiƒe[ƒuƒ‹QÆjB
+	/** [static]ã‚¿ãƒ³ã‚¸ã‚§ãƒ³ãƒˆï¼ˆãƒ†ãƒ¼ãƒ–ãƒ«å‚ç…§ï¼‰ã€‚
 	*/
 	f32 Math::tanf_fast(f32 a_rad)
 	{

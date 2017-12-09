@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief OpenGLB
+ * @brief OpenGLã€‚
 */
 
 
@@ -30,7 +30,7 @@
 #if(BSYS_OPENGL_ENABLE)
 namespace NBsys{namespace NOpengl
 {
-	/** ƒo[ƒeƒbƒNƒXƒoƒbƒtƒ@ì¬B
+	/** ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ä½œæˆã€‚
 	*/
 	class Opengl_Impl_ActionBatching_Shader_Delete : public NBsys::NActionBatching::ActionBatching_ActionItem_Base
 	{
@@ -63,23 +63,23 @@ namespace NBsys{namespace NOpengl
 
 	public:
 
-		/** ƒAƒNƒVƒ‡ƒ“ŠJnB
+		/** ã‚¢ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹ã€‚
 		*/
 		virtual void Start()
 		{
 		}
 
-		/** ƒAƒNƒVƒ‡ƒ“’†B
+		/** ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ä¸­ã€‚
 		*/
 		virtual s32 Do(f32& a_delta,bool a_endrequest)
 		{
 			if(a_endrequest == true){
-				//’†’fB
+				//ä¸­æ–­ã€‚
 			}
 
 			this->opengl_impl.Render_DeleteShader(this->shaderstate);
 
-			//¬Œ÷B
+			//æˆåŠŸã€‚
 			return 1;
 		}
 

@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒAƒNƒVƒ‡ƒ“‚Ìƒoƒbƒ`ˆ—B
+ * @brief ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã®ãƒãƒƒãƒå‡¦ç†ã€‚
 */
 
 
@@ -52,7 +52,7 @@ namespace NBsys{namespace NActionBatching
 		this->actionlist.push_back(a_actionitem);
 	}
 
-	/** ƒAƒNƒVƒ‡ƒ“ŠJnB
+	/** ã‚¢ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹ã€‚
 	*/
 	void ActionBatching_ActionList::Start()
 	{
@@ -62,12 +62,12 @@ namespace NBsys{namespace NActionBatching
 		if(this->index < static_cast<s32>(this->actionlist.size())){
 			this->actionlist[this->index]->Start();
 		}else{
-			//‹óB
+			//ç©ºã€‚
 			ASSERT(0);
 		}
 	}
 
-	/** ƒAƒNƒVƒ‡ƒ“’†B
+	/** ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ä¸­ã€‚
 	*/
 	bool ActionBatching_ActionList::Do(f32 a_delta)
 	{
@@ -82,22 +82,22 @@ namespace NBsys{namespace NActionBatching
 
 				if(this->index < static_cast<s32>(this->actionlist.size())){
 					if(this->endrequest == true){
-						//’†’fB
+						//ä¸­æ–­ã€‚
 						this->index = -1;
 						return true;
 					}else{
-						//ŸB
+						//æ¬¡ã€‚
 						this->actionlist[this->index]->Start();
 					}
 				}else{
-					//Š®—¹B
+					//å®Œäº†ã€‚
 					this->index = -1;
 					return true;
 				}
 			}
 		}
 
-		//Œp‘±B
+		//ç¶™ç¶šã€‚
 		return false;
 	}
 
@@ -108,7 +108,7 @@ namespace NBsys{namespace NActionBatching
 		return this->index;
 	}
 
-	/** ’†’fB
+	/** ä¸­æ–­ã€‚
 	*/
 	void ActionBatching_ActionList::EndRequest()
 	{

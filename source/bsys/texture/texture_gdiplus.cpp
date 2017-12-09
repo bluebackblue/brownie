@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
 * Copyright (c) 2017 blueback
 * Released under the MIT License
 * https://github.com/bluebackblue/brownie/blob/master/LICENSE
 * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
-* @brief ƒeƒNƒXƒ`ƒƒ[B
+* @brief ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ã€‚
 */
 
 
@@ -62,10 +62,10 @@ namespace NBsys{namespace NTexture
 				void* t_global_buffer = ::GlobalLock(t_global_handle);
 				if(t_global_buffer){
 
-					//ƒOƒ[ƒoƒ‹ƒƒ‚ƒŠ‚ÉƒRƒs[B
+					//ã‚°ãƒ­ãƒ¼ãƒãƒ«ãƒ¡ãƒ¢ãƒªã«ã‚³ãƒ”ãƒ¼ã€‚
 					::CopyMemory(t_global_buffer,a_data.get(),a_size);
  
-					//ƒXƒgƒŠ[ƒ€ì¬B
+					//ã‚¹ãƒˆãƒªãƒ¼ãƒ ä½œæˆã€‚
 					IStream* t_stream = nullptr;
 					if(CreateStreamOnHGlobal(t_global_handle,FALSE,&t_stream) == S_OK){
 

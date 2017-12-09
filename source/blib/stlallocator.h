@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ‚r‚s‚kƒAƒƒP[ƒ^B
+ * @brief ï¼³ï¼´ï¼¬ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿ã€‚
 */
 
 
@@ -31,11 +31,11 @@ namespace NBlib
 	{
 	public:
 
-		/** Šm•ÛB
+		/** ç¢ºä¿ã€‚
 		*/
 		static void* Alloc(size_t a_size);
 
-		/** ‰ğ•úB
+		/** è§£æ”¾ã€‚
 		*/
 		static void Free(void* a_pointer);
 
@@ -47,11 +47,11 @@ namespace NBlib
 	{
 	public:
 
-		/** Šm•ÛB
+		/** ç¢ºä¿ã€‚
 		*/
 		static void* Alloc(size_t a_size);
 
-		/** ‰ğ•úB
+		/** è§£æ”¾ã€‚
 		*/
 		static void Free(void* a_pointer);
 
@@ -113,21 +113,21 @@ namespace NBlib
 		{
 		}
 
-		/** ƒAƒhƒŒƒXæ“¾B
+		/** ã‚¢ãƒ‰ãƒ¬ã‚¹å–å¾—ã€‚
 		*/
 		pointer address(reference a_value) const
 		{
 			return &a_value;
 		}
 
-		/** ƒAƒhƒŒƒXæ“¾B
+		/** ã‚¢ãƒ‰ãƒ¬ã‚¹å–å¾—ã€‚
 		*/
 		const_pointer address(const_reference a_value) const
 		{
 			return &a_value;
 		}
 
-		/** Š„“–‚Ä‚é‚±‚Æ‚ª‚Å‚«‚éÅ‘å‚Ì—v‘f”‚ğ•Ô‚·B
+		/** å‰²å½“ã¦ã‚‹ã“ã¨ãŒã§ãã‚‹æœ€å¤§ã®è¦ç´ æ•°ã‚’è¿”ã™ã€‚
 		*/
 		size_type max_size() const noexcept
 		{
@@ -135,14 +135,14 @@ namespace NBlib
 			return std::numeric_limits<size_type>::max()/sizeof(T);
 		}
 
-		/** ‘ã“üB
+		/** ä»£å…¥ã€‚
 		*/
 		template <class OTHER> STLAllocator<T>&  operator =(const STLAllocator<OTHER>&)
 		{
 			return (*this);
 		}
 
-		/** –¾¦“I‚ÈƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ÌŒÄ‚Ño‚µB
+		/** æ˜ç¤ºçš„ãªã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã®å‘¼ã³å‡ºã—ã€‚
 		*/
 		void construct(T* a_pointer)
 		{
@@ -150,7 +150,7 @@ namespace NBlib
 			::new (static_cast<void*>(a_pointer)) T();
 		}
 
-		/** –¾¦“I‚ÈƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ÌŒÄ‚Ño‚µB
+		/** æ˜ç¤ºçš„ãªã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã®å‘¼ã³å‡ºã—ã€‚
 		*/
 		void construct(pointer a_pointer,const T& a_value)
 		{
@@ -158,21 +158,21 @@ namespace NBlib
 			::new ((void*)a_pointer) T(a_value);
 		}
 
-		/** –¾¦“I‚ÈƒfƒXƒgƒ‰ƒNƒ^‚ÌŒÄ‚Ño‚µB
+		/** æ˜ç¤ºçš„ãªãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã®å‘¼ã³å‡ºã—ã€‚
 		*/
 		void destroy(pointer a_pointer)
 		{
 			a_pointer->~T();
 		}
 
-		/** –¾¦“I‚ÈƒfƒXƒgƒ‰ƒNƒ^‚ÌŒÄ‚Ño‚µB
+		/** æ˜ç¤ºçš„ãªãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã®å‘¼ã³å‡ºã—ã€‚
 		*/
 		template <class U> void destroy(U* a_pointer)
 		{
 			a_pointer->~U();
 		}
 
-		/** —ÌˆæŠm•ÛB
+		/** é ˜åŸŸç¢ºä¿ã€‚
 		*/
 		pointer allocate(size_type a_count,const void* a_hint = nullptr)
 		{
@@ -182,7 +182,7 @@ namespace NBlib
 			return reinterpret_cast<pointer>(STLAllocatorBase::Alloc(a_count * sizeof(T)));
 		}
 
-		/** —ÌˆæŠJ•úB
+		/** é ˜åŸŸé–‹æ”¾ã€‚
 		*/
 		void deallocate(pointer a_pointer,size_type a_count)
 		{
@@ -252,21 +252,21 @@ namespace NBlib
 		{
 		}
 
-		/** ƒAƒhƒŒƒXæ“¾B
+		/** ã‚¢ãƒ‰ãƒ¬ã‚¹å–å¾—ã€‚
 		*/
 		pointer address(reference a_value) const
 		{
 			return &a_value;
 		}
 
-		/** ƒAƒhƒŒƒXæ“¾B
+		/** ã‚¢ãƒ‰ãƒ¬ã‚¹å–å¾—ã€‚
 		*/
 		const_pointer address(const_reference a_value) const
 		{
 			return &a_value;
 		}
 
-		/** Š„“–‚Ä‚é‚±‚Æ‚ª‚Å‚«‚éÅ‘å‚Ì—v‘f”‚ğ•Ô‚·B
+		/** å‰²å½“ã¦ã‚‹ã“ã¨ãŒã§ãã‚‹æœ€å¤§ã®è¦ç´ æ•°ã‚’è¿”ã™ã€‚
 		*/
 		size_type max_size() const noexcept
 		{
@@ -274,14 +274,14 @@ namespace NBlib
 			return std::numeric_limits<size_type>::max()/sizeof(T);
 		}
 
-		/** ‘ã“üB
+		/** ä»£å…¥ã€‚
 		*/
 		template <class OTHER> STLAllocator_String<T>&  operator =(const STLAllocator_String<OTHER>&)
 		{
 			return (*this);
 		}
 
-		/** –¾¦“I‚ÈƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ÌŒÄ‚Ño‚µB
+		/** æ˜ç¤ºçš„ãªã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã®å‘¼ã³å‡ºã—ã€‚
 		*/
 		void construct(T* a_pointer)
 		{
@@ -289,7 +289,7 @@ namespace NBlib
 			::new (static_cast<void*>(a_pointer)) T();
 		}
 
-		/** –¾¦“I‚ÈƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ÌŒÄ‚Ño‚µB
+		/** æ˜ç¤ºçš„ãªã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã®å‘¼ã³å‡ºã—ã€‚
 		*/
 		void construct(pointer a_pointer,const T& a_value)
 		{
@@ -297,21 +297,21 @@ namespace NBlib
 			::new ((void*)a_pointer) T(a_value);
 		}
 
-		/** –¾¦“I‚ÈƒfƒXƒgƒ‰ƒNƒ^‚ÌŒÄ‚Ño‚µB
+		/** æ˜ç¤ºçš„ãªãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã®å‘¼ã³å‡ºã—ã€‚
 		*/
 		void destroy(pointer a_pointer)
 		{
 			a_pointer->~T();
 		}
 
-		/** –¾¦“I‚ÈƒfƒXƒgƒ‰ƒNƒ^‚ÌŒÄ‚Ño‚µB
+		/** æ˜ç¤ºçš„ãªãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã®å‘¼ã³å‡ºã—ã€‚
 		*/
 		template <class U> void destroy(U* a_pointer)
 		{
 			a_pointer->~U();
 		}
 
-		/** —ÌˆæŠm•ÛB
+		/** é ˜åŸŸç¢ºä¿ã€‚
 		*/
 		pointer allocate(size_type a_count,const void* a_hint = nullptr)
 		{
@@ -321,7 +321,7 @@ namespace NBlib
 			return reinterpret_cast<pointer>(STLAllocatorBase_String::Alloc(a_count * sizeof(T)));
 		}
 
-		/** —ÌˆæŠJ•úB
+		/** é ˜åŸŸé–‹æ”¾ã€‚
 		*/
 		void deallocate(pointer a_pointer,size_type a_count)
 		{
@@ -335,28 +335,28 @@ namespace NBlib
 		}
 	};
 
-	/** ”äŠrBƒAƒƒP[ƒ^[‚ÉŒİŠ·«‚ª‚ ‚é‚©‚Ç‚¤‚©B
+	/** æ¯”è¼ƒã€‚ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼ã«äº’æ›æ€§ãŒã‚ã‚‹ã‹ã©ã†ã‹ã€‚
 	*/
 	template <class T1,class T2> inline bool operator ==(const STLAllocator<T1>& /*a_allocator_1*/,const STLAllocator<T2>& /*a_allocator_2*/) noexcept
 	{	
 		return true;
 	}
 
-	/** ”äŠrBƒAƒƒP[ƒ^[‚ÉŒİŠ·«‚ª‚ ‚é‚©‚Ç‚¤‚©B
+	/** æ¯”è¼ƒã€‚ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼ã«äº’æ›æ€§ãŒã‚ã‚‹ã‹ã©ã†ã‹ã€‚
 	*/
 	template <class T1,class T2> inline bool operator !=(const STLAllocator<T1>& /*a_allocator_1*/,const STLAllocator<T2>& /*a_allocator_2*/) noexcept
 	{
 		return false;
 	}
 
-	/** ”äŠrBƒAƒƒP[ƒ^[‚ÉŒİŠ·«‚ª‚ ‚é‚©‚Ç‚¤‚©B
+	/** æ¯”è¼ƒã€‚ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼ã«äº’æ›æ€§ãŒã‚ã‚‹ã‹ã©ã†ã‹ã€‚
 	*/
 	template <class T1,class T2> inline bool operator ==(const STLAllocator_String<T1>& /*a_allocator_1*/,const STLAllocator_String<T2>& /*a_allocator_2*/) noexcept
 	{	
 		return true;
 	}
 
-	/** ”äŠrBƒAƒƒP[ƒ^[‚ÉŒİŠ·«‚ª‚ ‚é‚©‚Ç‚¤‚©B
+	/** æ¯”è¼ƒã€‚ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼ã«äº’æ›æ€§ãŒã‚ã‚‹ã‹ã©ã†ã‹ã€‚
 	*/
 	template <class T1,class T2> inline bool operator !=(const STLAllocator_String<T1>& /*a_allocator_1*/,const STLAllocator_String<T2>& /*a_allocator_2*/) noexcept
 	{

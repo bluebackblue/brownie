@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒCƒ“ƒNƒ‹[ƒhB
+ * @brief ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ã€‚
 */
 
 
@@ -28,45 +28,45 @@
 */
 void Test_Main()
 {
-	//ƒtƒ@ƒCƒ‹ŠJnB
+	//ãƒ•ã‚¡ã‚¤ãƒ«é–‹å§‹ã€‚
 	NBsys::NFile::StartSystem(1);
 	NBsys::NFile::SetRoot(0,L"./project_test/test2");
 
-	//“Ç‚İ‚İŠJnB
+	//èª­ã¿è¾¼ã¿é–‹å§‹ã€‚
 	sharedptr<NBsys::NFile::File_Object> t_fileobject(new NBsys::NFile::File_Object(0,L"test2.json",-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
 
-	//“Ç‚İ‚İ’†B
+	//èª­ã¿è¾¼ã¿ä¸­ã€‚
 	while(t_fileobject->IsBusy()){
 		ThreadSleep(10);
 	}
 
-	//ƒRƒ“ƒo[ƒgB
+	//ã‚³ãƒ³ãƒãƒ¼ãƒˆã€‚
 	for(;;){
 		NBsys::NFile::File_ConvertLock_ReturnType::Id t_ret = t_fileobject->ConvertLock();
 		if(t_ret == NBsys::NFile::File_ConvertLock_ReturnType::Locked){
-			//–¢ƒRƒ“ƒo[ƒg => ƒRƒ“ƒo[ƒg’†B
+			//æœªã‚³ãƒ³ãƒãƒ¼ãƒˆ => ã‚³ãƒ³ãƒãƒ¼ãƒˆä¸­ã€‚
 			t_fileobject->GetLoadData().get()[static_cast<s32>(t_fileobject->GetLoadSize())] = 0x00;
 
-			//ƒRƒ“ƒo[ƒg’† => ƒRƒ“ƒo[ƒgÏ‚İB
+			//ã‚³ãƒ³ãƒãƒ¼ãƒˆä¸­ => ã‚³ãƒ³ãƒãƒ¼ãƒˆæ¸ˆã¿ã€‚
 			t_fileobject->ConvertUnlock();
 			
 			break;
 		}else if(t_ret == NBsys::NFile::File_ConvertLock_ReturnType::ConvertNow){
-			//ƒRƒ“ƒo[ƒg’†B
+			//ã‚³ãƒ³ãƒãƒ¼ãƒˆä¸­ã€‚
 
-			//ƒƒbƒN‚É¬Œ÷‚µ‚Ä‚¢‚È‚¢‚Ì‚ÅƒAƒ“ƒƒbƒN•s—vB
+			//ãƒ­ãƒƒã‚¯ã«æˆåŠŸã—ã¦ã„ãªã„ã®ã§ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ä¸è¦ã€‚
 		}else{
-			//ƒRƒ“ƒo[ƒgÏ‚İB
+			//ã‚³ãƒ³ãƒãƒ¼ãƒˆæ¸ˆã¿ã€‚
 
-			//ƒƒbƒN‚É¬Œ÷‚µ‚Ä‚¢‚È‚¢‚Ì‚ÅƒAƒ“ƒƒbƒN•s—vB
+			//ãƒ­ãƒƒã‚¯ã«æˆåŠŸã—ã¦ã„ãªã„ã®ã§ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ä¸è¦ã€‚
 			break;
 		}
 	}
 
-	//‚i‚r‚n‚m‰ğÍB
+	//ï¼ªï¼³ï¼¯ï¼®è§£æã€‚
 	sharedptr<JsonItem> t_json(new JsonItem(reinterpret_cast<char*>(t_fileobject->GetLoadData().get())));
 
-	//‚i‚r‚n‚mæ“¾B
+	//ï¼ªï¼³ï¼¯ï¼®å–å¾—ã€‚
 	if(t_json->GetValueType() == JsonItem::ValueType::AssociativeArray){
 		if(t_json->IsExistItem("name") == true){
 			STLString t_name = *t_json->GetItem("name")->GetStringData();
@@ -78,7 +78,7 @@ void Test_Main()
 		}
 	}
 
-	//‚i‚r‚n‚mo—ÍB
+	//ï¼ªï¼³ï¼¯ï¼®å‡ºåŠ›ã€‚
 	{
 		FileHandle t_filehandle;
 		t_filehandle.WriteOpen(L"./project_test/test2/out.json");
@@ -87,7 +87,7 @@ void Test_Main()
 		t_filehandle.Close();
 	}
 
-	//ƒtƒ@ƒCƒ‹I—¹B
+	//ãƒ•ã‚¡ã‚¤ãƒ«çµ‚äº†ã€‚
 	NBsys::NFile::EndSystemRequest();
 	NBsys::NFile::EndWaitSystem();
 

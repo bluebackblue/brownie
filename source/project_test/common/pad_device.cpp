@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒpƒbƒhB
+ * @brief ãƒ‘ãƒƒãƒ‰ã€‚
 */
 
 
@@ -83,7 +83,7 @@ namespace NCommon
 	{
 	}
 
-	/** ƒfƒoƒCƒX‚ÌXVB
+	/** ãƒ‡ãƒã‚¤ã‚¹ã®æ›´æ–°ã€‚
 	*/
 	void Pad_Device::DeviceUpdate()
 	{
@@ -107,7 +107,7 @@ namespace NCommon
 		
 	}
 
-	/** ƒ{ƒ^ƒ“æ“¾B
+	/** ãƒœã‚¿ãƒ³å–å¾—ã€‚
 	*/
 	bool Pad_Device::GetButton(s32 a_virtualpad_index,NBsys::NPad::Pad_Device_Base::ButtonType::Id a_device_button)
 	{
@@ -127,14 +127,14 @@ namespace NCommon
 		return false;
 	}
 
-	/** ƒAƒiƒƒOæ“¾B
+	/** ã‚¢ãƒŠãƒ­ã‚°å–å¾—ã€‚
 	*/
 	f32 Pad_Device::GetAnalog(s32 a_virtualpad_index,NBsys::NPad::Pad_Device_Base::AnalogType::Id a_device_analog)
 	{
 		return 0.0f;
 	}
 
-	/** ƒ^ƒbƒ`æ“¾B
+	/** ã‚¿ãƒƒãƒå–å¾—ã€‚
 	*/
 	NBsys::NPad::TouchValue Pad_Device::GetTouch(s32 a_virtualpad_index,NBsys::NPad::Pad_Device_Base::TouchType::Id a_device_touch)
 	{

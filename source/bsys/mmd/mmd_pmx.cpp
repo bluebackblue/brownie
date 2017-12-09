@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
 * Copyright (c) 2017 blueback
 * Released under the MIT License
 * https://github.com/bluebackblue/brownie/blob/master/LICENSE
 * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
-* @brief ‚l‚l‚cB‚o‚l‚wB
+* @brief ï¼­ï¼­ï¼¤ã€‚ï¼°ï¼­ï¼¸ã€‚
 */
 
 
@@ -339,46 +339,46 @@ namespace NBsys{namespace NMmd
 
 			//mode
 			{
-				//00000001 : —¼–Ê•`‰æB
-				//00000010 : ’n–Ê‰eB
-				//00000100 : ƒZƒ‹ƒtƒVƒƒƒhƒEƒ}ƒbƒv‚Ö‚Ì•`‰æB
-				//00001000 : ƒZƒ‹ƒtƒVƒƒƒhƒE‚Ì•`‰æB
-				//00010000 : ƒGƒbƒW•`‰æB
-				//00100000 : ’¸“_ƒJƒ‰[B
-				//01000000 : Point•`‰æB
-				//10000000 : Line•`‰æB
+				//00000001 : ä¸¡é¢æç”»ã€‚
+				//00000010 : åœ°é¢å½±ã€‚
+				//00000100 : ã‚»ãƒ«ãƒ•ã‚·ãƒ£ãƒ‰ã‚¦ãƒãƒƒãƒ—ã¸ã®æç”»ã€‚
+				//00001000 : ã‚»ãƒ«ãƒ•ã‚·ãƒ£ãƒ‰ã‚¦ã®æç”»ã€‚
+				//00010000 : ã‚¨ãƒƒã‚¸æç”»ã€‚
+				//00100000 : é ‚ç‚¹ã‚«ãƒ©ãƒ¼ã€‚
+				//01000000 : Pointæç”»ã€‚
+				//10000000 : Lineæç”»ã€‚
 
 				u8 t_drawmode = Memory::Copy<u8>(a_raw);
 
-				/** —¼–Ê•`‰æB
+				/** ä¸¡é¢æç”»ã€‚
 				*/
 				t_parts.drawmode_cullfull = (t_drawmode & (0x01)) > 0;
 
-				/** ‰e”­¶B
+				/** å½±ç™ºç”Ÿã€‚
 				*/
 				t_parts.drawmode_shadow = (t_drawmode & (0x01<<1)) > 0;
 
-				/** ƒZƒ‹ƒtƒVƒƒƒhƒEƒ}ƒbƒv‚Ö‚Ì•`‰æB
+				/** ã‚»ãƒ«ãƒ•ã‚·ãƒ£ãƒ‰ã‚¦ãƒãƒƒãƒ—ã¸ã®æç”»ã€‚
 				*/
 				t_parts.drawmode_selfshadowmap = (t_drawmode & (0x01<<2)) > 0;
 
-				/** ƒZƒ‹ƒtƒVƒƒƒhƒE‚Ì•`‰æB
+				/** ã‚»ãƒ«ãƒ•ã‚·ãƒ£ãƒ‰ã‚¦ã®æç”»ã€‚
 				*/
 				t_parts.drawmode_selfshadow = (t_drawmode & (0x01<<3)) > 0;
 
-				/** ƒGƒbƒW‚Ì•`‰æB
+				/** ã‚¨ãƒƒã‚¸ã®æç”»ã€‚
 				*/
 				t_parts.drawmode_edge = (t_drawmode & (0x01<<4)) > 0;
 
-				/** ’¸“_ƒJƒ‰[B
+				/** é ‚ç‚¹ã‚«ãƒ©ãƒ¼ã€‚
 				*/
 				t_parts.drawmode_vertexcolor = (t_drawmode & (0x01<<5)) > 0;
 
-				/** ƒ|ƒCƒ“ƒg•`‰æB
+				/** ãƒã‚¤ãƒ³ãƒˆæç”»ã€‚
 				*/
 				t_parts.drawmode_point = (t_drawmode & (0x01<<6)) > 0;
 
-				/** ƒ‰ƒCƒ“•`‰æB
+				/** ãƒ©ã‚¤ãƒ³æç”»ã€‚
 				*/
 				t_parts.drawmode_line = (t_drawmode & (0x01<<7)) > 0;
 			}
@@ -415,7 +415,7 @@ namespace NBsys{namespace NMmd
 				t_parts.toon_mode = Memory::Copy<u8>(a_raw);
 
 				if(t_parts.toon_mode == 0){
-					//ŒÂ•ÊB
+					//å€‹åˆ¥ã€‚
 
 					if(this->header_ex.texture_index_size == 1){
 						t_parts.toon_textureindex = Memory::Copy<s8>(a_raw);
@@ -426,7 +426,7 @@ namespace NBsys{namespace NMmd
 					}
 
 				}else if(t_parts.toon_mode == 1){
-					//‹¤’ÊB
+					//å…±é€šã€‚
 
 					t_parts.toon_textureindex = Memory::Copy<s8>(a_raw);
 				}else{

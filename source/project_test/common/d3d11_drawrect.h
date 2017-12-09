@@ -1,11 +1,11 @@
-#pragma once
+Ôªø#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ÉRÉÇÉìÅBÇcÇRÇcÇPÇPÅBÉåÉNÉgï`âÊÅB
+ * @brief „Ç≥„É¢„É≥„ÄÇÔº§ÔºìÔº§ÔºëÔºë„ÄÇ„É¨„ÇØ„ÉàÊèèÁîª„ÄÇ
 */
 
 
@@ -177,7 +177,7 @@ namespace NCommon
 			switch(this->step){
 			case 0:
 				{
-					//ÉåÉCÉAÉEÉgÅB
+					//„É¨„Ç§„Ç¢„Ç¶„Éà„ÄÇ
 					sharedptr<STLVector<NBsys::ND3d11::D3d11_Layout>::Type> t_layout(new STLVector<NBsys::ND3d11::D3d11_Layout>::Type());
 					{
 						s32 t_offset = 0;
@@ -192,7 +192,7 @@ namespace NCommon
 						t_offset += sizeof(f32) * 4;
 					}
 
-					//ÉVÉFÅ[É_Å[ÅB
+					//„Ç∑„Çß„Éº„ÉÄ„Éº„ÄÇ
 					sharedptr<NBsys::NFile::File_Object> t_vertex_fx(new NBsys::NFile::File_Object(0,L"common/drawrect_vertex.fx",-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
 					sharedptr<NBsys::NFile::File_Object> t_pixel_fx(new NBsys::NFile::File_Object(0,L"common/drawrect_pixel.fx",-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
 					this->asyncresult_vertexshader.Create(false);
@@ -200,11 +200,11 @@ namespace NCommon
 					this->vertexshader_id = this->d3d11->CreateVertexShader(this->asyncresult_vertexshader,t_vertex_fx,t_layout);
 					this->pixelshader_id = this->d3d11->CreatePixelShader(this->asyncresult_pixelshader,t_pixel_fx);
 
-					//ÉRÉìÉXÉ^ÉìÉgÉoÉbÉtÉ@ÅB
+					//„Ç≥„É≥„Çπ„Çø„É≥„Éà„Éê„ÉÉ„Éï„Ç°„ÄÇ
 					this->vs_constantbuffer_b0_id = this->d3d11->CreateConstantBuffer(0,sizeof(DrawRect_VS_ConstantBuffer_B0));
 					this->ps_constantbuffer_b0_id = this->d3d11->CreateConstantBuffer(1,sizeof(DrawRect_PS_ConstantBuffer_B0));
 
-					//ÉoÅ[ÉeÉbÉNÉXÉoÉbÉtÉ@ÅB
+					//„Éê„Éº„ÉÜ„ÉÉ„ÇØ„Çπ„Éê„ÉÉ„Éï„Ç°„ÄÇ
 					s32 t_vertex_allcountof = 2 * 1024;
 					this->vertex = new NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4>();
 					this->vertex->AddParts("root");
@@ -215,10 +215,10 @@ namespace NCommon
 					this->vertex_buffer_id = this->d3d11->CreateVertexBuffer(this->vertex->GetVertexPointer(),this->vertex->GetVertexStrideByte(),0,t_vertex_allcountof,true);
 					this->vertex->ClearVertex();
 
-					//ÉuÉåÉìÉhÉXÉeÅ[É^ÉXÅB
+					//„Éñ„É¨„É≥„Éâ„Çπ„ÉÜ„Éº„Çø„Çπ„ÄÇ
 					this->blendstate_id = this->d3d11->CreateBlendState(true);
 
-					//ÉâÉXÉ^ÉâÉCÉUÅ[ÅB
+					//„É©„Çπ„Çø„É©„Ç§„Ç∂„Éº„ÄÇ
 					this->rasterizerstate_cull_none_id = this->d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::NONE);
 
 					this->step++;
@@ -323,7 +323,7 @@ namespace NCommon
 			}
 		}
 
-		/** ï`âÊÅB
+		/** ÊèèÁîª„ÄÇ
 		*/
 		void Render(NBsys::NGeometry::Geometry_Matrix_44& a_view_projection)
 		{
@@ -331,17 +331,17 @@ namespace NCommon
 				if(this->vertex->GetVertexCountOf(0) > 0){
 					NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = a_view_projection;
 
-					//ÉVÉFÅ[É_Å[ÅB
+					//„Ç∑„Çß„Éº„ÉÄ„Éº„ÄÇ
 					this->d3d11->Render_VSSetShader(this->vertexshader_id);
 					this->d3d11->Render_PSSetShader(this->pixelshader_id);
 
-					//ÉgÉ|ÉçÉWÅ[ÅB
+					//„Éà„Éù„É≠„Ç∏„Éº„ÄÇ
 					this->d3d11->Render_SetPrimitiveTopology(NBsys::ND3d11::D3d11_TopologyType::Id::TriangleList);
 
-					//ÉuÉåÉìÉhÉXÉeÅ[É^ÉXÅB
+					//„Éñ„É¨„É≥„Éâ„Çπ„ÉÜ„Éº„Çø„Çπ„ÄÇ
 					this->d3d11->Render_SetBlendState(this->blendstate_id);
 
-					//ÉRÉìÉXÉ^ÉìÉgÉoÉbÉtÉ@ÅB
+					//„Ç≥„É≥„Çπ„Çø„É≥„Éà„Éê„ÉÉ„Éï„Ç°„ÄÇ
 					DrawRect_VS_ConstantBuffer_B0 t_vs_constantbuffer_b0;
 					DrawRect_PS_ConstantBuffer_B0 t_ps_constantbuffer_b0;
 					{
@@ -349,22 +349,22 @@ namespace NCommon
 						t_ps_constantbuffer_b0.flag1 = 0x00000000;
 					}
 
-					//ÉRÉìÉXÉ^ÉìÉgÉoÉbÉtÉ@Å[ÇÃì‡óeçXêVÅB
+					//„Ç≥„É≥„Çπ„Çø„É≥„Éà„Éê„ÉÉ„Éï„Ç°„Éº„ÅÆÂÜÖÂÆπÊõ¥Êñ∞„ÄÇ
 					this->d3d11->Render_UpdateSubresource(this->vs_constantbuffer_b0_id,&t_vs_constantbuffer_b0);
 					this->d3d11->Render_UpdateSubresource(this->ps_constantbuffer_b0_id,&t_ps_constantbuffer_b0);
 
-					//ÉRÉìÉXÉ^ÉìÉgÉoÉbÉtÉ@Å[ÇÉVÉFÅ[É_Å[Ç…ê›íËÅB
+					//„Ç≥„É≥„Çπ„Çø„É≥„Éà„Éê„ÉÉ„Éï„Ç°„Éº„Çí„Ç∑„Çß„Éº„ÉÄ„Éº„Å´Ë®≠ÂÆö„ÄÇ
 					this->d3d11->Render_VSSetConstantBuffers(this->vs_constantbuffer_b0_id);
 					this->d3d11->Render_PSSetConstantBuffers(this->ps_constantbuffer_b0_id);
 
-					//ÉâÉXÉ^ÉâÉCÉUÅ[ÅB
+					//„É©„Çπ„Çø„É©„Ç§„Ç∂„Éº„ÄÇ
 					this->d3d11->Render_SetRasterizerState(this->rasterizerstate_cull_none_id);
 
-					//ÉoÅ[ÉeÉbÉNÉXÉoÉbÉtÉ@ÅB
+					//„Éê„Éº„ÉÜ„ÉÉ„ÇØ„Çπ„Éê„ÉÉ„Éï„Ç°„ÄÇ
 					this->d3d11->Render_ReMapVertexBuffer(this->vertex_buffer_id,this->vertex->GetVertexPointer(),this->vertex->GetVertexStrideByte() * this->vertex->GetVertexCountOf(0));
 					this->d3d11->Render_SetVertexBuffer(this->vertex_buffer_id);
 
-					//ï`âÊÅB
+					//ÊèèÁîª„ÄÇ
 					this->d3d11->Render_Draw(this->vertex->GetVertexCountOf(0),0);
 				}
 			}

@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
 * Copyright (c) 2017 blueback
 * Released under the MIT License
 * https://github.com/bluebackblue/brownie/blob/master/LICENSE
 * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
-* @brief ƒo[ƒeƒbƒNƒXB
+* @brief ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ã€‚
 */
 
 
@@ -38,15 +38,15 @@ namespace NBsys{namespace NVertex
 		*/
 		struct Parts
 		{
-			/** ƒp[ƒc–¼B
+			/** ãƒ‘ãƒ¼ãƒ„åã€‚
 			*/
 			STLString name;
 
-			/** ƒo[ƒeƒbƒNƒXƒIƒtƒZƒbƒgB
+			/** ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ã‚ªãƒ•ã‚»ãƒƒãƒˆã€‚
 			*/
 			s32 vertex_offset;
 
-			/** ƒo[ƒeƒbƒNƒX”B
+			/** ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹æ•°ã€‚
 			*/
 			s32 vertex_countof;
 		};
@@ -55,7 +55,7 @@ namespace NBsys{namespace NVertex
 		*/
 		typename STLVector<sharedptr<Parts>>::Type parts_list;
 
-		/** ƒo[ƒeƒbƒNƒXB
+		/** ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ã€‚
 		*/
 		typename STLVector<VertexType>::Type vertex_list;
 
@@ -74,19 +74,19 @@ namespace NBsys{namespace NVertex
 
 	public:
 
-		/** V‹Kƒp[ƒc‚ğ’Ç‰ÁB
+		/** æ–°è¦ãƒ‘ãƒ¼ãƒ„ã‚’è¿½åŠ ã€‚
 		*/
 		void AddParts(const STLString& a_parts_name);
 
-		/** ÅŒã‚Ìƒp[ƒc‚Éƒo[ƒeƒbƒNƒX‚ğ’Ç‰ÁB
+		/** æœ€å¾Œã®ãƒ‘ãƒ¼ãƒ„ã«ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ã‚’è¿½åŠ ã€‚
 		*/
 		void AddVertex(const T& a_vertex);
 
-		/** ƒo[ƒeƒbƒNƒX‚Ì—e—ÊŠm•ÛB
+		/** ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ã®å®¹é‡ç¢ºä¿ã€‚
 		*/
 		void ReserveVertex(s32 a_count_of);
 
-		/** ƒo[ƒeƒNƒX‚ÌƒNƒŠƒAB
+		/** ãƒãƒ¼ãƒ†ã‚¯ã‚¹ã®ã‚¯ãƒªã‚¢ã€‚
 		*/
 		void ClearVertex();
 
@@ -95,19 +95,19 @@ namespace NBsys{namespace NVertex
 		*/
 		s32 GetMaxParts();
 
-		/** ƒo[ƒeƒbƒNƒX”B
+		/** ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹æ•°ã€‚
 		*/
 		s32 GetVertexCountOf(s32 a_parts_index);
 
-		/** ‘Sƒo[ƒeƒbƒNƒX”B
+		/** å…¨ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹æ•°ã€‚
 		*/
 		s32 GetVertexAllCountOf();
 
-		/** ƒo[ƒeƒbƒNƒXƒIƒtƒZƒbƒgB
+		/** ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ã‚ªãƒ•ã‚»ãƒƒãƒˆã€‚
 		*/
 		s32 GetVertexOffset(s32 a_parts_index);
 
-		/** GetVertexPointerB
+		/** GetVertexPointerã€‚
 		*/
 		const typename Vertex<T>::VertexType* GetVertexPointer() const;
 

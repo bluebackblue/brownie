@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒAƒgƒ~ƒbƒN•Ï”B
+ * @brief ã‚¢ãƒˆãƒŸãƒƒã‚¯å¤‰æ•°ã€‚
 */
 
 
@@ -33,7 +33,7 @@
 */
 namespace NBlib
 {
-	/** g—p‰Â”\‚ÈŒ^‚Ì—ñ‹“B
+	/** ä½¿ç”¨å¯èƒ½ãªå‹ã®åˆ—æŒ™ã€‚
 	*/
 	template <typename T> class AtomicValue_Check;
 	template <> class AtomicValue_Check<s8>{};
@@ -47,7 +47,7 @@ namespace NBlib
 	template <> class AtomicValue_Check<bool>{};
 
 
-	/** AtomicValueB
+	/** AtomicValueã€‚
 	*/
 	template <typename T> class AtomicValue
 	{
@@ -119,9 +119,9 @@ namespace NBlib
 		}
 
 
-		/** “ü‚ê‘Ö‚¦B
+		/** å…¥ã‚Œæ›¿ãˆã€‚
 
-		‘ã“ü’¼‘O‚Ì’l‚ğ•Ô‚·B
+		ä»£å…¥ç›´å‰ã®å€¤ã‚’è¿”ã™ã€‚
 
 		*/
 		T Exchange(T a_value)
@@ -138,7 +138,7 @@ namespace NBlib
 			#endif
 		}
 
-		/** ‰ÁZB
+		/** åŠ ç®—ã€‚
 		*/
 		void Add(s32 a_add_value)
 		{
@@ -153,9 +153,9 @@ namespace NBlib
 			#endif
 		}
 
-		/** Œ¸ZB
+		/** æ¸›ç®—ã€‚
 
-		Œ¸Z‘O‚Ì’l‚ğ•Ô‚µ‚Ü‚·B
+		æ¸›ç®—å‰ã®å€¤ã‚’è¿”ã—ã¾ã™ã€‚
 
 		*/
 		s32 Sub(s32 a_sub_value)
@@ -173,19 +173,19 @@ namespace NBlib
 		}
 
 	private:
-		/** copy constructor‹Ö~B
+		/** copy constructorç¦æ­¢ã€‚
 		*/
 		AtomicValue(const AtomicValue& a_this) = delete;
 
 	private:
-		/** ƒRƒs[‹Ö~B
+		/** ã‚³ãƒ”ãƒ¼ç¦æ­¢ã€‚
 		*/
 		void operator =(const AtomicValue& a_this) = delete;
 
 	};
 
 
-	/** AtomicValueB
+	/** AtomicValueã€‚
 	*/
 	template <> class AtomicValue<bool>
 	{
@@ -258,9 +258,9 @@ namespace NBlib
 			#endif
 		}
 
-		/** “ü‚ê‘Ö‚¦B
+		/** å…¥ã‚Œæ›¿ãˆã€‚
 
-		‘ã“ü’¼‘O‚Ì’l‚ğ•Ô‚·B
+		ä»£å…¥ç›´å‰ã®å€¤ã‚’è¿”ã™ã€‚
 
 		*/
 		bool Exchange(bool a_value)
@@ -278,12 +278,12 @@ namespace NBlib
 		}
 
 	private:
-		/** copy constructor‹Ö~B
+		/** copy constructorç¦æ­¢ã€‚
 		*/
 		AtomicValue(const AtomicValue& a_this) = delete;
 
 	private:
-		/** ƒRƒs[‹Ö~B
+		/** ã‚³ãƒ”ãƒ¼ç¦æ­¢ã€‚
 		*/
 		void operator =(const AtomicValue& a_this) = delete;
 

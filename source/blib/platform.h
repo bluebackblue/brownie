@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒvƒ‰ƒbƒgƒtƒH[ƒ€B
+ * @brief ãƒ—ãƒ©ãƒƒãƒˆãƒ•ã‚©ãƒ¼ãƒ ã€‚
 */
 
 
@@ -14,7 +14,7 @@
 #include <brownie_config/brownie_config.h>
 
 
-/** ƒvƒ‰ƒbƒgƒtƒH[ƒ€B
+/** ãƒ—ãƒ©ãƒƒãƒˆãƒ•ã‚©ãƒ¼ãƒ ã€‚
 */
 #if defined(PLATFORM_VCWIN)
 
@@ -31,7 +31,7 @@
 #endif
 
 
-/** ƒrƒbƒgB
+/** ãƒ“ãƒƒãƒˆã€‚
 */
 #if defined(ROM_32BIT)
 
@@ -48,7 +48,7 @@
 #endif
 
 
-/** ƒƒ€B
+/** ãƒ­ãƒ ã€‚
 */
 #if defined(ROM_MASTER)
 

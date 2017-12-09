@@ -1,11 +1,11 @@
-
+Ôªø
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief åoòHíTç∏ÅB
+ * @brief ÁµåË∑ØÊé¢Êüª„ÄÇ
 */
 
 
@@ -44,14 +44,14 @@ namespace NBsys{namespace NRootSearch
 	{
 	}
 
-	/** ê⁄ë±êÊÅAÉmÅ[ÉhÉCÉìÉfÉNÉXéÊìæÅB
+	/** Êé•Á∂öÂÖà„ÄÅ„Éé„Éº„Éâ„Ç§„É≥„Éá„ÇØ„ÇπÂèñÂæó„ÄÇ
 	*/
 	RootSearch_NodeIndex RootSearch_Connect::GetNodeIndex()
 	{
 		return this->nodeindex_to;
 	}
 
-	/** ÉRÉXÉgÅB
+	/** „Ç≥„Çπ„Éà„ÄÇ
 	*/
 	s32 RootSearch_Connect::GetCost()
 	{

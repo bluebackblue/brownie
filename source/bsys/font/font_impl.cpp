@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒtƒHƒ“ƒgB
+ * @brief ãƒ•ã‚©ãƒ³ãƒˆã€‚
 */
 
 
@@ -67,7 +67,7 @@ namespace NBsys{namespace NFont
 
 		#if defined(PLATFORM_VCWIN)
 		{
-			//ƒfƒoƒCƒXƒRƒ“ƒeƒLƒXƒgB
+			//ãƒ‡ãƒã‚¤ã‚¹ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã€‚
 			HWND t_handle = GetDesktopWindow();
 			HDC t_hdc_desktop = GetDC(t_handle);
 			this->hdc = CreateCompatibleDC(t_hdc_desktop);
@@ -101,7 +101,7 @@ namespace NBsys{namespace NFont
 
 				::GetTextMetricsW(this->hdc,&t_text_metric);
 
-				//ƒTƒCƒYæ“¾B
+				//ã‚µã‚¤ã‚ºå–å¾—ã€‚
 				{
 					MAT2 t_mat2 = {
 						{0,1,},
@@ -113,7 +113,7 @@ namespace NBsys{namespace NFont
 					ASSERT(t_buffer_size <= sizeof(t_buffer));
 				}
 
-				//ƒf[ƒ^æ“¾B
+				//ãƒ‡ãƒ¼ã‚¿å–å¾—ã€‚
 				{
 					MAT2 t_mat2 = {
 						{0,1,},
@@ -125,7 +125,7 @@ namespace NBsys{namespace NFont
 				}
 			}
 
-			//ƒtƒHƒ“ƒgƒXƒe[ƒ^ƒXB
+			//ãƒ•ã‚©ãƒ³ãƒˆã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã€‚
 			{
 				t_font_state.x = t_glyphmetrics.gmptGlyphOrigin.x;
 				t_font_state.y = t_text_metric.tmAscent - t_glyphmetrics.gmptGlyphOrigin.y;
@@ -137,7 +137,7 @@ namespace NBsys{namespace NFont
 				t_font_state.cell_inc_y = t_glyphmetrics.gmCellIncY;
 			}
 
-			//ƒsƒNƒZƒ‹B
+			//ãƒ”ã‚¯ã‚»ãƒ«ã€‚
 			{
 				u8* t_dest_data = &a_dest_data.get()[a_offset];
 				Memory::memset(t_dest_data,0x00,a_dest_width * a_dest_height * 4);

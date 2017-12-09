@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒfƒoƒbƒOƒƒjƒ…[B
+ * @brief ãƒ‡ãƒãƒƒã‚°ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã€‚
 */
 
 
@@ -34,28 +34,28 @@ namespace NBsys{namespace NDebugMenu
 		{
 			enum Id
 			{
-				//©—R”z’uB
+				//è‡ªç”±é…ç½®ã€‚
 				Free,
 
-				//cB
+				//ç¸¦ã€‚
 				Vertical,
 
-				//‰¡B
+				//æ¨ªã€‚
 				Horizontal,
 			};
 		};
 
 	public:
-		/** ©•ªB
+		/** è‡ªåˆ†ã€‚
 		*/
 		DebugMenu_Window_Base* me;
 
-		/** eB
+		/** è¦ªã€‚
 		*/
 		DebugMenu_Window_Base* parent;
 
 	public:
-		/** ƒ‚[ƒhB
+		/** ãƒ¢ãƒ¼ãƒ‰ã€‚
 		*/
 		Mode::Id mode;
 
@@ -63,31 +63,31 @@ namespace NBsys{namespace NDebugMenu
 		*/
 		STLVector<sharedptr<DebugMenu_Window_Base>>::Type child_list;
 
-		/** [İ’è’l]©•ª‚ÌˆÊ’uB
+		/** [è¨­å®šå€¤]è‡ªåˆ†ã®ä½ç½®ã€‚
 		*/
 		f32 offset_x;
 		f32 offset_y;
 
-		/** [İ’è’l]©•ª‚ÌƒTƒCƒYB
+		/** [è¨­å®šå€¤]è‡ªåˆ†ã®ã‚µã‚¤ã‚ºã€‚
 		*/
 		f32 width;
 		f32 height;
 
-		/** •`‰æ—Dæ“xB
+		/** æç”»å„ªå…ˆåº¦ã€‚
 		*/
 		f32 z;
 
-		/** [ŒvZŒ‹‰Ê]©•ª‚ÌˆÊ’uB
+		/** [è¨ˆç®—çµæœ]è‡ªåˆ†ã®ä½ç½®ã€‚
 		*/
 		f32 calc_x;
 		f32 calc_y;
 
-		/** [ŒvZŒ‹‰Ê]©•ª‚ÌƒTƒCƒYB
+		/** [è¨ˆç®—çµæœ]è‡ªåˆ†ã®ã‚µã‚¤ã‚ºã€‚
 		*/
 		f32 calc_w;
 		f32 calc_h;
 
-		/** [ŒvZŒ‹‰Ê]e‚ÌˆÊ’uB
+		/** [è¨ˆç®—çµæœ]è¦ªã®ä½ç½®ã€‚
 		*/
 		f32 calc_parent_x;
 		f32 calc_parent_y;
@@ -133,23 +133,23 @@ namespace NBsys{namespace NDebugMenu
 		*/
 		void AddChild(const sharedptr<DebugMenu_Window_Base>& a_window);
 
-		/** •\¦ˆÊ’uŒvZB
+		/** è¡¨ç¤ºä½ç½®è¨ˆç®—ã€‚
 		*/
 		virtual void CalcRect(f32 a_parent_offset_x,f32 a_parent_offset_y);
 
-		/** XVB
+		/** æ›´æ–°ã€‚
 		*/
 		virtual void Update();
 
-		/** •`‰æB
+		/** æç”»ã€‚
 		*/
 		virtual void Draw();
 
-		/** íœƒŠƒNƒGƒXƒgBæ“¾B
+		/** å‰Šé™¤ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚å–å¾—ã€‚
 		*/
 		virtual bool GetDeleteRequest();
 
-		/** ƒR[ƒ‹ƒoƒbƒNBe‚ªÚ‘±‚³‚ê‚½’¼Œã‚ÉŒÄ‚Ño‚³‚ê‚éB
+		/** ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã€‚è¦ªãŒæ¥ç¶šã•ã‚ŒãŸç›´å¾Œã«å‘¼ã³å‡ºã•ã‚Œã‚‹ã€‚
 		*/
 		virtual void CallBack_SetParent();
 	};

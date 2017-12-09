@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒtƒ@ƒCƒ‹B
+ * @brief ãƒ•ã‚¡ã‚¤ãƒ«ã€‚
 */
 
 
@@ -45,14 +45,14 @@ namespace NBsys{namespace NFile
 	{
 	}
 
-	/** ƒtƒ@ƒCƒ‹ƒTƒCƒYæ“¾B
+	/** ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºå–å¾—ã€‚
 	*/
 	s64 File_Pack_FileHandle::GetSize()
 	{
 		return this->data_size;
 	}
 
-	/** “Ç‚İ‚İB
+	/** èª­ã¿è¾¼ã¿ã€‚
 	*/
 	bool File_Pack_FileHandle::Read(u8* a_buffer,s64 a_size,s64 a_offset)
 	{

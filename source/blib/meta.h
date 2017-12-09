@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒƒ^B
+ * @brief ãƒ¡ã‚¿ã€‚
 */
 
 
@@ -24,7 +24,7 @@
 */
 namespace NBlib
 {
-	/** íœqB
+	/** å‰Šé™¤å­ã€‚
 	*/
 	template <typename T> struct default_delete
 	{
@@ -39,7 +39,7 @@ namespace NBlib
 		}
 	};
 
-	/** íœqB
+	/** å‰Šé™¤å­ã€‚
 	*/
 	template <typename T> struct default_delete<T[]>
 	{
@@ -52,7 +52,7 @@ namespace NBlib
 		}
 	};
 
-	/** íœqB‚È‚É‚à‚µ‚È‚¢B
+	/** å‰Šé™¤å­ã€‚ãªã«ã‚‚ã—ãªã„ã€‚
 	*/
 	struct null_delete
 	{
@@ -66,7 +66,7 @@ namespace NBlib
 	};
 
 
-	/** íœqBvoid‚Í‹Ö~B
+	/** å‰Šé™¤å­ã€‚voidã¯ç¦æ­¢ã€‚
 	*/
 	template <> struct default_delete<void>
 	{
@@ -75,9 +75,9 @@ namespace NBlib
 		void operator ()(void* a_instance) const noexcept = delete;
 	};
 
-	/** íœqBplacement_delete
+	/** å‰Šé™¤å­ã€‚placement_delete
 	
-	uplacement newv‚É‚æ‚Á‚ÄŠm•Û‚³‚ê‚½ƒNƒ‰ƒXƒ|ƒCƒ“ƒ^[‚Í–¾¦“I‚ÉƒfƒXƒgƒ‰ƒNƒ^[‚ğŒÄ‚Ño‚·•K—v‚ª‚ ‚è‚Ü‚·B
+	ã€Œplacement newã€ã«ã‚ˆã£ã¦ç¢ºä¿ã•ã‚ŒãŸã‚¯ãƒ©ã‚¹ãƒã‚¤ãƒ³ã‚¿ãƒ¼ã¯æ˜ç¤ºçš„ã«ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ãƒ¼ã‚’å‘¼ã³å‡ºã™å¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚
 
 	*/
 	template <class T> struct placement_delete
@@ -91,7 +91,7 @@ namespace NBlib
 		}
 	};
 
-	/** íœqBrelease
+	/** å‰Šé™¤å­ã€‚release
 	*/
 	template <class T> struct release_delete
 	{
@@ -104,7 +104,7 @@ namespace NBlib
 		}
 	};
 
-	/** B==true‚Ìê‡‚Ì‚İtype‚ÌéŒ¾‚ªŠm’è‚·‚éB
+	/** B==trueã®å ´åˆã®ã¿typeã®å®£è¨€ãŒç¢ºå®šã™ã‚‹ã€‚
 	*/
 	template <bool B,class T=void> struct enable_if
 	{
@@ -114,7 +114,7 @@ namespace NBlib
 		typedef T type;
 	};
 
-	/** ˆê•û‚ÌŒ^‚ğ‚à‚¤ˆê•û‚ÌŒ^‚É•ÏŠ·‚Å‚«‚é‚©‚Ç‚¤‚©‚ğƒeƒXƒg‚µ‚Ü‚·B
+	/** ä¸€æ–¹ã®å‹ã‚’ã‚‚ã†ä¸€æ–¹ã®å‹ã«å¤‰æ›ã§ãã‚‹ã‹ã©ã†ã‹ã‚’ãƒ†ã‚¹ãƒˆã—ã¾ã™ã€‚
 	*/
 	template <class FROM,class TO> struct is_convertible
 	{
@@ -130,15 +130,15 @@ namespace NBlib
 			char dummy[2];
 		};
 
-		/** ‚±‚ÌŠÖ”‚ªg—p‚³‚ê‚é‚Æ¬Œ÷B
+		/** ã“ã®é–¢æ•°ãŒä½¿ç”¨ã•ã‚Œã‚‹ã¨æˆåŠŸã€‚
 		*/
 		static SUCCESSTYPE ConvertibleProc(TO);
 
-		/** ‚±‚ÌŠÖ”‚ªg—p‚³‚ê‚é‚Æ¸”sB
+		/** ã“ã®é–¢æ•°ãŒä½¿ç”¨ã•ã‚Œã‚‹ã¨å¤±æ•—ã€‚
 		*/
 		static FAILEDTYPE ConvertibleProc(...);
 
-		/** FROMŒ^‚ğ•Ô‚·ŠÖ”B
+		/** FROMå‹ã‚’è¿”ã™é–¢æ•°ã€‚
 		*/
 		static FROM FromTypeProc();
 

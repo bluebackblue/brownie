@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ‚c‚R‚c‚P‚PB
+ * @brief ï¼¤ï¼“ï¼¤ï¼‘ï¼‘ã€‚
 */
 
 
@@ -25,7 +25,7 @@
 #if(BSYS_D3D11_ENABLE)
 namespace NBsys{namespace ND3d11
 {
-	/** ƒo[ƒeƒbƒNƒXƒVƒF[ƒ_[ì¬B
+	/** ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ä½œæˆã€‚
 	*/
 	class D3d11_Impl_ActionBatching_VertexShader_Create : public NBsys::NActionBatching::ActionBatching_ActionItem_Base
 	{
@@ -63,21 +63,21 @@ namespace NBsys{namespace ND3d11
 
 	public:
 
-		/** ƒAƒNƒVƒ‡ƒ“ŠJnB
+		/** ã‚¢ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹ã€‚
 		*/
 		virtual void Start()
 		{
 		}
 
-		/** ƒAƒNƒVƒ‡ƒ“’†B
+		/** ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ä¸­ã€‚
 		*/
 		virtual s32 Do(f32& a_delta,bool a_endrequest)
 		{
 			if(a_endrequest == true){
-				//’†’fB
+				//ä¸­æ–­ã€‚
 			}
 
-			//ƒ[ƒhB
+			//ãƒ­ãƒ¼ãƒ‰ã€‚
 			if(this->vertexshader != nullptr){
 				if(this->vertexshader->fileobject != nullptr){
 					if(this->vertexshader->fileobject->IsBusy() == true){
@@ -91,7 +91,7 @@ namespace NBsys{namespace ND3d11
 
 			this->asyncresult.Set(true);
 
-			//¬Œ÷B
+			//æˆåŠŸã€‚
 			return 1;
 		}
 

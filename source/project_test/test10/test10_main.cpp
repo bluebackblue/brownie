@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒCƒ“ƒNƒ‹[ƒhB
+ * @brief ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ã€‚
 */
 
 
@@ -49,7 +49,7 @@ static sharedptr<NBsys::NWindow::Window> s_window;
 static sharedptr<NBsys::ND3d11::D3d11> s_d3d11;
 
 
-/** ƒ‰ƒCƒ“•`‰æB
+/** ãƒ©ã‚¤ãƒ³æç”»ã€‚
 */
 sharedptr<NCommon::D3d11_DrawLine_Manager> s_drawline_manager;
 
@@ -67,16 +67,16 @@ private:
 	*/
 	bool draw;
 
-	/** ƒuƒŒƒ“ƒhƒXƒe[ƒ^ƒXB
+	/** ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã€‚
 	*/
 	s32 blendstate_id;
 
-	/** ƒ‰ƒXƒ^ƒ‰ƒCƒU[B
+	/** ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ãƒ¼ã€‚
 	*/
 	s32 rasterizerstate_cull_back_id;
 	s32 rasterizerstate_cull_none_id;
 
-	/** ƒJƒƒ‰B
+	/** ã‚«ãƒ¡ãƒ©ã€‚
 	*/
 	NBsys::NGeometry::Geometry_Vector3 camera_position;
 	NBsys::NGeometry::Geometry_Vector3 camera_up;
@@ -86,7 +86,7 @@ private:
 	f32 camera_far;
 	f32 camera_time;
 
-	/** ƒ^[ƒQƒbƒgB
+	/** ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã€‚
 	*/
 	NBsys::NGeometry::Geometry_Vector3 target_from;
 	NBsys::NGeometry::Geometry_Vector3 target_to_a;
@@ -110,11 +110,11 @@ public:
 	}
 
 public:
-	/** XVB
+	/** æ›´æ–°ã€‚
 	*/
 	void Update(f32 a_delta)
 	{
-		//ƒ‰ƒCƒ“•`‰æB
+		//ãƒ©ã‚¤ãƒ³æç”»ã€‚
 		s_drawline_manager->PreUpdate();
 
 		switch(this->step){
@@ -124,14 +124,14 @@ public:
 					break;
 				}
 
-				//ƒuƒŒƒ“ƒhƒXƒe[ƒ^ƒXB
+				//ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã€‚
 				this->blendstate_id = s_d3d11->CreateBlendState(true);
 
-				//ƒ‰ƒXƒ^ƒ‰ƒCƒU[B
+				//ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ãƒ¼ã€‚
 				this->rasterizerstate_cull_back_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::BACK);
 				this->rasterizerstate_cull_none_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::NONE);
 
-				//ƒJƒƒ‰B
+				//ã‚«ãƒ¡ãƒ©ã€‚
 				{
 					this->camera_position = NBsys::NGeometry::Geometry_Vector3(1.0f,10.0f,-20.0f);
 					this->camera_up = NBsys::NGeometry::Geometry_Vector3(0.0f,1.0f,0.0f);
@@ -142,7 +142,7 @@ public:
 					this->camera_time = 0.0f;
 				}
 
-				//ƒ^[ƒQƒbƒgB
+				//ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã€‚
 				{
 					this->target_from.Set(10,10,10);
 					this->target_to_a.Set(0,0,10);
@@ -160,7 +160,7 @@ public:
 			{
 				this->camera_time += a_delta;
 
-				//ƒJƒƒ‰‰ñ“]B
+				//ã‚«ãƒ¡ãƒ©å›è»¢ã€‚
 				this->camera_position.x = Math::cosf(this->camera_time / 10) * 20;
 				this->camera_position.z = Math::sinf(this->camera_time / 10) * 20;
 
@@ -168,28 +168,28 @@ public:
 		}
 	}
 
-	/** •`‰æB
+	/** æç”»ã€‚
 	*/
 	void Draw()
 	{
 		s_d3d11->Render_ViewPort(0.0f,0.0f,static_cast<f32>(s_width),static_cast<f32>(s_height));
 
-		//ƒNƒŠƒAB
+		//ã‚¯ãƒªã‚¢ã€‚
 		s_d3d11->Render_ClearRenderTargetView(NBsys::NColor::Color_F(0.3f,0.3f,0.8f,1.0f));
 
-		//[“xƒXƒeƒ“ƒVƒ‹ƒNƒŠƒAB
+		//æ·±åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ã‚¯ãƒªã‚¢ã€‚
 		s_d3d11->Render_ClearDepthStencilView();
 
 		if(this->draw){
-			//ƒvƒƒWƒFƒNƒVƒ‡ƒ“B
+			//ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³ã€‚
 			NBsys::NGeometry::Geometry_Matrix_44 t_projection;
 			t_projection.Set_PerspectiveProjectionMatrix(static_cast<f32>(s_width),static_cast<f32>(s_height),this->camera_fov_deg,this->camera_near,this->camera_far);
 
-			//ƒrƒ…[B
+			//ãƒ“ãƒ¥ãƒ¼ã€‚
 			NBsys::NGeometry::Geometry_Matrix_44 t_view;
 			t_view.Set_ViewMatrix(this->camera_target,this->camera_position,this->camera_up);
 
-			//ƒ‰ƒCƒ“•`‰æB
+			//ãƒ©ã‚¤ãƒ³æç”»ã€‚
 			s_drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(-100,0,0),NBsys::NGeometry::Geometry_Vector3(100,0,0),NBsys::NColor::Color_F(1.0f,0.0f,0.0f,1.0f));
 			s_drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(0,-100,0),NBsys::NGeometry::Geometry_Vector3(0,100,0),NBsys::NColor::Color_F(0.0f,1.0f,0.0f,1.0f));
 			s_drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(0,0,-100),NBsys::NGeometry::Geometry_Vector3(0,0,100),NBsys::NColor::Color_F(0.0f,0.0f,1.0f,1.0f));
@@ -198,31 +198,31 @@ public:
 				NBsys::NGeometry::Geometry_Matrix_44 t_matrix_a;
 				NBsys::NGeometry::Geometry_Matrix_44 t_matrix_b;
 
-				//from‚©‚ça‚ğŒü‚­ƒ}ƒgƒŠƒbƒNƒXB
+				//fromã‹ã‚‰aã‚’å‘ããƒãƒˆãƒªãƒƒã‚¯ã‚¹ã€‚
 				t_matrix_a.Set_Lookat(this->target_from,this->target_to_a,NBsys::NGeometry::Geometry_Vector3(0,1,0));
-				//from‚©‚çb‚ğŒü‚­ƒ}ƒgƒŠƒbƒNƒXB
+				//fromã‹ã‚‰bã‚’å‘ããƒãƒˆãƒªãƒƒã‚¯ã‚¹ã€‚
 				t_matrix_b.Set_Lookat(this->target_from,this->target_to_b,NBsys::NGeometry::Geometry_Vector3(0,1,0));
 
-				//from‚©‚ça‚ğŒü‚­p¨B
+				//fromã‹ã‚‰aã‚’å‘ãå§¿å‹¢ã€‚
 				NBsys::NGeometry::Geometry_Quaternion t_quat_a = t_matrix_a.Make_Quaternion();
-				//from‚©‚çb‚ğŒü‚­p¨B
+				//fromã‹ã‚‰bã‚’å‘ãå§¿å‹¢ã€‚
 				NBsys::NGeometry::Geometry_Quaternion t_quat_b = t_matrix_b.Make_Quaternion();
 
-				//ƒ‰ƒCƒ“•`‰æB
+				//ãƒ©ã‚¤ãƒ³æç”»ã€‚
 				{
 					NBsys::NGeometry::Geometry_Matrix_44 t_matrix_a = t_quat_a.Make_Matrix();
 					NBsys::NGeometry::Geometry_Vector3 t_to_a = this->target_from + t_matrix_a.Make_AxisZ() * 5;
 					s_drawline_manager->DrawLine(this->target_from,t_to_a,NBsys::NColor::Color_F(0.0f,0.0f,1.0f,1.0f));
 				}
 
-				//ƒ‰ƒCƒ“•`‰æB
+				//ãƒ©ã‚¤ãƒ³æç”»ã€‚
 				{
 					NBsys::NGeometry::Geometry_Matrix_44 t_matrix_b = t_quat_b.Make_Matrix();
 					NBsys::NGeometry::Geometry_Vector3 t_to_b = this->target_from + t_matrix_b.Make_AxisZ() * 5;
 					s_drawline_manager->DrawLine(this->target_from,t_to_b,NBsys::NColor::Color_F(1.0f,0.0f,0.0f,1.0f));
 				}
 
-				//ƒ‰ƒCƒ“•`‰æB
+				//ãƒ©ã‚¤ãƒ³æç”»ã€‚
 				{
 					NBsys::NGeometry::Geometry_Matrix_44 t_matrix_b = t_quat_a.Make_Slerp(t_quat_b,Math::absf(Math::cosf(this->camera_time)));
 					NBsys::NGeometry::Geometry_Vector3 t_to_b = this->target_from + t_matrix_b.Make_AxisZ() * 20;
@@ -230,7 +230,7 @@ public:
 				}
 			}
 
-			//ƒ‰ƒCƒ“•`‰æB
+			//ãƒ©ã‚¤ãƒ³æç”»ã€‚
 			s_drawline_manager->Render(t_view * t_projection);
 		}
 	}
@@ -256,10 +256,10 @@ void Test_Main()
 	s_window->Create(DEF_TEST_TITLE,s_width,s_height);
 	s_d3d11->Render_Create(s_window,s_width,s_height);
 
-	//ƒ‰ƒCƒ“•`‰æB
+	//ãƒ©ã‚¤ãƒ³æç”»ã€‚
 	s_drawline_manager.reset(new NCommon::D3d11_DrawLine_Manager(s_d3d11));
 
-	//ƒpƒtƒH[ƒ}ƒ“ƒXƒJƒEƒ“ƒ^[B
+	//ãƒ‘ãƒ•ã‚©ãƒ¼ãƒãƒ³ã‚¹ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã€‚
 	u64 t_pcounter = 0ULL;
 
 	while(true){
@@ -270,7 +270,7 @@ void Test_Main()
 			break;
 		}
 
-		//ƒpƒtƒH[ƒ}ƒ“ƒXƒJƒEƒ“ƒ^[B
+		//ãƒ‘ãƒ•ã‚©ãƒ¼ãƒãƒ³ã‚¹ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã€‚
 		float t_delta = 0.0f;
 		{
 			u64 t_pcounter_now = PerformanceCounter::GetPerformanceCounter();
@@ -282,13 +282,13 @@ void Test_Main()
 			t_pcounter = t_pcounter_now;
 		}
 
-		//XVB
+		//æ›´æ–°ã€‚
 		s_app->Update(t_delta);
 
-		//ƒŠƒNƒGƒXƒgˆ—B
+		//ãƒªã‚¯ã‚¨ã‚¹ãƒˆå‡¦ç†ã€‚
 		s_d3d11->Render_Main();
 
-		//•`‰æB
+		//æç”»ã€‚
 		s_app->Draw();
 
 		if(s_d3d11->Render_Present() == false){

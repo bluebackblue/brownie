@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ushareptrvuweakptrvB
+ * @brief ã€Œshareptrã€ã€Œweakptrã€ã€‚
 */
 
 
@@ -35,7 +35,7 @@ namespace NBlib
 
 	#else
 
-	/** [static]Šm•ÛB
+	/** [static]ç¢ºä¿ã€‚
 	*/
 	void* sharedptrbase::Alloc(size_t a_size)
 	{
@@ -60,7 +60,7 @@ namespace NBlib
 		return nullptr;
 	}
 
-	/** [static]‰ğ•úB
+	/** [static]è§£æ”¾ã€‚
 	*/
 	void sharedptrbase::Free(void* a_pointer)
 	{

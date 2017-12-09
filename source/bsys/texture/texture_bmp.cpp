@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
 * Copyright (c) 2017 blueback
 * Released under the MIT License
 * https://github.com/bluebackblue/brownie/blob/master/LICENSE
 * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
-* @brief ƒeƒNƒXƒ`ƒƒ[B
+* @brief ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ã€‚
 */
 
 
@@ -35,58 +35,58 @@ namespace NBsys{namespace NTexture
 	{
 		const u8* t_raw = reinterpret_cast<const u8*>(a_data.get());
 
-		//ƒ^ƒCƒvB
+		//ã‚¿ã‚¤ãƒ—ã€‚
 		u16 t_header_type =	Memory::Copy<u16>(t_raw);
 		if(t_header_type != 0x4D42){
 			ASSERT(0);
 			return nullptr;
 		}
 
-		//ƒtƒ@ƒCƒ‹ƒTƒCƒYB
+		//ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºã€‚
 		u32 t_heaer_filesize = Memory::Copy<u32>(t_raw);
 		if(t_heaer_filesize > static_cast<u32>(a_size)){
 			ASSERT(0);
 			return nullptr;
 		}
 
-		//—\–ñB
+		//äºˆç´„ã€‚
 		u16 t_header_reserved1 = Memory::Copy<u16>(t_raw);
 		u16 t_header_reserved2 = Memory::Copy<u16>(t_raw);
 
-		//ƒIƒtƒZƒbƒgB
+		//ã‚ªãƒ•ã‚»ãƒƒãƒˆã€‚
 		u32 t_data_offset = Memory::Copy<u32>(t_raw);
 
-		//\‘¢‘Ì‚ÌƒTƒCƒYB
+		//æ§‹é€ ä½“ã®ã‚µã‚¤ã‚ºã€‚
 		u32 t_size = Memory::Copy<u32>(t_raw);
 
-		//ƒrƒbƒgƒ}ƒbƒv‚Ì•(ƒsƒNƒZƒ‹)B
+		//ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ã®å¹…(ãƒ”ã‚¯ã‚»ãƒ«)ã€‚
 		u32 t_width = Memory::Copy<u32>(t_raw);
 
-		//ƒrƒbƒgƒ}ƒbƒv‚Ì‚‚³(ƒsƒNƒZƒ‹)B
+		//ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ã®é«˜ã•(ãƒ”ã‚¯ã‚»ãƒ«)ã€‚
 		u32 t_height = Memory::Copy<u32>(t_raw);
 
-		//í‚É1B
+		//å¸¸ã«1ã€‚
 		u16 t_planes = Memory::Copy<u16>(t_raw);
 
-		//1ƒsƒNƒZƒ‹•Ó‚è‚Ìƒrƒbƒg”B
+		//1ãƒ”ã‚¯ã‚»ãƒ«è¾ºã‚Šã®ãƒ“ãƒƒãƒˆæ•°ã€‚
 		u16 t_bit_count = Memory::Copy<u16>(t_raw);
 
-		//ˆ³kŒ`‘Ô –³ˆ³k‚È‚ç‚ÎBI_RGB(16,256F‚Ìê‡)B
+		//åœ§ç¸®å½¢æ…‹ ç„¡åœ§ç¸®ãªã‚‰ã°BI_RGB(16,256è‰²ã®å ´åˆ)ã€‚
 		u32 t_compression = Memory::Copy<u32>(t_raw);
 
-		//‰æ‘œ‚ÌƒoƒCƒg” biCompression‚ªBI_RGB‚Ìê‡‚Í0‚Å‚à‚æ‚¢B
+		//ç”»åƒã®ãƒã‚¤ãƒˆæ•° biCompressionãŒBI_RGBã®å ´åˆã¯0ã§ã‚‚ã‚ˆã„ã€‚
 		u32 t_size_image = Memory::Copy<u32>(t_raw);
 
-		//X•ûŒü‚Ì1ƒsƒNƒZƒ‹•Ó‚è‚Ìƒ[ƒgƒ‹”B
+		//Xæ–¹å‘ã®1ãƒ”ã‚¯ã‚»ãƒ«è¾ºã‚Šã®ãƒ¡ãƒ¼ãƒˆãƒ«æ•°ã€‚
 		u32 t_x_pels_per_meter = Memory::Copy<u32>(t_raw);
 
-		//Y•ûŒü‚Ì1ƒsƒNƒZƒ‹•Ó‚è‚Ìƒ[ƒgƒ‹”B
+		//Yæ–¹å‘ã®1ãƒ”ã‚¯ã‚»ãƒ«è¾ºã‚Šã®ãƒ¡ãƒ¼ãƒˆãƒ«æ•°ã€‚
 		u32 t_y_pels_per_meter = Memory::Copy<u32>(t_raw);
 
-		//ƒJƒ‰[ƒe[ƒuƒ‹‚ÉŠÜ‚Ü‚ê‚éF‚Ì”(0ê‡‚Í‚»‚ÌŒ^‚ÌÅ‘å‚É‚È‚é)B
+		//ã‚«ãƒ©ãƒ¼ãƒ†ãƒ¼ãƒ–ãƒ«ã«å«ã¾ã‚Œã‚‹è‰²ã®æ•°(0å ´åˆã¯ãã®å‹ã®æœ€å¤§ã«ãªã‚‹)ã€‚
 		u32 t_color_size = Memory::Copy<u32>(t_raw);
 
-		//d—v‚ÈF‚Ì” 0‚Ìê‡‚Í‘S•”d—vB
+		//é‡è¦ãªè‰²ã®æ•° 0ã®å ´åˆã¯å…¨éƒ¨é‡è¦ã€‚
 		u32 t_color_size_important = Memory::Copy<u32>(t_raw);
 
 		const u8* t_src = reinterpret_cast<const u8*>(a_data.get()) + t_data_offset;

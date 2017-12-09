@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief OpenGLB
+ * @brief OpenGLã€‚
 */
 
 
@@ -39,7 +39,7 @@ namespace NBsys{namespace NOpengl
 		*/
 		struct Uniform
 		{
-			/** •Ï”–¼B
+			/** å¤‰æ•°åã€‚
 			*/
 			STLString name;
 
@@ -47,7 +47,7 @@ namespace NBsys{namespace NOpengl
 			*/
 			Opengl_ShaderValueType::Id shadervaluetype;
 
-			/** ”z—ñ”B
+			/** é…åˆ—æ•°ã€‚
 			*/
 			s32 countof;
 
@@ -72,7 +72,7 @@ namespace NBsys{namespace NOpengl
 		*/
 		struct Attribute
 		{
-			/** •Ï”–¼B
+			/** å¤‰æ•°åã€‚
 			*/
 			STLString name;
 

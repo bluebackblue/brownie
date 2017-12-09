@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒtƒ@ƒCƒ‹B
+ * @brief ãƒ•ã‚¡ã‚¤ãƒ«ã€‚
 */
 
 
@@ -33,20 +33,20 @@ namespace NBsys{namespace NFile
 		virtual ~File_Allocator(){}
 
 	public:
-		/** Œp³æ‚Åƒ[ƒh‚ÌŠm•Ûˆ—‚ğ‹Lq‚·‚éB
+		/** ç¶™æ‰¿å…ˆã§ãƒ­ãƒ¼ãƒ‰æ™‚ã®ç¢ºä¿å‡¦ç†ã‚’è¨˜è¿°ã™ã‚‹ã€‚
 		*/
 		virtual void* Alloc(u32 a_size) = 0;
 
-		/** Œp³æ‚Å‰ğ•úˆ—‚ğ‹Lq‚·‚éB
+		/** ç¶™æ‰¿å…ˆã§è§£æ”¾å‡¦ç†ã‚’è¨˜è¿°ã™ã‚‹ã€‚
 		*/
 		virtual void Free(void* a_pointer) = 0;
 	};
 
-	/** íœqB
+	/** å‰Šé™¤å­ã€‚
 	*/
 	struct File_Alloc_Deleter
 	{
-		/** íœ‚Ég—p‚·‚éƒAƒƒP[ƒ^B
+		/** å‰Šé™¤ã«ä½¿ç”¨ã™ã‚‹ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿ã€‚
 		*/
 		sharedptr<File_Allocator> allocator;
 
@@ -58,7 +58,7 @@ namespace NBsys{namespace NFile
 		{
 		}
 
-		/** ‰ğ•úˆ—B
+		/** è§£æ”¾å‡¦ç†ã€‚
 		*/
 		void operator ()(void* a_pointer) noexcept
 		{

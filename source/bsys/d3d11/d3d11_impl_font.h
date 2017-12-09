@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ‚c‚R‚c‚P‚PB
+ * @brief ï¼¤ï¼“ï¼¤ï¼‘ï¼‘ã€‚
 */
 
 
@@ -132,7 +132,7 @@ namespace NBsys{namespace ND3d11
 
 	private:
 
-		/** ‘‚«Š·‚¦‰Â”\ˆÊ’u‚ÌŒŸõB
+		/** æ›¸ãæ›ãˆå¯èƒ½ä½ç½®ã®æ¤œç´¢ã€‚
 		*/
 		s32 FindNoLockFontIndex()
 		{
@@ -186,17 +186,17 @@ namespace NBsys{namespace ND3d11
 
 					STLMap<wchar,s32>::iterator t_it = this->maplist.find(t_code);
 					if(t_it != this->maplist.end()){
-						//‚·‚Å‚Éì¬Ï‚İB
+						//ã™ã§ã«ä½œæˆæ¸ˆã¿ã€‚
 						t_font_index = t_it->second;
 						ASSERT(t_font_index >= 0);
 					}else{
-						//‘‚«Š·‚¦‰Â”\ˆÊ’u‚ÌŒŸõB
+						//æ›¸ãæ›ãˆå¯èƒ½ä½ç½®ã®æ¤œç´¢ã€‚
 						t_font_index = this->FindNoLockFontIndex();
 
 						if(t_font_index >= 0){
 							wchar t_old_code = this->list[t_font_index].code;
 							if(t_old_code != nullwchar){
-								//‹ŒƒR[ƒh‚ğíœB
+								//æ—§ã‚³ãƒ¼ãƒ‰ã‚’å‰Šé™¤ã€‚
 								STLMap<wchar,s32>::iterator t_old_it = this->maplist.find(t_old_code);
 								if(t_old_it != this->maplist.end()){
 									this->maplist.erase(t_old_it);
@@ -210,7 +210,7 @@ namespace NBsys{namespace ND3d11
 							}
 							#endif
 
-							//ƒeƒNƒXƒ`ƒƒ[‚É‘‚«‚İB
+							//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ã«æ›¸ãè¾¼ã¿ã€‚
 							NBsys::NFont::Font_State t_font_state = this->font->GetPixel_R8G8B8A8(this->texture->GetPixel(),t_font_index * (this->texturewidth * this->texturewidth * 4),this->texturewidth,this->texturewidth,t_code);
 							t_change = true;
 
@@ -221,7 +221,7 @@ namespace NBsys{namespace ND3d11
 								t_change_max = t_font_index;
 							}
 							
-							//“o˜^B
+							//ç™»éŒ²ã€‚
 							this->list[t_font_index].code = t_code;
 							this->list[t_font_index].lock = true;
 							this->list[t_font_index].fontstate = t_font_state;

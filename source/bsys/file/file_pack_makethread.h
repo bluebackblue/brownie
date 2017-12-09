@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒtƒ@ƒCƒ‹B
+ * @brief ãƒ•ã‚¡ã‚¤ãƒ«ã€‚
 */
 
 
@@ -35,7 +35,7 @@ namespace NBsys{namespace NFile
 	class File_Pack_MakeThread
 	{
 	private:
-		/** ƒƒbƒNƒIƒuƒWƒFƒNƒgB
+		/** ãƒ­ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã€‚
 		*/
 		LockObject lockobject;
 
@@ -49,7 +49,7 @@ namespace NBsys{namespace NFile
 		nonvirtual ~File_Pack_MakeThread();
 
 	public:
-		/** ˆø”B
+		/** å¼•æ•°ã€‚
 		*/
 		struct ThreadArgument
 		{
@@ -97,7 +97,7 @@ namespace NBsys{namespace NFile
 			}
 		};
 
-		/** ƒXƒŒƒbƒhƒƒCƒ“B
+		/** ã‚¹ãƒ¬ãƒƒãƒ‰ãƒ¡ã‚¤ãƒ³ã€‚
 		*/
 		void ThreadMain(ThreadArgument& a_threadargument);
 

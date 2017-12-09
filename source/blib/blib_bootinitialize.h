@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ‰Šú‰»B
+ * @brief åˆæœŸåŒ–ã€‚
 */
 
 
@@ -26,32 +26,32 @@
 */
 namespace NBlib
 {
-	/** ‹N“®‰Šú‰»B
+	/** èµ·å‹•æ™‚åˆæœŸåŒ–ã€‚
 	*/
 	void BootInitialize();
 
-	/** ‰Šú‰»Ï‚İ‚©‚Ç‚¤‚©B
+	/** åˆæœŸåŒ–æ¸ˆã¿ã‹ã©ã†ã‹ã€‚
 	*/
 	bool IsBootInitialize();
 
-	/** ƒOƒ[ƒoƒ‹ŒÅ’è’·ƒAƒƒP[ƒ^B
+	/** ã‚°ãƒ­ãƒ¼ãƒãƒ«å›ºå®šé•·ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿ã€‚
 	*/
 	#if(BLIB_GLOBALFIXEDALLOCATOR_ENABLE)
 	typedef FixedAllocator<BLIB_GLOBALFIXEDALLOCATOR_BLOCKSIZE,BLIB_GLOBALFIXEDALLOCATOR_SIZE> GlobalFixedAllocator_Type;
 	GlobalFixedAllocator_Type& GlobalFixedAllocator_Get();
 	#endif
 
-	/** ƒOƒ[ƒoƒ‹ŒÅ’è’·ƒAƒƒP[ƒ^BƒƒbƒNƒIƒuƒWƒFƒNƒgB
+	/** ã‚°ãƒ­ãƒ¼ãƒãƒ«å›ºå®šé•·ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿ã€‚ãƒ­ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã€‚
 	*/
 	#if(BLIB_GLOBALFIXEDALLOCATOR_ENABLE)
 	LockObject& GlobalFixedAllocator_LockObject();
 	#endif
 
-	/** ƒOƒ[ƒoƒ‹—”B
+	/** ã‚°ãƒ­ãƒ¼ãƒãƒ«ä¹±æ•°ã€‚
 	*/
 	RandomTemplate<Random_LinearCongruentialGenerators>& GlobalRand_Get();
 
-	/** ƒOƒ[ƒoƒ‹—”BƒƒbƒNƒIƒuƒWƒFƒNƒgB
+	/** ã‚°ãƒ­ãƒ¼ãƒãƒ«ä¹±æ•°ã€‚ãƒ­ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã€‚
 	*/
 	LockObject& GlobalRand_LockObject();
 }

@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
 * Copyright (c) 2017 blueback
 * Released under the MIT License
 * https://github.com/bluebackblue/brownie/blob/master/LICENSE
 * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
-* @brief ƒeƒNƒXƒ`ƒƒ[B
+* @brief ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ã€‚
 */
 
 
@@ -29,7 +29,7 @@
 namespace NBsys{namespace NTexture
 {
 
-	/** ƒRƒ“ƒXƒgƒ‰ƒNƒ^B
+	/** ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã€‚
 	*/
 	Texture::Texture(const sharedptr<u8>& a_pixel,s32 a_width,s32 a_height,s32 a_pitch,TextureType::Id a_texturetype,const STLWString& a_name)
 		:
@@ -42,7 +42,7 @@ namespace NBsys{namespace NTexture
 	{
 	}
 
-	/** ƒfƒXƒgƒ‰ƒNƒ^B
+	/** ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã€‚
 	*/
 	Texture::~Texture()
 	{

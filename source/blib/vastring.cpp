@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ‰Â•Ïˆø”•¶š—ñ‘€ìB
+ * @brief å¯å¤‰å¼•æ•°æ–‡å­—åˆ—æ“ä½œã€‚
 */
 
 
@@ -35,9 +35,9 @@ namespace NBlib
 {
 	/** VaString
 
-	a_buffer		: ƒoƒbƒtƒ@B
-	a_buffer_size	: ƒoƒbƒtƒ@ƒTƒCƒYB
-	a_format		: ƒtƒH[ƒ}ƒbƒgB
+	a_buffer		: ãƒãƒƒãƒ•ã‚¡ã€‚
+	a_buffer_size	: ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚ºã€‚
+	a_format		: ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã€‚
 
 	return			: a_buffer
 
@@ -68,9 +68,9 @@ namespace NBlib
 
 	/** VaString
 
-	a_buffer		: ƒoƒbƒtƒ@B
-	a_buffer_size	: ƒoƒbƒtƒ@ƒTƒCƒYB
-	a_format		: ƒtƒH[ƒ}ƒbƒgB
+	a_buffer		: ãƒãƒƒãƒ•ã‚¡ã€‚
+	a_buffer_size	: ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚ºã€‚
+	a_format		: ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã€‚
 
 	return			: a_buffer
 

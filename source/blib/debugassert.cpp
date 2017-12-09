@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒfƒoƒbƒOƒAƒT[ƒgB
+ * @brief ãƒ‡ãƒãƒƒã‚°ã‚¢ã‚µãƒ¼ãƒˆã€‚
 */
 
 
@@ -46,9 +46,9 @@ namespace NBlib
 	void DebugAssert(bool a_flag,const char* a_message,const char* a_filename,s32 a_line)
 	{
 		if(a_flag == true){
-			//’â~‚µ‚È‚¢B
+			//åœæ­¢ã—ãªã„ã€‚
 		}else{
-			//ƒfƒoƒbƒOo—ÍB
+			//ãƒ‡ãƒãƒƒã‚°å‡ºåŠ›ã€‚
 
 			const char* t_message = a_message;
 			if(t_message == nullptr){

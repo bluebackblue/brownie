@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief OpenGLB
+ * @brief OpenGLã€‚
 */
 
 
@@ -67,28 +67,28 @@ namespace NBsys{namespace NOpengl
 		this->impl->Main();
 	}
 
-	/** ƒo[ƒeƒbƒNƒXƒoƒbƒtƒ@ì¬B
+	/** ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ä½œæˆã€‚
 	*/
 	s32 Opengl::CreateVertexBuffer(const sharedptr<u8>& a_data_byte,s32 a_size_byte,s32 a_stride_byte)
 	{
 		return this->impl->CreateVertexBuffer(a_data_byte,a_size_byte,a_stride_byte);
 	}
 
-	/** ƒo[ƒeƒbƒNƒXƒoƒbƒtƒ@íœB
+	/** ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡å‰Šé™¤ã€‚
 	*/
 	void Opengl::DeleteVertexBuffer(s32 a_vertexbufferid)
 	{
 		this->impl->DeleteVertexBuffer(a_vertexbufferid);
 	}
 
-	/** ƒVƒF[ƒ_[ƒ[ƒhŠJnB
+	/** ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒ­ãƒ¼ãƒ‰é–‹å§‹ã€‚
 	*/
 	void Opengl::LoadShaderRequest(const sharedptr<Opengl_ShaderLayout>& a_shaderlayout,AsyncResult<bool>& a_asyncresult)
 	{
 		this->impl->LoadShaderRequest(a_shaderlayout,a_asyncresult);
 	}
 
-	/** ƒVƒF[ƒ_[íœB
+	/** ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼å‰Šé™¤ã€‚
 	*/
 	void Opengl::DeleteShader(s32 a_shaderid)
 	{
@@ -104,28 +104,28 @@ namespace NBsys{namespace NOpengl
 		this->impl->SetShadeModel(a_shademodeltype);
 	}
 
-	/** ƒeƒNƒXƒ`ƒƒ\“o˜^B
+	/** ãƒ†ã‚¯ã‚¹ãƒãƒ£â€•ç™»éŒ²ã€‚
 	*/
 	s32 Opengl::CreateTexture(const sharedptr<NBsys::NTexture::Texture>& a_texture)
 	{
 		return this->impl->CreateTexture(a_texture);
 	}
 
-	/** ƒeƒNƒXƒ`ƒƒ\‰ğœB
+	/** ãƒ†ã‚¯ã‚¹ãƒãƒ£â€•è§£é™¤ã€‚
 	*/
 	void Opengl::DeleteTexture(s32 a_textureid)
 	{
 		this->impl->DeleteTexture(a_textureid);
 	}
 
-	/** ƒtƒŒ[ƒ€ƒoƒbƒtƒ@ì¬B
+	/** ãƒ•ãƒ¬ãƒ¼ãƒ ãƒãƒƒãƒ•ã‚¡ä½œæˆã€‚
 	*/
 	s32 Opengl::CreateFrameBuffer(s32 a_textureid_depth,s32 a_textureid_color0)
 	{
 		return this->impl->CreateFrameBuffer(a_textureid_depth,a_textureid_color0);
 	}
 
-	/** ƒtƒŒ[ƒ€ƒoƒbƒtƒ@íœB
+	/** ãƒ•ãƒ¬ãƒ¼ãƒ ãƒãƒƒãƒ•ã‚¡å‰Šé™¤ã€‚
 	*/
 	/*
 	void Opengl::DeleteFrameBuffer(s32 a_framebufferid)
@@ -134,7 +134,7 @@ namespace NBsys{namespace NOpengl
 	}
 	*/
 
-	/** ƒ}ƒEƒXæ“¾B
+	/** ãƒã‚¦ã‚¹å–å¾—ã€‚
 	*/
 	void Opengl::GetMouse(s32& a_x,s32& a_y,bool& a_left,bool& a_right)
 	{
@@ -150,7 +150,7 @@ namespace NBsys{namespace NOpengl
 
 	#if !defined(ROM_MASTER)
 
-	/** ‚q‚`‚vƒeƒNƒXƒ`ƒƒ[‚h‚cæ“¾B
+	/** ï¼²ï¼¡ï¼·ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ï¼©ï¼¤å–å¾—ã€‚
 	*/
 	u32 Opengl::Debug_GetRawTextureID(s32 a_textureid)
 	{
@@ -161,21 +161,21 @@ namespace NBsys{namespace NOpengl
 
 	#endif
 
-	/** [•`‰æ–½—ß]ƒNƒŠƒAƒJƒ‰[İ’èB
+	/** [æç”»å‘½ä»¤]ã‚¯ãƒªã‚¢ã‚«ãƒ©ãƒ¼è¨­å®šã€‚
 	*/
 	void Opengl::Render_SetClearColor(const NBsys::NColor::Color_F& a_color)
 	{
 		this->impl->Render_SetClearColor(a_color);
 	}
 
-	/** [•`‰æ–½—ß]ƒNƒŠƒAƒoƒbƒtƒ@B
+	/** [æç”»å‘½ä»¤]ã‚¯ãƒªã‚¢ãƒãƒƒãƒ•ã‚¡ã€‚
 	*/
 	void Opengl::Render_ClearBuffer(bool a_depth,bool a_color)
 	{
 		this->impl->Render_ClearBuffer(a_depth,a_color);
 	}
 
-	/** [•`‰æ–½—ß]ƒ[ƒ‹ƒhƒ‰ƒCƒ“•`‰æB
+	/** [æç”»å‘½ä»¤]ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒ©ã‚¤ãƒ³æç”»ã€‚
 	*/
 	#if(ROM_DEVELOP)
 	void Opengl::Render_DrawWorldLine()
@@ -184,23 +184,23 @@ namespace NBsys{namespace NOpengl
 	}
 	#endif
 
-	/** [•`‰æ–½—ß]ƒVƒF[ƒ_[İ’èB
+	/** [æç”»å‘½ä»¤]ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼è¨­å®šã€‚
 	*/
 	void Opengl::Render_SetShader(s32 a_shaderid)
 	{
 		this->impl->Render_SetShader(a_shaderid);
 	}
 
-	/** [•`‰æ–½—ß]ƒo[ƒeƒbƒNƒXƒoƒbƒtƒ@İ’èB
+	/** [æç”»å‘½ä»¤]ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡è¨­å®šã€‚
 	*/
 	void Opengl::Render_SetVertexBuffer(s32 a_vertexbufferid)
 	{
 		this->impl->Render_SetVertexBuffer(a_vertexbufferid);
 	}
 
-	/** Render_SetVertexAttributeB
+	/** Render_SetVertexAttributeã€‚
 
-	return : g—pƒoƒCƒg”B
+	return : ä½¿ç”¨ãƒã‚¤ãƒˆæ•°ã€‚
 
 	*/
 	s32 Opengl::Render_SetAttributeParameter(s32 a_shaderid,const STLString& a_name,s32 a_stride_byte,s32 a_offset_byte)
@@ -215,7 +215,7 @@ namespace NBsys{namespace NOpengl
 		this->impl->Render_DrawArray_Triangle(a_vertex_offset,a_vertex_countof);
 	}
 
-	/** Render_ViewPortB
+	/** Render_ViewPortã€‚
 	*/
 	void Opengl::Render_ViewPort(f32 a_x,f32 a_y,f32 a_width,f32 a_height)
 	{
@@ -239,7 +239,7 @@ namespace NBsys{namespace NOpengl
 
 	#if(0)
 
-	/** ƒAƒNƒVƒ‡ƒ“ƒoƒbƒ`ƒ“ƒOXVB
+	/** ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ãƒãƒƒãƒãƒ³ã‚°æ›´æ–°ã€‚
 	*/
 	void Opengl::Render_UpdateActionBatching()
 	{
@@ -247,14 +247,14 @@ namespace NBsys{namespace NOpengl
 	}
 
 
-	/** [ƒŒƒ“ƒ_[ƒXƒŒƒbƒhRender_SetColorMaskB
+	/** [ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¹ãƒ¬ãƒƒãƒ‰Render_SetColorMaskã€‚
 	*/
 	void Opengl::Render_SetColorMask(bool a_r,bool a_g,bool a_b,bool a_a)
 	{
 		this->impl->Render_SetColorMask(a_r,a_g,a_b,a_a);
 	}
 
-	/** Render_SetPolygonOffsetB
+	/** Render_SetPolygonOffsetã€‚
 	*/
 	void Opengl::Render_SetPolygonOffset(bool a_flag,f32 a_factor,f32 a_unit)
 	{
@@ -268,21 +268,21 @@ namespace NBsys{namespace NOpengl
 		this->impl->Render_SetTextureDirect(a_textureunitid,a_textureid);
 	}
 
-	/** Render_SetFrameBufferB
+	/** Render_SetFrameBufferã€‚
 	*/
 	void Opengl::Render_SetFrameBuffer(s32 a_framebufferid)
 	{
 		this->impl->Render_SetFrameBuffer(a_framebufferid);
 	}
 
-	/** Render_SetProjectionMatrixB
+	/** Render_SetProjectionMatrixã€‚
 	*/
 	void Opengl::Render_SetProjectionMatrix(const NBsys::NGeometry::Geometry_Matrix_44& a_projection)
 	{
 		this->impl->Render_SetProjectionMatrix(a_projection);
 	}
 
-	/** Render_SetViewMatrixB
+	/** Render_SetViewMatrixã€‚
 	*/
 	void Opengl::Render_SetViewMatrix(const NBsys::NGeometry::Geometry_Matrix_44& a_view)
 	{
@@ -292,7 +292,7 @@ namespace NBsys{namespace NOpengl
 
 
 
-	/** Render_SetAlphaBlendB
+	/** Render_SetAlphaBlendã€‚
 	*/
 	void Opengl::Render_SetAlphaBlend(bool a_flag)
 	{
@@ -333,7 +333,7 @@ namespace NBsys{namespace NOpengl
 		this->impl->Render_DrawFont(a_string,a_font_size,a_x,a_y,a_color);
 	}
 
-	/** Render_DrawRectB
+	/** Render_DrawRectã€‚
 	*/
 	void Opengl::Render_DrawRect(f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_textureid,const NBsys::NColor::Color_F& a_color)
 	{

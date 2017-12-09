@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒtƒ@ƒCƒ‹B
+ * @brief ãƒ•ã‚¡ã‚¤ãƒ«ã€‚
 */
 
 
@@ -42,7 +42,7 @@ namespace NBsys{namespace NFile
 	{
 	}
 
-	/** ƒLƒƒƒbƒVƒ…‚Ö“o˜^B
+	/** ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã¸ç™»éŒ²ã€‚
 	*/
 	void File_Cache::SetCache(const sharedptr<File_WorkItem>& a_workitem,s32 a_cachegroup_id)
 	{
@@ -50,21 +50,21 @@ namespace NBsys{namespace NFile
 
 		STLMap<STLWString,sharedptr<File_Cache_Item>>::iterator t_it_item = this->map.find(a_workitem->GetFileNameShort());
 		if(t_it_item == this->map.end()){
-			//V‹KB
+			//æ–°è¦ã€‚
 			sharedptr<File_Cache_Item> t_newitem(new File_Cache_Item(a_workitem));
 
-			//‚h‚c’Ç‰ÁB
+			//ï¼©ï¼¤è¿½åŠ ã€‚
 			t_newitem->AddID(a_cachegroup_id);
 
-			//ƒ[ƒNƒAƒCƒeƒ€‚ğƒLƒƒƒbƒVƒ…‚É’Ç‰ÁB
+			//ãƒ¯ãƒ¼ã‚¯ã‚¢ã‚¤ãƒ†ãƒ ã‚’ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã«è¿½åŠ ã€‚
 			this->map.insert(STLMap<STLWString,sharedptr<File_Cache_Item>>::value_type(a_workitem->GetFileNameShort(),t_newitem));
 		}else{
-			//Šù‘¶B‚h‚c‚Ì‚İ’Ç‰ÁB
+			//æ—¢å­˜ã€‚ï¼©ï¼¤ã®ã¿è¿½åŠ ã€‚
 			t_it_item->second->AddID(a_cachegroup_id);
 		}
 	}
 
-	/** –¼‘O‚©‚çƒLƒƒƒbƒVƒ…‚ğŒŸõB
+	/** åå‰ã‹ã‚‰ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’æ¤œç´¢ã€‚
 	*/
 	const sharedptr<File_WorkItem>& File_Cache::GetCacheFromFileNameShort(const STLWString& a_filename_short) const
 	{
@@ -76,12 +76,12 @@ namespace NBsys{namespace NFile
 		return sharedptr<File_WorkItem>::null();
 	}
 
-	/** ƒLƒƒƒbƒVƒ…ƒNƒŠƒAB
+	/** ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚¯ãƒªã‚¢ã€‚
 	*/
 	void File_Cache::CacheClear(s32 a_cachegroup_id)
 	{
 		if(a_cachegroup_id <= File_CacheGroupID::NoCache){
-			//‘S•”BíœB
+			//å…¨éƒ¨ã€‚å‰Šé™¤ã€‚
 			STLMap<STLWString,sharedptr<File_Cache_Item>>::Type().swap(this->map);
 		}else{
 			STLMap<STLWString,sharedptr<File_Cache_Item>>::iterator t_it = this->map.begin();
@@ -89,7 +89,7 @@ namespace NBsys{namespace NFile
 				t_it->second->KillID(a_cachegroup_id);
 
 				if(t_it->second->IsEmpty()){
-					//’†g‚ª‹ó‚Ì‚à‚Ì‚ÍƒLƒƒƒbƒVƒ…ƒ}ƒbƒv‚©‚çíœB
+					//ä¸­èº«ãŒç©ºã®ã‚‚ã®ã¯ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãƒãƒƒãƒ—ã‹ã‚‰å‰Šé™¤ã€‚
 					STLMap<STLWString,sharedptr<File_Cache_Item>>::iterator t_it_erase = t_it;
 					t_it++;
 					this->map.erase(t_it_erase);
@@ -101,14 +101,14 @@ namespace NBsys{namespace NFile
 		}
 	}
 
-	/** ƒŠ[ƒNƒ`ƒFƒbƒNB
+	/** ãƒªãƒ¼ã‚¯ãƒã‚§ãƒƒã‚¯ã€‚
 	*/
 	void File_Cache::LeakCheck() const
 	{
 		STLMap<STLWString,sharedptr<File_Cache_Item>>::const_iterator t_it = this->map.begin();
 		while(t_it != this->map.end()){
 			if(t_it->second.use_count() > 1){
-				//’N‚©‚©‚çQÆ‚³‚ê‚Ä‚¢‚éB
+				//èª°ã‹ã‹ã‚‰å‚ç…§ã•ã‚Œã¦ã„ã‚‹ã€‚
 				ASSERT(0);
 			}
 			t_it++;

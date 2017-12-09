@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒtƒ@ƒCƒ‹ƒnƒ“ƒhƒ‹B
+ * @brief ãƒ•ã‚¡ã‚¤ãƒ«ãƒãƒ³ãƒ‰ãƒ«ã€‚
 */
 
 
@@ -53,56 +53,56 @@ namespace NBlib
 		this->impl.reset();
 	}
 	
-	/** “Ç‚İ‚İƒ‚[ƒh‚ÅŠJ‚­B
+	/** èª­ã¿è¾¼ã¿ãƒ¢ãƒ¼ãƒ‰ã§é–‹ãã€‚
 	*/
 	bool FileHandle::ReadOpen(const STLWString& a_filename)
 	{
 		return this->impl->ReadOpen(a_filename);
 	}
 
-	/** ‘‚«‚İƒ‚[ƒh‚ÅŠJ‚­B
+	/** æ›¸ãè¾¼ã¿ãƒ¢ãƒ¼ãƒ‰ã§é–‹ãã€‚
 	*/
 	bool FileHandle::WriteOpen(const STLWString& a_filename)
 	{
 		return this->impl->WriteOpen(a_filename);
 	}
 
-	/** •Â‚¶‚éB
+	/** é–‰ã˜ã‚‹ã€‚
 	*/
 	void FileHandle::Close()
 	{
 		return this->impl->Close();
 	}
 
-	/** “Ç‚İ‚İB
+	/** èª­ã¿è¾¼ã¿ã€‚
 	*/
 	bool FileHandle::Read(u8* a_buffer,s64 a_size,s64 a_offset)
 	{
 		return this->impl->Read(a_buffer,a_size,a_offset);
 	}
 
-	/** ‘‚«‚İB
+	/** æ›¸ãè¾¼ã¿ã€‚
 	*/
 	bool FileHandle::Write(const u8* a_buffer,s64 a_size,s64 a_offset)
 	{
 		return this->impl->Write(a_buffer,a_size,a_offset);
 	}
 
-	/** ƒtƒ@ƒCƒ‹ƒTƒCƒYæ“¾B
+	/** ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºå–å¾—ã€‚
 	*/
 	s64 FileHandle::GetSize() const
 	{
 		return this->impl->GetSize();
 	}
 
-	/** ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“ƒ`ƒFƒbƒNB
+	/** ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³ãƒã‚§ãƒƒã‚¯ã€‚
 	*/
 	bool FileHandle::IsOpen() const
 	{
 		return this->impl->IsOpen();
 	}
 
-	/** ‚d‚n‚eİ’èB
+	/** ï¼¥ï¼¯ï¼¦è¨­å®šã€‚
 	*/
 	void FileHandle::SetEOF(s64 a_offset)
 	{

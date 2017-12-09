@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒtƒ@ƒCƒ‹B
+ * @brief ãƒ•ã‚¡ã‚¤ãƒ«ã€‚
 */
 
 
@@ -64,7 +64,7 @@ namespace NBsys{namespace NFile
 	{
 	}
 
-	/** ƒGƒ‰[ƒR[ƒhæ“¾B
+	/** ã‚¨ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰å–å¾—ã€‚
 	*/
 	ErrorCode::Id File_WorkItem::GetErrorCode() const
 	{
@@ -73,7 +73,7 @@ namespace NBsys{namespace NFile
 		return this->errorcode;
 	}
 
-	/** GetDataB
+	/** GetDataã€‚
 	*/
 	sharedptr<u8>& File_WorkItem::GetData()
 	{
@@ -126,7 +126,7 @@ namespace NBsys{namespace NFile
 		return this->filename_short;
 	}
 
-	/** ƒRƒ“ƒo[ƒgƒƒbƒNB
+	/** ã‚³ãƒ³ãƒãƒ¼ãƒˆãƒ­ãƒƒã‚¯ã€‚
 	*/
 	File_ConvertLock_ReturnType::Id File_WorkItem::ConvertLock()
 	{
@@ -134,23 +134,23 @@ namespace NBsys{namespace NFile
 
 		if(this->convertflag < 0){
 
-			//–¢ƒRƒ“ƒo[ƒg => ƒRƒ“ƒo[ƒg’†B
+			//æœªã‚³ãƒ³ãƒãƒ¼ãƒˆ => ã‚³ãƒ³ãƒãƒ¼ãƒˆä¸­ã€‚
 
 			this->convertflag = 0;
 			return File_ConvertLock_ReturnType::Locked;
 
 		}else if(this->convertflag == 0){
 		
-			//ƒRƒ“ƒo[ƒg’†B
+			//ã‚³ãƒ³ãƒãƒ¼ãƒˆä¸­ã€‚
 		
 			return File_ConvertLock_ReturnType::ConvertNow;
 		}
 		
-		//ƒRƒ“ƒo[ƒgÏ‚İB
+		//ã‚³ãƒ³ãƒãƒ¼ãƒˆæ¸ˆã¿ã€‚
 		return File_ConvertLock_ReturnType::AlreadyConverted;
 	}
 
-	/** ƒRƒ“ƒo[ƒgƒAƒ“ƒƒbƒNB
+	/** ã‚³ãƒ³ãƒãƒ¼ãƒˆã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã€‚
 	*/
 	void File_WorkItem::ConvertUnlock()
 	{
@@ -158,28 +158,28 @@ namespace NBsys{namespace NFile
 
 		if(this->convertflag < 0){
 
-			//–¢ƒRƒ“ƒo[ƒgB
+			//æœªã‚³ãƒ³ãƒãƒ¼ãƒˆã€‚
 
 			ASSERT(0);
 			return;
 		}else if(this->convertflag == 0){
 
-			//ƒRƒ“ƒo[ƒg’† => ƒRƒ“ƒo[ƒgÏ‚İB
+			//ã‚³ãƒ³ãƒãƒ¼ãƒˆä¸­ => ã‚³ãƒ³ãƒãƒ¼ãƒˆæ¸ˆã¿ã€‚
 
 			this->convertflag = 1;
 			return;
 		}
 
-		//ƒRƒ“ƒo[ƒgÏ‚İB
+		//ã‚³ãƒ³ãƒãƒ¼ãƒˆæ¸ˆã¿ã€‚
 		ASSERT(0);
 		return;
 	}
 
-	/** [ƒXƒŒƒbƒh‚©‚ç]XVB
+	/** [ã‚¹ãƒ¬ãƒƒãƒ‰ã‹ã‚‰]æ›´æ–°ã€‚
 
-		@return : true = Š®—¹ / false = ì‹Æ’†
+		@return : true = å®Œäº† / false = ä½œæ¥­ä¸­
 
-		filehandle‚Í•¡”ƒXƒŒƒbƒh‚©‚çƒAƒNƒZƒX‚³‚ê‚È‚¢‚Ì‚ÅA”r‘¼‚µ‚È‚¢B
+		filehandleã¯è¤‡æ•°ã‚¹ãƒ¬ãƒƒãƒ‰ã‹ã‚‰ã‚¢ã‚¯ã‚»ã‚¹ã•ã‚Œãªã„ã®ã§ã€æ’ä»–ã—ãªã„ã€‚
 
 	*/
 	bool File_WorkItem::Update(File_Thread& a_thread,const STLWString& a_rootpath_full,bool a_cancel)
@@ -187,12 +187,12 @@ namespace NBsys{namespace NFile
 		switch(this->mainstep){
 		case MainStep::Open:
 			{
-				//ŠJ‚­B
+				//é–‹ãã€‚
 
 				STLWString t_filename_full;
 				STLWString t_filename_short;
 				{
-					//¡”r‘¼B
+					//â– æ’ä»–ã€‚
 					AutoLock t_autolock(this->lockobject);
 
 					t_filename_full = Path::DirAndName(a_rootpath_full,this->filename_short);
@@ -201,7 +201,7 @@ namespace NBsys{namespace NFile
 
 				this->mode = Mode::None;
 
-				//¡[ˆ—]ƒpƒbƒN‚©‚çƒtƒ@ƒCƒ‹‚ğŠJ‚­B
+				//â– [å‡¦ç†]ãƒ‘ãƒƒã‚¯ã‹ã‚‰ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ãã€‚
 				#if(BSYS_FILE_PACK_ENABLE)
 				if(this->mode == Mode::None){
 					File_Pack& t_pack = a_thread.Pack_GetInstance();
@@ -214,7 +214,7 @@ namespace NBsys{namespace NFile
 				UNUSED(a_thread);
 				#endif
 
-				//¡[ˆ—]ŠJ‚­B
+				//â– [å‡¦ç†]é–‹ãã€‚
 				if(this->mode == Mode::None){
 					bool t_ret_open = this->normal_filehandle.ReadOpen(t_filename_full);
 					if(t_ret_open == true){
@@ -223,7 +223,7 @@ namespace NBsys{namespace NFile
 				}
 
 				if(this->mode != Mode::None){
-					//¡[ˆ—]ƒtƒ@ƒCƒ‹ƒTƒCƒYB
+					//â– [å‡¦ç†]ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºã€‚
 
 					if(this->mode == Mode::Pack){
 						#if(BSYS_FILE_PACK_ENABLE)
@@ -234,17 +234,17 @@ namespace NBsys{namespace NFile
 					}
 
 					{
-						//¡”r‘¼B
+						//â– æ’ä»–ã€‚
 						AutoLock t_autolock(this->lockobject);
 
 						if(this->data_size > 0LL){
 							this->data_offset = 0LL;
 
 							if(this->allocator){
-								//ƒAƒƒP[ƒ^g—pB
+								//ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿ä½¿ç”¨ã€‚
 								this->data.reset(reinterpret_cast<u8*>(this->allocator->Alloc(static_cast<u32>(this->data_size + this->add_allocatesize))),File_Alloc_Deleter(this->allocator));
 							}else{
-								//’ÊíƒAƒƒP[ƒgB
+								//é€šå¸¸ã‚¢ãƒ­ã‚±ãƒ¼ãƒˆã€‚
 								MemoryContainer t_memorycontainer(BSYS_FILE_MEMORYCONTAINER);
 
 								this->data.reset(new u8[static_cast<u32>(this->data_size + this->add_allocatesize)],default_delete<u8[]>());
@@ -252,16 +252,16 @@ namespace NBsys{namespace NFile
 							this->mainstep = MainStep::Read;
 							break;
 						}else{
-							//ƒtƒ@ƒCƒ‹ƒTƒCƒYæ“¾‚É¸”sB
+							//ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºå–å¾—ã«å¤±æ•—ã€‚
 							this->errorcode = ErrorCode::Load_OpenError;
 							this->mainstep = MainStep::Error;
 						}
 					}
 				}else{
-					//¡”r‘¼B
+					//â– æ’ä»–ã€‚
 					AutoLock t_autolock(this->lockobject);
 
-					//ƒtƒ@ƒCƒ‹‚ğŠJ‚­‚Ì‚É¸”sB
+					//ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ãã®ã«å¤±æ•—ã€‚
 					this->errorcode = ErrorCode::Load_OpenError;
 					this->mainstep = MainStep::Error;
 					break;
@@ -269,12 +269,12 @@ namespace NBsys{namespace NFile
 			}break;
 		case MainStep::Read:
 			{
-				//“Ç‚İ‚ŞB
+				//èª­ã¿è¾¼ã‚€ã€‚
 				s64 t_readsize = 0LL;
 				u8* t_readdata = nullptr;
 				s64 t_readoffset = 0LL;
 				{
-					//¡”r‘¼B
+					//â– æ’ä»–ã€‚
 					AutoLock t_autolock(this->lockobject);
 
 					t_readsize = this->data_size - this->data_offset;
@@ -289,35 +289,35 @@ namespace NBsys{namespace NFile
 
 				bool t_ret_read = false;
 				if(this->mode == Mode::Pack){
-					//¡[ˆ—]“Ç‚İ‚İB
+					//â– [å‡¦ç†]èª­ã¿è¾¼ã¿ã€‚
 					#if(BSYS_FILE_PACK_ENABLE)
 					t_ret_read = this->pack_filehandle->Read(t_readdata,t_readsize,t_readoffset);
 					#endif
 				}else if(this->mode == Mode::Normal){
-					//¡[ˆ—]“Ç‚İ‚İB
+					//â– [å‡¦ç†]èª­ã¿è¾¼ã¿ã€‚
 					t_ret_read = this->normal_filehandle.Read(t_readdata,t_readsize,t_readoffset);
 				}
 
 				{
-					//¡”r‘¼B
+					//â– æ’ä»–ã€‚
 					AutoLock t_autolock(this->lockobject);
 
 					if(a_cancel){
-						//ƒLƒƒƒ“ƒZƒ‹B
+						//ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã€‚
 						this->errorcode = ErrorCode::Load_CancelError;
 						this->mainstep = MainStep::Error;
 						break;
 					}else if(t_ret_read){
-						//“Ç‚İ‚İ’†B
+						//èª­ã¿è¾¼ã¿ä¸­ã€‚
 						this->data_offset += t_readsize;
 						if(this->data_offset >= this->data_size){
-							//“Ç‚İ‚İŠ®—¹B
+							//èª­ã¿è¾¼ã¿å®Œäº†ã€‚
 							this->mainstep = MainStep::End;
 						}else{
-							//“Ç‚İ‚İ’†B
+							//èª­ã¿è¾¼ã¿ä¸­ã€‚
 						}
 					}else{
-						//“Ç‚İ‚İ‚É¸”sB
+						//èª­ã¿è¾¼ã¿ã«å¤±æ•—ã€‚
 						this->errorcode = ErrorCode::Load_ReadError;
 						this->mainstep = MainStep::Error;
 						break;
@@ -326,7 +326,7 @@ namespace NBsys{namespace NFile
 			}break;
 		case MainStep::End:
 			{
-				//¡[ˆ—]•Â‚¶‚éB
+				//â– [å‡¦ç†]é–‰ã˜ã‚‹ã€‚
 				if(this->mode == Mode::Normal){
 					this->normal_filehandle.Close();
 				}
@@ -334,14 +334,14 @@ namespace NBsys{namespace NFile
 				{
 					AutoLock t_autolock(this->lockobject);
 
-					//Š®—¹B
+					//å®Œäº†ã€‚
 					this->isbusy = false;
 					return true;
 				}
 			}break;
 		case MainStep::Error:
 			{
-				//¡[ˆ—]•Â‚¶‚éB
+				//â– [å‡¦ç†]é–‰ã˜ã‚‹ã€‚
 				if(this->mode == Mode::Normal){
 					this->normal_filehandle.Close();
 				}
@@ -349,7 +349,7 @@ namespace NBsys{namespace NFile
 				{
 					AutoLock t_autolock(this->lockobject);
 
-					//ƒGƒ‰[Š®—¹B
+					//ã‚¨ãƒ©ãƒ¼å®Œäº†ã€‚
 					this->isbusy = false;
 					return true;
 				}

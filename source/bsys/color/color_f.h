@@ -1,11 +1,11 @@
-#pragma once
+Ôªø#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief êFÅB
+ * @brief Ëâ≤„ÄÇ
 */
 
 
@@ -62,7 +62,7 @@ namespace NBsys{namespace NColor
 		*/
 		inline Color_F(const Color_B& a_color);
 
-		/** ë„ì¸ÅB
+		/** ‰ª£ÂÖ•„ÄÇ
 		*/
 		inline Color_F& operator =(const Color_B& a_color);
 

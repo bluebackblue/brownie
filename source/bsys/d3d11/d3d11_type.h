@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ‚c‚R‚c‚P‚PB
+ * @brief ï¼¤ï¼“ï¼¤ï¼‘ï¼‘ã€‚
 */
 
 
@@ -73,15 +73,15 @@ namespace NBsys{namespace ND3d11
 	{
 		enum Id
 		{
-			/** —¼–Ê•`‰æB
+			/** ä¸¡é¢æç”»ã€‚
 			*/
 			NONE,
 
-			/** ‘OŒü‚«‚ğ•`‰æ‚µ‚È‚¢B
+			/** å‰å‘ãã‚’æç”»ã—ãªã„ã€‚
 			*/
 			FRONT,
 
-			/** Œã‚ëŒü‚«‚ğ•`‰æ‚µ‚È‚¢B
+			/** å¾Œã‚å‘ãã‚’æç”»ã—ãªã„ã€‚
 			*/
 			BACK,
 		};

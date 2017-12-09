@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒRƒ“ƒtƒBƒOB
+ * @brief ã‚³ãƒ³ãƒ•ã‚£ã‚°ã€‚
 */
 
 
@@ -25,7 +25,7 @@
 
 /*
 
-	ƒOƒ[ƒoƒ‹ŒÅ’è’·ƒAƒƒP[ƒ^B
+	ã‚°ãƒ­ãƒ¼ãƒãƒ«å›ºå®šé•·ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿ã€‚
 
 */
 #if !defined(BLIB_GLOBALFIXEDALLOCATOR_ENABLE)
@@ -40,7 +40,7 @@
 
 /*
 
-	ƒfƒoƒbƒOƒAƒT[ƒgƒR[ƒ‹ƒoƒbƒNB
+	ãƒ‡ãƒãƒƒã‚°ã‚¢ã‚µãƒ¼ãƒˆã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã€‚
 
 */
 #if !defined(BLIB_DEBUGASSERT_CALLBACK_ENABLE)
@@ -49,7 +49,7 @@
 
 /*
 
-	ƒfƒoƒbƒOƒuƒŒƒCƒNƒR[ƒ‹ƒoƒbƒNB
+	ãƒ‡ãƒãƒƒã‚°ãƒ–ãƒ¬ã‚¤ã‚¯ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã€‚
 
 */
 #if !defined(BLIB_DEBUGBREAK_CALLBACK_ENABLE)
@@ -58,7 +58,7 @@
 
 /*
 
-	ƒfƒoƒbƒOƒƒOB
+	ãƒ‡ãƒãƒƒã‚°ãƒ­ã‚°ã€‚
 
 */
 #if !defined(BLIB_DEBUGLOG_CALLBACK_ENABLE)
@@ -67,7 +67,7 @@
 
 /*
 
-	ƒtƒ@ƒCƒ‹ƒnƒ“ƒhƒ‹BƒvƒƒbƒNƒTƒCƒYB
+	ãƒ•ã‚¡ã‚¤ãƒ«ãƒãƒ³ãƒ‰ãƒ«ã€‚ãƒ—ãƒ­ãƒƒã‚¯ã‚µã‚¤ã‚ºã€‚
 
 */
 #if !defined(BLIB_FILEHANDLE_BLOCKSIZE)
@@ -76,7 +76,7 @@
 
 /*
 
-	ƒtƒ@ƒCƒ‹ƒnƒ“ƒhƒ‹BƒŠƒgƒ‰ƒC‰ñ”B
+	ãƒ•ã‚¡ã‚¤ãƒ«ãƒãƒ³ãƒ‰ãƒ«ã€‚ãƒªãƒˆãƒ©ã‚¤å›žæ•°ã€‚
 
 */
 #if !defined(BLIB_FILEHANDLE_RETRYMAX)
@@ -112,7 +112,7 @@
 
 /*
 
-	Math::sin_fast / Math::cos_fast ‚Ìƒe[ƒuƒ‹ƒTƒCƒYB
+	Math::sin_fast / Math::cos_fast ã®ãƒ†ãƒ¼ãƒ–ãƒ«ã‚µã‚¤ã‚ºã€‚
 
 */
 #if !defined(BLIB_MATH_SINCOSFAST_TABLESIZE)
@@ -121,7 +121,7 @@
 
 /*
 
-	ƒƒ‚ƒŠ[ƒRƒ“ƒeƒi[B
+	ãƒ¡ãƒ¢ãƒªãƒ¼ã‚³ãƒ³ãƒ†ãƒŠãƒ¼ã€‚
 
 */
 #if !defined(BLIB_MEMORYCONTAINER_ENABLE)
@@ -130,7 +130,7 @@
 
 /*
 
-	ƒƒ‚ƒŠ[ƒRƒ“ƒeƒi[BƒlƒXƒgÅ‘å’lB
+	ãƒ¡ãƒ¢ãƒªãƒ¼ã‚³ãƒ³ãƒ†ãƒŠãƒ¼ã€‚ãƒã‚¹ãƒˆæœ€å¤§å€¤ã€‚
 
 */
 #if !defined(BLIB_MEMORYCONTAINER_NESTMAX)
@@ -139,7 +139,7 @@
 
 /*
 
-	ƒƒ‚ƒŠ[ƒRƒ“ƒeƒi[BƒXƒŒƒbƒhƒ[ƒJƒ‹ƒXƒƒbƒgB
+	ãƒ¡ãƒ¢ãƒªãƒ¼ã‚³ãƒ³ãƒ†ãƒŠãƒ¼ã€‚ã‚¹ãƒ¬ãƒƒãƒ‰ãƒ­ãƒ¼ã‚«ãƒ«ã‚¹ãƒ­ãƒƒãƒˆã€‚
 
 */
 #if !defined(BLIB_MEMORYCONTAINER_THREADLOCALSLOT)
@@ -166,7 +166,7 @@
 
 /*
 
-	ƒVƒFƒA[ƒhƒ|ƒCƒ“ƒ^BƒLƒƒƒbƒVƒ…B
+	ã‚·ã‚§ã‚¢ãƒ¼ãƒ‰ãƒã‚¤ãƒ³ã‚¿ã€‚ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã€‚
 
 */
 #if !defined(BLIB_SHAREDPTR_CACHE_ENABLE)
@@ -184,7 +184,7 @@
 
 /*
 
-	‚i‚r‚n‚mƒAƒCƒeƒ€B
+	ï¼ªï¼³ï¼¯ï¼®ã‚¢ã‚¤ãƒ†ãƒ ã€‚
 
 */
 #if !defined(BLIB_JSONITEM_ENABLE)
@@ -193,7 +193,7 @@
 
 /*
 
-	ƒXƒ^ƒbƒNƒgƒŒ[ƒXB
+	ã‚¹ã‚¿ãƒƒã‚¯ãƒˆãƒ¬ãƒ¼ã‚¹ã€‚
 
 */
 #if !defined(BLIB_STACKTRACE_ENABLE)
@@ -220,7 +220,7 @@
 
 /*
 
-	ƒXƒŒƒbƒhƒ[ƒJƒ‹Bƒ\ƒƒbƒg”B
+	ã‚¹ãƒ¬ãƒƒãƒ‰ãƒ­ãƒ¼ã‚«ãƒ«ã€‚ã‚½ãƒ­ãƒƒãƒˆæ•°ã€‚
 
 */
 #if !defined(BLIB_THREADLOCAL_SLOTMAX)
@@ -229,7 +229,7 @@
 
 /*
 
-	ƒXƒŒƒbƒhƒ[ƒJƒ‹B
+	ã‚¹ãƒ¬ãƒƒãƒ‰ãƒ­ãƒ¼ã‚«ãƒ«ã€‚
 
 */
 #if !defined(BLIB_THREADLOCAL_ENABLE)
@@ -238,7 +238,7 @@
 
 /*
 
-	‰Â•Ïˆø”•¶Žš—ñ‘€ìBƒfƒoƒbƒO—pBƒXƒŒƒbƒhƒ[ƒJƒ‹ƒXƒƒbƒgB
+	å¯å¤‰å¼•æ•°æ–‡å­—åˆ—æ“ä½œã€‚ãƒ‡ãƒãƒƒã‚°ç”¨ã€‚ã‚¹ãƒ¬ãƒƒãƒ‰ãƒ­ãƒ¼ã‚«ãƒ«ã‚¹ãƒ­ãƒƒãƒˆã€‚
 
 */
 #if !defined(BLIB_VASTRING_DEBUG_THREADLOCALSLOT)
@@ -247,7 +247,7 @@
 
 /*
 
-	‰Â•Ïˆø”•¶Žš—ñ‘€ìBƒfƒoƒbƒO—pBƒTƒCƒYB
+	å¯å¤‰å¼•æ•°æ–‡å­—åˆ—æ“ä½œã€‚ãƒ‡ãƒãƒƒã‚°ç”¨ã€‚ã‚µã‚¤ã‚ºã€‚
 
 */
 #if !defined(BLIB_VASTRING_DEBUG_SIZE)
@@ -294,8 +294,8 @@
 
 	file
 
-	BSYS_FILE_LISTSIZE		: “¯ŽžƒŠƒNƒGƒXƒg”B
-	BSYS_FILE_PACK_ENABLE	: ƒpƒbƒNƒtƒ@ƒCƒ‹B
+	BSYS_FILE_LISTSIZE		: åŒæ™‚ãƒªã‚¯ã‚¨ã‚¹ãƒˆæ•°ã€‚
+	BSYS_FILE_PACK_ENABLE	: ãƒ‘ãƒƒã‚¯ãƒ•ã‚¡ã‚¤ãƒ«ã€‚
 
 */
 #if !defined(BSYS_FILE_ENABLE)
@@ -384,7 +384,7 @@
 
 	d3d11
 
-	BSYS_D3D11_FONT_DRAWTYPEMAX		: “¯Žž•`‰æ‰Â”\‚È•¶ŽšŽí—Þ”
+	BSYS_D3D11_FONT_DRAWTYPEMAX		: åŒæ™‚æç”»å¯èƒ½ãªæ–‡å­—ç¨®é¡žæ•°
 
 */
 #if !defined(BSYS_D3D11_ENABLE)
@@ -409,7 +409,7 @@
 
 /*
 
-	ƒeƒNƒXƒ`ƒƒ[
+	ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼
 
 */
 #if !defined(BSYS_TEXTURE_ENABLE)
@@ -421,7 +421,7 @@
 
 /*
 
-	Œo˜H’T¸
+	çµŒè·¯æŽ¢æŸ»
 
 */
 #if !defined(BSYS_ROOTSEARCH_ENABLE)
@@ -430,7 +430,7 @@
 
 /*
 
-	ƒtƒHƒ“ƒgB
+	ãƒ•ã‚©ãƒ³ãƒˆã€‚
 
 */
 #if !defined(BSYS_FONT_ENABLE)
@@ -440,7 +440,7 @@
 
 /*
 
-	ƒpƒbƒhB
+	ãƒ‘ãƒƒãƒ‰ã€‚
 
 */
 #if !defined(BSYS_PAD_ENABLE)
@@ -450,7 +450,7 @@
 
 /*
 
-	ƒfƒoƒbƒOƒƒjƒ…[B
+	ãƒ‡ãƒãƒƒã‚°ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã€‚
 
 */
 #if !defined(BSYS_DEBUGMENU_ENABLE)

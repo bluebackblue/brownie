@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒtƒ@ƒCƒ‹B
+ * @brief ãƒ•ã‚¡ã‚¤ãƒ«ã€‚
 */
 
 
@@ -61,7 +61,7 @@ namespace NBsys{namespace NFile
 
 		LockObject& lockobject;
 
-		/** ƒƒCƒ“ƒXƒeƒbƒvB
+		/** ãƒ¡ã‚¤ãƒ³ã‚¹ãƒ†ãƒƒãƒ—ã€‚
 		*/
 		MainStep::Id mainstep;
 
@@ -69,49 +69,49 @@ namespace NBsys{namespace NFile
 		*/
 		Mode::Id mode;
 
-		/** ƒtƒ@ƒCƒ‹ƒnƒ“ƒhƒ‹B
+		/** ãƒ•ã‚¡ã‚¤ãƒ«ãƒãƒ³ãƒ‰ãƒ«ã€‚
 		*/
 		#if(BSYS_FILE_PACK_ENABLE)
 		sharedptr<File_Pack_FileHandle> pack_filehandle;
 		#endif
 
-		/** ƒtƒ@ƒCƒ‹ƒnƒ“ƒhƒ‹B
+		/** ãƒ•ã‚¡ã‚¤ãƒ«ãƒãƒ³ãƒ‰ãƒ«ã€‚
 		*/
 		FileHandle normal_filehandle;
 
-		/** ƒtƒ@ƒCƒ‹–¼B
+		/** ãƒ•ã‚¡ã‚¤ãƒ«åã€‚
 		*/
 		STLWString filename_short;
 
-		/** ƒf[ƒ^B
+		/** ãƒ‡ãƒ¼ã‚¿ã€‚
 		*/
 		sharedptr<u8> data;
 
-		/** ƒRƒ“ƒo[ƒgƒtƒ‰ƒOB
+		/** ã‚³ãƒ³ãƒãƒ¼ãƒˆãƒ•ãƒ©ã‚°ã€‚
 		*/
 		s32 convertflag;
 
-		/** ƒf[ƒ^ƒTƒCƒYB
+		/** ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºã€‚
 		*/
 		s64 data_size;
 
-		/** ƒIƒtƒZƒbƒgB
+		/** ã‚ªãƒ•ã‚»ãƒƒãƒˆã€‚
 		*/
 		s64 data_offset;
 		
-		/** ƒGƒ‰[ƒR[ƒhB
+		/** ã‚¨ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰ã€‚
 		*/
 		ErrorCode::Id errorcode;
 
-		/** ˆ—’†B
+		/** å‡¦ç†ä¸­ã€‚
 		*/
 		bool isbusy;
 
-		/** ƒƒ‚ƒŠŠm•ÛB
+		/** ãƒ¡ãƒ¢ãƒªç¢ºä¿ã€‚
 		*/
 		sharedptr<File_Allocator> allocator;
 
-		/** ƒƒ‚ƒŠŠm•Û‚É—]•ª‚ÉŠm•Û‚·‚éƒTƒCƒYB
+		/** ãƒ¡ãƒ¢ãƒªç¢ºä¿æ™‚ã«ä½™åˆ†ã«ç¢ºä¿ã™ã‚‹ã‚µã‚¤ã‚ºã€‚
 		*/
 		s32 add_allocatesize;
 
@@ -145,20 +145,20 @@ namespace NBsys{namespace NFile
 		*/
 		const STLWString& GetFileNameShort() const;
 
-		/** ƒRƒ“ƒo[ƒgƒƒbƒNB
+		/** ã‚³ãƒ³ãƒãƒ¼ãƒˆãƒ­ãƒƒã‚¯ã€‚
 		*/
 		File_ConvertLock_ReturnType::Id ConvertLock();
 
-		/** ƒRƒ“ƒo[ƒgƒAƒ“ƒƒbƒNB
+		/** ã‚³ãƒ³ãƒãƒ¼ãƒˆã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã€‚
 		*/
 		void ConvertUnlock();
 
 	public:
-		/** XVB
+		/** æ›´æ–°ã€‚
 		*/
 		bool Update(File_Thread& a_thread,const STLWString& a_rootpath_full,bool a_cancel);
 
-		/** ƒGƒ‰[ƒR[ƒhB
+		/** ã‚¨ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰ã€‚
 		*/
 		ErrorCode::Id GetErrorCode() const;
 

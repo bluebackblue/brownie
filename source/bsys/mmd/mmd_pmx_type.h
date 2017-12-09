@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
 * Copyright (c) 2017 blueback
 * Released under the MIT License
 * https://github.com/bluebackblue/brownie/blob/master/LICENSE
 * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
-* @brief ‚l‚l‚cB‚o‚l‚wB
+* @brief ï¼­ï¼­ï¼¤ã€‚ï¼°ï¼­ï¼¸ã€‚
 */
 
 
@@ -104,35 +104,35 @@ namespace NBsys{namespace NMmd
 		*/
 		NBsys::NGeometry::Geometry_Vector3 ambient;
 
-		/** —¼–Ê•`‰æB
+		/** ä¸¡é¢æç”»ã€‚
 		*/
 		bool drawmode_cullfull;
 
-		/** ‰e”­¶B
+		/** å½±ç™ºç”Ÿã€‚
 		*/
 		bool drawmode_shadow;
 
-		/** ƒZƒ‹ƒtƒVƒƒƒhƒEƒ}ƒbƒv‚Ö‚Ì•`‰æB
+		/** ã‚»ãƒ«ãƒ•ã‚·ãƒ£ãƒ‰ã‚¦ãƒãƒƒãƒ—ã¸ã®æç”»ã€‚
 		*/
 		bool drawmode_selfshadowmap;
 
-		/** ƒZƒ‹ƒtƒVƒƒƒhƒE‚Ì•`‰æB
+		/** ã‚»ãƒ«ãƒ•ã‚·ãƒ£ãƒ‰ã‚¦ã®æç”»ã€‚
 		*/
 		bool drawmode_selfshadow;
 
-		/** ƒGƒbƒW‚Ì•`‰æB
+		/** ã‚¨ãƒƒã‚¸ã®æç”»ã€‚
 		*/
 		bool drawmode_edge;
 
-		/** ’¸“_ƒJƒ‰[B
+		/** é ‚ç‚¹ã‚«ãƒ©ãƒ¼ã€‚
 		*/
 		bool drawmode_vertexcolor;
 
-		/** ƒ|ƒCƒ“ƒg•`‰æB
+		/** ãƒã‚¤ãƒ³ãƒˆæç”»ã€‚
 		*/
 		bool drawmode_point;
 
-		/** ƒ‰ƒCƒ“•`‰æB
+		/** ãƒ©ã‚¤ãƒ³æç”»ã€‚
 		*/
 		bool drawmode_line;
 
@@ -200,20 +200,20 @@ namespace NBsys{namespace NMmd
 
 		/** boneflag
 		*/
-		bool boneflag_target_showmode;		//Ú‘±æ(PMDqƒ{[ƒ“w’è)•\¦•û–@ -> 0:À•WƒIƒtƒZƒbƒg‚Åw’è 1:ƒ{[ƒ“‚Åw’èB
-		bool boneflag_allow_rotate;			//‰ñ“]‰Â”\
-		bool boneflag_allow_translate;		//ˆÚ“®‰Â”\
-		bool boneflag_visible;				//•\¦
-		bool boneflag_allow_control;		//‘€ì‰Â
+		bool boneflag_target_showmode;		//æ¥ç¶šå…ˆ(PMDå­ãƒœãƒ¼ãƒ³æŒ‡å®š)è¡¨ç¤ºæ–¹æ³• -> 0:åº§æ¨™ã‚ªãƒ•ã‚»ãƒƒãƒˆã§æŒ‡å®š 1:ãƒœãƒ¼ãƒ³ã§æŒ‡å®šã€‚
+		bool boneflag_allow_rotate;			//å›è»¢å¯èƒ½
+		bool boneflag_allow_translate;		//ç§»å‹•å¯èƒ½
+		bool boneflag_visible;				//è¡¨ç¤º
+		bool boneflag_allow_control;		//æ“ä½œå¯
 		bool boneflag_ik;					//IK
 		bool boneflag_dummy;				//dummy
-		bool boneflag_append_local;			//ƒ[ƒJƒ‹•t—^ | •t—^‘ÎÛ 0:ƒ†[ƒU[•ÏŒ`’l^IKƒŠƒ“ƒN^‘½d•t—^ 1:e‚Ìƒ[ƒJƒ‹•ÏŒ`—ÊB
-		bool boneflag_append_rotate;		//‰ñ“]•t—^
-		bool boneflag_append_translate;		//ˆÚ“®•t—^
-		bool boneflag_fixed_axis;			//²ŒÅ’è
-		bool boneflag_local_axis;			//ƒ[ƒJƒ‹²
-		bool boneflag_deform_after_physics;	//•¨—Œã•ÏŒ`
-		bool boneflag_deform_outer_parent;	//ŠO•”e•ÏŒ`
+		bool boneflag_append_local;			//ãƒ­ãƒ¼ã‚«ãƒ«ä»˜ä¸ | ä»˜ä¸å¯¾è±¡ 0:ãƒ¦ãƒ¼ã‚¶ãƒ¼å¤‰å½¢å€¤ï¼IKãƒªãƒ³ã‚¯ï¼å¤šé‡ä»˜ä¸ 1:è¦ªã®ãƒ­ãƒ¼ã‚«ãƒ«å¤‰å½¢é‡ã€‚
+		bool boneflag_append_rotate;		//å›è»¢ä»˜ä¸
+		bool boneflag_append_translate;		//ç§»å‹•ä»˜ä¸
+		bool boneflag_fixed_axis;			//è»¸å›ºå®š
+		bool boneflag_local_axis;			//ãƒ­ãƒ¼ã‚«ãƒ«è»¸
+		bool boneflag_deform_after_physics;	//ç‰©ç†å¾Œå¤‰å½¢
+		bool boneflag_deform_outer_parent;	//å¤–éƒ¨è¦ªå¤‰å½¢
 
 		/** bone_position_offset
 		*/

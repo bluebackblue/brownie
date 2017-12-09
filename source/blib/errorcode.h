@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒGƒ‰[ƒR[ƒhB
+ * @brief ã‚¨ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰ã€‚
 */
 
 
@@ -26,47 +26,47 @@ namespace NBlib
 	{
 		enum Id
 		{
-			//¬Œ÷B
+			//æˆåŠŸã€‚
 			Success						= 0x00000000,
 
-			//•s–¾B
+			//ä¸æ˜ã€‚
 			UnknownError				= 0xFFFFFFFF,
 
-			//ˆ—’†B
-			Busy						= 0x80000001,	//ˆ—’†B
+			//å‡¦ç†ä¸­ã€‚
+			Busy						= 0x80000001,	//å‡¦ç†ä¸­ã€‚
 
-			//–¢‰Šú‰»B
-			Uninitialized				= 0x80000002,	//–¢‰Šú‰»B
-
-
+			//æœªåˆæœŸåŒ–ã€‚
+			Uninitialized				= 0x80000002,	//æœªåˆæœŸåŒ–ã€‚
 
 
 
 
 
-			//ƒ[ƒhB
-			Load_Error					= 0x80001000,	// •s–¾B
-			Load_AccessError			= 0x80001001,	// ƒAƒNƒZƒXƒGƒ‰[B
-			Load_ReadError				= 0x80001002,	// “Ç‚İ‚İƒGƒ‰[B
-			Load_WriteError				= 0x80001003,	// ‘‚«‚İƒGƒ‰[B
-			Load_OpenError				= 0x80001004,	// ƒI[ƒvƒ“ƒGƒ‰[B
-			Load_CancelError			= 0x80001005,	// ƒLƒƒƒ“ƒZƒ‹‚É‚æ‚è’†’f‚³‚ê‚½B
 
-			//ƒƒ‚ƒŠB
-			Memory_Error				= 0x80002000,	// •s–¾B
-			Memory_OutOfMainMemoryError	= 0x80002001,	// ƒƒCƒ“ƒƒ‚ƒŠ•s‘«B
 
-			//ƒIƒ“ƒ‰ƒCƒ“B
-			Online_Error				= 0x80003000,	// •s–¾B
-			Online_StepError			= 0x80003001,	// è‘±‚«ƒGƒ‰[B
-			Online_WirelessOff			= 0x80003002,	// ƒƒCƒ„ƒŒƒX‚n‚e‚eB
-			Online_BufferError			= 0x80003003,	// ƒoƒbƒtƒ@ƒGƒ‰[B
-			Online_DisConnect 			= 0x80003004,	// Ø’fB
+			//ãƒ­ãƒ¼ãƒ‰ã€‚
+			Load_Error					= 0x80001000,	// ä¸æ˜ã€‚
+			Load_AccessError			= 0x80001001,	// ã‚¢ã‚¯ã‚»ã‚¹ã‚¨ãƒ©ãƒ¼ã€‚
+			Load_ReadError				= 0x80001002,	// èª­ã¿è¾¼ã¿ã‚¨ãƒ©ãƒ¼ã€‚
+			Load_WriteError				= 0x80001003,	// æ›¸ãè¾¼ã¿ã‚¨ãƒ©ãƒ¼ã€‚
+			Load_OpenError				= 0x80001004,	// ã‚ªãƒ¼ãƒ—ãƒ³ã‚¨ãƒ©ãƒ¼ã€‚
+			Load_CancelError			= 0x80001005,	// ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã«ã‚ˆã‚Šä¸­æ–­ã•ã‚ŒãŸã€‚
 
-			//ƒVƒXƒeƒ€B
-			System_Error				= 0x8000F000,	// •s–¾B
-			System_InvalidID			= 0x8000F001,	// –³Œø‚È‚h‚cB
-			System_BufferOver			= 0x8000F002,	// ”z—ñŠOB
+			//ãƒ¡ãƒ¢ãƒªã€‚
+			Memory_Error				= 0x80002000,	// ä¸æ˜ã€‚
+			Memory_OutOfMainMemoryError	= 0x80002001,	// ãƒ¡ã‚¤ãƒ³ãƒ¡ãƒ¢ãƒªä¸è¶³ã€‚
+
+			//ã‚ªãƒ³ãƒ©ã‚¤ãƒ³ã€‚
+			Online_Error				= 0x80003000,	// ä¸æ˜ã€‚
+			Online_StepError			= 0x80003001,	// æ‰‹ç¶šãã‚¨ãƒ©ãƒ¼ã€‚
+			Online_WirelessOff			= 0x80003002,	// ãƒ¯ã‚¤ãƒ¤ãƒ¬ã‚¹ï¼¯ï¼¦ï¼¦ã€‚
+			Online_BufferError			= 0x80003003,	// ãƒãƒƒãƒ•ã‚¡ã‚¨ãƒ©ãƒ¼ã€‚
+			Online_DisConnect 			= 0x80003004,	// åˆ‡æ–­ã€‚
+
+			//ã‚·ã‚¹ãƒ†ãƒ ã€‚
+			System_Error				= 0x8000F000,	// ä¸æ˜ã€‚
+			System_InvalidID			= 0x8000F001,	// ç„¡åŠ¹ãªï¼©ï¼¤ã€‚
+			System_BufferOver			= 0x8000F002,	// é…åˆ—å¤–ã€‚
 		};
 
 		/** code

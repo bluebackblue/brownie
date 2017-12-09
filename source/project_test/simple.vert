@@ -5,26 +5,26 @@
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief OpenGLB
+ * @brief OpenGLã€‚
 */
 
 
-/** ƒ‰ƒCƒgBƒrƒ…[BƒvƒƒWƒFƒNƒVƒ‡ƒ“B
+/** ãƒ©ã‚¤ãƒˆã€‚ãƒ“ãƒ¥ãƒ¼ã€‚ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³ã€‚
 */
 uniform mat4 a_view_projection;
 
 
-/** ’¸“_B
+/** é ‚ç‚¹ã€‚
 */
 in vec3 a_position;
 
 
-/** ƒJƒ‰[B
+/** ã‚«ãƒ©ãƒ¼ã€‚
 */
 in vec4 a_color;
 
 
-/** ƒJƒ‰[B
+/** ã‚«ãƒ©ãƒ¼ã€‚
 */
 smooth out vec4 a_vertex_color;
 

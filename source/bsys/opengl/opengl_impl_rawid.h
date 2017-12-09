@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief OpenGLB
+ * @brief OpenGLã€‚
 */
 
 
@@ -46,20 +46,20 @@ namespace NBsys{namespace NOpengl
 		{
 		}
 
-		/** –³Œøƒ`ƒFƒbƒNB
+		/** ç„¡åŠ¹ãƒã‚§ãƒƒã‚¯ã€‚
 		*/
 		bool IsInvalid() const
 		{
 			if(this->rawid == 0){
-				//–³ŒøB
+				//ç„¡åŠ¹ã€‚
 				return true;
 			}
 
-			//—LŒøB
+			//æœ‰åŠ¹ã€‚
 			return false;
 		}
 
-		/** –³ŒøB
+		/** ç„¡åŠ¹ã€‚
 		*/
 		void SetInvalid()
 		{

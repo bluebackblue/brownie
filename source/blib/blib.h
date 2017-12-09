@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ’áƒŒƒxƒ‹ƒ‰ƒCƒuƒ‰ƒŠ[B
+ * @brief ä½ãƒ¬ãƒ™ãƒ«ãƒ©ã‚¤ãƒ–ãƒ©ãƒªãƒ¼ã€‚
 */
 
 

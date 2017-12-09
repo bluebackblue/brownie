@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒtƒ@ƒCƒ‹B
+ * @brief ãƒ•ã‚¡ã‚¤ãƒ«ã€‚
 */
 
 
@@ -43,7 +43,7 @@ namespace NBsys{namespace NFile
 	{
 	}
 
-	/** ‚h‚c’Ç‰ÁB
+	/** ï¼©ï¼¤è¿½åŠ ã€‚
 	*/
 	void File_Cache_Item::AddID(s32 a_cachegroup_id)
 	{
@@ -55,7 +55,7 @@ namespace NBsys{namespace NFile
 		}
 	}
 
-	/** ‚h‚cíœB
+	/** ï¼©ï¼¤å‰Šé™¤ã€‚
 	*/
 	void File_Cache_Item::KillID(s32 a_cachegroup_id)
 	{
@@ -66,7 +66,7 @@ namespace NBsys{namespace NFile
 		}
 	}
 
-	/** ŒŸõB
+	/** æ¤œç´¢ã€‚
 	*/
 	bool File_Cache_Item::Find(s32 a_cachegroup_id)
 	{
@@ -79,7 +79,7 @@ namespace NBsys{namespace NFile
 		return false;
 	}
 
-	/** ‹ó‚©‚Ç‚¤‚©B
+	/** ç©ºã‹ã©ã†ã‹ã€‚
 	*/
 	bool File_Cache_Item::IsEmpty()
 	{

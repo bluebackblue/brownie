@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ‚c‚R‚c‚P‚PB
+ * @brief ï¼¤ï¼“ï¼¤ï¼‘ï¼‘ã€‚
 */
 
 
@@ -212,11 +212,11 @@ namespace NBsys{namespace ND3d11
 		*/
 		IDMaker id_maker;
 
-		/** ƒAƒNƒVƒ‡ƒ“ƒoƒbƒ`ƒ“ƒOBƒƒbƒNƒIƒuƒWƒFƒNƒgB
+		/** ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ãƒãƒƒãƒãƒ³ã‚°ã€‚ãƒ­ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã€‚
 		*/
 		LockObject actionbatching_lockobject;
 
-		/** ƒAƒNƒVƒ‡ƒ“ƒoƒbƒ`ƒ“ƒOB
+		/** ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ãƒãƒƒãƒãƒ³ã‚°ã€‚
 		*/
 		NBsys::NActionBatching::ActionBatching actionbatching;
 
@@ -486,7 +486,7 @@ namespace NBsys{namespace ND3d11
 
 	public:
 
-		/** ƒŠƒNƒGƒXƒgˆ—B
+		/** ãƒªã‚¯ã‚¨ã‚¹ãƒˆå‡¦ç†ã€‚
 		*/
 		void Render_Main();
 
@@ -494,7 +494,7 @@ namespace NBsys{namespace ND3d11
 		*/
 		void StartBatching(sharedptr<NBsys::NActionBatching::ActionBatching_ActionList>& a_actionlist);
 
-		/** Render_ViewPortB
+		/** Render_ViewPortã€‚
 		*/
 		void Render_ViewPort(f32 a_x,f32 a_y,f32 a_width,f32 a_height);
 

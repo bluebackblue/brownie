@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒfƒoƒbƒOƒƒjƒ…[B
+ * @brief ãƒ‡ãƒãƒƒã‚°ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã€‚
 */
 
 
@@ -51,14 +51,14 @@ namespace NBsys{namespace NDebugMenu
 	*/
 	void DebugMenu_Window_Plate::Draw()
 	{
-		//©•ª‚Ì•`‰æB
+		//è‡ªåˆ†ã®æç”»ã€‚
 		{
 			if((this->calc_w >= 0.0f)&&(this->calc_h >= 0.0f)){
 				GetSystemInstance()->callback->DrawRect_Callback(this->calc_x,this->calc_y,this->calc_w,this->calc_h,0.0f,-1,NBsys::NColor::Color_F(0.6f,0.6f,0.6f,1.0f));
 			}
 		}
 
-		//q‚Ì•`‰æB
+		//å­ã®æç”»ã€‚
 		DebugMenu_Window_Base::Draw();
 	}
 }}

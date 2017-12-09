@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒvƒƒZƒX‹óŠÔ“à‚Åƒ†ƒj[ƒN‚È‚h‚cB
+ * @brief ãƒ—ãƒ­ã‚»ã‚¹ç©ºé–“å†…ã§ãƒ¦ãƒ‹ãƒ¼ã‚¯ãªï¼©ï¼¤ã€‚
 */
 
 
@@ -31,7 +31,7 @@
 */
 namespace NBlib
 {
-	/** [static]Šm•ÛB
+	/** [static]ç¢ºä¿ã€‚
 	*/
 	void* Muid_Impl::Alloc(size_t a_size)
 	{
@@ -56,7 +56,7 @@ namespace NBlib
 		return nullptr;
 	}
 
-	/** [static]‰ğ•úB
+	/** [static]è§£æ”¾ã€‚
 	*/
 	void Muid_Impl::Free(void* a_pointer)
 	{

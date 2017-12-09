@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒtƒ@ƒCƒ‹B
+ * @brief ãƒ•ã‚¡ã‚¤ãƒ«ã€‚
 */
 
 
@@ -29,11 +29,11 @@ namespace NBsys{namespace NFile
 	*/
 	struct File_Cache_Item
 	{
-		/** ƒLƒƒƒbƒVƒ…‚µ‚Ä‚¢‚éƒ[ƒNƒAƒCƒeƒ€B
+		/** ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã—ã¦ã„ã‚‹ãƒ¯ãƒ¼ã‚¯ã‚¢ã‚¤ãƒ†ãƒ ã€‚
 		*/
 		sharedptr<File_WorkItem> workitem;
 
-		/** QÆ‚h‚c‚ğ—ñ‹“B
+		/** å‚ç…§ï¼©ï¼¤ã‚’åˆ—æŒ™ã€‚
 		*/
 		typedef STLMap<s32,bool>::Type IDListType;
 		IDListType cachegroup_id_list;
@@ -46,19 +46,19 @@ namespace NBsys{namespace NFile
 		*/
 		nonvirtual ~File_Cache_Item();
 
-		/** ‚h‚c’Ç‰ÁB
+		/** ï¼©ï¼¤è¿½åŠ ã€‚
 		*/
 		void AddID(s32 a_id);
 
-		/** ‚h‚cíœB
+		/** ï¼©ï¼¤å‰Šé™¤ã€‚
 		*/
 		void KillID(s32 a_id);
 
-		/** ŒŸõB
+		/** æ¤œç´¢ã€‚
 		*/
 		bool Find(s32 a_id);
 
-		/** ‹ó‚©‚Ç‚¤‚©B
+		/** ç©ºã‹ã©ã†ã‹ã€‚
 		*/
 		bool IsEmpty();
 

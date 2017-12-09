@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒfƒoƒbƒOƒƒOB
+ * @brief ãƒ‡ãƒãƒƒã‚°ãƒ­ã‚°ã€‚
 */
 
 
@@ -36,7 +36,7 @@ namespace NBlib
 	#endif
 }
 
-/** ƒƒOB
+/** ãƒ­ã‚°ã€‚
 */
 #if defined(ROM_MASTER)
 

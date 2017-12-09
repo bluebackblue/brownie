@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒpƒbƒhB
+ * @brief ãƒ‘ãƒƒãƒ‰ã€‚
 */
 
 
@@ -117,19 +117,19 @@ namespace NBsys{namespace NPad
 		};
 
 	public:
-		/** ƒfƒoƒCƒX‚ÌXVB
+		/** ãƒ‡ãƒã‚¤ã‚¹ã®æ›´æ–°ã€‚
 		*/
 		virtual void DeviceUpdate() = 0;
 
-		/** ƒ{ƒ^ƒ“æ“¾B
+		/** ãƒœã‚¿ãƒ³å–å¾—ã€‚
 		*/
 		virtual bool GetButton(s32 a_virtualpad_index,NBsys::NPad::Pad_Device_Base::ButtonType::Id a_device_button) = 0;
 
-		/** ƒAƒiƒƒOæ“¾B
+		/** ã‚¢ãƒŠãƒ­ã‚°å–å¾—ã€‚
 		*/
 		virtual f32 GetAnalog(s32 a_virtualpad_index,NBsys::NPad::Pad_Device_Base::AnalogType::Id a_device_analog) = 0;
 
-		/** ƒ^ƒbƒ`æ“¾B
+		/** ã‚¿ãƒƒãƒå–å¾—ã€‚
 		*/
 		virtual TouchValue GetTouch(s32 a_virtualpad_index,NBsys::NPad::Pad_Device_Base::TouchType::Id a_device_touch) = 0;
 	};

@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒpƒXB
+ * @brief ãƒ‘ã‚¹ã€‚
 */
 
 
@@ -30,10 +30,10 @@
 namespace NBlib
 {
 
-	/** [static]ƒpƒX‚Ì®Œ`B
+	/** [static]ãƒ‘ã‚¹ã®æ•´å½¢ã€‚
 
-	a_path	: ƒpƒXB
-	return	: ƒpƒXB
+	a_path	: ãƒ‘ã‚¹ã€‚
+	return	: ãƒ‘ã‚¹ã€‚
 
 	*/
 	STLWString Path::Dir(const STLWString& a_path)
@@ -58,10 +58,10 @@ namespace NBlib
 	}
 
 
-	/** [static]–¼‘O•t‚«ƒpƒX‚Ì®Œ`B
+	/** [static]åå‰ä»˜ããƒ‘ã‚¹ã®æ•´å½¢ã€‚
 
-	a_name	: ([ƒpƒX]+–¼‘O)B
-	return	: ([ƒpƒX]+–¼‘O)B
+	a_name	: ([ãƒ‘ã‚¹]+åå‰)ã€‚
+	return	: ([ãƒ‘ã‚¹]+åå‰)ã€‚
 
 	*/
 	STLWString Path::Name(const STLWString& a_name)
@@ -80,11 +80,11 @@ namespace NBlib
 	}
 
 
-	/** [static]ƒpƒX‚Æ–¼‘O•t‚«ƒpƒX‚Ì‡¬B
+	/** [static]ãƒ‘ã‚¹ã¨åå‰ä»˜ããƒ‘ã‚¹ã®åˆæˆã€‚
 
-	a_path	: ƒpƒXB
-	a_name	: ([ƒpƒX]+–¼‘O)B
-	return	: ƒpƒX{([ƒpƒX]+–¼‘O)B
+	a_path	: ãƒ‘ã‚¹ã€‚
+	a_name	: ([ãƒ‘ã‚¹]+åå‰)ã€‚
+	return	: ãƒ‘ã‚¹ï¼‹([ãƒ‘ã‚¹]+åå‰)ã€‚
 
 	*/
 	STLWString Path::DirAndName(const STLWString& a_path,const STLWString& a_name)
@@ -117,11 +117,11 @@ namespace NBlib
 	}
 
 
-	/** [static]ƒpƒX‚Ì‡¬B
+	/** [static]ãƒ‘ã‚¹ã®åˆæˆã€‚
 
-	a_path_a	: ƒpƒXB
-	a_path_b	: ƒpƒXB
-	return		: ƒpƒX{ƒpƒXB
+	a_path_a	: ãƒ‘ã‚¹ã€‚
+	a_path_b	: ãƒ‘ã‚¹ã€‚
+	return		: ãƒ‘ã‚¹ï¼‹ãƒ‘ã‚¹ã€‚
 
 	*/
 	STLWString Path::DirAndDir(const STLWString& a_path_a,const STLWString& a_path_b)

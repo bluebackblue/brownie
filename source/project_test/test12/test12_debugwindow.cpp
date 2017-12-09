@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒCƒ“ƒNƒ‹[ƒhB
+ * @brief ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ã€‚
 */
 
 
@@ -38,7 +38,7 @@ Test12_DebugWindow::Test12_DebugWindow(f32 a_offset_x,f32 a_offset_y)
 		0.0f
 	);
 
-	//ƒhƒ‰ƒbƒOB
+	//ãƒ‰ãƒ©ãƒƒã‚°ã€‚
 	{
 		sharedptr<NBsys::NDebugMenu::DebugMenu_Window_Base> t_drag(new NBsys::NDebugMenu::DebugMenu_Window_Drag(
 			NBsys::NDebugMenu::DebugMenu_Window_Base::Mode::Vertical,
@@ -51,7 +51,7 @@ Test12_DebugWindow::Test12_DebugWindow(f32 a_offset_x,f32 a_offset_y)
 
 		this->AddChild(t_drag);
 
-		//‰º’nB
+		//ä¸‹åœ°ã€‚
 		{
 			sharedptr<NBsys::NDebugMenu::DebugMenu_Window_Base> t_plate(new NBsys::NDebugMenu::DebugMenu_Window_Plate(
 				NBsys::NDebugMenu::DebugMenu_Window_Base::Mode::Vertical,

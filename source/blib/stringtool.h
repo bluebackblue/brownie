@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief •¶šƒc[ƒ‹B
+ * @brief æ–‡å­—ãƒ„ãƒ¼ãƒ«ã€‚
 */
 
 
@@ -24,25 +24,25 @@
 */
 namespace NBlib
 {
-	/** Wchar‚©‚çChar‚Ö•ÏŠ·B
+	/** Wcharã‹ã‚‰Charã¸å¤‰æ›ã€‚
 	*/
 	void WcharToChar(const STLWString& a_wstring,STLString& a_string);
 
-	/** Char‚©‚çWchar‚Ö•ÏŠ·B
+	/** Charã‹ã‚‰Wcharã¸å¤‰æ›ã€‚
 	*/
 	void CharToWchar(const STLString& a_string,STLWString& a_wstring);
 
-	/** Wchar‚©‚çSjis‚Ö•ÏŠ·B
+	/** Wcharã‹ã‚‰Sjisã¸å¤‰æ›ã€‚
 	*/
 	#if defined(PLATFORM_VCWIN)
 	void WcharToSjis(const STLWString& a_wstring,STLString& a_string);
 	#endif
 
-	/** 16i”•¶š—ñ => s32 ‚Ö‚Ì•ÏŠ·B
+	/** 16é€²æ•°æ–‡å­—åˆ— => s32 ã¸ã®å¤‰æ›ã€‚
 	*/
 	void HexCharToInt(const STLString& a_string,s32& a_value);
 
-	/** ‘O•ûˆê’vB
+	/** å‰æ–¹ä¸€è‡´ã€‚
 	*/
 	bool StartsWith(const STLString& a_string,const STLString& a_prefix);
 }

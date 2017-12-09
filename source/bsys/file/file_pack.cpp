@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒtƒ@ƒCƒ‹B
+ * @brief ãƒ•ã‚¡ã‚¤ãƒ«ã€‚
 */
 
 
@@ -43,21 +43,21 @@ namespace NBsys{namespace NFile
 	{
 	}
 
-	/** “o˜^B
+	/** ç™»éŒ²ã€‚
 	*/
 	void File_Pack::Resist(const sharedptr<File_Pack_WorkItem>& a_workitem)
 	{
-		//¡”r‘¼B
+		//â– æ’ä»–ã€‚
 		AutoLock t_autolock(this->lockobject);
 
 		this->list.push_back(a_workitem);
 	}
 
-	/** “Ç‚İ‚İÏ‚İƒ`ƒFƒbƒNB
+	/** èª­ã¿è¾¼ã¿æ¸ˆã¿ãƒã‚§ãƒƒã‚¯ã€‚
 	*/
 	bool File_Pack::IsExist(const STLWString& a_pack_filename_short)
 	{
-		//¡”r‘¼B
+		//â– æ’ä»–ã€‚
 		AutoLock t_autolock(this->lockobject);
 
 		STLList<sharedptr<File_Pack_WorkItem>>::iterator t_it_end = this->list.end();
@@ -70,11 +70,11 @@ namespace NBsys{namespace NFile
 		return false;
 	}
 
-	/** ƒpƒbƒN‚©‚çƒtƒ@ƒCƒ‹‚ğŠJ‚­B
+	/** ãƒ‘ãƒƒã‚¯ã‹ã‚‰ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ãã€‚
 	*/
 	sharedptr<File_Pack_FileHandle>& File_Pack::CreatePackFileHandle(const STLWString& a_filename_short)
 	{
-		//¡”r‘¼B
+		//â– æ’ä»–ã€‚
 		AutoLock t_autolock(this->lockobject);
 
 		STLList<sharedptr<File_Pack_WorkItem>>::iterator t_it_end = this->list.end();

@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief Œo˜H’T¸B
+ * @brief çµŒè·¯æ¢æŸ»ã€‚
 */
 
 
@@ -47,33 +47,33 @@ namespace NBsys{namespace NRootSearch
 	{
 	}
 
-	/** ˆÊ’uB
+	/** ä½ç½®ã€‚
 	*/
 	NBsys::NGeometry::Geometry_Vector3& RootSearch_Node::GetPos()
 	{
 		return this->pos;
 	}
 
-	/** ”¼ŒaB
+	/** åŠå¾„ã€‚
 	*/
 	f32 RootSearch_Node::GetRadius()
 	{
 		return this->radius;
 	}
 
-	/** ƒ‹[ƒg‚©‚Ç‚¤‚©B
+	/** ãƒ«ãƒ¼ãƒˆã‹ã©ã†ã‹ã€‚
 	*/
 	bool RootSearch_Node::IsRoot()
 	{
 		return this->root;
 	}
 
-	/** ƒRƒlƒNƒgƒŠƒXƒgB
+	/** ã‚³ãƒã‚¯ãƒˆãƒªã‚¹ãƒˆã€‚
 	*/
 	STLVector<RootSearch_ConnectIndex>::Type& RootSearch_Node::ConnectIndexList(bool a_root)
 	{
 		if(a_root){
-			//ƒ‹[ƒg‚Ç‚¤‚µ‚ÌƒRƒlƒNƒgB
+			//ãƒ«ãƒ¼ãƒˆã©ã†ã—ã®ã‚³ãƒã‚¯ãƒˆã€‚
 			return this->connectindex_root_list;
 		}
 

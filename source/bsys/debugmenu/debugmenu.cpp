@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒfƒoƒbƒOƒƒjƒ…[B
+ * @brief ãƒ‡ãƒãƒƒã‚°ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã€‚
 */
 
 
@@ -51,7 +51,7 @@ namespace NBsys{namespace NDebugMenu
 	*/
 	void DebugMenu::Update()
 	{
-		//íœƒŠƒNƒGƒXƒgB
+		//å‰Šé™¤ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚
 		{
 			STLList<sharedptr<DebugMenu_Window_Base>>::iterator t_it = this->list.begin();
 			while(t_it != this->list.end()){
@@ -66,14 +66,14 @@ namespace NBsys{namespace NDebugMenu
 		{
 			STLList<sharedptr<DebugMenu_Window_Base>>::iterator t_it_end = this->list.end();
 
-			//•\¦ˆÊ’uŒvZB
+			//è¡¨ç¤ºä½ç½®è¨ˆç®—ã€‚
 			{
 				for(STLList<sharedptr<DebugMenu_Window_Base>>::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
 					(*t_it)->CalcRect(0.0f,0.0f);
 				}
 			}
 
-			//XVB
+			//æ›´æ–°ã€‚
 			{
 				for(STLList<sharedptr<DebugMenu_Window_Base>>::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
 					(*t_it)->Update();
@@ -99,14 +99,14 @@ namespace NBsys{namespace NDebugMenu
 		this->list.push_back(a_window);
 	}
 
-	/** ƒVƒXƒeƒ€‚ÌŠJnB
+	/** ã‚·ã‚¹ãƒ†ãƒ ã®é–‹å§‹ã€‚
 	*/
 	void StartSystem(sharedptr<DebugMenu_Callback_Base>& a_callback)
 	{
 		s_debugmenu.reset(new DebugMenu(a_callback));
 	}
 
-	/** ƒVƒXƒeƒ€‚ÌI—¹B
+	/** ã‚·ã‚¹ãƒ†ãƒ ã®çµ‚äº†ã€‚
 	*/
 	void EndSystem()
 	{
@@ -114,7 +114,7 @@ namespace NBsys{namespace NDebugMenu
 		s_debugmenu.reset();
 	}
 
-	/** ƒVƒXƒeƒ€‚ÌƒCƒ“ƒXƒ^ƒ“ƒXæ“¾B
+	/** ã‚·ã‚¹ãƒ†ãƒ ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å–å¾—ã€‚
 	*/
 	sharedptr<DebugMenu>& GetSystemInstance()
 	{

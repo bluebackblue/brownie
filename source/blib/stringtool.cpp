@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief •¶šƒc[ƒ‹B
+ * @brief æ–‡å­—ãƒ„ãƒ¼ãƒ«ã€‚
 */
 
 
@@ -38,32 +38,32 @@
 */
 namespace NBlib
 {
-	/** Char‚©‚çWChar‚Ö•ÏŠ·B
+	/** Charã‹ã‚‰WCharã¸å¤‰æ›ã€‚
 	*/
 	void CharToWchar(const STLString& a_string,STLWString& a_wstring)
 	{
 		#if defined(PLATFORM_VCWIN)
 		{
-			//ƒR[ƒhƒy[ƒWB
+			//ã‚³ãƒ¼ãƒ‰ãƒšãƒ¼ã‚¸ã€‚
 			UINT t_codepage = CP_UTF8;
-			//ˆ—«”\‚Æƒ}ƒbƒsƒ“ƒO‚Ìƒtƒ‰ƒOB
+			//å‡¦ç†æ€§èƒ½ã¨ãƒãƒƒãƒ”ãƒ³ã‚°ã®ãƒ•ãƒ©ã‚°ã€‚
 			DWORD t_flags = 0;
 
-			//“ü—Í•¶šB
+			//å…¥åŠ›æ–‡å­—ã€‚
 			const char* t_char = a_string.c_str();
-			//“ü—Í•¶š”BI’[‚ğŠÜ‚ß‚éB
+			//å…¥åŠ›æ–‡å­—æ•°ã€‚çµ‚ç«¯ã‚’å«ã‚ã‚‹ã€‚
 			s32 t_char_len = static_cast<s32>(a_string.length() + 1);
 
-			//•K—v”z—ñƒTƒCƒY‚ğó‚¯æ‚éiƒoƒCƒg”‚Å‚Í‚È‚¢jBI’[•¶šŠÜ‚ŞB
+			//å¿…è¦é…åˆ—ã‚µã‚¤ã‚ºã‚’å—ã‘å–ã‚‹ï¼ˆãƒã‚¤ãƒˆæ•°ã§ã¯ãªã„ï¼‰ã€‚çµ‚ç«¯æ–‡å­—å«ã‚€ã€‚
 			s32 t_wchar_use_len = ::MultiByteToWideChar(t_codepage,t_flags,t_char,t_char_len,nullptr,0);
 
 			if(t_wchar_use_len > 0){
-				//o—Í•¶šBI’[‚ğŠÜ‚ŞB
+				//å‡ºåŠ›æ–‡å­—ã€‚çµ‚ç«¯ã‚’å«ã‚€ã€‚
 				s32 t_alloca_size = t_wchar_use_len * sizeof(wchar);
 				wchar* t_wchar = reinterpret_cast<wchar*>(MALLOCA(t_alloca_size));
 
 				if(t_wchar != nullptr){
-					//•ÏŠ·B
+					//å¤‰æ›ã€‚
 					t_wchar_use_len = ::MultiByteToWideChar(t_codepage,t_flags,t_char,t_char_len,t_wchar,t_alloca_size / sizeof(wchar));
 					if((t_wchar_use_len * sizeof(wchar)) == t_alloca_size){
 						a_wstring = t_wchar;
@@ -83,32 +83,32 @@ namespace NBlib
 	}
 
 
-	/** Wchar‚©‚çChar‚Ö•ÏŠ·B
+	/** Wcharã‹ã‚‰Charã¸å¤‰æ›ã€‚
 	*/
 	void WcharToChar(const STLWString& a_wstring,STLString& a_string)
 	{
 		#if defined(PLATFORM_VCWIN)
 		{
-			//ƒR[ƒhƒy[ƒWB
+			//ã‚³ãƒ¼ãƒ‰ãƒšãƒ¼ã‚¸ã€‚
 			UINT t_codepage = CP_UTF8;
-			//ˆ—«”\‚Æƒ}ƒbƒsƒ“ƒO‚Ìƒtƒ‰ƒOB
+			//å‡¦ç†æ€§èƒ½ã¨ãƒãƒƒãƒ”ãƒ³ã‚°ã®ãƒ•ãƒ©ã‚°ã€‚
 			DWORD t_flags = 0;
 
-			//“ü—Í•¶šB
+			//å…¥åŠ›æ–‡å­—ã€‚
 			const wchar* t_wchar = a_wstring.c_str();
-			//“ü—Í•¶š”BI’[‚ğŠÜ‚ß‚éB
+			//å…¥åŠ›æ–‡å­—æ•°ã€‚çµ‚ç«¯ã‚’å«ã‚ã‚‹ã€‚
 			s32 t_wchar_len = static_cast<s32>(a_wstring.length() + 1);
 
-			//•K—v”z—ñƒTƒCƒY‚ğó‚¯æ‚éiƒoƒCƒg”‚Å‚Í‚È‚¢jBI’[•¶šŠÜ‚ŞB
+			//å¿…è¦é…åˆ—ã‚µã‚¤ã‚ºã‚’å—ã‘å–ã‚‹ï¼ˆãƒã‚¤ãƒˆæ•°ã§ã¯ãªã„ï¼‰ã€‚çµ‚ç«¯æ–‡å­—å«ã‚€ã€‚
 			s32 t_char_use_len = ::WideCharToMultiByte(t_codepage,t_flags,t_wchar,t_wchar_len,nullptr,0,nullptr,nullptr);
 		
 			if(t_char_use_len > 0){
-				//o—Í•¶šBI’[•¶š‚ğŠÜ‚ŞB
+				//å‡ºåŠ›æ–‡å­—ã€‚çµ‚ç«¯æ–‡å­—ã‚’å«ã‚€ã€‚
 				s32 t_alloca_size = t_char_use_len * sizeof(char);
 				char* t_char = reinterpret_cast<char*>(MALLOCA(t_alloca_size));
 
 				if(t_char != nullptr){
-					//•ÏŠ·B
+					//å¤‰æ›ã€‚
 					t_char_use_len = ::WideCharToMultiByte(t_codepage,t_flags,t_wchar,t_wchar_len,t_char,t_alloca_size,nullptr,nullptr);
 					if((t_char_use_len * sizeof(char)) == t_alloca_size){
 						a_string = t_char;
@@ -127,32 +127,32 @@ namespace NBlib
 		ASSERT(0);
 	}
 
-	/** Wchar‚©‚çSjis‚Ö•ÏŠ·B
+	/** Wcharã‹ã‚‰Sjisã¸å¤‰æ›ã€‚
 	*/
 	#if defined(PLATFORM_VCWIN)
 	void WcharToSjis(const STLWString& a_wstring,STLString& a_string)
 	{
-		//ƒR[ƒhƒy[ƒWB
+		//ã‚³ãƒ¼ãƒ‰ãƒšãƒ¼ã‚¸ã€‚
 		UINT t_codepage = CP_ACP;
-		//ˆ—«”\‚Æƒ}ƒbƒsƒ“ƒO‚Ìƒtƒ‰ƒOB
+		//å‡¦ç†æ€§èƒ½ã¨ãƒãƒƒãƒ”ãƒ³ã‚°ã®ãƒ•ãƒ©ã‚°ã€‚
 		DWORD t_flags = 0;
 
-		//“ü—Í•¶šB
+		//å…¥åŠ›æ–‡å­—ã€‚
 		const wchar* t_wchar = a_wstring.c_str();
-		//“ü—Í•¶š”Bu-1:©“®ŒvZvB
+		//å…¥åŠ›æ–‡å­—æ•°ã€‚ã€Œ-1:è‡ªå‹•è¨ˆç®—ã€ã€‚
 		s32 t_wchar_len = static_cast<s32>(a_wstring.length() + 1);
 
-		//•K—v”z—ñƒTƒCƒY‚ğó‚¯æ‚éiƒoƒCƒg”‚Å‚Í‚È‚¢jBI’[•¶šŠÜ‚ŞB
+		//å¿…è¦é…åˆ—ã‚µã‚¤ã‚ºã‚’å—ã‘å–ã‚‹ï¼ˆãƒã‚¤ãƒˆæ•°ã§ã¯ãªã„ï¼‰ã€‚çµ‚ç«¯æ–‡å­—å«ã‚€ã€‚
 		s32 t_use_len = ::WideCharToMultiByte(t_codepage,t_flags,t_wchar,t_wchar_len,nullptr,0,nullptr,nullptr);
 		
 		if(t_use_len>0){
-			//o—Í•¶šB
+			//å‡ºåŠ›æ–‡å­—ã€‚
 			char* t_char = reinterpret_cast<char*>(MALLOCA(t_use_len * sizeof(char)));
-			//o—Í•¶š”BI’[•¶šŠÜ‚ŞB
+			//å‡ºåŠ›æ–‡å­—æ•°ã€‚çµ‚ç«¯æ–‡å­—å«ã‚€ã€‚
 			s32 t_char_len = t_use_len;
 
 			if(t_char != nullptr){
-				//•ÏŠ·B
+				//å¤‰æ›ã€‚
 				t_use_len = ::WideCharToMultiByte(t_codepage,t_flags,t_wchar,t_wchar_len,t_char,t_char_len,nullptr,nullptr);
 				if(t_use_len==t_char_len){
 					a_string = t_char;
@@ -167,7 +167,7 @@ namespace NBlib
 	}
 	#endif
 
-	/** 16i”•¶š—ñ => s32 ‚Ö‚Ì•ÏŠ·B
+	/** 16é€²æ•°æ–‡å­—åˆ— => s32 ã¸ã®å¤‰æ›ã€‚
 	*/
 	void HexCharToInt(const STLString& a_string,s32& a_value)
 	{
@@ -278,7 +278,7 @@ namespace NBlib
 		return;
 	}
 
-	/** ‘O•ûˆê’vB
+	/** å‰æ–¹ä¸€è‡´ã€‚
 	*/
 	bool StartsWith(const STLString& a_string,const STLString& a_prefix)
 	{

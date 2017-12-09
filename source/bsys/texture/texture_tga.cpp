@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
 * Copyright (c) 2017 blueback
 * Released under the MIT License
 * https://github.com/bluebackblue/brownie/blob/master/LICENSE
 * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
-* @brief ƒeƒNƒXƒ`ƒƒ[B
+* @brief ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ã€‚
 */
 
 
@@ -34,67 +34,67 @@ namespace NBsys{namespace NTexture
 	#pragma pack(1)
 	struct HEADER_TGA
 	{
-		/** IDƒtƒB[ƒ‹ƒh’·B
+		/** IDãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰é•·ã€‚
 		*/
 		u8	h_IDLength;
 
-		/** ƒJƒ‰[ƒ}ƒbƒvƒ^ƒCƒv(ƒJƒ‰[ƒ}ƒbƒv‚Ì—L–³)B
+		/** ã‚«ãƒ©ãƒ¼ãƒžãƒƒãƒ—ã‚¿ã‚¤ãƒ—(ã‚«ãƒ©ãƒ¼ãƒžãƒƒãƒ—ã®æœ‰ç„¡)ã€‚
 		*/
 		u8	h_colorMap;
 
-		/** ‰æ‘œƒ^ƒCƒvB
+		/** ç”»åƒã‚¿ã‚¤ãƒ—ã€‚
 
-		0	: ƒCƒ[ƒWƒf[ƒ^–³‚µ
-		1	: ƒJƒ‰[ƒ}ƒbƒvƒCƒ[ƒW
-		2	: RGBƒJƒ‰[ƒCƒ[ƒW
-		3	: ”’•ƒCƒ[ƒW
-		9	: ƒ‰ƒ“ƒŒƒ“ƒOƒXˆ³kƒJƒ‰[ƒ}ƒbƒvƒCƒ[ƒW
-		10	: ƒ‰ƒ“ƒŒƒ“ƒOƒXˆ³kRGBƒJƒ‰[ƒCƒ[ƒW
-		11	: ƒ‰ƒ“ƒŒƒ“ƒOƒXˆ³k”’•ƒCƒ[ƒW
-		32	: ƒJƒ‰[ƒ}ƒbƒvƒf[ƒ^‚ðƒnƒtƒ}ƒ“/ƒfƒ‹ƒ^/ƒ‰ƒ“ƒŒƒ“ƒOƒXˆ³k
-		33	: ƒJƒ‰[ƒ}ƒbƒvƒf[ƒ^‚ðƒnƒtƒ}ƒ“/ƒfƒ‹ƒ^/ƒ‰ƒ“ƒŒƒ“ƒOƒXˆ³k 4ƒpƒX4•ª–Øˆ—
+		0	: ã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ‡ãƒ¼ã‚¿ç„¡ã—
+		1	: ã‚«ãƒ©ãƒ¼ãƒžãƒƒãƒ—ã‚¤ãƒ¡ãƒ¼ã‚¸
+		2	: RGBã‚«ãƒ©ãƒ¼ã‚¤ãƒ¡ãƒ¼ã‚¸
+		3	: ç™½é»’ã‚¤ãƒ¡ãƒ¼ã‚¸
+		9	: ãƒ©ãƒ³ãƒ¬ãƒ³ã‚°ã‚¹åœ§ç¸®ã‚«ãƒ©ãƒ¼ãƒžãƒƒãƒ—ã‚¤ãƒ¡ãƒ¼ã‚¸
+		10	: ãƒ©ãƒ³ãƒ¬ãƒ³ã‚°ã‚¹åœ§ç¸®RGBã‚«ãƒ©ãƒ¼ã‚¤ãƒ¡ãƒ¼ã‚¸
+		11	: ãƒ©ãƒ³ãƒ¬ãƒ³ã‚°ã‚¹åœ§ç¸®ç™½é»’ã‚¤ãƒ¡ãƒ¼ã‚¸
+		32	: ã‚«ãƒ©ãƒ¼ãƒžãƒƒãƒ—ãƒ‡ãƒ¼ã‚¿ã‚’ãƒãƒ•ãƒžãƒ³/ãƒ‡ãƒ«ã‚¿/ãƒ©ãƒ³ãƒ¬ãƒ³ã‚°ã‚¹åœ§ç¸®
+		33	: ã‚«ãƒ©ãƒ¼ãƒžãƒƒãƒ—ãƒ‡ãƒ¼ã‚¿ã‚’ãƒãƒ•ãƒžãƒ³/ãƒ‡ãƒ«ã‚¿/ãƒ©ãƒ³ãƒ¬ãƒ³ã‚°ã‚¹åœ§ç¸® 4ãƒ‘ã‚¹4åˆ†æœ¨å‡¦ç†
 
 		*/
 		u8	h_imgType;
 
-		/** ƒJƒ‰[ƒ}ƒbƒvŒ´“_B
+		/** ã‚«ãƒ©ãƒ¼ãƒžãƒƒãƒ—åŽŸç‚¹ã€‚
 		*/
 		u16	h_colorMapEntry;
 
-		/** ƒJƒ‰[ƒ}ƒbƒv’·B
+		/** ã‚«ãƒ©ãƒ¼ãƒžãƒƒãƒ—é•·ã€‚
 		*/
 		u16	h_colorMapLength;
 
-		/** ƒJƒ‰[ƒ}ƒbƒv[“x(ƒJƒ‰[ƒ}ƒbƒvƒGƒ“ƒgƒŠ[ƒTƒCƒY)B
+		/** ã‚«ãƒ©ãƒ¼ãƒžãƒƒãƒ—æ·±åº¦(ã‚«ãƒ©ãƒ¼ãƒžãƒƒãƒ—ã‚¨ãƒ³ãƒˆãƒªãƒ¼ã‚µã‚¤ã‚º)ã€‚
 		*/
 		u8	h_colorMapSize;
 
-		/** ‰æ‘œX•ûŒüŒ´“_B
+		/** ç”»åƒXæ–¹å‘åŽŸç‚¹ã€‚
 		*/
 		u16	h_x;
 
-		/** ‰æ‘œY•ûŒüŒ´“_B
+		/** ç”»åƒYæ–¹å‘åŽŸç‚¹ã€‚
 		*/
 		u16	h_y;
 
-		/** ‰æ‘œ•B
+		/** ç”»åƒå¹…ã€‚
 		*/
 		u16	h_w;
 
-		/** ‰æ‘œ‚‚³B
+		/** ç”»åƒé«˜ã•ã€‚
 		*/
 		u16	h_h;
 
-		/** ‰æ‘œ[“x(‰æ‘œƒsƒNƒZƒ‹ƒTƒCƒY)B
+		/** ç”»åƒæ·±åº¦(ç”»åƒãƒ”ã‚¯ã‚»ãƒ«ã‚µã‚¤ã‚º)ã€‚
 		*/
 		u8	h_bitDepth;
 
-		/** ‰æ‘œƒfƒXƒNƒŠƒvƒ^B
+		/** ç”»åƒãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ã€‚
 
-		00001111 & 0x0F : ƒAƒ‹ƒtƒ@ƒ`ƒƒƒ“ƒlƒ‹[“x
-		00010000 & 0x10 : X•ûŒüŠi”[•û–@ / 0: ¶‚©‚ç‰E•ûŒü / 1: ‰E‚©‚ç‰º•ûŒü
-		00100000 & 0x20 : Y•ûŒüŠi”[•û–@ / 0: ‰º‚©‚çã•ûŒü / 1: ã‚©‚ç‰º•ûŒü
-		11000000 & 0xC0 : ƒCƒ“ƒ^[ƒŠ[ƒuƒtƒ‰ƒO
+		00001111 & 0x0F : ã‚¢ãƒ«ãƒ•ã‚¡ãƒãƒ£ãƒ³ãƒãƒ«æ·±åº¦
+		00010000 & 0x10 : Xæ–¹å‘æ ¼ç´æ–¹æ³• / 0: å·¦ã‹ã‚‰å³æ–¹å‘ / 1: å³ã‹ã‚‰ä¸‹æ–¹å‘
+		00100000 & 0x20 : Yæ–¹å‘æ ¼ç´æ–¹æ³• / 0: ä¸‹ã‹ã‚‰ä¸Šæ–¹å‘ / 1: ä¸Šã‹ã‚‰ä¸‹æ–¹å‘
+		11000000 & 0xC0 : ã‚¤ãƒ³ã‚¿ãƒ¼ãƒªãƒ¼ãƒ–ãƒ•ãƒ©ã‚°
 
 		*/
 		u8	h_img;

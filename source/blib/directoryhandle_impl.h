@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒfƒBƒŒƒNƒgƒŠƒnƒ“ƒhƒ‹BÀ‘••”•ªB
+ * @brief ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãƒãƒ³ãƒ‰ãƒ«ã€‚å®Ÿè£…éƒ¨åˆ†ã€‚
 */
 
 
@@ -78,15 +78,15 @@ namespace NBlib
 		*/
 		void Close();
 
-		/** ƒTƒCƒYB
+		/** ã‚µã‚¤ã‚ºã€‚
 		*/
 		s32 GetSize();
 
-		/** æ“¾B
+		/** å–å¾—ã€‚
 		*/
 		DirectoryHandle::DirectoryItem& GetItem(s32 a_index);
 
-		/** ƒtƒ‹ƒpƒXæ“¾B
+		/** ãƒ•ãƒ«ãƒ‘ã‚¹å–å¾—ã€‚
 		*/
 		STLWString& GetFullPath();
 

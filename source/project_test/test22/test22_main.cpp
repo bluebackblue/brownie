@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒCƒ“ƒNƒ‹[ƒhB
+ * @brief ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ã€‚
 */
 
 
@@ -109,7 +109,7 @@ s32 t_rasterizerstate_cull_back_id = -1;
 s32 t_rasterizerstate_cull_none_id = -1;
 
 
-/** ƒo[ƒeƒbƒNƒXƒVƒF[ƒ_B’è”B
+/** ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ã‚·ã‚§ãƒ¼ãƒ€ã€‚å®šæ•°ã€‚
 */
 struct VS_ConstantBuffer_B0
 {
@@ -126,13 +126,13 @@ struct VS_ConstantBuffer_B0
 	}
 };
 
-/** ƒsƒNƒZƒ‹ƒVƒF[ƒ_B’è”B
+/** ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã€‚å®šæ•°ã€‚
 */
 struct PS_ConstantBuffer_B1
 {
 	/**
 
-	00000001 : ƒeƒNƒXƒ`ƒƒ[g—pB
+	00000001 : ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ä½¿ç”¨ã€‚
 	00000010 :
 	00000100 :
 	00001000 :
@@ -177,13 +177,13 @@ sharedptr<NCommon::D3d11_DrawLine_Manager> s_drawline_manager;
 
 void LoadPmx()
 {
-	STLWString t_pmx_path = L"ƒAƒŠƒX‚ ‚Òƒ~ƒNver1.0/";
+	STLWString t_pmx_path = L"ã‚¢ãƒªã‚¹ã‚ã´ãƒŸã‚¯ver1.0/";
 	STLWString t_pmx_name = L"Appearance Miku_Alice.pmx";
 
 	STLWString t_vmd_path = L"nac_miraikei/";
 	STLWString t_vmd_name = L"nac_miraikei.vmd";
 
-	//‚o‚l‚w“Ç‚İ‚İB
+	//ï¼°ï¼­ï¼¸èª­ã¿è¾¼ã¿ã€‚
 	{
 		sharedptr<NBsys::NFile::File_Object> t_fileobject_pmx(new NBsys::NFile::File_Object(1,t_pmx_path + t_pmx_name,-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
 		while(t_fileobject_pmx->IsBusy()){
@@ -193,7 +193,7 @@ void LoadPmx()
 		s_mmd_pmx->Load(t_fileobject_pmx);
 	}
 
-	//‚u‚l‚c“Ç‚İ‚İB
+	//ï¼¶ï¼­ï¼¤èª­ã¿è¾¼ã¿ã€‚
 	{
 		sharedptr<NBsys::NFile::File_Object> t_fileobject_vmd(new NBsys::NFile::File_Object(1,t_vmd_path + t_vmd_name,-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
 		while(t_fileobject_vmd->IsBusy()){
@@ -210,16 +210,16 @@ void LoadPmx()
 		NBsys::NMmd::Mmd_Pmx_Parts& t_mmd_pmx_parts = s_mmd_pmx->parts_list[ii];
 		s_model->push_back(ModelParts());
 
-		//ƒ‚ƒfƒ‹ƒp[ƒcB
+		//ãƒ¢ãƒ‡ãƒ«ãƒ‘ãƒ¼ãƒ„ã€‚
 		ModelParts& t_model_patrs = s_model->at(ii);
 
-		//ƒp[ƒc–¼B
+		//ãƒ‘ãƒ¼ãƒ„åã€‚
 		t_model_patrs.patrs_name = t_mmd_pmx_parts.parts_name_jp;
 
-		//ƒo[ƒeƒbƒNƒX‚Éƒp[ƒc’Ç‰ÁB
+		//ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ã«ãƒ‘ãƒ¼ãƒ„è¿½åŠ ã€‚
 		s_vertex->AddParts("parts");
 
-		//ƒp[ƒc‚É’¸“_’Ç‰ÁB
+		//ãƒ‘ãƒ¼ãƒ„ã«é ‚ç‚¹è¿½åŠ ã€‚
 		for(u32 jj=0;jj<t_mmd_pmx_parts.count_of_index;jj++){
 			u32 t_index = s_mmd_pmx->index_list.get()[t_mmd_pmx_parts.start_index + jj];
 
@@ -238,13 +238,13 @@ void LoadPmx()
 			s_vertex->AddVertex(t_vertex);
 		}
 
-		//ƒJƒŠƒ“ƒOB
+		//ã‚«ãƒªãƒ³ã‚°ã€‚
 		t_model_patrs.cullfull = t_mmd_pmx_parts.drawmode_cullfull;
 
-		//ƒeƒNƒXƒ`ƒƒ[ƒCƒ“ƒfƒbƒNƒXB
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã€‚
 		t_model_patrs.texture_index = t_mmd_pmx_parts.textureindex;
 
-		//ƒeƒNƒXƒ`ƒƒ[“Ç‚İ‚İŠJnB
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼èª­ã¿è¾¼ã¿é–‹å§‹ã€‚
 		if(t_model_patrs.texture_index >= 0){
 			t_model_patrs.texture_filepath = Path::DirAndName(t_pmx_path,s_mmd_pmx->texturename_list[t_model_patrs.texture_index]);
 			t_model_patrs.texture_file = new NBsys::NFile::File_Object(1,t_model_patrs.texture_filepath,-1,sharedptr<NBsys::NFile::File_Allocator>(),1);
@@ -256,17 +256,17 @@ void LoadPmx()
 
 	for(u32 ii=0;ii<s_model->size();ii++){
 
-		//ƒ‚ƒfƒ‹ƒp[ƒcB
+		//ãƒ¢ãƒ‡ãƒ«ãƒ‘ãƒ¼ãƒ„ã€‚
 		ModelParts& t_model_patrs = s_model->at(ii);
 
 		if(t_model_patrs.texture_file != nullptr){
 
-			//ƒeƒNƒXƒ`ƒƒ[“Ç‚İ‚İ’†B
+			//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼èª­ã¿è¾¼ã¿ä¸­ã€‚
 			while(t_model_patrs.texture_file->IsBusy()){
 				ThreadSleep(10);
 			}
 
-			//ƒeƒNƒXƒ`ƒƒ[ì¬B
+			//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ä½œæˆã€‚
 			t_model_patrs.texture = NBsys::NTexture::CreateTexture(t_model_patrs.texture_file->GetLoadData(),static_cast<s32>(t_model_patrs.texture_file->GetLoadSize()),t_model_patrs.texture_file->GetFileNameShort());
 			t_model_patrs.texture_id = s_d3d11->CreateTexture(t_model_patrs.texture);
 
@@ -283,13 +283,13 @@ void DrawOnce(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeome
 {
 	NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = a_model_matrix * NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(a_xx*2.0f,a_yy*2.0f,a_zz*2.0f) * a_view_projection;
 
-	//ƒVƒF[ƒ_[B
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã€‚
 	s_d3d11->Render_VSSetShader(t_vertexshader_id);
 	s_d3d11->Render_PSSetShader(t_pixelshader_id);
 	s_d3d11->Render_SetPrimitiveTopology(NBsys::ND3d11::D3d11_TopologyType::Id::TriangleList);
 	s_d3d11->Render_SetBlendState(t_blendstate_id);
 
-	//ƒo[ƒeƒbƒNƒXƒoƒbƒtƒ@B
+	//ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã€‚
 	s_d3d11->Render_SetVertexBuffer(t_vertexbuffer_id);
 
 	for(s32 ii=0;ii<static_cast<s32>(s_model->size());ii++){
@@ -297,14 +297,14 @@ void DrawOnce(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeome
 		PS_ConstantBuffer_B1 t_ps_constantbuffer_b1;
 
 		if(s_model->at(ii).cullfull){
-			//—¼–Ê•`‰æB
+			//ä¸¡é¢æç”»ã€‚
 			s_d3d11->Render_SetRasterizerState(t_rasterizerstate_cull_none_id);
 		}else{
-			//Œã‚ëŒü‚«‚ğ•`‰æ‚µ‚È‚¢B
+			//å¾Œã‚å‘ãã‚’æç”»ã—ãªã„ã€‚
 			s_d3d11->Render_SetRasterizerState(t_rasterizerstate_cull_back_id);
 		}
 
-		//ƒeƒNƒXƒ`ƒƒ[İ’èB
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼è¨­å®šã€‚
 		if(s_model->at(ii).texture_index >= 0){
 			s_d3d11->Render_SetTexture(0,s_model->at(ii).texture_id);
 			t_ps_constantbuffer_b1.flag1 = 1;
@@ -312,15 +312,15 @@ void DrawOnce(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeome
 
 		t_vs_constantbuffer_b0.view_projection = t_view_projection.Make_Transpose();
 
-		//ƒRƒ“ƒXƒ^ƒ“ƒgƒoƒbƒtƒ@[‚Ì“à—eXVB
+		//ã‚³ãƒ³ã‚¹ã‚¿ãƒ³ãƒˆãƒãƒƒãƒ•ã‚¡ãƒ¼ã®å†…å®¹æ›´æ–°ã€‚
 		s_d3d11->Render_UpdateSubresource(t_vs_constantbuffer_b0_id,&t_vs_constantbuffer_b0);
 		s_d3d11->Render_UpdateSubresource(t_ps_constantbuffer_b1_id,&t_ps_constantbuffer_b1);
 
-		//ƒRƒ“ƒXƒ^ƒ“ƒgƒoƒbƒtƒ@[‚ğƒVƒF[ƒ_[‚Éİ’èB
+		//ã‚³ãƒ³ã‚¹ã‚¿ãƒ³ãƒˆãƒãƒƒãƒ•ã‚¡ãƒ¼ã‚’ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã«è¨­å®šã€‚
 		s_d3d11->Render_VSSetConstantBuffers(t_vs_constantbuffer_b0_id);
 		s_d3d11->Render_PSSetConstantBuffers(t_ps_constantbuffer_b1_id);
 
-		//•`‰æB
+		//æç”»ã€‚
 		s_d3d11->Render_Draw(s_vertex->GetVertexCountOf(ii),s_vertex->GetVertexOffset(ii));
 	}
 }
@@ -360,10 +360,10 @@ void Test_Main()
 	s_d3d11->Render_Create(s_window,s_width,s_height);
 	#endif
 
-	//ƒuƒŒƒ“ƒhƒXƒe[ƒ^ƒXB
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã€‚
 	t_blendstate_id = s_d3d11->CreateBlendState(true);
 
-	//ƒ‰ƒXƒ^ƒ‰ƒCƒU[B
+	//ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ãƒ¼ã€‚
 	t_rasterizerstate_cull_back_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::BACK);
 	t_rasterizerstate_cull_none_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::NONE);
 
@@ -404,7 +404,7 @@ void Test_Main()
 
 		if(s_step == 0){
 
-			//ì¬B
+			//ä½œæˆã€‚
 
 			sharedptr<NBsys::NFile::File_Object> t_simple_vertex_fx(	new NBsys::NFile::File_Object(0,L"simple_vertex.fx",	-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
 			sharedptr<NBsys::NFile::File_Object> t_simple_pixel_fx(	new NBsys::NFile::File_Object(0,L"simple_pixel.fx",		-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
@@ -436,7 +436,7 @@ void Test_Main()
 
 		}else if(s_step == 1){
 
-			//ì¬‘Ò‚¿B
+			//ä½œæˆå¾…ã¡ã€‚
 
 			if(t_asyncresult_vertexshader.Get() == true){
 				if(t_asyncresult_pixelshader.Get() == true){
@@ -455,12 +455,12 @@ void Test_Main()
 
 		}else{
 
-			//•`‰æB
+			//æç”»ã€‚
 
-			//ƒNƒŠƒAB
+			//ã‚¯ãƒªã‚¢ã€‚
 			s_d3d11->Render_ClearRenderTargetView(NBsys::NColor::Color_F(0.3f,0.3f,0.8f,1.0f));
 
-			//[“xƒXƒeƒ“ƒVƒ‹ƒNƒŠƒAB
+			//æ·±åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ã‚¯ãƒªã‚¢ã€‚
 			s_d3d11->Render_ClearDepthStencilView();
 
 			s32 t_left_right_index_max = 1;
@@ -472,10 +472,10 @@ void Test_Main()
 
 			for(s32 t_left_right_index=0;t_left_right_index<t_left_right_index_max;t_left_right_index++){
 
-				//ƒ‰ƒCƒ“•`‰æŠJnB
+				//ãƒ©ã‚¤ãƒ³æç”»é–‹å§‹ã€‚
 				s_drawline_manager->PreUpdate();
 
-				//ƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“B
+				//ãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³ã€‚
 				NBsys::NGeometry::Geometry_Matrix_44 t_view_projection;
 				#if(USE_FOVE)
 				{
@@ -579,7 +579,7 @@ void Test_Main()
 				}
 				*/
 
-				//ƒ‰ƒCƒ“•`‰æB
+				//ãƒ©ã‚¤ãƒ³æç”»ã€‚
 				s_drawline_manager->Update(t_view_projection);
 			}
 

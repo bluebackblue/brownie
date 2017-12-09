@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒXƒŒƒbƒhƒeƒ“ƒvƒŒ[ƒgB
+ * @brief ã‚¹ãƒ¬ãƒƒãƒ‰ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã€‚
 */
 
 
@@ -50,7 +50,7 @@ namespace NBlib
 	#endif
 
 
-	/** ƒNƒ‰ƒX‚ÌƒXƒŒƒbƒh‰»B
+	/** ã‚¯ãƒ©ã‚¹ã®ã‚¹ãƒ¬ãƒƒãƒ‰åŒ–ã€‚
 	*/
 	template <typename T> class ThreadTemplate
 	{
@@ -71,7 +71,7 @@ namespace NBlib
 		*/
 		AtomicValue<bool> isopen;
 
-		/** ƒXƒŒƒbƒhŠJn‚Ìˆø”B
+		/** ã‚¹ãƒ¬ãƒƒãƒ‰é–‹å§‹æ™‚ã®å¼•æ•°ã€‚
 		*/
 		struct Argument
 		{
@@ -98,25 +98,25 @@ namespace NBlib
 		}
 
 	public:
-		/** ƒXƒŒƒbƒhŠJnB
+		/** ã‚¹ãƒ¬ãƒƒãƒ‰é–‹å§‹ã€‚
 		*/
 		void Start(typename T::ThreadArgument& a_threadargument)
 		{
 			if(this->threadhandle == nullptr){
 				if(this->implimentation == nullptr){
-					//À‘••”•ªì¬B
+					//å®Ÿè£…éƒ¨åˆ†ä½œæˆã€‚
 					this->implimentation.reset(new T());
 
-					//ƒtƒ‰ƒOİ’èB
+					//ãƒ•ãƒ©ã‚°è¨­å®šã€‚
 					this->isopen.Store(true);
 
-					//ˆø”ì¬B
+					//å¼•æ•°ä½œæˆã€‚
 					this->argument.reset(new Argument());
 					this->argument->me = this;
 					this->argument->threadargument = a_threadargument;
 					this->argument->implimentation = this->implimentation;
 
-					//ƒXƒŒƒbƒh‹N“®B
+					//ã‚¹ãƒ¬ãƒƒãƒ‰èµ·å‹•ã€‚
 					#if(BLIB_STDTHREAD_ENABLE)
 					{
 						this->threadhandle.reset(new std::thread(&ThreadTemplate<T>::ThreadMain,*this->argument.get()));
@@ -130,7 +130,7 @@ namespace NBlib
 			}
 		}
 
-		/** ƒXƒŒƒbƒh’â~Šm”FB
+		/** ã‚¹ãƒ¬ãƒƒãƒ‰åœæ­¢ç¢ºèªã€‚
 		*/
 		bool IsEnd() const
 		{
@@ -140,7 +140,7 @@ namespace NBlib
 			return true;
 		}
 
-		/** ƒXƒŒƒbƒhíœ‘Ò‚¿B
+		/** ã‚¹ãƒ¬ãƒƒãƒ‰å‰Šé™¤å¾…ã¡ã€‚
 		*/
 		void EndWait()
 		{
@@ -164,14 +164,14 @@ namespace NBlib
 			this->implimentation.reset();
 		}
 
-		/** ƒ|ƒCƒ“ƒ^‚Ì‚æ‚¤‚ÉU•‘‚¤B
+		/** ãƒã‚¤ãƒ³ã‚¿ã®ã‚ˆã†ã«æŒ¯èˆã†ã€‚
 		*/
 		sharedptr<T>& operator ->()
 		{
 			return this->implimentation;
 		}
 
-		/** ƒ|ƒCƒ“ƒ^‚Ì‚æ‚¤‚ÉU•‘‚¤B
+		/** ãƒã‚¤ãƒ³ã‚¿ã®ã‚ˆã†ã«æŒ¯èˆã†ã€‚
 		*/
 		const sharedptr<T>& operator ->() const
 		{
@@ -188,7 +188,7 @@ namespace NBlib
 			return this->implimentation;
 		}
 
-		/** ƒ|ƒCƒ“ƒ^‚Ì‚æ‚¤‚ÉU•‘‚¤B
+		/** ãƒã‚¤ãƒ³ã‚¿ã®ã‚ˆã†ã«æŒ¯èˆã†ã€‚
 		*/
 		operator bool() const
 		{
@@ -242,11 +242,11 @@ namespace NBlib
 		}
 
 	private:
-		/** ‘ã“ü‹Ö~B
+		/** ä»£å…¥ç¦æ­¢ã€‚
 		*/
 		ThreadTemplate<T>& operator =(const ThreadTemplate<T>& a_instance);
 
-		/** ‘ã“ü‹Ö~B
+		/** ä»£å…¥ç¦æ­¢ã€‚
 		*/
 		ThreadTemplate(const ThreadTemplate<T>& a_instance);
 

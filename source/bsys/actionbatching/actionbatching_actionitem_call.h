@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒAƒNƒVƒ‡ƒ“‚Ìƒoƒbƒ`ˆ—B
+ * @brief ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã®ãƒãƒƒãƒå‡¦ç†ã€‚
 */
 
 
@@ -51,14 +51,14 @@ namespace NBsys{namespace NActionBatching
 
 	public:
 
-		/** ƒAƒNƒVƒ‡ƒ“ŠJnB
+		/** ã‚¢ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹ã€‚
 		*/
 		virtual void Start()
 		{
 			this->actionlist->Start();
 		}
 
-		/** ƒAƒNƒVƒ‡ƒ“’†B
+		/** ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ä¸­ã€‚
 		*/
 		virtual s32 Do(f32& a_delta,bool a_endrequest)
 		{

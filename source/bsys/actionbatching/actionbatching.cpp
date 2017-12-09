@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒAƒNƒVƒ‡ƒ“‚Ìƒoƒbƒ`ˆ—B
+ * @brief ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã®ãƒãƒƒãƒå‡¦ç†ã€‚
 */
 
 
@@ -50,7 +50,7 @@ namespace NBsys{namespace NActionBatching
 		while(t_it != this->worklist.end()){
 			if((*t_it)->Do(a_delta) == true){
 
-				//Š®—¹B
+				//å®Œäº†ã€‚
 				t_it = this->worklist.erase(t_it);
 
 			}else{
@@ -63,7 +63,7 @@ namespace NBsys{namespace NActionBatching
 	*/
 	void ActionBatching::StartBatching(sharedptr<ActionBatching_ActionList>& a_actionlist)
 	{
-		//ŠJŽnB
+		//é–‹å§‹ã€‚
 		a_actionlist->Start();
 
 		this->worklist.push_back(a_actionlist);

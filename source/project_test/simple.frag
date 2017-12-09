@@ -5,7 +5,7 @@
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief OpenGLB
+ * @brief OpenGLã€‚
 */
 
 
@@ -14,7 +14,7 @@
 smooth in vec4 a_vertex_color;
 
 
-/** o—ÍB
+/** å‡ºåŠ›ã€‚
 */
 out vec4 fg_FragColor;
 

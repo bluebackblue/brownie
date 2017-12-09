@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief FoveHMDB
+ * @brief FoveHMDã€‚
 */
 
 
@@ -74,39 +74,39 @@ namespace NBsys{namespace NFovehmd
 		return this->errorcode;
 	}
 
-	/** Ú‘±ŠJnB
+	/** æ¥ç¶šé–‹å§‹ã€‚
 	*/
 	void Fovehmd_Impl::ConnectStart()
 	{
-		//ƒCƒ“ƒXƒ^ƒ“ƒXæ“¾B
+		//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å–å¾—ã€‚
 		this->headset.reset(Fove::GetFVRHeadset(),null_delete());
 
 		if(this->headset){
-			//ƒ‰ƒ“ƒ^ƒCƒ€AƒRƒ“ƒ|ƒWƒ^[‹N“®B
+			//ãƒ©ãƒ³ã‚¿ã‚¤ãƒ ã€ã‚³ãƒ³ãƒã‚¸ã‚¿ãƒ¼èµ·å‹•ã€‚
 			bool t_ret_initialize = this->headset->Initialise(Fove::EFVR_ClientCapabilities::Orientation | Fove::EFVR_ClientCapabilities::Position);
 			TAGLOG("fovehmd",VASTRING_DEBUG("ret_initialize = %s",t_ret_initialize ? "true" : "false"));
 		}else{
-			//¸”sB
+			//å¤±æ•—ã€‚
 			//Unable to create headset connection.
 			this->errorcode.code = ErrorCode::UnknownError;
 			return;
 		}
 
-		//ƒCƒ“ƒXƒ^ƒ“ƒXæ“¾B
+		//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å–å¾—ã€‚
 		this->compositor.reset(Fove::GetFVRCompositor(),null_delete());
 
 		if(this->compositor){
-			//¬Œ÷B
+			//æˆåŠŸã€‚
 			return;
 		}else{
-			//¸”sB
+			//å¤±æ•—ã€‚
 			//Unable to create compositor connection
 			this->errorcode.code = ErrorCode::UnknownError;
 			return;
 		}
 	}
 
-	/** Ú‘±’†B
+	/** æ¥ç¶šä¸­ã€‚
 	*/
 	bool Fovehmd_Impl::ConnectUpdate()
 	{
@@ -116,7 +116,7 @@ namespace NBsys{namespace NFovehmd
 				const Fove::SFVR_Vec2i t_ret = this->compositor->GetSingleEyeResolution();
 				if((t_ret.x > 0) && (t_ret.y > 0)){
 
-					//¬Œ÷B
+					//æˆåŠŸã€‚
 
 					this->singleeye_resolution.x = static_cast<f32>(t_ret.x);
 					this->singleeye_resolution.y = static_cast<f32>(t_ret.y);
@@ -124,7 +124,7 @@ namespace NBsys{namespace NFovehmd
 
 				}else{
 
-					//æ“¾¸”sB
+					//å–å¾—å¤±æ•—ã€‚
 
 					return false;
 
@@ -139,7 +139,7 @@ namespace NBsys{namespace NFovehmd
 
 		}else{
 
-			//ƒGƒ‰[‚ª”­¶‚µ‚Ä‚¢‚éB
+			//ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¦ã„ã‚‹ã€‚
 			return true;
 
 		}
@@ -147,7 +147,7 @@ namespace NBsys{namespace NFovehmd
 		return false;
 	}
 
-	/** ƒTƒCƒYæ“¾B
+	/** ã‚µã‚¤ã‚ºå–å¾—ã€‚
 	*/
 	NGeometry::Geometry_Vector2& Fovehmd_Impl::GetSingleEyeResolution()
 	{

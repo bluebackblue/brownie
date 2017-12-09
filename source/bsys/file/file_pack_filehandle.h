@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒtƒ@ƒCƒ‹B
+ * @brief ãƒ•ã‚¡ã‚¤ãƒ«ã€‚
 */
 
 
@@ -26,15 +26,15 @@ namespace NBsys{namespace NFile
 	{
 	private:
 
-		/** ƒtƒ@ƒCƒ‹ƒnƒ“ƒhƒ‹B
+		/** ãƒ•ã‚¡ã‚¤ãƒ«ãƒãƒ³ãƒ‰ãƒ«ã€‚
 		*/
 		FileHandle filehandle;
 
-		/** ƒf[ƒ^ƒTƒCƒYB
+		/** ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºã€‚
 		*/
 		s64 data_size;
 
-		/** ƒf[ƒ^ƒIƒtƒZƒbƒgB
+		/** ãƒ‡ãƒ¼ã‚¿ã‚ªãƒ•ã‚»ãƒƒãƒˆã€‚
 		*/
 		s64 data_offset;
 
@@ -49,11 +49,11 @@ namespace NBsys{namespace NFile
 
 	public:
 
-		/** ƒtƒ@ƒCƒ‹ƒTƒCƒYæ“¾B
+		/** ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºå–å¾—ã€‚
 		*/
 		s64 GetSize();
 
-		/** “Ç‚İ‚İB
+		/** èª­ã¿è¾¼ã¿ã€‚
 		*/
 		bool Read(u8* a_buffer,s64 a_size,s64 a_offset);
 

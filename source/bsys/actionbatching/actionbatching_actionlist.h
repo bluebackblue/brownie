@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒAƒNƒVƒ‡ƒ“‚Ìƒoƒbƒ`ˆ—B
+ * @brief ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã®ãƒãƒƒãƒå‡¦ç†ã€‚
 */
 
 
@@ -60,11 +60,11 @@ namespace NBsys{namespace NActionBatching
 		*/
 		void Add(const sharedptr<ActionBatching_ActionItem_Base>& a_actionitem);
 
-		/** ƒAƒNƒVƒ‡ƒ“ŠJnB
+		/** ã‚¢ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹ã€‚
 		*/
 		void Start();
 
-		/** ƒAƒNƒVƒ‡ƒ“’†B	
+		/** ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ä¸­ã€‚	
 		*/
 		bool Do(f32 a_delta);
 
@@ -72,7 +72,7 @@ namespace NBsys{namespace NActionBatching
 		*/
 		s32 GetCurrentIndex() const;
 
-		/** ’†’fB
+		/** ä¸­æ–­ã€‚
 		*/
 		void EndRequest();
 

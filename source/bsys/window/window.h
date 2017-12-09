@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
 * Copyright (c) 2017 blueback
 * Released under the MIT License
 * https://github.com/bluebackblue/brownie/blob/master/LICENSE
 * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
-* @brief ƒEƒBƒ“ƒhƒEB
+* @brief ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã€‚
 */
 
 
@@ -47,11 +47,11 @@ namespace NBsys{namespace NWindow
 		nonvirtual ~Window();
 
 	public:
-		/** ì¬B
+		/** ä½œæˆã€‚
 		*/
 		void Create(const STLWString& a_title,s32 a_width,s32 a_height);
 
-		/** íœB
+		/** å‰Šé™¤ã€‚
 		*/
 		void Delete();
 
@@ -71,19 +71,19 @@ namespace NBsys{namespace NWindow
 		*/
 		s32 GetMouseY();
 
-		/** XVB
+		/** æ›´æ–°ã€‚
 		*/
 		void Update();
 
-		/** I—¹ƒ`ƒFƒbƒNB
+		/** çµ‚äº†ãƒã‚§ãƒƒã‚¯ã€‚
 		*/
 		bool IsEnd();
 
-		/** •\¦’†ƒ`ƒFƒbƒNB
+		/** è¡¨ç¤ºä¸­ãƒã‚§ãƒƒã‚¯ã€‚
 		*/
 		bool IsView();
 
-		/** ƒAƒNƒeƒBƒuƒ`ƒFƒbƒNB
+		/** ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ãƒã‚§ãƒƒã‚¯ã€‚
 		*/
 		bool IsActive();
 

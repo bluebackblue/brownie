@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ‰Â•Ïˆø”•¶š—ñ‘€ìB
+ * @brief å¯å¤‰å¼•æ•°æ–‡å­—åˆ—æ“ä½œã€‚
 */
 
 
@@ -32,7 +32,7 @@ namespace NBlib
 	*/
 	const wchar* VaString(void* a_buffer,s32 a_buffer_size,const wchar* a_format,...);
 
-	/** ƒfƒoƒbƒO—p‚Ìƒoƒbƒtƒ@B
+	/** ãƒ‡ãƒãƒƒã‚°ç”¨ã®ãƒãƒƒãƒ•ã‚¡ã€‚
 	*/
 	#if defined(ROM_MASTER)
 
@@ -79,7 +79,7 @@ namespace NBlib
 #define VASTRING(BUFFER,BUFFERSIZE,...)				NBlib::VaString(BUFFER,BUFFERSIZE,__VA_ARGS__)
 
 
-/** ƒfƒoƒbƒO—pƒoƒbƒtƒ@B
+/** ãƒ‡ãƒãƒƒã‚°ç”¨ãƒãƒƒãƒ•ã‚¡ã€‚
 */
 #if defined(ROM_MASTER)
 

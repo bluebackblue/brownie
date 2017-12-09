@@ -1,11 +1,11 @@
-
+Ôªø
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ÇcÇRÇcÇPÇPÅB
+ * @brief Ôº§ÔºìÔº§ÔºëÔºë„ÄÇ
 */
 
 
@@ -138,14 +138,14 @@ namespace NBsys{namespace ND3d11
 		this->impl->Render_Delete();
 	}
 
-	/** ÉäÉNÉGÉXÉgèàóùÅB
+	/** „É™„ÇØ„Ç®„Çπ„ÉàÂá¶ÁêÜ„ÄÇ
 	*/
 	void D3d11::Render_Main()
 	{
 		this->impl->Render_Main();
 	}
 
-	/** Render_ViewPortÅB
+	/** Render_ViewPort„ÄÇ
 	*/
 	void D3d11::Render_ViewPort(f32 a_x,f32 a_y,f32 a_width,f32 a_height)
 	{

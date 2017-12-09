@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒfƒBƒŒƒNƒgƒŠƒnƒ“ƒhƒ‹BÀ‘••”•ªB
+ * @brief ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãƒãƒ³ãƒ‰ãƒ«ã€‚å®Ÿè£…éƒ¨åˆ†ã€‚
 */
 
 
@@ -60,13 +60,13 @@ namespace NBlib
 		if(this->isopen == false){
 			#if defined(PLATFORM_VCWIN)
 			{
-				//ƒtƒ‹ƒpƒXB
+				//ãƒ•ãƒ«ãƒ‘ã‚¹ã€‚
 				this->fullpath = Path::Dir(a_directoryname);
 
-				//ŒŸõƒpƒXB
+				//æ¤œç´¢ãƒ‘ã‚¹ã€‚
 				STLWString t_filepath = Path::DirAndName(this->fullpath,L"*");
 
-				//ˆê‚Â–ÚB
+				//ä¸€ã¤ç›®ã€‚
 				{
 					WIN32_FIND_DATAW t_finddata;
 					this->rawhandle = ::FindFirstFileW(t_filepath.c_str(),&t_finddata);
@@ -83,7 +83,7 @@ namespace NBlib
 					}
 				}
 
-				//“ñ‚Â–ÚˆÈ~B
+				//äºŒã¤ç›®ä»¥é™ã€‚
 				while(1){
 					WIN32_FIND_DATAW t_finddata;
 					BOOL t_ret = ::FindNextFileW(this->rawhandle,&t_finddata);
@@ -122,14 +122,14 @@ namespace NBlib
 		}
 	}
 
-	/** ƒTƒCƒYB
+	/** ã‚µã‚¤ã‚ºã€‚
 	*/
 	s32 DirectoryHandle_Impl::GetSize()
 	{
 		return static_cast<s32>(this->list.size());
 	}
 
-	/** æ“¾B
+	/** å–å¾—ã€‚
 	*/
 	DirectoryHandle::DirectoryItem& DirectoryHandle_Impl::GetItem(s32 a_index)
 	{
@@ -138,7 +138,7 @@ namespace NBlib
 		return this->list[a_index];
 	}
 
-	/** ƒtƒ‹ƒpƒXæ“¾B
+	/** ãƒ•ãƒ«ãƒ‘ã‚¹å–å¾—ã€‚
 	*/
 	STLWString& DirectoryHandle_Impl::GetFullPath()
 	{

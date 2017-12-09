@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ‚i‚r‚n‚mƒAƒCƒeƒ€B
+ * @brief ï¼ªï¼³ï¼¯ï¼®ã‚¢ã‚¤ãƒ†ãƒ ã€‚
 */
 
 
@@ -42,21 +42,21 @@ namespace NBlib
 			{
 				None = 0,
 		
-				StringData,			//•¶šƒf[ƒ^B
-				AssociativeArray,	//˜A‘z”z—ñB
-				IndexArray,			//ƒCƒ“ƒfƒbƒNƒX”z—ñB
-				UnknownNumber,		//”’li­”/®”jB
-				IntegerNumber,		//®”B
-				FloatNumber,		//­”B
+				StringData,			//æ–‡å­—ãƒ‡ãƒ¼ã‚¿ã€‚
+				AssociativeArray,	//é€£æƒ³é…åˆ—ã€‚
+				IndexArray,			//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é…åˆ—ã€‚
+				UnknownNumber,		//æ•°å€¤ï¼ˆå°‘æ•°/æ•´æ•°ï¼‰ã€‚
+				IntegerNumber,		//æ•´æ•°ã€‚
+				FloatNumber,		//å°‘æ•°ã€‚
 		
-				BoolDataTrue,		//^B
-				BoolDataFalse,		//‹UB
+				BoolDataTrue,		//çœŸã€‚
+				BoolDataFalse,		//å½ã€‚
 
-				BinaryData,			//ƒoƒCƒiƒŠƒf[ƒ^B
+				BinaryData,			//ãƒã‚¤ãƒŠãƒªãƒ‡ãƒ¼ã‚¿ã€‚
 			};
 		};
 
-		/** •¶šƒf[ƒ^B
+		/** æ–‡å­—ãƒ‡ãƒ¼ã‚¿ã€‚
 		*/
 		struct Value_StringData
 		{
@@ -68,7 +68,7 @@ namespace NBlib
 			}
 		};
 
-		/** ˜A‘z”z—ñB
+		/** é€£æƒ³é…åˆ—ã€‚
 		*/
 		struct Value_AssociativeArray
 		{
@@ -77,7 +77,7 @@ namespace NBlib
 			}
 		};
 
-		/** ƒCƒ“ƒfƒbƒNƒX”z—ñB
+		/** ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é…åˆ—ã€‚
 		*/
 		struct Value_IndexArray
 		{
@@ -86,7 +86,7 @@ namespace NBlib
 			}
 		};
 
-		/** ®”B
+		/** æ•´æ•°ã€‚
 		*/
 		struct Value_Integer
 		{
@@ -98,7 +98,7 @@ namespace NBlib
 			}
 		};
 
-		/** ®”B
+		/** æ•´æ•°ã€‚
 		*/
 		struct Value_UnsignedInteger
 		{
@@ -110,7 +110,7 @@ namespace NBlib
 			}
 		};
 
-		/** ­”B
+		/** å°‘æ•°ã€‚
 		*/
 		struct Value_Float
 		{
@@ -122,7 +122,7 @@ namespace NBlib
 			}
 		};
 
-		/** BoolB
+		/** Boolã€‚
 		*/
 		struct Value_Bool
 		{
@@ -147,7 +147,7 @@ namespace NBlib
 		};
 
 	private:
-		/** ƒoƒŠƒAƒ“ƒgŒ^B
+		/** ãƒãƒªã‚¢ãƒ³ãƒˆå‹ã€‚
 		*/
 		class StValue
 		{
@@ -161,7 +161,7 @@ namespace NBlib
 			bool														bool_value;
 			sharedptr<STLVector<u8>::Type>								binary_data;
 
-			/** ƒŠƒZƒbƒgB
+			/** ãƒªã‚»ãƒƒãƒˆã€‚
 			*/
 			void Reset()
 			{
@@ -175,25 +175,25 @@ namespace NBlib
 			}
 		};
 
-		/** ‚i‚r‚n‚m•¶š—ñB
+		/** ï¼ªï¼³ï¼¯ï¼®æ–‡å­—åˆ—ã€‚
 		*/
 		mutable sharedptr<STLString> jsonstring;
 
-		/** ƒoƒŠƒAƒ“ƒgŒ^Bƒ^ƒCƒvB
+		/** ãƒãƒªã‚¢ãƒ³ãƒˆå‹ã€‚ã‚¿ã‚¤ãƒ—ã€‚
 		*/
 		ValueType::Id valuetype;
 
-		/** ƒoƒŠƒAƒ“ƒgŒ^B
+		/** ãƒãƒªã‚¢ãƒ³ãƒˆå‹ã€‚
 		*/
 		mutable StValue value;
 
 	private:
 
-		/** Šm•ÛB
+		/** ç¢ºä¿ã€‚
 		*/
 		static void* Alloc(size_t a_size);
 
-		/** ‰ğ•úB
+		/** è§£æ”¾ã€‚
 		*/
 		static void Free(void* a_pointer);
 
@@ -254,113 +254,113 @@ namespace NBlib
 		*/
 		JsonItem(const Value_BinaryData& a_value);
 
-		/** ƒfƒB[ƒvƒRƒs[B
+		/** ãƒ‡ã‚£ãƒ¼ãƒ—ã‚³ãƒ”ãƒ¼ã€‚
 		*/
 		sharedptr<JsonItem> DeepCopy() const;
 	
-		/** ‚i‚r‚n‚m•¶š—ñ‚ğƒZƒbƒgB
+		/** ï¼ªï¼³ï¼¯ï¼®æ–‡å­—åˆ—ã‚’ã‚»ãƒƒãƒˆã€‚
 		*/
 		void SetJsonString(const STLString& a_jsonstring);
 
 	private:
-		/** ’l‰»B
+		/** å€¤åŒ–ã€‚
 		*/
 		void JsonStringToValue() const;
 
 	public:
-		/** [æ“¾]GetListMax
+		/** [å–å¾—]GetListMax
 		*/
 		s32 GetListMax() const;
 	
-		/** [æ“¾][’l]GetStringData
+		/** [å–å¾—][å€¤]GetStringData
 		*/
 		const sharedptr<STLString>& GetStringData() const;
 	
-		/** [æ“¾][’l]GetInteger
+		/** [å–å¾—][å€¤]GetInteger
 		*/
 		s32 GetInteger() const;
 	
-		/** [æ“¾][’l]GetUnsignedInteger
+		/** [å–å¾—][å€¤]GetUnsignedInteger
 		*/
 		u32 GetUnsignedInteger() const;
 
-		/** [æ“¾][’l]GetFloat
+		/** [å–å¾—][å€¤]GetFloat
 		*/
 		f32 GetFloat() const;
 
-		/** [æ“¾][’l]GetBool
+		/** [å–å¾—][å€¤]GetBool
 		*/
 		bool GetBool() const;
 
-		/** [æ“¾][’l]GetBinaryData
+		/** [å–å¾—][å€¤]GetBinaryData
 		*/
 		sharedptr<STLVector<u8>::Type>& GetBinaryData();
 
-		/** [æ“¾]GetValueType
+		/** [å–å¾—]GetValueType
 		*/
 		ValueType::Id GetValueType() const;
 
-		/** [æ“¾]˜A‘zƒŠƒXƒg‚ÌƒAƒCƒeƒ€æ“¾B
+		/** [å–å¾—]é€£æƒ³ãƒªã‚¹ãƒˆã®ã‚¢ã‚¤ãƒ†ãƒ å–å¾—ã€‚
 		*/
 		sharedptr<JsonItem>& GetItem(const STLString& a_itemname);
 
-		/** [æ“¾]˜A‘zƒŠƒXƒg‚ÌƒAƒCƒeƒ€æ“¾B
+		/** [å–å¾—]é€£æƒ³ãƒªã‚¹ãƒˆã®ã‚¢ã‚¤ãƒ†ãƒ å–å¾—ã€‚
 		*/
 		const sharedptr<JsonItem>& GetItem(const STLString& a_itemname) const;
 
-		/** [æ“¾]˜A‘zƒŠƒXƒg‚ÌƒAƒCƒeƒ€ƒ`ƒFƒbƒNB
+		/** [å–å¾—]é€£æƒ³ãƒªã‚¹ãƒˆã®ã‚¢ã‚¤ãƒ†ãƒ ãƒã‚§ãƒƒã‚¯ã€‚
 		*/
 		bool IsExistItem(const STLString& a_itemname);
 	
-		/** [æ“¾]ƒCƒ“ƒfƒbƒNƒXƒŠƒXƒg‚ÌƒAƒCƒeƒ€æ“¾B
+		/** [å–å¾—]ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒªã‚¹ãƒˆã®ã‚¢ã‚¤ãƒ†ãƒ å–å¾—ã€‚
 		*/
 		sharedptr<JsonItem>& GetItem(s32 a_index);
 
-		/** [æ“¾]ƒCƒ“ƒfƒbƒNƒXƒŠƒXƒg‚ÌƒAƒCƒeƒ€æ“¾B
+		/** [å–å¾—]ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒªã‚¹ãƒˆã®ã‚¢ã‚¤ãƒ†ãƒ å–å¾—ã€‚
 		*/
 		const sharedptr<JsonItem>& GetItem(s32 a_index) const;
 
-		/** [æ“¾]ƒCƒ“ƒfƒbƒNƒXƒŠƒXƒg‚ÌƒAƒCƒeƒ€ƒ`ƒFƒbƒNB
+		/** [å–å¾—]ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒªã‚¹ãƒˆã®ã‚¢ã‚¤ãƒ†ãƒ ãƒã‚§ãƒƒã‚¯ã€‚
 		*/
 		bool IsExistItem(s32 a_index);
 	
-		/** [İ’è]˜A‘zƒŠƒXƒg‚ÉƒAƒCƒeƒ€’Ç‰ÁBíœB
+		/** [è¨­å®š]é€£æƒ³ãƒªã‚¹ãƒˆã«ã‚¢ã‚¤ãƒ†ãƒ è¿½åŠ ã€‚å‰Šé™¤ã€‚
 		*/
 		void SetItem(const STLString& a_itemname,sharedptr<JsonItem>& a_item,bool a_deepcopy);
 	
-		/** [İ’è]ƒCƒ“ƒfƒbƒNƒXƒŠƒXƒg‚ÉƒAƒCƒeƒ€’Ç‰ÁB
+		/** [è¨­å®š]ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒªã‚¹ãƒˆã«ã‚¢ã‚¤ãƒ†ãƒ è¿½åŠ ã€‚
 		*/
 		void AddItem(const sharedptr<JsonItem>& a_item,bool a_deepcopy);
 	
-		/** [íœ]ƒCƒ“ƒfƒbƒNƒXƒŠƒXƒg‚©‚çƒAƒCƒeƒ€íœB
+		/** [å‰Šé™¤]ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒªã‚¹ãƒˆã‹ã‚‰ã‚¢ã‚¤ãƒ†ãƒ å‰Šé™¤ã€‚
 		*/
 		void RemoveItem(s32 a_index);
 	
-		/** [İ’è]•¶šƒf[ƒ^B
+		/** [è¨­å®š]æ–‡å­—ãƒ‡ãƒ¼ã‚¿ã€‚
 		*/
 		void SetStringData(const STLString& a_string);
 	
-		/** [İ’è]‹ó˜A‘zƒŠƒXƒgB
+		/** [è¨­å®š]ç©ºé€£æƒ³ãƒªã‚¹ãƒˆã€‚
 		*/
 		void SetAssociativeArray();
 	
-		/** [İ’è]‹óƒCƒ“ƒfƒbƒNƒXƒŠƒXƒgB
+		/** [è¨­å®š]ç©ºã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒªã‚¹ãƒˆã€‚
 		*/
 		void SetIndexArray();
 	
-		/** [İ’è]®”ƒZƒbƒgB
+		/** [è¨­å®š]æ•´æ•°ã‚»ãƒƒãƒˆã€‚
 		*/
 		void SetInteger(s32 a_integer);
 
-		/** [İ’è]®”ƒZƒbƒgB
+		/** [è¨­å®š]æ•´æ•°ã‚»ãƒƒãƒˆã€‚
 		*/
 		void SetUnsignedInteger(u32 a_unsignedinteger);
 	
-		/** [İ’è]­”ƒZƒbƒgB
+		/** [è¨­å®š]å°‘æ•°ã‚»ãƒƒãƒˆã€‚
 		*/
 		void SetFloat(f32 a_float);
 
-		/** [İ’è]BoolƒZƒbƒgB
+		/** [è¨­å®š]Boolã‚»ãƒƒãƒˆã€‚
 		*/
 		void SetBool(bool a_bool);
 	
@@ -368,11 +368,11 @@ namespace NBlib
 		*/
 		void SetBinaryData(const sharedptr<STLVector<u8>::Type>& a_binarydata);
 
-		/** ˜A‘z”z—ñƒL[ƒŠƒXƒgì¬B
+		/** é€£æƒ³é…åˆ—ã‚­ãƒ¼ãƒªã‚¹ãƒˆä½œæˆã€‚
 		*/
 		sharedptr<STLVector<STLString>::Type> CreateAssociativeKeyList();
 
-		/** JsonString‚ÖƒRƒ“ƒo[ƒgB
+		/** JsonStringã¸ã‚³ãƒ³ãƒãƒ¼ãƒˆã€‚
 		*/
 		const STLString ConvertJsonString() const;
 

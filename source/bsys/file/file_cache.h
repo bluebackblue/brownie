@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒtƒ@ƒCƒ‹B
+ * @brief ãƒ•ã‚¡ã‚¤ãƒ«ã€‚
 */
 
 
@@ -30,7 +30,7 @@ namespace NBsys{namespace NFile
 	class File_Cache
 	{
 	private:
-		/** ƒLƒƒƒbƒVƒ…ƒ}ƒbƒvB
+		/** ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãƒãƒƒãƒ—ã€‚
 		*/
 		STLMap<STLWString,sharedptr<File_Cache_Item>>::Type map;
 	
@@ -43,19 +43,19 @@ namespace NBsys{namespace NFile
 		*/
 		nonvirtual ~File_Cache();
 
-		/** ƒLƒƒƒbƒVƒ…‚Ö“o˜^B
+		/** ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã¸ç™»éŒ²ã€‚
 		*/
 		void SetCache(const sharedptr<File_WorkItem>& a_workitem,s32 a_cachegroup_id);
 
-		/** –¼‘O‚©‚çƒLƒƒƒbƒVƒ…‚ğŒŸõB
+		/** åå‰ã‹ã‚‰ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’æ¤œç´¢ã€‚
 		*/
 		const sharedptr<File_WorkItem>& GetCacheFromFileNameShort(const STLWString& a_filename_short) const;
 
-		/** ƒLƒƒƒbƒVƒ…ƒNƒŠƒAB
+		/** ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚¯ãƒªã‚¢ã€‚
 		*/
 		void CacheClear(s32 a_cachegroup_id);
 
-		/** ƒŠ[ƒNƒ`ƒFƒbƒNB
+		/** ãƒªãƒ¼ã‚¯ãƒã‚§ãƒƒã‚¯ã€‚
 		*/
 		void LeakCheck() const;
 

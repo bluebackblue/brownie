@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒfƒoƒbƒOƒƒjƒ…[B
+ * @brief ãƒ‡ãƒãƒƒã‚°ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã€‚
 */
 
 
@@ -64,21 +64,21 @@ namespace NBsys{namespace NDebugMenu
 		void Draw();
 
 	public:
-		/** ’Ç‰ÁB
+		/** è¿½åŠ ã€‚
 		*/
 		void Add(const sharedptr<DebugMenu_Window_Base>& a_window);
 
 	};
 
-	/** ƒVƒXƒeƒ€‚ÌŠJnB
+	/** ã‚·ã‚¹ãƒ†ãƒ ã®é–‹å§‹ã€‚
 	*/
 	void StartSystem(sharedptr<DebugMenu_Callback_Base>& a_callback);
 
-	/** ƒVƒXƒeƒ€‚ÌI—¹B
+	/** ã‚·ã‚¹ãƒ†ãƒ ã®çµ‚äº†ã€‚
 	*/
 	void EndSystem();
 
-	/** ƒVƒXƒeƒ€‚ÌƒCƒ“ƒXƒ^ƒ“ƒXæ“¾B
+	/** ã‚·ã‚¹ãƒ†ãƒ ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å–å¾—ã€‚
 	*/
 	sharedptr<DebugMenu>& GetSystemInstance();
 }}

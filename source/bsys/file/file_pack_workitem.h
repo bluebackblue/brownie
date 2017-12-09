@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒtƒ@ƒCƒ‹B
+ * @brief ãƒ•ã‚¡ã‚¤ãƒ«ã€‚
 */
 
 
@@ -45,27 +45,27 @@ namespace NBsys{namespace NFile
 			};
 		};
 
-		/** ƒƒCƒ“ƒXƒeƒbƒvB
+		/** ãƒ¡ã‚¤ãƒ³ã‚¹ãƒ†ãƒƒãƒ—ã€‚
 		*/
 		MainStep::Id mainstep;
 
-		/** ƒtƒ@ƒCƒ‹ƒnƒ“ƒhƒ‹B
+		/** ãƒ•ã‚¡ã‚¤ãƒ«ãƒãƒ³ãƒ‰ãƒ«ã€‚
 		*/
 		FileHandle filehandle;
 
-		/** ƒpƒbƒNƒtƒ@ƒCƒ‹–¼B
+		/** ãƒ‘ãƒƒã‚¯ãƒ•ã‚¡ã‚¤ãƒ«åã€‚
 		*/
 		STLWString pack_filename_short;
 
-		/** ƒpƒbƒNƒ‹[ƒgƒpƒXB
+		/** ãƒ‘ãƒƒã‚¯ãƒ«ãƒ¼ãƒˆãƒ‘ã‚¹ã€‚
 		*/
 		STLWString pack_rootpath_short;
 
-		/** ƒf[ƒ^ƒTƒCƒYB
+		/** ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºã€‚
 		*/
 		s64 data_size;
 
-		/** ƒGƒ‰[ƒR[ƒhB
+		/** ã‚¨ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰ã€‚
 		*/
 		ErrorCode::Id errorcode;
 
@@ -84,19 +84,19 @@ public:
 
 	public:
 
-		/** ƒGƒ‰[ƒR[ƒhæ“¾B
+		/** ã‚¨ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰å–å¾—ã€‚
 		*/
 		ErrorCode::Id GetErrorCode() const;
 
-		/** ƒpƒbƒNƒtƒ@ƒCƒ‹–¼æ“¾B
+		/** ãƒ‘ãƒƒã‚¯ãƒ•ã‚¡ã‚¤ãƒ«åå–å¾—ã€‚
 		*/
 		const STLWString& GetPackFileNameShort();
 
-		/** ƒtƒ@ƒCƒ‹ŒŸõB
+		/** ãƒ•ã‚¡ã‚¤ãƒ«æ¤œç´¢ã€‚
 		*/
 		sharedptr<File_Pack_FileHandle>& FindFromFileNameShort(const STLWString& a_filename_short);
 
-		/** XVB
+		/** æ›´æ–°ã€‚
 		*/
 		bool Update(const STLWString& a_rootpath_full);
 

@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒtƒ@ƒCƒ‹B
+ * @brief ãƒ•ã‚¡ã‚¤ãƒ«ã€‚
 */
 
 
@@ -34,7 +34,7 @@ namespace NBsys{namespace NFile
 	*/
 	sharedptr<STLVector<sharedptr<ThreadTemplate<File_Thread>>>::Type> s_thread_list;
 
-	/** ƒVƒXƒeƒ€‚ÌŠJnB
+	/** ã‚·ã‚¹ãƒ†ãƒ ã®é–‹å§‹ã€‚
 	*/
 	void StartSystem(s32 a_device_max)
 	{
@@ -52,7 +52,7 @@ namespace NBsys{namespace NFile
 		}
 	}
 
-	/** ƒ‹[ƒg‚Ìİ’èB
+	/** ãƒ«ãƒ¼ãƒˆã®è¨­å®šã€‚
 	*/
 	void SetRoot(s32 a_device_index,const STLWString& a_rootpath_full)
 	{
@@ -75,7 +75,7 @@ namespace NBsys{namespace NFile
 		}
 	}
 
-	/** ƒVƒXƒeƒ€‚ÌƒCƒ“ƒXƒ^ƒ“ƒXæ“¾B
+	/** ã‚·ã‚¹ãƒ†ãƒ ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å–å¾—ã€‚
 	*/
 	sharedptr<ThreadTemplate<File_Thread>>& GetSystemInstance(s32 a_device_index)
 	{
@@ -84,7 +84,7 @@ namespace NBsys{namespace NFile
 		return s_thread_list->at(a_device_index);
 	}
 
-	/** ƒŠ[ƒNƒ`ƒFƒbƒNB
+	/** ãƒªãƒ¼ã‚¯ãƒã‚§ãƒƒã‚¯ã€‚
 	*/
 	void LeakCheck()
 	{
@@ -104,7 +104,7 @@ namespace NBsys{namespace NFile
 		}
 	}
 
-	/** ƒLƒƒƒbƒVƒ…ƒNƒŠƒAB
+	/** ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚¯ãƒªã‚¢ã€‚
 	*/
 	void CacheClear(s32 a_device_index,s32 a_cachegroup_id)
 	{
@@ -115,7 +115,7 @@ namespace NBsys{namespace NFile
 		}
 	}
 
-	/** ƒVƒXƒeƒ€‚ÌI—¹ƒŠƒNƒGƒXƒgB
+	/** ã‚·ã‚¹ãƒ†ãƒ ã®çµ‚äº†ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚
 	*/
 	void EndSystemRequest()
 	{
@@ -135,14 +135,14 @@ namespace NBsys{namespace NFile
 		}
 	}
 
-	/** ƒVƒXƒeƒ€‚ÌI—¹‘Ò‚¿B
+	/** ã‚·ã‚¹ãƒ†ãƒ ã®çµ‚äº†å¾…ã¡ã€‚
 	*/
 	void EndWaitSystem()
 	{
 		s_thread_list.reset();
 	}
 
-	/** [ƒpƒbƒN]ì¬B
+	/** [ãƒ‘ãƒƒã‚¯]ä½œæˆã€‚
 	*/
 	#if(BSYS_FILE_PACK_ENABLE)
 	sharedptr<ThreadTemplate<File_Pack_MakeThread>> Pack_Create(const STLWString& a_rootpath_full,const STLWString& a_pack_filename_full,const sharedptr<File_Allocator>& a_allocator)
@@ -161,7 +161,7 @@ namespace NBsys{namespace NFile
 	}
 	#endif
 
-	/** [ƒpƒbƒN]ƒ[ƒhƒŠƒNƒGƒXƒgB
+	/** [ãƒ‘ãƒƒã‚¯]ãƒ­ãƒ¼ãƒ‰ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚
 	*/
 	#if(BSYS_FILE_PACK_ENABLE)
 	void Pack_LoadRequest(s32 a_device_index,const STLWString& a_pack_filename_short,const STLWString& a_pack_rootpath_short)
@@ -170,7 +170,7 @@ namespace NBsys{namespace NFile
 	}
 	#endif
 
-	/** [ƒpƒbƒN]“Ç‚İ‚İÏ‚İƒ`ƒFƒbƒNB
+	/** [ãƒ‘ãƒƒã‚¯]èª­ã¿è¾¼ã¿æ¸ˆã¿ãƒã‚§ãƒƒã‚¯ã€‚
 	*/
 	#if(BSYS_FILE_PACK_ENABLE)
 	bool Pack_IsExist(s32 a_device_index,const STLWString& a_pack_filename_short)

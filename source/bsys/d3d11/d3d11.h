@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ‚c‚R‚c‚P‚PB
+ * @brief ï¼¤ï¼“ï¼¤ï¼‘ï¼‘ã€‚
 */
 
 
@@ -104,15 +104,15 @@ namespace NBsys{namespace ND3d11
 		s32 CreateDepthStencilState(bool a_depthtest_flag,bool a_depthwrie_flag);
 
 	public:
-		/** ì¬B
+		/** ä½œæˆã€‚
 		*/
 		void Render_Create(sharedptr<NWindow::Window>& a_window,s32 a_width,s32 a_height);
 
-		/** íœB
+		/** å‰Šé™¤ã€‚
 		*/
 		void Render_Delete();
 
-		/** ƒŠƒNƒGƒXƒgˆ—B
+		/** ãƒªã‚¯ã‚¨ã‚¹ãƒˆå‡¦ç†ã€‚
 		*/
 		void Render_Main();
 

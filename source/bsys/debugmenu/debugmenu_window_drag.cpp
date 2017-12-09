@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒfƒoƒbƒOƒƒjƒ…[B
+ * @brief ãƒ‡ãƒãƒƒã‚°ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã€‚
 */
 
 
@@ -65,7 +65,7 @@ namespace NBsys{namespace NDebugMenu
 		bool t_up_r = false;
 		GetSystemInstance()->callback->GetMouse_Callback(t_x,t_y,t_on_l,t_on_r,t_down_l,t_down_r,t_up_l,t_up_r);
 
-		//”ÍˆÍ“àƒ`ƒFƒbƒNB
+		//ç¯„å›²å†…ãƒã‚§ãƒƒã‚¯ã€‚
 		bool t_in_range = false;
 		if((this->calc_x < t_x)&&(t_x < this->calc_x + this->calc_w)&&(this->calc_y < t_y)&&(t_y < this->calc_y + this->calc_h)){
 			t_in_range = true;
@@ -74,7 +74,7 @@ namespace NBsys{namespace NDebugMenu
 		if(this->parent != nullptr){
 			if((this->drag_flag == false)&&(t_in_range == true)&&(t_down_l == true)){
 
-				//ƒhƒ‰ƒbƒOŠJŽnB
+				//ãƒ‰ãƒ©ãƒƒã‚°é–‹å§‹ã€‚
 
 				this->drag_flag = true;
 				this->start_x = t_x;
@@ -84,7 +84,7 @@ namespace NBsys{namespace NDebugMenu
 
 			}else if((this->drag_flag == true)&&(t_on_l == true)){
 
-				//ƒhƒ‰ƒbƒO’†B
+				//ãƒ‰ãƒ©ãƒƒã‚°ä¸­ã€‚
 
 				this->parent->offset_x = this->old_x + (t_x - this->start_x);
 				this->parent->offset_y = this->old_y + (t_y - this->start_y);
@@ -92,7 +92,7 @@ namespace NBsys{namespace NDebugMenu
 
 			}else if((this->drag_flag == true)&&(t_on_l == false)){
 
-				//ƒhƒ‰ƒbƒOI—¹B
+				//ãƒ‰ãƒ©ãƒƒã‚°çµ‚äº†ã€‚
 
 				this->drag_flag = false;
 

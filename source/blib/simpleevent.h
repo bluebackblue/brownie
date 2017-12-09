@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ’Pƒ‚ÈƒCƒxƒ“ƒgB
+ * @brief å˜ç´”ãªã‚¤ãƒ™ãƒ³ãƒˆã€‚
 */
 
 
@@ -70,21 +70,21 @@ namespace NBlib
 		{
 		}
 
-		/** ‘Ò‚¿B
+		/** å¾…ã¡ã€‚
 		*/
 		void Wait()
 		{
 			#if(BLIB_STDMUTEX_ENABLE)
 			{
-				//”r‘¼B
+				//æ’ä»–ã€‚
 				std::unique_lock<std::mutex> t_lock(this->mutex);
 
-				//”r‘¼‰ğœ=>‘Ò‚¿=>”r‘¼=>ƒtƒ‰ƒOƒ`ƒFƒbƒNB
+				//æ’ä»–è§£é™¤=>å¾…ã¡=>æ’ä»–=>ãƒ•ãƒ©ã‚°ãƒã‚§ãƒƒã‚¯ã€‚
 				this->cv.wait(t_lock,[this]{
 					return this->flag;
 				});
 
-				//ƒŠƒZƒbƒgB
+				//ãƒªã‚»ãƒƒãƒˆã€‚
 				if(this->manual_reset == false){
 					this->flag = false;
 				}				
@@ -96,7 +96,7 @@ namespace NBlib
 			#endif
 		}
 
-		/** ƒVƒOƒiƒ‹æ“¾B
+		/** ã‚·ã‚°ãƒŠãƒ«å–å¾—ã€‚
 		*/
 		bool TryWait()
 		{
@@ -105,13 +105,13 @@ namespace NBlib
 				bool t_ret = false;
 
 				{
-					//”r‘¼B
+					//æ’ä»–ã€‚
 					std::lock_guard<std::mutex> t_lock(this->mutex);
 
-					//æ“¾B
+					//å–å¾—ã€‚
 					t_ret = this->flag;
 
-					//ƒŠƒZƒbƒgB
+					//ãƒªã‚»ãƒƒãƒˆã€‚
 					if(t_ret == true){
 						if(this->manual_reset == false){
 							this->flag = false;
@@ -128,21 +128,21 @@ namespace NBlib
 			#endif
 		}
 
-		/** ƒVƒOƒiƒ‹B
+		/** ã‚·ã‚°ãƒŠãƒ«ã€‚
 		*/
 		void Signal()
 		{
 			#if(BLIB_STDMUTEX_ENABLE)
 			{
 				{
-					//”r‘¼B
+					//æ’ä»–ã€‚
 					std::lock_guard<std::mutex> t_lock(this->mutex);
 
-					//İ’èB
+					//è¨­å®šã€‚
 					this->flag = true;
 				}
 
-				//‘Ò‹@‚µ‚Ä‚¢‚éƒXƒŒƒbƒh‚ğ‚Ğ‚Æ‚Â‹N°‚³‚¹‚éB
+				//å¾…æ©Ÿã—ã¦ã„ã‚‹ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’ã²ã¨ã¤èµ·åºŠã•ã›ã‚‹ã€‚
 				this->cv.notify_one();
 			}
 			#else
@@ -152,16 +152,16 @@ namespace NBlib
 			#endif
 		}
 
-		/** ƒNƒŠƒAB
+		/** ã‚¯ãƒªã‚¢ã€‚
 		*/
 		void Clear()
 		{
 			#if(BLIB_STDMUTEX_ENABLE)
 			{
-				//”r‘¼B
+				//æ’ä»–ã€‚
 				std::lock_guard<std::mutex> t_lock(this->mutex);
 				
-				//İ’èB
+				//è¨­å®šã€‚
 				this->flag = false;
 			}
 			#else

@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒpƒXB
+ * @brief ãƒ‘ã‚¹ã€‚
 */
 
 
@@ -32,8 +32,8 @@ namespace NBlib
 
 		/** [static]Dir
 	
-		a_path	: ƒpƒXB
-		return	: ƒpƒXB
+		a_path	: ãƒ‘ã‚¹ã€‚
+		return	: ãƒ‘ã‚¹ã€‚
 
 		*/
 		static STLWString Dir(const STLWString& a_path);
@@ -41,8 +41,8 @@ namespace NBlib
 
 		/** [static]Name
 
-		a_name	: ([ƒpƒX]+–¼‘O)B
-		return	: ([ƒpƒX]+–¼‘O)B
+		a_name	: ([ãƒ‘ã‚¹]+åå‰)ã€‚
+		return	: ([ãƒ‘ã‚¹]+åå‰)ã€‚
 
 		*/
 		static STLWString Name(const STLWString& a_name);
@@ -50,9 +50,9 @@ namespace NBlib
 
 		/** [static]DirAndName
 
-		a_path	: ƒpƒXB
-		a_name	: ([ƒpƒX]+–¼‘O)B
-		return	: ƒpƒX{([ƒpƒX]+–¼‘O)B
+		a_path	: ãƒ‘ã‚¹ã€‚
+		a_name	: ([ãƒ‘ã‚¹]+åå‰)ã€‚
+		return	: ãƒ‘ã‚¹ï¼‹([ãƒ‘ã‚¹]+åå‰)ã€‚
 
 		*/
 		static STLWString DirAndName(const STLWString& a_path,const STLWString& a_name);
@@ -60,9 +60,9 @@ namespace NBlib
 
 		/** [static]DirAndDir
 
-		a_path_a	: ƒpƒXB
-		a_path_b	: ƒpƒXB
-		return		: ƒpƒX{ƒpƒXB
+		a_path_a	: ãƒ‘ã‚¹ã€‚
+		a_path_b	: ãƒ‘ã‚¹ã€‚
+		return		: ãƒ‘ã‚¹ï¼‹ãƒ‘ã‚¹ã€‚
 
 		*/
 		static STLWString DirAndDir(const STLWString& a_path_a,const STLWString& a_path_b);

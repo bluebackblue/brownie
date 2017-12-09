@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒtƒ@ƒCƒ‹B
+ * @brief ãƒ•ã‚¡ã‚¤ãƒ«ã€‚
 */
 
 
@@ -36,7 +36,7 @@ namespace NBsys{namespace NFile
 	*/
 	File_Object::File_Object(s32 a_device_index,const STLWString& a_filename_short,s32 a_cachegroup_id,sharedptr<File_Allocator>& a_allocator,s32 a_add_allocatesize)
 	{
-		//ƒ[ƒhŠJnB
+		//ãƒ­ãƒ¼ãƒ‰é–‹å§‹ã€‚
 		sharedptr<ThreadTemplate<File_Thread>>& t_instance = GetSystemInstance(a_device_index);
 		this->workitem = (*t_instance)->LoadRequest(Path::Name(a_filename_short),a_cachegroup_id,a_allocator,a_add_allocatesize);
 	}
@@ -48,14 +48,14 @@ namespace NBsys{namespace NFile
 		this->workitem.reset();
 	}
 
-	/** ƒf[ƒ^æ“¾B
+	/** ãƒ‡ãƒ¼ã‚¿å–å¾—ã€‚
 	*/
 	sharedptr<u8>& File_Object::GetLoadData()
 	{
 		return this->workitem->GetData();
 	}
 
-	/** ƒ[ƒhƒTƒCƒYæ“¾B
+	/** ãƒ­ãƒ¼ãƒ‰ã‚µã‚¤ã‚ºå–å¾—ã€‚
 	*/
 	s64 File_Object::GetLoadSize() const
 	{
@@ -76,28 +76,28 @@ namespace NBsys{namespace NFile
 		return this->workitem->GetAddAllocateSize();
 	}
 
-	/** ƒRƒ“ƒo[ƒgƒƒbƒNB
+	/** ã‚³ãƒ³ãƒãƒ¼ãƒˆãƒ­ãƒƒã‚¯ã€‚
 	*/
 	File_ConvertLock_ReturnType::Id File_Object::ConvertLock()
 	{
 		return this->workitem->ConvertLock();
 	}
 
-	/** ƒRƒ“ƒo[ƒgƒAƒ“ƒƒbƒNB
+	/** ã‚³ãƒ³ãƒãƒ¼ãƒˆã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã€‚
 	*/
 	void File_Object::ConvertUnlock()
 	{
 		this->workitem->ConvertUnlock();
 	}
 
-	/** ˆ—’†B
+	/** å‡¦ç†ä¸­ã€‚
 	*/
 	bool File_Object::IsBusy() const
 	{
 		return this->workitem->IsBusy();
 	}
 
-	/** ƒGƒ‰[ƒR[ƒhæ“¾B
+	/** ã‚¨ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰å–å¾—ã€‚
 	*/
 	ErrorCode::Id File_Object::GetErrorCode() const
 	{

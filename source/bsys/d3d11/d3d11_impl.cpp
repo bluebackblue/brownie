@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ‚c‚R‚c‚P‚PB
+ * @brief ï¼¤ï¼“ï¼¤ï¼‘ï¼‘ã€‚
 */
 
 
@@ -471,7 +471,7 @@ namespace NBsys{namespace ND3d11
 	*/
 	s32 D3d11_Impl::CreateVertexShader(AsyncResult<bool>& a_asyncresult,sharedptr<NBsys::NFile::File_Object>& a_fileobject,sharedptr<STLVector<NBsys::ND3d11::D3d11_Layout>::Type>& a_layout)
 	{
-		//‚h‚cB
+		//ï¼©ï¼¤ã€‚
 		s32 t_vertexshader_id = this->id_maker.MakeID();
 
 		sharedptr<D3d11_Impl_VertexShader> t_vertexshader = new D3d11_Impl_VertexShader();
@@ -480,14 +480,14 @@ namespace NBsys{namespace ND3d11
 			t_vertexshader->layout = a_layout;
 		}
 
-		//ƒŒƒ“ƒ_[ƒRƒ}ƒ“ƒhB
+		//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚³ãƒãƒ³ãƒ‰ã€‚
 		sharedptr<NBsys::NActionBatching::ActionBatching_ActionList> t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
 		{
 			t_actionlist->Add(new D3d11_Impl_ActionBatching_VertexShader_Create(*this,t_vertexshader,a_asyncresult));
 		}
 		this->StartBatching(t_actionlist);
 
-		//ŠÇ—ƒŠƒXƒgB
+		//ç®¡ç†ãƒªã‚¹ãƒˆã€‚
 		this->vertexshader_list.insert(STLMap<s32,sharedptr<D3d11_Impl_VertexShader>>::value_type(t_vertexshader_id,t_vertexshader));
 
 		return t_vertexshader_id;
@@ -497,7 +497,7 @@ namespace NBsys{namespace ND3d11
 	*/
 	s32 D3d11_Impl::CreatePixelShader(AsyncResult<bool>& a_asyncresult,sharedptr<NBsys::NFile::File_Object>& a_fileobject)
 	{
-		//‚h‚cB
+		//ï¼©ï¼¤ã€‚
 		s32 t_pixelshader_id = this->id_maker.MakeID();
 
 		sharedptr<D3d11_Impl_PixelShader> t_pixelshader = new D3d11_Impl_PixelShader();
@@ -505,14 +505,14 @@ namespace NBsys{namespace ND3d11
 			t_pixelshader->fileobject = a_fileobject;
 		}
 
-		//ƒŒƒ“ƒ_[ƒRƒ}ƒ“ƒhB
+		//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚³ãƒãƒ³ãƒ‰ã€‚
 		sharedptr<NBsys::NActionBatching::ActionBatching_ActionList> t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
 		{
 			t_actionlist->Add(new D3d11_Impl_ActionBatching_PixelShader_Create(*this,t_pixelshader,a_asyncresult));
 		}
 		this->StartBatching(t_actionlist);
 
-		//ŠÇ—ƒŠƒXƒgB
+		//ç®¡ç†ãƒªã‚¹ãƒˆã€‚
 		this->pixelshader_list.insert(STLMap<s32,sharedptr<D3d11_Impl_PixelShader>>::value_type(t_pixelshader_id,t_pixelshader));
 
 		return t_pixelshader_id;
@@ -522,7 +522,7 @@ namespace NBsys{namespace ND3d11
 	*/
 	s32 D3d11_Impl::CreateVertexBuffer(const void* a_data,s32 a_stridebyte,s32 a_offset,s32 a_countofvertex,bool a_write_flag)
 	{
-		//‚h‚cB
+		//ï¼©ï¼¤ã€‚
 		s32 t_vertexbuffer_id = this->id_maker.MakeID();
 
 		sharedptr<D3d11_Impl_VertexBuffer> t_vertexbuffer = new D3d11_Impl_VertexBuffer();
@@ -534,14 +534,14 @@ namespace NBsys{namespace ND3d11
 			t_vertexbuffer->write_flag = a_write_flag;
 		}
 
-		//ƒŒƒ“ƒ_[ƒRƒ}ƒ“ƒhB
+		//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚³ãƒãƒ³ãƒ‰ã€‚
 		sharedptr<NBsys::NActionBatching::ActionBatching_ActionList> t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
 		{
 			t_actionlist->Add(new D3d11_Impl_ActionBatching_VertexBuffer_Create(*this,t_vertexbuffer));
 		}
 		this->StartBatching(t_actionlist);
 
-		//ŠÇ—ƒŠƒXƒgB
+		//ç®¡ç†ãƒªã‚¹ãƒˆã€‚
 		this->vertexbuffer_list.insert(STLMap<s32,sharedptr<D3d11_Impl_VertexBuffer>>::value_type(t_vertexbuffer_id,t_vertexbuffer));
 
 		return t_vertexbuffer_id;
@@ -551,7 +551,7 @@ namespace NBsys{namespace ND3d11
 	*/
 	s32 D3d11_Impl::CreateConstantBuffer(s32 a_register_b_index,s32 a_size)
 	{
-		//‚h‚cB
+		//ï¼©ï¼¤ã€‚
 		s32 t_constantbuffer_id = this->id_maker.MakeID();
 
 		sharedptr<D3d11_Impl_ConstantBuffer> t_constantbuffer = new D3d11_Impl_ConstantBuffer();
@@ -560,14 +560,14 @@ namespace NBsys{namespace ND3d11
 			t_constantbuffer->register_b_index = a_register_b_index;
 		}
 
-		//ƒŒƒ“ƒ_[ƒRƒ}ƒ“ƒhB
+		//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚³ãƒãƒ³ãƒ‰ã€‚
 		sharedptr<NBsys::NActionBatching::ActionBatching_ActionList> t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
 		{
 			t_actionlist->Add(new D3d11_Impl_ActionBatching_ConstantBuffer_Create(*this,t_constantbuffer));
 		}
 		this->StartBatching(t_actionlist);
 
-		//ŠÇ—ƒŠƒXƒgB
+		//ç®¡ç†ãƒªã‚¹ãƒˆã€‚
 		this->constantbuffer_list.insert(STLMap<s32,sharedptr<D3d11_Impl_ConstantBuffer>>::value_type(t_constantbuffer_id,t_constantbuffer));
 
 		return t_constantbuffer_id;
@@ -577,7 +577,7 @@ namespace NBsys{namespace ND3d11
 	*/
 	s32 D3d11_Impl::CreateTexture(sharedptr<NBsys::NTexture::Texture>& a_texture,bool a_write_flag)
 	{
-		//‚h‚cB
+		//ï¼©ï¼¤ã€‚
 		s32 t_texture_id = this->id_maker.MakeID();
 
 		sharedptr<D3d11_Impl_Texture> t_texture = new D3d11_Impl_Texture();
@@ -585,14 +585,14 @@ namespace NBsys{namespace ND3d11
 			t_texture->texture = a_texture;
 		}
 
-		//ƒŒƒ“ƒ_[ƒRƒ}ƒ“ƒhB
+		//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚³ãƒãƒ³ãƒ‰ã€‚
 		sharedptr<NBsys::NActionBatching::ActionBatching_ActionList> t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
 		{ 
 			t_actionlist->Add(new D3d11_Impl_ActionBatching_Texture_Create(*this,t_texture,a_write_flag));
 		}
 		this->StartBatching(t_actionlist);
 
-		//ŠÇ—ƒŠƒXƒgB
+		//ç®¡ç†ãƒªã‚¹ãƒˆã€‚
 		this->texture_list.insert(STLMap<s32,sharedptr<D3d11_Impl_Texture>>::value_type(t_texture_id,t_texture));
 
 		return t_texture_id;
@@ -602,7 +602,7 @@ namespace NBsys{namespace ND3d11
 	*/
 	s32 D3d11_Impl::CreateBlendState(bool a_alpha_blend)
 	{
-		//‚h‚cB
+		//ï¼©ï¼¤ã€‚
 		s32 t_blendstate_id = this->id_maker.MakeID();
 
 		sharedptr<D3d11_Impl_BlendState> t_blendstate = new D3d11_Impl_BlendState();
@@ -610,14 +610,14 @@ namespace NBsys{namespace ND3d11
 			t_blendstate->alpha_blend = a_alpha_blend;
 		}
 
-		//ƒŒƒ“ƒ_[ƒRƒ}ƒ“ƒhB
+		//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚³ãƒãƒ³ãƒ‰ã€‚
 		sharedptr<NBsys::NActionBatching::ActionBatching_ActionList> t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
 		{
 			t_actionlist->Add(new D3d11_Impl_ActionBatching_BlendState_Create(*this,t_blendstate));
 		}
 		this->StartBatching(t_actionlist);
 
-		//ŠÇ—ƒŠƒXƒgB
+		//ç®¡ç†ãƒªã‚¹ãƒˆã€‚
 		this->blendstate_list.insert(STLMap<s32,sharedptr<D3d11_Impl_BlendState>>::value_type(t_blendstate_id,t_blendstate));
 
 		return t_blendstate_id;
@@ -627,7 +627,7 @@ namespace NBsys{namespace ND3d11
 	*/
 	s32 D3d11_Impl::CreateRasterizerState(D3d11_CullType::Id a_culltype)
 	{
-		//‚h‚cB
+		//ï¼©ï¼¤ã€‚
 		s32 t_rasterizerstate_id = this->id_maker.MakeID();
 
 		sharedptr<D3d11_Impl_RasterizerState> t_rasterizerstate = new D3d11_Impl_RasterizerState();
@@ -635,14 +635,14 @@ namespace NBsys{namespace ND3d11
 			t_rasterizerstate->culltype = a_culltype;
 		}
 
-		//ƒŒƒ“ƒ_[ƒRƒ}ƒ“ƒhB
+		//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚³ãƒãƒ³ãƒ‰ã€‚
 		sharedptr<NBsys::NActionBatching::ActionBatching_ActionList> t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
 		{
 			t_actionlist->Add(new D3d11_Impl_ActionBatching_RasterizerState_Create(*this,t_rasterizerstate));
 		}
 		this->StartBatching(t_actionlist);
 
-		//ŠÇ—ƒŠƒXƒgB
+		//ç®¡ç†ãƒªã‚¹ãƒˆã€‚
 		this->rasterizerstate_list.insert(STLMap<s32,sharedptr<D3d11_Impl_RasterizerState>>::value_type(t_rasterizerstate_id,t_rasterizerstate));
 
 		return t_rasterizerstate_id;
@@ -652,7 +652,7 @@ namespace NBsys{namespace ND3d11
 	*/
 	s32 D3d11_Impl::CreateDepthStencilState(bool a_depthtest_flag,bool a_depthwrie_flag)
 	{
-		//‚h‚cB
+		//ï¼©ï¼¤ã€‚
 		s32 t_depthstencilstate_id = this->id_maker.MakeID();
 
 		sharedptr<D3d11_Impl_DepthStencilState> t_depthstencilstate = new D3d11_Impl_DepthStencilState();
@@ -661,14 +661,14 @@ namespace NBsys{namespace ND3d11
 			t_depthstencilstate->depthwrie_flag = a_depthwrie_flag;
 		}
 
-		//ƒŒƒ“ƒ_[ƒRƒ}ƒ“ƒhB
+		//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚³ãƒãƒ³ãƒ‰ã€‚
 		sharedptr<NBsys::NActionBatching::ActionBatching_ActionList> t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
 		{
 			t_actionlist->Add(new D3d11_Impl_ActionBatching_DepthStencilState_Create(*this,t_depthstencilstate));
 		}
 		this->StartBatching(t_actionlist);
 
-		//ŠÇ—ƒŠƒXƒgB
+		//ç®¡ç†ãƒªã‚¹ãƒˆã€‚
 		this->depthstencilstate_list.insert(STLMap<s32,sharedptr<D3d11_Impl_DepthStencilState>>::value_type(t_depthstencilstate_id,t_depthstencilstate));
 
 		return t_depthstencilstate_id;
@@ -893,14 +893,14 @@ namespace NBsys{namespace ND3d11
 				t_desc.SampleDesc.Count = 1;
 				t_desc.SampleDesc.Quality = 0;
 				if(a_write_flag){
-					//GPU (“Ç‚İæ‚è‚Ì‚İ) ‚Æ CPU (‘‚«‚İ‚Ì‚İ) ‚É‚æ‚éƒAƒNƒZƒX‚ª‰Â”\‚ÈƒŠƒ\[ƒXB
+					//GPU (èª­ã¿å–ã‚Šã®ã¿) ã¨ CPU (æ›¸ãè¾¼ã¿ã®ã¿) ã«ã‚ˆã‚‹ã‚¢ã‚¯ã‚»ã‚¹ãŒå¯èƒ½ãªãƒªã‚½ãƒ¼ã‚¹ã€‚
 					t_desc.Usage = D3D11_USAGE_DYNAMIC;
 				}else{
 					t_desc.Usage = D3D11_USAGE_DEFAULT;
 				}
 				t_desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
 				if(a_write_flag){
-					//ƒŠƒ\[ƒX‚ğƒ}ƒbƒv‰Â”\‚É‚µACPU ‚ª‚»‚ÌƒŠƒ\[ƒX‚Ì“à—e‚ğ•ÏX‚Å‚«‚é‚æ‚¤‚É‚µ‚Ü‚·B
+					//ãƒªã‚½ãƒ¼ã‚¹ã‚’ãƒãƒƒãƒ—å¯èƒ½ã«ã—ã€CPU ãŒãã®ãƒªã‚½ãƒ¼ã‚¹ã®å†…å®¹ã‚’å¤‰æ›´ã§ãã‚‹ã‚ˆã†ã«ã—ã¾ã™ã€‚
 					t_desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 				}else{
 					t_desc.CPUAccessFlags = 0;
@@ -955,7 +955,7 @@ namespace NBsys{namespace ND3d11
 			Memory::memset(&t_desc,0,sizeof(t_desc));
 
 			if(a_blendstate->alpha_blend == true){
-				//ƒAƒ‹ƒtƒ@ƒuƒŒƒ“ƒhB
+				//ã‚¢ãƒ«ãƒ•ã‚¡ãƒ–ãƒ¬ãƒ³ãƒ‰ã€‚
 				t_desc.AlphaToCoverageEnable = FALSE;
 				t_desc.IndependentBlendEnable = FALSE;
 				for(s32 ii=0;ii<COUNTOF(t_desc.RenderTarget);ii++){
@@ -1034,23 +1034,23 @@ namespace NBsys{namespace ND3d11
 			Memory::memset(&t_desc,0,sizeof(t_desc));
 
 			if(a_depthstencilstate->depthtest_flag){
-				//[“xƒeƒXƒg‚ğg—p‚·‚éB
+				//æ·±åº¦ãƒ†ã‚¹ãƒˆã‚’ä½¿ç”¨ã™ã‚‹ã€‚
 				t_desc.DepthEnable = TRUE;
 			}else{
-				//[“xƒeƒXƒg‚ğg—p‚µ‚È‚¢B
+				//æ·±åº¦ãƒ†ã‚¹ãƒˆã‚’ä½¿ç”¨ã—ãªã„ã€‚
 				t_desc.DepthEnable = FALSE;
 			}
 
 			if(a_depthstencilstate->depthwrie_flag){
-				//[“xƒXƒeƒ“ƒVƒ‹ ƒoƒbƒtƒ@[‚Ö‚Ì‘‚«‚İ‚ğƒIƒ“‚É‚µ‚Ü‚·B
+				//æ·±åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ« ãƒãƒƒãƒ•ã‚¡ãƒ¼ã¸ã®æ›¸ãè¾¼ã¿ã‚’ã‚ªãƒ³ã«ã—ã¾ã™ã€‚
 				t_desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
 			}else{
-				//[“xƒXƒeƒ“ƒVƒ‹ ƒoƒbƒtƒ@[‚Ö‚Ì‘‚«‚İ‚ğƒIƒt‚É‚µ‚Ü‚·B
+				//æ·±åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ« ãƒãƒƒãƒ•ã‚¡ãƒ¼ã¸ã®æ›¸ãè¾¼ã¿ã‚’ã‚ªãƒ•ã«ã—ã¾ã™ã€‚
 				t_desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
 			}
 
 
-			//ƒ\[ƒX ƒf[ƒ^‚ª‘ÎÛƒf[ƒ^‚æ‚è‚à¬‚³‚¢ê‡A”äŠr‚É‡Ši‚µ‚Ü‚·B
+			//ã‚½ãƒ¼ã‚¹ ãƒ‡ãƒ¼ã‚¿ãŒå¯¾è±¡ãƒ‡ãƒ¼ã‚¿ã‚ˆã‚Šã‚‚å°ã•ã„å ´åˆã€æ¯”è¼ƒã«åˆæ ¼ã—ã¾ã™ã€‚
 			t_desc.DepthFunc = D3D11_COMPARISON_LESS;
 		}
 
@@ -1118,11 +1118,11 @@ namespace NBsys{namespace ND3d11
 	}
 	#endif
 
-	/** ƒŠƒNƒGƒXƒgˆ—B
+	/** ãƒªã‚¯ã‚¨ã‚¹ãƒˆå‡¦ç†ã€‚
 	*/
 	void D3d11_Impl::Render_Main()
 	{
-		//ƒAƒNƒVƒ‡ƒ“ƒoƒbƒ`ƒ“ƒOÀs’†‚ÍƒƒbƒNB
+		//ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ãƒãƒƒãƒãƒ³ã‚°å®Ÿè¡Œä¸­ã¯ãƒ­ãƒƒã‚¯ã€‚
 		AutoLock t_autolock_actionbatching(this->actionbatching_lockobject);
 
 		this->actionbatching.Update(1.0f);
@@ -1132,13 +1132,13 @@ namespace NBsys{namespace ND3d11
 	*/
 	void D3d11_Impl::StartBatching(sharedptr<NBsys::NActionBatching::ActionBatching_ActionList>& a_actionlist)
 	{
-		//ƒAƒNƒVƒ‡ƒ“ƒoƒbƒ`ƒ“ƒO“o˜^’†‚ÍƒƒbƒNB
+		//ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ãƒãƒƒãƒãƒ³ã‚°ç™»éŒ²ä¸­ã¯ãƒ­ãƒƒã‚¯ã€‚
 		AutoLock t_autolock_actionbatching(this->actionbatching_lockobject);
 
 		this->actionbatching.StartBatching(a_actionlist);
 	}
 
-	/** Render_ViewPortB
+	/** Render_ViewPortã€‚
 	*/
 	void D3d11_Impl::Render_ViewPort(f32 a_x,f32 a_y,f32 a_width,f32 a_height)
 	{

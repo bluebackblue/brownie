@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒtƒ@ƒCƒ‹B
+ * @brief ãƒ•ã‚¡ã‚¤ãƒ«ã€‚
 */
 
 
@@ -43,11 +43,11 @@ namespace NBsys{namespace NFile
 		virtual ~File_Object();
 
 	public:
-		/** ƒ[ƒhƒf[ƒ^æ“¾B
+		/** ãƒ­ãƒ¼ãƒ‰ãƒ‡ãƒ¼ã‚¿å–å¾—ã€‚
 		*/
 		sharedptr<u8>& GetLoadData();
 
-		/** ƒ[ƒhƒTƒCƒYæ“¾B
+		/** ãƒ­ãƒ¼ãƒ‰ã‚µã‚¤ã‚ºå–å¾—ã€‚
 		*/
 		s64 GetLoadSize() const;
 
@@ -59,19 +59,19 @@ namespace NBsys{namespace NFile
 		*/
 		s32 GetAddAllocateSize() const;
 
-		/** ƒRƒ“ƒo[ƒgƒƒbƒNB
+		/** ã‚³ãƒ³ãƒãƒ¼ãƒˆãƒ­ãƒƒã‚¯ã€‚
 		*/
 		File_ConvertLock_ReturnType::Id ConvertLock();
 
-		/** ƒRƒ“ƒo[ƒgƒAƒ“ƒƒbƒNB
+		/** ã‚³ãƒ³ãƒãƒ¼ãƒˆã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã€‚
 		*/
 		void ConvertUnlock();
 
-		/** ˆ—’†B
+		/** å‡¦ç†ä¸­ã€‚
 		*/
 		bool IsBusy() const;
 
-		/** ƒGƒ‰[ƒR[ƒhæ“¾B
+		/** ã‚¨ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰å–å¾—ã€‚
 		*/
 		ErrorCode::Id GetErrorCode() const;
 

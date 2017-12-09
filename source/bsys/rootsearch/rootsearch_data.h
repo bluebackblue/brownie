@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief Œo˜H’T¸B
+ * @brief çµŒè·¯æ¢æŸ»ã€‚
 */
 
 
@@ -26,7 +26,7 @@
 #if(BSYS_ROOTSEARCH_ENABLE)
 namespace NBsys{namespace NRootSearch
 {
-	/** ƒf[ƒ^B
+	/** ãƒ‡ãƒ¼ã‚¿ã€‚
 	*/
 	class RootSearch_Data
 	{
@@ -48,33 +48,33 @@ namespace NBsys{namespace NRootSearch
 		~RootSearch_Data();
 
 	private:
-		/** ƒRƒlƒNƒgƒ`ƒFƒbƒNB
+		/** ã‚³ãƒã‚¯ãƒˆãƒã‚§ãƒƒã‚¯ã€‚
 		*/
 		bool ConnectCheck(RootSearch_NodeIndex& a_nodeindex_from,RootSearch_NodeIndex& a_nodeindex_to,bool a_root);
 
 	public:
 
-		/** ƒNƒŠƒAB
+		/** ã‚¯ãƒªã‚¢ã€‚
 		*/
 		void Clear();
 
-		/** ƒm[ƒh’Ç‰ÁB
+		/** ãƒãƒ¼ãƒ‰è¿½åŠ ã€‚
 		*/
 		RootSearch_NodeIndex AddNode(const NGeometry::Geometry_Vector3& a_pos,f32 a_radius,bool a_root);
 
-		/** ƒRƒlƒNƒgB
+		/** ã‚³ãƒã‚¯ãƒˆã€‚
 		*/
 		void Connect(RootSearch_NodeIndex a_nodeindex_a,RootSearch_NodeIndex a_nodeindex_b,bool a_root,s32 a_cost);
 
-		/** ˆÊ’u‚©‚çƒm[ƒhƒCƒ“ƒfƒbƒNƒXæ“¾B
+		/** ä½ç½®ã‹ã‚‰ãƒãƒ¼ãƒ‰ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹å–å¾—ã€‚
 		*/
 		RootSearch_NodeIndex GetNodeIndexFromPos(const NBsys::NGeometry::Geometry_Vector3& a_pos);
 
-		/** ƒm[ƒhæ“¾B
+		/** ãƒãƒ¼ãƒ‰å–å¾—ã€‚
 		*/
 		RootSearch_Node& GetNode(RootSearch_NodeIndex a_nodeindex);
 
-		/** ƒ‹[ƒgƒm[ƒh‚ÌŒvZB
+		/** ãƒ«ãƒ¼ãƒˆãƒãƒ¼ãƒ‰ã®è¨ˆç®—ã€‚
 		*/
 		void CalcRootNode();
 

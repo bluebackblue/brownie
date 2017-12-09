@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
 * Copyright (c) 2017 blueback
 * Released under the MIT License
 * https://github.com/bluebackblue/brownie/blob/master/LICENSE
 * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
-* @brief ‚l‚l‚cB‚o‚l‚wB
+* @brief ï¼­ï¼­ï¼¤ã€‚ï¼°ï¼­ï¼¸ã€‚
 */
 
 

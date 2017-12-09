@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒ\ƒPƒbƒgƒnƒ“ƒhƒ‹BÀ‘••”•ªB
+ * @brief ã‚½ã‚±ãƒƒãƒˆãƒãƒ³ãƒ‰ãƒ«ã€‚å®Ÿè£…éƒ¨åˆ†ã€‚
 */
 
 
@@ -116,7 +116,7 @@ namespace NBlib
 		return t_ret;
 	}
 
-	/** ŠJ‚­B
+	/** é–‹ãã€‚
 	*/
 	bool SocketHandle_Impl::OpenTcp()
 	{
@@ -144,7 +144,7 @@ namespace NBlib
 	}
 
 
-	/** ŠJ‚­B
+	/** é–‹ãã€‚
 	*/
 	bool SocketHandle_Impl::OpenUdp()
 	{
@@ -171,7 +171,7 @@ namespace NBlib
 		}
 	}
 
-	/** •Â‚¶‚éB
+	/** é–‰ã˜ã‚‹ã€‚
 	*/
 	void SocketHandle_Impl::Close()
 	{
@@ -196,7 +196,7 @@ namespace NBlib
 		}
 	}
 
-	/** Ú‘±B
+	/** æ¥ç¶šã€‚
 	*/
 	bool SocketHandle_Impl::ConnectTcp(const STLString& a_ip,s32 a_port)
 	{
@@ -240,7 +240,7 @@ namespace NBlib
 		}
 	}
 
-	/** Ú‘±B
+	/** æ¥ç¶šã€‚
 	*/
 	bool SocketHandle_Impl::ConnectUdp(const STLString& a_ip,s32 a_port)
 	{
@@ -277,7 +277,7 @@ namespace NBlib
 		}
 	}
 
-	/** ƒoƒCƒ“ƒhB
+	/** ãƒã‚¤ãƒ³ãƒ‰ã€‚
 	*/
 	bool SocketHandle_Impl::Bind(s32 a_port)
 	{
@@ -367,7 +367,7 @@ namespace NBlib
 		}
 	}
 
-	/** ƒuƒ[ƒhƒLƒƒƒXƒgİ’èB
+	/** ãƒ–ãƒ­ãƒ¼ãƒ‰ã‚­ãƒ£ã‚¹ãƒˆè¨­å®šã€‚
 	*/
 	void SocketHandle_Impl::SetBroadcast(bool a_flag)
 	{
@@ -386,7 +386,7 @@ namespace NBlib
 		#endif
 	}
 
-	/** ƒmƒ“ƒuƒƒbƒNİ’èB
+	/** ãƒãƒ³ãƒ–ãƒ­ãƒƒã‚¯è¨­å®šã€‚
 	*/
 	void SocketHandle_Impl::SetNonblock(bool a_flag)
 	{
@@ -405,7 +405,7 @@ namespace NBlib
 		#endif
 	}
 
-	/** ‘—MB
+	/** é€ä¿¡ã€‚
 	*/
 	bool SocketHandle_Impl::SendUdp(const u8* a_data,s64 a_size,s64 a_offset)
 	{
@@ -431,7 +431,7 @@ namespace NBlib
 		return true;
 	}
 
-	/** ‘—MB
+	/** é€ä¿¡ã€‚
 	*/
 	bool SocketHandle_Impl::Send(const u8* a_data,s64 a_size,s64 a_offset)
 	{
@@ -471,7 +471,7 @@ namespace NBlib
 		}
 	}
 
-	/** óMB
+	/** å—ä¿¡ã€‚
 	*/
 	s64 SocketHandle_Impl::Recv(u8* a_data,s64 a_size,s64 a_offset,bool a_complete)
 	{
@@ -483,7 +483,7 @@ namespace NBlib
 				while(1){
 					s64 t_size = a_size - t_offset;
 					if(t_size <= 0){
-						//Š®—¹B
+						//å®Œäº†ã€‚
 						return a_size;
 					}else{
 						s32 t_fix = ::recv(this->rawhandle,reinterpret_cast<char*>(&a_data[t_offset+a_offset]),static_cast<s32>(t_size),0);
@@ -522,7 +522,7 @@ namespace NBlib
 		}
 	}
 
-	/** ŠJ‚¢‚Ä‚¢‚é‚©‚Ç‚¤‚©B
+	/** é–‹ã„ã¦ã„ã‚‹ã‹ã©ã†ã‹ã€‚
 	*/
 	bool SocketHandle_Impl::IsOpen() const
 	{

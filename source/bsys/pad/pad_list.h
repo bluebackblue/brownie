@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒpƒbƒhB
+ * @brief ãƒ‘ãƒƒãƒ‰ã€‚
 */
 
 
@@ -38,25 +38,25 @@ namespace NBsys{namespace NPad
 		nonvirtual ~Pad_List();
 
 	private:
-		/** ƒfƒoƒCƒXƒŠƒXƒgB
+		/** ãƒ‡ãƒã‚¤ã‚¹ãƒªã‚¹ãƒˆã€‚
 		*/
 		STLVector<sharedptr<Pad_Device_Base>>::Type device_list;
 
-		/** ‰¼‘zƒpƒbƒhƒŠƒXƒgB
+		/** ä»®æƒ³ãƒ‘ãƒƒãƒ‰ãƒªã‚¹ãƒˆã€‚
 		*/
 		STLVector<sharedptr<Pad_Virtual>>::Type virtual_list;
 
 	public:
-		/** ƒfƒoƒCƒX’Ç‰ÁB
+		/** ãƒ‡ãƒã‚¤ã‚¹è¿½åŠ ã€‚
 		*/
 		void AddDevice(sharedptr<Pad_Device_Base>& a_device_instance);
 
-		/** ‰¼‘zƒpƒbƒhæ“¾B
+		/** ä»®æƒ³ãƒ‘ãƒƒãƒ‰å–å¾—ã€‚
 		*/
 		sharedptr<Pad_Virtual>& GetVirtualPad(s32 a_virtualpad_index);
 
 	public:
-		/** XVB
+		/** æ›´æ–°ã€‚
 		*/
 		void Update(bool a_device_update);
 

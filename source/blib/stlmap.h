@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ‚r‚s‚kƒ}ƒbƒvB
+ * @brief ï¼³ï¼´ï¼¬ãƒãƒƒãƒ—ã€‚
 */
 
 
@@ -37,7 +37,7 @@
 
 	STLBtMap<KEY,T,PR,STLALLOCATOR>::Type
 	STLMap<KEY,T,H,KEYEQ,STLALLOCATOR>::Type
-	std::map / std::unordered_map‚ÌƒAƒƒP[ƒ^w’èƒo[ƒWƒ‡ƒ“B
+	std::map / std::unordered_mapã®ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿æŒ‡å®šãƒãƒ¼ã‚¸ãƒ§ãƒ³ã€‚
 
 */
 

@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒfƒoƒbƒOƒuƒŒƒCƒNB
+ * @brief ãƒ‡ãƒãƒƒã‚°ãƒ–ãƒ¬ã‚¤ã‚¯ã€‚
 */
 
 
@@ -30,7 +30,7 @@
 #endif
 
 
-/** ƒuƒŒƒCƒNB 
+/** ãƒ–ãƒ¬ã‚¤ã‚¯ã€‚ 
 */
 #if defined(ROM_MASTER)
 

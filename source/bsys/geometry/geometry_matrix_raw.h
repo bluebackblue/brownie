@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒWƒIƒƒgƒŠB
+ * @brief ã‚¸ã‚ªãƒ¡ãƒˆãƒªã€‚
 */
 
 
@@ -34,7 +34,7 @@ namespace NBsys{namespace NGeometry
 			{
 				#if(BSYS_GEOMETRY_ROWCOLUMN_TYPE == 0x00)
 
-				//s—Dæ(Row-major)
+				//è¡Œå„ªå…ˆ(Row-major)
 				//D3DXMATRIX
 
 				f32 m_11;
@@ -59,7 +59,7 @@ namespace NBsys{namespace NGeometry
 
 				#else
 
-				//—ñ—Dæ(Column-major)
+				//åˆ—å„ªå…ˆ(Column-major)
 				//HLSL
 
 				f32 m_11;
@@ -89,7 +89,7 @@ namespace NBsys{namespace NGeometry
 			{
 				#if(BSYS_GEOMETRY_ROWCOLUMN_TYPE == 0x00)
 
-				//s—Dæ(Row-major)
+				//è¡Œå„ªå…ˆ(Row-major)
 				//D3DXMATRIX
 				//Maya
 
@@ -115,7 +115,7 @@ namespace NBsys{namespace NGeometry
 
 				#else
 
-				//—ñ—Dæ(Column-major)
+				//åˆ—å„ªå…ˆ(Column-major)
 				//HLSL
 				//OpenGL
 

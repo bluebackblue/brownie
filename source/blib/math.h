@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ZpB
+ * @brief ç®—è¡“ã€‚
 */
 
 
@@ -68,31 +68,31 @@ namespace NBlib
 		*/
 		static bool is_nan(f32 a_value);
 
-		/** [static]a_x/a_y‚Ì—]èB
+		/** [static]a_x/a_yã®ä½™å‰°ã€‚
 		*/
 		static f32 modf(f32 a_x,f32 a_y);
 
-		/** [static]x‚ÌyæB
+		/** [static]xã®yä¹—ã€‚
 		*/
 		static f32 powf(f32 a_x,f32 a_y);
 
-		/** [static]•½•ûªB
+		/** [static]å¹³æ–¹æ ¹ã€‚
 		*/
 		static f32 sqrtf(f32 a_value);
 
-		/** [static]2‚ğ’ê‚Æ‚·‚é‘Î”B
+		/** [static]2ã‚’åº•ã¨ã™ã‚‹å¯¾æ•°ã€‚
 		*/
 		static f32 log2f(f32 a_value);
 
-		/** [static]Ø‚èã‚°B
+		/** [static]åˆ‡ã‚Šä¸Šã’ã€‚
 		*/
 		static f32 ceilf(f32 a_value);
 
-		/** [static]â‘Î’lB
+		/** [static]çµ¶å¯¾å€¤ã€‚
 		*/
 		static f32 absf(f32 a_value);
 
-		/** [static]©‘R‘Î”‚Ì’êe(ƒlƒCƒsƒA”)‚ÌvalueæB
+		/** [static]è‡ªç„¶å¯¾æ•°ã®åº•e(ãƒã‚¤ãƒ”ã‚¢æ•°)ã®valueä¹—ã€‚
 		*/
 		static f32 expf(f32 a_value);
 

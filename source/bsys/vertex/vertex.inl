@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
 * Copyright (c) 2017 blueback
 * Released under the MIT License
 * https://github.com/bluebackblue/brownie/blob/master/LICENSE
 * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
-* @brief ƒo[ƒeƒbƒNƒXB
+* @brief ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ã€‚
 */
 
 
@@ -47,13 +47,13 @@ namespace NBsys{namespace NVertex
 			const sharedptr<JsonItem>& t_parts_json = a_jsonitem->GetItem(ii);
 
 			{
-				//ƒp[ƒcƒCƒ“ƒfƒbƒNƒXB
+				//ãƒ‘ãƒ¼ãƒ„ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã€‚
 				s32 t_parts_index = t_parts_json->GetItem("parts_index")->GetInteger();
 
-				//ƒIƒtƒZƒbƒgB
+				//ã‚ªãƒ•ã‚»ãƒƒãƒˆã€‚
 				this->parts_list[t_parts_index]->vertex_offset = static_cast<s32>(this->vertex_list.size());
 
-				//ƒo[ƒeƒbƒNƒXƒŠƒXƒgB
+				//ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ãƒªã‚¹ãƒˆã€‚
 				const sharedptr<JsonItem>& t_vertexlist_json = t_parts_json->GetItem("vertex_list");
 				s32 jj_max = t_vertexlist_json->GetListMax();
 				for(s32 jj=0;jj<jj_max;jj++){
@@ -101,7 +101,7 @@ namespace NBsys{namespace NVertex
 					this->vertex_list.push_back(t_vertex);
 				}
 
-				//ƒJƒEƒ“ƒgƒIƒuB
+				//ã‚«ã‚¦ãƒ³ãƒˆã‚ªãƒ–ã€‚
 				this->parts_list[t_parts_index]->vertex_countof = jj_max;
 			}
 		}
@@ -113,7 +113,7 @@ namespace NBsys{namespace NVertex
 	{
 	}
 
-	/** V‹Kƒp[ƒc‚ğ’Ç‰ÁB
+	/** æ–°è¦ãƒ‘ãƒ¼ãƒ„ã‚’è¿½åŠ ã€‚
 	*/
 	template <typename T> void Vertex<T>::AddParts(const STLString& a_parts_name)
 	{
@@ -124,7 +124,7 @@ namespace NBsys{namespace NVertex
 		this->parts_list[this->parts_list.size() - 1]->vertex_countof = 0;
 	}
 
-	/** ÅŒã‚Ìƒp[ƒc‚Éƒo[ƒeƒbƒNƒX‚ğ’Ç‰ÁB
+	/** æœ€å¾Œã®ãƒ‘ãƒ¼ãƒ„ã«ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ã‚’è¿½åŠ ã€‚
 	*/
 	template <typename T> void Vertex<T>::AddVertex(const T& a_vertex)
 	{
@@ -134,14 +134,14 @@ namespace NBsys{namespace NVertex
 		this->parts_list[this->parts_list.size() - 1]->vertex_countof++;
 	}
 
-	/** ƒo[ƒeƒbƒNƒX‚Ì—e—ÊŠm•ÛB
+	/** ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ã®å®¹é‡ç¢ºä¿ã€‚
 	*/
 	template <typename T> void Vertex<T>::ReserveVertex(s32 a_count_of)
 	{
 		this->vertex_list.reserve(a_count_of);
 	}
 
-	/** ƒo[ƒeƒNƒX‚ÌƒNƒŠƒAB
+	/** ãƒãƒ¼ãƒ†ã‚¯ã‚¹ã®ã‚¯ãƒªã‚¢ã€‚
 	*/
 	template <typename T> void Vertex<T>::ClearVertex()
 	{
@@ -163,7 +163,7 @@ namespace NBsys{namespace NVertex
 		return this->parts_list[a_parts_index]->vertex_countof;
 	}
 
-	/** ‘Sƒo[ƒeƒbƒNƒX”B
+	/** å…¨ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹æ•°ã€‚
 	*/
 	template <typename T> s32 Vertex<T>::GetVertexAllCountOf()
 	{

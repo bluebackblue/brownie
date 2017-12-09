@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒWƒIƒƒgƒŠB
+ * @brief ã‚¸ã‚ªãƒ¡ãƒˆãƒªã€‚
 */
 
 
@@ -27,23 +27,23 @@
 namespace NBsys{namespace NGeometry
 {
 
-	/** ƒGƒ‹ƒ~[ƒg‹ÈüB
+	/** ã‚¨ãƒ«ãƒŸãƒ¼ãƒˆæ›²ç·šã€‚
 	*/
 	inline Geometry_Vector2 HermiteCurve(Geometry_Vector2& a_p0,Geometry_Vector2& a_v0,Geometry_Vector2& a_p1,Geometry_Vector2& a_v1,f32 a_rate);
 
-	/** ƒxƒWƒF‹ÈüB‚S“_B
+	/** ãƒ™ã‚¸ã‚§æ›²ç·šã€‚ï¼”ç‚¹ã€‚
 	*/
 	inline f32 GetBezierCurve(f32 a_pos_1,f32 a_pos_2,f32 a_pos_3,f32 a_pos_4,f32 a_rate);
 
-	/** ƒxƒWƒF‹ÈüB‚R“_B
+	/** ãƒ™ã‚¸ã‚§æ›²ç·šã€‚ï¼“ç‚¹ã€‚
 	*/
 	inline Geometry_Vector2 GetBezierCurve(Geometry_Vector2& a_pos_1,Geometry_Vector2& a_pos_2,Geometry_Vector2& a_pos_3,f32 a_rate);
 
-	/** ƒxƒWƒF‹ÈüB‚S“_B
+	/** ãƒ™ã‚¸ã‚§æ›²ç·šã€‚ï¼”ç‚¹ã€‚
 	*/
 	inline Geometry_Vector2 GetBezierCurve(Geometry_Vector2& a_pos_1,Geometry_Vector2& a_pos_2,Geometry_Vector2& a_pos_3,Geometry_Vector2& a_pos_4,f32 a_rate);
 
-	/** ƒxƒWƒF‹ÈüB‚T“_B
+	/** ãƒ™ã‚¸ã‚§æ›²ç·šã€‚ï¼•ç‚¹ã€‚
 	*/
 	inline Geometry_Vector2 GetBezierCurve(Geometry_Vector2& a_pos_1,Geometry_Vector2& a_pos_2,Geometry_Vector2& a_pos_3,Geometry_Vector2& a_pos_4,Geometry_Vector2& a_pos_5,f32 a_rate);
 

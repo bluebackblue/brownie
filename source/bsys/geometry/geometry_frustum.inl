@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒWƒIƒƒgƒŠB
+ * @brief ã‚¸ã‚ªãƒ¡ãƒˆãƒªã€‚
 */
 
 
@@ -96,12 +96,12 @@ namespace NBsys{namespace NGeometry
 		for(s32 ii=0;ii<COUNTOF(this->plane);ii++){
 			if(this->plane[ii].Distance(a_position) < 0){
 
-				//ƒtƒ‰ƒXƒ^ƒ€ŠOB
+				//ãƒ•ãƒ©ã‚¹ã‚¿ãƒ å¤–ã€‚
 				return false;
 			}
 		}
 
-		//ƒtƒ‰ƒXƒ^ƒ€“àB
+		//ãƒ•ãƒ©ã‚¹ã‚¿ãƒ å†…ã€‚
 		return true;
 	}
 

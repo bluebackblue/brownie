@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief Œo˜H’T¸B
+ * @brief çµŒè·¯æ¢æŸ»ã€‚
 */
 
 
@@ -123,23 +123,23 @@ namespace NBsys{namespace NRootSearch
 		*/
 		nonvirtual ~RootSearch();
 
-		/** ƒNƒŠƒAB
+		/** ã‚¯ãƒªã‚¢ã€‚
 		*/
 		void Clear();
 
-		/** Ú‘±B
+		/** æ¥ç¶šã€‚
 		*/
 		void Connect(s32 a_node_index_a,s32 a_node_index_b);
 
-		/** ƒm[ƒh’Ç‰ÁB
+		/** ãƒãƒ¼ãƒ‰è¿½åŠ ã€‚
 		*/
 		s32 AddNode(const NGeometry::Geometry_Vector3& a_pos);
 
-		/** ƒm[ƒhƒCƒ“ƒfƒbƒNƒXæ“¾B
+		/** ãƒãƒ¼ãƒ‰ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹å–å¾—ã€‚
 		*/
 		s32 GetNodeIndexFromPos(const NGeometry::Geometry_Vector3& a_pos);
 
-		/** Œo˜H’T¸B
+		/** çµŒè·¯æ¢æŸ»ã€‚
 		*/
 		NGeometry::Geometry_Vector3 SearchRoot(const NGeometry::Geometry_Vector3& a_start,const NGeometry::Geometry_Vector3& a_end);
 

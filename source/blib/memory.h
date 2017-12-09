@@ -1,11 +1,11 @@
-#pragma once
+Ôªø#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ÉÅÉÇÉäÅ[ÅB
+ * @brief „É°„É¢„É™„Éº„ÄÇ
 */
 
 
@@ -46,10 +46,10 @@ namespace NBlib
 				Memory::memcpy(&t_ret,static_cast<s32>(sizeof(T)),a_current_pointer,static_cast<s32>(sizeof(T)));
 
 				if(a_increment < 0){
-					//é©ìÆÅB
+					//Ëá™Âãï„ÄÇ
 					a_current_pointer += sizeof(T);
 				}else{
-					//éËìÆÅB
+					//ÊâãÂãï„ÄÇ
 					a_current_pointer += a_increment;
 				}
 			}
@@ -64,10 +64,10 @@ namespace NBlib
 				Memory::memcpy(&t_ret,static_cast<s32>(sizeof(T)),a_current_pointer,static_cast<s32>(sizeof(T)));
 
 				if(a_increment < 0){
-					//é©ìÆÅB
+					//Ëá™Âãï„ÄÇ
 					a_current_pointer += sizeof(T);
 				}else{
-					//éËìÆÅB
+					//ÊâãÂãï„ÄÇ
 					a_current_pointer += a_increment;
 				}
 			}

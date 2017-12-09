@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒWƒIƒƒgƒŠB
+ * @brief ã‚¸ã‚ªãƒ¡ãƒˆãƒªã€‚
 */
 
 
@@ -58,31 +58,31 @@ namespace NBsys{namespace NGeometry
 		*/
 		nonvirtual inline ~Geometry_Vector2();
 
-		/** [static]ZeroB
+		/** [static]Zeroã€‚
 		*/
 		static inline const Geometry_Vector2& Zero();
 
-		/** [static]OneB
+		/** [static]Oneã€‚
 		*/
 		static inline const Geometry_Vector2& One();
 
-		/** [İ’è]B
+		/** [è¨­å®š]ã€‚
 		*/
 		inline Geometry_Vector2& Set(f32 a_x,f32 a_y);
 
-		/** [İ’è]B
+		/** [è¨­å®š]ã€‚
 		*/
 		inline Geometry_Vector2& Set(const Geometry_Vector2& a_vector);
 
-		/** [İ’è]Set_ZeroB
+		/** [è¨­å®š]Set_Zeroã€‚
 		*/
 		inline Geometry_Vector2& Set_Zero();
 
-		/** [ƒLƒƒƒXƒg]B
+		/** [ã‚­ãƒ£ã‚¹ãƒˆ]ã€‚
 		*/
 		inline operator f32*();
 
-		/** [ƒLƒƒƒXƒg]B
+		/** [ã‚­ãƒ£ã‚¹ãƒˆ]ã€‚
 		*/
 		inline operator const f32*() const;
 	};
@@ -119,139 +119,139 @@ namespace NBsys{namespace NGeometry
 		*/
 		nonvirtual inline ~Geometry_Vector3();
 
-		/** [static]ZeroB
+		/** [static]Zeroã€‚
 		*/
 		static inline const Geometry_Vector3& Zero();
 
-		/** [static]OneB
+		/** [static]Oneã€‚
 		*/
 		static inline const Geometry_Vector3& One();
 
-		/** [İ’è]B
+		/** [è¨­å®š]ã€‚
 		*/
 		inline Geometry_Vector3& Set(f32 a_x,f32 a_y,f32 a_z);
 
-		/** [İ’è]B
+		/** [è¨­å®š]ã€‚
 		*/
 		inline Geometry_Vector3& Set(const Geometry_Vector3& a_vector);
 
-		/** [İ’è]Set_ZeroB
+		/** [è¨­å®š]Set_Zeroã€‚
 		*/
 		inline Geometry_Vector3& Set_Zero();
 
-		/** [ƒLƒƒƒXƒg]B
+		/** [ã‚­ãƒ£ã‚¹ãƒˆ]ã€‚
 		*/
 		inline operator f32*();
 
-		/** [ƒLƒƒƒXƒg]B
+		/** [ã‚­ãƒ£ã‚¹ãƒˆ]ã€‚
 		*/
 		inline operator const f32*() const;
 
-		/** [ì¬]ŠOÏB
+		/** [ä½œæˆ]å¤–ç©ã€‚
 		*/
 		inline Geometry_Vector3 Make_Cross(const Geometry_Vector3& a_vector) const;
 
-		/** [İ’è]ŠOÏB
+		/** [è¨­å®š]å¤–ç©ã€‚
 		*/
 		inline Geometry_Vector3& Set_Cross(const Geometry_Vector3& a_vector);
 
-		/** [İ’è]ŠOÏB
+		/** [è¨­å®š]å¤–ç©ã€‚
 		*/
 		inline Geometry_Vector3& Set_Cross(const Geometry_Vector3& a_vector_1,const Geometry_Vector3& a_vector_2);
 
-		/** [İ’è]³‹K‰»B
+		/** [è¨­å®š]æ­£è¦åŒ–ã€‚
 		*/
 		inline Geometry_Vector3& Set_Normalize();
 
-		/** [İ’è]³‹K‰»B
+		/** [è¨­å®š]æ­£è¦åŒ–ã€‚
 		*/
 		inline Geometry_Vector3& Set_Normalize_Safe(const Geometry_Vector3& a_vector_safe);
 
-		/** [İ’è]³‹K‰»B
+		/** [è¨­å®š]æ­£è¦åŒ–ã€‚
 		*/
 		inline f32 Set_Normalize_GetLength();
 
-		/** [ì¬]³‹K‰»B
+		/** [ä½œæˆ]æ­£è¦åŒ–ã€‚
 		*/
 		inline Geometry_Vector3 Make_Normalize() const;
 
-		/** [ì¬]³‹K‰»B
+		/** [ä½œæˆ]æ­£è¦åŒ–ã€‚
 		*/
 		inline Geometry_Vector3 Make_Normalize_Safe(const Geometry_Vector3& a_vector_safe) const;
 
-		/** [İ’è]‰ÁZB
+		/** [è¨­å®š]åŠ ç®—ã€‚
 		*/
 		inline Geometry_Vector3& operator +=(const Geometry_Vector3& a_vector);
 
-		/** [İ’è]Œ¸ZB
+		/** [è¨­å®š]æ¸›ç®—ã€‚
 		*/
 		inline Geometry_Vector3& operator -=(const Geometry_Vector3& a_vector);
 
-		/** [İ’è]æZB
+		/** [è¨­å®š]ä¹—ç®—ã€‚
 		*/
 		inline Geometry_Vector3& operator *=(f32 a_value);
 
-		/** [İ’è]æZB
+		/** [è¨­å®š]ä¹—ç®—ã€‚
 		*/
 		inline Geometry_Vector3& operator *=(const Geometry_Vector3& a_vector);
 
-		/** [İ’è]œZB
+		/** [è¨­å®š]é™¤ç®—ã€‚
 		*/
 		inline Geometry_Vector3& operator /=(f32 a_value);
 
-		/** [ì¬]©g‚ÌƒxƒNƒgƒ‹‚ğ•Ô‚µ‚Ü‚·B
+		/** [ä½œæˆ]è‡ªèº«ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’è¿”ã—ã¾ã™ã€‚
 		*/
 		inline Geometry_Vector3 operator +() const;
 
-		/** [ì¬]‹tŒü‚«ƒxƒNƒgƒ‹B
+		/** [ä½œæˆ]é€†å‘ããƒ™ã‚¯ãƒˆãƒ«ã€‚
 		*/
 		inline Geometry_Vector3 operator -() const;
 
-		/** [ì¬]‰ÁZB
+		/** [ä½œæˆ]åŠ ç®—ã€‚
 		*/
 		inline Geometry_Vector3 operator +(const Geometry_Vector3& a_vector) const;
 
-		/** [ì¬]Œ¸ZB
+		/** [ä½œæˆ]æ¸›ç®—ã€‚
 		*/
 		inline Geometry_Vector3 operator -(const Geometry_Vector3& a_vector) const;
 
-		/** [ì¬]æZB
+		/** [ä½œæˆ]ä¹—ç®—ã€‚
 		*/
 		inline Geometry_Vector3 operator *(f32 a_value) const;
 
-		/** [ì¬]œZB
+		/** [ä½œæˆ]é™¤ç®—ã€‚
 		*/
 		inline Geometry_Vector3 operator /(f32 a_value) const;
 
-		/** [”äŠr]B
+		/** [æ¯”è¼ƒ]ã€‚
 		*/
 		inline bool operator ==(const Geometry_Vector3& a_vector) const;
 
-		/** [”äŠr]B
+		/** [æ¯”è¼ƒ]ã€‚
 		*/
 		inline bool operator !=(const Geometry_Vector3& a_vector) const;
 
-		/** [“àÏ]length(this)*length(a_vector)*cos(ƒÆ)B
+		/** [å†…ç©]length(this)*length(a_vector)*cos(Î¸)ã€‚
 		*/
 		inline f32 Dot(const Geometry_Vector3& a_vector) const;
 
-		/** [ƒ`ƒFƒbƒN]B
+		/** [ãƒã‚§ãƒƒã‚¯]ã€‚
 		*/
 		inline bool IsZero() const;
 
-		/** [ì¬]’·‚³B
+		/** [ä½œæˆ]é•·ã•ã€‚
 		*/
 		inline f32 Length() const;
 
-		/** [ì¬]’·‚³‚Ì‚QæB
+		/** [ä½œæˆ]é•·ã•ã®ï¼’ä¹—ã€‚
 		*/
 		inline f32 SquareLength() const;
 
-		/** [ì¬]‚Q“_ŠÔ‚Ì‹——£‚Ì‚QæB
+		/** [ä½œæˆ]ï¼’ç‚¹é–“ã®è·é›¢ã®ï¼’ä¹—ã€‚
 		*/
 		inline f32 SquareDistance(const Geometry_Vector3& a_vector) const;
 
-		/** [ì¬]Make_LerpB
+		/** [ä½œæˆ]Make_Lerpã€‚
 
 		a_per = 0.0f : return = this
 		a_per = 1.0f : return = a_vector
@@ -259,7 +259,7 @@ namespace NBsys{namespace NGeometry
 		*/
 		inline Geometry_Vector3 Make_Lerp(const Geometry_Vector3& a_vector,f32 a_per) const;
 
-		/** [static][ì¬]Lerp
+		/** [static][ä½œæˆ]Lerp
 
 		a_per = 0.0f : return = this
 		a_per = 1.0f : return = a_vector
@@ -267,7 +267,7 @@ namespace NBsys{namespace NGeometry
 		*/
 		static inline Geometry_Vector3 Make_Lerp(const Geometry_Vector3& a_vector_1,const Geometry_Vector3& a_vector_2,f32 a_per);
 
-		/** [İ’è]LerpB
+		/** [è¨­å®š]Lerpã€‚
 
 		a_per = 0.0f : this = this
 		a_per = 1.0f : this = a_vector
@@ -275,7 +275,7 @@ namespace NBsys{namespace NGeometry
 		*/
 		inline void Set_Lerp(const Geometry_Vector3& a_vector,f32 a_per);
 
-		/** [İ’è]LerpB
+		/** [è¨­å®š]Lerpã€‚
 
 		a_per = 0.0f : this = a_vector_1
 		a_per = 1.0f : this = a_vector_2
@@ -312,31 +312,31 @@ namespace NBsys{namespace NGeometry
 		*/
 		nonvirtual inline ~Geometry_Vector4();
 
-		/** [static]Make_ZeroB
+		/** [static]Make_Zeroã€‚
 		*/
 		static inline const Geometry_Vector4& Zero();
 
-		/** [static]Make_OneB
+		/** [static]Make_Oneã€‚
 		*/
 		static inline const Geometry_Vector4& One();
 
-		/** [İ’è]B
+		/** [è¨­å®š]ã€‚
 		*/
 		inline Geometry_Vector4& Set(f32 a_x,f32 a_y,f32 a_z,f32 a_w);
 
-		/** [İ’è]B
+		/** [è¨­å®š]ã€‚
 		*/
 		inline Geometry_Vector4& Set(const Geometry_Vector4& a_vector);
 
-		/** [İ’è]Set_ZeroB
+		/** [è¨­å®š]Set_Zeroã€‚
 		*/
 		inline Geometry_Vector4& Set_Zero();
 
-		/** [ƒLƒƒƒXƒg]B
+		/** [ã‚­ãƒ£ã‚¹ãƒˆ]ã€‚
 		*/
 		inline operator f32*();
 
-		/** [ƒLƒƒƒXƒg]B
+		/** [ã‚­ãƒ£ã‚¹ãƒˆ]ã€‚
 		*/
 		inline operator const f32*() const;
 

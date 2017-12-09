@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒtƒ@ƒCƒ‹B
+ * @brief ãƒ•ã‚¡ã‚¤ãƒ«ã€‚
 */
 
 
@@ -29,11 +29,11 @@ namespace NBsys{namespace NFile
 	class File_Pack
 	{
 	private:
-		/** ƒƒbƒNƒIƒuƒWƒFƒNƒgB
+		/** ãƒ­ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã€‚
 		*/
 		LockObject& lockobject;
 
-		/** ƒpƒbƒNƒŠƒXƒgB
+		/** ãƒ‘ãƒƒã‚¯ãƒªã‚¹ãƒˆã€‚
 		*/
 		STLList<sharedptr<File_Pack_WorkItem>>::Type list;
 
@@ -46,15 +46,15 @@ namespace NBsys{namespace NFile
 		*/
 		nonvirtual ~File_Pack();
 
-		/** “o˜^B
+		/** ç™»éŒ²ã€‚
 		*/
 		void Resist(const sharedptr<File_Pack_WorkItem>& a_workitem);
 
-		/** “Ç‚İ‚İÏ‚İƒpƒbƒN‚Ìƒ`ƒFƒbƒNB
+		/** èª­ã¿è¾¼ã¿æ¸ˆã¿ãƒ‘ãƒƒã‚¯ã®ãƒã‚§ãƒƒã‚¯ã€‚
 		*/
 		bool IsExist(const STLWString& a_pack_filename_short);
 
-		/** ƒpƒbƒN‚©‚çƒtƒ@ƒCƒ‹‚ğŠJ‚­B
+		/** ãƒ‘ãƒƒã‚¯ã‹ã‚‰ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ãã€‚
 		*/
 		sharedptr<File_Pack_FileHandle>& CreatePackFileHandle(const STLWString& a_filename);
 

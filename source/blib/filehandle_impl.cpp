@@ -1,11 +1,11 @@
-
+Ôªø
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ÉtÉ@ÉCÉãÉnÉìÉhÉãÅBé¿ëïïîï™ÅB
+ * @brief „Éï„Ç°„Ç§„É´„Éè„É≥„Éâ„É´„ÄÇÂÆüË£ÖÈÉ®ÂàÜ„ÄÇ
 */
 
 
@@ -81,8 +81,8 @@ namespace NBlib
 			#if defined(PLATFORM_VCWIN)
 			{
 				//OPEN_ALWAYS
-				//ÉtÉ@ÉCÉãÇ™ë∂ç›ÇµÇƒÇ¢ÇÈèÍçáÇªÇÃÉtÉ@ÉCÉãÇäJÇ´Ç‹Ç∑ÅB
-				//éwíËÇµÇΩÉtÉ@ÉCÉãÇ™ë∂ç›ÇµÇƒÇ¢Ç»Ç¢èÍçáÅAÇ±ÇÃä÷êîÇÕ dwCreationDisposition ÉpÉâÉÅÅ[É^Ç≈ CREATE_NEW Ç™éwíËÇ≥ÇÍÇƒÇ¢ÇΩÇ∆âºíËÇµÇƒêVÇµÇ¢ÉtÉ@ÉCÉãÇçÏê¨ÇµÇ‹Ç∑ÅB
+				//„Éï„Ç°„Ç§„É´„ÅåÂ≠òÂú®„Åó„Å¶„ÅÑ„ÇãÂ†¥Âêà„Åù„ÅÆ„Éï„Ç°„Ç§„É´„ÇíÈñã„Åç„Åæ„Åô„ÄÇ
+				//ÊåáÂÆö„Åó„Åü„Éï„Ç°„Ç§„É´„ÅåÂ≠òÂú®„Åó„Å¶„ÅÑ„Å™„ÅÑÂ†¥Âêà„ÄÅ„Åì„ÅÆÈñ¢Êï∞„ÅØ dwCreationDisposition „Éë„É©„É°„Éº„Çø„Åß CREATE_NEW „ÅåÊåáÂÆö„Åï„Çå„Å¶„ÅÑ„Åü„Å®‰ªÆÂÆö„Åó„Å¶Êñ∞„Åó„ÅÑ„Éï„Ç°„Ç§„É´„Çí‰ΩúÊàê„Åó„Åæ„Åô„ÄÇ
 				this->rawhandle = ::CreateFileW(a_filename.c_str(),GENERIC_WRITE,0x00000000,WIN_NULL,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL,WIN_NULL);
 				if(this->rawhandle == INVALID_HANDLE_VALUE){
 					return false;
@@ -130,13 +130,13 @@ namespace NBlib
 					t_blocksize = BLIB_FILEHANDLE_BLOCKSIZE;
 				}
 
-				//ì«Ç›çûÇ›ÅB
+				//Ë™≠„ÅøËæº„Åø„ÄÇ
 				#if defined(PLATFORM_VCWIN)
 				{
 					DWORD t_fix = 0;
 					bool t_ret = true;
 
-					DWORD t_offset_low = static_cast<DWORD>((a_offset+t_index)&0xFFFFFFFF);	//â∫à ÅB
+					DWORD t_offset_low = static_cast<DWORD>((a_offset+t_index)&0xFFFFFFFF);	//‰∏ã‰Ωç„ÄÇ
 					DWORD t_ret_seek = ::SetFilePointer(this->rawhandle,t_offset_low,WIN_NULL,FILE_BEGIN);
 					if(t_ret_seek == INVALID_SET_FILE_POINTER){
 						t_ret = false;
@@ -158,7 +158,7 @@ namespace NBlib
 						t_index += static_cast<s64>(t_fix);
 
 						if(t_fix == 0){
-							//ì«Ç›çûÇ›ìríÜÇ≈èIí[ÅB
+							//Ë™≠„ÅøËæº„ÅøÈÄî‰∏≠„ÅßÁµÇÁ´Ø„ÄÇ
 							return false;
 						}
 					}
@@ -186,13 +186,13 @@ namespace NBlib
 					t_blocksize = BLIB_FILEHANDLE_BLOCKSIZE;
 				}
 
-				//èëÇ´çûÇ›ÅB
+				//Êõ∏„ÅçËæº„Åø„ÄÇ
 				#if defined(PLATFORM_VCWIN)
 				{
 					DWORD t_fix = 0;
 					bool t_ret = true;
 
-					DWORD t_offset_low = static_cast<DWORD>((a_offset+t_index)&0xFFFFFFFF);	//â∫à ÅB
+					DWORD t_offset_low = static_cast<DWORD>((a_offset+t_index)&0xFFFFFFFF);	//‰∏ã‰Ωç„ÄÇ
 					DWORD t_ret_seek = ::SetFilePointer(this->rawhandle,t_offset_low,WIN_NULL,FILE_BEGIN);
 					if(t_ret_seek == INVALID_SET_FILE_POINTER){
 						t_ret = false;
@@ -267,7 +267,7 @@ namespace NBlib
 			{
 				bool t_ret = true;
 
-				DWORD t_offset_low = static_cast<DWORD>((a_offset)&0xFFFFFFFF);	//â∫à ÅB
+				DWORD t_offset_low = static_cast<DWORD>((a_offset)&0xFFFFFFFF);	//‰∏ã‰Ωç„ÄÇ
 				DWORD t_ret_seek = ::SetFilePointer(this->rawhandle,t_offset_low,WIN_NULL,FILE_BEGIN);
 				if(t_ret_seek == INVALID_SET_FILE_POINTER){
 					t_ret = false;

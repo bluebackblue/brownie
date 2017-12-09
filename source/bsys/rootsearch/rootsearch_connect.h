@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief Œo˜H’T¸B
+ * @brief çµŒè·¯æ¢æŸ»ã€‚
 */
 
 
@@ -24,15 +24,15 @@
 #if(BSYS_ROOTSEARCH_ENABLE)
 namespace NBsys{namespace NRootSearch
 {
-	/** ƒRƒlƒNƒgB
+	/** ã‚³ãƒã‚¯ãƒˆã€‚
 	*/
 	class RootSearch_Connect
 	{
-		/** Ú‘±æB
+		/** æ¥ç¶šå…ˆã€‚
 		*/
 		RootSearch_NodeIndex nodeindex_to;
 
-		/** ƒRƒXƒgB
+		/** ã‚³ã‚¹ãƒˆã€‚
 		*/
 		s32 cost;
 
@@ -47,11 +47,11 @@ namespace NBsys{namespace NRootSearch
 
 	public:
 
-		/** Ú‘±æAƒm[ƒhƒCƒ“ƒfƒNƒXæ“¾B
+		/** æ¥ç¶šå…ˆã€ãƒãƒ¼ãƒ‰ã‚¤ãƒ³ãƒ‡ã‚¯ã‚¹å–å¾—ã€‚
 		*/
 		RootSearch_NodeIndex GetNodeIndex();
 
-		/** ƒRƒXƒgB
+		/** ã‚³ã‚¹ãƒˆã€‚
 		*/
 		s32 GetCost();
 

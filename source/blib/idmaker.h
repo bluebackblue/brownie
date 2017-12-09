@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ‚h‚c”­sB
+ * @brief ï¼©ï¼¤ç™ºè¡Œã€‚
 */
 
 
@@ -37,7 +37,7 @@ namespace NBlib
 		*/
 		s32 size;
 
-		/** ©“®’Ç‰ÁB
+		/** è‡ªå‹•è¿½åŠ ã€‚
 		*/
 		bool autocreate;
 
@@ -70,7 +70,7 @@ namespace NBlib
 		}
 
 	public:
-		/** ID’Ç‰ÁB
+		/** IDè¿½åŠ ã€‚
 		*/
 		void Create(s32 a_max)
 		{
@@ -80,7 +80,7 @@ namespace NBlib
 			}
 		}
 
-		/** ID”­sB
+		/** IDç™ºè¡Œã€‚
 		*/
 		s32 MakeID()
 		{
@@ -99,7 +99,7 @@ namespace NBlib
 			return t_id;
 		}
 
-		/** ID”jŠüB
+		/** IDç ´æ£„ã€‚
 		*/
 		void ReleaseID(s32 a_id)
 		{

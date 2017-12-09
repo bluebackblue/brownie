@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief —”B
+ * @brief ä¹±æ•°ã€‚
 */
 
 
@@ -20,16 +20,16 @@
 namespace NBlib
 {
 
-	/** üŒ`‡“¯–@B
+	/** ç·šå½¢åˆåŒæ³•ã€‚
 	*/
 	class Random_LinearCongruentialGenerators
 	{
 	private:
-		/** seedB
+		/** seedã€‚
 		*/
 		u32 seed;
 
-		/** valueB
+		/** valueã€‚
 		*/
 		u32 value;
 
@@ -50,7 +50,7 @@ namespace NBlib
 		}
 
 	public:
-		/** ƒV[ƒhİ’èB
+		/** ã‚·ãƒ¼ãƒ‰è¨­å®šã€‚
 		*/
 		void SetSeed(u32 a_seed)
 		{
@@ -59,14 +59,14 @@ namespace NBlib
 			this->GetRand();
 		}
 
-		/** ƒV[ƒhæ“¾B
+		/** ã‚·ãƒ¼ãƒ‰å–å¾—ã€‚
 		*/
 		u32 GetSeed() const
 		{
 			return this->seed;
 		}
 
-		/** —”æ“¾B
+		/** ä¹±æ•°å–å¾—ã€‚
 		*/
 		u32 GetRand()
 		{
@@ -74,7 +74,7 @@ namespace NBlib
 			return (this->value>>16);
 		}
 
-		/** —”æ“¾(0.0f <= value < 1.0f)B
+		/** ä¹±æ•°å–å¾—(0.0f <= value < 1.0f)ã€‚
 		*/
 		f32 GetFloat()
 		{
@@ -83,11 +83,11 @@ namespace NBlib
 		}
 	};
 
-	/** ”ñŒˆ’è˜_“I—”B
+	/** éæ±ºå®šè«–çš„ä¹±æ•°ã€‚
 	*/
 	u32 GetRandFromDevice();
 
-	/** —”B
+	/** ä¹±æ•°ã€‚
 	*/
 	template <typename T=Random_LinearCongruentialGenerators> class RandomTemplate
 	{
@@ -108,42 +108,42 @@ namespace NBlib
 		{
 		}
 
-		/** ƒV[ƒhİ’è‚É”ñŒˆ’è˜_“I—”‚ğg—p‚·‚éB
+		/** ã‚·ãƒ¼ãƒ‰è¨­å®šã«éæ±ºå®šè«–çš„ä¹±æ•°ã‚’ä½¿ç”¨ã™ã‚‹ã€‚
 		*/
 		void SetSeedFromDevice()
 		{
 			this->SetSeed(GetRandFromDevice());
 		}
 
-		/** ƒV[ƒhİ’èB
+		/** ã‚·ãƒ¼ãƒ‰è¨­å®šã€‚
 		*/
 		void SetSeed(u32 a_seed)
 		{
 			this->impl.SetSeed(a_seed);
 		}
 
-		/** ƒV[ƒhæ“¾B
+		/** ã‚·ãƒ¼ãƒ‰å–å¾—ã€‚
 		*/
 		u32 GetSeed() const
 		{
 			return this->impl.GetSeed();
 		}
 
-		/** —”æ“¾B
+		/** ä¹±æ•°å–å¾—ã€‚
 		*/
 		u32 Get()
 		{
 			return this->impl.GetRand();
 		}
 
-		/** —”æ“¾(0.0f <= value < 1.0f)B
+		/** ä¹±æ•°å–å¾—(0.0f <= value < 1.0f)ã€‚
 		*/
 		f32 GetFloat()
 		{
 			return this->impl.GetFloat();
 		}
 
-		/** —”æ“¾(0 <= value < a_max)B
+		/** ä¹±æ•°å–å¾—(0 <= value < a_max)ã€‚
 		*/
 		u32 Get(u32 a_max)
 		{

@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒRƒ“ƒpƒCƒ‹ƒAƒT[ƒgB
+ * @brief ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«æ™‚ã‚¢ã‚µãƒ¼ãƒˆã€‚
 */
 
 
@@ -27,7 +27,7 @@ namespace NBlib
 		*/
 		template <bool> struct StaticAssertValue;
 
-		/** [true]‚Å‚Ì“Áê‰»B
+		/** [true]ã§ã®ç‰¹æ®ŠåŒ–ã€‚
 		*/
 		template <> struct StaticAssertValue<true>
 		{
@@ -40,7 +40,7 @@ namespace NBlib
 			};
 		};
 
-		/** [false]‚Å‚Ì“Áê‰»B
+		/** [false]ã§ã®ç‰¹æ®ŠåŒ–ã€‚
 		*/
 		//template <> struct StaticAssert<false>
 		//{
