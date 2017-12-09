@@ -461,6 +461,8 @@ void Test_Main()
 
 			//クリア。
 			s_d3d11->Render_ClearRenderTargetView(NBsys::NColor::Color_F(0.3f,0.3f,0.8f,1.0f));
+
+			//深度ステンシルクリア。
 			s_d3d11->Render_ClearDepthStencilView();
 
 			s32 t_left_right_index_max = 1;

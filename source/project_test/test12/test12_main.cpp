@@ -117,22 +117,6 @@ public:
 		step(0),
 		draw(false)
 	{
-		//ブレンドステータス。
-		this->blendstate_id = s_d3d11->CreateBlendState(true);
-
-		//ラスタライザー。
-		this->rasterizerstate_cull_back_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::BACK);
-		this->rasterizerstate_cull_none_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::NONE);
-
-		//深度ステンシル。
-		this->depthstencilstate_write_on_id = s_d3d11->CreateDepthStencilState(true,true);
-		this->depthstencilstate_write_off_id = s_d3d11->CreateDepthStencilState(true,false);
-
-		//カメラ。
-		this->camera_fov_deg = 0.0f;
-		this->camera_near = 0.0f;
-		this->camera_far = 0.0f;
-		this->camera_time = 0.0f;
 	}
 
 	/** destructor
@@ -170,7 +154,18 @@ public:
 					break;
 				}
 
-				//初期化完了。
+				//ブレンドステータス。
+				this->blendstate_id = s_d3d11->CreateBlendState(true);
+
+				//ラスタライザー。
+				this->rasterizerstate_cull_back_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::BACK);
+				this->rasterizerstate_cull_none_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::NONE);
+
+				//深度ステンシル。
+				this->depthstencilstate_write_on_id = s_d3d11->CreateDepthStencilState(true,true);
+				this->depthstencilstate_write_off_id = s_d3d11->CreateDepthStencilState(true,false);
+
+				//カメラ。
 				{
 					this->camera_position = NBsys::NGeometry::Geometry_Vector3(1.0f,10.0f,-20.0f);
 					this->camera_up = NBsys::NGeometry::Geometry_Vector3(0.0f,1.0f,0.0f);

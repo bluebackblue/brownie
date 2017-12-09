@@ -49,6 +49,11 @@ static sharedptr<NBsys::NWindow::Window> s_window;
 static sharedptr<NBsys::ND3d11::D3d11> s_d3d11;
 
 
+/** ライン描画。
+*/
+sharedptr<NCommon::D3d11_DrawLine_Manager> s_drawline_manager;
+
+
 /** App
 */
 class App
@@ -70,10 +75,6 @@ private:
 	*/
 	s32 rasterizerstate_cull_back_id;
 	s32 rasterizerstate_cull_none_id;
-
-	/** ライン描画。
-	*/
-	sharedptr<NCommon::D3d11_DrawLine_Manager> drawline_manager;
 
 	/** カメラ。
 	*/
@@ -98,15 +99,6 @@ public:
 		step(0),
 		draw(false)
 	{
-		//ブレンドステータス。
-		this->blendstate_id = s_d3d11->CreateBlendState(true);
-
-		//ラスタライザー。
-		this->rasterizerstate_cull_back_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::BACK);
-		this->rasterizerstate_cull_none_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::NONE);
-
-		//ライン描画。
-		this->drawline_manager.reset(new NCommon::D3d11_DrawLine_Manager(s_d3d11));
 	}
 
 	/** destructor
@@ -121,16 +113,23 @@ public:
 	void Update(f32 a_delta)
 	{
 		//ライン描画。
-		this->drawline_manager->PreUpdate();
+		s_drawline_manager->PreUpdate();
 
 		switch(this->step){
 		case 0:
 			{
-				if(this->drawline_manager->IsBusy() == true){
+				if(s_drawline_manager->IsBusy() == true){
 					break;
 				}
 
-				//初期化完了。
+				//ブレンドステータス。
+				this->blendstate_id = s_d3d11->CreateBlendState(true);
+
+				//ラスタライザー。
+				this->rasterizerstate_cull_back_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::BACK);
+				this->rasterizerstate_cull_none_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::NONE);
+
+				//カメラ。
 				{
 					this->camera_position = NBsys::NGeometry::Geometry_Vector3(1.0f,10.0f,-20.0f);
 					this->camera_up = NBsys::NGeometry::Geometry_Vector3(0.0f,1.0f,0.0f);
@@ -198,6 +197,8 @@ public:
 
 		//クリア。
 		s_d3d11->Render_ClearRenderTargetView(NBsys::NColor::Color_F(0.3f,0.3f,0.8f,1.0f));
+
+		//深度ステンシルクリア。
 		s_d3d11->Render_ClearDepthStencilView();
 
 		if(this->draw){
@@ -210,9 +211,9 @@ public:
 			t_view.Set_ViewMatrix(this->camera_target,this->camera_position,this->camera_up);
 
 			//ライン描画。
-			this->drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(-100,0,0),NBsys::NGeometry::Geometry_Vector3(100,0,0),NBsys::NColor::Color_F(1.0f,0.0f,0.0f,1.0f));
-			this->drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(0,-100,0),NBsys::NGeometry::Geometry_Vector3(0,100,0),NBsys::NColor::Color_F(0.0f,1.0f,0.0f,1.0f));
-			this->drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(0,0,-100),NBsys::NGeometry::Geometry_Vector3(0,0,100),NBsys::NColor::Color_F(0.0f,0.0f,1.0f,1.0f));
+			s_drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(-100,0,0),NBsys::NGeometry::Geometry_Vector3(100,0,0),NBsys::NColor::Color_F(1.0f,0.0f,0.0f,1.0f));
+			s_drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(0,-100,0),NBsys::NGeometry::Geometry_Vector3(0,100,0),NBsys::NColor::Color_F(0.0f,1.0f,0.0f,1.0f));
+			s_drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(0,0,-100),NBsys::NGeometry::Geometry_Vector3(0,0,100),NBsys::NColor::Color_F(0.0f,0.0f,1.0f,1.0f));
 
 			{
 				//this->rootsearch.SearchRoot(NBsys::NGeometry::Geometry_Vector3(0,0,0),NBsys::NGeometry::Geometry_Vector3(10,0,-10));
@@ -230,7 +231,7 @@ public:
 			}
 
 			//ライン描画。
-			this->drawline_manager->Update(t_view * t_projection);
+			s_drawline_manager->Render(t_view * t_projection);
 		}
 	}
 };
@@ -256,6 +257,9 @@ void Test_Main()
 
 	s_window->Create(L"sample",s_width,s_height);
 	s_d3d11->Render_Create(s_window,s_width,s_height);
+
+	//ライン描画。
+	s_drawline_manager.reset(new NCommon::D3d11_DrawLine_Manager(s_d3d11));
 
 	//パフォーマンスカウンター。
 	u64 t_pcounter = 0ULL;

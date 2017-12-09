@@ -20,7 +20,7 @@
 	DEF_TEST12	:	デバッグメニュー。
 
 */
-#define DEF_TEST2
+#define DEF_TEST12
 
 
 #if defined(DEF_TEST0)

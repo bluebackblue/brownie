@@ -254,7 +254,9 @@ namespace NBsys{namespace ND3d11
 
 		/** font
 		*/
+		#if(BSYS_FONT_ENABLE)
 		sharedptr<D3d11_Impl_Font> font_list[8];
+		#endif
 
 	private:
 
