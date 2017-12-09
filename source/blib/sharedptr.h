@@ -585,7 +585,7 @@ namespace NBlib
 				:
 				impl(a_sharedptr.impl)
 			{
-				UNUSED(check);
+				UNUSED(a_check);
 
 				//新しい「sharedptrbase」の使用数、参照数をインクリメント。
 				if(this->impl){

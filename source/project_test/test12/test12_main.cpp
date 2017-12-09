@@ -22,6 +22,7 @@
 /** include
 */
 #include "./test12_main.h"
+#include "./test12_debugwindow.h"
 
 
 /** include
@@ -67,14 +68,20 @@ sharedptr<NBsys::NDebugMenu::DebugMenu_Callback_Base> s_debugmenu_callback;
 */
 sharedptr<NCommon::D3d11_DrawLine_Manager> s_drawline_manager;
 
+
 /** レクト描画。
 */
 sharedptr<NCommon::D3d11_DrawRect_Manager> s_drawrect_manager;
+
 
 /** フォント描画。
 */
 sharedptr<NCommon::D3d11_DrawFont_Manager> s_drawfont_manager;
 
+
+/** デバッグウィンドウ。
+*/
+sharedptr<Test12_DebugWindow> s_test12_debugwindow;
 
 /** App
 */
@@ -193,6 +200,10 @@ public:
 			{
 				this->step++;
 				this->draw = true;
+
+				//デバッグウィンドウ。
+				s_test12_debugwindow.reset(new Test12_DebugWindow(100.0f,100.0f));
+				NBsys::NDebugMenu::GetSystemInstance()->Add(s_test12_debugwindow);
 			}break;
 		case 2:
 			{
@@ -277,10 +288,11 @@ public:
 				s_drawfont_manager->DrawFont64(L"あいうえお",	64.0f,	s_width/2.0f,	s_height/2.0f,	0.0f,NBsys::NColor::Color_F(1.0f,1.0f,0.0f,1.0f));
 
 				//レクト描画。
-				s_drawrect_manager->DrawRect(0.0f,0.0f,100.0f,100.0f,0.0f,-1,NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
+				//s_drawrect_manager->DrawRect(0.0f,0.0f,100.0f,100.0f,0.0f,-1,NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
 
 				//デバッグメニュー。
 				NBsys::NDebugMenu::GetSystemInstance()->Update();
+				NBsys::NDebugMenu::GetSystemInstance()->Draw();
 
 				{
 					//深度ステンシル。深度書き込みあり。
@@ -332,9 +344,6 @@ void Test_Main()
 	NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->AddTouch(NBsys::NPad::Pad_Virtual::TouchType::MOUSER,NBsys::NPad::Pad_Device_Base::TouchType::DeviceTouch_2,s_pad_device);
 	NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->SetEnable(true);
 
-	s_debugmenu_callback.reset(new NCommon::DebugMenu_Callback(s_drawrect_manager,s_drawfont_manager));
-	NBsys::NDebugMenu::StartSystem(s_debugmenu_callback);
-
 	//ライン描画。
 	s_drawline_manager.reset(new NCommon::D3d11_DrawLine_Manager(s_d3d11));
 
@@ -343,6 +352,10 @@ void Test_Main()
 
 	//フォント描画。
 	s_drawfont_manager.reset(new NCommon::D3d11_DrawFont_Manager(s_d3d11));
+
+	//デバッグメニュー。
+	s_debugmenu_callback.reset(new NCommon::DebugMenu_Callback(s_drawrect_manager,s_drawfont_manager));
+	NBsys::NDebugMenu::StartSystem(s_debugmenu_callback);
 
 	//パフォーマンスカウンター。
 	u64 t_pcounter = 0ULL;
