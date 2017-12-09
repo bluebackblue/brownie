@@ -62,7 +62,7 @@ namespace NBlib
 		#endif
 
 	public:
-		/** constructor。
+		/** constructor
 		*/
 		AtomicValue()
 			:
@@ -71,7 +71,7 @@ namespace NBlib
 			STATIC_ASSERT(sizeof(AtomicValue_Check<T>) > 0);
 		}
 
-		/** constructor。
+		/** constructor
 		*/
 		explicit AtomicValue(T a_value)
 			#if(BLIB_STDATOMIC_ENABLE)
@@ -81,7 +81,7 @@ namespace NBlib
 		{
 		}
 
-		/** destructor。
+		/** destructor
 		*/
 		nonvirtual ~AtomicValue()
 		{
@@ -200,7 +200,7 @@ namespace NBlib
 		#endif
 
 	public:
-		/** constructor。
+		/** constructor
 		*/
 		AtomicValue()
 			#if(BLIB_STDATOMIC_ENABLE)
@@ -212,7 +212,7 @@ namespace NBlib
 			STATIC_ASSERT(sizeof(bool) == sizeof(s8));
 		}
 
-		/** constructor。
+		/** constructor
 		*/
 		AtomicValue(bool a_value)
 			#if(BLIB_STDATOMIC_ENABLE)
@@ -222,7 +222,7 @@ namespace NBlib
 		{
 		}
 
-		/** destructor。
+		/** destructor
 		*/
 		nonvirtual ~AtomicValue()
 		{

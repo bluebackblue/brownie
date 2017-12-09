@@ -34,7 +34,7 @@ namespace NBlib
 		u32 value;
 
 	public:
-		/** constructor。
+		/** constructor
 		*/
 		Random_LinearCongruentialGenerators()
 			:
@@ -43,7 +43,7 @@ namespace NBlib
 		{
 		}
 
-		/** destructor。
+		/** destructor
 		*/
 		nonvirtual ~Random_LinearCongruentialGenerators()
 		{
@@ -95,14 +95,14 @@ namespace NBlib
 		T impl;
 
 	public:
-		/** constructor。
+		/** constructor
 		*/
 		RandomTemplate()
 			: impl()
 		{
 		}
 
-		/** destructor。
+		/** destructor
 		*/
 		nonvirtual ~RandomTemplate()
 		{

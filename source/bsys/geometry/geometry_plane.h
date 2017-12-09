@@ -34,11 +34,11 @@ namespace NBsys{namespace NGeometry
 	{
 	public:
 
-		/** constructorB
+		/** constructor
 		*/
 		inline Geometry_Plane();
 
-		/** destructorB
+		/** destructor
 		*/
 		nonvirtual inline ~Geometry_Plane();
 

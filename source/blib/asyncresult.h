@@ -35,7 +35,7 @@ namespace NBlib
 		sharedptr<T> instance;
 
 	public:
-		/** constructorB
+		/** constructor
 		*/
 		AsyncResult()
 		{

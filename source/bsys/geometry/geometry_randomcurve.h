@@ -72,28 +72,28 @@ namespace NBsys{namespace NGeometry
 		f32 value_17;
 
 	public:
-		/** constructor。
+		/** constructor
 		*/
 		Geometry_RandomCurve()
 		{
 			this->SetParam(1,2,3,4,5,6,7,8,9,10,11,12,13,10,10);
 		}
 
-		/** constructor。
+		/** constructor
 		*/
 		Geometry_RandomCurve(s32 a_k)
 		{
 			this->SetParam(a_k,a_k+1,a_k+2,a_k+3,a_k+4,a_k+5,a_k+6,a_k+7,a_k+8,a_k+9,a_k+10,a_k+11,a_k+12,10,10);
 		}
 
-		/** constructor。
+		/** constructor
 		*/
 		Geometry_RandomCurve(s32 a_k1,s32 a_k2,s32 a_k3,s32 a_k4,s32 a_k5,s32 a_k6,s32 a_k7,s32 a_k8,s32 a_k9,s32 a_k10,s32 a_k11,s32 a_k12,s32 a_k13,s32 a_speed_inverse_range,s32 a_speed_inverse)
 		{
 			this->SetParam(a_k1,a_k2,a_k3,a_k4,a_k5,a_k6,a_k7,a_k8,a_k9,a_k10,a_k11,a_k12,a_k13,a_speed_inverse_range,a_speed_inverse);
 		}
 
-		/** destructor。
+		/** destructor
 		*/
 		nonvirtual ~Geometry_RandomCurve()
 		{

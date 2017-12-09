@@ -52,13 +52,13 @@ namespace NBsys{namespace NGeometry
 		}
 	}
 
-	/** constructor。
+	/** constructor
 	*/
 	inline Geometry_Matrix_44::Geometry_Matrix_44()
 	{
 	}
 
-	/** constructor。
+	/** constructor
 	*/
 	inline Geometry_Matrix_44::Geometry_Matrix_44(
 		f32 a_ax_x,f32 a_ax_y,f32 a_ax_z,f32 a_ax_w,
@@ -88,14 +88,14 @@ namespace NBsys{namespace NGeometry
 		this->tr_w = a_tr_w;
 	}
 
-	/** constructor。
+	/** constructor
 	*/
 	inline Geometry_Matrix_44::Geometry_Matrix_44(const Geometry_Identity_Type& /*a_identity*/)
 	{
 		*this = Geometry_Matrix_44::Identity();
 	}
 
-	/** constructor。
+	/** constructor
 	*/
 	inline Geometry_Matrix_44::Geometry_Matrix_44(const Geometry_Quaternion& a_quaternion)
 	{
@@ -127,7 +127,7 @@ namespace NBsys{namespace NGeometry
 		this->m_44 = a_m[15];
 	}
 
-	/** destructor。
+	/** destructor
 	*/
 	inline Geometry_Matrix_44::~Geometry_Matrix_44()
 	{

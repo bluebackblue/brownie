@@ -25,13 +25,13 @@
 namespace NBsys{namespace NGeometry
 {
 
-	/** constructorB
+	/** constructor
 	*/
 	inline Geometry_Plane::Geometry_Plane()
 	{
 	}
 
-	/** destructorB
+	/** destructor
 	*/
 	inline Geometry_Plane::~Geometry_Plane()
 	{

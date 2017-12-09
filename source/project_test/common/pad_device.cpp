@@ -64,7 +64,7 @@
 #if(BSYS_PAD_ENABLE)
 namespace NCommon
 {
-	/** constructorÅB
+	/** constructor
 	*/
 	Pad_Device::Pad_Device(sharedptr<NBsys::NWindow::Window>& a_window,sharedptr<NBsys::ND3d11::D3d11>& a_d3d11)
 		:
@@ -77,7 +77,7 @@ namespace NCommon
 	{
 	}
 
-	/** destructorÅB
+	/** destructor
 	*/
 	Pad_Device::~Pad_Device()
 	{

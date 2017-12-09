@@ -39,7 +39,7 @@ namespace NBlib
 		LockObject& lockobject;
 
 	public:
-		/** constructor。
+		/** constructor
 		*/
 		explicit AutoLock(LockObject& a_lockobject)
 			:
@@ -49,7 +49,7 @@ namespace NBlib
 			this->Lock();
 		}
 
-		/** destructor。
+		/** destructor
 		*/
 		nonvirtual ~AutoLock()
 		{
@@ -103,7 +103,7 @@ namespace NBlib
 		AutoLock& autolock;
 
 	public:
-		/** constructor。
+		/** constructor
 		*/
 		explicit AutoUnlock(AutoLock& a_autolock)
 			:
@@ -112,7 +112,7 @@ namespace NBlib
 			autolock.Unlock();
 		}
 
-		/** destructor。
+		/** destructor
 		*/
 		nonvirtual ~AutoUnlock()
 		{

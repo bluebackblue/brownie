@@ -48,19 +48,19 @@ namespace NBsys{namespace NColor
 	struct Color_B : public Color_B_Raw
 	{
 
-		/** constructor。
+		/** constructor
 		*/
 		inline Color_B();
 
-		/** constructor。
+		/** constructor
 		*/
 		inline Color_B(u8 a_r,u8 a_g,u8 a_b,u8 a_a);
 
-		/** constructor。
+		/** constructor
 		*/
 		inline Color_B(const Color_B& a_color);
 
-		/** constructor。
+		/** constructor
 		*/
 		inline Color_B(const Color_F& a_color);
 

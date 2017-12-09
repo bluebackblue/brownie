@@ -44,7 +44,7 @@ namespace NBsys{namespace NOpengl
 			*/
 			s32 countof;
 
-			/** constructor。
+			/** constructor
 			*/
 			Uniform(GLint a_location,Opengl_ShaderValueType::Id a_shadervaluetype,s32 a_countof)
 				:
@@ -54,7 +54,7 @@ namespace NBsys{namespace NOpengl
 			{
 			}
 
-			/** destructor。
+			/** destructor
 			*/
 			nonvirtual ~Uniform()
 			{
@@ -73,7 +73,7 @@ namespace NBsys{namespace NOpengl
 			*/
 			Opengl_ShaderValueType::Id shadervaluetype;
 
-			/** constructor。
+			/** constructor
 			*/
 			Attribute(GLint a_location,Opengl_ShaderValueType::Id a_shadervaluetype)
 				:
@@ -82,7 +82,7 @@ namespace NBsys{namespace NOpengl
 			{
 			}
 
-			/** destructor。
+			/** destructor
 			*/
 			nonvirtual ~Attribute()
 			{
@@ -113,13 +113,13 @@ namespace NBsys{namespace NOpengl
 		*/
 		RawID vertexarray_rawid;
 
-		/** constructor。
+		/** constructor
 		*/
 		Opengl_Impl_ShaderState()
 		{
 		}
 
-		/** destructor。
+		/** destructor
 		*/
 		nonvirtual ~Opengl_Impl_ShaderState()
 		{

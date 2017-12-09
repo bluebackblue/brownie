@@ -35,11 +35,11 @@ namespace NBsys{namespace NGeometry
 	*/
 	struct Geometry_Matrix_44 : public Geometry_Matrix_44_Raw
 	{
-		/** constructor。
+		/** constructor
 		*/
 		inline Geometry_Matrix_44();
 
-		/** constructor。
+		/** constructor
 		*/
 		inline Geometry_Matrix_44(
 			f32 a_ax_x,f32 a_ax_y,f32 a_ax_z,f32 a_ax_w,
@@ -48,11 +48,11 @@ namespace NBsys{namespace NGeometry
 			f32 a_tr_x,f32 a_tr_y,f32 a_tr_z,f32 a_tr_w
 		);
 
-		/** constructor。
+		/** constructor
 		*/
 		inline Geometry_Matrix_44(const Geometry_Identity_Type& /*a_identity*/);
 
-		/** constructor。
+		/** constructor
 		*/
 		inline Geometry_Matrix_44(const Geometry_Quaternion& a_quaternion);
 
@@ -60,7 +60,7 @@ namespace NBsys{namespace NGeometry
 		*/
 		inline Geometry_Matrix_44(const f32* a_m);
 
-		/** destructor。
+		/** destructor
 		*/
 		inline ~Geometry_Matrix_44();
 

@@ -1093,7 +1093,7 @@ namespace NBlib
 	}
 
 
-	/** constructor。
+	/** constructor
 	*/
 	JsonItem::JsonItem()
 		:
@@ -1103,7 +1103,7 @@ namespace NBlib
 	}
 
 
-	/** constructor。
+	/** constructor
 	*/
 	JsonItem::JsonItem(const STLString& a_jsonstring)
 	{
@@ -1111,7 +1111,7 @@ namespace NBlib
 	}
 
 
-	/** constructor。
+	/** constructor
 	*/
 	JsonItem::JsonItem(const Value_StringData& a_value)
 	{
@@ -1119,7 +1119,7 @@ namespace NBlib
 	}
 
 
-	/** constructor。
+	/** constructor
 	*/
 	JsonItem::JsonItem(const Value_AssociativeArray& /*a_value*/)
 	{
@@ -1127,7 +1127,7 @@ namespace NBlib
 	}
 
 		
-	/** constructor。
+	/** constructor
 	*/
 	JsonItem::JsonItem(const Value_IndexArray& /*a_value*/)
 	{
@@ -1135,7 +1135,7 @@ namespace NBlib
 	}
 
 
-	/** constructor。
+	/** constructor
 	*/
 	JsonItem::JsonItem(const Value_Integer& a_value)
 	{
@@ -1143,7 +1143,7 @@ namespace NBlib
 	}
 
 
-	/** constructor。
+	/** constructor
 	*/
 	JsonItem::JsonItem(const Value_UnsignedInteger& a_value)
 	{
@@ -1151,21 +1151,21 @@ namespace NBlib
 	}
 
 
-	/** constructor。
+	/** constructor
 	*/
 	JsonItem::JsonItem(const Value_Float& a_value)
 	{
 		this->SetFloat(a_value.value);
 	}
 
-	/** constructor。
+	/** constructor
 	*/
 	JsonItem::JsonItem(const Value_Bool& a_value)
 	{
 		this->SetBool(a_value.value);
 	}
 
-	/** constructor。
+	/** constructor
 	*/
 	JsonItem::JsonItem(const Value_BinaryData& a_value)
 	{

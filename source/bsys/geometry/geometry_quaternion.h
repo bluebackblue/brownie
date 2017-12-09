@@ -35,23 +35,23 @@ namespace NBsys{namespace NGeometry
 	*/
 	struct Geometry_Quaternion : public Geometry_Quaternion_Raw
 	{
-		/** constructor。
+		/** constructor
 		*/
 		inline Geometry_Quaternion();
 
-		/** constructor。
+		/** constructor
 		*/
 		inline Geometry_Quaternion(const Geometry_Identity_Type& /*a_identity*/);
 
-		/** constructor。
+		/** constructor
 		*/
 		inline Geometry_Quaternion(const Geometry_Quaternion& a_quaternion);
 
-		/** constructor。
+		/** constructor
 		*/
 		inline Geometry_Quaternion(const f32* a_list);
 
-		/** constructor。
+		/** constructor
 		*/
 		inline Geometry_Quaternion(f32 a_x,f32 a_y,f32 a_z,f32 a_w);
 
@@ -59,7 +59,7 @@ namespace NBsys{namespace NGeometry
 		*/
 		inline Geometry_Quaternion(f32 a_rad,const Geometry_Vector3& a_normal);
 
-		/** destructor。
+		/** destructor
 		*/
 		nonvirtual inline ~Geometry_Quaternion();
 

@@ -83,7 +83,7 @@ namespace NBlib
 			typedef STLAllocator<OTHER> other;
 		};
 
-		/** constructor。
+		/** constructor
 		*/
 		STLAllocator() noexcept
 			:
@@ -91,7 +91,7 @@ namespace NBlib
 		{
 		}
 
-		/** constructor。
+		/** constructor
 		*/
 		STLAllocator(const STLAllocator<T>& a_other) noexcept
 			:
@@ -99,7 +99,7 @@ namespace NBlib
 		{
 		}
 
-		/** constructor。
+		/** constructor
 		*/
 		template <class OTHER> STLAllocator(const STLAllocator<OTHER>& a_other) noexcept
 			:
@@ -107,7 +107,7 @@ namespace NBlib
 		{
 		}
 
-		/** destructor。
+		/** destructor
 		*/
 		nonvirtual ~STLAllocator() noexcept
 		{
@@ -222,7 +222,7 @@ namespace NBlib
 			typedef STLAllocator_String<OTHER> other;
 		};
 
-		/** constructor。
+		/** constructor
 		*/
 		STLAllocator_String() noexcept
 			:
@@ -230,7 +230,7 @@ namespace NBlib
 		{
 		}
 
-		/** constructor。
+		/** constructor
 		*/
 		STLAllocator_String(const STLAllocator_String<T>& a_other) noexcept
 			:
@@ -238,7 +238,7 @@ namespace NBlib
 		{
 		}
 
-		/** constructor。
+		/** constructor
 		*/
 		template <class OTHER> STLAllocator_String(const STLAllocator_String<OTHER>& a_other) noexcept
 			:
@@ -246,7 +246,7 @@ namespace NBlib
 		{
 		}
 
-		/** destructor。
+		/** destructor
 		*/
 		nonvirtual ~STLAllocator_String() noexcept
 		{

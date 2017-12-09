@@ -35,11 +35,11 @@ namespace NBsys{namespace NGeometry
 	{
 	public:
 
-		/** constructorB
+		/** constructor
 		*/
 		inline Geometry_Frustum();
 
-		/** destructorB
+		/** destructor
 		*/
 		nonvirtual inline ~Geometry_Frustum();
 

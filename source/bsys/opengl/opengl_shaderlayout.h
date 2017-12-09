@@ -51,7 +51,7 @@ namespace NBsys{namespace NOpengl
 			*/
 			s32 countof;
 
-			/** constructor。
+			/** constructor
 			*/
 			Uniform(const STLString& a_name,Opengl_ShaderValueType::Id a_shadervaluetype,s32 a_countof)
 				:
@@ -61,7 +61,7 @@ namespace NBsys{namespace NOpengl
 			{
 			}
 
-			/** destructor。
+			/** destructor
 			*/
 			nonvirtual ~Uniform()
 			{
@@ -80,7 +80,7 @@ namespace NBsys{namespace NOpengl
 			*/
 			Opengl_ShaderValueType::Id shadervaluetype;
 			
-			/** constructor。
+			/** constructor
 			*/
 			Attribute(const STLString& a_name,Opengl_ShaderValueType::Id a_shadervaluetype)
 				:
@@ -89,7 +89,7 @@ namespace NBsys{namespace NOpengl
 			{
 			}
 
-			/** destructor。
+			/** destructor
 			*/
 			nonvirtual ~Attribute()
 			{
@@ -120,7 +120,7 @@ namespace NBsys{namespace NOpengl
 			*/
 			sharedptr<STLVector<Opengl_ShaderLayout::Attribute>::Type> attribute_list;
 
-			/** constructor。
+			/** constructor
 			*/
 			Item::Item(s32 a_shaderid,const sharedptr<NBsys::NFile::File_Object>& a_vertex_fileobject,const sharedptr<NBsys::NFile::File_Object>& a_fragment_fileobject,const sharedptr<STLVector<Opengl_ShaderLayout::Uniform>::Type>& a_uniform_list,const sharedptr<STLVector<Opengl_ShaderLayout::Attribute>::Type>& a_attribute_list)
 				:
@@ -132,7 +132,7 @@ namespace NBsys{namespace NOpengl
 			{
 			}
 
-			/** destructor。
+			/** destructor
 			*/
 			nonvirtual Item::~Item()
 			{
@@ -145,11 +145,11 @@ namespace NBsys{namespace NOpengl
 		STLVector<Item>::Type list;
 
 	public:
-		/** constructor。
+		/** constructor
 		*/
 		Opengl_ShaderLayout();
 
-		/** destructor。
+		/** destructor
 		*/
 		nonvirtual ~Opengl_ShaderLayout();
 

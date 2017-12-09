@@ -214,43 +214,43 @@ namespace NBlib
 		}
 
 	public:
-		/** constructor。
+		/** constructor
 		*/
 		JsonItem();
 
-		/** constructor。
+		/** constructor
 		*/
 		JsonItem(const STLString& a_jsonstring);
 
-		/** constructor。
+		/** constructor
 		*/
 		JsonItem(const Value_StringData& a_value);
 
-		/** constructor。
+		/** constructor
 		*/
 		JsonItem(const Value_AssociativeArray& /*a_value*/);
 		
-		/** constructor。
+		/** constructor
 		*/
 		JsonItem(const Value_IndexArray& /*a_value*/);
 
-		/** constructor。
+		/** constructor
 		*/
 		JsonItem(const Value_Integer& a_value);
 
-		/** constructor。
+		/** constructor
 		*/
 		JsonItem(const Value_UnsignedInteger& a_value);
 
-		/** constructor。
+		/** constructor
 		*/
 		JsonItem(const Value_Float& a_value);
 
-		/** constructor。
+		/** constructor
 		*/
 		JsonItem(const Value_Bool& a_value);
 
-		/** constructor。
+		/** constructor
 		*/
 		JsonItem(const Value_BinaryData& a_value);
 

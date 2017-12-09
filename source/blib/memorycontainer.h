@@ -25,11 +25,11 @@ namespace NBlib
 	{
 	public:
 
-		/** constructorB
+		/** constructor
 		*/
 		MemoryContainer(s32 a_containerindex);
 
-		/** destructorB
+		/** destructor
 		*/
 		nonvirtual ~MemoryContainer();
 

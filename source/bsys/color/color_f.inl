@@ -20,27 +20,27 @@
 namespace NBsys{namespace NColor
 {
 
-	/** constructor。
+	/** constructor
 	*/
 	inline Color_F::Color_F()
 	{
 	}
 
-	/** constructor。
+	/** constructor
 	*/
 	inline Color_F::Color_F(f32 a_r,f32 a_g,f32 a_b,f32 a_a)
 	{
 		this->F_Set(a_r,a_g,a_b,a_a);
 	}
 
-	/** constructor。
+	/** constructor
 	*/
 	inline Color_F::Color_F(const Color_F& a_color)
 	{
 		this->F_SetColor(a_color);
 	}
 
-	/** constructor。
+	/** constructor
 	*/
 	inline Color_F::Color_F(const Color_B& a_color)
 	{

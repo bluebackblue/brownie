@@ -551,7 +551,7 @@ namespace NBlib
 			}
 			#endif
 
-			/** [constructor]copy constructor。
+			/** [constructor]copy constructor
 			*/
 			sharedptr(const sharedptr<T>& a_sharedptr) noexcept
 				:
@@ -579,7 +579,7 @@ namespace NBlib
 				}
 			}
 
-			/** [constructor]copy constructor。
+			/** [constructor]copy constructor
 			*/
 			template <class T2> sharedptr(const sharedptr<T2>& a_sharedptr,typename enable_if<is_convertible<T2*,T*>::value,bool>::type a_check=true) noexcept
 				:
@@ -603,7 +603,7 @@ namespace NBlib
 				}
 			}
 
-			/** destructor。
+			/** destructor
 			*/
 			nonvirtual ~sharedptr()
 			{
@@ -829,7 +829,7 @@ namespace NBlib
 			{
 			}
 
-			/** [constructor]copy constructor。
+			/** [constructor]copy constructor
 			*/
 			template <class T2> weakptr(const sharedptr<T2>& a_sharedptr,typename enable_if<is_convertible<T2*,T*>::value,bool>::type a_check=true) noexcept
 			{

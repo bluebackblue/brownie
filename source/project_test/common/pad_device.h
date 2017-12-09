@@ -62,11 +62,11 @@ namespace NCommon
 		bool mouse_r;
 
 	public:
-		/** constructorÅB
+		/** constructor
 		*/
 		Pad_Device(sharedptr<NBsys::NWindow::Window>& a_window,sharedptr<NBsys::ND3d11::D3d11>& a_d3d11);
 
-		/** destructorÅB
+		/** destructor
 		*/
 		virtual ~Pad_Device();
 

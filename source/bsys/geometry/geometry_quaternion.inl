@@ -31,13 +31,13 @@
 namespace NBsys{namespace NGeometry
 {
 
-	/** constructor。
+	/** constructor
 	*/
 	inline Geometry_Quaternion::Geometry_Quaternion()
 	{
 	}
 
-	/** constructor。
+	/** constructor
 	*/
 	inline Geometry_Quaternion::Geometry_Quaternion(const Geometry_Identity_Type& /*a_identity*/)
 	{
@@ -47,7 +47,7 @@ namespace NBsys{namespace NGeometry
 		this->w = 1.0f;
 	}
 
-	/** constructor。
+	/** constructor
 	*/
 	inline Geometry_Quaternion::Geometry_Quaternion(const Geometry_Quaternion& a_quaternion)
 	{
@@ -62,7 +62,7 @@ namespace NBsys{namespace NGeometry
 		this->w = a_quaternion.w;
 	}
 
-	/** constructor。
+	/** constructor
 	*/
 	inline Geometry_Quaternion::Geometry_Quaternion(const f32* a_list)
 	{
@@ -77,7 +77,7 @@ namespace NBsys{namespace NGeometry
 		this->w = a_list[3];
 	}
 
-	/** constructor。
+	/** constructor
 	*/
 	inline Geometry_Quaternion::Geometry_Quaternion(f32 a_x,f32 a_y,f32 a_z,f32 a_w)
 	{
@@ -92,7 +92,7 @@ namespace NBsys{namespace NGeometry
 		this->w = a_w;
 	}
 
-	/** constructor。
+	/** constructor
 	*/
 	inline Geometry_Quaternion::Geometry_Quaternion(f32 a_rad,const Geometry_Vector3& a_normal)
 	{
@@ -112,7 +112,7 @@ namespace NBsys{namespace NGeometry
 		this->w = t_cos_half;
 	}
 
-	/** destructor。
+	/** destructor
 	*/
 	inline Geometry_Quaternion::~Geometry_Quaternion()
 	{

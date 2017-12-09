@@ -46,7 +46,7 @@ namespace NBlib
 
 	public:
 
-		/** constructorÅB
+		/** constructor
 		*/
 		SimpleEvent(bool a_manual_reset)
 			#if(BLIB_STDMUTEX_ENABLE)
@@ -64,7 +64,7 @@ namespace NBlib
 			#endif
 		}
 
-		/** destructorÅB
+		/** destructor
 		*/
 		nonvirtual ~SimpleEvent()
 		{

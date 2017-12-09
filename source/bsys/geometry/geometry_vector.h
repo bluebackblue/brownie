@@ -30,31 +30,31 @@ namespace NBsys{namespace NGeometry
 	*/
 	struct Geometry_Vector2 : public Geometry_Vector_2_Raw
 	{
-		/** constructor。
+		/** constructor
 		*/
 		inline Geometry_Vector2();
 
-		/** constructor。
+		/** constructor
 		*/
 		inline Geometry_Vector2(f32 a_x,f32 a_y);
 
-		/** constructor。
+		/** constructor
 		*/
 		inline Geometry_Vector2(f32 a_value);
 
-		/** constructor。
+		/** constructor
 		*/
 		inline Geometry_Vector2(const f32* a_value_pointer);
 
-		/** constructor。
+		/** constructor
 		*/
 		inline Geometry_Vector2(const Geometry_Vector2& a_vector);
 
-		/** constructor。
+		/** constructor
 		*/
 		inline Geometry_Vector2(const Geometry_Identity_Type& /*a_identity*/);
 
-		/** destructor。
+		/** destructor
 		*/
 		nonvirtual inline ~Geometry_Vector2();
 
@@ -91,31 +91,31 @@ namespace NBsys{namespace NGeometry
 	*/
 	struct Geometry_Vector3 : public Geometry_Vector_3_Raw
 	{
-		/** constructor。
+		/** constructor
 		*/
 		inline Geometry_Vector3();
 
-		/** constructor。
+		/** constructor
 		*/
 		inline Geometry_Vector3(f32 a_x,f32 a_y,f32 a_z);
 
-		/** constructor。
+		/** constructor
 		*/
 		inline Geometry_Vector3(f32 a_value);
 
-		/** constructor。
+		/** constructor
 		*/
 		inline Geometry_Vector3(const f32* a_value_pointer);
 
-		/** constructor。
+		/** constructor
 		*/
 		inline Geometry_Vector3(const Geometry_Vector3& a_vector);
 
-		/** constructor。
+		/** constructor
 		*/
 		inline Geometry_Vector3(const Geometry_Identity_Type& /*a_identity*/);
 
-		/** destructor。
+		/** destructor
 		*/
 		nonvirtual inline ~Geometry_Vector3();
 
@@ -288,27 +288,27 @@ namespace NBsys{namespace NGeometry
 	*/
 	struct Geometry_Vector4 : public Geometry_Vector_4_Raw
 	{
-		/** constructor。
+		/** constructor
 		*/
 		inline Geometry_Vector4();
 
-		/** constructor。
+		/** constructor
 		*/
 		inline Geometry_Vector4(f32 a_x,f32 a_y,f32 a_z,f32 a_w);
 
-		/** constructor。
+		/** constructor
 		*/
 		inline Geometry_Vector4(const f32* a_value_pointer);
 
-		/** constructor。
+		/** constructor
 		*/
 		inline Geometry_Vector4(const Geometry_Vector4& a_vector);
 
-		/** constructor。
+		/** constructor
 		*/
 		inline Geometry_Vector4(const Geometry_Identity_Type& /*a_identity*/);
 
-		/** destructor。
+		/** destructor
 		*/
 		nonvirtual inline ~Geometry_Vector4();
 

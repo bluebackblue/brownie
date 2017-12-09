@@ -25,13 +25,13 @@
 namespace NBsys{namespace NGeometry
 {
 
-	/** constructorB
+	/** constructor
 	*/
 	inline Geometry_Frustum::Geometry_Frustum()
 	{
 	}
 
-	/** destructorB
+	/** destructor
 	*/
 	inline Geometry_Frustum::~Geometry_Frustum()
 	{
