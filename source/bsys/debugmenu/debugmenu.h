@@ -24,6 +24,7 @@
 #include "./debugmenu_callback_base.h"
 #include "./debugmenu_window_base.h"
 #include "./debugmenu_window_plate.h"
+#include "./debugmenu_window_drag.h"
 
 
 /** NBsys::NDebugMenu

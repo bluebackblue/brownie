@@ -38,9 +38,9 @@ Test12_DebugWindow::Test12_DebugWindow(f32 a_offset_x,f32 a_offset_y)
 		0.0f
 	);
 
-	//下地。
+	//ドラッグ。
 	{
-		sharedptr<NBsys::NDebugMenu::DebugMenu_Window_Base> t_plate(new NBsys::NDebugMenu::DebugMenu_Window_Plate(
+		sharedptr<NBsys::NDebugMenu::DebugMenu_Window_Base> t_drag(new NBsys::NDebugMenu::DebugMenu_Window_Drag(
 			NBsys::NDebugMenu::DebugMenu_Window_Base::Mode::Vertical,
 			0.0f,
 			0.0f,
@@ -49,8 +49,24 @@ Test12_DebugWindow::Test12_DebugWindow(f32 a_offset_x,f32 a_offset_y)
 			0.0f
 		));
 
-		this->AddChild(t_plate);
+		this->AddChild(t_drag);
+
+		//下地。
+		{
+			sharedptr<NBsys::NDebugMenu::DebugMenu_Window_Base> t_plate(new NBsys::NDebugMenu::DebugMenu_Window_Plate(
+				NBsys::NDebugMenu::DebugMenu_Window_Base::Mode::Vertical,
+				0.0f,
+				0.0f,
+				-1.0f,
+				-1.0f,
+				0.0f
+			));
+
+			t_drag->AddChild(t_plate);
+		}
 	}
+
+
 }
 
 /** destructor
