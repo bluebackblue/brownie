@@ -24,11 +24,6 @@
 #include "./debugmenu_callback_base.h"
 #include "./debugmenu_window_base.h"
 #include "./debugmenu_window_plate.h"
-/*
-#include "./debugmenu_window_button.h"
-#include "./debugmenu_window_separate.h"
-#include "./debugmenu_window_dragtitle.h"
-*/
 
 
 /** NBsys::NDebugMenu
@@ -85,7 +80,6 @@ namespace NBsys{namespace NDebugMenu
 	/** システムのインスタンス取得。
 	*/
 	sharedptr<DebugMenu>& GetSystemInstance();
-
 }}
 #endif
 

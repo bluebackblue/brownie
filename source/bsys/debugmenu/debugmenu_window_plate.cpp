@@ -61,6 +61,5 @@ namespace NBsys{namespace NDebugMenu
 		//q‚Ì•`‰æB
 		DebugMenu_Window_Base::Draw();
 	}
-
 }}
 

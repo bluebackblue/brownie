@@ -57,7 +57,6 @@ Test12_DebugWindow::Test12_DebugWindow(f32 a_offset_x,f32 a_offset_y)
 */
 Test12_DebugWindow::~Test12_DebugWindow()
 {
-
 }
 
 #endif

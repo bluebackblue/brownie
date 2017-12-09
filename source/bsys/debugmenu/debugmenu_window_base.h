@@ -153,6 +153,5 @@ namespace NBsys{namespace NDebugMenu
 		*/
 		virtual void CallBack_SetParent();
 	};
-
 }}
 

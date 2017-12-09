@@ -325,6 +325,5 @@ namespace NBsys{namespace NDebugMenu
 	void DebugMenu_Window_Base::CallBack_SetParent()
 	{
 	}
-
 }}
 

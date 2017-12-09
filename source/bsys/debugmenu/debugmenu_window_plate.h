@@ -45,7 +45,6 @@ namespace NBsys{namespace NDebugMenu
 		/** Draw
 		*/
 		virtual void Draw();
-
 	};
 
 }}
