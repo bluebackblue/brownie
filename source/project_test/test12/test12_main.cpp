@@ -27,11 +27,11 @@
 
 /** include
 */
-#include "../common/d3d11_drawline.h"
-#include "../common/d3d11_drawrect.h"
-#include "../common/d3d11_drawfont.h"
-#include "../common/pad_device.h"
-#include "../common/debugmenu_callback.h"
+#include "../common/common_drawline.h"
+#include "../common/common_drawrect.h"
+#include "../common/common_drawfont.h"
+#include "../common/common_pad_device.h"
+#include "../common/common_debugmenu_callback.h"
 
 
 /** s_width
@@ -66,17 +66,17 @@ sharedptr<NBsys::NDebugMenu::DebugMenu_Callback_Base> s_debugmenu_callback;
 
 /** ライン描画。
 */
-sharedptr<NCommon::D3d11_DrawLine_Manager> s_drawline_manager;
+sharedptr<NCommon::DrawLine_Manager> s_drawline_manager;
 
 
 /** レクト描画。
 */
-sharedptr<NCommon::D3d11_DrawRect_Manager> s_drawrect_manager;
+sharedptr<NCommon::DrawRect_Manager> s_drawrect_manager;
 
 
 /** フォント描画。
 */
-sharedptr<NCommon::D3d11_DrawFont_Manager> s_drawfont_manager;
+sharedptr<NCommon::DrawFont_Manager> s_drawfont_manager;
 
 
 /** デバッグウィンドウ。
@@ -353,13 +353,13 @@ void Test_Main()
 	NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->SetEnable(true);
 
 	//ライン描画。
-	s_drawline_manager.reset(new NCommon::D3d11_DrawLine_Manager(s_d3d11));
+	s_drawline_manager.reset(new NCommon::DrawLine_Manager(s_d3d11));
 
 	//レクト描画。
-	s_drawrect_manager.reset(new NCommon::D3d11_DrawRect_Manager(s_d3d11));
+	s_drawrect_manager.reset(new NCommon::DrawRect_Manager(s_d3d11));
 
 	//フォント描画。
-	s_drawfont_manager.reset(new NCommon::D3d11_DrawFont_Manager(s_d3d11));
+	s_drawfont_manager.reset(new NCommon::DrawFont_Manager(s_d3d11));
 
 	//デバッグメニュー。
 	s_debugmenu_callback.reset(new NCommon::DebugMenu_Callback(s_drawrect_manager,s_drawfont_manager));

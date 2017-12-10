@@ -5,7 +5,7 @@
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief コモン。Ｄ３Ｄ１１。レクト描画。
+ * @brief コモン。レクト描画。
 */
 
 
@@ -89,9 +89,9 @@ namespace NCommon
 		}
 	};
 
-	/** D3d11_DrawRect_Manager
+	/** DrawRect_Manager
 	*/
-	class D3d11_DrawRect_Manager
+	class DrawRect_Manager
 	{
 	private:
 		/** step
@@ -128,7 +128,7 @@ namespace NCommon
 	public:
 		/** constructor
 		*/
-		D3d11_DrawRect_Manager(sharedptr<NBsys::ND3d11::D3d11>& a_d3d11)
+		DrawRect_Manager(sharedptr<NBsys::ND3d11::D3d11>& a_d3d11)
 			:
 			step(0),
 			isbusy(true),
@@ -138,7 +138,7 @@ namespace NCommon
 
 		/** destructor
 		*/
-		nonvirtual ~D3d11_DrawRect_Manager()
+		nonvirtual ~DrawRect_Manager()
 		{
 		}
 
@@ -225,6 +225,10 @@ namespace NCommon
 		*/
 		void DrawRect(f32 a_x,f32 a_y,f32 a_w,f32 a_h,f32 a_z,s32 a_texture_id,const NBsys::NColor::Color_F& a_color)
 		{
+
+
+
+
 			NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 t_vector;
 
 			t_vector.color_rr = a_color.r; 

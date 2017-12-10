@@ -16,9 +16,9 @@
 
 /** inclulde
 */
-#include "./d3d11_drawfont.h"
-#include "./d3d11_drawrect.h"
-#include "./pad_device.h"
+#include "./common_drawfont.h"
+#include "./common_drawrect.h"
+#include "./common_pad_device.h"
 
 
 /** NCommon
@@ -33,16 +33,16 @@ namespace NCommon
 	private:
 		/** drawrect_manager
 		*/
-		sharedptr<NCommon::D3d11_DrawRect_Manager> drawrect_manager;
+		sharedptr<NCommon::DrawRect_Manager> drawrect_manager;
 
 		/** drawfont_manager
 		*/
-		sharedptr<NCommon::D3d11_DrawFont_Manager> drawfont_manager;
+		sharedptr<NCommon::DrawFont_Manager> drawfont_manager;
 
 	public:
 		/** constructor
 		*/
-		DebugMenu_Callback(sharedptr<NCommon::D3d11_DrawRect_Manager>& a_drawrect_manager,sharedptr<NCommon::D3d11_DrawFont_Manager>& a_drawfont_manager)
+		DebugMenu_Callback(sharedptr<NCommon::DrawRect_Manager>& a_drawrect_manager,sharedptr<NCommon::DrawFont_Manager>& a_drawfont_manager)
 			:
 			drawrect_manager(a_drawrect_manager),
 			drawfont_manager(a_drawfont_manager)

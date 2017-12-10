@@ -5,7 +5,7 @@
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief コモン。Ｄ３Ｄ１１。フォント描画。
+ * @brief コモン。フォント描画。
 */
 
 
@@ -82,9 +82,9 @@ namespace NCommon
 		}
 	};
 
-	/** D3d11_DrawFont_Manager
+	/** DrawFont_Manager
 	*/
-	class D3d11_DrawFont_Manager
+	class DrawFont_Manager
 	{
 	private:
 		/** step
@@ -127,7 +127,7 @@ namespace NCommon
 	public:
 		/** constructor
 		*/
-		D3d11_DrawFont_Manager(sharedptr<NBsys::ND3d11::D3d11>& a_d3d11)
+		DrawFont_Manager(sharedptr<NBsys::ND3d11::D3d11>& a_d3d11)
 			:
 			step(0),
 			isbusy(true),
@@ -137,7 +137,7 @@ namespace NCommon
 
 		/** destructor
 		*/
-		nonvirtual ~D3d11_DrawFont_Manager()
+		nonvirtual ~DrawFont_Manager()
 		{
 		}
 

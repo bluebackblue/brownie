@@ -16,7 +16,7 @@
 
 /** include
 */
-#include "./pad_device.h"
+#include "./common_pad_device.h"
 
 
 /** include

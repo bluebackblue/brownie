@@ -16,7 +16,7 @@
 
 /** include
 */
-#include "./debugmenu_callback.h"
+#include "./common_debugmenu_callback.h"
 
 
 /** NCommon
