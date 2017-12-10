@@ -87,9 +87,9 @@ namespace NCommon
 		}
 	};
 
-	/** DrawFont_Manager
+	/** DrawFont_Material
 	*/
-	class DrawFont_Manager : public Render2D_Material_Base
+	class DrawFont_Material : public Render2D_Material_Base
 	{
 	private:
 		/** step
@@ -126,13 +126,13 @@ namespace NCommon
 
 		/** vertex
 		*/
-		sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4>> vertex[3];
-		s32 vertex_buffer_id[3];
+		sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex1>> vertex;
+		s32 vertex_buffer_id;
 
 	public:
 		/** constructor
 		*/
-		DrawFont_Manager(sharedptr<NBsys::ND3d11::D3d11>& a_d3d11)
+		DrawFont_Material(sharedptr<NBsys::ND3d11::D3d11>& a_d3d11)
 			:
 			step(0),
 			is_initialized(false),
@@ -142,7 +142,7 @@ namespace NCommon
 
 		/** destructor
 		*/
-		nonvirtual ~DrawFont_Manager()
+		nonvirtual ~DrawFont_Material()
 		{
 		}
 
@@ -175,6 +175,15 @@ namespace NCommon
 
 						t_layout->push_back(NBsys::ND3d11::D3d11_Layout("COLOR",0,NBsys::ND3d11::D3d11_LayoutFormatType::R32G32B32A32_FLOAT,0,t_offset));
 						t_offset += sizeof(f32) * 4;
+
+						t_layout->push_back(NBsys::ND3d11::D3d11_Layout("BLENDINDICES",0,NBsys::ND3d11::D3d11_LayoutFormatType::R8_UINT,0,t_offset));
+						t_offset += sizeof(u8);
+						t_layout->push_back(NBsys::ND3d11::D3d11_Layout("BLENDINDICES",1,NBsys::ND3d11::D3d11_LayoutFormatType::R8_UINT,0,t_offset));
+						t_offset += sizeof(u8);
+						t_layout->push_back(NBsys::ND3d11::D3d11_Layout("BLENDINDICES",2,NBsys::ND3d11::D3d11_LayoutFormatType::R8_UINT,0,t_offset));
+						t_offset += sizeof(u8);
+						t_layout->push_back(NBsys::ND3d11::D3d11_Layout("BLENDINDICES",3,NBsys::ND3d11::D3d11_LayoutFormatType::R8_UINT,0,t_offset));
+						t_offset += sizeof(u8);
 					}
 
 					//シェーダー。
@@ -190,17 +199,15 @@ namespace NCommon
 					this->ps_constantbuffer_b1_id = this->d3d11->CreateConstantBuffer(1,sizeof(DrawFont_PS_ConstantBuffer_B1));
 
 					//バーテックスバッファ。
-					for(s32 ii=0;ii<COUNTOF(this->vertex);ii++){
-						s32 t_vertex_allcountof = 2 * 1024;
-						this->vertex[ii] = new NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4>();
-						this->vertex[ii]->AddParts("root");
-						this->vertex[ii]->ReserveVertex(t_vertex_allcountof);
+					s32 t_vertex_allcountof = 2 * 1024;
+					this->vertex = new NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex1>();
+					this->vertex->AddParts("root");
+					this->vertex->ReserveVertex(t_vertex_allcountof);
 
-						NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 t_vertex_dummy = {0};
-						this->vertex[ii]->AddVertex(t_vertex_dummy);
-						this->vertex_buffer_id[ii] = this->d3d11->CreateVertexBuffer(this->vertex[ii]->GetVertexPointer(),this->vertex[ii]->GetVertexStrideByte(),0,t_vertex_allcountof,true);
-						this->vertex[ii]->ClearVertex();
-					}
+					NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex1 t_vertex_dummy = {0};
+					this->vertex->AddVertex(t_vertex_dummy);
+					this->vertex_buffer_id = this->d3d11->CreateVertexBuffer(this->vertex->GetVertexPointer(),this->vertex->GetVertexStrideByte(),0,t_vertex_allcountof,true);
+					this->vertex->ClearVertex();
 
 					//ブレンドステータス。
 					this->blendstate_id = this->d3d11->CreateBlendState(true);
@@ -234,9 +241,11 @@ namespace NCommon
 		virtual void Render(NBsys::NGeometry::Geometry_Matrix_44& a_view_projection,STLList<Render2D_Item>::const_iterator a_it_start,STLList<Render2D_Item>::const_iterator a_it_end)
 		{
 			//バーテックスクリア。
-			for(s32 ii=0;ii<COUNTOF(this->vertex);ii++){
-				this->vertex[ii]->ClearVertex();
-			}
+			this->vertex->ClearVertex();
+
+			this->d3d11->Render_DrawFont_StartClear(0);
+			this->d3d11->Render_DrawFont_StartClear(1);
+			this->d3d11->Render_DrawFont_StartClear(2);
 
 			for(STLList<Render2D_Item>::const_iterator t_it = a_it_start;t_it != a_it_end;t_it++){
 				//フォントテクスチャー更新。
@@ -246,7 +255,7 @@ namespace NCommon
 				this->d3d11->Render_MakeFontVertex(
 					t_it->data.texture_index,
 					t_it->data.string,
-					this->vertex[t_it->data.texture_index],
+					this->vertex,
 					t_it->data.x,
 					t_it->data.y,
 					static_cast<f32>(t_it->data.y),
@@ -255,50 +264,49 @@ namespace NCommon
 				);
 			}
 
-			for(s32 ii=0;ii<COUNTOF(this->vertex);ii++){
-				if(this->vertex[ii]->GetVertexCountOf(0) > 0){
-					this->d3d11->Render_DrawFont_StartClear(ii);
+			if(this->vertex->GetVertexCountOf(0) > 0){
 
-					NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = a_view_projection;
+				NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = a_view_projection;
 
-					//シェーダー。
-					this->d3d11->Render_VSSetShader(this->vertexshader_id);
-					this->d3d11->Render_PSSetShader(this->pixelshader_id);
+				//シェーダー。
+				this->d3d11->Render_VSSetShader(this->vertexshader_id);
+				this->d3d11->Render_PSSetShader(this->pixelshader_id);
 
-					//テクスチャー設定。
-					this->d3d11->Render_SetTexture(0,this->d3d11->Render_GetFontTexture(ii));
+				//テクスチャー設定。
+				this->d3d11->Render_SetTexture(0,this->d3d11->Render_GetFontTexture(0));
+				this->d3d11->Render_SetTexture(1,this->d3d11->Render_GetFontTexture(1));
+				this->d3d11->Render_SetTexture(2,this->d3d11->Render_GetFontTexture(2));
 
-					//トポロジー。
-					this->d3d11->Render_SetPrimitiveTopology(NBsys::ND3d11::D3d11_TopologyType::Id::TriangleList);
+				//トポロジー。
+				this->d3d11->Render_SetPrimitiveTopology(NBsys::ND3d11::D3d11_TopologyType::Id::TriangleList);
 
-					//ブレンドステータス。
-					this->d3d11->Render_SetBlendState(this->blendstate_id);
+				//ブレンドステータス。
+				this->d3d11->Render_SetBlendState(this->blendstate_id);
 
-					//コンスタントバッファ。
-					DrawFont_VS_ConstantBuffer_B0 t_vs_constantbuffer_b0;
-					DrawFont_PS_ConstantBuffer_B1 t_ps_constantbuffer_b1;
-					{
-						t_vs_constantbuffer_b0.view_projection = t_view_projection.Make_Transpose();
-					}
-
-					//コンスタントバッファーの内容更新。
-					this->d3d11->Render_UpdateSubresource(this->vs_constantbuffer_b0_id,&t_vs_constantbuffer_b0);
-					this->d3d11->Render_UpdateSubresource(this->ps_constantbuffer_b1_id,&t_ps_constantbuffer_b1);
-
-					//コンスタントバッファーをシェーダーに設定。
-					this->d3d11->Render_VSSetConstantBuffers(this->vs_constantbuffer_b0_id);
-					this->d3d11->Render_PSSetConstantBuffers(this->ps_constantbuffer_b1_id);
-
-					//ラスタライザー。
-					this->d3d11->Render_SetRasterizerState(this->rasterizerstate_cull_none_id);
-
-					//バーテックスバッファ。
-					this->d3d11->Render_ReMapVertexBuffer(this->vertex_buffer_id[ii],this->vertex[ii]->GetVertexPointer(),this->vertex[ii]->GetVertexStrideByte() * this->vertex[ii]->GetVertexCountOf(0));
-					this->d3d11->Render_SetVertexBuffer(this->vertex_buffer_id[ii]);
-
-					//描画。
-					this->d3d11->Render_Draw(this->vertex[ii]->GetVertexCountOf(0),0);
+				//コンスタントバッファ。
+				DrawFont_VS_ConstantBuffer_B0 t_vs_constantbuffer_b0;
+				DrawFont_PS_ConstantBuffer_B1 t_ps_constantbuffer_b1;
+				{
+					t_vs_constantbuffer_b0.view_projection = t_view_projection.Make_Transpose();
 				}
+
+				//コンスタントバッファーの内容更新。
+				this->d3d11->Render_UpdateSubresource(this->vs_constantbuffer_b0_id,&t_vs_constantbuffer_b0);
+				this->d3d11->Render_UpdateSubresource(this->ps_constantbuffer_b1_id,&t_ps_constantbuffer_b1);
+
+				//コンスタントバッファーをシェーダーに設定。
+				this->d3d11->Render_VSSetConstantBuffers(this->vs_constantbuffer_b0_id);
+				this->d3d11->Render_PSSetConstantBuffers(this->ps_constantbuffer_b1_id);
+
+				//ラスタライザー。
+				this->d3d11->Render_SetRasterizerState(this->rasterizerstate_cull_none_id);
+
+				//バーテックスバッファ。
+				this->d3d11->Render_ReMapVertexBuffer(this->vertex_buffer_id,this->vertex->GetVertexPointer(),this->vertex->GetVertexStrideByte() * this->vertex->GetVertexCountOf(0));
+				this->d3d11->Render_SetVertexBuffer(this->vertex_buffer_id);
+
+				//描画。
+				this->d3d11->Render_Draw(this->vertex->GetVertexCountOf(0),0);
 			}
 		}
 	};

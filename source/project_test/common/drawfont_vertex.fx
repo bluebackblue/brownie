@@ -21,9 +21,10 @@ cbuffer VS_ConstantBuffer_B0 : register(b0)
 */
 struct VS_IN
 {
-	float4 in_pos		: POSITION0;
-	float4 in_color		: COLOR0;
-	float2 in_uv		: TEXCOORD0;
+	float4 in_pos				: POSITION0;
+	float4 in_color				: COLOR0;
+	float2 in_uv				: TEXCOORD0;
+	uint   in_texture_index[4]	: BLENDINDICES;
 };
 
 
@@ -31,9 +32,10 @@ struct VS_IN
 */
 struct VS_OUT
 {
-	float4 out_pos		: SV_POSITION0;
-	float4 out_color	: COLOR0;
-	float2 out_uv		: TEXCOORD0;
+	float4 out_pos				: SV_POSITION0;
+	float4 out_color			: COLOR0;
+	float2 out_uv				: TEXCOORD0;
+	uint   out_texture_index[4]	: BLENDINDICES;
 };
 
 
@@ -46,6 +48,7 @@ VS_OUT VS(VS_IN a_vs_in)
 	t_out.out_pos = mul(a_vs_in.in_pos,view_projection);
 	t_out.out_color = a_vs_in.in_color;
 	t_out.out_uv = a_vs_in.in_uv;
+	t_out.out_texture_index = a_vs_in.in_texture_index;
 
 	return t_out;
 }

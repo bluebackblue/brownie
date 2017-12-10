@@ -66,6 +66,10 @@ namespace NBsys{namespace ND3d11
 		*/
 		sharedptr<NBsys::NFont::Font> font;
 
+		/** index
+		*/
+		s32 index;
+
 		/** texturewidth
 		*/
 		s32 texturewidth;
@@ -97,10 +101,11 @@ namespace NBsys{namespace ND3d11
 	public:
 		/** constructor
 		*/
-		D3d11_Impl_Font(D3d11_Impl& a_opengl_impl,const sharedptr<NBsys::NFont::Font>& a_font,s32 a_texture_width,const STLWString& a_name)
+		D3d11_Impl_Font(D3d11_Impl& a_opengl_impl,const sharedptr<NBsys::NFont::Font>& a_font,s32 a_texture_width,const STLWString& a_name,s32 a_index)
 			:
 			d3d11_impl(a_opengl_impl),
-			font(a_font)
+			font(a_font),
+			index(a_index)
 		{
 			this->texturewidth = static_cast<s32>(NBlib::Math::powf(2,NBlib::Math::ceilf(NBlib::Math::log2f(static_cast<f32>(a_texture_width)))));
 			this->textureheight = static_cast<s32>(NBlib::Math::powf(2,NBlib::Math::ceilf(NBlib::Math::log2f(static_cast<f32>(this->texturewidth * BSYS_D3D11_FONT_DRAWTYPEMAX)))));
@@ -270,7 +275,7 @@ namespace NBsys{namespace ND3d11
 		
 		/** MakeFontVertex
 		*/
-		void MakeFontVertex(const STLWString& a_string,sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4>>& a_vertex,f32 a_x,f32 a_y,f32 a_z,f32 a_font_size,const NBsys::NColor::Color_F& a_color)
+		void MakeFontVertex(const STLWString& a_string,sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex1>>& a_vertex,f32 a_x,f32 a_y,f32 a_z,f32 a_font_size,const NBsys::NColor::Color_F& a_color)
 		{
 			{
 				f32 t_scale = a_font_size / static_cast<f32>(this->texturewidth);
@@ -302,11 +307,16 @@ namespace NBsys{namespace ND3d11
 								f32 t_rect_y0 = t_y + static_cast<f32>(t_font_state.y) * t_scale;
 								f32 t_rect_y1 = t_rect_y0 + this->texturewidth * t_scale;
 
-								NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 t_vertex;
+								NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex1 t_vertex;
 								t_vertex.color_rr = a_color.r;
 								t_vertex.color_gg = a_color.g;
 								t_vertex.color_bb = a_color.b;
 								t_vertex.color_aa = a_color.a;
+
+								t_vertex.texture_index_00 = static_cast<u8>(this->index);
+								t_vertex.texture_index_01 = 0;
+								t_vertex.texture_index_02 = 0;
+								t_vertex.texture_index_03 = 0;
 
 								//00
 								{

@@ -36,6 +36,14 @@ namespace NBsys{namespace ND3d11
 			/** float4
 			*/
 			R32G32B32A32_FLOAT,
+
+			/** u32
+			*/
+			R8G8B8A8_UINT,
+
+			/** u8
+			*/
+			R8_UINT
 		};
 	};
 

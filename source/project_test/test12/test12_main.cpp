@@ -365,7 +365,7 @@ void Test_Main()
 	s_drawrect_material.reset(new NCommon::DrawRect_Material(s_d3d11));
 
 	//フォント描画。
-	s_drawfont_material.reset(new NCommon::DrawFont_Manager(s_d3d11));
+	s_drawfont_material.reset(new NCommon::DrawFont_Material(s_d3d11));
 
 	//デバッグメニュー。
 	s_debugmenu_callback.reset(new NCommon::DebugMenu_Callback(s_render2d));

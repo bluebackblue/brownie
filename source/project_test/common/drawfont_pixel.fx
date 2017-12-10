@@ -21,7 +21,10 @@ SamplerState DiffuseSampler
 
 /** tex_diffuse
 */
-Texture2D tex_diffuse : register(t0);
+Texture2D tex_diffuse_1 : register(t0);
+Texture2D tex_diffuse_2 : register(t1);
+Texture2D tex_diffuse_3 : register(t2);
+Texture2D tex_diffuse_4 : register(t3);
 
 
 /** PS_ConstantBuffer_B1
@@ -39,9 +42,10 @@ cbuffer PS_ConstantBuffer_B1 : register(b0)
 */
 struct VS_IN
 {
-	float4 in_pos		: SV_POSITION0;
-	float4 in_color		: COLOR0;
-	float2 in_uv		: TEXCOORD0;
+	float4 in_pos				: SV_POSITION0;
+	float4 in_color				: COLOR0;
+	float2 in_uv				: TEXCOORD0;
+	uint   in_texture_index[4]	: BLENDINDICES;
 };
 
 
@@ -52,12 +56,18 @@ float4 PS(VS_IN a_vs_in) : SV_Target
 	//diffuse
 	float4 t_color = a_vs_in.in_color;
 
-	//texture
-	t_color *= tex_diffuse.Sample(DiffuseSampler,a_vs_in.in_uv);
+	//texture index
+	uint t_texture_index = a_vs_in.in_texture_index[0];
 
-	//if(t_color.a <= 0.5f){
-	//	t_color.a = 0.5f;
-	//}
+	if(t_texture_index == 0){
+		t_color *= tex_diffuse_1.Sample(DiffuseSampler,a_vs_in.in_uv);
+	}else if(t_texture_index == 1){
+		t_color *= tex_diffuse_2.Sample(DiffuseSampler,a_vs_in.in_uv);
+	}else if(t_texture_index == 2){
+		t_color *= tex_diffuse_3.Sample(DiffuseSampler,a_vs_in.in_uv);
+	}else if(t_texture_index == 3){
+		t_color *= tex_diffuse_4.Sample(DiffuseSampler,a_vs_in.in_uv);
+	}
 
 	return t_color;
 }

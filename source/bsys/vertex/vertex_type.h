@@ -97,6 +97,34 @@ namespace NBsys{namespace NVertex
 		};
 	};
 
+	/** Vertex_Data_Pos3Uv2Color4TextureIndex1
+	*/
+	struct Vertex_Data_Pos3Uv2Color4TextureIndex1
+	{
+		union
+		{
+			struct
+			{
+				f32 pos_xx;
+				f32 pos_yy;
+				f32 pos_zz;
+
+				f32 uv_xx;
+				f32 uv_yy;
+
+				f32 color_rr;
+				f32 color_gg;
+				f32 color_bb;
+				f32 color_aa;
+
+				u8 texture_index_00;
+				u8 texture_index_01;
+				u8 texture_index_02;
+				u8 texture_index_03;
+			};
+		};
+	};
+
 	/** Vertex_Data_Pos3Uv2Matrixindex4Matrixweight4
 	*/
 	struct Vertex_Data_Pos3Uv2Matrixindex4Matrixweight4

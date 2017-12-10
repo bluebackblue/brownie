@@ -750,6 +750,11 @@ namespace NBsys{namespace ND3d11
 					case D3d11_LayoutFormatType::R32G32B32_FLOAT:		t_layout_data[ii].Format = DXGI_FORMAT_R32G32B32_FLOAT;		break;
 					case D3d11_LayoutFormatType::R32G32B32A32_FLOAT:	t_layout_data[ii].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;	break;
 					case D3d11_LayoutFormatType::R32G32_FLOAT:			t_layout_data[ii].Format = DXGI_FORMAT_R32G32_FLOAT;		break;
+					case D3d11_LayoutFormatType::R8G8B8A8_UINT:			t_layout_data[ii].Format = DXGI_FORMAT_R8G8B8A8_UINT;		break;
+					case D3d11_LayoutFormatType::R8_UINT:				t_layout_data[ii].Format = DXGI_FORMAT_R8_UINT;				break;
+
+
+					
 					default:ASSERT(0);break;
 					}
 				 }
@@ -1069,7 +1074,7 @@ namespace NBsys{namespace ND3d11
 	#if(BSYS_FONT_ENABLE)
 	void D3d11_Impl::Render_SetFont(s32 a_fontindex,sharedptr<NBsys::NFont::Font>& a_font,s32 a_texture_width,const STLWString& a_name)
 	{
-		this->font_list[a_fontindex].reset(new D3d11_Impl_Font(*this,a_font,a_texture_width,a_name));
+		this->font_list[a_fontindex].reset(new D3d11_Impl_Font(*this,a_font,a_texture_width,a_name,a_fontindex));
 	}
 	#endif
 
@@ -1098,7 +1103,7 @@ namespace NBsys{namespace ND3d11
 	/** Render_MakeFontVertex
 	*/
 	#if(BSYS_FONT_ENABLE)
-	void D3d11_Impl::Render_MakeFontVertex(s32 a_fontindex,const STLWString& a_string,sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4>>& a_vertex,f32 a_x,f32 a_y,f32 a_z,f32 a_font_size,const NBsys::NColor::Color_F& a_color)
+	void D3d11_Impl::Render_MakeFontVertex(s32 a_fontindex,const STLWString& a_string,sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex1>>& a_vertex,f32 a_x,f32 a_y,f32 a_z,f32 a_font_size,const NBsys::NColor::Color_F& a_color)
 	{
 		if(this->font_list[a_fontindex] != nullptr){
 			this->font_list[a_fontindex]->MakeFontVertex(a_string,a_vertex,a_x,a_y,a_z,a_font_size,a_color);
