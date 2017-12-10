@@ -5,7 +5,7 @@
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief インクルード。
+ * @brief テスト。
 */
 
 
@@ -16,7 +16,7 @@
 
 /** include
 */
-#include "./test12_debugwindow.h"
+#include "./test12_windowmenu.h"
 
 
 /** DEF_TEST12
@@ -25,7 +25,7 @@
 
 /** constructor
 */
-Test12_DebugWindow::Test12_DebugWindow(f32 a_offset_x,f32 a_offset_y)
+Test12_WindowMenu::Test12_WindowMenu(f32 a_offset_x,f32 a_offset_y)
 	:
 	NBsys::NWindowMenu::WindowMenu_Window_Base()
 {
@@ -87,7 +87,7 @@ Test12_DebugWindow::Test12_DebugWindow(f32 a_offset_x,f32 a_offset_y)
 
 /** destructor
 */
-Test12_DebugWindow::~Test12_DebugWindow()
+Test12_WindowMenu::~Test12_WindowMenu()
 {
 }
 

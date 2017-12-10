@@ -5,7 +5,7 @@
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief インクルード。
+ * @brief テスト。
 */
 
 
@@ -22,7 +22,7 @@
 /** include
 */
 #include "./test12_main.h"
-#include "./test12_debugwindow.h"
+#include "./test12_windowmenu.h"
 
 
 /** include
@@ -85,9 +85,10 @@ sharedptr<NCommon::Render2D_Material_Base> s_drawrect_material;
 sharedptr<NCommon::Render2D_Material_Base> s_drawfont_material;
 
 
-/** デバッグウィンドウ。
+/** ウィンドウ。
 */
-sharedptr<Test12_DebugWindow> s_test12_debugwindow;
+sharedptr<Test12_WindowMenu> s_test12_window_1;
+sharedptr<Test12_WindowMenu> s_test12_window_2;
 
 
 /** App
@@ -209,9 +210,11 @@ public:
 				this->step++;
 				this->draw = true;
 
-				//デバッグウィンドウ。
-				s_test12_debugwindow.reset(new Test12_DebugWindow(100.0f,100.0f));
-				NBsys::NWindowMenu::GetSystemInstance()->Add(s_test12_debugwindow);
+				//ウィンドウ。
+				s_test12_window_1.reset(new Test12_WindowMenu(150.0f,150.0f));
+				s_test12_window_2.reset(new Test12_WindowMenu(300.0f,300.0f));
+				NBsys::NWindowMenu::GetSystemInstance()->Add(s_test12_window_1);
+				NBsys::NWindowMenu::GetSystemInstance()->Add(s_test12_window_2);
 			}break;
 		case 2:
 			{
