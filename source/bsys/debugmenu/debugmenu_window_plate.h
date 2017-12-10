@@ -28,10 +28,15 @@ namespace NBsys{namespace NDebugMenu
 	*/
 	class DebugMenu_Window_Plate : public DebugMenu_Window_Base
 	{
+	private:
+		/** color
+		*/
+		NBsys::NColor::Color_F color;
+
 	public:
 		/** constructor
 		*/
-		DebugMenu_Window_Plate(DebugMenu_Window_Base::Mode::Id a_mode,f32 a_x,f32 a_y,f32 a_w,f32 a_h,f32 a_z);
+		DebugMenu_Window_Plate(DebugMenu_Window_Base::Mode::Id a_mode,f32 a_x,f32 a_y,f32 a_w,f32 a_h,const NBsys::NColor::Color_F& a_color,f32 a_z);
 
 		/** destructor
 		*/

@@ -103,8 +103,6 @@ namespace NCommon
 			this->mouse_r = true;
 		}
 		#endif
-
-		
 	}
 
 	/** ボタン取得。

@@ -36,7 +36,9 @@ namespace NBsys{namespace NDebugMenu
 {
 	/** constructor
 	*/
-	DebugMenu_Window_Plate::DebugMenu_Window_Plate(DebugMenu_Window_Base::Mode::Id a_mode,f32 a_x,f32 a_y,f32 a_w,f32 a_h,f32 a_z)
+	DebugMenu_Window_Plate::DebugMenu_Window_Plate(DebugMenu_Window_Base::Mode::Id a_mode,f32 a_x,f32 a_y,f32 a_w,f32 a_h,const NBsys::NColor::Color_F& a_color,f32 a_z)
+		:
+		color(a_color)
 	{
 		this->Initialize(a_mode,a_x,a_y,a_w,a_h,a_z);
 	}
@@ -54,7 +56,7 @@ namespace NBsys{namespace NDebugMenu
 		//自分の描画。
 		{
 			if((this->calc_w >= 0.0f)&&(this->calc_h >= 0.0f)){
-				GetSystemInstance()->callback->DrawRect_Callback(this->calc_x,this->calc_y,this->calc_w,this->calc_h,0.0f,-1,NBsys::NColor::Color_F(0.6f,0.6f,0.6f,1.0f));
+				GetSystemInstance()->callback->DrawRect_Callback(this->calc_x,this->calc_y,this->calc_w,this->calc_h,0.0f,-1,this->color);
 			}
 		}
 

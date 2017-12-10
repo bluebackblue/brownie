@@ -107,8 +107,8 @@ private:
 
 	/** depthstencilstate
 	*/
-	s32 depthstencilstate_write_on_id;
-	s32 depthstencilstate_write_off_id;
+	s32 depthstencilstate_check_on_write_on_id;
+	s32 depthstencilstate_check_off_write_off_id;
 
 	/** カメラ。
 	*/
@@ -148,26 +148,23 @@ public:
 		//デバッグメニュー。
 		NBsys::NDebugMenu::GetSystemInstance()->Update();
 
-		//ライン描画。
-		s_drawline_manager->PreUpdate();
-
-		//レクト描画。
-		s_drawrect_manager->PreUpdate();
-
-		//フォント描画。
-		s_drawfont_manager->PreUpdate();
-
 		switch(this->step){
 		case 0:
 			{
+				//ライン描画。
+				s_drawline_manager->Initialize_Update();
 				if(s_drawline_manager->IsBusy() == true){
 					break;
 				}
 
+				//レクト描画。
+				s_drawrect_manager->Initialize_Update();
 				if(s_drawrect_manager->IsBusy() == true){
 					break;
 				}
 
+				//フォント描画。
+				s_drawfont_manager->Initialize_Update();
 				if(s_drawfont_manager->IsBusy() == true){
 					break;
 				}
@@ -180,8 +177,8 @@ public:
 				this->rasterizerstate_cull_none_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::NONE);
 
 				//深度ステンシル。
-				this->depthstencilstate_write_on_id = s_d3d11->CreateDepthStencilState(true,true);
-				this->depthstencilstate_write_off_id = s_d3d11->CreateDepthStencilState(true,false);
+				this->depthstencilstate_check_on_write_on_id = s_d3d11->CreateDepthStencilState(true,true);
+				this->depthstencilstate_check_off_write_off_id = s_d3d11->CreateDepthStencilState(false,false);
 
 				//カメラ。
 				{
@@ -213,6 +210,31 @@ public:
 				this->camera_position.x = Math::cosf(this->camera_time / 10) * 20;
 				this->camera_position.z = Math::sinf(this->camera_time / 10) * 20;
 
+				//ライン描画。
+				s_drawline_manager->Clear();
+
+				//レクト描画。
+				s_drawrect_manager->Clear();
+
+				//フォント描画。
+				s_drawfont_manager->Clear();
+
+				{
+					//マウス。
+					const NBsys::NPad::TouchValue& t_mouse_l = NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->GetTouchValue(NBsys::NPad::Pad_Virtual::TouchType::MOUSEL);
+
+					//文字描画。
+					if(t_mouse_l.flag){
+						char t_buffer[32];
+						STLWString t_string = VASTRING(t_buffer,sizeof(t_buffer),L"%d %d",static_cast<s32>(t_mouse_l.x),static_cast<s32>(t_mouse_l.y));
+						s_drawfont_manager->DrawFont16(t_string,16.0f,t_mouse_l.x+50,t_mouse_l.y+50,0.0f,NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f));
+						s_drawfont_manager->DrawFont16(t_string,16.0f,t_mouse_l.x-50,t_mouse_l.y-50,0.0f,NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f));
+					}
+
+					s_drawfont_manager->DrawFont32(L"あいうえお",	32.0f,	100.0f,			100.0f,			0.0f,NBsys::NColor::Color_F(1.0f,0.0f,1.0f,1.0f));
+					s_drawfont_manager->DrawFont64(L"あいうえお",	64.0f,	s_width/2.0f,	s_height/2.0f,	0.0f,NBsys::NColor::Color_F(1.0f,1.0f,0.0f,1.0f));
+				}
+
 			}break;
 		}
 	}
@@ -224,15 +246,16 @@ public:
 		//リクエスト処理。
 		s_d3d11->Render_Main();
 
+		//ビューポート。
 		s_d3d11->Render_ViewPort(0.0f,0.0f,static_cast<f32>(s_width),static_cast<f32>(s_height));
 
 		//クリア。
 		s_d3d11->Render_ClearRenderTargetView(NBsys::NColor::Color_F(0.3f,0.3f,0.8f,1.0f));
 
-		//深度ステンシルクリア。
-		s_d3d11->Render_ClearDepthStencilView();
-
 		if(this->draw){
+
+			//深度ステンシルクリア。
+			s_d3d11->Render_ClearDepthStencilView();
 
 			//プロジェクション。
 			NBsys::NGeometry::Geometry_Matrix_44 t_projection;
@@ -254,8 +277,8 @@ public:
 					s_drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(0,-100,0),NBsys::NGeometry::Geometry_Vector3(0,100,0),NBsys::NColor::Color_F(0.0f,1.0f,0.0f,1.0f));
 					s_drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(0,0,-100),NBsys::NGeometry::Geometry_Vector3(0,0,100),NBsys::NColor::Color_F(0.0f,0.0f,1.0f,1.0f));
 
-					//深度ステンシル。深度書き込みあり。
-					s_d3d11->Render_SetDepthStencilState(this->depthstencilstate_write_on_id);
+					//深度ステンシル。チェックあり。書き込みあり。
+					s_d3d11->Render_SetDepthStencilState(this->depthstencilstate_check_on_write_on_id);
 
 					//ライン描画。
 					s_drawline_manager->Render(t_view * t_projection);
@@ -273,40 +296,25 @@ public:
 				//クリア。
 				s_d3d11->Render_ClearDepthStencilView();
 
-				//マウス。
-				const NBsys::NPad::TouchValue& t_mouse_l = NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->GetTouchValue(NBsys::NPad::Pad_Virtual::TouchType::MOUSEL);
-			
-				//文字描画。
-				if(t_mouse_l.flag){
-					char t_buffer[32];
-					STLWString t_string = VASTRING(t_buffer,sizeof(t_buffer),L"%d %d",static_cast<s32>(t_mouse_l.x),static_cast<s32>(t_mouse_l.y));
-					s_drawfont_manager->DrawFont16(t_string,16.0f,t_mouse_l.x+50,t_mouse_l.y+50,0.0f,NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f));
-					s_drawfont_manager->DrawFont16(t_string,16.0f,t_mouse_l.x-50,t_mouse_l.y-50,0.0f,NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f));
-				}
-
-				s_drawfont_manager->DrawFont32(L"あいうえお",	32.0f,	100.0f,			100.0f,			0.0f,NBsys::NColor::Color_F(1.0f,0.0f,1.0f,1.0f));
-				s_drawfont_manager->DrawFont64(L"あいうえお",	64.0f,	s_width/2.0f,	s_height/2.0f,	0.0f,NBsys::NColor::Color_F(1.0f,1.0f,0.0f,1.0f));
+				//深度ステンシル。チェックなし。書き込みなし。
+				s_d3d11->Render_SetDepthStencilState(this->depthstencilstate_check_off_write_off_id);
 
 				//レクト描画。
-				//s_drawrect_manager->DrawRect(0.0f,0.0f,100.0f,100.0f,0.0f,-1,NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
-
-				//デバッグメニュー。
-				NBsys::NDebugMenu::GetSystemInstance()->Update();
-				NBsys::NDebugMenu::GetSystemInstance()->Draw();
-
+				//文字描画。
 				{
-					//深度ステンシル。深度書き込みあり。
-					s_d3d11->Render_SetDepthStencilState(this->depthstencilstate_write_on_id);
-
-					//レクト描画。
 					s_drawrect_manager->Render(t_view * t_projection);
+					s_drawfont_manager->Render(t_view * t_projection);
 				}
 
+				//デバッグメニュー。
 				{
-					//深度ステンシル。深度書き込みなし。
-					s_d3d11->Render_SetDepthStencilState(this->depthstencilstate_write_off_id);
+					s_drawrect_manager->Clear();
+					s_drawfont_manager->Clear();
 
-					//文字描画。
+					NBsys::NDebugMenu::GetSystemInstance()->Update();
+					NBsys::NDebugMenu::GetSystemInstance()->Draw();
+
+					s_drawrect_manager->Render(t_view * t_projection);
 					s_drawfont_manager->Render(t_view * t_projection);
 				}
 			}

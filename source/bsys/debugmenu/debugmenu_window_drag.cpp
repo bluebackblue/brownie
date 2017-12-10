@@ -19,9 +19,6 @@
 #include "../types/types.h"
 
 
-
-
-
 /** include
 */
 #include "./debugmenu.h"

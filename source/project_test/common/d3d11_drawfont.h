@@ -36,67 +36,39 @@ namespace NCommon
 		}
 	};
 	
-	/** DrawFont_PS_ConstantBuffer_B0
+	/** DrawFont_PS_ConstantBuffer_B1
 	*/
-	struct DrawFont_PS_ConstantBuffer_B0 //TODO:未使用。
+	struct DrawFont_PS_ConstantBuffer_B1 //TODO:未使用。
 	{
 		/**
 
-		00000001 :
-		00000010 :
-		00000100 :
-		00001000 :
-		00010000 :
-		00100000 :
-		01000000 :
-		10000000 :
+		00000000 00000000 00000000 00000001 :
 
 		*/
 		u32 flag1;
 
 		/**
 
-		00000001 :
-		00000010 :
-		00000100 :
-		00001000 :
-		00010000 :
-		00100000 :
-		01000000 :
-		10000000 :
+		00000000 00000000 00000000 00000001 :
 
 		*/
 		u32 flag2;
 
 		/**
 
-		00000001 :
-		00000010 :
-		00000100 :
-		00001000 :
-		00010000 :
-		00100000 :
-		01000000 :
-		10000000 :
+		00000000 00000000 00000000 00000001 :
 
 		*/
 		u32 flag3;
 
 		/**
 
-		00000001 :
-		00000010 :
-		00000100 :
-		00001000 :
-		00010000 :
-		00100000 :
-		01000000 :
-		10000000 :
+		00000000 00000000 00000000 00000001 :
 
 		*/
 		u32 flag4;
 
-		DrawFont_PS_ConstantBuffer_B0()
+		DrawFont_PS_ConstantBuffer_B1()
 			:
 			flag1(0),
 			flag2(0),
@@ -105,7 +77,7 @@ namespace NCommon
 		{
 		}
 
-		nonvirtual ~DrawFont_PS_ConstantBuffer_B0()
+		nonvirtual ~DrawFont_PS_ConstantBuffer_B1()
 		{
 		}
 	};
@@ -143,7 +115,7 @@ namespace NCommon
 		s32 vertexshader_id;
 		s32 pixelshader_id;
 		s32 vs_constantbuffer_b0_id;
-		s32 ps_constantbuffer_b0_id;
+		s32 ps_constantbuffer_b1_id;
 		s32 blendstate_id;
 		s32 rasterizerstate_cull_none_id;
 
@@ -176,9 +148,9 @@ namespace NCommon
 			return this->isbusy;
 		}
 
-		/** PreUpdate
+		/** Initialize_Update
 		*/
-		void PreUpdate()
+		void Initialize_Update()
 		{
 			switch(this->step){
 			case 0:
@@ -217,7 +189,7 @@ namespace NCommon
 
 					//コンスタントバッファ。
 					this->vs_constantbuffer_b0_id = this->d3d11->CreateConstantBuffer(0,sizeof(DrawFont_VS_ConstantBuffer_B0));
-					this->ps_constantbuffer_b0_id = this->d3d11->CreateConstantBuffer(1,sizeof(DrawFont_PS_ConstantBuffer_B0));
+					this->ps_constantbuffer_b1_id = this->d3d11->CreateConstantBuffer(1,sizeof(DrawFont_PS_ConstantBuffer_B1));
 
 					//バーテックスバッファ。
 					for(s32 ii=0;ii<COUNTOF(this->vertex);ii++){
@@ -249,13 +221,16 @@ namespace NCommon
 						}
 					}
 				}break;
-			case 2:
-				{
-					for(s32 ii=0;ii<COUNTOF(this->vertex);ii++){
-						this->vertex[ii]->ClearVertex();
-						this->d3d11->Render_DrawFont_StartClear(ii);
-					}
-				}break;
+			}
+		}
+
+		/** クリア。
+		*/
+		void Clear()
+		{
+			for(s32 ii=0;ii<COUNTOF(this->vertex);ii++){
+				this->vertex[ii]->ClearVertex();
+				this->d3d11->Render_DrawFont_StartClear(ii);
 			}
 		}
 
@@ -307,18 +282,18 @@ namespace NCommon
 
 						//コンスタントバッファ。
 						DrawFont_VS_ConstantBuffer_B0 t_vs_constantbuffer_b0;
-						DrawFont_PS_ConstantBuffer_B0 t_ps_constantbuffer_b0;
+						DrawFont_PS_ConstantBuffer_B1 t_ps_constantbuffer_b1;
 						{
 							t_vs_constantbuffer_b0.view_projection = t_view_projection.Make_Transpose();
 						}
 
 						//コンスタントバッファーの内容更新。
 						this->d3d11->Render_UpdateSubresource(this->vs_constantbuffer_b0_id,&t_vs_constantbuffer_b0);
-						this->d3d11->Render_UpdateSubresource(this->ps_constantbuffer_b0_id,&t_ps_constantbuffer_b0);
+						this->d3d11->Render_UpdateSubresource(this->ps_constantbuffer_b1_id,&t_ps_constantbuffer_b1);
 
 						//コンスタントバッファーをシェーダーに設定。
 						this->d3d11->Render_VSSetConstantBuffers(this->vs_constantbuffer_b0_id);
-						this->d3d11->Render_PSSetConstantBuffers(this->ps_constantbuffer_b0_id);
+						this->d3d11->Render_PSSetConstantBuffers(this->ps_constantbuffer_b1_id);
 
 						//ラスタライザー。
 						this->d3d11->Render_SetRasterizerState(this->rasterizerstate_cull_none_id);

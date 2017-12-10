@@ -230,7 +230,9 @@ namespace NBlib
 				ASSERT(0);
 			}
 
+			#if defined(ROM_DEEPDEBUG)
 			TAGLOG("ThreadTemplate::ThreadMain","isopen.Store(false) : start");
+			#endif
 
 			if(t_argument->me){
 				t_argument->me->isopen.Store(false);
@@ -238,7 +240,9 @@ namespace NBlib
 				ASSERT(0);
 			}
 
+			#if defined(ROM_DEEPDEBUG)
 			TAGLOG("ThreadTemplate::ThreadMain","isopen.Store(false) : end");
+			#endif
 		}
 
 	private:

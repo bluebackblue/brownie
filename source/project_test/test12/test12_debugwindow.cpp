@@ -34,7 +34,7 @@ Test12_DebugWindow::Test12_DebugWindow(f32 a_offset_x,f32 a_offset_y)
 		a_offset_x,
 		a_offset_y,
 		300.0f,
-		300.0f,
+		-1.0f,
 		0.0f
 	);
 
@@ -45,7 +45,7 @@ Test12_DebugWindow::Test12_DebugWindow(f32 a_offset_x,f32 a_offset_y)
 			0.0f,
 			0.0f,
 			-1.0f,
-			-1.0f,
+			50.0f,
 			0.0f
 		));
 
@@ -59,6 +59,7 @@ Test12_DebugWindow::Test12_DebugWindow(f32 a_offset_x,f32 a_offset_y)
 				0.0f,
 				-1.0f,
 				-1.0f,
+				NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f),
 				0.0f
 			));
 
@@ -66,7 +67,20 @@ Test12_DebugWindow::Test12_DebugWindow(f32 a_offset_x,f32 a_offset_y)
 		}
 	}
 
+	//下地。
+	{
+		sharedptr<NBsys::NDebugMenu::DebugMenu_Window_Base> t_plate(new NBsys::NDebugMenu::DebugMenu_Window_Plate(
+			NBsys::NDebugMenu::DebugMenu_Window_Base::Mode::Vertical,
+			0.0f,
+			0.0f,
+			-1.0f,
+			300.0f,
+			NBsys::NColor::Color_F(0.5f,0.5f,0.5f,0.5f),
+			0.0f
+		));
 
+		this->AddChild(t_plate);
+	}
 }
 
 /** destructor

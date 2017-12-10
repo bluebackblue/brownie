@@ -36,67 +36,46 @@ namespace NCommon
 		}
 	};
 	
-	/** DrawRect_PS_ConstantBuffer_B0
+	/** DrawRect_PS_ConstantBuffer_B1
 	*/
-	struct DrawRect_PS_ConstantBuffer_B0
+	struct DrawRect_PS_ConstantBuffer_B1
 	{
 		/**
 
-		00000001 : use texture
-		00000010 :
-		00000100 :
-		00001000 :
-		00010000 :
-		00100000 :
-		01000000 :
-		10000000 :
+		00000000 00000000 00000000 00000001 : use texture
+		00000000 00000000 00000000 00000010 :
+		00000000 00000000 00000000 00000100 :
+		00000000 00000000 00000000 00001000 :
+		00000000 00000000 00000000 00010000 :
+		00000000 00000000 00000000 00100000 :
+		00000000 00000000 00000000 01000000 :
+		00000000 00000000 00000000 10000000 :
 
 		*/
 		u32 flag1;
 
 		/**
 
-		00000001 :
-		00000010 :
-		00000100 :
-		00001000 :
-		00010000 :
-		00100000 :
-		01000000 :
-		10000000 :
+		00000000 00000000 00000000 00000001 :
 
 		*/
 		u32 flag2;
 
 		/**
 
-		00000001 :
-		00000010 :
-		00000100 :
-		00001000 :
-		00010000 :
-		00100000 :
-		01000000 :
-		10000000 :
+		00000000 00000000 00000000 00000001 :
 
 		*/
 		u32 flag3;
 
 		/**
 
-		00000001 :
-		00000010 :
-		00000100 :
-		00001000 :
-		00010000 :
-		00100000 :
-		01000000 :
-		10000000 :
+		00000000 00000000 00000000 00000001 :
 
 		*/
 		u32 flag4;
 
-		DrawRect_PS_ConstantBuffer_B0()
+		DrawRect_PS_ConstantBuffer_B1()
 			:
 			flag1(0),
 			flag2(0),
@@ -105,7 +84,7 @@ namespace NCommon
 		{
 		}
 
-		nonvirtual ~DrawRect_PS_ConstantBuffer_B0()
+		nonvirtual ~DrawRect_PS_ConstantBuffer_B1()
 		{
 		}
 	};
@@ -137,7 +116,7 @@ namespace NCommon
 		s32 vertexshader_id;
 		s32 pixelshader_id;
 		s32 vs_constantbuffer_b0_id;
-		s32 ps_constantbuffer_b0_id;
+		s32 ps_constantbuffer_b1_id;
 		s32 blendstate_id;
 		s32 rasterizerstate_cull_none_id;
 
@@ -170,9 +149,9 @@ namespace NCommon
 			return this->isbusy;
 		}
 
-		/** PreUpdate
+		/** Initialize_Update
 		*/
-		void PreUpdate()
+		void Initialize_Update()
 		{
 			switch(this->step){
 			case 0:
@@ -202,7 +181,7 @@ namespace NCommon
 
 					//コンスタントバッファ。
 					this->vs_constantbuffer_b0_id = this->d3d11->CreateConstantBuffer(0,sizeof(DrawRect_VS_ConstantBuffer_B0));
-					this->ps_constantbuffer_b0_id = this->d3d11->CreateConstantBuffer(1,sizeof(DrawRect_PS_ConstantBuffer_B0));
+					this->ps_constantbuffer_b1_id = this->d3d11->CreateConstantBuffer(1,sizeof(DrawRect_PS_ConstantBuffer_B1));
 
 					//バーテックスバッファ。
 					s32 t_vertex_allcountof = 2 * 1024;
@@ -232,11 +211,14 @@ namespace NCommon
 						}
 					}
 				}break;
-			case 2:
-				{
-					this->vertex->ClearVertex();
-				}break;
 			}
+		}
+
+		/** クリア。
+		*/
+		void Clear()
+		{
+			this->vertex->ClearVertex();
 		}
 
 		/** DrawRect
@@ -343,19 +325,19 @@ namespace NCommon
 
 					//コンスタントバッファ。
 					DrawRect_VS_ConstantBuffer_B0 t_vs_constantbuffer_b0;
-					DrawRect_PS_ConstantBuffer_B0 t_ps_constantbuffer_b0;
+					DrawRect_PS_ConstantBuffer_B1 t_ps_constantbuffer_b1;
 					{
 						t_vs_constantbuffer_b0.view_projection = t_view_projection.Make_Transpose();
-						t_ps_constantbuffer_b0.flag1 = 0x00000000;
+						t_ps_constantbuffer_b1.flag1 = 0x00000000;
 					}
 
 					//コンスタントバッファーの内容更新。
 					this->d3d11->Render_UpdateSubresource(this->vs_constantbuffer_b0_id,&t_vs_constantbuffer_b0);
-					this->d3d11->Render_UpdateSubresource(this->ps_constantbuffer_b0_id,&t_ps_constantbuffer_b0);
+					this->d3d11->Render_UpdateSubresource(this->ps_constantbuffer_b1_id,&t_ps_constantbuffer_b1);
 
 					//コンスタントバッファーをシェーダーに設定。
 					this->d3d11->Render_VSSetConstantBuffers(this->vs_constantbuffer_b0_id);
-					this->d3d11->Render_PSSetConstantBuffers(this->ps_constantbuffer_b0_id);
+					this->d3d11->Render_PSSetConstantBuffers(this->ps_constantbuffer_b1_id);
 
 					//ラスタライザー。
 					this->d3d11->Render_SetRasterizerState(this->rasterizerstate_cull_none_id);

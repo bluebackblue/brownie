@@ -26,7 +26,7 @@ Texture2D tex_diffuse : register(t0);
 
 /** PS_ConstantBuffer_B1
 */
-cbuffer PS_ConstantBuffer_B1 : register(b0)
+cbuffer PS_ConstantBuffer_B1 : register(b1)
 {
 	uint flag1;
 	uint flag2;
@@ -53,7 +53,7 @@ float4 PS(VS_IN a_vs_in) : SV_Target
 	float4 t_color = a_vs_in.in_color;
 
 	if(flag1 & 0x00000001){
-		//texture
+		//use texture
 		t_color *= tex_diffuse.Sample(DiffuseSampler,a_vs_in.in_uv);
 	}
 

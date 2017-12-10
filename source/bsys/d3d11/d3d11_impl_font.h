@@ -203,7 +203,7 @@ namespace NBsys{namespace ND3d11
 								}
 							}
 
-							#if !defined(ROM_MASTER)
+							#if defined(ROM_DEEPDEBUG)
 							{
 								wchar t_wchar[2] = {t_code,nullwchar};
 								TAGLOG("UpdateFontTexture",L"%s",t_wchar);
