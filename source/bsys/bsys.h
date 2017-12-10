@@ -98,7 +98,7 @@
 
 /** include
 */
-#if(BSYS_DEBUGMENU_ENABLE)
-#include "./debugmenu/debugmenu.h"
+#if(BSYS_WINDOWMENU_ENABLE)
+#include "./windowmenu/windowmenu.h"
 #endif
 

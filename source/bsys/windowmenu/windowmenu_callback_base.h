@@ -19,36 +19,36 @@
 #include "../color/color.h"
 
 
-/** NBsys::NDebugMenu
+/** NBsys::NWindowMenu
 */
-#if(BSYS_DEBUGMENU_ENABLE)
-namespace NBsys{namespace NDebugMenu
+#if(BSYS_WINDOWMENU_ENABLE)
+namespace NBsys{namespace NWindowMenu
 {
-	/** DebugMenu_Callback_Base
+	/** WindowMenu_Callback_Base
 	*/
-	class DebugMenu_Callback_Base
+	class WindowMenu_Callback_Base
 	{
 	public:
 		/** constructor
 		*/
-		DebugMenu_Callback_Base()
+		WindowMenu_Callback_Base()
 		{
 		}
 
 		/** destructor
 		*/
-		virtual ~DebugMenu_Callback_Base()
+		virtual ~WindowMenu_Callback_Base()
 		{
 		}
 
 	public:
 		/** DrawFontProcType
 		*/
-		virtual void DrawFont_Callback(const STLWString& a_string,f32 a_font_size,f32 a_x,f32 a_y,s32 a_z,const NBsys::NColor::Color_F& a_color) = 0;
+		virtual void DrawFont_Callback(s32 a_z,f32 a_x,f32 a_y,f32 a_size,s32 a_texture_index,const NBsys::NColor::Color_F& a_color,const STLWString& a_string) = 0;
 
 		/** DrawRectProcType
 		*/
-		virtual void DrawRect_Callback(f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_z,s32 a_texture_id,const NBsys::NColor::Color_F& a_color) = 0;
+		virtual void DrawRect_Callback(s32 a_z,f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_texture_id,const NBsys::NColor::Color_F& a_color) = 0;
 
 		/** GetMouseProcType
 		*/

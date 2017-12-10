@@ -19,13 +19,13 @@
 #include "../color/color.h"
 
 
-/** NBsys::NDebugMenu
+/** NBsys::NWindowMenu
 */
-namespace NBsys{namespace NDebugMenu
+namespace NBsys{namespace NWindowMenu
 {
-	/** DebugMenu_Window_Base
+	/** WindowMenu_Window_Base
 	*/
-	class DebugMenu_Window_Base
+	class WindowMenu_Window_Base
 	{
 	public:
 		/** Mode
@@ -48,11 +48,11 @@ namespace NBsys{namespace NDebugMenu
 	public:
 		/** 自分。
 		*/
-		DebugMenu_Window_Base* me;
+		WindowMenu_Window_Base* me;
 
 		/** 親。
 		*/
-		DebugMenu_Window_Base* parent;
+		WindowMenu_Window_Base* parent;
 
 	public:
 		/** モード。
@@ -61,7 +61,7 @@ namespace NBsys{namespace NDebugMenu
 
 		/** child_list
 		*/
-		STLVector<sharedptr<DebugMenu_Window_Base>>::Type child_list;
+		STLVector<sharedptr<WindowMenu_Window_Base>>::Type child_list;
 
 		/** [設定値]自分の位置。
 		*/
@@ -75,7 +75,7 @@ namespace NBsys{namespace NDebugMenu
 
 		/** 描画優先度。
 		*/
-		f32 z;
+		s32 z;
 
 		/** [計算結果]自分の位置。
 		*/
@@ -95,15 +95,15 @@ namespace NBsys{namespace NDebugMenu
 	public:
 		/** constructor
 		*/
-		DebugMenu_Window_Base();
+		WindowMenu_Window_Base();
 
 		/** destructor
 		*/
-		virtual ~DebugMenu_Window_Base();
+		virtual ~WindowMenu_Window_Base();
 
 		/** Initialize
 		*/
-		void Initialize(Mode::Id a_mode,f32 a_offset_x,f32 a_offset_y,f32 a_width,f32 a_height,f32 a_z);
+		void Initialize(Mode::Id a_mode,f32 a_offset_x,f32 a_offset_y,f32 a_width,f32 a_height,s32 a_z);
 
 		/** CalcWidth
 		*/
@@ -131,7 +131,7 @@ namespace NBsys{namespace NDebugMenu
 
 		/** AddChild
 		*/
-		void AddChild(const sharedptr<DebugMenu_Window_Base>& a_window);
+		void AddChild(const sharedptr<WindowMenu_Window_Base>& a_window);
 
 		/** 表示位置計算。
 		*/

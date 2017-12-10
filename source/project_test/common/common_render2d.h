@@ -52,17 +52,17 @@ namespace NCommon
 			f32 w;
 			f32 h;
 
-			s32 texture_index;
+			s32 texture_id;
 			NBsys::NColor::Color_F color;
 
-			RectData(s32 a_z,f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_texture_index,const NBsys::NColor::Color_F& a_color)
+			RectData(s32 a_z,f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_texture_id,const NBsys::NColor::Color_F& a_color)
 				:
 				z(a_z),
 				x(a_x),
 				y(a_y),
 				w(a_w),
 				h(a_h),
-				texture_index(a_texture_index),
+				texture_id(a_texture_id),
 				color(a_color)
 			{
 			}
@@ -116,6 +116,7 @@ namespace NCommon
 			f32 size;
 
 			s32 texture_index;
+			s32 texture_id;
 			NBsys::NColor::Color_F color;
 
 			STLWString string;
@@ -136,7 +137,7 @@ namespace NCommon
 			this->data.y = a_data.y;
 			this->data.w = a_data.w;
 			this->data.h = a_data.h;
-			this->data.texture_index = a_data.texture_index;
+			this->data.texture_id = a_data.texture_id;
 			this->data.color = a_data.color;
 		}
 
@@ -222,9 +223,9 @@ namespace NCommon
 
 		/** DrawRect
 		*/
-		void DrawRect(s32 a_z,f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_texture_index,const NBsys::NColor::Color_F& a_color)
+		void DrawRect(s32 a_z,f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_texture_id,const NBsys::NColor::Color_F& a_color)
 		{
-			Render2D_Item t_item(Render2D_Item::RectData(a_z,a_x,a_y,a_w,a_h,a_texture_index,a_color));
+			Render2D_Item t_item(Render2D_Item::RectData(a_z,a_x,a_y,a_w,a_h,a_texture_id,a_color));
 			this->list.push_back(t_item);
 		}
 

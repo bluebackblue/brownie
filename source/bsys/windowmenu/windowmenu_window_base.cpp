@@ -21,21 +21,21 @@
 
 /** include
 */
-#include "./debugmenu.h"
+#include "./windowmenu.h"
 
 
 /** include
 */
-#include "./debugmenu_window_base.h"
+#include "./windowmenu_window_base.h"
 
 
-/** NBsys::NDebugMenu
+/** NBsys::NWindowMenu
 */
-namespace NBsys{namespace NDebugMenu
+namespace NBsys{namespace NWindowMenu
 {
 	/** constructor
 	*/
-	DebugMenu_Window_Base::DebugMenu_Window_Base()
+	WindowMenu_Window_Base::WindowMenu_Window_Base()
 		:
 		me(nullptr),
 		parent(nullptr),
@@ -47,7 +47,7 @@ namespace NBsys{namespace NDebugMenu
 		width(-1.0f),
 		height(-1.0f),
 
-		z(0.0f),
+		z(0),
 
 		calc_x(-1.0f),
 		calc_y(-1.0f),
@@ -60,13 +60,13 @@ namespace NBsys{namespace NDebugMenu
 
 	/** destructor
 	*/
-	DebugMenu_Window_Base::~DebugMenu_Window_Base()
+	WindowMenu_Window_Base::~WindowMenu_Window_Base()
 	{
 	}
 
 	/** SetBase
 	*/
-	void DebugMenu_Window_Base::Initialize(Mode::Id a_mode,f32 a_offset_x,f32 a_offset_y,f32 a_width,f32 a_height,f32 a_z)
+	void WindowMenu_Window_Base::Initialize(Mode::Id a_mode,f32 a_offset_x,f32 a_offset_y,f32 a_width,f32 a_height,s32 a_z)
 	{
 		this->me = this;
 		this->parent = nullptr;
@@ -83,7 +83,7 @@ namespace NBsys{namespace NDebugMenu
 
 	/** CalcWidth
 	*/
-	f32 DebugMenu_Window_Base::CalcWidth()
+	f32 WindowMenu_Window_Base::CalcWidth()
 	{
 		f32 t_width = this->CalcWidthFromParent();
 
@@ -96,7 +96,7 @@ namespace NBsys{namespace NDebugMenu
 	}
 	/** CalcHeight
 	*/
-	f32 DebugMenu_Window_Base::CalcHeight()
+	f32 WindowMenu_Window_Base::CalcHeight()
 	{
 		f32 t_height = this->CalcHeightFromParent();
 
@@ -110,7 +110,7 @@ namespace NBsys{namespace NDebugMenu
 
 	/** CalcWidthFromParent
 	*/
-	f32 DebugMenu_Window_Base::CalcWidthFromParent()
+	f32 WindowMenu_Window_Base::CalcWidthFromParent()
 	{
 		//自分のサイズを使用。
 		f32 t_width = this->width;
@@ -126,7 +126,7 @@ namespace NBsys{namespace NDebugMenu
 	}
 	/** CalcHeightFromParent
 	*/
-	f32 DebugMenu_Window_Base::CalcHeightFromParent()
+	f32 WindowMenu_Window_Base::CalcHeightFromParent()
 	{
 		//自分のサイズを使用。
 		f32 t_height = this->height;
@@ -143,7 +143,7 @@ namespace NBsys{namespace NDebugMenu
 
 	/** CalcWidthFromChild
 	*/
-	f32 DebugMenu_Window_Base::CalcWidthFromChild()
+	f32 WindowMenu_Window_Base::CalcWidthFromChild()
 	{
 		//自分のサイズを使用。
 		f32 t_width = this->width;
@@ -153,13 +153,13 @@ namespace NBsys{namespace NDebugMenu
 
 			t_width = 0.0f;
 
-			STLVector<sharedptr<DebugMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
+			STLVector<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
 
 			switch(this->mode){
 			case Mode::Free:
 				{
 					//自由配置。
-					for(STLVector<sharedptr<DebugMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
+					for(STLVector<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 						f32 t_width_temp = (*t_it)->CalcWidthFromChild();
 						if(t_width_temp > t_width){
 							t_width = t_width_temp;
@@ -169,7 +169,7 @@ namespace NBsys{namespace NDebugMenu
 			case Mode::Vertical:
 				{
 					//縦。
-					for(STLVector<sharedptr<DebugMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
+					for(STLVector<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 						f32 t_width_temp = (*t_it)->CalcWidthFromChild();
 						if(t_width_temp > t_width){
 							t_width = t_width_temp;
@@ -179,7 +179,7 @@ namespace NBsys{namespace NDebugMenu
 			case Mode::Horizontal:
 				{
 					//横。
-					for(STLVector<sharedptr<DebugMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
+					for(STLVector<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 						t_width += (*t_it)->CalcWidthFromChild();
 					}
 				}break;
@@ -191,7 +191,7 @@ namespace NBsys{namespace NDebugMenu
 
 	/** CalcHeightFromChild
 	*/
-	f32 DebugMenu_Window_Base::CalcHeightFromChild()
+	f32 WindowMenu_Window_Base::CalcHeightFromChild()
 	{
 		//自分のサイズを使用。
 		f32 t_height = this->height;
@@ -201,13 +201,13 @@ namespace NBsys{namespace NDebugMenu
 
 			t_height = 0.0f;
 
-			STLVector<sharedptr<DebugMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
+			STLVector<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
 
 			switch(this->mode){
 			case Mode::Free:
 				{
 					//自由配置。
-					for(STLVector<sharedptr<DebugMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
+					for(STLVector<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 						f32 t_height_temp = (*t_it)->CalcHeightFromChild();
 						if(t_height_temp > t_height){
 							t_height = t_height_temp;
@@ -217,14 +217,14 @@ namespace NBsys{namespace NDebugMenu
 			case Mode::Vertical:
 				{
 					//縦。
-					for(STLVector<sharedptr<DebugMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
+					for(STLVector<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 						t_height += (*t_it)->CalcHeightFromChild();
 					}
 				}break;
 			case Mode::Horizontal:
 				{
 					//横。
-					for(STLVector<sharedptr<DebugMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
+					for(STLVector<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 						f32 t_height_temp = (*t_it)->CalcHeightFromChild();
 						if(t_height_temp > t_height){
 							t_height = t_height_temp;
@@ -239,7 +239,7 @@ namespace NBsys{namespace NDebugMenu
 
 	/** AddChild
 	*/
-	void DebugMenu_Window_Base::AddChild(const sharedptr<DebugMenu_Window_Base>& a_window)
+	void WindowMenu_Window_Base::AddChild(const sharedptr<WindowMenu_Window_Base>& a_window)
 	{
 		this->child_list.push_back(a_window);
 		this->child_list[this->child_list.size()-1]->parent = this->me;
@@ -248,7 +248,7 @@ namespace NBsys{namespace NDebugMenu
 
 	/** 表示位置計算。
 	*/
-	void DebugMenu_Window_Base::CalcRect(f32 a_parent_offset_x,f32 a_parent_offset_y)
+	void WindowMenu_Window_Base::CalcRect(f32 a_parent_offset_x,f32 a_parent_offset_y)
 	{
 		//[計算結果]親の位置。
 		this->calc_parent_x = a_parent_offset_x;
@@ -262,13 +262,13 @@ namespace NBsys{namespace NDebugMenu
 		this->calc_w = this->CalcWidth();
 		this->calc_h = this->CalcHeight();
 
-		STLVector<sharedptr<DebugMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
+		STLVector<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
 
 		switch(this->mode){
 		case Mode::Free:
 			{
 				//自由配置。
-				for(STLVector<sharedptr<DebugMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
+				for(STLVector<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 					(*t_it)->CalcRect(this->calc_x,this->calc_y);
 				}
 			}break;
@@ -276,7 +276,7 @@ namespace NBsys{namespace NDebugMenu
 			{
 				//縦。
 				f32 t_y = this->calc_y;
-				for(STLVector<sharedptr<DebugMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
+				for(STLVector<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 					(*t_it)->CalcRect(this->calc_x,t_y);
 					t_y += (*t_it)->calc_h;
 				}
@@ -285,7 +285,7 @@ namespace NBsys{namespace NDebugMenu
 			{
 				//横。
 				f32 t_x = this->calc_x;
-				for(STLVector<sharedptr<DebugMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
+				for(STLVector<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 					(*t_it)->CalcRect(t_x,this->calc_y);
 					t_x += (*t_it)->calc_w;
 				}
@@ -295,34 +295,34 @@ namespace NBsys{namespace NDebugMenu
 
 	/** 更新。
 	*/
-	void DebugMenu_Window_Base::Update()
+	void WindowMenu_Window_Base::Update()
 	{
-		STLVector<sharedptr<DebugMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
-		for(STLVector<sharedptr<DebugMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
+		STLVector<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
+		for(STLVector<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 			(*t_it)->Update();
 		}
 	}
 
 	/** 描画。
 	*/
-	void DebugMenu_Window_Base::Draw()
+	void WindowMenu_Window_Base::Draw()
 	{
-		STLVector<sharedptr<DebugMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
-		for(STLVector<sharedptr<DebugMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
+		STLVector<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
+		for(STLVector<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 			(*t_it)->Draw();
 		}
 	}
 
 	/** 親の削除リクエスト。取得。
 	*/
-	bool DebugMenu_Window_Base::GetDeleteRequest()
+	bool WindowMenu_Window_Base::GetDeleteRequest()
 	{
 		return false;
 	}
 
 	/** コールバック。親が接続された直後に呼び出される。
 	*/
-	void DebugMenu_Window_Base::CallBack_SetParent()
+	void WindowMenu_Window_Base::CallBack_SetParent()
 	{
 	}
 }}

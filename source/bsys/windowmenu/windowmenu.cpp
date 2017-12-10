@@ -21,21 +21,21 @@
 
 /** include
 */
-#include "./debugmenu.h"
+#include "./windowmenu.h"
 
 
-/** NBsys::NDebugMenu
+/** NBsys::NWindowMenu
 */
-#if(BSYS_DEBUGMENU_ENABLE)
-namespace NBsys{namespace NDebugMenu
+#if(BSYS_WINDOWMENU_ENABLE)
+namespace NBsys{namespace NWindowMenu
 {
-	/** s_debugmenu
+	/** s_windowmenu
 	*/
-	sharedptr<DebugMenu> s_debugmenu;
+	sharedptr<WindowMenu> s_windowmenu;
 
 	/** constructor
 	*/
-	DebugMenu::DebugMenu(sharedptr<DebugMenu_Callback_Base>& a_callback)
+	WindowMenu::WindowMenu(sharedptr<WindowMenu_Callback_Base>& a_callback)
 		:
 		callback(a_callback)
 	{
@@ -43,17 +43,17 @@ namespace NBsys{namespace NDebugMenu
 
 	/** destructor
 	*/
-	DebugMenu::~DebugMenu()
+	WindowMenu::~WindowMenu()
 	{
 	}
 
 	/** Update
 	*/
-	void DebugMenu::Update()
+	void WindowMenu::Update()
 	{
 		//削除リクエスト。
 		{
-			STLList<sharedptr<DebugMenu_Window_Base>>::iterator t_it = this->list.begin();
+			STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->list.begin();
 			while(t_it != this->list.end()){
 				if((*t_it)->GetDeleteRequest() == true){
 					t_it = this->list.erase(t_it);
@@ -64,18 +64,18 @@ namespace NBsys{namespace NDebugMenu
 		}
 
 		{
-			STLList<sharedptr<DebugMenu_Window_Base>>::iterator t_it_end = this->list.end();
+			STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->list.end();
 
 			//表示位置計算。
 			{
-				for(STLList<sharedptr<DebugMenu_Window_Base>>::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
+				for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
 					(*t_it)->CalcRect(0.0f,0.0f);
 				}
 			}
 
 			//更新。
 			{
-				for(STLList<sharedptr<DebugMenu_Window_Base>>::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
+				for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
 					(*t_it)->Update();
 				}
 			}
@@ -84,41 +84,41 @@ namespace NBsys{namespace NDebugMenu
 
 	/** Draw
 	*/
-	void DebugMenu::Draw()
+	void WindowMenu::Draw()
 	{
-		STLList<sharedptr<DebugMenu_Window_Base>>::iterator t_it_end = this->list.end();
-		for(STLList<sharedptr<DebugMenu_Window_Base>>::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
+		STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->list.end();
+		for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
 			(*t_it)->Draw();
 		}
 	}
 
 	/** Add
 	*/
-	void DebugMenu::Add(const sharedptr<DebugMenu_Window_Base>& a_window)
+	void WindowMenu::Add(const sharedptr<WindowMenu_Window_Base>& a_window)
 	{
 		this->list.push_back(a_window);
 	}
 
 	/** システムの開始。
 	*/
-	void StartSystem(sharedptr<DebugMenu_Callback_Base>& a_callback)
+	void StartSystem(sharedptr<WindowMenu_Callback_Base>& a_callback)
 	{
-		s_debugmenu.reset(new DebugMenu(a_callback));
+		s_windowmenu.reset(new WindowMenu(a_callback));
 	}
 
 	/** システムの終了。
 	*/
 	void EndSystem()
 	{
-		ASSERT(s_debugmenu.use_count() == 1);
-		s_debugmenu.reset();
+		ASSERT(s_windowmenu.use_count() == 1);
+		s_windowmenu.reset();
 	}
 
 	/** システムのインスタンス取得。
 	*/
-	sharedptr<DebugMenu>& GetSystemInstance()
+	sharedptr<WindowMenu>& GetSystemInstance()
 	{
-		return s_debugmenu;
+		return s_windowmenu;
 	}
 }}
 #endif

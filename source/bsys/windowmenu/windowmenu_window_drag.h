@@ -16,17 +16,17 @@
 
 /** include
 */
-#include "./debugmenu.h"
-#include "./debugmenu_window_base.h"
+#include "./windowmenu.h"
+#include "./windowmenu_window_base.h"
 
 
-/** NBsys::NDebugMenu
+/** NBsys::NWindowMenu
 */
-namespace NBsys{namespace NDebugMenu
+namespace NBsys{namespace NWindowMenu
 {
 	/** ドラッグ。
 	*/
-	class DebugMenu_Window_Drag : public DebugMenu_Window_Base
+	class WindowMenu_Window_Drag : public WindowMenu_Window_Base
 	{
 	public:
 		/** drag
@@ -46,11 +46,11 @@ namespace NBsys{namespace NDebugMenu
 	public:
 		/** constructor
 		*/
-		DebugMenu_Window_Drag(DebugMenu_Window_Base::Mode::Id a_mode,f32 a_x,f32 a_y,f32 a_w,f32 a_h,f32 a_z);
+		WindowMenu_Window_Drag(WindowMenu_Window_Base::Mode::Id a_mode,f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_z);
 
 		/** destructor
 		*/
-		virtual ~DebugMenu_Window_Drag();
+		virtual ~WindowMenu_Window_Drag();
 
 		/** 更新。
 		*/

@@ -32,7 +32,7 @@
 #include "../common/common_drawrect.h"
 #include "../common/common_drawfont.h"
 #include "../common/common_pad_device.h"
-#include "../common/common_debugmenu_callback.h"
+#include "../common/common_windowmenu_callback.h"
 
 
 /** s_width
@@ -65,9 +65,9 @@ sharedptr<NCommon::Render2D> s_render2d;
 sharedptr<NBsys::NPad::Pad_Device_Base> s_pad_device;
 
 
-/** s_debugmenu_callback
+/** s_windowmenu_callback
 */
-sharedptr<NBsys::NDebugMenu::DebugMenu_Callback_Base> s_debugmenu_callback;
+sharedptr<NBsys::NWindowMenu::WindowMenu_Callback_Base> s_windowmenu_callback;
 
 
 /** ライン描画。
@@ -153,7 +153,7 @@ public:
 		NBsys::NPad::Update(true);
 
 		//デバッグメニュー。
-		NBsys::NDebugMenu::GetSystemInstance()->Update();
+		NBsys::NWindowMenu::GetSystemInstance()->Update();
 
 		switch(this->step){
 		case 0:
@@ -211,7 +211,7 @@ public:
 
 				//デバッグウィンドウ。
 				s_test12_debugwindow.reset(new Test12_DebugWindow(100.0f,100.0f));
-				NBsys::NDebugMenu::GetSystemInstance()->Add(s_test12_debugwindow);
+				NBsys::NWindowMenu::GetSystemInstance()->Add(s_test12_debugwindow);
 			}break;
 		case 2:
 			{
@@ -314,8 +314,8 @@ public:
 
 				//デバッグメニュー。
 				{
-					NBsys::NDebugMenu::GetSystemInstance()->Update();
-					NBsys::NDebugMenu::GetSystemInstance()->Draw();
+					NBsys::NWindowMenu::GetSystemInstance()->Update();
+					NBsys::NWindowMenu::GetSystemInstance()->Draw();
 
 					//描画。
 					s_render2d->Render(t_view * t_projection);
@@ -368,8 +368,8 @@ void Test_Main()
 	s_drawfont_material.reset(new NCommon::DrawFont_Material(s_d3d11));
 
 	//デバッグメニュー。
-	s_debugmenu_callback.reset(new NCommon::DebugMenu_Callback(s_render2d));
-	NBsys::NDebugMenu::StartSystem(s_debugmenu_callback);
+	s_windowmenu_callback.reset(new NCommon::WindowMenu_Callback(s_render2d));
+	NBsys::NWindowMenu::StartSystem(s_windowmenu_callback);
 
 	//パフォーマンスカウンター。
 	u64 t_pcounter = 0ULL;
@@ -413,7 +413,7 @@ void Test_Main()
 
 	s_app.reset();
 
-	NBsys::NDebugMenu::EndSystem();
+	NBsys::NWindowMenu::EndSystem();
 
 	NBsys::NPad::EndSystem();
 

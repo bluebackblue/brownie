@@ -20,7 +20,7 @@
 
 /** Test12_DebugWindow
 */
-class Test12_DebugWindow : public NBsys::NDebugMenu::DebugMenu_Window_Base
+class Test12_DebugWindow : public NBsys::NWindowMenu::WindowMenu_Window_Base
 {
 public:
 	/** constructor

@@ -27,40 +27,41 @@
 */
 Test12_DebugWindow::Test12_DebugWindow(f32 a_offset_x,f32 a_offset_y)
 	:
-	NBsys::NDebugMenu::DebugMenu_Window_Base()
+	NBsys::NWindowMenu::WindowMenu_Window_Base()
 {
 	this->Initialize(
-		NBsys::NDebugMenu::DebugMenu_Window_Base::Mode::Vertical,
+		NBsys::NWindowMenu::WindowMenu_Window_Base::Mode::Vertical,
 		a_offset_x,
 		a_offset_y,
 		300.0f,
 		-1.0f,
-		0.0f
+		0
 	);
 
 	//ドラッグ。
 	{
-		sharedptr<NBsys::NDebugMenu::DebugMenu_Window_Base> t_drag(new NBsys::NDebugMenu::DebugMenu_Window_Drag(
-			NBsys::NDebugMenu::DebugMenu_Window_Base::Mode::Vertical,
+		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_drag(new NBsys::NWindowMenu::WindowMenu_Window_Drag(
+			NBsys::NWindowMenu::WindowMenu_Window_Base::Mode::Vertical,
 			0.0f,
 			0.0f,
 			-1.0f,
 			50.0f,
-			0.0f
+			0
 		));
 
 		this->AddChild(t_drag);
 
 		//下地。
 		{
-			sharedptr<NBsys::NDebugMenu::DebugMenu_Window_Base> t_plate(new NBsys::NDebugMenu::DebugMenu_Window_Plate(
-				NBsys::NDebugMenu::DebugMenu_Window_Base::Mode::Vertical,
+			sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_plate(new NBsys::NWindowMenu::WindowMenu_Window_Plate(
+				NBsys::NWindowMenu::WindowMenu_Window_Base::Mode::Vertical,
 				0.0f,
 				0.0f,
 				-1.0f,
 				-1.0f,
 				NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f),
-				0.0f
+				-1,
+				0
 			));
 
 			t_drag->AddChild(t_plate);
@@ -69,14 +70,15 @@ Test12_DebugWindow::Test12_DebugWindow(f32 a_offset_x,f32 a_offset_y)
 
 	//下地。
 	{
-		sharedptr<NBsys::NDebugMenu::DebugMenu_Window_Base> t_plate(new NBsys::NDebugMenu::DebugMenu_Window_Plate(
-			NBsys::NDebugMenu::DebugMenu_Window_Base::Mode::Vertical,
+		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_plate(new NBsys::NWindowMenu::WindowMenu_Window_Plate(
+			NBsys::NWindowMenu::WindowMenu_Window_Base::Mode::Vertical,
 			0.0f,
 			0.0f,
 			-1.0f,
 			300.0f,
 			NBsys::NColor::Color_F(0.5f,0.5f,0.5f,0.5f),
-			0.0f
+			-1,
+			0
 		));
 
 		this->AddChild(t_plate);

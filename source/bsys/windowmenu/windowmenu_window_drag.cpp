@@ -21,17 +21,17 @@
 
 /** include
 */
-#include "./debugmenu.h"
-#include "./debugmenu_window_drag.h"
+#include "./windowmenu.h"
+#include "./windowmenu_window_drag.h"
 
 
-/** NBsys::NDebugMenu
+/** NBsys::NWindowMenu
 */
-namespace NBsys{namespace NDebugMenu
+namespace NBsys{namespace NWindowMenu
 {
 	/** constructor
 	*/
-	DebugMenu_Window_Drag::DebugMenu_Window_Drag(DebugMenu_Window_Base::Mode::Id a_mode,f32 a_x,f32 a_y,f32 a_w,f32 a_h,f32 a_z)
+	WindowMenu_Window_Drag::WindowMenu_Window_Drag(WindowMenu_Window_Base::Mode::Id a_mode,f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_z)
 		:
 		drag_flag(false),
 		start_x(0.0f),
@@ -44,13 +44,13 @@ namespace NBsys{namespace NDebugMenu
 
 	/** destructor
 	*/
-	DebugMenu_Window_Drag::~DebugMenu_Window_Drag()
+	WindowMenu_Window_Drag::~WindowMenu_Window_Drag()
 	{
 	}
 
 	/** Update
 	*/
-	void DebugMenu_Window_Drag::Update()
+	void WindowMenu_Window_Drag::Update()
 	{
 		f32 t_x = 0.0f;
 		f32 t_y = 0.0f;

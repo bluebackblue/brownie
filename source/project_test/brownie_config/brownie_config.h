@@ -453,8 +453,8 @@
 	デバッグメニュー。
 
 */
-#if !defined(BSYS_DEBUGMENU_ENABLE)
-	#define BSYS_DEBUGMENU_ENABLE							(0)
+#if !defined(BSYS_WINDOWMENU_ENABLE)
+	#define BSYS_WINDOWMENU_ENABLE							(0)
 #endif
 
 

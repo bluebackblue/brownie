@@ -26,42 +26,43 @@
 
 /** include
 */
-#include "./debugmenu.h"
-#include "./debugmenu_window_plate.h"
+#include "./windowmenu.h"
+#include "./windowmenu_window_plate.h"
 
 
-/** NBsys::NDebugMenu
+/** NBsys::NWindowMenu
 */
-namespace NBsys{namespace NDebugMenu
+namespace NBsys{namespace NWindowMenu
 {
 	/** constructor
 	*/
-	DebugMenu_Window_Plate::DebugMenu_Window_Plate(DebugMenu_Window_Base::Mode::Id a_mode,f32 a_x,f32 a_y,f32 a_w,f32 a_h,const NBsys::NColor::Color_F& a_color,f32 a_z)
+	WindowMenu_Window_Plate::WindowMenu_Window_Plate(WindowMenu_Window_Base::Mode::Id a_mode,f32 a_x,f32 a_y,f32 a_w,f32 a_h,const NBsys::NColor::Color_F& a_color,s32 a_texture_id,s32 a_z)
 		:
-		color(a_color)
+		color(a_color),
+		texture_id(a_texture_id)
 	{
 		this->Initialize(a_mode,a_x,a_y,a_w,a_h,a_z);
 	}
 
 	/** destructor
 	*/
-	DebugMenu_Window_Plate::~DebugMenu_Window_Plate()
+	WindowMenu_Window_Plate::~WindowMenu_Window_Plate()
 	{
 	}
 
 	/** Draw
 	*/
-	void DebugMenu_Window_Plate::Draw()
+	void WindowMenu_Window_Plate::Draw()
 	{
 		//自分の描画。
 		{
 			if((this->calc_w >= 0.0f)&&(this->calc_h >= 0.0f)){
-				GetSystemInstance()->callback->DrawRect_Callback(this->calc_x,this->calc_y,this->calc_w,this->calc_h,0,-1,this->color);
+				GetSystemInstance()->callback->DrawRect_Callback(this->z,this->calc_x,this->calc_y,this->calc_w,this->calc_h,this->texture_id,this->color);
 			}
 		}
 
 		//子の描画。
-		DebugMenu_Window_Base::Draw();
+		WindowMenu_Window_Base::Draw();
 	}
 }}
 

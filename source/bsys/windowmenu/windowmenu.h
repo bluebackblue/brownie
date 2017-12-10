@@ -21,38 +21,38 @@
 
 /** include
 */
-#include "./debugmenu_callback_base.h"
-#include "./debugmenu_window_base.h"
-#include "./debugmenu_window_plate.h"
-#include "./debugmenu_window_drag.h"
+#include "./windowmenu_callback_base.h"
+#include "./windowmenu_window_base.h"
+#include "./windowmenu_window_plate.h"
+#include "./windowmenu_window_drag.h"
 
 
-/** NBsys::NDebugMenu
+/** NBsys::NWindowMenu
 */
-#if(BSYS_DEBUGMENU_ENABLE)
-namespace NBsys{namespace NDebugMenu
+#if(BSYS_WINDOWMENU_ENABLE)
+namespace NBsys{namespace NWindowMenu
 {
-	/** DebugMenu
+	/** WindowMenu
 	*/
-	class DebugMenu
+	class WindowMenu
 	{
 	public:
 		/** callback
 		*/
-		sharedptr<DebugMenu_Callback_Base> callback;
+		sharedptr<WindowMenu_Callback_Base> callback;
 
 		/** list
 		*/
-		STLList<sharedptr<DebugMenu_Window_Base>>::Type list;
+		STLList<sharedptr<WindowMenu_Window_Base>>::Type list;
 
 	public:
 		/** constructor
 		*/
-		DebugMenu(sharedptr<DebugMenu_Callback_Base>& a_callback);
+		WindowMenu(sharedptr<WindowMenu_Callback_Base>& a_callback);
 
 		/** destructor
 		*/
-		nonvirtual ~DebugMenu();
+		nonvirtual ~WindowMenu();
 
 	public:
 		/** Update
@@ -66,13 +66,13 @@ namespace NBsys{namespace NDebugMenu
 	public:
 		/** 追加。
 		*/
-		void Add(const sharedptr<DebugMenu_Window_Base>& a_window);
+		void Add(const sharedptr<WindowMenu_Window_Base>& a_window);
 
 	};
 
 	/** システムの開始。
 	*/
-	void StartSystem(sharedptr<DebugMenu_Callback_Base>& a_callback);
+	void StartSystem(sharedptr<WindowMenu_Callback_Base>& a_callback);
 
 	/** システムの終了。
 	*/
@@ -80,7 +80,7 @@ namespace NBsys{namespace NDebugMenu
 
 	/** システムのインスタンス取得。
 	*/
-	sharedptr<DebugMenu>& GetSystemInstance();
+	sharedptr<WindowMenu>& GetSystemInstance();
 }}
 #endif
 

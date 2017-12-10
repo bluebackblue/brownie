@@ -16,31 +16,31 @@
 
 /** include
 */
-#include "./common_debugmenu_callback.h"
+#include "./common_windowmenu_callback.h"
 
 
 /** NCommon
 */
-#if(BSYS_DEBUGMENU_ENABLE)
+#if(BSYS_WINDOWMENU_ENABLE)
 namespace NCommon
 {
 	/** DrawFontProcType
 	*/
-	void DebugMenu_Callback::DrawFont_Callback(const STLWString& a_string,f32 a_font_size,f32 a_x,f32 a_y,s32 a_z,const NBsys::NColor::Color_F& a_color)
+	void WindowMenu_Callback::DrawFont_Callback(s32 a_z,f32 a_x,f32 a_y,f32 a_size,s32 a_texture_index,const NBsys::NColor::Color_F& a_color,const STLWString& a_string)
 	{
-		//this->render2d->DrawFont16(a_string,a_font_size,a_x,a_y,a_z,a_color);
+		this->render2d->DrawFont(a_z,a_x,a_y,a_size,a_texture_index,a_color,a_string);
 	}
 
 	/** DrawRectProcType
 	*/
-	void DebugMenu_Callback::DrawRect_Callback(f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_z,s32 a_texture_id,const NBsys::NColor::Color_F& a_color)
+	void WindowMenu_Callback::DrawRect_Callback(s32 a_z,f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_texture_id,const NBsys::NColor::Color_F& a_color)
 	{
 		this->render2d->DrawRect(a_z,a_x,a_y,a_w,a_h,a_texture_id,a_color);
 	}
 
 	/** GetMouseProcType
 	*/
-	void DebugMenu_Callback::GetMouse_Callback(f32& a_x,f32& a_y,bool& a_l_on,bool& a_r_on,bool& a_l_down,bool& a_r_down,bool& a_l_up,bool& a_r_up)
+	void WindowMenu_Callback::GetMouse_Callback(f32& a_x,f32& a_y,bool& a_l_on,bool& a_r_on,bool& a_l_down,bool& a_r_down,bool& a_l_up,bool& a_r_up)
 	{
 		NBsys::NPad::Pad_Virtual* t_pad_virtual_ptr = NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1).get();
 

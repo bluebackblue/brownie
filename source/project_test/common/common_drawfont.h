@@ -258,7 +258,7 @@ namespace NCommon
 					this->vertex,
 					t_it->data.x,
 					t_it->data.y,
-					static_cast<f32>(t_it->data.y),
+					static_cast<f32>(t_it->data.z),
 					t_it->data.size,
 					t_it->data.color
 				);

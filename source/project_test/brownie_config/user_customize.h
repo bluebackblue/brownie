@@ -62,7 +62,7 @@
 	#define BSYS_D3D11_ENABLE								(1)
 	#define BSYS_FONT_ENABLE								(1)
 	#define BSYS_PAD_ENABLE									(1)
-	#define BSYS_DEBUGMENU_ENABLE							(1)
+	#define BSYS_WINDOWMENU_ENABLE							(1)
 
 #elif defined(DEF_TEST22)
 
