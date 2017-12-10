@@ -56,7 +56,7 @@ namespace NBsys{namespace NDebugMenu
 		//自分の描画。
 		{
 			if((this->calc_w >= 0.0f)&&(this->calc_h >= 0.0f)){
-				GetSystemInstance()->callback->DrawRect_Callback(this->calc_x,this->calc_y,this->calc_w,this->calc_h,0.0f,-1,this->color);
+				GetSystemInstance()->callback->DrawRect_Callback(this->calc_x,this->calc_y,this->calc_w,this->calc_h,0,-1,this->color);
 			}
 		}
 

@@ -27,6 +27,7 @@
 
 /** include
 */
+#include "../common/common_render2d.h"
 #include "../common/common_drawline.h"
 #include "../common/common_drawrect.h"
 #include "../common/common_drawfont.h"
@@ -54,6 +55,11 @@ static sharedptr<NBsys::NWindow::Window> s_window;
 static sharedptr<NBsys::ND3d11::D3d11> s_d3d11;
 
 
+/** render2d
+*/
+sharedptr<NCommon::Render2D> s_render2d;
+
+
 /** s_pad_device
 */
 sharedptr<NBsys::NPad::Pad_Device_Base> s_pad_device;
@@ -71,17 +77,18 @@ sharedptr<NCommon::DrawLine_Manager> s_drawline_manager;
 
 /** レクト描画。
 */
-sharedptr<NCommon::DrawRect_Manager> s_drawrect_manager;
+sharedptr<NCommon::Render2D_Material_Base> s_drawrect_material;
 
 
 /** フォント描画。
 */
-sharedptr<NCommon::DrawFont_Manager> s_drawfont_manager;
+sharedptr<NCommon::Render2D_Material_Base> s_drawfont_material;
 
 
 /** デバッグウィンドウ。
 */
 sharedptr<Test12_DebugWindow> s_test12_debugwindow;
+
 
 /** App
 */
@@ -158,14 +165,14 @@ public:
 				}
 
 				//レクト描画。
-				s_drawrect_manager->Initialize_Update();
-				if(s_drawrect_manager->IsBusy() == true){
+				s_drawrect_material->Initialize_Update();
+				if(s_drawrect_material->IsInitialized() == false){
 					break;
 				}
 
 				//フォント描画。
-				s_drawfont_manager->Initialize_Update();
-				if(s_drawfont_manager->IsBusy() == true){
+				s_drawfont_material->Initialize_Update();
+				if(s_drawfont_material->IsInitialized() == true){
 					break;
 				}
 
@@ -191,6 +198,10 @@ public:
 					this->camera_time = 0.0f;
 				}
 
+				//マテリアル設定。
+				s_render2d->SetMaterial(NCommon::Render2D_Item::Type::Rect,s_drawrect_material);
+				s_render2d->SetMaterial(NCommon::Render2D_Item::Type::Font,s_drawfont_material);
+
 				this->step++;
 			}break;
 		case 1:
@@ -213,12 +224,6 @@ public:
 				//ライン描画。
 				s_drawline_manager->Clear();
 
-				//レクト描画。
-				s_drawrect_manager->Clear();
-
-				//フォント描画。
-				s_drawfont_manager->Clear();
-
 				{
 					//マウス。
 					const NBsys::NPad::TouchValue& t_mouse_l = NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->GetTouchValue(NBsys::NPad::Pad_Virtual::TouchType::MOUSEL);
@@ -227,12 +232,13 @@ public:
 					if(t_mouse_l.flag){
 						char t_buffer[32];
 						STLWString t_string = VASTRING(t_buffer,sizeof(t_buffer),L"%d %d",static_cast<s32>(t_mouse_l.x),static_cast<s32>(t_mouse_l.y));
-						s_drawfont_manager->DrawFont16(t_string,16.0f,t_mouse_l.x+50,t_mouse_l.y+50,0.0f,NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f));
-						s_drawfont_manager->DrawFont16(t_string,16.0f,t_mouse_l.x-50,t_mouse_l.y-50,0.0f,NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f));
+						
+						s_render2d->DrawFont(0,t_mouse_l.x+50,t_mouse_l.y+50,16.0f,0,NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f),t_string);
+						s_render2d->DrawFont(0,t_mouse_l.x-50,t_mouse_l.y-50,16.0f,0,NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f),t_string);
 					}
 
-					s_drawfont_manager->DrawFont32(L"あいうえお",	32.0f,	100.0f,			100.0f,			0.0f,NBsys::NColor::Color_F(1.0f,0.0f,1.0f,1.0f));
-					s_drawfont_manager->DrawFont64(L"あいうえお",	64.0f,	s_width/2.0f,	s_height/2.0f,	0.0f,NBsys::NColor::Color_F(1.0f,1.0f,0.0f,1.0f));
+					s_render2d->DrawFont(0,100.0f,			100.0f,			32.0f,1,NBsys::NColor::Color_F(1.0f,0.0f,1.0f,1.0f),L"あいうえお");
+					s_render2d->DrawFont(0,s_width/2.0f,	s_height/2.0f,	64.0f,2,NBsys::NColor::Color_F(1.0f,1.0f,0.0f,1.0f),L"あいうえお");
 				}
 
 			}break;
@@ -302,20 +308,17 @@ public:
 				//レクト描画。
 				//文字描画。
 				{
-					s_drawrect_manager->Render(t_view * t_projection);
-					s_drawfont_manager->Render(t_view * t_projection);
+					//描画。
+					s_render2d->Render(t_view * t_projection);
 				}
 
 				//デバッグメニュー。
 				{
-					s_drawrect_manager->Clear();
-					s_drawfont_manager->Clear();
-
 					NBsys::NDebugMenu::GetSystemInstance()->Update();
 					NBsys::NDebugMenu::GetSystemInstance()->Draw();
 
-					s_drawrect_manager->Render(t_view * t_projection);
-					s_drawfont_manager->Render(t_view * t_projection);
+					//描画。
+					s_render2d->Render(t_view * t_projection);
 				}
 			}
 		}
@@ -352,17 +355,20 @@ void Test_Main()
 	NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->AddTouch(NBsys::NPad::Pad_Virtual::TouchType::MOUSER,NBsys::NPad::Pad_Device_Base::TouchType::DeviceTouch_2,s_pad_device);
 	NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->SetEnable(true);
 
+	//レンダー２Ｄ。
+	s_render2d.reset(new NCommon::Render2D());
+
 	//ライン描画。
 	s_drawline_manager.reset(new NCommon::DrawLine_Manager(s_d3d11));
 
 	//レクト描画。
-	s_drawrect_manager.reset(new NCommon::DrawRect_Manager(s_d3d11));
+	s_drawrect_material.reset(new NCommon::DrawRect_Material(s_d3d11));
 
 	//フォント描画。
-	s_drawfont_manager.reset(new NCommon::DrawFont_Manager(s_d3d11));
+	s_drawfont_material.reset(new NCommon::DrawFont_Manager(s_d3d11));
 
 	//デバッグメニュー。
-	s_debugmenu_callback.reset(new NCommon::DebugMenu_Callback(s_drawrect_manager,s_drawfont_manager));
+	s_debugmenu_callback.reset(new NCommon::DebugMenu_Callback(s_render2d));
 	NBsys::NDebugMenu::StartSystem(s_debugmenu_callback);
 
 	//パフォーマンスカウンター。

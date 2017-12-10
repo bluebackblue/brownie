@@ -14,6 +14,11 @@
 #include "../include.h"
 
 
+/** include
+*/
+#include "./common_render2d.h"
+
+
 /** NCommon
 */
 #if(BSYS_D3D11_ENABLE)
@@ -89,18 +94,19 @@ namespace NCommon
 		}
 	};
 
-	/** DrawRect_Manager
+
+	/** DrawRect_Material
 	*/
-	class DrawRect_Manager
+	class DrawRect_Material : public Render2D_Material_Base
 	{
 	private:
 		/** step
 		*/
 		s32 step;
 
-		/** isbusy
+		/** is_initialized
 		*/
-		bool isbusy;
+		bool is_initialized;
 
 		/** d3d11
 		*/
@@ -128,30 +134,23 @@ namespace NCommon
 	public:
 		/** constructor
 		*/
-		DrawRect_Manager(sharedptr<NBsys::ND3d11::D3d11>& a_d3d11)
+		DrawRect_Material(sharedptr<NBsys::ND3d11::D3d11>& a_d3d11)
 			:
 			step(0),
-			isbusy(true),
+			is_initialized(false),
 			d3d11(a_d3d11)
 		{
 		}
 
 		/** destructor
 		*/
-		nonvirtual ~DrawRect_Manager()
+		nonvirtual ~DrawRect_Material()
 		{
 		}
 
-		/** IsBusy
+		/** 初期化。
 		*/
-		bool IsBusy()
-		{
-			return this->isbusy;
-		}
-
-		/** Initialize_Update
-		*/
-		void Initialize_Update()
+		virtual void Initialize_Update()
 		{
 			switch(this->step){
 			case 0:
@@ -207,155 +206,151 @@ namespace NCommon
 					if(this->asyncresult_vertexshader.Get() == true){
 						if(this->asyncresult_pixelshader.Get() == true){
 							this->step++;
-							this->isbusy = false;
+							this->is_initialized = true;
 						}
 					}
 				}break;
 			}
 		}
 
-		/** クリア。
+		/** 初期化チェック。
 		*/
-		void Clear()
+		virtual bool IsInitialized()
 		{
-			this->vertex->ClearVertex();
-		}
-
-		/** DrawRect
-		*/
-		void DrawRect(f32 a_x,f32 a_y,f32 a_w,f32 a_h,f32 a_z,s32 a_texture_id,const NBsys::NColor::Color_F& a_color)
-		{
-
-
-
-
-			NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 t_vector;
-
-			t_vector.color_rr = a_color.r; 
-			t_vector.color_gg = a_color.g;
-			t_vector.color_bb = a_color.b;
-			t_vector.color_aa = a_color.a;
-
-			//00
-			{
-				t_vector.pos_xx = a_x;
-				t_vector.pos_yy = a_y;
-				t_vector.pos_zz = a_z;
-
-				t_vector.uv_xx = 0.0f;
-				t_vector.uv_yy = 0.0f;
-
-				this->vertex->AddVertex(t_vector);
-			}
-
-			//10
-			{
-				t_vector.pos_xx = a_x + a_w;
-				t_vector.pos_yy = a_y;
-				t_vector.pos_zz = a_z;
-
-				t_vector.uv_xx = 0.0f;
-				t_vector.uv_yy = 0.0f;
-
-				this->vertex->AddVertex(t_vector);
-			}
-
-			//01
-			{
-				t_vector.pos_xx = a_x;
-				t_vector.pos_yy = a_y + a_h;
-				t_vector.pos_zz = a_z;
-
-				t_vector.uv_xx = 0.0f;
-				t_vector.uv_yy = 0.0f;
-
-				this->vertex->AddVertex(t_vector);
-			}
-
-			//01
-			{
-				t_vector.pos_xx = a_x;
-				t_vector.pos_yy = a_y + a_h;
-				t_vector.pos_zz = a_z;
-
-				t_vector.uv_xx = 0.0f;
-				t_vector.uv_yy = 0.0f;
-
-				this->vertex->AddVertex(t_vector);
-			}
-
-			//10
-			{
-				t_vector.pos_xx = a_x + a_w;
-				t_vector.pos_yy = a_y;
-				t_vector.pos_zz = a_z;
-
-				t_vector.uv_xx = 0.0f;
-				t_vector.uv_yy = 0.0f;
-
-				this->vertex->AddVertex(t_vector);
-			}
-
-			//11
-			{
-				t_vector.pos_xx = a_x + a_w;
-				t_vector.pos_yy = a_y + a_h;
-				t_vector.pos_zz = a_z;
-
-				t_vector.uv_xx = 0.0f;
-				t_vector.uv_yy = 0.0f;
-
-				this->vertex->AddVertex(t_vector);
-			}
+			return this->is_initialized;
 		}
 
 		/** 描画。
 		*/
-		void Render(NBsys::NGeometry::Geometry_Matrix_44& a_view_projection)
+		virtual void Render(NBsys::NGeometry::Geometry_Matrix_44& a_view_projection,STLList<Render2D_Item>::const_iterator a_it_start,STLList<Render2D_Item>::const_iterator a_it_end)
 		{
-			if(this->isbusy == false){
-				if(this->vertex->GetVertexCountOf(0) > 0){
-					NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = a_view_projection;
+			//バーテックスクリア。
+			this->vertex->ClearVertex();
 
-					//シェーダー。
-					this->d3d11->Render_VSSetShader(this->vertexshader_id);
-					this->d3d11->Render_PSSetShader(this->pixelshader_id);
+			for(STLList<Render2D_Item>::const_iterator t_it = a_it_start;t_it != a_it_end;t_it++){
+				
+				//バーテックス作成。
 
-					//トポロジー。
-					this->d3d11->Render_SetPrimitiveTopology(NBsys::ND3d11::D3d11_TopologyType::Id::TriangleList);
+				NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 t_vector;
 
-					//ブレンドステータス。
-					this->d3d11->Render_SetBlendState(this->blendstate_id);
+				t_vector.color_rr = t_it->data.color.r; 
+				t_vector.color_gg = t_it->data.color.g;
+				t_vector.color_bb = t_it->data.color.b;
+				t_vector.color_aa = t_it->data.color.a;
 
-					//コンスタントバッファ。
-					DrawRect_VS_ConstantBuffer_B0 t_vs_constantbuffer_b0;
-					DrawRect_PS_ConstantBuffer_B1 t_ps_constantbuffer_b1;
-					{
-						t_vs_constantbuffer_b0.view_projection = t_view_projection.Make_Transpose();
-						t_ps_constantbuffer_b1.flag1 = 0x00000000;
-					}
+				//00
+				{
+					t_vector.pos_xx = t_it->data.x;
+					t_vector.pos_yy = t_it->data.y;
+					t_vector.pos_zz = static_cast<f32>(t_it->data.z);
 
-					//コンスタントバッファーの内容更新。
-					this->d3d11->Render_UpdateSubresource(this->vs_constantbuffer_b0_id,&t_vs_constantbuffer_b0);
-					this->d3d11->Render_UpdateSubresource(this->ps_constantbuffer_b1_id,&t_ps_constantbuffer_b1);
+					t_vector.uv_xx = 0.0f;
+					t_vector.uv_yy = 0.0f;
 
-					//コンスタントバッファーをシェーダーに設定。
-					this->d3d11->Render_VSSetConstantBuffers(this->vs_constantbuffer_b0_id);
-					this->d3d11->Render_PSSetConstantBuffers(this->ps_constantbuffer_b1_id);
+					this->vertex->AddVertex(t_vector);
+				}
 
-					//ラスタライザー。
-					this->d3d11->Render_SetRasterizerState(this->rasterizerstate_cull_none_id);
+				//10
+				{
+					t_vector.pos_xx = t_it->data.x + t_it->data.w;
+					t_vector.pos_yy = t_it->data.y;
+					t_vector.pos_zz = static_cast<f32>(t_it->data.z);
 
-					//バーテックスバッファ。
-					this->d3d11->Render_ReMapVertexBuffer(this->vertex_buffer_id,this->vertex->GetVertexPointer(),this->vertex->GetVertexStrideByte() * this->vertex->GetVertexCountOf(0));
-					this->d3d11->Render_SetVertexBuffer(this->vertex_buffer_id);
+					t_vector.uv_xx = 0.0f;
+					t_vector.uv_yy = 0.0f;
 
-					//描画。
-					this->d3d11->Render_Draw(this->vertex->GetVertexCountOf(0),0);
+					this->vertex->AddVertex(t_vector);
+				}
+
+				//01
+				{
+					t_vector.pos_xx = t_it->data.x;
+					t_vector.pos_yy = t_it->data.y + t_it->data.h;
+					t_vector.pos_zz = static_cast<f32>(t_it->data.z);
+
+					t_vector.uv_xx = 0.0f;
+					t_vector.uv_yy = 0.0f;
+
+					this->vertex->AddVertex(t_vector);
+				}
+
+				//01
+				{
+					t_vector.pos_xx = t_it->data.x;
+					t_vector.pos_yy = t_it->data.y + t_it->data.h;
+					t_vector.pos_zz = static_cast<f32>(t_it->data.z);
+
+					t_vector.uv_xx = 0.0f;
+					t_vector.uv_yy = 0.0f;
+
+					this->vertex->AddVertex(t_vector);
+				}
+
+				//10
+				{
+					t_vector.pos_xx = t_it->data.x + t_it->data.w;
+					t_vector.pos_yy = t_it->data.y;
+					t_vector.pos_zz = static_cast<f32>(t_it->data.z);
+
+					t_vector.uv_xx = 0.0f;
+					t_vector.uv_yy = 0.0f;
+
+					this->vertex->AddVertex(t_vector);
+				}
+
+				//11
+				{
+					t_vector.pos_xx = t_it->data.x + t_it->data.w;
+					t_vector.pos_yy = t_it->data.y + t_it->data.h;
+					t_vector.pos_zz = static_cast<f32>(t_it->data.z);
+
+					t_vector.uv_xx = 0.0f;
+					t_vector.uv_yy = 0.0f;
+
+					this->vertex->AddVertex(t_vector);
 				}
 			}
-		}
 
+			if(this->vertex->GetVertexCountOf(0) > 0){
+				NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = a_view_projection;
+
+				//シェーダー。
+				this->d3d11->Render_VSSetShader(this->vertexshader_id);
+				this->d3d11->Render_PSSetShader(this->pixelshader_id);
+
+				//トポロジー。
+				this->d3d11->Render_SetPrimitiveTopology(NBsys::ND3d11::D3d11_TopologyType::Id::TriangleList);
+
+				//ブレンドステータス。
+				this->d3d11->Render_SetBlendState(this->blendstate_id);
+
+				//コンスタントバッファ。
+				DrawRect_VS_ConstantBuffer_B0 t_vs_constantbuffer_b0;
+				DrawRect_PS_ConstantBuffer_B1 t_ps_constantbuffer_b1;
+				{
+					t_vs_constantbuffer_b0.view_projection = t_view_projection.Make_Transpose();
+					t_ps_constantbuffer_b1.flag1 = 0x00000000;
+				}
+
+				//コンスタントバッファーの内容更新。
+				this->d3d11->Render_UpdateSubresource(this->vs_constantbuffer_b0_id,&t_vs_constantbuffer_b0);
+				this->d3d11->Render_UpdateSubresource(this->ps_constantbuffer_b1_id,&t_ps_constantbuffer_b1);
+
+				//コンスタントバッファーをシェーダーに設定。
+				this->d3d11->Render_VSSetConstantBuffers(this->vs_constantbuffer_b0_id);
+				this->d3d11->Render_PSSetConstantBuffers(this->ps_constantbuffer_b1_id);
+
+				//ラスタライザー。
+				this->d3d11->Render_SetRasterizerState(this->rasterizerstate_cull_none_id);
+
+				//バーテックスバッファ。
+				this->d3d11->Render_ReMapVertexBuffer(this->vertex_buffer_id,this->vertex->GetVertexPointer(),this->vertex->GetVertexStrideByte() * this->vertex->GetVertexCountOf(0));
+				this->d3d11->Render_SetVertexBuffer(this->vertex_buffer_id);
+
+				//描画。
+				this->d3d11->Render_Draw(this->vertex->GetVertexCountOf(0),0);
+			}
+		}
 	};
 }
 #endif

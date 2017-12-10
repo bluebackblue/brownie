@@ -26,16 +26,16 @@ namespace NCommon
 {
 	/** DrawFontProcType
 	*/
-	void DebugMenu_Callback::DrawFont_Callback(const STLWString& a_string,f32 a_font_size,f32 a_x,f32 a_y,f32 a_z,const NBsys::NColor::Color_F& a_color)
+	void DebugMenu_Callback::DrawFont_Callback(const STLWString& a_string,f32 a_font_size,f32 a_x,f32 a_y,s32 a_z,const NBsys::NColor::Color_F& a_color)
 	{
-		this->drawfont_manager->DrawFont16(a_string,a_font_size,a_x,a_y,a_z,a_color);
+		//this->render2d->DrawFont16(a_string,a_font_size,a_x,a_y,a_z,a_color);
 	}
 
 	/** DrawRectProcType
 	*/
-	void DebugMenu_Callback::DrawRect_Callback(f32 a_x,f32 a_y,f32 a_w,f32 a_h,f32 a_z,s32 a_texture_id,const NBsys::NColor::Color_F& a_color)
+	void DebugMenu_Callback::DrawRect_Callback(f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_z,s32 a_texture_id,const NBsys::NColor::Color_F& a_color)
 	{
-		this->drawrect_manager->DrawRect(a_x,a_y,a_w,a_h,a_z,a_texture_id,a_color);
+		this->render2d->DrawRect(a_z,a_x,a_y,a_w,a_h,a_texture_id,a_color);
 	}
 
 	/** GetMouseProcType

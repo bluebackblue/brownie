@@ -44,11 +44,11 @@ namespace NBsys{namespace NDebugMenu
 	public:
 		/** DrawFontProcType
 		*/
-		virtual void DrawFont_Callback(const STLWString& a_string,f32 a_font_size,f32 a_x,f32 a_y,f32 a_z,const NBsys::NColor::Color_F& a_color) = 0;
+		virtual void DrawFont_Callback(const STLWString& a_string,f32 a_font_size,f32 a_x,f32 a_y,s32 a_z,const NBsys::NColor::Color_F& a_color) = 0;
 
 		/** DrawRectProcType
 		*/
-		virtual void DrawRect_Callback(f32 a_x,f32 a_y,f32 a_w,f32 a_h,f32 a_z,s32 a_texture_id,const NBsys::NColor::Color_F& a_color) = 0;
+		virtual void DrawRect_Callback(f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_z,s32 a_texture_id,const NBsys::NColor::Color_F& a_color) = 0;
 
 		/** GetMouseProcType
 		*/

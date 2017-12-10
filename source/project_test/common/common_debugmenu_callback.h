@@ -31,21 +31,16 @@ namespace NCommon
 	class DebugMenu_Callback : public NBsys::NDebugMenu::DebugMenu_Callback_Base
 	{
 	private:
-		/** drawrect_manager
+		/** render2d
 		*/
-		sharedptr<NCommon::DrawRect_Manager> drawrect_manager;
-
-		/** drawfont_manager
-		*/
-		sharedptr<NCommon::DrawFont_Manager> drawfont_manager;
+		sharedptr<NCommon::Render2D> render2d;
 
 	public:
 		/** constructor
 		*/
-		DebugMenu_Callback(sharedptr<NCommon::DrawRect_Manager>& a_drawrect_manager,sharedptr<NCommon::DrawFont_Manager>& a_drawfont_manager)
+		DebugMenu_Callback(sharedptr<NCommon::Render2D>& a_render2d)
 			:
-			drawrect_manager(a_drawrect_manager),
-			drawfont_manager(a_drawfont_manager)
+			render2d(a_render2d)
 		{
 		}
 
@@ -58,11 +53,11 @@ namespace NCommon
 	public:
 		/** DrawFont_Callback
 		*/
-		virtual void DrawFont_Callback(const STLWString& a_string,f32 a_font_size,f32 a_x,f32 a_y,f32 a_z,const NBsys::NColor::Color_F& a_color);
+		virtual void DrawFont_Callback(const STLWString& a_string,f32 a_font_size,f32 a_x,f32 a_y,s32 a_z,const NBsys::NColor::Color_F& a_color);
 
 		/** DrawRect_Callback
 		*/
-		virtual void DrawRect_Callback(f32 a_x,f32 a_y,f32 a_w,f32 a_h,f32 a_z,s32 a_texture_id,const NBsys::NColor::Color_F& a_color);
+		virtual void DrawRect_Callback(f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_z,s32 a_texture_id,const NBsys::NColor::Color_F& a_color);
 
 		/** GetMouse_Callback
 		*/
