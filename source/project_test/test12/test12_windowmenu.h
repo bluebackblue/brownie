@@ -22,10 +22,15 @@
 */
 class Test12_WindowMenu : public NBsys::NWindowMenu::WindowMenu_Window_Base
 {
+private:
+	/** id
+	*/
+	s32 id;
+
 public:
 	/** constructor
 	*/
-	Test12_WindowMenu(f32 a_offset_x,f32 a_offset_y);
+	Test12_WindowMenu(f32 a_offset_x,f32 a_offset_y,s32 a_id);
 
 	/** destructor
 	*/

@@ -211,8 +211,8 @@ public:
 				this->draw = true;
 
 				//ウィンドウ。
-				s_test12_window_1.reset(new Test12_WindowMenu(150.0f,150.0f));
-				s_test12_window_2.reset(new Test12_WindowMenu(300.0f,300.0f));
+				s_test12_window_1.reset(new Test12_WindowMenu(150.0f,150.0f,0));
+				s_test12_window_2.reset(new Test12_WindowMenu(300.0f,300.0f,1));
 				NBsys::NWindowMenu::GetSystemInstance()->Add(s_test12_window_1);
 				NBsys::NWindowMenu::GetSystemInstance()->Add(s_test12_window_2);
 			}break;

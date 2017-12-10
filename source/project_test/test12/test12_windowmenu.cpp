@@ -25,9 +25,10 @@
 
 /** constructor
 */
-Test12_WindowMenu::Test12_WindowMenu(f32 a_offset_x,f32 a_offset_y)
+Test12_WindowMenu::Test12_WindowMenu(f32 a_offset_x,f32 a_offset_y,s32 a_id)
 	:
-	NBsys::NWindowMenu::WindowMenu_Window_Base()
+	NBsys::NWindowMenu::WindowMenu_Window_Base(),
+	id(a_id)
 {
 	this->Initialize(
 		NBsys::NWindowMenu::WindowMenu_Window_Base::Mode::Vertical,
@@ -53,13 +54,18 @@ Test12_WindowMenu::Test12_WindowMenu(f32 a_offset_x,f32 a_offset_y)
 
 		//下地。
 		{
+			NBsys::NColor::Color_F t_color[] = {
+				NBsys::NColor::Color_F(1.0f,0.9f,0.9f,1.0f),
+				NBsys::NColor::Color_F(0.9f,1.0f,0.9f,1.0f),
+			};
+
 			sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_plate(new NBsys::NWindowMenu::WindowMenu_Window_Plate(
 				NBsys::NWindowMenu::WindowMenu_Window_Base::Mode::Vertical,
 				0.0f,
 				0.0f,
 				-1.0f,
 				-1.0f,
-				NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f),
+				t_color[this->id],
 				-1,
 				0
 			));
