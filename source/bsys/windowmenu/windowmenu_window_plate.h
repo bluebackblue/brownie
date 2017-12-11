@@ -46,9 +46,9 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		virtual ~WindowMenu_Window_Plate();
 
-		/** Draw
+		/** 描画処理。
 		*/
-		virtual void Draw();
+		virtual bool CallBack_Draw();
 	};
 
 }}

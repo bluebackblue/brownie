@@ -64,7 +64,7 @@ namespace NBlib
 			if(this->nestvalue.Load() >= 0){
 				this->lockobject.Lock();
 			}else{
-				//複数回アンロックが呼ばれているためロックしない。
+				//すでにロック済み。
 			}
 
 			this->nestvalue.Add(1);
@@ -98,7 +98,7 @@ namespace NBlib
 	class AutoUnlock
 	{
 	private:
-		/** 
+		/** autolock
 		*/
 		AutoLock& autolock;
 

@@ -293,24 +293,69 @@ namespace NBsys{namespace NWindowMenu
 		}
 	}
 
-	/** 更新。
+	/** システムからのマウス再起処理。
 	*/
-	void WindowMenu_Window_Base::Update()
+	bool WindowMenu_Window_Base::System_MouseUpdate(WindowMenu_Mouse& a_mouse)
 	{
+		if((this->calc_x < a_mouse.x)&&(a_mouse.x < this->calc_x + this->calc_w)&&(this->calc_y < a_mouse.y)&&(a_mouse.y < this->calc_y + this->calc_h)){
+			//範囲内。
+
+			this->CallBack_MouseUpdate(a_mouse);
+
+			STLVector<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
+			for(STLVector<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
+				(*t_it)->System_MouseUpdate(a_mouse);
+			}
+			return true;
+		}
+
+		//範囲外。
+		return false;
+	}
+
+	/** システムからの更新処理。
+	*/
+	void WindowMenu_Window_Base::System_Update()
+	{
+		this->CallBack_Update();
+
 		STLVector<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
 		for(STLVector<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
-			(*t_it)->Update();
+			(*t_it)->System_Update();
 		}
 	}
 
-	/** 描画。
+	/** システムからの描画処理。
 	*/
-	void WindowMenu_Window_Base::Draw()
+	void WindowMenu_Window_Base::System_Draw()
 	{
+		this->CallBack_Draw();
+
 		STLVector<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
 		for(STLVector<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
-			(*t_it)->Draw();
+			(*t_it)->System_Draw();
 		}
+	}
+
+	/** マウス処理。
+	*/
+	bool WindowMenu_Window_Base::CallBack_MouseUpdate(WindowMenu_Mouse& /*a_mouse*/)
+	{
+		return true;
+	}
+
+	/** 更新処理。
+	*/
+	bool WindowMenu_Window_Base::CallBack_Update()
+	{
+		return true;
+	}
+
+	/** 描画処理。
+	*/
+	bool WindowMenu_Window_Base::CallBack_Draw()
+	{
+		return true;
 	}
 
 	/** 親の削除リクエスト。取得。

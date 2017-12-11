@@ -50,19 +50,15 @@ namespace NBsys{namespace NWindowMenu
 	{
 	}
 
-	/** Draw
+	/** 描画処理。
 	*/
-	void WindowMenu_Window_Plate::Draw()
+	bool WindowMenu_Window_Plate::CallBack_Draw()
 	{
-		//自分の描画。
-		{
-			if((this->calc_w >= 0.0f)&&(this->calc_h >= 0.0f)){
-				GetSystemInstance()->callback->DrawRect_Callback(this->z,this->calc_x,this->calc_y,this->calc_w,this->calc_h,this->texture_id,this->color);
-			}
+		if((this->calc_w >= 0.0f)&&(this->calc_h >= 0.0f)){
+			GetSystemInstance()->GetCallback()->DrawRect_Callback(this->z,this->calc_x,this->calc_y,this->calc_w,this->calc_h,this->texture_id,this->color);
 		}
 
-		//子の描画。
-		WindowMenu_Window_Base::Draw();
+		return true;
 	}
 }}
 

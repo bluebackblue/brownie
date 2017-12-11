@@ -52,9 +52,13 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		virtual ~WindowMenu_Window_Drag();
 
-		/** 更新。
+		/** マウス処理。
 		*/
-		virtual void Update();
+		virtual bool CallBack_MouseUpdate(WindowMenu_Mouse& a_mouse);
+
+		/** 更新処理。
+		*/
+		virtual bool CallBack_Update();
 	};
 
 }}

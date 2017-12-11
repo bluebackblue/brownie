@@ -121,7 +121,7 @@ namespace NBlib
 
 		/** 入れ替え。
 
-		代入直前の値を返す。
+		代入前の値を返す。
 
 		*/
 		T Exchange(T a_value)
@@ -155,7 +155,7 @@ namespace NBlib
 
 		/** 減算。
 
-		減算前の値を返します。
+		減算前の値を返す。
 
 		*/
 		s32 Sub(s32 a_sub_value)

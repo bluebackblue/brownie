@@ -73,10 +73,30 @@ namespace NBsys{namespace NWindowMenu
 				}
 			}
 
+			//マウス更新。
+			{
+				GetSystemInstance()->callback->GetMouse_Callback(this->mouse.x,this->mouse.y,this->mouse.on_l,this->mouse.on_r,this->mouse.down_l,this->mouse.down_r,this->mouse.up_l,this->mouse.up_r);
+
+				STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_begin = this->list.begin();
+				STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->list.end();
+				if(t_it_begin != t_it_end){
+					for(;;){
+						t_it--;
+						bool t_ret = (*t_it)->System_MouseUpdate(this->mouse);
+						if(t_ret == true){
+							//範囲内。
+							break;
+						}else if(t_it == t_it_begin){
+							break;
+						}
+					}
+				}
+			}
+
 			//更新。
 			{
 				for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
-					(*t_it)->Update();
+					(*t_it)->System_Update();
 				}
 			}
 		}
@@ -88,7 +108,7 @@ namespace NBsys{namespace NWindowMenu
 	{
 		STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->list.end();
 		for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
-			(*t_it)->Draw();
+			(*t_it)->System_Draw();
 		}
 	}
 
@@ -97,6 +117,27 @@ namespace NBsys{namespace NWindowMenu
 	void WindowMenu::Add(const sharedptr<WindowMenu_Window_Base>& a_window)
 	{
 		this->list.push_back(a_window);
+	}
+
+	/** GetList
+	*/
+	STLList<sharedptr<WindowMenu_Window_Base>>::Type& WindowMenu::GetList()
+	{
+		return this->list;
+	}
+
+	/** GetMouse
+	*/
+	WindowMenu_Mouse& WindowMenu::GetMouse()
+	{
+		return this->mouse;
+	}
+
+	/** GetCallback
+	*/
+	sharedptr<WindowMenu_Callback_Base>& WindowMenu::GetCallback()
+	{
+		return this->callback;
 	}
 
 	/** システムの開始。

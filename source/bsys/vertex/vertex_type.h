@@ -97,9 +97,9 @@ namespace NBsys{namespace NVertex
 		};
 	};
 
-	/** Vertex_Data_Pos3Uv2Color4TextureIndex1
+	/** Vertex_Data_Pos3Uv2Color4TextureIndex4
 	*/
-	struct Vertex_Data_Pos3Uv2Color4TextureIndex1
+	struct Vertex_Data_Pos3Uv2Color4TextureIndex4
 	{
 		union
 		{

@@ -16,6 +16,11 @@
 
 /** include
 */
+#include "./windowmenu_mouse.h"
+
+
+/** include
+*/
 #include "../color/color.h"
 
 
@@ -137,13 +142,29 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		virtual void CalcRect(f32 a_parent_offset_x,f32 a_parent_offset_y);
 
-		/** 更新。
+		/** システムからのマウス再起処理。
 		*/
-		virtual void Update();
+		virtual bool System_MouseUpdate(WindowMenu_Mouse& a_mouse);
 
-		/** 描画。
+		/** システムからの更新処理。
 		*/
-		virtual void Draw();
+		virtual void System_Update();
+
+		/** システムからの描画処理。
+		*/
+		virtual void System_Draw();
+
+		/** マウス処理。
+		*/
+		virtual bool CallBack_MouseUpdate(WindowMenu_Mouse& a_mouse);
+
+		/** 更新処理。
+		*/
+		virtual bool CallBack_Update();
+
+		/** 描画処理。
+		*/
+		virtual bool CallBack_Draw();
 
 		/** 削除リクエスト。取得。
 		*/

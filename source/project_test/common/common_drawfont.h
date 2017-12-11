@@ -126,7 +126,7 @@ namespace NCommon
 
 		/** vertex
 		*/
-		sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex1>> vertex;
+		sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4>> vertex;
 		s32 vertex_buffer_id;
 
 	public:
@@ -200,11 +200,11 @@ namespace NCommon
 
 					//バーテックスバッファ。
 					s32 t_vertex_allcountof = 2 * 1024;
-					this->vertex = new NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex1>();
+					this->vertex = new NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4>();
 					this->vertex->AddParts("root");
 					this->vertex->ReserveVertex(t_vertex_allcountof);
 
-					NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex1 t_vertex_dummy = {0};
+					NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4 t_vertex_dummy = {0};
 					this->vertex->AddVertex(t_vertex_dummy);
 					this->vertex_buffer_id = this->d3d11->CreateVertexBuffer(this->vertex->GetVertexPointer(),this->vertex->GetVertexStrideByte(),0,t_vertex_allcountof,true);
 					this->vertex->ClearVertex();

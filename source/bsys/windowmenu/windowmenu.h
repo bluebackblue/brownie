@@ -21,6 +21,7 @@
 
 /** include
 */
+#include "./windowmenu_mouse.h"
 #include "./windowmenu_callback_base.h"
 #include "./windowmenu_window_base.h"
 #include "./windowmenu_window_plate.h"
@@ -36,7 +37,7 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	class WindowMenu
 	{
-	public:
+	private:
 		/** callback
 		*/
 		sharedptr<WindowMenu_Callback_Base> callback;
@@ -44,6 +45,10 @@ namespace NBsys{namespace NWindowMenu
 		/** list
 		*/
 		STLList<sharedptr<WindowMenu_Window_Base>>::Type list;
+
+		/** mouse
+		*/
+		WindowMenu_Mouse mouse;
 
 	public:
 		/** constructor
@@ -67,6 +72,18 @@ namespace NBsys{namespace NWindowMenu
 		/** 追加。
 		*/
 		void Add(const sharedptr<WindowMenu_Window_Base>& a_window);
+
+		/** GetList
+		*/
+		STLList<sharedptr<WindowMenu_Window_Base>>::Type& GetList();
+
+		/** GetMouse
+		*/
+		WindowMenu_Mouse& GetMouse();
+
+		/** GetCallback
+		*/
+		sharedptr<WindowMenu_Callback_Base>& GetCallback();
 
 	};
 
