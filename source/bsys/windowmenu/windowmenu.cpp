@@ -65,38 +65,58 @@ namespace NBsys{namespace NWindowMenu
 
 		{
 			STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->list.end();
+			STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_begin = this->list.begin();
+			if(t_it_begin != t_it_end){
 
-			//表示位置計算。
-			{
-				for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
-					(*t_it)->CalcRect(0.0f,0.0f);
+				//表示位置計算。
+				{
+					for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
+						(*t_it)->CalcRect(0.0f,0.0f);
+					}
 				}
-			}
 
-			//マウス更新。
-			{
-				GetSystemInstance()->callback->GetMouse_Callback(this->mouse.x,this->mouse.y,this->mouse.on_l,this->mouse.on_r,this->mouse.down_l,this->mouse.down_r,this->mouse.up_l,this->mouse.up_r);
-
-				STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_begin = this->list.begin();
-				STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->list.end();
-				if(t_it_begin != t_it_end){
+				//マウス更新。
+				{
+					GetSystemInstance()->callback->GetMouse_Callback(this->mouse.x,this->mouse.y,this->mouse.on_l,this->mouse.on_r,this->mouse.down_l,this->mouse.down_r,this->mouse.up_l,this->mouse.up_r);
+				
+					STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_movetolast = t_it_end;
+				
+					STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = t_it_end;
+				
 					for(;;){
 						t_it--;
 						bool t_ret = (*t_it)->System_MouseUpdate(this->mouse);
 						if(t_ret == true){
 							//範囲内。
+
+							//最後尾へ移動。
+							if(this->mouse.on_l || this->mouse.on_r){
+								STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_last = t_it_end;
+								t_it_last--;
+								if(t_it != t_it_last){
+									t_it_movetolast = t_it;
+								}
+							}
+
 							break;
 						}else if(t_it == t_it_begin){
 							break;
 						}
 					}
-				}
-			}
 
-			//更新。
-			{
-				for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
-					(*t_it)->System_Update();
+					//最後尾へ移動。
+					if(t_it_movetolast != t_it_end){
+						sharedptr<WindowMenu_Window_Base> t_active = *t_it_movetolast;
+						this->list.erase(t_it_movetolast);
+						this->list.push_back(t_active);
+					}
+				}
+
+				//更新。
+				{
+					for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
+						(*t_it)->System_Update();
+					}
 				}
 			}
 		}
