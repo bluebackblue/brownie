@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒCƒ“ƒNƒ‹[ƒhB
+ * @brief ãƒ†ã‚¹ãƒˆã€‚
 */
 
 
@@ -60,8 +60,8 @@ void Test_Main()
 	TAGLOG("main","DEF_TEST0");
 	TAGLOG("main",L"DEF_TEST0");
 
-	DEBUGLOG("%s%s\n","ƒfƒoƒbƒO","ƒƒO");	
-	DEBUGLOG(L"%s%s\n",L"ƒfƒoƒbƒO",L"ƒƒO");	
+	DEBUGLOG("%s%s\n","ãƒ‡ãƒãƒƒã‚°","ãƒ­ã‚°");	
+	DEBUGLOG(L"%s%s\n",L"ãƒ‡ãƒãƒƒã‚°",L"ãƒ­ã‚°");	
 
 	DEBUGBREAK();
 
