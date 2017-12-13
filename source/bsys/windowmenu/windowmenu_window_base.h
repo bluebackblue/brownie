@@ -68,6 +68,10 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		STLVector<sharedptr<WindowMenu_Window_Base>>::Type child_list;
 
+		/** name
+		*/
+		STLString name;
+
 		/** [設定値]自分の位置。
 		*/
 		f32 offset_x;
@@ -82,6 +86,13 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		s32 z;
 
+		/** 計算処理中。
+		*/
+		bool calc_x_fix;
+		bool calc_y_fix;
+		bool calc_w_fix;
+		bool calc_h_fix;
+
 		/** [計算結果]自分の位置。
 		*/
 		f32 calc_x;
@@ -92,56 +103,37 @@ namespace NBsys{namespace NWindowMenu
 		f32 calc_w;
 		f32 calc_h;
 
-		/** [計算結果]親の位置。
-		*/
-		f32 calc_parent_x;
-		f32 calc_parent_y;
-
 	public:
 		/** constructor
 		*/
-		WindowMenu_Window_Base();
+		WindowMenu_Window_Base(const STLString& a_name);
 
 		/** destructor
 		*/
 		virtual ~WindowMenu_Window_Base();
 
+	public:
 		/** Initialize
+
+		a_width : 負の値を設定した場合は自動計算。
+		a_height : 負の値を設定した場合は自動計算。
+
 		*/
 		void Initialize(Mode::Id a_mode,f32 a_offset_x,f32 a_offset_y,f32 a_width,f32 a_height,s32 a_z);
 
-		/** CalcWidth
+		/** 子の追加。
 		*/
-		f32 CalcWidth();
+		void AddChild(sharedptr<WindowMenu_Window_Base>& a_window);
 
-		/** CalcHeight
+		/** 子の削除。
 		*/
-		f32 CalcHeight();
+		void RemoveChild(sharedptr<WindowMenu_Window_Base>& a_window);
 
-		/** CalcWidthFromParent
+		/** IsRange
 		*/
-		f32 CalcWidthFromParent();
+		bool IsRange(f32 a_x,f32 a_y);
 
-		/** CalcHeightFromParent
-		*/
-		f32 CalcHeightFromParent();
-
-		/** CalcWidthFromChild
-		*/
-		f32 CalcWidthFromChild();
-
-		/** CalcHeightFromChild
-		*/
-		f32 CalcHeightFromChild();
-
-		/** AddChild
-		*/
-		void AddChild(const sharedptr<WindowMenu_Window_Base>& a_window);
-
-		/** 表示位置計算。
-		*/
-		virtual void CalcRect(f32 a_parent_offset_x,f32 a_parent_offset_y);
-
+	public:
 		/** システムからのマウス再起処理。
 		*/
 		virtual bool System_MouseUpdate(WindowMenu_Mouse& a_mouse);
@@ -170,9 +162,34 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		virtual bool GetDeleteRequest();
 
-		/** コールバック。親が接続された直後に呼び出される。
+		/** 削除リクエスト。設定。
 		*/
-		virtual void CallBack_SetParent();
+		virtual void SetDeleteRequest();
+
+		/** 計算結果のクリア。
+		*/
+		virtual void CalcRectClear();
+
+		/** サイズ計算。
+		*/
+		virtual void CalcRect();
+
+		/** サイズ計算。
+		*/
+		virtual void CalcX();
+
+		/** サイズ計算。
+		*/
+		virtual void CalcY();
+
+		/** サイズ計算。
+		*/
+		virtual void CalcWidth();
+
+		/** サイズ計算。
+		*/
+		virtual void CalcHeight();
+
 	};
 }}
 

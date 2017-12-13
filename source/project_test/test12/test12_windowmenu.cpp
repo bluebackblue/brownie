@@ -27,25 +27,27 @@
 */
 Test12_WindowMenu::Test12_WindowMenu(f32 a_offset_x,f32 a_offset_y,s32 a_id)
 	:
-	NBsys::NWindowMenu::WindowMenu_Window_Base(),
-	id(a_id)
+	NBsys::NWindowMenu::WindowMenu_Window_Base("Test12_WindowMenu"),
+	id(a_id),
+	endrequest(false)
 {
 	this->Initialize(
-		NBsys::NWindowMenu::WindowMenu_Window_Base::Mode::Vertical,
+		NBsys::NWindowMenu::WindowMenu_Window_Base::Mode::Vertical,	//縦済み。
 		a_offset_x,
 		a_offset_y,
 		300.0f,
-		-1.0f,
+		-1.0f,		//縦幅は自動。
 		0
 	);
 
 	//ドラッグ。
 	{
 		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_drag(new NBsys::NWindowMenu::WindowMenu_Window_Drag(
-			NBsys::NWindowMenu::WindowMenu_Window_Base::Mode::Vertical,
+			NBsys::NWindowMenu::WindowMenu_Window_Base::Mode::Horizontal,
+			"title:drag",
 			0.0f,
 			0.0f,
-			-1.0f,
+			-1.0f,	//横幅は自動。
 			50.0f,
 			0
 		));
@@ -60,7 +62,8 @@ Test12_WindowMenu::Test12_WindowMenu(f32 a_offset_x,f32 a_offset_y,s32 a_id)
 			};
 
 			sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_plate(new NBsys::NWindowMenu::WindowMenu_Window_Plate(
-				NBsys::NWindowMenu::WindowMenu_Window_Base::Mode::Vertical,
+				NBsys::NWindowMenu::WindowMenu_Window_Base::Mode::Free,
+				"title:plate",
 				0.0f,
 				0.0f,
 				-1.0f,
@@ -72,12 +75,28 @@ Test12_WindowMenu::Test12_WindowMenu(f32 a_offset_x,f32 a_offset_y,s32 a_id)
 
 			t_drag->AddChild(t_plate);
 		}
+
+		//閉じるボタン。
+		{
+			sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_closebutton(new NBsys::NWindowMenu::WindowMenu_Window_CloseButton(
+				NBsys::NWindowMenu::WindowMenu_Window_Base::Mode::Free,
+				"title:closebutton",
+				0.0f,
+				0.0f,
+				50.0f,
+				50.0f,
+				0
+			));
+
+			t_drag->AddChild(t_closebutton);
+		}
 	}
 
 	//下地。
 	{
 		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_plate(new NBsys::NWindowMenu::WindowMenu_Window_Plate(
 			NBsys::NWindowMenu::WindowMenu_Window_Base::Mode::Vertical,
+			"body:plate",
 			0.0f,
 			0.0f,
 			-1.0f,
@@ -95,6 +114,20 @@ Test12_WindowMenu::Test12_WindowMenu(f32 a_offset_x,f32 a_offset_y,s32 a_id)
 */
 Test12_WindowMenu::~Test12_WindowMenu()
 {
+}
+
+/** 削除リクエスト。取得。
+*/
+bool Test12_WindowMenu::GetDeleteRequest()
+{
+	return this->endrequest;
+}
+
+/** 削除リクエスト。設定。
+*/
+void Test12_WindowMenu::SetDeleteRequest()
+{
+	this->endrequest = true;
 }
 
 #endif

@@ -27,6 +27,10 @@ private:
 	*/
 	s32 id;
 
+	/** endrequest
+	*/
+	bool endrequest;
+
 public:
 	/** constructor
 	*/
@@ -35,6 +39,16 @@ public:
 	/** destructor
 	*/
 	virtual ~Test12_WindowMenu();
+
+public:
+	/** 削除リクエスト。取得。
+	*/
+	virtual bool GetDeleteRequest();
+
+	/** 削除リクエスト。設定。
+	*/
+	virtual void SetDeleteRequest();
+
 };
 
 #endif

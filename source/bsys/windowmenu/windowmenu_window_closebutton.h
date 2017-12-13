@@ -24,27 +24,31 @@
 */
 namespace NBsys{namespace NWindowMenu
 {
-	/** プレート。
+	/** 閉じるボタン。
 	*/
-	class WindowMenu_Window_Plate : public WindowMenu_Window_Base
+	class WindowMenu_Window_CloseButton : public WindowMenu_Window_Base
 	{
 	private:
-		/** color
+		/** push_flag
 		*/
-		NBsys::NColor::Color_F color;
-
-		/** texture_id
-		*/
-		s32 texture_id;
+		bool push_flag;
 
 	public:
 		/** constructor
 		*/
-		WindowMenu_Window_Plate(WindowMenu_Window_Base::Mode::Id a_mode,const STLString& a_name,f32 a_x,f32 a_y,f32 a_w,f32 a_h,const NBsys::NColor::Color_F& a_color,s32 a_texture_id,s32 a_z);
+		WindowMenu_Window_CloseButton(WindowMenu_Window_Base::Mode::Id a_mode,const STLString& a_name,f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_z);
 
 		/** destructor
 		*/
-		virtual ~WindowMenu_Window_Plate();
+		virtual ~WindowMenu_Window_CloseButton();
+
+		/** マウス処理。
+		*/
+		virtual bool CallBack_MouseUpdate(WindowMenu_Mouse& a_mouse);
+
+		/** 更新処理。
+		*/
+		virtual bool CallBack_Update();
 
 		/** 描画処理。
 		*/

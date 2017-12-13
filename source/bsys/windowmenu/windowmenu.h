@@ -26,6 +26,7 @@
 #include "./windowmenu_window_base.h"
 #include "./windowmenu_window_plate.h"
 #include "./windowmenu_window_drag.h"
+#include "./windowmenu_window_closebutton.h"
 
 
 /** NBsys::NWindowMenu

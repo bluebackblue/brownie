@@ -68,10 +68,17 @@ namespace NBsys{namespace NWindowMenu
 			STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_begin = this->list.begin();
 			if(t_it_begin != t_it_end){
 
+				//計算結果のクリア。
+				{
+					for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
+						(*t_it)->CalcRectClear();
+					}
+				}
+
 				//表示位置計算。
 				{
 					for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
-						(*t_it)->CalcRect(0.0f,0.0f);
+						(*t_it)->CalcRect();
 					}
 				}
 

@@ -31,8 +31,9 @@ namespace NBsys{namespace NWindowMenu
 {
 	/** constructor
 	*/
-	WindowMenu_Window_Drag::WindowMenu_Window_Drag(WindowMenu_Window_Base::Mode::Id a_mode,f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_z)
+	WindowMenu_Window_Drag::WindowMenu_Window_Drag(WindowMenu_Window_Base::Mode::Id a_mode,const STLString& a_name,f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_z)
 		:
+		WindowMenu_Window_Base(a_name),
 		drag_flag(false),
 		start_x(0.0f),
 		start_y(0.0f),
@@ -53,14 +54,12 @@ namespace NBsys{namespace NWindowMenu
 	bool WindowMenu_Window_Drag::CallBack_MouseUpdate(WindowMenu_Mouse& a_mouse)
 	{
 		if(a_mouse.down_l){
-
 			//ドラッグ開始。
 			this->drag_flag = true;
 			this->start_x = a_mouse.x;
 			this->start_y = a_mouse.y;
 			this->old_x = this->parent->offset_x;
 			this->old_y = this->parent->offset_y;
-
 		}
 
 		return true;
@@ -76,7 +75,8 @@ namespace NBsys{namespace NWindowMenu
 				//ドラッグ中。
 				this->parent->offset_x = this->old_x + (t_mouse.x - this->start_x);
 				this->parent->offset_y = this->old_y + (t_mouse.y - this->start_y);
-				this->parent->CalcRect(this->parent->calc_parent_x,this->parent->calc_parent_y);
+
+				//this->parent->CalcRect(this->parent->calc_parent_x,this->parent->calc_parent_y);
 			}else{
 				//ドラッグ終了。
 				this->drag_flag = false;
