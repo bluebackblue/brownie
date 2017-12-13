@@ -238,6 +238,7 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	void WindowMenu_Window_Base::CalcRect()
 	{
+		/*
 		while((this->calc_x_fix == false)||(this->calc_y_fix == false)||(this->calc_w_fix == false)||(this->calc_h_fix == false)){
 			if(this->calc_x_fix == false){
 				this->CalcX();
@@ -252,12 +253,14 @@ namespace NBsys{namespace NWindowMenu
 				this->CalcHeight();
 			}
 		}
+		*/
 	}
 
 	/** サイズ計算。
 	*/
 	void WindowMenu_Window_Base::CalcX()
 	{
+		/*
 		if(this->calc_x_fix == false){
 			if(this->parent == nullptr){
 				this->calc_x = this->offset_x;
@@ -285,12 +288,14 @@ namespace NBsys{namespace NWindowMenu
 				}
 			}
 		}
+		*/
 	}
 
 	/** サイズ計算。
 	*/
 	void WindowMenu_Window_Base::CalcY()
 	{
+		/*
 		if(this->calc_y_fix == false){
 			if(this->parent == nullptr){
 				this->calc_y = this->offset_y;
@@ -305,12 +310,14 @@ namespace NBsys{namespace NWindowMenu
 				}
 			}
 		}
+		*/
 	}
 
 	/** サイズ計算。
 	*/
 	void WindowMenu_Window_Base::CalcWidth()
 	{
+		/*
 		if(this->calc_w_fix == false){
 			if(this->width >= 0.0f){
 				//固定。
@@ -394,6 +401,7 @@ namespace NBsys{namespace NWindowMenu
 				}
 			}
 		}
+		*/
 	}
 
 	/** サイズ計算。
