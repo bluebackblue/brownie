@@ -35,8 +35,10 @@ Test12_WindowMenu::Test12_WindowMenu(f32 a_offset_x,f32 a_offset_y,s32 a_id)
 		NBsys::NWindowMenu::WindowMenu_Window_Base::Mode::Vertical,	//縦済み。
 		a_offset_x,
 		a_offset_y,
+		NBsys::NWindowMenu::WindowMenu_Window_Base::SizeType::Fix,
 		300.0f,
-		-1.0f,		//縦幅は自動。
+		NBsys::NWindowMenu::WindowMenu_Window_Base::SizeType::StretchChild,
+		-1.0f,
 		0
 	);
 
@@ -47,7 +49,9 @@ Test12_WindowMenu::Test12_WindowMenu(f32 a_offset_x,f32 a_offset_y,s32 a_id)
 			"title:drag",
 			0.0f,
 			0.0f,
-			-1.0f,	//横幅は自動。
+			NBsys::NWindowMenu::WindowMenu_Window_Base::SizeType::StretchParent,
+			-1.0f,
+			NBsys::NWindowMenu::WindowMenu_Window_Base::SizeType::Fix,
 			50.0f,
 			0
 		));
@@ -66,7 +70,9 @@ Test12_WindowMenu::Test12_WindowMenu(f32 a_offset_x,f32 a_offset_y,s32 a_id)
 				"title:plate",
 				0.0f,
 				0.0f,
+				NBsys::NWindowMenu::WindowMenu_Window_Base::SizeType::StretchParent,
 				-1.0f,
+				NBsys::NWindowMenu::WindowMenu_Window_Base::SizeType::StretchParent,
 				-1.0f,
 				t_color[this->id],
 				-1,
@@ -83,7 +89,9 @@ Test12_WindowMenu::Test12_WindowMenu(f32 a_offset_x,f32 a_offset_y,s32 a_id)
 				"title:closebutton",
 				0.0f,
 				0.0f,
+				NBsys::NWindowMenu::WindowMenu_Window_Base::SizeType::Fix,
 				50.0f,
+				NBsys::NWindowMenu::WindowMenu_Window_Base::SizeType::Fix,
 				50.0f,
 				0
 			));
@@ -99,7 +107,9 @@ Test12_WindowMenu::Test12_WindowMenu(f32 a_offset_x,f32 a_offset_y,s32 a_id)
 			"body:plate",
 			0.0f,
 			0.0f,
+			NBsys::NWindowMenu::WindowMenu_Window_Base::SizeType::StretchParent,
 			-1.0f,
+			NBsys::NWindowMenu::WindowMenu_Window_Base::SizeType::Fix,
 			300.0f,
 			NBsys::NColor::Color_F(0.5f,0.5f,0.5f,0.5f),
 			-1,

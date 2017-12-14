@@ -50,6 +50,23 @@ namespace NBsys{namespace NWindowMenu
 			};
 		};
 
+		/** SizeType
+		*/
+		struct SizeType
+		{
+			enum Id
+			{
+				//固定サイズ。
+				Fix,
+
+				//親のサイズに合わせる。
+				StretchParent,
+
+				//子のサイズに合わせる。
+				StretchChild
+			};
+		};
+
 	public:
 		/** 自分。
 		*/
@@ -81,6 +98,11 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		f32 width;
 		f32 height;
+
+		/** [設定値]サイズﾀｲﾌﾟ。
+		*/
+		SizeType::Id sizetype_w;
+		SizeType::Id sizetype_h;
 
 		/** 描画優先度。
 		*/
@@ -120,7 +142,7 @@ namespace NBsys{namespace NWindowMenu
 		a_height : 負の値を設定した場合は自動計算。
 
 		*/
-		void Initialize(Mode::Id a_mode,f32 a_offset_x,f32 a_offset_y,f32 a_width,f32 a_height,s32 a_z);
+		void Initialize(Mode::Id a_mode,f32 a_offset_x,f32 a_offset_y,SizeType::Id a_sizetype_w,f32 a_w,SizeType::Id a_sizetype_h,f32 a_h,s32 a_z);
 
 		/** 子の追加。
 		*/
