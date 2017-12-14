@@ -146,6 +146,10 @@ namespace NBsys{namespace NFont
 
 				s32 xx_max = t_font_state.black_box_x;
 				s32 yy_max = t_font_state.black_box_y;
+				if(t_buffer_size <= 0){
+					xx_max = 0;
+					yy_max = 0;
+				}
 
 				if(xx_max >= a_dest_width){
 					xx_max = a_dest_width;

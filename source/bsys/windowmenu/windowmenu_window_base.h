@@ -66,7 +66,7 @@ namespace NBsys{namespace NWindowMenu
 
 		/** child_list
 		*/
-		STLVector<sharedptr<WindowMenu_Window_Base>>::Type child_list;
+		STLList<sharedptr<WindowMenu_Window_Base>>::Type child_list;
 
 		/** name
 		*/
@@ -86,13 +86,6 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		s32 z;
 
-		/** 計算処理中。
-		*/
-		bool calc_x_fix;
-		bool calc_y_fix;
-		bool calc_w_fix;
-		bool calc_h_fix;
-
 		/** [計算結果]自分の位置。
 		*/
 		f32 calc_x;
@@ -102,6 +95,14 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		f32 calc_w;
 		f32 calc_h;
+
+		/** 計算に必要な親が所持している自分のイテレータ。
+		*/
+		STLList<sharedptr<WindowMenu_Window_Base>>::iterator calc_it;
+
+		/** 計算に必要な親が所持している自分のインデックス。
+		*/
+		s32 calc_child_index;
 
 	public:
 		/** constructor
@@ -168,28 +169,27 @@ namespace NBsys{namespace NWindowMenu
 
 		/** 計算結果のクリア。
 		*/
-		virtual void CalcRectClear();
+		virtual void CalcRectClear(STLList<sharedptr<WindowMenu_Window_Base>>::iterator a_it,s32 a_index);
 
 		/** サイズ計算。
 		*/
-		virtual void CalcRect();
+		static void CalcRect(WindowMenu_Window_Base* a_window);
 
 		/** サイズ計算。
 		*/
-		virtual void CalcX();
+		static void CalcX(WindowMenu_Window_Base* a_window);
 
 		/** サイズ計算。
 		*/
-		virtual void CalcY();
+		static void CalcY(WindowMenu_Window_Base* a_window);
 
 		/** サイズ計算。
 		*/
-		virtual void CalcWidth();
+		static void CalcW(WindowMenu_Window_Base* a_window);
 
 		/** サイズ計算。
 		*/
-		virtual void CalcHeight();
-
+		static void CalcH(WindowMenu_Window_Base* a_window);
 	};
 }}
 

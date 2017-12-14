@@ -148,7 +148,13 @@ namespace NBsys{namespace ND3d11
 		/** Render_UpdateFontTexture
 		*/
 		#if(BSYS_FONT_ENABLE)
-		void Render_UpdateFontTexture(s32 a_fontindex,const STLWString& a_string);
+		bool Render_UpdateFontTexture(s32 a_fontindex,const STLWString& a_string);
+		#endif
+
+		/** Render_WriteFontTexture
+		*/
+		#if(BSYS_FONT_ENABLE)
+		void Render_WriteFontTexture(s32 a_fontindex);
 		#endif
 
 		/** Render_MakeFontVertex

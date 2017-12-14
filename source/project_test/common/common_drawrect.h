@@ -222,10 +222,47 @@ namespace NCommon
 
 		/** 描画。
 		*/
+		virtual void PreRenderOnce(STLList<Render2D_Item>::Type& a_list)
+		{
+		}
+
+		/** 描画。
+		*/
 		virtual void Render(NBsys::NGeometry::Geometry_Matrix_44& a_view_projection,STLList<Render2D_Item>::const_iterator a_it_start,STLList<Render2D_Item>::const_iterator a_it_end)
+		{
+			s32 t_current_texture_id = -1;
+
+			STLList<Render2D_Item>::const_iterator t_it = a_it_start;
+			STLList<Render2D_Item>::const_iterator t_it_renderstart = t_it;
+			if(t_it != a_it_end){
+				t_current_texture_id = t_it->data.texture_id;
+			}
+
+			while(t_it != a_it_end){
+
+				if(t_it->data.texture_id != t_current_texture_id){
+					this->RenderCall(a_view_projection,t_it_renderstart,t_it);
+
+					t_current_texture_id = t_it->data.texture_id;
+					t_it_renderstart = t_it;
+				}
+
+				t_it++;
+			}
+
+			if(t_it_renderstart != a_it_end){
+				this->RenderCall(a_view_projection,t_it_renderstart,a_it_end);
+			}
+		}
+
+		/** 描画。
+		*/
+		void RenderCall(NBsys::NGeometry::Geometry_Matrix_44& a_view_projection,STLList<Render2D_Item>::const_iterator a_it_start,STLList<Render2D_Item>::const_iterator a_it_end)
 		{
 			//バーテックスクリア。
 			this->vertex->ClearVertex();
+
+			s32 t_texture_id = -1;
 
 			for(STLList<Render2D_Item>::const_iterator t_it = a_it_start;t_it != a_it_end;t_it++){
 				
@@ -256,7 +293,7 @@ namespace NCommon
 					t_vector.pos_yy = t_it->data.y;
 					t_vector.pos_zz = static_cast<f32>(t_it->data.z);
 
-					t_vector.uv_xx = 0.0f;
+					t_vector.uv_xx = 1.0f;
 					t_vector.uv_yy = 0.0f;
 
 					this->vertex->AddVertex(t_vector);
@@ -269,7 +306,7 @@ namespace NCommon
 					t_vector.pos_zz = static_cast<f32>(t_it->data.z);
 
 					t_vector.uv_xx = 0.0f;
-					t_vector.uv_yy = 0.0f;
+					t_vector.uv_yy = 1.0f;
 
 					this->vertex->AddVertex(t_vector);
 				}
@@ -281,7 +318,7 @@ namespace NCommon
 					t_vector.pos_zz = static_cast<f32>(t_it->data.z);
 
 					t_vector.uv_xx = 0.0f;
-					t_vector.uv_yy = 0.0f;
+					t_vector.uv_yy = 1.0f;
 
 					this->vertex->AddVertex(t_vector);
 				}
@@ -292,7 +329,7 @@ namespace NCommon
 					t_vector.pos_yy = t_it->data.y;
 					t_vector.pos_zz = static_cast<f32>(t_it->data.z);
 
-					t_vector.uv_xx = 0.0f;
+					t_vector.uv_xx = 1.0f;
 					t_vector.uv_yy = 0.0f;
 
 					this->vertex->AddVertex(t_vector);
@@ -304,10 +341,15 @@ namespace NCommon
 					t_vector.pos_yy = t_it->data.y + t_it->data.h;
 					t_vector.pos_zz = static_cast<f32>(t_it->data.z);
 
-					t_vector.uv_xx = 0.0f;
-					t_vector.uv_yy = 0.0f;
+					t_vector.uv_xx = 1.0f;
+					t_vector.uv_yy = 1.0f;
 
 					this->vertex->AddVertex(t_vector);
+				}
+
+				//TODO:
+				if(t_it->data.texture_id >= 0){
+					t_texture_id = t_it->data.texture_id;
 				}
 			}
 
@@ -317,6 +359,11 @@ namespace NCommon
 				//シェーダー。
 				this->d3d11->Render_VSSetShader(this->vertexshader_id);
 				this->d3d11->Render_PSSetShader(this->pixelshader_id);
+
+				//テクスチャー設定。
+				if(t_texture_id >= 0){
+					this->d3d11->Render_SetTexture(0,t_texture_id);
+				}
 
 				//トポロジー。
 				this->d3d11->Render_SetPrimitiveTopology(NBsys::ND3d11::D3d11_TopologyType::Id::TriangleList);
@@ -329,7 +376,12 @@ namespace NCommon
 				DrawRect_PS_ConstantBuffer_B1 t_ps_constantbuffer_b1;
 				{
 					t_vs_constantbuffer_b0.view_projection = t_view_projection.Make_Transpose();
-					t_ps_constantbuffer_b1.flag1 = 0x00000000;
+
+					if(t_texture_id >= 0){
+						t_ps_constantbuffer_b1.flag1 = 0x00000001;
+					}else{
+						t_ps_constantbuffer_b1.flag1 = 0x00000000;
+					}
 				}
 
 				//コンスタントバッファーの内容更新。
@@ -351,6 +403,7 @@ namespace NCommon
 				this->d3d11->Render_Draw(this->vertex->GetVertexCountOf(0),0);
 			}
 		}
+
 	};
 }
 #endif

@@ -29,7 +29,7 @@ Texture2D tex_diffuse_4 : register(t3);
 
 /** PS_ConstantBuffer_B1
 */
-cbuffer PS_ConstantBuffer_B1 : register(b0)
+cbuffer PS_ConstantBuffer_B1 : register(b1)
 {
 	uint flag1;
 	uint flag2;
@@ -65,9 +65,12 @@ float4 PS(VS_IN a_vs_in) : SV_Target
 		t_color *= tex_diffuse_2.Sample(DiffuseSampler,a_vs_in.in_uv);
 	}else if(t_texture_index == 2){
 		t_color *= tex_diffuse_3.Sample(DiffuseSampler,a_vs_in.in_uv);
-	}else if(t_texture_index == 3){
-		t_color *= tex_diffuse_4.Sample(DiffuseSampler,a_vs_in.in_uv);
 	}
+
+	//debug
+	//if(t_color.a <= 0.5){
+	//	t_color.a = 0.5;
+	//}
 
 	return t_color;
 }

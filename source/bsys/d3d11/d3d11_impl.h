@@ -469,10 +469,16 @@ namespace NBsys{namespace ND3d11
 		/** Render_UpdateFontTexture
 		*/
 		#if(BSYS_FONT_ENABLE)
-		void Render_UpdateFontTexture(s32 a_fontindex,const STLWString& a_string);
+		bool Render_UpdateFontTexture(s32 a_fontindex,const STLWString& a_string);
 		#endif
 
-		/** Render_UpdateFontTexture
+		/** Render_WriteFontTexture
+		*/
+		#if(BSYS_FONT_ENABLE)
+		void Render_WriteFontTexture(s32 a_fontindex);
+		#endif
+
+		/** Render_MakeFontVertex
 		*/
 		#if(BSYS_FONT_ENABLE)
 		void Render_MakeFontVertex(s32 a_fontindex,const STLWString& a_string,sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4>>& a_vertex,f32 a_x,f32 a_y,f32 a_z,f32 a_font_size,const NBsys::NColor::Color_F& a_color);

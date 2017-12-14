@@ -57,6 +57,11 @@ float4 PS(VS_IN a_vs_in) : SV_Target
 		t_color *= tex_diffuse.Sample(DiffuseSampler,a_vs_in.in_uv);
 	}
 
+	//debug
+	//if(t_color.a <= 0.5){
+	//	t_color.a = 0.5;
+	//}
+
 	return t_color;
 }
 

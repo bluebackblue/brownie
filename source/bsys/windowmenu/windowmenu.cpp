@@ -71,14 +71,14 @@ namespace NBsys{namespace NWindowMenu
 				//計算結果のクリア。
 				{
 					for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
-						(*t_it)->CalcRectClear();
+						(*t_it)->CalcRectClear(t_it,0);
 					}
 				}
 
 				//表示位置計算。
 				{
 					for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
-						(*t_it)->CalcRect();
+						WindowMenu_Window_Base::CalcRect(t_it->get());
 					}
 				}
 

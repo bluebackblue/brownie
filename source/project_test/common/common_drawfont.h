@@ -238,7 +238,31 @@ namespace NCommon
 
 		/** 描画。
 		*/
+		virtual void PreRenderOnce(STLList<Render2D_Item>::Type& a_list)
+		{
+			STLList<Render2D_Item>::iterator t_it_end = a_list.end();
+			for(STLList<Render2D_Item>::const_iterator t_it = a_list.begin();t_it != t_it_end;t_it++){
+				if(t_it->data.type == Render2D_Item::Type::Font){
+					//フォントテクスチャー更新。
+					this->d3d11->Render_UpdateFontTexture(t_it->data.texture_index,t_it->data.string);
+				}
+			}
+
+			this->d3d11->Render_WriteFontTexture(0);
+			this->d3d11->Render_WriteFontTexture(1);
+			this->d3d11->Render_WriteFontTexture(2);
+		}
+
+		/** 描画。
+		*/
 		virtual void Render(NBsys::NGeometry::Geometry_Matrix_44& a_view_projection,STLList<Render2D_Item>::const_iterator a_it_start,STLList<Render2D_Item>::const_iterator a_it_end)
+		{
+			this->RenderCall(a_view_projection,a_it_start,a_it_end);
+		}
+
+		/** 描画。
+		*/
+		void RenderCall(NBsys::NGeometry::Geometry_Matrix_44& a_view_projection,STLList<Render2D_Item>::const_iterator a_it_start,STLList<Render2D_Item>::const_iterator a_it_end)
 		{
 			//バーテックスクリア。
 			this->vertex->ClearVertex();
@@ -308,6 +332,7 @@ namespace NCommon
 				//描画。
 				this->d3d11->Render_Draw(this->vertex->GetVertexCountOf(0),0);
 			}
+
 		}
 	};
 }

@@ -186,6 +186,10 @@ namespace NCommon
 
 		/** 描画。
 		*/
+		virtual void PreRenderOnce(STLList<Render2D_Item>::Type& a_list) = 0;
+
+		/** 描画。
+		*/
 		virtual void Render(NBsys::NGeometry::Geometry_Matrix_44& a_view_projection,STLList<Render2D_Item>::const_iterator a_it_start,STLList<Render2D_Item>::const_iterator a_it_end) = 0;
 	};
 
@@ -248,10 +252,16 @@ namespace NCommon
 
 			//描画。
 			{
-				Render2D_Item::Type::Id t_current_type = Render2D_Item::Type::None;
-
 				STLList<Render2D_Item>::const_iterator t_it_end = this->list.end();
 				STLList<Render2D_Item>::const_iterator t_it = this->list.begin();
+
+				for(s32 ii=0;ii<COUNTOF(this->material_list);ii++){
+					if(this->material_list[ii].get() != nullptr){
+						this->material_list[ii]->PreRenderOnce(this->list);
+					}
+				}
+
+				Render2D_Item::Type::Id t_current_type = Render2D_Item::Type::None;
 				STLList<Render2D_Item>::const_iterator t_it_renderstart = t_it;
 				if(t_it != t_it_end){
 					t_current_type = t_it->data.type;
@@ -263,7 +273,7 @@ namespace NCommon
 						this->material_list[t_current_type]->Render(a_view_projection,t_it_renderstart,t_it);
 
 						t_current_type = t_it->data.type;
-						t_it_renderstart = t_it_renderstart;
+						t_it_renderstart = t_it;
 					}
 
 					t_it++;

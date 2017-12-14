@@ -153,7 +153,7 @@ public:
 		//パッド。
 		NBsys::NPad::Update(true);
 
-		//デバッグメニュー。
+		//ウィンドウメニュー。
 		NBsys::NWindowMenu::GetSystemInstance()->Update();
 
 		switch(this->step){
@@ -210,7 +210,7 @@ public:
 				this->step++;
 				this->draw = true;
 
-				//ウィンドウ。
+				//ウィンドウメニュー。
 				s_test12_window_1.reset(new Test12_WindowMenu(150.0f,150.0f,0));
 				//s_test12_window_2.reset(new Test12_WindowMenu(300.0f,300.0f,1));
 				NBsys::NWindowMenu::GetSystemInstance()->Add(s_test12_window_1);
@@ -240,8 +240,25 @@ public:
 						s_render2d->DrawFont(0,t_mouse_l.x-50,t_mouse_l.y-50,16.0f,0,NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f),t_string);
 					}
 
-					s_render2d->DrawFont(0,100.0f,			100.0f,			32.0f,1,NBsys::NColor::Color_F(1.0f,0.0f,1.0f,1.0f),L"あいうえお");
-					s_render2d->DrawFont(0,s_width/2.0f,	s_height/2.0f,	64.0f,2,NBsys::NColor::Color_F(1.0f,1.0f,0.0f,1.0f),L"あいうえお");
+					s_render2d->DrawFont(1,200.0f,			200.0f,			32.0f,		1,	NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f),L"あいうえお");
+					s_render2d->DrawFont(1,s_width/2.0f,	s_height/2.0f,	64.0f,		2,	NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f),L"あいうえお");
+					
+					/*
+					{
+						s32 t_texture_id = s_d3d11->Render_GetFontTexture(0);
+						s_render2d->DrawRect(0,100,100,16*3,256*4,t_texture_id,NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
+					}
+
+					{
+						s32 t_texture_id = s_d3d11->Render_GetFontTexture(1);
+						s_render2d->DrawRect(0,200,100,32,256,t_texture_id,NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
+					}
+
+					{
+						s32 t_texture_id = s_d3d11->Render_GetFontTexture(2);
+						s_render2d->DrawRect(0,300,100,64,4096,t_texture_id,NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
+					}
+					*/
 				}
 
 			}break;
@@ -315,7 +332,7 @@ public:
 					s_render2d->Render(t_view * t_projection);
 				}
 
-				//デバッグメニュー。
+				//ウィンドウメニュー。
 				{
 					NBsys::NWindowMenu::GetSystemInstance()->Update();
 					NBsys::NWindowMenu::GetSystemInstance()->Draw();
@@ -370,7 +387,7 @@ void Test_Main()
 	//フォント描画。
 	s_drawfont_material.reset(new NCommon::DrawFont_Material(s_d3d11));
 
-	//デバッグメニュー。
+	//ウィンドウメニュー。
 	s_windowmenu_callback.reset(new NCommon::WindowMenu_Callback(s_render2d));
 	NBsys::NWindowMenu::StartSystem(s_windowmenu_callback);
 

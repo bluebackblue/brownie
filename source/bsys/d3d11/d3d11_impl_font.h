@@ -176,11 +176,9 @@ namespace NBsys{namespace ND3d11
 		
 		/** UpdateFontTexture
 		*/
-		void UpdateFontTexture(const STLWString& a_string)
+		bool UpdateFontTexture(const STLWString& a_string)
 		{
 			bool t_change = false;
-			s32 t_change_min = BSYS_D3D11_FONT_DRAWTYPEMAX;
-			s32 t_change_max = -1;
 
 			for(s32 ii=0;ii<static_cast<s32>(a_string.length());ii++){
 
@@ -219,13 +217,6 @@ namespace NBsys{namespace ND3d11
 							NBsys::NFont::Font_State t_font_state = this->font->GetPixel_R8G8B8A8(this->texture->GetPixel(),t_font_index * (this->texturewidth * this->texturewidth * 4),this->texturewidth,this->texturewidth,t_code);
 							t_change = true;
 
-							if(t_change_min > t_font_index){
-								t_change_min = t_font_index;
-							}
-							if(t_change_max < t_font_index){
-								t_change_max = t_font_index;
-							}
-							
 							//登録。
 							this->list[t_font_index].code = t_code;
 							this->list[t_font_index].lock = true;
@@ -238,37 +229,45 @@ namespace NBsys{namespace ND3d11
 				}
 			}
 
-			if(t_change){
-				sharedptr<D3d11_Impl_Texture>& t_texture = this->d3d11_impl.GetTexture(this->textureid);
-				if(t_texture){
-					D3D11_MAPPED_SUBRESOURCE t_mapped_resource;
-					HRESULT t_result = this->d3d11_impl.GetDeviceContext()->Map(t_texture->texture2d.get(),0,D3D11_MAP_WRITE_DISCARD,0,&t_mapped_resource);
+			return t_change;
+		}
 
-					if(SUCCEEDED(t_result)){
-						s32 t_from_pitch = this->texturewidth * 4;
-						if(t_mapped_resource.RowPitch == t_from_pitch){
-							u8* t_to = &reinterpret_cast<u8*>(t_mapped_resource.pData)[t_change_min * this->texturewidth * t_mapped_resource.RowPitch];
-							u8* t_from = &this->texture->GetPixel().get()[t_change_min * this->texturewidth * t_from_pitch];
+		/** WriteFontTexture
+		*/
+		void WriteFontTexture()
+		{
+			s32 t_change_min = 0;
+			s32 t_change_max = BSYS_D3D11_FONT_DRAWTYPEMAX - 1;
 
-							s32 t_size = (t_change_max - t_change_min + 1) * this->texturewidth * t_from_pitch;
-							Memory::memcpy(t_to,t_size,t_from,t_size);
-						}else{
-							for(s32 ii=t_change_min;ii<=t_change_max;ii++){
-								s32 t_blocksize_to = ii * t_mapped_resource.RowPitch * this->texturewidth;
-								s32 t_blocksize_from = ii * t_from_pitch * this->texturewidth;
+			sharedptr<D3d11_Impl_Texture>& t_texture = this->d3d11_impl.GetTexture(this->textureid);
+			if(t_texture){
+				D3D11_MAPPED_SUBRESOURCE t_mapped_resource;
+				HRESULT t_result = this->d3d11_impl.GetDeviceContext()->Map(t_texture->texture2d.get(),0,D3D11_MAP_WRITE_DISCARD,0,&t_mapped_resource);
 
-								for(s32 yy=0;yy<this->texturewidth;yy++){
-									u8* t_to = &reinterpret_cast<u8*>(t_mapped_resource.pData)[yy * t_mapped_resource.RowPitch + t_blocksize_to];
-									u8* t_from = &this->texture->GetPixel().get()[yy * t_from_pitch + t_blocksize_from];
+				if(SUCCEEDED(t_result)){
+					s32 t_from_pitch = this->texturewidth * 4;
+					if(t_mapped_resource.RowPitch == t_from_pitch){
+						u8* t_to = &reinterpret_cast<u8*>(t_mapped_resource.pData)[t_change_min * this->texturewidth * t_mapped_resource.RowPitch];
+						u8* t_from = &this->texture->GetPixel().get()[t_change_min * this->texturewidth * t_from_pitch];
 
-									s32 t_size = t_from_pitch;
-									Memory::memcpy(t_to,t_size,t_from,t_size);
-								}
+						s32 t_size = (t_change_max - t_change_min + 1) * this->texturewidth * t_from_pitch;
+						Memory::memcpy(t_to,t_size,t_from,t_size);
+					}else{
+						for(s32 ii=t_change_min;ii<=t_change_max;ii++){
+							s32 t_blocksize_to = ii * t_mapped_resource.RowPitch * this->texturewidth;
+							s32 t_blocksize_from = ii * t_from_pitch * this->texturewidth;
+
+							for(s32 yy=0;yy<this->texturewidth;yy++){
+								u8* t_to = &reinterpret_cast<u8*>(t_mapped_resource.pData)[yy * t_mapped_resource.RowPitch + t_blocksize_to];
+								u8* t_from = &this->texture->GetPixel().get()[yy * t_from_pitch + t_blocksize_from];
+
+								s32 t_size = t_from_pitch;
+								Memory::memcpy(t_to,t_size,t_from,t_size);
 							}
 						}
-
-						this->d3d11_impl.GetDeviceContext()->Unmap(t_texture->texture2d.get(),0);
 					}
+
+					this->d3d11_impl.GetDeviceContext()->Unmap(t_texture->texture2d.get(),0);
 				}
 			}
 		}

@@ -1092,11 +1092,26 @@ namespace NBsys{namespace ND3d11
 	/** Render_UpdateFontTexture
 	*/
 	#if(BSYS_FONT_ENABLE)
-	void D3d11_Impl::Render_UpdateFontTexture(s32 a_fontindex,const STLWString& a_string)
+	bool D3d11_Impl::Render_UpdateFontTexture(s32 a_fontindex,const STLWString& a_string)
 	{
 		if(this->font_list[a_fontindex] != nullptr){
-			this->font_list[a_fontindex]->UpdateFontTexture(a_string);
+			return this->font_list[a_fontindex]->UpdateFontTexture(a_string);
 		}
+
+		return false;
+	}
+	#endif
+
+	/** Render_WriteFontTexture
+	*/
+	#if(BSYS_FONT_ENABLE)
+	void D3d11_Impl::Render_WriteFontTexture(s32 a_fontindex)
+	{
+		if(this->font_list[a_fontindex] != nullptr){
+			this->font_list[a_fontindex]->WriteFontTexture();
+		}
+
+		false;
 	}
 	#endif
 
