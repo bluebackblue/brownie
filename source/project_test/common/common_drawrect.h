@@ -259,6 +259,9 @@ namespace NCommon
 		*/
 		void RenderCall(NBsys::NGeometry::Geometry_Matrix_44& a_view_projection,STLList<Render2D_Item>::const_iterator a_it_start,STLList<Render2D_Item>::const_iterator a_it_end)
 		{
+			//ビューポート。
+			this->d3d11->Render_ViewPort(0.0f,0.0f,static_cast<f32>(this->d3d11->GetWidth()),static_cast<f32>(this->d3d11->GetHeight()));
+
 			//バーテックスクリア。
 			this->vertex->ClearVertex();
 

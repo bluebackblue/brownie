@@ -336,8 +336,8 @@ namespace NCommon
 				this->d3d11->Render_ViewPort(
 					0,
 					0,
-					this->d3d11->GetWidth(),
-					this->d3d11->GetHeight()
+					static_cast<f32>(this->d3d11->GetWidth()),
+					static_cast<f32>(this->d3d11->GetHeight())
 				);
 			}
 
@@ -411,9 +411,6 @@ namespace NCommon
 				//描画。
 				this->d3d11->Render_Draw(this->vertex->GetVertexCountOf(0),0);
 			}
-
-			//ビューポート。
-			this->d3d11->Render_ViewPort(0.0f,0.0f,static_cast<f32>(this->d3d11->GetWidth()),static_cast<f32>(this->d3d11->GetHeight()));
 		}
 	};
 }
