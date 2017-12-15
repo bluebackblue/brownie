@@ -31,80 +31,79 @@ Test12_WindowMenu::Test12_WindowMenu(f32 a_offset_x,f32 a_offset_y,s32 a_id)
 	id(a_id),
 	endrequest(false)
 {
+	//メイン。
 	this->Initialize(
-		NBsys::NWindowMenu::WindowMenu_Window_Base::Mode::Vertical,	//縦済み。
+		NBsys::NWindowMenu::WindowMenu_Window_Base::Mode::Vertical,
 		a_offset_x,
 		a_offset_y,
 		NBsys::NWindowMenu::WindowMenu_Window_Base::SizeType::Fix,
-		300.0f,
+		300,
 		NBsys::NWindowMenu::WindowMenu_Window_Base::SizeType::StretchChild,
 		-1.0f,
 		0
 	);
 
-	//ドラッグ。
+	f32 t_title_h = 30.0f;
+
+	//タイトル。
 	{
-		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_drag(new NBsys::NWindowMenu::WindowMenu_Window_Drag(
+		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_titledrag(new NBsys::NWindowMenu::WindowMenu_Window_Drag(
 			NBsys::NWindowMenu::WindowMenu_Window_Base::Mode::Horizontal,
-			"title:drag",
+			"title->drag",
 			0.0f,
 			0.0f,
 			NBsys::NWindowMenu::WindowMenu_Window_Base::SizeType::StretchParent,
-			-1.0f,
+			-1,
 			NBsys::NWindowMenu::WindowMenu_Window_Base::SizeType::Fix,
-			50.0f,
+			t_title_h,
 			0
 		));
 
-		this->AddChild(t_drag);
+		this->AddChild(t_titledrag);
 
-		//下地。
+		//タイトル背景。
 		{
-			NBsys::NColor::Color_F t_color[] = {
-				NBsys::NColor::Color_F(1.0f,0.9f,0.9f,1.0f),
-				NBsys::NColor::Color_F(0.9f,1.0f,0.9f,1.0f),
-			};
-
-			sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_plate(new NBsys::NWindowMenu::WindowMenu_Window_Plate(
-				NBsys::NWindowMenu::WindowMenu_Window_Base::Mode::Free,
-				"title:plate",
+			sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_titlebg = new NBsys::NWindowMenu::WindowMenu_Window_Plate(
+				NBsys::NWindowMenu::WindowMenu_Window_Base::Mode::Horizontal,
+				"title",
 				0.0f,
 				0.0f,
 				NBsys::NWindowMenu::WindowMenu_Window_Base::SizeType::StretchParent,
-				-1.0f,
-				NBsys::NWindowMenu::WindowMenu_Window_Base::SizeType::StretchParent,
-				-1.0f,
-				t_color[this->id],
 				-1,
+				NBsys::NWindowMenu::WindowMenu_Window_Base::SizeType::Fix,
+				t_title_h,
+				NBsys::NColor::Color_F(1.0f,0.9f,0.9f,1.0f),
+				-1,
+				false,
 				0
-			));
+			);
 
-			t_drag->AddChild(t_plate);
+			t_titledrag->AddChild(t_titlebg);
 		}
 
 		//閉じるボタン。
 		{
 			sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_closebutton(new NBsys::NWindowMenu::WindowMenu_Window_CloseButton(
 				NBsys::NWindowMenu::WindowMenu_Window_Base::Mode::Free,
-				"title:closebutton",
+				"title->closebutton",
 				0.0f,
 				0.0f,
 				NBsys::NWindowMenu::WindowMenu_Window_Base::SizeType::Fix,
-				50.0f,
+				t_title_h,
 				NBsys::NWindowMenu::WindowMenu_Window_Base::SizeType::Fix,
-				50.0f,
+				t_title_h,
 				0
 			));
 
-			t_drag->AddChild(t_closebutton);
+			t_titledrag->AddChild(t_closebutton);
 		}
 	}
 
-	//下地。
+	//ボディー。
 	{
-		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_plate(new NBsys::NWindowMenu::WindowMenu_Window_Plate(
+		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_body(new NBsys::NWindowMenu::WindowMenu_Window_Plate(
 			NBsys::NWindowMenu::WindowMenu_Window_Base::Mode::Vertical,
-			"body:plate",
+			"body",
 			0.0f,
 			0.0f,
 			NBsys::NWindowMenu::WindowMenu_Window_Base::SizeType::StretchParent,
@@ -113,10 +112,11 @@ Test12_WindowMenu::Test12_WindowMenu(f32 a_offset_x,f32 a_offset_y,s32 a_id)
 			300.0f,
 			NBsys::NColor::Color_F(0.5f,0.5f,0.5f,0.5f),
 			-1,
+			true,
 			0
 		));
 
-		this->AddChild(t_plate);
+		this->AddChild(t_body);
 	}
 }
 

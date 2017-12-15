@@ -37,10 +37,14 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		s32 texture_id;
 
+		/** mouseblock
+		*/
+		bool mouseblock;
+
 	public:
 		/** constructor
 		*/
-		WindowMenu_Window_Plate(WindowMenu_Window_Base::Mode::Id a_mode,const STLString& a_name,f32 a_x,f32 a_y,SizeType::Id a_sizetype_w,f32 a_w,SizeType::Id a_sizetype_h,f32 a_h,const NBsys::NColor::Color_F& a_color,s32 a_texture_id,s32 a_z);
+		WindowMenu_Window_Plate(WindowMenu_Window_Base::Mode::Id a_mode,const STLString& a_name,f32 a_x,f32 a_y,SizeType::Id a_sizetype_w,f32 a_w,SizeType::Id a_sizetype_h,f32 a_h,const NBsys::NColor::Color_F& a_color,s32 a_texture_id,bool a_mouseblock,s32 a_z);
 
 		/** destructor
 		*/
@@ -49,6 +53,10 @@ namespace NBsys{namespace NWindowMenu
 		/** 描画処理。
 		*/
 		virtual bool CallBack_Draw();
+
+		/** マウス処理。
+		*/
+		virtual bool CallBack_MouseUpdate(WindowMenu_Mouse& a_mouse);
 	};
 
 }}

@@ -36,11 +36,12 @@ namespace NBsys{namespace NWindowMenu
 {
 	/** constructor
 	*/
-	WindowMenu_Window_Plate::WindowMenu_Window_Plate(WindowMenu_Window_Base::Mode::Id a_mode,const STLString& a_name,f32 a_x,f32 a_y,SizeType::Id a_sizetype_w,f32 a_w,SizeType::Id a_sizetype_h,f32 a_h,const NBsys::NColor::Color_F& a_color,s32 a_texture_id,s32 a_z)
+	WindowMenu_Window_Plate::WindowMenu_Window_Plate(WindowMenu_Window_Base::Mode::Id a_mode,const STLString& a_name,f32 a_x,f32 a_y,SizeType::Id a_sizetype_w,f32 a_w,SizeType::Id a_sizetype_h,f32 a_h,const NBsys::NColor::Color_F& a_color,s32 a_texture_id,bool a_mouseblock,s32 a_z)
 		:
 		WindowMenu_Window_Base(a_name),
 		color(a_color),
-		texture_id(a_texture_id)
+		texture_id(a_texture_id),
+		mouseblock(a_mouseblock)
 	{
 		this->Initialize(a_mode,a_x,a_y,a_sizetype_w,a_w,a_sizetype_h,a_h,a_z);
 	}
@@ -60,6 +61,13 @@ namespace NBsys{namespace NWindowMenu
 		}
 
 		return true;
+	}
+
+	/** マウス処理。
+	*/
+	bool WindowMenu_Window_Plate::CallBack_MouseUpdate(WindowMenu_Mouse& a_mouse)
+	{
+		return this->mouseblock;
 	}
 }}
 
