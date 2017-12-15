@@ -220,7 +220,7 @@ namespace NCommon
 
 		/** SetMaterial
 		*/
-		void SetMaterial(Render2D_Item::Type::Id a_type,sharedptr<Render2D_Material_Base>& a_material)
+		void SetMaterial(Render2D_Item::Type::Id a_type,sharedptr<Render2D_Material_Base> a_material)
 		{
 			this->material_list[a_type] = a_material;
 		}

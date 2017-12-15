@@ -46,7 +46,7 @@ namespace NBsys{namespace NPad
 
 	/** デバイス追加。
 	*/
-	void Pad_List::AddDevice(sharedptr<Pad_Device_Base>& a_device_instance)
+	void Pad_List::AddDevice(sharedptr<Pad_Device_Base> a_device_instance)
 	{
 		this->device_list.push_back(a_device_instance);
 	}

@@ -47,7 +47,7 @@ namespace NBsys{namespace NActionBatching
 
 	/** Add
 	*/
-	void ActionBatching_ActionList::Add(const sharedptr<ActionBatching_ActionItem_Base>& a_actionitem)
+	void ActionBatching_ActionList::Add(const sharedptr<ActionBatching_ActionItem_Base> a_actionitem)
 	{
 		this->actionlist.push_back(a_actionitem);
 	}

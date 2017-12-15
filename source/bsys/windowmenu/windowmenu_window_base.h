@@ -153,7 +153,7 @@ namespace NBsys{namespace NWindowMenu
 
 		/** 子の削除。
 		*/
-		void RemoveChild(sharedptr<WindowMenu_Window_Base>& a_window);
+		void RemoveChild(sharedptr<WindowMenu_Window_Base> a_window);
 
 		/** IsRange
 		*/

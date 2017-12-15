@@ -49,7 +49,7 @@ namespace NBsys{namespace NPad
 	public:
 		/** デバイス追加。
 		*/
-		void AddDevice(sharedptr<Pad_Device_Base>& a_device_instance);
+		void AddDevice(sharedptr<Pad_Device_Base> a_device_instance);
 
 		/** 仮想パッド取得。
 		*/

@@ -58,7 +58,7 @@ namespace NBsys{namespace NActionBatching
 
 		/** Add
 		*/
-		void Add(const sharedptr<ActionBatching_ActionItem_Base>& a_actionitem);
+		void Add(const sharedptr<ActionBatching_ActionItem_Base> a_actionitem);
 
 		/** アクション開始。
 		*/

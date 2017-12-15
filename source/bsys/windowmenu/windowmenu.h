@@ -65,7 +65,7 @@ namespace NBsys{namespace NWindowMenu
 	public:
 		/** constructor
 		*/
-		WindowMenu(sharedptr<WindowMenu_Callback_Base>& a_callback);
+		WindowMenu(sharedptr<WindowMenu_Callback_Base> a_callback);
 
 		/** destructor
 		*/
@@ -83,7 +83,7 @@ namespace NBsys{namespace NWindowMenu
 	public:
 		/** 追加。
 		*/
-		void Add(const sharedptr<WindowMenu_Window_Base>& a_window);
+		void Add(const sharedptr<WindowMenu_Window_Base> a_window);
 
 		/** GetList
 		*/
@@ -101,7 +101,7 @@ namespace NBsys{namespace NWindowMenu
 
 	/** システムの開始。
 	*/
-	void StartSystem(sharedptr<WindowMenu_Callback_Base>& a_callback);
+	void StartSystem(sharedptr<WindowMenu_Callback_Base> a_callback);
 
 	/** システムの終了。
 	*/

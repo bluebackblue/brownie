@@ -70,7 +70,7 @@ namespace NBsys{namespace NPad
 
 	/** AddButton
 	*/
-	void Pad_Virtual::AddButton(Pad_Virtual::ButtonType::Id a_virtual_button,Pad_Device_Base::ButtonType::Id a_device_button,sharedptr<Pad_Device_Base>& a_device)
+	void Pad_Virtual::AddButton(Pad_Virtual::ButtonType::Id a_virtual_button,Pad_Device_Base::ButtonType::Id a_device_button,sharedptr<Pad_Device_Base> a_device)
 	{
 		ButtonItem t_item;
 		{
@@ -84,7 +84,7 @@ namespace NBsys{namespace NPad
 
 	/** AddAnalog
 	*/
-	void Pad_Virtual::AddAnalog(Pad_Virtual::AnalogType::Id a_virtual_analog,Pad_Device_Base::AnalogType::Id a_device_analog,sharedptr<Pad_Device_Base>& a_device)
+	void Pad_Virtual::AddAnalog(Pad_Virtual::AnalogType::Id a_virtual_analog,Pad_Device_Base::AnalogType::Id a_device_analog,sharedptr<Pad_Device_Base> a_device)
 	{
 		AnalogItem t_item;
 		{
@@ -99,7 +99,7 @@ namespace NBsys{namespace NPad
 
 	/** AddTouch
 	*/
-	void Pad_Virtual::AddTouch(Pad_Virtual::TouchType::Id a_virtual_touch,Pad_Device_Base::TouchType::Id a_device_touch,sharedptr<Pad_Device_Base>& a_device)
+	void Pad_Virtual::AddTouch(Pad_Virtual::TouchType::Id a_virtual_touch,Pad_Device_Base::TouchType::Id a_device_touch,sharedptr<Pad_Device_Base> a_device)
 	{
 		TouchItem t_item;
 		{
@@ -113,7 +113,7 @@ namespace NBsys{namespace NPad
 
 	/** SetButton
 	*/
-	void Pad_Virtual::SetButton(Pad_Virtual::ButtonType::Id a_virtual_button,Pad_Device_Base::ButtonType::Id a_device_button,sharedptr<Pad_Device_Base>& a_device)
+	void Pad_Virtual::SetButton(Pad_Virtual::ButtonType::Id a_virtual_button,Pad_Device_Base::ButtonType::Id a_device_button,sharedptr<Pad_Device_Base> a_device)
 	{
 		for(STLList<ButtonItem>::iterator t_it = this->list_button.begin();t_it != this->list_button.end();++t_it){
 			if(t_it->virtual_button == a_virtual_button){
@@ -126,7 +126,7 @@ namespace NBsys{namespace NPad
 
 	/** SetAnalog
 	*/
-	void Pad_Virtual::SetAnalog(Pad_Virtual::AnalogType::Id a_virtual_analog,Pad_Device_Base::AnalogType::Id a_device_analog,sharedptr<Pad_Device_Base>& a_device)
+	void Pad_Virtual::SetAnalog(Pad_Virtual::AnalogType::Id a_virtual_analog,Pad_Device_Base::AnalogType::Id a_device_analog,sharedptr<Pad_Device_Base> a_device)
 	{
 		for(STLList<AnalogItem>::iterator t_it = this->list_analog.begin();t_it != this->list_analog.end();++t_it){
 			if(t_it->virtual_analog == a_virtual_analog){
@@ -139,7 +139,7 @@ namespace NBsys{namespace NPad
 
 	/** SetTouch
 	*/
-	void Pad_Virtual::SetTouch(Pad_Virtual::TouchType::Id a_virtual_touch,Pad_Device_Base::TouchType::Id a_device_touch,sharedptr<Pad_Device_Base>& a_device)
+	void Pad_Virtual::SetTouch(Pad_Virtual::TouchType::Id a_virtual_touch,Pad_Device_Base::TouchType::Id a_device_touch,sharedptr<Pad_Device_Base> a_device)
 	{
 		for(STLList<TouchItem>::iterator t_it = this->list_touch.begin();t_it != this->list_touch.end();++t_it){
 			if(t_it->virtual_touch == a_virtual_touch){

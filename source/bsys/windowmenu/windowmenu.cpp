@@ -35,7 +35,7 @@ namespace NBsys{namespace NWindowMenu
 
 	/** constructor
 	*/
-	WindowMenu::WindowMenu(sharedptr<WindowMenu_Callback_Base>& a_callback)
+	WindowMenu::WindowMenu(sharedptr<WindowMenu_Callback_Base> a_callback)
 		:
 		callback(a_callback),
 		list(),
@@ -175,7 +175,7 @@ namespace NBsys{namespace NWindowMenu
 
 	/** Add
 	*/
-	void WindowMenu::Add(const sharedptr<WindowMenu_Window_Base>& a_window)
+	void WindowMenu::Add(const sharedptr<WindowMenu_Window_Base> a_window)
 	{
 		this->list.push_back(a_window);
 		this->listcahnge = true;
@@ -204,7 +204,7 @@ namespace NBsys{namespace NWindowMenu
 
 	/** システムの開始。
 	*/
-	void StartSystem(sharedptr<WindowMenu_Callback_Base>& a_callback)
+	void StartSystem(sharedptr<WindowMenu_Callback_Base> a_callback)
 	{
 		s_windowmenu.reset(new WindowMenu(a_callback));
 	}

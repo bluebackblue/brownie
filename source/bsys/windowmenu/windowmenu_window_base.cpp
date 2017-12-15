@@ -111,10 +111,10 @@ namespace NBsys{namespace NWindowMenu
 
 	/** 子の削除。
 	*/
-	void WindowMenu_Window_Base::RemoveChild(sharedptr<WindowMenu_Window_Base>& a_window)
+	void WindowMenu_Window_Base::RemoveChild(sharedptr<WindowMenu_Window_Base> a_window)
 	{
 		STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = std::find_if(this->child_list.begin(),this->child_list.end(),
-			[&](const sharedptr<WindowMenu_Window_Base>& a_item){
+			[&](const sharedptr<WindowMenu_Window_Base> a_item){
 				return (a_item.get() == a_window.get());
 			}
 		);

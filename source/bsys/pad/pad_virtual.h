@@ -182,27 +182,27 @@ namespace NBsys{namespace NPad
 	public:
 		/** AddButton
 		*/
-		void AddButton(Pad_Virtual::ButtonType::Id a_virtual_button,Pad_Device_Base::ButtonType::Id a_device_button,sharedptr<Pad_Device_Base>& a_device);
+		void AddButton(Pad_Virtual::ButtonType::Id a_virtual_button,Pad_Device_Base::ButtonType::Id a_device_button,sharedptr<Pad_Device_Base> a_device);
 
 		/** AddAnalog
 		*/
-		void AddAnalog(Pad_Virtual::AnalogType::Id a_virtual_analog,Pad_Device_Base::AnalogType::Id a_device_analog,sharedptr<Pad_Device_Base>& a_device);
+		void AddAnalog(Pad_Virtual::AnalogType::Id a_virtual_analog,Pad_Device_Base::AnalogType::Id a_device_analog,sharedptr<Pad_Device_Base> a_device);
 
 		/** AddTouch
 		*/
-		void AddTouch(Pad_Virtual::TouchType::Id a_virtual_touch,Pad_Device_Base::TouchType::Id a_device_touch,sharedptr<Pad_Device_Base>& a_device);
+		void AddTouch(Pad_Virtual::TouchType::Id a_virtual_touch,Pad_Device_Base::TouchType::Id a_device_touch,sharedptr<Pad_Device_Base> a_device);
 
 		/** SetButton
 		*/
-		void SetButton(Pad_Virtual::ButtonType::Id a_virtual_button,Pad_Device_Base::ButtonType::Id a_device_button,sharedptr<Pad_Device_Base>& a_device);
+		void SetButton(Pad_Virtual::ButtonType::Id a_virtual_button,Pad_Device_Base::ButtonType::Id a_device_button,sharedptr<Pad_Device_Base> a_device);
 
 		/** SetAnalog
 		*/
-		void SetAnalog(Pad_Virtual::AnalogType::Id a_virtual_analog,Pad_Device_Base::AnalogType::Id a_device_analog,sharedptr<Pad_Device_Base>& a_device);
+		void SetAnalog(Pad_Virtual::AnalogType::Id a_virtual_analog,Pad_Device_Base::AnalogType::Id a_device_analog,sharedptr<Pad_Device_Base> a_device);
 
 		/** SetTouch
 		*/
-		void SetTouch(Pad_Virtual::TouchType::Id a_virtual_touch,Pad_Device_Base::TouchType::Id a_device_touch,sharedptr<Pad_Device_Base>& a_device);
+		void SetTouch(Pad_Virtual::TouchType::Id a_virtual_touch,Pad_Device_Base::TouchType::Id a_device_touch,sharedptr<Pad_Device_Base> a_device);
 
 		/** Update
 		*/
