@@ -37,30 +37,21 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	WindowMenu_Window_Base::WindowMenu_Window_Base(const STLString& a_name)
 		:
-		me(nullptr),
 		parent(nullptr),
-		mode(Mode::Free),
+
+		mode(WindowMenu_Mode::Free),
 		child_list(),
-
 		name(a_name),
-
-		offset_x(-1.0f),
-		offset_y(-1.0f),
-		width(-1.0f),
-		height(-1.0f),
-
-		sizetype_w(SizeType::Fix),
-		sizetype_h(SizeType::Fix),
-
-		z(0),
+		offset(0.0f,0.0f),
+		size(WindowMenu_SizeType::Fix,0.0f,WindowMenu_SizeType::Fix,0.0f),
 
 		calc_x(-1.0f),
 		calc_y(-1.0f),
 		calc_w(-1.0f),
 		calc_h(-1.0f),
 
-		calc_it(),
-		calc_child_index(0)
+		calc_child_index(0),
+		calc_it(STLList<sharedptr<WindowMenu_Window_Base>>::iterator())
 	{
 	}
 
@@ -72,26 +63,25 @@ namespace NBsys{namespace NWindowMenu
 
 	/** SetBase
 	*/
-	void WindowMenu_Window_Base::Initialize(Mode::Id a_mode,f32 a_offset_x,f32 a_offset_y,SizeType::Id a_sizetype_w,f32 a_width,SizeType::Id a_sizetype_h,f32 a_height,s32 a_z)
+	void WindowMenu_Window_Base::Initialize(const InitItem& a_inititem)
 	{
-		this->me = this;
 		this->parent = nullptr;
+
+		this->mode = a_inititem.mode;
 		this->child_list.clear();
 
-		this->mode = a_mode;
+		//this->name = "";
 
-		this->offset_x = a_offset_x;
-		this->offset_y = a_offset_y;
-		this->sizetype_w = a_sizetype_w;
-		this->width = a_width;
-		this->sizetype_h = a_sizetype_h;
-		this->height = a_height;
-		this->z = a_z;
+		this->offset = a_inititem.offset;
+		this->size = a_inititem.size;
 
 		this->calc_x = -1.0f;
 		this->calc_y = -1.0f;
 		this->calc_w = -1.0f;
 		this->calc_h = -1.0f;
+
+		this->calc_child_index = -1;
+		this->calc_it = STLList<sharedptr<WindowMenu_Window_Base>>::iterator();
 	}
 
 	/** 子の追加。
@@ -103,7 +93,7 @@ namespace NBsys{namespace NWindowMenu
 		}
 
 		this->child_list.push_back(a_window);
-		a_window->parent = this->me;
+		a_window->parent = this;
 	}
 
 	/** 子の削除。
@@ -144,19 +134,15 @@ namespace NBsys{namespace NWindowMenu
 			for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 				bool t_ret = (*t_it)->System_MouseUpdate(a_mouse);
 				if(t_ret == true){
-					//範囲内。
+					//マウス操作を親に伝えない。
 					return true;
-				}else{
-					//範囲外、透過。
 				}
 			}
 
-			bool t_ret = this->CallBack_MouseUpdate(a_mouse);
+			bool t_ret = this->CallBack_InRangeMouseUpdate(a_mouse);
 			if(t_ret == true){
-				//範囲内。
+				//マウス操作を親に伝えない。
 				return true;
-			}else{
-				//範囲外、透過。
 			}
 		}
 
@@ -190,8 +176,9 @@ namespace NBsys{namespace NWindowMenu
 
 	/** マウス処理。
 	*/
-	bool WindowMenu_Window_Base::CallBack_MouseUpdate(WindowMenu_Mouse& /*a_mouse*/)
+	bool WindowMenu_Window_Base::CallBack_InRangeMouseUpdate(WindowMenu_Mouse& /*a_mouse*/)
 	{
+		//マウス操作を親に伝える。
 		return false;
 	}
 
@@ -225,28 +212,24 @@ namespace NBsys{namespace NWindowMenu
 		}
 	}
 
-
 	/** 計算結果のクリア。
 	*/
 	void WindowMenu_Window_Base::CalcRectClear(STLList<sharedptr<WindowMenu_Window_Base>>::iterator a_it,s32 a_index)
 	{
-		/** [計算結果]自分の位置。
+		/** 計算結果。
 		*/
 		this->calc_x = -1.0f;
 		this->calc_y = -1.0f;
-
-		/** [計算結果]自分のサイズ。
-		*/
 		this->calc_w = -1.0f;
 		this->calc_h = -1.0f;
 
-		/** 計算に必要な自分のイテレータ。
-		*/
-		this->calc_it = a_it;
-
-		/** 計算に必要な自分のインデックス。
+		/** 計算に必要な親が所持している自分のインデックス。
 		*/
 		this->calc_child_index = a_index;
+
+		/** 計算に必要な親が所持している自分のイテレータ。
+		*/
+		this->calc_it = a_it;
 
 		s32 t_index = 0;
 		STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
@@ -257,270 +240,293 @@ namespace NBsys{namespace NWindowMenu
 	}
 
 
-	/** [static]サイズ計算。
+	/** サイズ計算。
 	*/
-	void WindowMenu_Window_Base::CalcRect(WindowMenu_Window_Base* a_window)
+	void WindowMenu_Window_Base::CalcRect()
 	{
-		CalcX(a_window);
-		CalcY(a_window);
-		CalcW(a_window);
-		CalcH(a_window);
+		this->CalcX(WindowMenu_SizeType::Fix);
+		this->CalcY(WindowMenu_SizeType::Fix);
+		this->CalcW(WindowMenu_SizeType::Fix);
+		this->CalcH(WindowMenu_SizeType::Fix);
 
-		ASSERT(a_window->calc_x >= 0.0f);
-		ASSERT(a_window->calc_y >= 0.0f);
-		ASSERT(a_window->calc_w >= 0.0f);
-		ASSERT(a_window->calc_h >= 0.0f);
+		ASSERT(this->calc_x >= 0.0f);
+		ASSERT(this->calc_y >= 0.0f);
+		ASSERT(this->calc_w >= 0.0f);
+		ASSERT(this->calc_h >= 0.0f);
 
-		STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = a_window->child_list.end();
-		for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = a_window->child_list.begin();t_it != t_it_end;++t_it){
-			CalcRect(t_it->get());
+		STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
+		for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
+			t_it->get()->CalcRect();
 		}
 	}
 
-	/** [static]サイズ計算。
+	/** サイズ計算。
 	*/
-	void WindowMenu_Window_Base::CalcX(WindowMenu_Window_Base* a_window)
+	void WindowMenu_Window_Base::CalcX(WindowMenu_SizeType::Id a_from_sizetype)
 	{
-		if(a_window->calc_x < 0.0f){
-			WindowMenu_Window_Base* t_parent = a_window->parent;
-
-			if(t_parent){
-				if(t_parent->mode == Mode::Free || t_parent->mode == Mode::Vertical){
+		if(this->calc_x < 0.0f){
+			if(this->parent){
+				if((this->parent->mode == WindowMenu_Mode::Free)||(this->parent->mode == WindowMenu_Mode::Vertical)){
 					//自由配置。
 					//縦積み。
 
-					CalcX(t_parent);
+					this->parent->CalcX(a_from_sizetype);
 
-					a_window->calc_x = t_parent->calc_x + a_window->offset_x;
-				}else if(t_parent->mode == Mode::Horizontal){
+					this->calc_x = this->parent->calc_x + this->offset.x;
+				}else if(this->parent->mode == WindowMenu_Mode::Horizontal){
 					//横積み。
 
-					if(a_window->calc_child_index == 0){
+					if(this->calc_child_index == 0){
 						//一番左。
 
-						CalcX(t_parent);
+						this->parent->CalcX(a_from_sizetype);
 
-						a_window->calc_x = t_parent->calc_x + a_window->offset_x;
+						this->calc_x = this->parent->calc_x + this->offset.x;
 					}else{
-						STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_before = std::prev(a_window->calc_it);
+						STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_before = std::prev(this->calc_it);
 						WindowMenu_Window_Base* t_before = t_it_before->get();
 
-						CalcX(t_before);
+						t_before->CalcX(a_from_sizetype);
 
-						a_window->calc_x = t_before->calc_x + t_before->calc_w + a_window->offset_x;
+						this->calc_x = t_before->calc_x + t_before->calc_w + this->offset.x;
 					}
 				}
 			}else{
 				//ルート。
-				a_window->calc_x = a_window->offset_x;
+				this->calc_x = this->offset.x;
 			}
 		}
 	}
 
-	/** [static]サイズ計算。
+	/** サイズ計算。
 	*/
-	void WindowMenu_Window_Base::CalcY(WindowMenu_Window_Base* a_window)
+	void WindowMenu_Window_Base::CalcY(WindowMenu_SizeType::Id a_from_sizetype)
 	{
-		if(a_window->calc_y < 0.0f){
-			WindowMenu_Window_Base* t_parent = a_window->parent;
-
-			if(t_parent){
-				if(t_parent->mode == Mode::Free || t_parent->mode == Mode::Horizontal){
+		if(this->calc_y < 0.0f){
+			if(this->parent){
+				if((this->parent->mode == WindowMenu_Mode::Free)||(this->parent->mode == WindowMenu_Mode::Horizontal)){
 					//自由配置。
 					//横積み。
 
-					CalcY(t_parent);
+					this->parent->CalcY(a_from_sizetype);
 
-					a_window->calc_y = t_parent->calc_y + a_window->offset_y;
-				}else if(t_parent->mode == Mode::Vertical){
+					this->calc_y = this->parent->calc_y + this->offset.y;
+				}else if(this->parent->mode == WindowMenu_Mode::Vertical){
 					//縦積み。
 
-					if(a_window->calc_child_index == 0){
+					if(this->calc_child_index == 0){
 						//一番上。
 
-						CalcY(t_parent);
+						this->parent->CalcY(a_from_sizetype);
 
-						a_window->calc_y = t_parent->calc_y + a_window->offset_y;
+						this->calc_y = this->parent->calc_y + this->offset.y;
 					}else{
-						STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_before = std::prev(a_window->calc_it);
+						STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_before = std::prev(this->calc_it);
 						WindowMenu_Window_Base* t_before = t_it_before->get();
 
-						CalcY(t_before);
+						t_before->CalcY(a_from_sizetype);
 
-						a_window->calc_y = t_before->calc_y + t_before->calc_h + a_window->offset_y;
+						this->calc_y = t_before->calc_y + t_before->calc_h + this->offset.y;
 					}
 				}
 			}else{
 				//ルート。
-				a_window->calc_y = a_window->offset_y;
+				this->calc_y = this->offset.y;
 			}
 		}
 	}
 
-	/** [static]サイズ計算。
+	/** サイズ計算。
 	*/
-	void WindowMenu_Window_Base::CalcW(WindowMenu_Window_Base* a_window)
+	void WindowMenu_Window_Base::CalcW(WindowMenu_SizeType::Id a_from_sizetype)
 	{
-		if(a_window->calc_w < 0.0f){
-			if(a_window->sizetype_w == WindowMenu_Window_Base::SizeType::Fix){
+		if(this->calc_w < 0.0f){
+			if(this->size.sizetype_w == WindowMenu_SizeType::Fix){
 				//固定。
-				a_window->calc_w = a_window->width;
-			}else if(a_window->sizetype_w == WindowMenu_Window_Base::SizeType::StretchParent){
-				//親のサイズに合わせる。
+				this->calc_w = this->size.w;
+			}else if(this->size.sizetype_w == WindowMenu_SizeType::StretchParent){
+				//■親のサイズに合わせる。
 
-				if((a_window->parent->mode == Mode::Free)||(a_window->parent->mode == Mode::Vertical)){
+				if((a_from_sizetype == WindowMenu_SizeType::Fix)||(a_from_sizetype == WindowMenu_SizeType::StretchParent)){
+				}else{
+					ASSERT(0);
+					this->calc_w = 0.0f;
+					return;
+				}
+
+				if((this->parent->mode == WindowMenu_Mode::Free)||(this->parent->mode == WindowMenu_Mode::Vertical)){
 					//自由配置。
 					//縦積み。
 
-					CalcW(a_window->parent);
+					this->parent->CalcW(WindowMenu_SizeType::StretchParent);
 
-					a_window->calc_w = a_window->parent->calc_w;
-				}else if(a_window->parent->mode == Mode::Horizontal){
+					this->calc_w = this->parent->calc_w;
+				}else if(this->parent->mode == WindowMenu_Mode::Horizontal){
 					//横積み。
 
+					s32 t_stretch_count = 0;
 					f32 t_total = 0.0f;
-					STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = a_window->parent->child_list.end();
-					for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = a_window->parent->child_list.begin();t_it != t_it_end;++t_it){
+					STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->parent->child_list.end();
+					for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->parent->child_list.begin();t_it != t_it_end;++t_it){
 						WindowMenu_Window_Base* t_parent_child = t_it->get();
 
-						if(t_parent_child->sizetype_w == WindowMenu_Window_Base::SizeType::StretchParent){
-
-							//自分。
-
+						if(t_parent_child->size.sizetype_w == WindowMenu_SizeType::StretchParent){
+							t_stretch_count++;
 						}else{
-
-							CalcW(t_parent_child);
-
-							t_total += t_parent_child->offset_x + t_parent_child->calc_w;
+							t_parent_child->CalcW(WindowMenu_SizeType::StretchParent);
+							t_total += t_parent_child->offset.x + t_parent_child->calc_w;
 						}
 					}
 
-					CalcW(a_window->parent);
+					this->parent->CalcW(WindowMenu_SizeType::StretchParent);
 
-					a_window->calc_w = a_window->parent->calc_w - t_total;
+					if(t_stretch_count<1){
+						t_stretch_count = 1;
+					}
+
+					this->calc_w = (this->parent->calc_w - t_total)/t_stretch_count;
 				}
-			}else if(a_window->sizetype_w == WindowMenu_Window_Base::SizeType::StretchChild){
-				//子のサイズに合わせる。
+			}else if(this->size.sizetype_w == WindowMenu_SizeType::StretchChild){
+				//■子のサイズに合わせる。
 
-				if((a_window->mode == Mode::Free)||(a_window->mode == Mode::Vertical)){
+				if((a_from_sizetype == WindowMenu_SizeType::Fix)||(a_from_sizetype == WindowMenu_SizeType::StretchChild)){
+				}else{
+					ASSERT(0);
+					this->calc_w = 0.0f;
+					return;
+				}
+
+				if((this->mode == WindowMenu_Mode::Free)||(this->mode == WindowMenu_Mode::Vertical)){
 					//自由配置。
 					//縦積み。
 
 					f32 t_temp = 0.0f;
-					STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = a_window->child_list.end();
-					for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = a_window->child_list.begin();t_it != t_it_end;++t_it){
+					STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
+					for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 						WindowMenu_Window_Base* t_child = t_it->get();
 
-						CalcW(t_child);
+						t_child->CalcW(WindowMenu_SizeType::StretchChild);
 
-						f32 t_offset_r = t_child->offset_x + t_child->calc_w;
+						f32 t_offset_r = t_child->offset.x + t_child->calc_w;
 						if(t_temp < t_offset_r){
 							t_temp = t_offset_r;
 						}
 					}
-					a_window->calc_w = t_temp;
+					this->calc_w = t_temp;
 
-				}else if(a_window->mode == Mode::Horizontal){
+				}else if(this->mode == WindowMenu_Mode::Horizontal){
 					//横積み。
 					
 					f32 t_temp = 0.0f;
-					STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = a_window->child_list.end();
-					for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = a_window->child_list.begin();t_it != t_it_end;++t_it){
+					STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
+					for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 						WindowMenu_Window_Base* t_child = t_it->get();
 
-						CalcW(t_child);
+						t_child->CalcW(WindowMenu_SizeType::StretchChild);
 
-						t_temp += t_child->offset_x + t_child->calc_w;
+						t_temp += t_child->offset.x + t_child->calc_w;
 					}
-					a_window->calc_w = t_temp;
-
+					this->calc_w = t_temp;
 				}
 			}
 		}
 	}
 
-	/** [static]サイズ計算。
+	/** サイズ計算。
 	*/
-	void WindowMenu_Window_Base::CalcH(WindowMenu_Window_Base* a_window)
+	void WindowMenu_Window_Base::CalcH(WindowMenu_SizeType::Id a_from_sizetype)
 	{
-		if(a_window->calc_h < 0.0f){
-			if(a_window->sizetype_h == WindowMenu_Window_Base::SizeType::Fix){
+		if(this->calc_h < 0.0f){
+			if(this->size.sizetype_h == WindowMenu_SizeType::Fix){
 				//固定。
-				a_window->calc_h = a_window->height;
-			}else if(a_window->sizetype_h == WindowMenu_Window_Base::SizeType::StretchParent){
-				//親のサイズに合わせる。
+				this->calc_h = this->size.h;
+			}else if(this->size.sizetype_h == WindowMenu_SizeType::StretchParent){
+				//■親のサイズに合わせる。
 
-				if((a_window->parent->mode == Mode::Free)||(a_window->parent->mode == Mode::Horizontal)){
+				if((a_from_sizetype == WindowMenu_SizeType::Fix)||(a_from_sizetype == WindowMenu_SizeType::StretchParent)){
+				}else{
+					ASSERT(0);
+					this->calc_h = 0.0f;
+					return;
+				}
+
+				if((this->parent->mode == WindowMenu_Mode::Free)||(this->parent->mode == WindowMenu_Mode::Horizontal)){
 					//自由配置。
 					//横積み。
 
-					CalcH(a_window->parent);
+					this->parent->CalcH(WindowMenu_SizeType::StretchParent);
 
-					a_window->calc_h = a_window->parent->calc_h;
-				}else if(a_window->parent->mode == Mode::Vertical){
+					this->calc_h = this->parent->calc_h;
+				}else if(this->parent->mode == WindowMenu_Mode::Vertical){
 					//縦積み。
 
+					s32 t_stretch_count = 0;
 					f32 t_total = 0.0f;
-					STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = a_window->parent->child_list.end();
-					for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = a_window->parent->child_list.begin();t_it != t_it_end;++t_it){
+					STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->parent->child_list.end();
+					for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->parent->child_list.begin();t_it != t_it_end;++t_it){
 						WindowMenu_Window_Base* t_parent_child = t_it->get();
 
-						if(t_parent_child->sizetype_h == WindowMenu_Window_Base::SizeType::StretchParent){
-
-							//自分。
-
+						if(t_parent_child->size.sizetype_h == WindowMenu_SizeType::StretchParent){
+							t_stretch_count++;
 						}else{
-
-							CalcH(t_parent_child);
-
-							t_total += t_parent_child->offset_y + t_parent_child->calc_h;
+							t_parent_child->CalcH(WindowMenu_SizeType::StretchParent);
+							t_total += t_parent_child->offset.y + t_parent_child->calc_h;
 						}
 					}
 
-					CalcH(a_window->parent);
+					this->parent->CalcH(WindowMenu_SizeType::StretchParent);
 
-					a_window->calc_h = a_window->parent->calc_h - t_total;
+					if(t_stretch_count<1){
+						t_stretch_count = 1;
+					}
+
+					this->calc_h = (this->parent->calc_h - t_total)/t_stretch_count;
 				}
-			}else if(a_window->sizetype_h == WindowMenu_Window_Base::SizeType::StretchChild){
-				//子のサイズに合わせる。
+			}else if(this->size.sizetype_h == WindowMenu_SizeType::StretchChild){
+				//■子のサイズに合わせる。
 
-				if((a_window->mode == Mode::Free)||(a_window->mode == Mode::Horizontal)){
+				if((a_from_sizetype == WindowMenu_SizeType::Fix)||(a_from_sizetype == WindowMenu_SizeType::StretchChild)){
+				}else{
+					ASSERT(0);
+					this->calc_h = 0.0f;
+					return;
+				}
+
+				if((this->mode == WindowMenu_Mode::Free)||(this->mode == WindowMenu_Mode::Horizontal)){
 					//自由配置。
 					//横積み。
 
 					f32 t_temp = 0.0f;
-					STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = a_window->child_list.end();
-					for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = a_window->child_list.begin();t_it != t_it_end;++t_it){
+					STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
+					for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 						WindowMenu_Window_Base* t_child = t_it->get();
 
-						CalcH(t_child);
+						t_child->CalcH(WindowMenu_SizeType::StretchChild);
 
-						f32 t_offset_d =t_child->offset_y + t_child->calc_h;
+						f32 t_offset_d =t_child->offset.y + t_child->calc_h;
 						if(t_temp < t_offset_d){
 							t_temp = t_offset_d;
 						}
 					}
-					a_window->calc_h = t_temp;
+					this->calc_h = t_temp;
 
-				}else if(a_window->mode == Mode::Vertical){
+				}else if(this->mode == WindowMenu_Mode::Vertical){
 					//縦積み。
 					
 					f32 t_temp = 0.0f;
-					STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = a_window->child_list.end();
-					for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = a_window->child_list.begin();t_it != t_it_end;++t_it){
+					STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
+					for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 						WindowMenu_Window_Base* t_child = t_it->get();
 
-						CalcH(t_child);
+						t_child->CalcH(WindowMenu_SizeType::StretchChild);
 
-						t_temp += t_child->offset_y + t_child->calc_h;
+						t_temp += t_child->offset.y + t_child->calc_h;
 					}
-					a_window->calc_h = t_temp;
-
+					this->calc_h = t_temp;
 				}
 			}
 		}
 	}
-
 
 }}
 

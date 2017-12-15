@@ -33,89 +33,91 @@ Test12_WindowMenu::Test12_WindowMenu(f32 a_offset_x,f32 a_offset_y,s32 a_id)
 {
 	//メイン。
 	this->Initialize(
-		NBsys::NWindowMenu::WindowMenu_Window_Base::Mode::Vertical,
-		a_offset_x,
-		a_offset_y,
-		NBsys::NWindowMenu::WindowMenu_Window_Base::SizeType::Fix,
-		300,
-		NBsys::NWindowMenu::WindowMenu_Window_Base::SizeType::StretchChild,
-		-1.0f,
-		0
+		WindowMenu_Window_Base::InitItem(
+			NBsys::NWindowMenu::WindowMenu_Mode::Vertical,
+			NBsys::NWindowMenu::WindowMenu_Offset(a_offset_x,a_offset_y),
+			NBsys::NWindowMenu::WindowMenu_Size(
+				NBsys::NWindowMenu::WindowMenu_SizeType::Fix,
+				300.0f,
+				NBsys::NWindowMenu::WindowMenu_SizeType::StretchChild,
+				-1.0f
+			)
+		)
 	);
 
 	f32 t_title_h = 30.0f;
 
 	//タイトル。
 	{
-		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_titledrag(new NBsys::NWindowMenu::WindowMenu_Window_Drag(
-			NBsys::NWindowMenu::WindowMenu_Window_Base::Mode::Horizontal,
+		NBsys::NWindowMenu::WindowMenu_Window_Drag::InitItem t_titledrag_inititem(
+			NBsys::NWindowMenu::WindowMenu_Mode::Horizontal,
 			"title->drag",
-			0.0f,
-			0.0f,
-			NBsys::NWindowMenu::WindowMenu_Window_Base::SizeType::StretchParent,
-			-1,
-			NBsys::NWindowMenu::WindowMenu_Window_Base::SizeType::Fix,
-			t_title_h,
-			0
-		));
-
+			NBsys::NWindowMenu::WindowMenu_Offset(0.0f,0.0f),
+			NBsys::NWindowMenu::WindowMenu_Size(
+				NBsys::NWindowMenu::WindowMenu_SizeType::StretchParent,
+				-1.0f,
+				NBsys::NWindowMenu::WindowMenu_SizeType::Fix,
+				t_title_h
+			)
+		);
+		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_titledrag(new NBsys::NWindowMenu::WindowMenu_Window_Drag(t_titledrag_inititem));
 		this->AddChild(t_titledrag);
 
 		//タイトル背景。
 		{
-			sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_titlebg = new NBsys::NWindowMenu::WindowMenu_Window_Plate(
-				NBsys::NWindowMenu::WindowMenu_Window_Base::Mode::Horizontal,
+			NBsys::NWindowMenu::WindowMenu_Window_Plate::InitItem t_plate_inititem(
+				NBsys::NWindowMenu::WindowMenu_Mode::Horizontal,
 				"title",
-				0.0f,
-				0.0f,
-				NBsys::NWindowMenu::WindowMenu_Window_Base::SizeType::StretchParent,
-				-1,
-				NBsys::NWindowMenu::WindowMenu_Window_Base::SizeType::Fix,
-				t_title_h,
+				NBsys::NWindowMenu::WindowMenu_Offset(0.0f,0.0f),
+				NBsys::NWindowMenu::WindowMenu_Size(
+					NBsys::NWindowMenu::WindowMenu_SizeType::StretchParent,
+					-1.0f,
+					NBsys::NWindowMenu::WindowMenu_SizeType::Fix,
+					t_title_h
+				),
 				NBsys::NColor::Color_F(1.0f,0.9f,0.9f,1.0f),
 				-1,
-				false,
-				0
+				false
 			);
-
+			sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_titlebg = new NBsys::NWindowMenu::WindowMenu_Window_Plate(t_plate_inititem);
 			t_titledrag->AddChild(t_titlebg);
 		}
 
 		//閉じるボタン。
 		{
-			sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_closebutton(new NBsys::NWindowMenu::WindowMenu_Window_CloseButton(
-				NBsys::NWindowMenu::WindowMenu_Window_Base::Mode::Free,
+			NBsys::NWindowMenu::WindowMenu_Window_CloseButton::InitItem t_closebutton_inititem(
+				NBsys::NWindowMenu::WindowMenu_Mode::Free,
 				"title->closebutton",
-				0.0f,
-				0.0f,
-				NBsys::NWindowMenu::WindowMenu_Window_Base::SizeType::Fix,
-				t_title_h,
-				NBsys::NWindowMenu::WindowMenu_Window_Base::SizeType::Fix,
-				t_title_h,
-				0
-			));
-
+				NBsys::NWindowMenu::WindowMenu_Offset(0.0f,0.0f),
+				NBsys::NWindowMenu::WindowMenu_Size(
+					NBsys::NWindowMenu::WindowMenu_SizeType::Fix,
+					t_title_h,
+					NBsys::NWindowMenu::WindowMenu_SizeType::Fix,
+					t_title_h
+				)
+			);
+			sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_closebutton(new NBsys::NWindowMenu::WindowMenu_Window_CloseButton(t_closebutton_inititem));
 			t_titledrag->AddChild(t_closebutton);
 		}
 	}
 
 	//ボディー。
 	{
-		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_body(new NBsys::NWindowMenu::WindowMenu_Window_Plate(
-			NBsys::NWindowMenu::WindowMenu_Window_Base::Mode::Vertical,
+		NBsys::NWindowMenu::WindowMenu_Window_Plate::InitItem t_body_inititem(
+			NBsys::NWindowMenu::WindowMenu_Mode::Vertical,
 			"body",
-			0.0f,
-			0.0f,
-			NBsys::NWindowMenu::WindowMenu_Window_Base::SizeType::StretchParent,
-			-1.0f,
-			NBsys::NWindowMenu::WindowMenu_Window_Base::SizeType::Fix,
-			300.0f,
+			NBsys::NWindowMenu::WindowMenu_Offset(0.0f,0.0f),
+			NBsys::NWindowMenu::WindowMenu_Size(
+				NBsys::NWindowMenu::WindowMenu_SizeType::StretchParent,
+				-1.0f,
+				NBsys::NWindowMenu::WindowMenu_SizeType::Fix,
+				300.0f
+			),
 			NBsys::NColor::Color_F(0.5f,0.5f,0.5f,0.5f),
 			-1,
-			true,
-			0
-		));
-
+			true
+		);
+		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_body(new NBsys::NWindowMenu::WindowMenu_Window_Plate(t_body_inititem));
 		this->AddChild(t_body);
 	}
 }

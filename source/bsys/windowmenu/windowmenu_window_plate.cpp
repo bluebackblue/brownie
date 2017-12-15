@@ -36,14 +36,15 @@ namespace NBsys{namespace NWindowMenu
 {
 	/** constructor
 	*/
-	WindowMenu_Window_Plate::WindowMenu_Window_Plate(WindowMenu_Window_Base::Mode::Id a_mode,const STLString& a_name,f32 a_x,f32 a_y,SizeType::Id a_sizetype_w,f32 a_w,SizeType::Id a_sizetype_h,f32 a_h,const NBsys::NColor::Color_F& a_color,s32 a_texture_id,bool a_mouseblock,s32 a_z)
+	WindowMenu_Window_Plate::WindowMenu_Window_Plate(const InitItem& a_inititem)
 		:
-		WindowMenu_Window_Base(a_name),
-		color(a_color),
-		texture_id(a_texture_id),
-		mouseblock(a_mouseblock)
+		WindowMenu_Window_Base(a_inititem.name),
+
+		color(a_inititem.color),
+		texture_id(a_inititem.texture_id),
+		mouseblock(a_inititem.mouseblock)
 	{
-		this->Initialize(a_mode,a_x,a_y,a_sizetype_w,a_w,a_sizetype_h,a_h,a_z);
+		this->Initialize(WindowMenu_Window_Base::InitItem(a_inititem.mode,a_inititem.offset,a_inititem.size));
 	}
 
 	/** destructor
@@ -57,7 +58,7 @@ namespace NBsys{namespace NWindowMenu
 	bool WindowMenu_Window_Plate::CallBack_Draw()
 	{
 		if((this->calc_w >= 0.0f)&&(this->calc_h >= 0.0f)){
-			GetSystemInstance()->GetCallback()->DrawRect_Callback(this->z,this->calc_x,this->calc_y,this->calc_w,this->calc_h,this->texture_id,this->color);
+			GetSystemInstance()->GetCallback()->DrawRect_Callback(0,this->calc_x,this->calc_y,this->calc_w,this->calc_h,this->texture_id,this->color);
 		}
 
 		return true;
@@ -65,8 +66,9 @@ namespace NBsys{namespace NWindowMenu
 
 	/** マウス処理。
 	*/
-	bool WindowMenu_Window_Plate::CallBack_MouseUpdate(WindowMenu_Mouse& a_mouse)
+	bool WindowMenu_Window_Plate::CallBack_InRangeMouseUpdate(WindowMenu_Mouse& a_mouse)
 	{
+		//マウス操作を親に伝えない。
 		return this->mouseblock;
 	}
 }}

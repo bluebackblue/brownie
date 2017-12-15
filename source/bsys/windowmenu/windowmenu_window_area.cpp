@@ -36,11 +36,11 @@ namespace NBsys{namespace NWindowMenu
 {
 	/** constructor
 	*/
-	WindowMenu_Window_Area::WindowMenu_Window_Area(WindowMenu_Window_Base::Mode::Id a_mode,const STLString& a_name,f32 a_x,f32 a_y,SizeType::Id a_sizetype_w,f32 a_w,SizeType::Id a_sizetype_h,f32 a_h,s32 a_z)
+	WindowMenu_Window_Area::WindowMenu_Window_Area(const InitItem& a_inititem)
 		:
-		WindowMenu_Window_Base(a_name)
+		WindowMenu_Window_Base(a_inititem.name)
 	{
-		this->Initialize(a_mode,a_x,a_y,a_sizetype_w,a_w,a_sizetype_h,a_h,a_z);
+		this->Initialize(WindowMenu_Window_Base::InitItem(a_inititem.mode,a_inititem.offset,a_inititem.size));
 	}
 
 	/** destructor

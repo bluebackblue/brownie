@@ -21,6 +21,7 @@
 
 /** include
 */
+#include "./windowmenu_type.h"
 #include "./windowmenu_mouse.h"
 #include "./windowmenu_callback_base.h"
 #include "./windowmenu_window_base.h"

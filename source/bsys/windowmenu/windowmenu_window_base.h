@@ -24,6 +24,11 @@
 #include "../color/color.h"
 
 
+/** include
+*/
+#include "./windowmenu_type.h"
+
+
 /** NBsys::NWindowMenu
 */
 namespace NBsys{namespace NWindowMenu
@@ -33,45 +38,48 @@ namespace NBsys{namespace NWindowMenu
 	class WindowMenu_Window_Base
 	{
 	public:
-		/** Mode
+		/** InitItem
 		*/
-		struct Mode
+		struct InitItem
 		{
-			enum Id
+			/** mode
+			*/
+			WindowMenu_Mode::Id mode;
+
+			/** offset
+			*/
+			WindowMenu_Offset offset;
+			
+			/** size
+			*/
+			WindowMenu_Size size;
+
+			/** constructor
+			*/
+			InitItem()
+				:
+				mode(WindowMenu_Mode::Free),
+				offset(WindowMenu_Offset(0.0f,0.0f)),
+				size(WindowMenu_Size(WindowMenu_SizeType::Fix,0.0f,WindowMenu_SizeType::Fix,0.0f))
 			{
-				//自由配置。
-				Free,
+			}
 
-				//縦。
-				Vertical,
-
-				//横。
-				Horizontal,
-			};
-		};
-
-		/** SizeType
-		*/
-		struct SizeType
-		{
-			enum Id
+			/** constructor
+			*/
+			InitItem(WindowMenu_Mode::Id a_mode,const WindowMenu_Offset& a_offset,const WindowMenu_Size& a_size)
+				:
+				mode(a_mode),
+				offset(a_offset),
+				size(a_size)
 			{
-				//固定サイズ。
-				Fix,
+			}
 
-				//親のサイズに合わせる。
-				StretchParent,
-
-				//子のサイズに合わせる。
-				StretchChild
-			};
+			nonvirtual ~InitItem()
+			{
+			}
 		};
 
 	public:
-		/** 自分。
-		*/
-		WindowMenu_Window_Base* me;
-
 		/** 親。
 		*/
 		WindowMenu_Window_Base* parent;
@@ -79,7 +87,7 @@ namespace NBsys{namespace NWindowMenu
 	public:
 		/** モード。
 		*/
-		Mode::Id mode;
+		WindowMenu_Mode::Id mode;
 
 		/** child_list
 		*/
@@ -91,40 +99,26 @@ namespace NBsys{namespace NWindowMenu
 
 		/** [設定値]自分の位置。
 		*/
-		f32 offset_x;
-		f32 offset_y;
+		WindowMenu_Offset offset;
 
 		/** [設定値]自分のサイズ。
 		*/
-		f32 width;
-		f32 height;
+		WindowMenu_Size size;
 
-		/** [設定値]サイズﾀｲﾌﾟ。
-		*/
-		SizeType::Id sizetype_w;
-		SizeType::Id sizetype_h;
-
-		/** 描画優先度。
-		*/
-		s32 z;
-
-		/** [計算結果]自分の位置。
+		/** 計算結果。
 		*/
 		f32 calc_x;
 		f32 calc_y;
-
-		/** [計算結果]自分のサイズ。
-		*/
 		f32 calc_w;
 		f32 calc_h;
-
-		/** 計算に必要な親が所持している自分のイテレータ。
-		*/
-		STLList<sharedptr<WindowMenu_Window_Base>>::iterator calc_it;
 
 		/** 計算に必要な親が所持している自分のインデックス。
 		*/
 		s32 calc_child_index;
+
+		/** 計算に必要な親が所持している自分のイテレータ。
+		*/
+		STLList<sharedptr<WindowMenu_Window_Base>>::iterator calc_it;
 
 	public:
 		/** constructor
@@ -135,14 +129,9 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		virtual ~WindowMenu_Window_Base();
 
-	public:
 		/** Initialize
-
-		a_width : 負の値を設定した場合は自動計算。
-		a_height : 負の値を設定した場合は自動計算。
-
 		*/
-		void Initialize(Mode::Id a_mode,f32 a_offset_x,f32 a_offset_y,SizeType::Id a_sizetype_w,f32 a_w,SizeType::Id a_sizetype_h,f32 a_h,s32 a_z);
+		void Initialize(const InitItem& a_inititem);
 
 		/** 子の追加。
 		*/
@@ -171,7 +160,7 @@ namespace NBsys{namespace NWindowMenu
 
 		/** マウス処理。
 		*/
-		virtual bool CallBack_MouseUpdate(WindowMenu_Mouse& a_mouse);
+		virtual bool CallBack_InRangeMouseUpdate(WindowMenu_Mouse& a_mouse);
 
 		/** 更新処理。
 		*/
@@ -195,23 +184,23 @@ namespace NBsys{namespace NWindowMenu
 
 		/** サイズ計算。
 		*/
-		static void CalcRect(WindowMenu_Window_Base* a_window);
+		void CalcRect();
 
 		/** サイズ計算。
 		*/
-		static void CalcX(WindowMenu_Window_Base* a_window);
+		void CalcX(WindowMenu_SizeType::Id a_from_sizetype);
 
 		/** サイズ計算。
 		*/
-		static void CalcY(WindowMenu_Window_Base* a_window);
+		void CalcY(WindowMenu_SizeType::Id a_from_sizetype);
 
 		/** サイズ計算。
 		*/
-		static void CalcW(WindowMenu_Window_Base* a_window);
+		void CalcW(WindowMenu_SizeType::Id a_from_sizetype);
 
 		/** サイズ計算。
 		*/
-		static void CalcH(WindowMenu_Window_Base* a_window);
+		void CalcH(WindowMenu_SizeType::Id a_from_sizetype);
 	};
 }}
 

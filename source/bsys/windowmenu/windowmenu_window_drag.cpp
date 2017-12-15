@@ -31,16 +31,16 @@ namespace NBsys{namespace NWindowMenu
 {
 	/** constructor
 	*/
-	WindowMenu_Window_Drag::WindowMenu_Window_Drag(WindowMenu_Window_Base::Mode::Id a_mode,const STLString& a_name,f32 a_x,f32 a_y,SizeType::Id a_sizetype_w,f32 a_w,SizeType::Id a_sizetype_h,f32 a_h,s32 a_z)
+	WindowMenu_Window_Drag::WindowMenu_Window_Drag(const InitItem& a_inititem)
 		:
-		WindowMenu_Window_Base(a_name),
+		WindowMenu_Window_Base(a_inititem.name),
 		drag_flag(false),
 		start_x(0.0f),
 		start_y(0.0f),
 		old_x(0.0f),
 		old_y(0.0f)
 	{
-		this->Initialize(a_mode,a_x,a_y,a_sizetype_w,a_w,a_sizetype_h,a_h,a_z);
+		this->Initialize(WindowMenu_Window_Base::InitItem(a_inititem.mode,a_inititem.offset,a_inititem.size));
 	}
 
 	/** destructor
@@ -51,17 +51,20 @@ namespace NBsys{namespace NWindowMenu
 
 	/** マウス処理。
 	*/
-	bool WindowMenu_Window_Drag::CallBack_MouseUpdate(WindowMenu_Mouse& a_mouse)
+	bool WindowMenu_Window_Drag::CallBack_InRangeMouseUpdate(WindowMenu_Mouse& a_mouse)
 	{
 		if(a_mouse.down_l){
 			//ドラッグ開始。
-			this->drag_flag = true;
-			this->start_x = a_mouse.x;
-			this->start_y = a_mouse.y;
-			this->old_x = this->parent->offset_x;
-			this->old_y = this->parent->offset_y;
+			if(this->parent){
+				this->drag_flag = true;
+				this->start_x = a_mouse.x;
+				this->start_y = a_mouse.y;
+				this->old_x = this->parent->offset.x;
+				this->old_y = this->parent->offset.y;
+			}
 		}
 
+		//マウス操作を親に伝えない。
 		return true;
 	}
 
@@ -70,14 +73,16 @@ namespace NBsys{namespace NWindowMenu
 	bool WindowMenu_Window_Drag::CallBack_Update()
 	{
 		if(this->drag_flag == true){
-			WindowMenu_Mouse t_mouse = GetSystemInstance()->GetMouse();
+			WindowMenu_Mouse& t_mouse = GetSystemInstance()->GetMouse();
 			if(t_mouse.on_l){
 				//ドラッグ中。
-				this->parent->offset_x = this->old_x + (t_mouse.x - this->start_x);
-				this->parent->offset_y = this->old_y + (t_mouse.y - this->start_y);
-
-				WindowMenu_Window_Base::CalcRectClear(this->parent->calc_it,0);
-				WindowMenu_Window_Base::CalcRect(this->parent);
+				if(this->parent){
+					this->parent->offset.x = this->old_x + (t_mouse.x - this->start_x);
+					this->parent->offset.y = this->old_y + (t_mouse.y - this->start_y);
+					
+					this->CalcRectClear(this->calc_it,this->calc_child_index);
+					this->parent->CalcRect();
+				}
 			}else{
 				//ドラッグ終了。
 				this->drag_flag = false;

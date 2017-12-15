@@ -29,9 +29,48 @@ namespace NBsys{namespace NWindowMenu
 	class WindowMenu_Window_Area : public WindowMenu_Window_Base
 	{
 	public:
+		/** InitItem
+		*/
+		struct InitItem
+		{
+			/** mode
+			*/
+			WindowMenu_Mode::Id mode;
+
+			/** name
+			*/
+			STLString name;
+			
+			/** offset
+			*/
+			WindowMenu_Offset offset;
+			
+			/** size
+			*/
+			WindowMenu_Size size;
+
+			/** constructor
+			*/
+			InitItem(WindowMenu_Mode::Id a_mode,const STLString& a_name,const WindowMenu_Offset& a_offset,const WindowMenu_Size& a_size)
+				:
+				mode(a_mode),
+				name(a_name),
+				offset(a_offset),
+				size(a_size)
+			{
+			}
+
+			/** destructor
+			*/
+			nonvirtual ~InitItem()
+			{
+			}
+		};
+
+	public:
 		/** constructor
 		*/
-		WindowMenu_Window_Area(WindowMenu_Window_Base::Mode::Id a_mode,const STLString& a_name,f32 a_x,f32 a_y,SizeType::Id a_sizetype_w,f32 a_w,SizeType::Id a_sizetype_h,f32 a_h,s32 a_z);
+		WindowMenu_Window_Area(const InitItem& a_inititem);
 
 		/** destructor
 		*/
