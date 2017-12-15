@@ -1,11 +1,11 @@
-Ôªø
+
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief „ÉÜ„Çπ„Éà„ÄÇ
+ * @brief ÉeÉXÉgÅB
 */
 
 
@@ -16,7 +16,7 @@
 
 /** include
 */
-#include "./test12_windowmenu.h"
+#include "./test12_windowmenu_log.h"
 
 
 /** DEF_TEST12
@@ -25,22 +25,20 @@
 
 /** constructor
 */
-Test12_WindowMenu::Test12_WindowMenu(s32 a_id,const STLWString& a_string,f32 a_offset_x,f32 a_offset_y,sharedptr<NBsys::ND3d11::D3d11>& a_d3d11)
+Test12_WindowMenu_Log::Test12_WindowMenu_Log(f32 a_offset_x,f32 a_offset_y)
 	:
-	NBsys::NWindowMenu::WindowMenu_Window_Base("Test12_WindowMenu"),
-	id(a_id),
+	NBsys::NWindowMenu::WindowMenu_Window_Base("Test12_WindowMenu_Log"),
 	endrequest(false),
-	titlebg(),
-	d3d11(a_d3d11)
+	titlebg()
 {
-	//„É°„Ç§„É≥„ÄÇ
+	//ÉÅÉCÉìÅB
 	this->Initialize(
 		WindowMenu_Window_Base::InitItem(
 			NBsys::NWindowMenu::WindowMenu_Mode::Vertical,
 			NBsys::NWindowMenu::WindowMenu_Offset(a_offset_x,a_offset_y),
 			NBsys::NWindowMenu::WindowMenu_Size(
 				NBsys::NWindowMenu::WindowMenu_SizeType::Fix,
-				200.0f,
+				400.0f,
 				NBsys::NWindowMenu::WindowMenu_SizeType::StretchChild,
 				-1.0f
 			),
@@ -50,7 +48,7 @@ Test12_WindowMenu::Test12_WindowMenu(s32 a_id,const STLWString& a_string,f32 a_o
 
 	f32 t_title_h = 16.0f;
 
-	//„Çø„Ç§„Éà„É´„ÄÇ
+	//É^ÉCÉgÉãÅB
 	{
 		NBsys::NWindowMenu::WindowMenu_Window_Drag::InitItem t_titledrag_inititem(
 			NBsys::NWindowMenu::WindowMenu_Mode::Horizontal,
@@ -66,7 +64,7 @@ Test12_WindowMenu::Test12_WindowMenu(s32 a_id,const STLWString& a_string,f32 a_o
 		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_titledrag(new NBsys::NWindowMenu::WindowMenu_Window_Drag(t_titledrag_inititem));
 		this->AddChild(t_titledrag);
 
-		//„Çø„Ç§„Éà„É´ËÉåÊôØ„ÄÇ
+		//É^ÉCÉgÉãîwåiÅB
 		{
 			NBsys::NWindowMenu::WindowMenu_Window_Plate::InitItem t_titlebg_inititem(
 				NBsys::NWindowMenu::WindowMenu_Mode::Horizontal,
@@ -87,7 +85,7 @@ Test12_WindowMenu::Test12_WindowMenu(s32 a_id,const STLWString& a_string,f32 a_o
 			this->titlebg = new NBsys::NWindowMenu::WindowMenu_Window_Plate(t_titlebg_inititem);
 			t_titledrag->AddChild(this->titlebg);
 
-			//„Çø„Ç§„Éà„É´„É©„Éô„É´„ÄÇ
+			//É^ÉCÉgÉãÉâÉxÉãÅB
 			{
 				NBsys::NWindowMenu::WindowMenu_Window_Text::InitItem t_titlelabel_inititem(
 					NBsys::NWindowMenu::WindowMenu_Mode::Horizontal,
@@ -102,14 +100,14 @@ Test12_WindowMenu::Test12_WindowMenu(s32 a_id,const STLWString& a_string,f32 a_o
 				);
 				{
 					t_titlelabel_inititem.color = NBsys::NColor::Color_F(1.0f,0.9f,0.9f,1.0f);
-					t_titlelabel_inititem.string = a_string;
+					t_titlelabel_inititem.string = L"log";
 				}
 				sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_titlelabel = new NBsys::NWindowMenu::WindowMenu_Window_Text(t_titlelabel_inititem);
 				this->titlebg->AddChild(t_titlelabel);
 			}
 		}
 
-		//Èñâ„Åò„Çã„Éú„Çø„É≥„ÄÇ
+		//ï¬Ç∂ÇÈÉ{É^ÉìÅB
 		{
 			NBsys::NWindowMenu::WindowMenu_Window_CloseButton::InitItem t_closebutton_inititem(
 				NBsys::NWindowMenu::WindowMenu_Mode::Free,
@@ -132,7 +130,7 @@ Test12_WindowMenu::Test12_WindowMenu(s32 a_id,const STLWString& a_string,f32 a_o
 		}
 	}
 
-	//„Éú„Éá„Ç£„Éº„ÄÇ
+	//É{ÉfÉBÅ[ÅB
 	{
 		NBsys::NWindowMenu::WindowMenu_Window_Plate::InitItem t_body_inititem(
 			NBsys::NWindowMenu::WindowMenu_Mode::Vertical,
@@ -141,54 +139,82 @@ Test12_WindowMenu::Test12_WindowMenu(s32 a_id,const STLWString& a_string,f32 a_o
 			NBsys::NWindowMenu::WindowMenu_Size(
 				NBsys::NWindowMenu::WindowMenu_SizeType::StretchParent,
 				-1.0f,
-				NBsys::NWindowMenu::WindowMenu_SizeType::Fix,
-				1024.0f
+				NBsys::NWindowMenu::WindowMenu_SizeType::StretchChild,
+				-1.0f
 			)
 		);
 		{
-			t_body_inititem.color = NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f);
-
-			if(this->id == 0){
-				t_body_inititem.texture_id = this->d3d11->Render_GetFontTexture(0);
-				t_body_inititem.size.h = 256;
-			}else if(this->id == 1){
-				t_body_inititem.texture_id = this->d3d11->Render_GetFontTexture(1);
-				t_body_inititem.size.h = 512;
-			}else if(this->id == 1){
-				t_body_inititem.texture_id = this->d3d11->Render_GetFontTexture(2);
-				t_body_inititem.size.h = 1024;
-			}
+			t_body_inititem.color = NBsys::NColor::Color_F(0.1f,0.1f,0.1f,1.0f);
+			t_body_inititem.texture_id = -1;
+			t_body_inititem.size.h = 256;
 			t_body_inititem.mouseblock = true;
 		}
 
 		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_body(new NBsys::NWindowMenu::WindowMenu_Window_Plate(t_body_inititem));
 		this->AddChild(t_body);
+
+		{
+			NBsys::NWindowMenu::WindowMenu_Window_Text::InitItem t_text_inititem(
+				NBsys::NWindowMenu::WindowMenu_Mode::Horizontal,
+				"text",
+				NBsys::NWindowMenu::WindowMenu_Offset(0.0f,0.0f),
+				NBsys::NWindowMenu::WindowMenu_Size(
+					NBsys::NWindowMenu::WindowMenu_SizeType::StretchParent,
+					-1.0f,
+					NBsys::NWindowMenu::WindowMenu_SizeType::Fix,
+					16.0f
+				)
+			);
+
+			STLWString t_log[] = {
+				L"[blib]platform = PLATFORM_VCWIN",
+				L"[blib]rom = ROM_DEVELOP",
+				L"[blib]ROM_32BIT",
+				L"[blib]{0xFF,0x00,0x00,0x00} == 0x000000FF : little endian",
+				L"common\\common_debug_callback.cpp(19):#if(BLIB_DEBUGASSERT_CALLBACK_ENABLE)",
+			};
+
+			NBsys::NColor::Color_F t_color[] = {
+				NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f),
+				NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f),
+				NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f),
+				NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f),
+				NBsys::NColor::Color_F(1.0f,0.0f,0.0f,1.0f)
+			};
+
+			for(s32 ii=0;ii<COUNTOF(t_log);ii++){
+				t_text_inititem.color = t_color[ii];
+				t_text_inititem.string = t_log[ii];
+				sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_text(new NBsys::NWindowMenu::WindowMenu_Window_Text(t_text_inititem));
+				t_body->AddChild(t_text);
+			}
+		}
 	}
 }
 
 /** destructor
 */
-Test12_WindowMenu::~Test12_WindowMenu()
+Test12_WindowMenu_Log::~Test12_WindowMenu_Log()
 {
 }
 
-/** ÂâäÈô§„É™„ÇØ„Ç®„Çπ„Éà„ÄÇÂèñÂæó„ÄÇ
+/** çÌèúÉäÉNÉGÉXÉgÅBéÊìæÅB
 */
-bool Test12_WindowMenu::CallBack_GetDeleteRequest()
+bool Test12_WindowMenu_Log::CallBack_GetDeleteRequest()
 {
 	return this->endrequest;
 }
 
-/** ÂâäÈô§„É™„ÇØ„Ç®„Çπ„Éà„ÄÇË®≠ÂÆö„ÄÇ
+/** çÌèúÉäÉNÉGÉXÉgÅBê›íËÅB
 */
-void Test12_WindowMenu::CallBack_SetDeleteRequest()
+void Test12_WindowMenu_Log::CallBack_SetDeleteRequest()
 {
 	this->endrequest = true;
 }
 
-/** „Ç¢„ÇØ„ÉÜ„Ç£„ÉñÂ§âÊõ¥„ÄÇ
+/** ÉAÉNÉeÉBÉuïœçXÅB
 */
-void Test12_WindowMenu::CallBack_ChangeActive(bool a_active)
+void Test12_WindowMenu_Log::CallBack_ChangeActive(bool a_active)
 {
 	if(a_active){
 		this->titlebg->color = NBsys::NColor::Color_F(0.7f,0.3f,0.3f,1.0f);

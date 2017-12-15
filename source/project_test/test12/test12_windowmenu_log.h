@@ -1,11 +1,11 @@
-ï»¿#pragma once
+#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ãƒ†ã‚¹ãƒˆã€‚
+ * @brief ƒeƒXƒgB
 */
 
 
@@ -18,15 +18,11 @@
 */
 #if defined(DEF_TEST12)
 
-/** Test12_WindowMenu
+/** Test12_WindowMenu_Log
 */
-class Test12_WindowMenu : public NBsys::NWindowMenu::WindowMenu_Window_Base
+class Test12_WindowMenu_Log : public NBsys::NWindowMenu::WindowMenu_Window_Base
 {
 private:
-	/** id
-	*/
-	s32 id;
-
 	/** endrequest
 	*/
 	bool endrequest;
@@ -35,29 +31,25 @@ private:
 	*/
 	sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Plate> titlebg;
 
-	/** d3d11
-	*/
-	sharedptr<NBsys::ND3d11::D3d11> d3d11;
-
 public:
 	/** constructor
 	*/
-	Test12_WindowMenu(s32 a_id,const STLWString& a_string,f32 a_offset_x,f32 a_offset_y,sharedptr<NBsys::ND3d11::D3d11>& a_d3d11);
+	Test12_WindowMenu_Log(f32 a_offset_x,f32 a_offset_y);
 
 	/** destructor
 	*/
-	virtual ~Test12_WindowMenu();
+	virtual ~Test12_WindowMenu_Log();
 
 public:
-	/** å‰Šé™¤ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚å–å¾—ã€‚
+	/** íœƒŠƒNƒGƒXƒgBæ“¾B
 	*/
 	virtual bool CallBack_GetDeleteRequest();
 
-	/** å‰Šé™¤ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚è¨­å®šã€‚
+	/** íœƒŠƒNƒGƒXƒgBİ’èB
 	*/
 	virtual void CallBack_SetDeleteRequest();
 
-	/** ã‚¢ã‚¯ãƒ†ã‚£ãƒ–å¤‰æ›´ã€‚
+	/** ƒAƒNƒeƒBƒu•ÏXB
 	*/
 	virtual void CallBack_ChangeActive(bool a_active);
 

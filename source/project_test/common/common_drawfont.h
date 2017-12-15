@@ -199,7 +199,7 @@ namespace NCommon
 					this->ps_constantbuffer_b1_id = this->d3d11->CreateConstantBuffer(1,sizeof(DrawFont_PS_ConstantBuffer_B1));
 
 					//バーテックスバッファ。
-					s32 t_vertex_allcountof = 2 * 1024;
+					s32 t_vertex_allcountof = 1024 * 1024;
 					this->vertex = new NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4>();
 					this->vertex->AddParts("root");
 					this->vertex->ReserveVertex(t_vertex_allcountof);

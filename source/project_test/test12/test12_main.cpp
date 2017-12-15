@@ -22,8 +22,8 @@
 /** include
 */
 #include "./test12_main.h"
-#include "./test12_windowmenu.h"
-
+#include "./test12_windowmenu_texture.h"
+#include "./test12_windowmenu_log.h"
 
 /** include
 */
@@ -87,9 +87,10 @@ sharedptr<NCommon::Render2D_Material_Base> s_drawfont_material;
 
 /** ウィンドウ。
 */
-sharedptr<Test12_WindowMenu> s_test12_window_1;
-sharedptr<Test12_WindowMenu> s_test12_window_2;
-sharedptr<Test12_WindowMenu> s_test12_window_3;
+sharedptr<Test12_WindowMenu_Texture> s_window_texture_1;
+sharedptr<Test12_WindowMenu_Texture> s_window_texture_2;
+sharedptr<Test12_WindowMenu_Texture> s_window_texture_3;
+sharedptr<Test12_WindowMenu_Log> s_window_log;
 
 
 /** App
@@ -212,12 +213,16 @@ public:
 				this->draw = true;
 
 				//ウィンドウメニュー。
-				s_test12_window_1.reset(new Test12_WindowMenu(0,L"フォントテクスチャー[0]",150.0f,150.0f,s_d3d11));
-				s_test12_window_2.reset(new Test12_WindowMenu(1,L"フォントテクスチャー[1]",150.0f,150.0f,s_d3d11));
-				s_test12_window_3.reset(new Test12_WindowMenu(1,L"フォントテクスチャー[2]",150.0f,150.0f,s_d3d11));
-				NBsys::NWindowMenu::GetSystemInstance()->Add(s_test12_window_1);
-				NBsys::NWindowMenu::GetSystemInstance()->Add(s_test12_window_2);
-				NBsys::NWindowMenu::GetSystemInstance()->Add(s_test12_window_3);
+				s_window_texture_1.reset(new Test12_WindowMenu_Texture(0,L"フォントテクスチャー[0]",150.0f,150.0f,s_d3d11));
+				s_window_texture_2.reset(new Test12_WindowMenu_Texture(1,L"フォントテクスチャー[1]",150.0f,150.0f,s_d3d11));
+				s_window_texture_3.reset(new Test12_WindowMenu_Texture(1,L"フォントテクスチャー[2]",150.0f,150.0f,s_d3d11));
+				NBsys::NWindowMenu::GetSystemInstance()->Add(s_window_texture_1);
+				NBsys::NWindowMenu::GetSystemInstance()->Add(s_window_texture_2);
+				NBsys::NWindowMenu::GetSystemInstance()->Add(s_window_texture_3);
+
+				s_window_log.reset(new Test12_WindowMenu_Log(150.0f,150.0f));
+				NBsys::NWindowMenu::GetSystemInstance()->Add(s_window_log);
+
 			}break;
 		case 2:
 			{
