@@ -31,10 +31,14 @@ private:
 	*/
 	bool endrequest;
 
+	/** titlebg
+	*/
+	sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Plate> titlebg;
+
 public:
 	/** constructor
 	*/
-	Test12_WindowMenu(f32 a_offset_x,f32 a_offset_y,s32 a_id);
+	Test12_WindowMenu(s32 a_id,const STLWString& a_string,f32 a_offset_x,f32 a_offset_y);
 
 	/** destructor
 	*/
@@ -43,11 +47,15 @@ public:
 public:
 	/** 削除リクエスト。取得。
 	*/
-	virtual bool GetDeleteRequest();
+	virtual bool CallBack_GetDeleteRequest();
 
 	/** 削除リクエスト。設定。
 	*/
-	virtual void SetDeleteRequest();
+	virtual void CallBack_SetDeleteRequest();
+
+	/** アクティブ変更。
+	*/
+	virtual void CallBack_ChangeActive(bool a_active);
 
 };
 

@@ -29,6 +29,7 @@
 #include "./windowmenu_window_plate.h"
 #include "./windowmenu_window_drag.h"
 #include "./windowmenu_window_closebutton.h"
+#include "./windowmenu_window_text.h"
 
 
 /** NBsys::NWindowMenu
@@ -49,9 +50,17 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		STLList<sharedptr<WindowMenu_Window_Base>>::Type list;
 
+		/** listcahnge
+		*/
+		bool listcahnge;
+
 		/** mouse
 		*/
 		WindowMenu_Mouse mouse;
+
+		/** active
+		*/
+		sharedptr<WindowMenu_Window_Base> active;
 
 	public:
 		/** constructor

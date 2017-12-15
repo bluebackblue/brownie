@@ -35,7 +35,11 @@ namespace NBsys{namespace NWindowMenu
 		:
 		WindowMenu_Window_Base(a_inititem.name),
 		push_flag(false),
-		on_flag(false)
+		on_flag(false),
+		color_nomal(a_inititem.color_nomal),
+		color_on(a_inititem.color_on),
+		color_ondown(a_inititem.color_ondown)
+
 	{
 		this->Initialize(WindowMenu_Window_Base::InitItem(a_inititem.mode,a_inititem.offset,a_inititem.size,0));
 	}
@@ -72,7 +76,7 @@ namespace NBsys{namespace NWindowMenu
 				this->push_flag = false;
 				if(this->IsRange(t_mouse.x,t_mouse.y)){
 					//プッシュ確定。
-					this->SetDeleteRequest();
+					this->CallBack_SetDeleteRequest();
 				}else{
 					//プッシュキャンセル。
 				}
@@ -97,10 +101,10 @@ namespace NBsys{namespace NWindowMenu
 
 			s32 t_color_index = 0;
 
-			NBsys::NColor::Color_F t_color_list[] = {
-				NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f),	//通常。
-				NBsys::NColor::Color_F(0.4f,0.4f,0.4f,1.0f),	//マウスがボタンの上。
-				NBsys::NColor::Color_F(0.3f,0.3f,1.0f,1.0f)		//マウスがボタンの上＆マウスダウン中。
+			NBsys::NColor::Color_F* t_color_list[] = {
+				&this->color_nomal,
+				&this->color_on,
+				&this->color_ondown,
 			};
 
 			NBsys::NColor::Color_F t_font_color(1.0f,1.0f,1.0f,1.0f);
@@ -111,14 +115,22 @@ namespace NBsys{namespace NWindowMenu
 				t_color_index = 1;
 			}
 
-			f32 t_font_size = 16.0f;
-			s32 t_font_texture_index = 2;
+			GetSystemInstance()->GetCallback()->DrawRect_Callback(a_z_sort + this->z_sort,this->calc_x,this->calc_y,this->calc_w,this->calc_h,-1,*t_color_list[t_color_index]);
 
-			f32 t_offst_x = (this->calc_w - t_font_size) / 2;
-			f32 t_offst_y = (this->calc_w - t_font_size) / 2;
+			//TODO
+			{
+				f32 t_font_size = 16.0f;
+				s32 t_font_texture_index = 2;
 
-			GetSystemInstance()->GetCallback()->DrawRect_Callback(a_z_sort + this->z_sort,this->calc_x,this->calc_y,this->calc_w,this->calc_h,-1,t_color_list[t_color_index]);
-			GetSystemInstance()->GetCallback()->DrawFont_Callback(a_z_sort + this->z_sort+1,this->calc_x + t_offst_x,this->calc_y + t_offst_y,t_font_size,t_font_texture_index,t_font_color,L"ｘ");
+				//L"x"
+				f32 t_fontdata_x = 4;
+				f32 t_fontdata_y = -2;
+
+				f32 t_offst_x = (this->calc_w - t_font_size) / 2 + t_fontdata_x;
+				f32 t_offst_y = (this->calc_w - t_font_size) / 2 + t_fontdata_y;
+
+				GetSystemInstance()->GetCallback()->DrawFont_Callback(a_z_sort + this->z_sort+1,this->calc_x + t_offst_x,this->calc_y + t_offst_y,t_font_size,t_font_texture_index,t_font_color,L"x");
+			}
 		}
 
 		return true;

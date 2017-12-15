@@ -149,7 +149,7 @@ namespace NBsys{namespace NWindowMenu
 
 		/** 子の追加。
 		*/
-		void AddChild(sharedptr<WindowMenu_Window_Base>& a_window,s32 a_z_sort_add = 10);
+		void AddChild(sharedptr<WindowMenu_Window_Base> a_window,s32 a_z_sort_add = 10);
 
 		/** 子の削除。
 		*/
@@ -158,6 +158,26 @@ namespace NBsys{namespace NWindowMenu
 		/** IsRange
 		*/
 		bool IsRange(f32 a_x,f32 a_y);
+
+		/** サイズ計算。
+		*/
+		void CalcRect();
+
+		/** サイズ計算。
+		*/
+		void CalcX(WindowMenu_SizeType::Id a_from_sizetype);
+
+		/** サイズ計算。
+		*/
+		void CalcY(WindowMenu_SizeType::Id a_from_sizetype);
+
+		/** サイズ計算。
+		*/
+		void CalcW(WindowMenu_SizeType::Id a_from_sizetype);
+
+		/** サイズ計算。
+		*/
+		void CalcH(WindowMenu_SizeType::Id a_from_sizetype);
 
 	public:
 		/** システムからのマウス再起処理。
@@ -184,37 +204,21 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		virtual bool CallBack_Draw(s32 a_z_sort);
 
+		/** アクティブ変更。
+		*/
+		virtual void CallBack_ChangeActive(bool a_active);
+
 		/** 削除リクエスト。取得。
 		*/
-		virtual bool GetDeleteRequest();
+		virtual bool CallBack_GetDeleteRequest();
 
 		/** 削除リクエスト。設定。
 		*/
-		virtual void SetDeleteRequest();
+		virtual void CallBack_SetDeleteRequest();
 
 		/** 計算結果のクリア。
 		*/
-		virtual void CalcRectClear(STLList<sharedptr<WindowMenu_Window_Base>>::iterator a_it,s32 a_index);
-
-		/** サイズ計算。
-		*/
-		void CalcRect();
-
-		/** サイズ計算。
-		*/
-		void CalcX(WindowMenu_SizeType::Id a_from_sizetype);
-
-		/** サイズ計算。
-		*/
-		void CalcY(WindowMenu_SizeType::Id a_from_sizetype);
-
-		/** サイズ計算。
-		*/
-		void CalcW(WindowMenu_SizeType::Id a_from_sizetype);
-
-		/** サイズ計算。
-		*/
-		void CalcH(WindowMenu_SizeType::Id a_from_sizetype);
+		virtual void CallBack_CalcRectClear(STLList<sharedptr<WindowMenu_Window_Base>>::iterator a_it,s32 a_index);
 	};
 }}
 

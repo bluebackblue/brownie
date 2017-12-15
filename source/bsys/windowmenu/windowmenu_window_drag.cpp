@@ -80,7 +80,7 @@ namespace NBsys{namespace NWindowMenu
 					this->parent->offset.x = this->old_x + (t_mouse.x - this->start_x);
 					this->parent->offset.y = this->old_y + (t_mouse.y - this->start_y);
 					
-					this->CalcRectClear(this->calc_it,this->calc_child_index);
+					this->CallBack_CalcRectClear(this->calc_it,this->calc_child_index);
 					this->parent->CalcRect();
 				}
 			}else{

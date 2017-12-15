@@ -37,7 +37,11 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	WindowMenu::WindowMenu(sharedptr<WindowMenu_Callback_Base>& a_callback)
 		:
-		callback(a_callback)
+		callback(a_callback),
+		list(),
+		listcahnge(false),
+		mouse(),
+		active()
 	{
 	}
 
@@ -55,8 +59,9 @@ namespace NBsys{namespace NWindowMenu
 		{
 			STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->list.begin();
 			while(t_it != this->list.end()){
-				if((*t_it)->GetDeleteRequest() == true){
+				if((*t_it)->CallBack_GetDeleteRequest() == true){
 					t_it = this->list.erase(t_it);
+					this->listcahnge = true;
 				}else{
 					t_it++;
 				}
@@ -71,7 +76,7 @@ namespace NBsys{namespace NWindowMenu
 				//計算結果のクリア。
 				{
 					for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
-						(*t_it)->CalcRectClear(STLList<sharedptr<WindowMenu_Window_Base>>::iterator(),-1);
+						(*t_it)->CallBack_CalcRectClear(STLList<sharedptr<WindowMenu_Window_Base>>::iterator(),-1);
 					}
 				}
 
@@ -98,8 +103,7 @@ namespace NBsys{namespace NWindowMenu
 
 							//最後尾へ移動。
 							if(this->mouse.on_l || this->mouse.on_r){
-								STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_last = t_it_end;
-								t_it_last--;
+								STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_last = STLList<sharedptr<WindowMenu_Window_Base>>::get_last(this->list);
 								if(t_it != t_it_last){
 									t_it_movetolast = t_it;
 								}
@@ -114,8 +118,36 @@ namespace NBsys{namespace NWindowMenu
 					//最後尾へ移動。
 					if(t_it_movetolast != t_it_end){
 						sharedptr<WindowMenu_Window_Base> t_active = *t_it_movetolast;
+						
 						this->list.erase(t_it_movetolast);
 						this->list.push_back(t_active);
+
+						this->listcahnge = true;
+
+					}
+				}
+
+				//アクティブ変更チェック。
+				if(this->listcahnge  == true){
+					STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_last = STLList<sharedptr<WindowMenu_Window_Base>>::get_last(this->list);
+
+					if(t_it_last != this->list.end()){
+						if(this->active.get() != (*t_it_last).get()){
+							//アクティブ解除。
+							if(this->active){
+								this->active->CallBack_ChangeActive(false);
+							}
+
+							this->active = *t_it_last;
+							
+							//アクティブ設定。
+							if(this->active){
+								this->active->CallBack_ChangeActive(true);
+							}
+						}
+					}else{
+						//リストが空。
+						this->active.reset();
 					}
 				}
 
@@ -146,6 +178,7 @@ namespace NBsys{namespace NWindowMenu
 	void WindowMenu::Add(const sharedptr<WindowMenu_Window_Base>& a_window)
 	{
 		this->list.push_back(a_window);
+		this->listcahnge = true;
 	}
 
 	/** GetList

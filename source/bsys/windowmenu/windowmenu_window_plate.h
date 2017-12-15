@@ -24,14 +24,6 @@
 */
 namespace NBsys{namespace NWindowMenu
 {
-
-	/**
-	*/
-	struct WindowMenu_Plate
-	{
-		
-	};
-
 	/** プレート。
 	*/
 	class WindowMenu_Window_Plate : public WindowMenu_Window_Base
@@ -71,15 +63,12 @@ namespace NBsys{namespace NWindowMenu
 
 			/** constructor
 			*/
-			InitItem(WindowMenu_Mode::Id a_mode,const STLString& a_name,const WindowMenu_Offset& a_offset,const WindowMenu_Size& a_size,const NBsys::NColor::Color_F& a_color,s32 a_texture_id,bool a_mouseblock)
+			InitItem(WindowMenu_Mode::Id a_mode,const STLString& a_name,const WindowMenu_Offset& a_offset,const WindowMenu_Size& a_size)
 				:
 				mode(a_mode),
 				name(a_name),
 				offset(a_offset),
-				size(a_size),
-				color(a_color),
-				texture_id(a_texture_id),
-				mouseblock(a_mouseblock)
+				size(a_size)
 			{
 			}
 
@@ -90,7 +79,7 @@ namespace NBsys{namespace NWindowMenu
 			}
 		};
 
-	private:
+	public:
 		/** color
 		*/
 		NBsys::NColor::Color_F color;

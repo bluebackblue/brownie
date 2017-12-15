@@ -1,11 +1,11 @@
-ï»¿#pragma once
+#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ãƒ‡ãƒãƒƒã‚°ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã€‚
+ * @brief ƒfƒoƒbƒOƒƒjƒ…[B
 */
 
 
@@ -24,9 +24,9 @@
 */
 namespace NBsys{namespace NWindowMenu
 {
-	/** é–‰ã˜ã‚‹ãƒœã‚¿ãƒ³ã€‚
+	/** ƒeƒLƒXƒgB
 	*/
-	class WindowMenu_Window_CloseButton : public WindowMenu_Window_Base
+	class WindowMenu_Window_Text: public WindowMenu_Window_Base
 	{
 	public:
 		/** InitItem
@@ -49,11 +49,13 @@ namespace NBsys{namespace NWindowMenu
 			*/
 			WindowMenu_Size size;
 
-			/** color
+			/** FB
 			*/
-			NBsys::NColor::Color_F color_nomal;
-			NBsys::NColor::Color_F color_on;
-			NBsys::NColor::Color_F color_ondown;
+			NBsys::NColor::Color_F color;
+
+			/** •¶šB
+			*/
+			STLWString string;
 
 			/** constructor
 			*/
@@ -74,40 +76,27 @@ namespace NBsys{namespace NWindowMenu
 		};
 
 	private:
-		/** push_flag
-		*/
-		bool push_flag;
-
-		/** on_flag
-		*/
-		bool on_flag;
-
 		/** color
 		*/
-		NBsys::NColor::Color_F color_nomal;
-		NBsys::NColor::Color_F color_on;
-		NBsys::NColor::Color_F color_ondown;
+		NBsys::NColor::Color_F color;
+
+		/** string
+		*/
+		STLWString string;
 
 	public:
 		/** constructor
 		*/
-		WindowMenu_Window_CloseButton(const InitItem& a_inititem);
+		WindowMenu_Window_Text(const InitItem& a_inititem);
 
 		/** destructor
 		*/
-		virtual ~WindowMenu_Window_CloseButton();
+		virtual ~WindowMenu_Window_Text();
 
-		/** ãƒã‚¦ã‚¹å‡¦ç†ã€‚
-		*/
-		virtual bool CallBack_InRangeMouseUpdate(WindowMenu_Mouse& a_mouse);
-
-		/** æ›´æ–°å‡¦ç†ã€‚
-		*/
-		virtual bool CallBack_Update();
-
-		/** æç”»å‡¦ç†ã€‚
+		/** •`‰æˆ—B
 		*/
 		virtual bool CallBack_Draw(s32 a_z_sort);
+
 	};
 
 }}

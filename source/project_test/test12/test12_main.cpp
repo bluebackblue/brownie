@@ -89,6 +89,7 @@ sharedptr<NCommon::Render2D_Material_Base> s_drawfont_material;
 */
 sharedptr<Test12_WindowMenu> s_test12_window_1;
 sharedptr<Test12_WindowMenu> s_test12_window_2;
+sharedptr<Test12_WindowMenu> s_test12_window_3;
 
 
 /** App
@@ -211,10 +212,12 @@ public:
 				this->draw = true;
 
 				//ウィンドウメニュー。
-				s_test12_window_1.reset(new Test12_WindowMenu(150.0f,150.0f,0));
-				s_test12_window_2.reset(new Test12_WindowMenu(300.0f,300.0f,1));
+				s_test12_window_1.reset(new Test12_WindowMenu(0,L"フォントテクスチャー[0]",150.0f,150.0f));
+				s_test12_window_2.reset(new Test12_WindowMenu(1,L"フォントテクスチャー[1]",150.0f,150.0f));
+				s_test12_window_3.reset(new Test12_WindowMenu(1,L"フォントテクスチャー[2]",150.0f,150.0f));
 				NBsys::NWindowMenu::GetSystemInstance()->Add(s_test12_window_1);
 				NBsys::NWindowMenu::GetSystemInstance()->Add(s_test12_window_2);
+				NBsys::NWindowMenu::GetSystemInstance()->Add(s_test12_window_3);
 			}break;
 		case 2:
 			{

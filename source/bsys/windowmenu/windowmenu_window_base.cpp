@@ -98,7 +98,7 @@ namespace NBsys{namespace NWindowMenu
 
 	/** 子の追加。
 	*/
-	void WindowMenu_Window_Base::AddChild(sharedptr<WindowMenu_Window_Base>& a_window,s32 a_z_sort_add)
+	void WindowMenu_Window_Base::AddChild(sharedptr<WindowMenu_Window_Base> a_window,s32 a_z_sort_add)
 	{
 		if(a_window->parent != nullptr){
 			a_window->parent->RemoveChild(a_window);
@@ -133,122 +133,6 @@ namespace NBsys{namespace NWindowMenu
 			return true;
 		}
 		return false;
-	}
-
-	/** システムからのマウス再起処理。
-	*/
-	bool WindowMenu_Window_Base::System_MouseUpdate(WindowMenu_Mouse& a_mouse)
-	{
-		if(this->IsRange(a_mouse.x,a_mouse.y)){
-			//範囲内。
-
-			//子から処理。
-			STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
-			for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
-				bool t_ret = (*t_it)->System_MouseUpdate(a_mouse);
-				if(t_ret == true){
-					//マウス操作を親に伝えない。
-					return true;
-				}
-			}
-
-			bool t_ret = this->CallBack_InRangeMouseUpdate(a_mouse);
-			if(t_ret == true){
-				//マウス操作を親に伝えない。
-				return true;
-			}
-		}
-
-		//範囲外。
-		return false;
-	}
-
-	/** システムからの更新処理。
-	*/
-	void WindowMenu_Window_Base::System_Update()
-	{
-		this->CallBack_Update();
-
-		STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
-		for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
-			(*t_it)->System_Update();
-		}
-	}
-
-	/** システムからの描画処理。
-	*/
-	void WindowMenu_Window_Base::System_Draw(s32 a_z_sort)
-	{
-		STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
-		for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
-			(*t_it)->System_Draw(a_z_sort);
-		}
-		this->CallBack_Draw(a_z_sort);
-	}
-
-	/** マウス処理。
-	*/
-	bool WindowMenu_Window_Base::CallBack_InRangeMouseUpdate(WindowMenu_Mouse& /*a_mouse*/)
-	{
-		//マウス操作を親に伝える。
-		return false;
-	}
-
-	/** 更新処理。
-	*/
-	bool WindowMenu_Window_Base::CallBack_Update()
-	{
-		return true;
-	}
-
-	/** 描画処理。
-	*/
-	bool WindowMenu_Window_Base::CallBack_Draw(s32 /*a_z_sort*/)
-	{
-		return true;
-	}
-
-	/** 親の削除リクエスト。取得。
-	*/
-	bool WindowMenu_Window_Base::GetDeleteRequest()
-	{
-		return false;
-	}
-
-	/** 削除リクエスト。設定。
-	*/
-	void WindowMenu_Window_Base::SetDeleteRequest()
-	{
-		if(this->parent != nullptr){
-			this->parent->SetDeleteRequest();
-		}
-	}
-
-	/** 計算結果のクリア。
-	*/
-	void WindowMenu_Window_Base::CalcRectClear(STLList<sharedptr<WindowMenu_Window_Base>>::iterator a_it,s32 a_index)
-	{
-		/** 計算結果。
-		*/
-		this->calc_x_fix = false;
-		this->calc_y_fix = false;
-		this->calc_w_fix = false;
-		this->calc_h_fix = false;
-
-		/** 計算に必要な親が所持している自分のインデックス。
-		*/
-		this->calc_child_index = a_index;
-
-		/** 計算に必要な親が所持している自分のイテレータ。
-		*/
-		this->calc_it = a_it;
-
-		s32 t_index = 0;
-		STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
-		for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
-			(*t_it)->CalcRectClear(t_it,t_index);
-			t_index++;
-		}
 	}
 
 	/** サイズ計算。
@@ -551,6 +435,128 @@ namespace NBsys{namespace NWindowMenu
 					this->calc_h_fix = true;
 				}
 			}
+		}
+	}
+
+	/** システムからのマウス再起処理。
+	*/
+	bool WindowMenu_Window_Base::System_MouseUpdate(WindowMenu_Mouse& a_mouse)
+	{
+		if(this->IsRange(a_mouse.x,a_mouse.y)){
+			//範囲内。
+
+			//子から処理。
+			STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
+			for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
+				bool t_ret = (*t_it)->System_MouseUpdate(a_mouse);
+				if(t_ret == true){
+					//マウス操作を親に伝えない。
+					return true;
+				}
+			}
+
+			bool t_ret = this->CallBack_InRangeMouseUpdate(a_mouse);
+			if(t_ret == true){
+				//マウス操作を親に伝えない。
+				return true;
+			}
+		}
+
+		//範囲外。
+		return false;
+	}
+
+	/** システムからの更新処理。
+	*/
+	void WindowMenu_Window_Base::System_Update()
+	{
+		this->CallBack_Update();
+
+		STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
+		for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
+			(*t_it)->System_Update();
+		}
+	}
+
+	/** システムからの描画処理。
+	*/
+	void WindowMenu_Window_Base::System_Draw(s32 a_z_sort)
+	{
+		STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
+		for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
+			(*t_it)->System_Draw(a_z_sort);
+		}
+		this->CallBack_Draw(a_z_sort);
+	}
+
+	/** マウス処理。
+	*/
+	bool WindowMenu_Window_Base::CallBack_InRangeMouseUpdate(WindowMenu_Mouse& /*a_mouse*/)
+	{
+		//マウス操作を親に伝える。
+		return false;
+	}
+
+	/** 更新処理。
+	*/
+	bool WindowMenu_Window_Base::CallBack_Update()
+	{
+		return true;
+	}
+
+	/** 描画処理。
+	*/
+	bool WindowMenu_Window_Base::CallBack_Draw(s32 /*a_z_sort*/)
+	{
+		return true;
+	}
+
+	/** アクティブ変更。
+	*/
+	void WindowMenu_Window_Base::CallBack_ChangeActive(bool a_active)
+	{
+	}
+
+	/** 親の削除リクエスト。取得。
+	*/
+	bool WindowMenu_Window_Base::CallBack_GetDeleteRequest()
+	{
+		return false;
+	}
+
+	/** 削除リクエスト。設定。
+	*/
+	void WindowMenu_Window_Base::CallBack_SetDeleteRequest()
+	{
+		if(this->parent != nullptr){
+			this->parent->CallBack_SetDeleteRequest();
+		}
+	}
+
+	/** 計算結果のクリア。
+	*/
+	void WindowMenu_Window_Base::CallBack_CalcRectClear(STLList<sharedptr<WindowMenu_Window_Base>>::iterator a_it,s32 a_index)
+	{
+		/** 計算結果。
+		*/
+		this->calc_x_fix = false;
+		this->calc_y_fix = false;
+		this->calc_w_fix = false;
+		this->calc_h_fix = false;
+
+		/** 計算に必要な親が所持している自分のインデックス。
+		*/
+		this->calc_child_index = a_index;
+
+		/** 計算に必要な親が所持している自分のイテレータ。
+		*/
+		this->calc_it = a_it;
+
+		s32 t_index = 0;
+		STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
+		for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
+			(*t_it)->CallBack_CalcRectClear(t_it,t_index);
+			t_index++;
 		}
 	}
 }}
