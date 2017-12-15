@@ -41,9 +41,9 @@ namespace NCommon
 		}
 	};
 	
-	/** DrawRect_PS_ConstantBuffer_B1
+	/** DrawRect_PS_ConstantBuffer_B0
 	*/
-	struct DrawRect_PS_ConstantBuffer_B1
+	struct DrawRect_PS_ConstantBuffer_B0
 	{
 		/**
 
@@ -80,7 +80,7 @@ namespace NCommon
 		*/
 		u32 flag4;
 
-		DrawRect_PS_ConstantBuffer_B1()
+		DrawRect_PS_ConstantBuffer_B0()
 			:
 			flag1(0),
 			flag2(0),
@@ -89,7 +89,7 @@ namespace NCommon
 		{
 		}
 
-		nonvirtual ~DrawRect_PS_ConstantBuffer_B1()
+		nonvirtual ~DrawRect_PS_ConstantBuffer_B0()
 		{
 		}
 	};
@@ -122,7 +122,7 @@ namespace NCommon
 		s32 vertexshader_id;
 		s32 pixelshader_id;
 		s32 vs_constantbuffer_b0_id;
-		s32 ps_constantbuffer_b1_id;
+		s32 ps_constantbuffer_b0_id;
 		s32 blendstate_id;
 		s32 rasterizerstate_cull_none_id;
 
@@ -180,7 +180,7 @@ namespace NCommon
 
 					//コンスタントバッファ。
 					this->vs_constantbuffer_b0_id = this->d3d11->CreateConstantBuffer(0,sizeof(DrawRect_VS_ConstantBuffer_B0));
-					this->ps_constantbuffer_b1_id = this->d3d11->CreateConstantBuffer(1,sizeof(DrawRect_PS_ConstantBuffer_B1));
+					this->ps_constantbuffer_b0_id = this->d3d11->CreateConstantBuffer(0,sizeof(DrawRect_PS_ConstantBuffer_B0));
 
 					//バーテックスバッファ。
 					s32 t_vertex_allcountof = 2 * 1024;
@@ -376,24 +376,24 @@ namespace NCommon
 
 				//コンスタントバッファ。
 				DrawRect_VS_ConstantBuffer_B0 t_vs_constantbuffer_b0;
-				DrawRect_PS_ConstantBuffer_B1 t_ps_constantbuffer_b1;
+				DrawRect_PS_ConstantBuffer_B0 t_ps_constantbuffer_b0;
 				{
 					t_vs_constantbuffer_b0.view_projection = t_view_projection.Make_Transpose();
 
 					if(t_texture_id >= 0){
-						t_ps_constantbuffer_b1.flag1 = 0x00000001;
+						t_ps_constantbuffer_b0.flag1 = 0x00000001;
 					}else{
-						t_ps_constantbuffer_b1.flag1 = 0x00000000;
+						t_ps_constantbuffer_b0.flag1 = 0x00000000;
 					}
 				}
 
 				//コンスタントバッファーの内容更新。
 				this->d3d11->Render_UpdateSubresource(this->vs_constantbuffer_b0_id,&t_vs_constantbuffer_b0);
-				this->d3d11->Render_UpdateSubresource(this->ps_constantbuffer_b1_id,&t_ps_constantbuffer_b1);
+				this->d3d11->Render_UpdateSubresource(this->ps_constantbuffer_b0_id,&t_ps_constantbuffer_b0);
 
 				//コンスタントバッファーをシェーダーに設定。
 				this->d3d11->Render_VSSetConstantBuffers(this->vs_constantbuffer_b0_id);
-				this->d3d11->Render_PSSetConstantBuffers(this->ps_constantbuffer_b1_id);
+				this->d3d11->Render_PSSetConstantBuffers(this->ps_constantbuffer_b0_id);
 
 				//ラスタライザー。
 				this->d3d11->Render_SetRasterizerState(this->rasterizerstate_cull_none_id);

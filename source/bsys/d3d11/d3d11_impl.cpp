@@ -556,6 +556,8 @@ namespace NBsys{namespace ND3d11
 
 		sharedptr<D3d11_Impl_ConstantBuffer> t_constantbuffer = new D3d11_Impl_ConstantBuffer();
 		{
+			ASSERT(a_size % 16 == 0);
+
 			t_constantbuffer->size = a_size;
 			t_constantbuffer->register_b_index = a_register_b_index;
 		}

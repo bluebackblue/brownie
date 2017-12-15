@@ -24,9 +24,9 @@ SamplerState DiffuseSampler
 Texture2D tex_diffuse : register(t0);
 
 
-/** PS_ConstantBuffer_B1
+/** PS_ConstantBuffer_B0
 */
-cbuffer PS_ConstantBuffer_B1 : register(b1)
+cbuffer PS_ConstantBuffer_B0 : register(b0)
 {
 	uint flag1;
 	uint flag2;

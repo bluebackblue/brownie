@@ -36,10 +36,10 @@ cbuffer PS_ConstantBuffer_B1 : register(b0)
 	uint flag3;
 	uint flag4;
 
-	float screen_w;
-	float screen_h;
-	uint flag5;
-	uint flag6;
+	uint dummy1;
+	uint dummy2;
+	uint dummy3;
+	uint dummy4;
 }
 
 
