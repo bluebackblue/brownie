@@ -279,7 +279,7 @@ namespace NCommon
 				{
 					t_vector.pos_xx = t_it->data.x;
 					t_vector.pos_yy = t_it->data.y;
-					t_vector.pos_zz = static_cast<f32>(t_it->data.z);
+					t_vector.pos_zz = 0.0f;
 
 					t_vector.uv_xx = 0.0f;
 					t_vector.uv_yy = 0.0f;
@@ -291,7 +291,7 @@ namespace NCommon
 				{
 					t_vector.pos_xx = t_it->data.x + t_it->data.w;
 					t_vector.pos_yy = t_it->data.y;
-					t_vector.pos_zz = static_cast<f32>(t_it->data.z);
+					t_vector.pos_zz = 0.0f;
 
 					t_vector.uv_xx = 1.0f;
 					t_vector.uv_yy = 0.0f;
@@ -303,7 +303,7 @@ namespace NCommon
 				{
 					t_vector.pos_xx = t_it->data.x;
 					t_vector.pos_yy = t_it->data.y + t_it->data.h;
-					t_vector.pos_zz = static_cast<f32>(t_it->data.z);
+					t_vector.pos_zz = 0.0f;
 
 					t_vector.uv_xx = 0.0f;
 					t_vector.uv_yy = 1.0f;
@@ -315,7 +315,7 @@ namespace NCommon
 				{
 					t_vector.pos_xx = t_it->data.x;
 					t_vector.pos_yy = t_it->data.y + t_it->data.h;
-					t_vector.pos_zz = static_cast<f32>(t_it->data.z);
+					t_vector.pos_zz = 0.0f;
 
 					t_vector.uv_xx = 0.0f;
 					t_vector.uv_yy = 1.0f;
@@ -327,7 +327,7 @@ namespace NCommon
 				{
 					t_vector.pos_xx = t_it->data.x + t_it->data.w;
 					t_vector.pos_yy = t_it->data.y;
-					t_vector.pos_zz = static_cast<f32>(t_it->data.z);
+					t_vector.pos_zz = 0.0f;
 
 					t_vector.uv_xx = 1.0f;
 					t_vector.uv_yy = 0.0f;
@@ -339,7 +339,7 @@ namespace NCommon
 				{
 					t_vector.pos_xx = t_it->data.x + t_it->data.w;
 					t_vector.pos_yy = t_it->data.y + t_it->data.h;
-					t_vector.pos_zz = static_cast<f32>(t_it->data.z);
+					t_vector.pos_zz = 0.0f;
 
 					t_vector.uv_xx = 1.0f;
 					t_vector.uv_yy = 1.0f;

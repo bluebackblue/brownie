@@ -54,6 +54,10 @@ namespace NBsys{namespace NWindowMenu
 			*/
 			WindowMenu_Size size;
 
+			/** z_sort
+			*/
+			s32 z_sort;
+
 			/** constructor
 			*/
 			InitItem()
@@ -66,11 +70,12 @@ namespace NBsys{namespace NWindowMenu
 
 			/** constructor
 			*/
-			InitItem(WindowMenu_Mode::Id a_mode,const WindowMenu_Offset& a_offset,const WindowMenu_Size& a_size)
+			InitItem(WindowMenu_Mode::Id a_mode,const WindowMenu_Offset& a_offset,const WindowMenu_Size& a_size,s32 a_z_sort)
 				:
 				mode(a_mode),
 				offset(a_offset),
-				size(a_size)
+				size(a_size),
+				z_sort(a_z_sort)
 			{
 			}
 
@@ -105,12 +110,21 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		WindowMenu_Size size;
 
+		/** [設定値]優先順位。
+		*/
+		s32 z_sort;
+
 		/** 計算結果。
 		*/
+		bool calc_x_fix;
+		bool calc_y_fix;
+		bool calc_w_fix;
+		bool calc_h_fix;
 		f32 calc_x;
 		f32 calc_y;
 		f32 calc_w;
 		f32 calc_h;
+
 
 		/** 計算に必要な親が所持している自分のインデックス。
 		*/
@@ -135,7 +149,7 @@ namespace NBsys{namespace NWindowMenu
 
 		/** 子の追加。
 		*/
-		void AddChild(sharedptr<WindowMenu_Window_Base>& a_window);
+		void AddChild(sharedptr<WindowMenu_Window_Base>& a_window,s32 a_z_sort_add = 10);
 
 		/** 子の削除。
 		*/
@@ -156,7 +170,7 @@ namespace NBsys{namespace NWindowMenu
 
 		/** システムからの描画処理。
 		*/
-		virtual void System_Draw();
+		virtual void System_Draw(s32 a_z_sort);
 
 		/** マウス処理。
 		*/
@@ -168,7 +182,7 @@ namespace NBsys{namespace NWindowMenu
 
 		/** 描画処理。
 		*/
-		virtual bool CallBack_Draw();
+		virtual bool CallBack_Draw(s32 a_z_sort);
 
 		/** 削除リクエスト。取得。
 		*/

@@ -69,7 +69,7 @@ namespace NBsys{namespace NWindowMenu
 
 		/** Draw
 		*/
-		void Draw();
+		void Draw(s32 a_z_sort_add = 100);
 
 	public:
 		/** 追加。

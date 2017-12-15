@@ -45,7 +45,7 @@ namespace NCommon
 		*/
 		struct RectData
 		{
-			s32 z;
+			s32 z_sort;
 
 			f32 x;
 			f32 y;
@@ -55,9 +55,9 @@ namespace NCommon
 			s32 texture_id;
 			NBsys::NColor::Color_F color;
 
-			RectData(s32 a_z,f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_texture_id,const NBsys::NColor::Color_F& a_color)
+			RectData(s32 a_z_sort,f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_texture_id,const NBsys::NColor::Color_F& a_color)
 				:
-				z(a_z),
+				z_sort(a_z_sort),
 				x(a_x),
 				y(a_y),
 				w(a_w),
@@ -75,23 +75,23 @@ namespace NCommon
 		*/
 		struct FontData
 		{
-			s32 z;
+			s32 z_sort;
 
 			f32 x;
 			f32 y;
 			f32 size;
-			s32 texture_index;
+			s32 font_texture_index;
 
 			NBsys::NColor::Color_F color;
 			STLWString string;
 
-			FontData(s32 a_z,f32 a_x,f32 a_y,f32 a_size,s32 a_texture_index,const NBsys::NColor::Color_F& a_color,const STLWString& a_string)
+			FontData(s32 a_z_sort,f32 a_x,f32 a_y,f32 a_size,s32 a_font_texture_index,const NBsys::NColor::Color_F& a_color,const STLWString& a_string)
 				:
-				z(a_z),
+				z_sort(a_z_sort),
 				x(a_x),
 				y(a_y),
 				size(a_size),
-				texture_index(a_texture_index),
+				font_texture_index(a_font_texture_index),
 				color(a_color),
 				string(a_string)
 			{
@@ -105,7 +105,7 @@ namespace NCommon
 		*/
 		struct Data
 		{
-			s32 z;
+			s32 z_sort;
 
 			Type::Id type;
 
@@ -129,7 +129,7 @@ namespace NCommon
 		*/
 		Render2D_Item(const RectData& a_data)
 		{
-			this->data.z = a_data.z;
+			this->data.z_sort = a_data.z_sort;
 
 			this->data.type = Type::Rect;
 
@@ -145,14 +145,14 @@ namespace NCommon
 		*/
 		Render2D_Item(const FontData& a_data)
 		{
-			this->data.z = a_data.z;
+			this->data.z_sort = a_data.z_sort;
 
 			this->data.type = Type::Font;
 
 			this->data.x = a_data.x;
 			this->data.y = a_data.y;
 			this->data.size = a_data.size;
-			this->data.texture_index = a_data.texture_index;
+			this->data.texture_index = a_data.font_texture_index;
 			this->data.color = a_data.color;
 			this->data.string = a_data.string;
 		}
@@ -227,17 +227,17 @@ namespace NCommon
 
 		/** DrawRect
 		*/
-		void DrawRect(s32 a_z,f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_texture_id,const NBsys::NColor::Color_F& a_color)
+		void DrawRect(s32 a_z_sort,f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_texture_id,const NBsys::NColor::Color_F& a_color)
 		{
-			Render2D_Item t_item(Render2D_Item::RectData(a_z,a_x,a_y,a_w,a_h,a_texture_id,a_color));
+			Render2D_Item t_item(Render2D_Item::RectData(a_z_sort,a_x,a_y,a_w,a_h,a_texture_id,a_color));
 			this->list.push_back(t_item);
 		}
 
 		/** DrawFont
 		*/
-		void DrawFont(s32 a_z,f32 a_x,f32 a_y,f32 a_size,s32 a_texture_index,const NBsys::NColor::Color_F& a_color,const STLWString& a_string)
+		void DrawFont(s32 a_z_sort,f32 a_x,f32 a_y,f32 a_size,s32 a_font_texture_index,const NBsys::NColor::Color_F& a_color,const STLWString& a_string)
 		{
-			Render2D_Item t_item(Render2D_Item::FontData(a_z,a_x,a_y,a_size,a_texture_index,a_color,a_string));
+			Render2D_Item t_item(Render2D_Item::FontData(a_z_sort,a_x,a_y,a_size,a_font_texture_index,a_color,a_string));
 			this->list.push_back(t_item);
 		}
 
@@ -247,7 +247,7 @@ namespace NCommon
 		{
 			//ソート。
 			this->list.sort([](const Render2D_Item& a_item_a,const Render2D_Item& a_item_b){
-				return (a_item_a.data.z > a_item_b.data.z);
+				return (a_item_a.data.z_sort < a_item_b.data.z_sort);
 			});
 
 			//描画。

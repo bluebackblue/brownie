@@ -114,7 +114,7 @@ namespace NBsys{namespace NWindowMenu
 
 		/** 描画処理。
 		*/
-		virtual bool CallBack_Draw();
+		virtual bool CallBack_Draw(s32 a_z_sort);
 
 		/** マウス処理。
 		*/

@@ -131,11 +131,13 @@ namespace NBsys{namespace NWindowMenu
 
 	/** Draw
 	*/
-	void WindowMenu::Draw()
+	void WindowMenu::Draw(s32 a_z_sort_add)
 	{
+		s32 t_z_sort = 0;
 		STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->list.end();
 		for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
-			(*t_it)->System_Draw();
+			(*t_it)->System_Draw(t_z_sort);
+			t_z_sort += a_z_sort_add;
 		}
 	}
 

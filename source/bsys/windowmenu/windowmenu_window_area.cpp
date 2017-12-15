@@ -40,7 +40,7 @@ namespace NBsys{namespace NWindowMenu
 		:
 		WindowMenu_Window_Base(a_inititem.name)
 	{
-		this->Initialize(WindowMenu_Window_Base::InitItem(a_inititem.mode,a_inititem.offset,a_inititem.size));
+		this->Initialize(WindowMenu_Window_Base::InitItem(a_inititem.mode,a_inititem.offset,a_inititem.size,0));
 	}
 
 	/** destructor

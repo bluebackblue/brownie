@@ -26,16 +26,16 @@ namespace NCommon
 {
 	/** DrawFontProcType
 	*/
-	void WindowMenu_Callback::DrawFont_Callback(s32 a_z,f32 a_x,f32 a_y,f32 a_size,s32 a_texture_index,const NBsys::NColor::Color_F& a_color,const STLWString& a_string)
+	void WindowMenu_Callback::DrawFont_Callback(s32 a_z_sort,f32 a_x,f32 a_y,f32 a_size,s32 a_font_texture_index,const NBsys::NColor::Color_F& a_color,const STLWString& a_string)
 	{
-		this->render2d->DrawFont(a_z,a_x,a_y,a_size,a_texture_index,a_color,a_string);
+		this->render2d->DrawFont(a_z_sort,a_x,a_y,a_size,a_font_texture_index,a_color,a_string);
 	}
 
 	/** DrawRectProcType
 	*/
-	void WindowMenu_Callback::DrawRect_Callback(s32 a_z,f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_texture_id,const NBsys::NColor::Color_F& a_color)
+	void WindowMenu_Callback::DrawRect_Callback(s32 a_z_sort,f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_texture_id,const NBsys::NColor::Color_F& a_color)
 	{
-		this->render2d->DrawRect(a_z,a_x,a_y,a_w,a_h,a_texture_id,a_color);
+		this->render2d->DrawRect(a_z_sort,a_x,a_y,a_w,a_h,a_texture_id,a_color);
 	}
 
 	/** GetMouseProcType

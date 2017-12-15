@@ -41,11 +41,16 @@ Test12_WindowMenu::Test12_WindowMenu(f32 a_offset_x,f32 a_offset_y,s32 a_id)
 				300.0f,
 				NBsys::NWindowMenu::WindowMenu_SizeType::StretchChild,
 				-1.0f
-			)
+			),
+			0
 		)
 	);
 
 	f32 t_title_h = 30.0f;
+	if(a_id == 1){
+		t_title_h = 60.0f;
+	}
+
 
 	//タイトル。
 	{

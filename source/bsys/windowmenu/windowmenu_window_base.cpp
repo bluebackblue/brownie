@@ -44,11 +44,17 @@ namespace NBsys{namespace NWindowMenu
 		name(a_name),
 		offset(0.0f,0.0f),
 		size(WindowMenu_SizeType::Fix,0.0f,WindowMenu_SizeType::Fix,0.0f),
+		z_sort(0),
 
-		calc_x(-1.0f),
-		calc_y(-1.0f),
-		calc_w(-1.0f),
-		calc_h(-1.0f),
+		calc_x_fix(false),
+		calc_y_fix(false),
+		calc_w_fix(false),
+		calc_h_fix(false),
+
+		calc_x(0.0f),
+		calc_y(0.0f),
+		calc_w(0.0f),
+		calc_h(0.0f),
 
 		calc_child_index(0),
 		calc_it(STLList<sharedptr<WindowMenu_Window_Base>>::iterator())
@@ -74,11 +80,17 @@ namespace NBsys{namespace NWindowMenu
 
 		this->offset = a_inititem.offset;
 		this->size = a_inititem.size;
+		this->z_sort = a_inititem.z_sort;
 
-		this->calc_x = -1.0f;
-		this->calc_y = -1.0f;
-		this->calc_w = -1.0f;
-		this->calc_h = -1.0f;
+		this->calc_x_fix = false;
+		this->calc_y_fix = false;
+		this->calc_w_fix = false;
+		this->calc_h_fix = false;
+
+		this->calc_x = 0.0f;
+		this->calc_y = 0.0f;
+		this->calc_w = 0.0f;
+		this->calc_h = 0.0f;
 
 		this->calc_child_index = -1;
 		this->calc_it = STLList<sharedptr<WindowMenu_Window_Base>>::iterator();
@@ -86,7 +98,7 @@ namespace NBsys{namespace NWindowMenu
 
 	/** 子の追加。
 	*/
-	void WindowMenu_Window_Base::AddChild(sharedptr<WindowMenu_Window_Base>& a_window)
+	void WindowMenu_Window_Base::AddChild(sharedptr<WindowMenu_Window_Base>& a_window,s32 a_z_sort_add)
 	{
 		if(a_window->parent != nullptr){
 			a_window->parent->RemoveChild(a_window);
@@ -94,6 +106,7 @@ namespace NBsys{namespace NWindowMenu
 
 		this->child_list.push_back(a_window);
 		a_window->parent = this;
+		a_window->z_sort = this->z_sort + a_z_sort_add;
 	}
 
 	/** 子の削除。
@@ -164,14 +177,13 @@ namespace NBsys{namespace NWindowMenu
 
 	/** システムからの描画処理。
 	*/
-	void WindowMenu_Window_Base::System_Draw()
+	void WindowMenu_Window_Base::System_Draw(s32 a_z_sort)
 	{
-		this->CallBack_Draw();
-
 		STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
 		for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
-			(*t_it)->System_Draw();
+			(*t_it)->System_Draw(a_z_sort);
 		}
+		this->CallBack_Draw(a_z_sort);
 	}
 
 	/** マウス処理。
@@ -191,7 +203,7 @@ namespace NBsys{namespace NWindowMenu
 
 	/** 描画処理。
 	*/
-	bool WindowMenu_Window_Base::CallBack_Draw()
+	bool WindowMenu_Window_Base::CallBack_Draw(s32 /*a_z_sort*/)
 	{
 		return true;
 	}
@@ -218,10 +230,10 @@ namespace NBsys{namespace NWindowMenu
 	{
 		/** 計算結果。
 		*/
-		this->calc_x = -1.0f;
-		this->calc_y = -1.0f;
-		this->calc_w = -1.0f;
-		this->calc_h = -1.0f;
+		this->calc_x_fix = false;
+		this->calc_y_fix = false;
+		this->calc_w_fix = false;
+		this->calc_h_fix = false;
 
 		/** 計算に必要な親が所持している自分のインデックス。
 		*/
@@ -239,7 +251,6 @@ namespace NBsys{namespace NWindowMenu
 		}
 	}
 
-
 	/** サイズ計算。
 	*/
 	void WindowMenu_Window_Base::CalcRect()
@@ -248,11 +259,6 @@ namespace NBsys{namespace NWindowMenu
 		this->CalcY(WindowMenu_SizeType::Fix);
 		this->CalcW(WindowMenu_SizeType::Fix);
 		this->CalcH(WindowMenu_SizeType::Fix);
-
-		ASSERT(this->calc_x >= 0.0f);
-		ASSERT(this->calc_y >= 0.0f);
-		ASSERT(this->calc_w >= 0.0f);
-		ASSERT(this->calc_h >= 0.0f);
 
 		STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
 		for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
@@ -264,7 +270,7 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	void WindowMenu_Window_Base::CalcX(WindowMenu_SizeType::Id a_from_sizetype)
 	{
-		if(this->calc_x < 0.0f){
+		if(this->calc_x_fix == false){
 			if(this->parent){
 				if((this->parent->mode == WindowMenu_Mode::Free)||(this->parent->mode == WindowMenu_Mode::Vertical)){
 					//自由配置。
@@ -273,6 +279,7 @@ namespace NBsys{namespace NWindowMenu
 					this->parent->CalcX(a_from_sizetype);
 
 					this->calc_x = this->parent->calc_x + this->offset.x;
+					this->calc_x_fix = true;
 				}else if(this->parent->mode == WindowMenu_Mode::Horizontal){
 					//横積み。
 
@@ -282,6 +289,7 @@ namespace NBsys{namespace NWindowMenu
 						this->parent->CalcX(a_from_sizetype);
 
 						this->calc_x = this->parent->calc_x + this->offset.x;
+						this->calc_x_fix = true;
 					}else{
 						STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_before = std::prev(this->calc_it);
 						WindowMenu_Window_Base* t_before = t_it_before->get();
@@ -289,11 +297,13 @@ namespace NBsys{namespace NWindowMenu
 						t_before->CalcX(a_from_sizetype);
 
 						this->calc_x = t_before->calc_x + t_before->calc_w + this->offset.x;
+						this->calc_x_fix = true;
 					}
 				}
 			}else{
 				//ルート。
 				this->calc_x = this->offset.x;
+				this->calc_x_fix = true;
 			}
 		}
 	}
@@ -302,7 +312,7 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	void WindowMenu_Window_Base::CalcY(WindowMenu_SizeType::Id a_from_sizetype)
 	{
-		if(this->calc_y < 0.0f){
+		if(this->calc_y_fix == false){
 			if(this->parent){
 				if((this->parent->mode == WindowMenu_Mode::Free)||(this->parent->mode == WindowMenu_Mode::Horizontal)){
 					//自由配置。
@@ -311,6 +321,7 @@ namespace NBsys{namespace NWindowMenu
 					this->parent->CalcY(a_from_sizetype);
 
 					this->calc_y = this->parent->calc_y + this->offset.y;
+					this->calc_y_fix = true;
 				}else if(this->parent->mode == WindowMenu_Mode::Vertical){
 					//縦積み。
 
@@ -320,6 +331,7 @@ namespace NBsys{namespace NWindowMenu
 						this->parent->CalcY(a_from_sizetype);
 
 						this->calc_y = this->parent->calc_y + this->offset.y;
+						this->calc_y_fix = true;
 					}else{
 						STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_before = std::prev(this->calc_it);
 						WindowMenu_Window_Base* t_before = t_it_before->get();
@@ -327,11 +339,13 @@ namespace NBsys{namespace NWindowMenu
 						t_before->CalcY(a_from_sizetype);
 
 						this->calc_y = t_before->calc_y + t_before->calc_h + this->offset.y;
+						this->calc_y_fix = true;
 					}
 				}
 			}else{
 				//ルート。
 				this->calc_y = this->offset.y;
+				this->calc_y_fix = true;
 			}
 		}
 	}
@@ -340,10 +354,11 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	void WindowMenu_Window_Base::CalcW(WindowMenu_SizeType::Id a_from_sizetype)
 	{
-		if(this->calc_w < 0.0f){
+		if(this->calc_w_fix == false){
 			if(this->size.sizetype_w == WindowMenu_SizeType::Fix){
 				//固定。
 				this->calc_w = this->size.w;
+				this->calc_w_fix = true;
 			}else if(this->size.sizetype_w == WindowMenu_SizeType::StretchParent){
 				//■親のサイズに合わせる。
 
@@ -351,6 +366,7 @@ namespace NBsys{namespace NWindowMenu
 				}else{
 					ASSERT(0);
 					this->calc_w = 0.0f;
+					this->calc_w_fix = true;
 					return;
 				}
 
@@ -361,6 +377,7 @@ namespace NBsys{namespace NWindowMenu
 					this->parent->CalcW(WindowMenu_SizeType::StretchParent);
 
 					this->calc_w = this->parent->calc_w;
+					this->calc_w_fix = true;
 				}else if(this->parent->mode == WindowMenu_Mode::Horizontal){
 					//横積み。
 
@@ -385,6 +402,7 @@ namespace NBsys{namespace NWindowMenu
 					}
 
 					this->calc_w = (this->parent->calc_w - t_total)/t_stretch_count;
+					this->calc_w_fix = true;
 				}
 			}else if(this->size.sizetype_w == WindowMenu_SizeType::StretchChild){
 				//■子のサイズに合わせる。
@@ -393,6 +411,7 @@ namespace NBsys{namespace NWindowMenu
 				}else{
 					ASSERT(0);
 					this->calc_w = 0.0f;
+					this->calc_w_fix = true;
 					return;
 				}
 
@@ -413,7 +432,7 @@ namespace NBsys{namespace NWindowMenu
 						}
 					}
 					this->calc_w = t_temp;
-
+					this->calc_w_fix = true;
 				}else if(this->mode == WindowMenu_Mode::Horizontal){
 					//横積み。
 					
@@ -427,6 +446,7 @@ namespace NBsys{namespace NWindowMenu
 						t_temp += t_child->offset.x + t_child->calc_w;
 					}
 					this->calc_w = t_temp;
+					this->calc_w_fix = true;
 				}
 			}
 		}
@@ -436,10 +456,11 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	void WindowMenu_Window_Base::CalcH(WindowMenu_SizeType::Id a_from_sizetype)
 	{
-		if(this->calc_h < 0.0f){
+		if(this->calc_h_fix == false){
 			if(this->size.sizetype_h == WindowMenu_SizeType::Fix){
 				//固定。
 				this->calc_h = this->size.h;
+				this->calc_h_fix = true;
 			}else if(this->size.sizetype_h == WindowMenu_SizeType::StretchParent){
 				//■親のサイズに合わせる。
 
@@ -447,6 +468,7 @@ namespace NBsys{namespace NWindowMenu
 				}else{
 					ASSERT(0);
 					this->calc_h = 0.0f;
+					this->calc_h_fix = true;
 					return;
 				}
 
@@ -457,6 +479,7 @@ namespace NBsys{namespace NWindowMenu
 					this->parent->CalcH(WindowMenu_SizeType::StretchParent);
 
 					this->calc_h = this->parent->calc_h;
+					this->calc_h_fix = true;
 				}else if(this->parent->mode == WindowMenu_Mode::Vertical){
 					//縦積み。
 
@@ -481,6 +504,7 @@ namespace NBsys{namespace NWindowMenu
 					}
 
 					this->calc_h = (this->parent->calc_h - t_total)/t_stretch_count;
+					this->calc_h_fix = true;
 				}
 			}else if(this->size.sizetype_h == WindowMenu_SizeType::StretchChild){
 				//■子のサイズに合わせる。
@@ -489,6 +513,7 @@ namespace NBsys{namespace NWindowMenu
 				}else{
 					ASSERT(0);
 					this->calc_h = 0.0f;
+					this->calc_h_fix = true;
 					return;
 				}
 
@@ -509,7 +534,7 @@ namespace NBsys{namespace NWindowMenu
 						}
 					}
 					this->calc_h = t_temp;
-
+					this->calc_h_fix = true;
 				}else if(this->mode == WindowMenu_Mode::Vertical){
 					//縦積み。
 					
@@ -523,10 +548,10 @@ namespace NBsys{namespace NWindowMenu
 						t_temp += t_child->offset.y + t_child->calc_h;
 					}
 					this->calc_h = t_temp;
+					this->calc_h_fix = true;
 				}
 			}
 		}
 	}
-
 }}
 

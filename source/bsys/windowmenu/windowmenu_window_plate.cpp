@@ -44,7 +44,7 @@ namespace NBsys{namespace NWindowMenu
 		texture_id(a_inititem.texture_id),
 		mouseblock(a_inititem.mouseblock)
 	{
-		this->Initialize(WindowMenu_Window_Base::InitItem(a_inititem.mode,a_inititem.offset,a_inititem.size));
+		this->Initialize(WindowMenu_Window_Base::InitItem(a_inititem.mode,a_inititem.offset,a_inititem.size,0));
 	}
 
 	/** destructor
@@ -55,10 +55,10 @@ namespace NBsys{namespace NWindowMenu
 
 	/** 描画処理。
 	*/
-	bool WindowMenu_Window_Plate::CallBack_Draw()
+	bool WindowMenu_Window_Plate::CallBack_Draw(s32 a_z_sort)
 	{
 		if((this->calc_w >= 0.0f)&&(this->calc_h >= 0.0f)){
-			GetSystemInstance()->GetCallback()->DrawRect_Callback(0,this->calc_x,this->calc_y,this->calc_w,this->calc_h,this->texture_id,this->color);
+			GetSystemInstance()->GetCallback()->DrawRect_Callback(a_z_sort + this->z_sort,this->calc_x,this->calc_y,this->calc_w,this->calc_h,this->texture_id,this->color);
 		}
 
 		return true;
