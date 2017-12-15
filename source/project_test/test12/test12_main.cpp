@@ -212,9 +212,9 @@ public:
 				this->draw = true;
 
 				//ウィンドウメニュー。
-				s_test12_window_1.reset(new Test12_WindowMenu(0,L"フォントテクスチャー[0]",150.0f,150.0f));
-				s_test12_window_2.reset(new Test12_WindowMenu(1,L"フォントテクスチャー[1]",150.0f,150.0f));
-				s_test12_window_3.reset(new Test12_WindowMenu(1,L"フォントテクスチャー[2]",150.0f,150.0f));
+				s_test12_window_1.reset(new Test12_WindowMenu(0,L"フォントテクスチャー[0]",150.0f,150.0f,s_d3d11));
+				s_test12_window_2.reset(new Test12_WindowMenu(1,L"フォントテクスチャー[1]",150.0f,150.0f,s_d3d11));
+				s_test12_window_3.reset(new Test12_WindowMenu(1,L"フォントテクスチャー[2]",150.0f,150.0f,s_d3d11));
 				NBsys::NWindowMenu::GetSystemInstance()->Add(s_test12_window_1);
 				NBsys::NWindowMenu::GetSystemInstance()->Add(s_test12_window_2);
 				NBsys::NWindowMenu::GetSystemInstance()->Add(s_test12_window_3);

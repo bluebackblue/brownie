@@ -35,10 +35,14 @@ private:
 	*/
 	sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Plate> titlebg;
 
+	/** d3d11
+	*/
+	sharedptr<NBsys::ND3d11::D3d11> d3d11;
+
 public:
 	/** constructor
 	*/
-	Test12_WindowMenu(s32 a_id,const STLWString& a_string,f32 a_offset_x,f32 a_offset_y);
+	Test12_WindowMenu(s32 a_id,const STLWString& a_string,f32 a_offset_x,f32 a_offset_y,sharedptr<NBsys::ND3d11::D3d11>& a_d3d11);
 
 	/** destructor
 	*/

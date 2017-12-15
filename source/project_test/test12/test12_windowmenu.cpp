@@ -25,12 +25,13 @@
 
 /** constructor
 */
-Test12_WindowMenu::Test12_WindowMenu(s32 a_id,const STLWString& a_string,f32 a_offset_x,f32 a_offset_y)
+Test12_WindowMenu::Test12_WindowMenu(s32 a_id,const STLWString& a_string,f32 a_offset_x,f32 a_offset_y,sharedptr<NBsys::ND3d11::D3d11>& a_d3d11)
 	:
 	NBsys::NWindowMenu::WindowMenu_Window_Base("Test12_WindowMenu"),
 	id(a_id),
 	endrequest(false),
-	titlebg()
+	titlebg(),
+	d3d11(a_d3d11)
 {
 	//メイン。
 	this->Initialize(
@@ -39,7 +40,7 @@ Test12_WindowMenu::Test12_WindowMenu(s32 a_id,const STLWString& a_string,f32 a_o
 			NBsys::NWindowMenu::WindowMenu_Offset(a_offset_x,a_offset_y),
 			NBsys::NWindowMenu::WindowMenu_Size(
 				NBsys::NWindowMenu::WindowMenu_SizeType::Fix,
-				300.0f,
+				200.0f,
 				NBsys::NWindowMenu::WindowMenu_SizeType::StretchChild,
 				-1.0f
 			),
@@ -141,12 +142,22 @@ Test12_WindowMenu::Test12_WindowMenu(s32 a_id,const STLWString& a_string,f32 a_o
 				NBsys::NWindowMenu::WindowMenu_SizeType::StretchParent,
 				-1.0f,
 				NBsys::NWindowMenu::WindowMenu_SizeType::Fix,
-				300.0f
+				1024.0f
 			)
 		);
 		{
-			t_body_inititem.color = NBsys::NColor::Color_F(0.5f,0.5f,0.5f,0.5f);
-			t_body_inititem.texture_id = -1;
+			t_body_inititem.color = NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f);
+
+			if(this->id == 0){
+				t_body_inititem.texture_id = this->d3d11->Render_GetFontTexture(0);
+				t_body_inititem.size.h = 256;
+			}else if(this->id == 1){
+				t_body_inititem.texture_id = this->d3d11->Render_GetFontTexture(1);
+				t_body_inititem.size.h = 512;
+			}else if(this->id == 1){
+				t_body_inititem.texture_id = this->d3d11->Render_GetFontTexture(2);
+				t_body_inititem.size.h = 1024;
+			}
 			t_body_inititem.mouseblock = true;
 		}
 

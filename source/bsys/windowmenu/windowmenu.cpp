@@ -102,7 +102,7 @@ namespace NBsys{namespace NWindowMenu
 							//範囲内。
 
 							//最後尾へ移動。
-							if(this->mouse.on_l || this->mouse.on_r){
+							if(this->mouse.down_l || this->mouse.down_r){
 								STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_last = STLList<sharedptr<WindowMenu_Window_Base>>::get_last(this->list);
 								if(t_it != t_it_last){
 									t_it_movetolast = t_it;
