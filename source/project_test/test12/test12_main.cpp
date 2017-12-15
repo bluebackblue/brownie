@@ -244,12 +244,12 @@ public:
 						char t_buffer[32];
 						STLWString t_string = VASTRING(t_buffer,sizeof(t_buffer),L"%d %d",static_cast<s32>(t_mouse_l.x),static_cast<s32>(t_mouse_l.y));
 						
-						s_render2d->DrawFont(0,t_mouse_l.x+50,t_mouse_l.y+50,16.0f,0,NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f),t_string);
-						s_render2d->DrawFont(0,t_mouse_l.x-50,t_mouse_l.y-50,16.0f,0,NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f),t_string);
+						s_render2d->DrawFont(0,t_mouse_l.x+50,t_mouse_l.y+50,-1.0f,-1.0f,16.0f,0,NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f),t_string);
+						s_render2d->DrawFont(0,t_mouse_l.x-50,t_mouse_l.y-50,-1.0f,-1.0f,16.0f,0,NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f),t_string);
 					}
 
-					s_render2d->DrawFont(1,200.0f,			200.0f,			32.0f,		1,	NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f),L"あいうえお");
-					s_render2d->DrawFont(1,s_width/2.0f,	s_height/2.0f,	64.0f,		2,	NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f),L"あいうえお");
+					s_render2d->DrawFont(1,200.0f,			200.0f,			-1.0f,-1.0f,		32.0f,		1,	NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f),L"あいうえお");
+					s_render2d->DrawFont(1,s_width/2.0f,	s_height/2.0f,	-1.0f,-1.0f,		64.0f,		2,	NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f),L"あいうえお");
 					
 					/*
 					{

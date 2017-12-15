@@ -274,10 +274,11 @@ namespace NBsys{namespace ND3d11
 		
 		/** MakeFontVertex
 		*/
-		void MakeFontVertex(const STLWString& a_string,sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4>>& a_vertex,f32 a_x,f32 a_y,f32 a_z,f32 a_font_size,const NBsys::NColor::Color_F& a_color)
+		void MakeFontVertex(const STLWString& a_string,sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4>>& a_vertex,f32 a_x,f32 a_y,f32 a_z,f32 a_font_size_w,f32 a_font_size_h,const NBsys::NColor::Color_F& a_color)
 		{
 			{
-				f32 t_scale = a_font_size / static_cast<f32>(this->texturewidth);
+				f32 t_scale_w = a_font_size_w / static_cast<f32>(this->texturewidth);
+				f32 t_scale_h = a_font_size_h / static_cast<f32>(this->texturewidth);
 
 				f32 t_x = a_x;
 				f32 t_y = a_y;
@@ -301,10 +302,10 @@ namespace NBsys{namespace ND3d11
 								f32 t_uv_y0 = t_cell_y_rate * t_font_index;
 								f32 t_uv_y1 = t_cell_y_rate * (t_font_index + 1);
 
-								f32 t_rect_x0 = t_x + static_cast<f32>(t_font_state.x) * t_scale;
-								f32 t_rect_x1 = t_rect_x0 + this->texturewidth * t_scale;
-								f32 t_rect_y0 = t_y + static_cast<f32>(t_font_state.y) * t_scale;
-								f32 t_rect_y1 = t_rect_y0 + this->texturewidth * t_scale;
+								f32 t_rect_x0 = t_x + static_cast<f32>(t_font_state.x) * t_scale_w;
+								f32 t_rect_x1 = t_rect_x0 + this->texturewidth * t_scale_w;
+								f32 t_rect_y0 = t_y + static_cast<f32>(t_font_state.y) * t_scale_h;
+								f32 t_rect_y1 = t_rect_y0 + this->texturewidth * t_scale_h;
 
 								NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4 t_vertex;
 								t_vertex.color_rr = a_color.r;
@@ -390,7 +391,7 @@ namespace NBsys{namespace ND3d11
 								}
 							}
 
-							t_x += static_cast<f32>(t_font_state.cell_inc_x) * t_scale;
+							t_x += static_cast<f32>(t_font_state.cell_inc_x) * t_scale_w;
 						}
 					}
 				}

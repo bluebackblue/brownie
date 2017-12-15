@@ -212,9 +212,9 @@ namespace NBsys{namespace ND3d11
 	/** Render_MakeFontVertex
 	*/
 	#if(BSYS_FONT_ENABLE)
-	void D3d11::Render_MakeFontVertex(s32 a_fontindex,const STLWString& a_string,sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4>>& a_vertex,f32 a_x,f32 a_y,f32 a_z,f32 a_font_size,const NBsys::NColor::Color_F& a_color)
+	void D3d11::Render_MakeFontVertex(s32 a_fontindex,const STLWString& a_string,sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4>>& a_vertex,f32 a_x,f32 a_y,f32 a_z,f32 a_font_size_w,f32 a_font_size_h,const NBsys::NColor::Color_F& a_color)
 	{
-		this->impl->Render_MakeFontVertex(a_fontindex,a_string,a_vertex,a_x,a_y,a_z,a_font_size,a_color);
+		this->impl->Render_MakeFontVertex(a_fontindex,a_string,a_vertex,a_x,a_y,a_z,a_font_size_w,a_font_size_h,a_color);
 	}
 	#endif
 

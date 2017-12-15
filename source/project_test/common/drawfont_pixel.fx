@@ -29,12 +29,17 @@ Texture2D tex_diffuse_4 : register(t3);
 
 /** PS_ConstantBuffer_B1
 */
-cbuffer PS_ConstantBuffer_B1 : register(b1)
+cbuffer PS_ConstantBuffer_B1 : register(b0)
 {
 	uint flag1;
 	uint flag2;
 	uint flag3;
 	uint flag4;
+
+	float screen_w;
+	float screen_h;
+	uint flag5;
+	uint flag6;
 }
 
 
@@ -66,6 +71,14 @@ float4 PS(VS_IN a_vs_in) : SV_Target
 	}else if(t_texture_index == 2){
 		t_color *= tex_diffuse_3.Sample(DiffuseSampler,a_vs_in.in_uv);
 	}
+
+	//画面左半分は描画しない。
+	//clip(a_vs_in.in_pos.x / screen_w - 0.5);
+
+	//画面左半分は描画しない。
+	//if(a_vs_in.in_pos.x / screen_w < 0.5){
+	//	discard;
+	//}
 
 	//debug
 	//if(t_color.a <= 0.5){

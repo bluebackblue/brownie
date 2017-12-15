@@ -53,7 +53,7 @@ namespace NCommon
 	public:
 		/** DrawFont_Callback
 		*/
-		virtual void DrawFont_Callback(s32 a_z_sort,f32 a_x,f32 a_y,f32 a_size,s32 a_font_texture_index,const NBsys::NColor::Color_F& a_color,const STLWString& a_string);
+		virtual void DrawFont_Callback(s32 a_z_sort,f32 a_x,f32 a_y,f32 a_clip_w,f32 a_clip_h,f32 a_size,s32 a_font_texture_index,const NBsys::NColor::Color_F& a_color,const STLWString& a_string);
 
 		/** DrawRect_Callback
 		*/

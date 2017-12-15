@@ -73,12 +73,19 @@ namespace NCommon
 		*/
 		u32 flag4;
 
+		float w;
+		float h;
+		u32 dummy1;
+		u32 dummy2;
+
 		DrawFont_PS_ConstantBuffer_B1()
 			:
 			flag1(0),
 			flag2(0),
 			flag3(0),
-			flag4(0)
+			flag4(0),
+			w(1.0f),
+			h(1.0f)
 		{
 		}
 
@@ -196,7 +203,7 @@ namespace NCommon
 
 					//コンスタントバッファ。
 					this->vs_constantbuffer_b0_id = this->d3d11->CreateConstantBuffer(0,sizeof(DrawFont_VS_ConstantBuffer_B0));
-					this->ps_constantbuffer_b1_id = this->d3d11->CreateConstantBuffer(1,sizeof(DrawFont_PS_ConstantBuffer_B1));
+					this->ps_constantbuffer_b1_id = this->d3d11->CreateConstantBuffer(0,sizeof(DrawFont_PS_ConstantBuffer_B1));
 
 					//バーテックスバッファ。
 					s32 t_vertex_allcountof = 1024 * 1024;
@@ -257,13 +264,83 @@ namespace NCommon
 		*/
 		virtual void Render(NBsys::NGeometry::Geometry_Matrix_44& a_view_projection,STLList<Render2D_Item>::const_iterator a_it_start,STLList<Render2D_Item>::const_iterator a_it_end)
 		{
-			this->RenderCall(a_view_projection,a_it_start,a_it_end);
+			auto t_minus = [](f32 a_value) -> f32{
+				if(a_value >= 0.0f){
+					return a_value;
+				}
+				return -1.0f;
+			};
+
+			f32 t_current_clip_x = -1;
+			f32 t_current_clip_y = -1;
+			f32 t_current_clip_w = -1;
+			f32 t_current_clip_h = -1;
+
+			STLList<Render2D_Item>::const_iterator t_it = a_it_start;
+			STLList<Render2D_Item>::const_iterator t_it_renderstart = t_it;
+			if(t_it != a_it_end){
+				t_current_clip_x = t_minus(t_it->data.x);
+				t_current_clip_y = t_minus(t_it->data.y);
+				t_current_clip_w = t_minus(t_it->data.w);
+				t_current_clip_h = t_minus(t_it->data.h);
+			}
+
+			while(t_it != a_it_end){
+
+				if((t_minus(t_it->data.x) != t_current_clip_x)||(t_minus(t_it->data.y) != t_current_clip_y)||(t_minus(t_it->data.w) != t_current_clip_w)||(t_minus(t_it->data.h) != t_current_clip_h)){
+					this->RenderCall(a_view_projection,t_it_renderstart,t_it);
+
+					t_current_clip_x = t_minus(t_it->data.x);
+					t_current_clip_y = t_minus(t_it->data.y);
+					t_current_clip_w = t_minus(t_it->data.w);
+					t_current_clip_h = t_minus(t_it->data.h);
+
+					t_it_renderstart = t_it;
+				}
+
+				t_it++;
+			}
+
+			if(t_it_renderstart != a_it_end){
+				this->RenderCall(a_view_projection,t_it_renderstart,a_it_end);
+			}
 		}
 
 		/** 描画。
 		*/
 		void RenderCall(NBsys::NGeometry::Geometry_Matrix_44& a_view_projection,STLList<Render2D_Item>::const_iterator a_it_start,STLList<Render2D_Item>::const_iterator a_it_end)
 		{
+			f32 t_scale_w = 1.0f;
+			f32 t_scale_h = 1.0f;
+			f32 t_viewport_offset_x = 0.0f;
+			f32 t_viewport_offset_y = 0.0f;
+			f32 t_viewport_w = a_it_start->data.w;
+			f32 t_viewport_h = a_it_start->data.h;
+
+			if((t_viewport_w > 0.0f)&&(t_viewport_h > 0.0f)){
+				t_viewport_offset_x = a_it_start->data.x;
+				t_viewport_offset_y = a_it_start->data.y;
+
+				t_scale_w = this->d3d11->GetWidth() / t_viewport_w;
+				t_scale_h = this->d3d11->GetHeight() / t_viewport_h;
+
+				//ビューポート。
+				this->d3d11->Render_ViewPort(
+					t_viewport_offset_x,
+					t_viewport_offset_y,
+					t_viewport_w,
+					t_viewport_h
+				);
+			}else{
+				//ビューポート。
+				this->d3d11->Render_ViewPort(
+					0,
+					0,
+					this->d3d11->GetWidth(),
+					this->d3d11->GetHeight()
+				);
+			}
+
 			//バーテックスクリア。
 			this->vertex->ClearVertex();
 
@@ -280,16 +357,16 @@ namespace NCommon
 					t_it->data.texture_index,
 					t_it->data.string,
 					this->vertex,
-					t_it->data.x,
-					t_it->data.y,
+					t_it->data.x - t_viewport_offset_x,
+					t_it->data.y - t_viewport_offset_y,
 					0.0f,
-					t_it->data.size,
+					t_it->data.size * t_scale_w,
+					t_it->data.size * t_scale_h,
 					t_it->data.color
 				);
 			}
 
 			if(this->vertex->GetVertexCountOf(0) > 0){
-
 				NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = a_view_projection;
 
 				//シェーダー。
@@ -312,6 +389,8 @@ namespace NCommon
 				DrawFont_PS_ConstantBuffer_B1 t_ps_constantbuffer_b1;
 				{
 					t_vs_constantbuffer_b0.view_projection = t_view_projection.Make_Transpose();
+					t_ps_constantbuffer_b1.w = static_cast<f32>(this->d3d11->GetWidth());
+					t_ps_constantbuffer_b1.h = static_cast<f32>(this->d3d11->GetHeight());
 				}
 
 				//コンスタントバッファーの内容更新。
@@ -333,6 +412,8 @@ namespace NCommon
 				this->d3d11->Render_Draw(this->vertex->GetVertexCountOf(0),0);
 			}
 
+			//ビューポート。
+			this->d3d11->Render_ViewPort(0.0f,0.0f,static_cast<f32>(this->d3d11->GetWidth()),static_cast<f32>(this->d3d11->GetHeight()));
 		}
 	};
 }

@@ -79,17 +79,21 @@ namespace NCommon
 
 			f32 x;
 			f32 y;
+			f32 clip_w;
+			f32 clip_h;
 			f32 size;
 			s32 font_texture_index;
 
 			NBsys::NColor::Color_F color;
 			STLWString string;
 
-			FontData(s32 a_z_sort,f32 a_x,f32 a_y,f32 a_size,s32 a_font_texture_index,const NBsys::NColor::Color_F& a_color,const STLWString& a_string)
+			FontData(s32 a_z_sort,f32 a_x,f32 a_y,f32 a_clip_w,f32 a_clip_h,f32 a_size,s32 a_font_texture_index,const NBsys::NColor::Color_F& a_color,const STLWString& a_string)
 				:
 				z_sort(a_z_sort),
 				x(a_x),
 				y(a_y),
+				clip_w(a_clip_w),
+				clip_h(a_clip_h),
 				size(a_size),
 				font_texture_index(a_font_texture_index),
 				color(a_color),
@@ -151,6 +155,8 @@ namespace NCommon
 
 			this->data.x = a_data.x;
 			this->data.y = a_data.y;
+			this->data.w = a_data.clip_w;
+			this->data.h = a_data.clip_h;
 			this->data.size = a_data.size;
 			this->data.texture_index = a_data.font_texture_index;
 			this->data.color = a_data.color;
@@ -235,9 +241,9 @@ namespace NCommon
 
 		/** DrawFont
 		*/
-		void DrawFont(s32 a_z_sort,f32 a_x,f32 a_y,f32 a_size,s32 a_font_texture_index,const NBsys::NColor::Color_F& a_color,const STLWString& a_string)
+		void DrawFont(s32 a_z_sort,f32 a_x,f32 a_y,f32 a_clip_w,f32 a_clip_h,f32 a_size,s32 a_font_texture_index,const NBsys::NColor::Color_F& a_color,const STLWString& a_string)
 		{
-			Render2D_Item t_item(Render2D_Item::FontData(a_z_sort,a_x,a_y,a_size,a_font_texture_index,a_color,a_string));
+			Render2D_Item t_item(Render2D_Item::FontData(a_z_sort,a_x,a_y,a_clip_w,a_clip_h,a_size,a_font_texture_index,a_color,a_string));
 			this->list.push_back(t_item);
 		}
 

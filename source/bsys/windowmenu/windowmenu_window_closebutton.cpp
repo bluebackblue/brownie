@@ -129,7 +129,7 @@ namespace NBsys{namespace NWindowMenu
 				f32 t_offst_x = (this->calc_w - t_font_size) / 2 + t_fontdata_x;
 				f32 t_offst_y = (this->calc_w - t_font_size) / 2 + t_fontdata_y;
 
-				GetSystemInstance()->GetCallback()->DrawFont_Callback(a_z_sort + this->z_sort+1,this->calc_x + t_offst_x,this->calc_y + t_offst_y,t_font_size,t_font_texture_index,t_font_color,L"x");
+				GetSystemInstance()->GetCallback()->DrawFont_Callback(a_z_sort + this->z_sort+1,this->calc_x + t_offst_x,this->calc_y + t_offst_y,-1.0f,-1.0f,t_font_size,t_font_texture_index,t_font_color,L"x");
 			}
 		}
 
