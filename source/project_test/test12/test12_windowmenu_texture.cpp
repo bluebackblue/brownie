@@ -190,8 +190,6 @@ void Test12_WindowMenu_Texture::CallBack_SetDeleteRequest()
 */
 void Test12_WindowMenu_Texture::CallBack_ChangeActive(bool a_active)
 {
-	ASSERT(0);
-
 	if(a_active){
 		this->titlebg->color = NBsys::NColor::Color_F(0.7f,0.3f,0.3f,1.0f);
 	}else{
