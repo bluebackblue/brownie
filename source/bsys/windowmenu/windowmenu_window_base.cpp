@@ -239,11 +239,11 @@ namespace NBsys{namespace NWindowMenu
 	void WindowMenu_Window_Base::CalcW(WindowMenu_SizeType::Id a_from_sizetype)
 	{
 		if(this->calc_w_fix == false){
-			if(this->size.sizetype_w == WindowMenu_SizeType::Fix){
+			if(this->size.type_w == WindowMenu_SizeType::Fix){
 				//固定。
 				this->calc_w = this->size.w;
 				this->calc_w_fix = true;
-			}else if(this->size.sizetype_w == WindowMenu_SizeType::StretchParent){
+			}else if(this->size.type_w == WindowMenu_SizeType::StretchParent){
 				//■親のサイズに合わせる。
 
 				if((a_from_sizetype == WindowMenu_SizeType::Fix)||(a_from_sizetype == WindowMenu_SizeType::StretchParent)){
@@ -271,7 +271,7 @@ namespace NBsys{namespace NWindowMenu
 					for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->parent->child_list.begin();t_it != t_it_end;++t_it){
 						WindowMenu_Window_Base* t_parent_child = t_it->get();
 
-						if(t_parent_child->size.sizetype_w == WindowMenu_SizeType::StretchParent){
+						if(t_parent_child->size.type_w == WindowMenu_SizeType::StretchParent){
 							t_stretch_count++;
 						}else{
 							t_parent_child->CalcW(WindowMenu_SizeType::StretchParent);
@@ -288,7 +288,7 @@ namespace NBsys{namespace NWindowMenu
 					this->calc_w = (this->parent->calc_w - t_total)/t_stretch_count;
 					this->calc_w_fix = true;
 				}
-			}else if(this->size.sizetype_w == WindowMenu_SizeType::StretchChild){
+			}else if(this->size.type_w == WindowMenu_SizeType::StretchChild){
 				//■子のサイズに合わせる。
 
 				if((a_from_sizetype == WindowMenu_SizeType::Fix)||(a_from_sizetype == WindowMenu_SizeType::StretchChild)){
@@ -341,11 +341,11 @@ namespace NBsys{namespace NWindowMenu
 	void WindowMenu_Window_Base::CalcH(WindowMenu_SizeType::Id a_from_sizetype)
 	{
 		if(this->calc_h_fix == false){
-			if(this->size.sizetype_h == WindowMenu_SizeType::Fix){
+			if(this->size.type_h == WindowMenu_SizeType::Fix){
 				//固定。
 				this->calc_h = this->size.h;
 				this->calc_h_fix = true;
-			}else if(this->size.sizetype_h == WindowMenu_SizeType::StretchParent){
+			}else if(this->size.type_h == WindowMenu_SizeType::StretchParent){
 				//■親のサイズに合わせる。
 
 				if((a_from_sizetype == WindowMenu_SizeType::Fix)||(a_from_sizetype == WindowMenu_SizeType::StretchParent)){
@@ -373,7 +373,7 @@ namespace NBsys{namespace NWindowMenu
 					for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->parent->child_list.begin();t_it != t_it_end;++t_it){
 						WindowMenu_Window_Base* t_parent_child = t_it->get();
 
-						if(t_parent_child->size.sizetype_h == WindowMenu_SizeType::StretchParent){
+						if(t_parent_child->size.type_h == WindowMenu_SizeType::StretchParent){
 							t_stretch_count++;
 						}else{
 							t_parent_child->CalcH(WindowMenu_SizeType::StretchParent);
@@ -390,7 +390,7 @@ namespace NBsys{namespace NWindowMenu
 					this->calc_h = (this->parent->calc_h - t_total)/t_stretch_count;
 					this->calc_h_fix = true;
 				}
-			}else if(this->size.sizetype_h == WindowMenu_SizeType::StretchChild){
+			}else if(this->size.type_h == WindowMenu_SizeType::StretchChild){
 				//■子のサイズに合わせる。
 
 				if((a_from_sizetype == WindowMenu_SizeType::Fix)||(a_from_sizetype == WindowMenu_SizeType::StretchChild)){

@@ -265,7 +265,7 @@ namespace NCommon
 			//バーテックスクリア。
 			this->vertex->ClearVertex();
 
-			s32 t_texture_id = -1;
+			s32 t_texture_id = a_it_start->data.texture_id;
 
 			for(STLList<Render2D_Item>::const_iterator t_it = a_it_start;t_it != a_it_end;t_it++){
 				
@@ -348,11 +348,6 @@ namespace NCommon
 					t_vector.uv_yy = 1.0f;
 
 					this->vertex->AddVertex(t_vector);
-				}
-
-				//TODO:
-				if(t_it->data.texture_id >= 0){
-					t_texture_id = t_it->data.texture_id;
 				}
 			}
 

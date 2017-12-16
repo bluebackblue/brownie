@@ -62,6 +62,14 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	struct WindowMenu_Offset
 	{
+		/** x
+		*/
+		f32 x;
+
+		/** y
+		*/
+		f32 y;
+
 		/** constructor
 		*/
 		WindowMenu_Offset()
@@ -85,33 +93,40 @@ namespace NBsys{namespace NWindowMenu
 		~WindowMenu_Offset()
 		{
 		}
-
-		f32 x;
-		f32 y;
 	};
 
 	/** サイズ。
 	*/
 	struct WindowMenu_Size
 	{
+		/** w
+		*/
+		WindowMenu_SizeType::Id type_w;
+		f32 w;
+
+		/** h
+		*/
+		WindowMenu_SizeType::Id type_h;
+		f32 h;
+
 		/** constructor
 		*/
 		WindowMenu_Size()
 			:
-			sizetype_w(WindowMenu_SizeType::Fix),
+			type_w(WindowMenu_SizeType::Fix),
 			w(0.0f),
-			sizetype_h(WindowMenu_SizeType::Fix),
+			type_h(WindowMenu_SizeType::Fix),
 			h(0.0f)
 		{
 		}
 
 		/** constructor
 		*/
-		WindowMenu_Size(WindowMenu_SizeType::Id a_sizetype_w,f32 a_w,WindowMenu_SizeType::Id a_sizetype_h,f32 a_h)
+		WindowMenu_Size(WindowMenu_SizeType::Id a_type_w,f32 a_w,WindowMenu_SizeType::Id a_type_h,f32 a_h)
 			:
-			sizetype_w(a_sizetype_w),//TODO:
+			type_w(a_type_w),
 			w(a_w),
-			sizetype_h(a_sizetype_h),
+			type_h(a_type_h),
 			h(a_h)
 		{
 		}
@@ -121,16 +136,6 @@ namespace NBsys{namespace NWindowMenu
 		~WindowMenu_Size()
 		{
 		}
-
-		/** w
-		*/
-		WindowMenu_SizeType::Id sizetype_w;
-		f32 w;
-
-		/** h
-		*/
-		WindowMenu_SizeType::Id sizetype_h;
-		f32 h;
 	};
 }}
 #endif

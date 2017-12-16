@@ -1179,7 +1179,6 @@ namespace NBsys{namespace ND3d11
 			this->devicecontext->RSSetViewports(1,&t_viewport);
 
 			return;
-
 		}
 
 		ASSERT(0);
@@ -1194,7 +1193,6 @@ namespace NBsys{namespace ND3d11
 			this->devicecontext->ClearRenderTargetView(this->rendertargetview.get(),a_color.p);
 
 			return;
-
 		}
 
 		ASSERT(0);
@@ -1209,7 +1207,6 @@ namespace NBsys{namespace ND3d11
 			this->devicecontext->ClearDepthStencilView(this->depthstencilview.get(),D3D11_CLEAR_DEPTH,1,0);
 
 			return;
-
 		}
 
 		ASSERT(0);
@@ -1239,7 +1236,6 @@ namespace NBsys{namespace ND3d11
 				this->devicecontext->UpdateSubresource(t_constantbuffer->buffer.get(),0,nullptr,a_data,0,0);
 
 				return;
-
 			}
 		}
 
@@ -1258,7 +1254,6 @@ namespace NBsys{namespace ND3d11
 				this->devicecontext->VSSetShader(t_vertexshader->vertexshader.get(),nullptr,0);
 
 				return;
-
 			}
 		}
 
@@ -1276,7 +1271,6 @@ namespace NBsys{namespace ND3d11
 				this->devicecontext->PSSetShader(t_pixelshader->pixelshader.get(),nullptr,0);
 
 				return;
-
 			}
 		}
 
@@ -1292,7 +1286,6 @@ namespace NBsys{namespace ND3d11
 			this->devicecontext->Draw(a_count_of_vertex,a_start_of_vertex);
 			
 			return;
-
 		}
 
 		ASSERT(0);
@@ -1314,7 +1307,6 @@ namespace NBsys{namespace ND3d11
 				this->devicecontext->VSSetConstantBuffers(t_constantbuffer->register_b_index,COUNTOF(t_list),t_list);
 
 				return;
-
 			}
 		}
 
@@ -1337,7 +1329,6 @@ namespace NBsys{namespace ND3d11
 				this->devicecontext->PSSetConstantBuffers(t_constantbuffer->register_b_index,COUNTOF(t_list),t_list);
 
 				return;
-
 			}
 		}
 
@@ -1406,7 +1397,6 @@ namespace NBsys{namespace ND3d11
 			}
 
 			return;
-
 		}
 
 		ASSERT(0);
@@ -1427,14 +1417,7 @@ namespace NBsys{namespace ND3d11
 				this->devicecontext->PSSetShaderResources(a_register_t_index,COUNTOF(t_resourceview_list),t_resourceview_list);
 
 				return;
-
 			}
-		}else{
-
-			this->devicecontext->PSSetShaderResources(0,0,nullptr);	//TODO:
-
-			return;
-
 		}
 
 		ASSERT(0);
@@ -1458,7 +1441,6 @@ namespace NBsys{namespace ND3d11
 				this->devicecontext->OMSetBlendState(t_blendstate->blendstate.get(),t_blendfactor,0xFFFFFFFF);
 
 				return;
-
 			}
 		}
 

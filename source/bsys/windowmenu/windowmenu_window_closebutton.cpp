@@ -115,7 +115,7 @@ namespace NBsys{namespace NWindowMenu
 
 			GetSystemInstance()->GetCallback()->DrawRect_Callback(a_z_sort + this->z_sort,this->calc_x,this->calc_y,this->calc_w,this->calc_h,-1,*t_color_list[t_color_index]);
 
-			//TODO
+			//TODO:×ボタンをフォントで表現。
 			{
 				f32 t_font_size = 16.0f;
 				s32 t_font_texture_index = 2;
