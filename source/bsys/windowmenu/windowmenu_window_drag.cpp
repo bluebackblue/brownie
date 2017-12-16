@@ -70,7 +70,7 @@ namespace NBsys{namespace NWindowMenu
 
 	/** 更新処理。
 	*/
-	bool WindowMenu_Window_Drag::CallBack_Update()
+	void WindowMenu_Window_Drag::CallBack_Update()
 	{
 		if(this->drag_flag == true){
 			WindowMenu_Mouse& t_mouse = GetSystemInstance()->GetMouse();
@@ -88,8 +88,6 @@ namespace NBsys{namespace NWindowMenu
 				this->drag_flag = false;
 			}
 		}
-
-		return true;
 	}
 
 }}

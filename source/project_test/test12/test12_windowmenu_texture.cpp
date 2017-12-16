@@ -54,7 +54,7 @@ Test12_WindowMenu_Texture::Test12_WindowMenu_Texture(s32 a_id,const STLWString& 
 	{
 		NBsys::NWindowMenu::WindowMenu_Window_Drag::InitItem t_titledrag_inititem(
 			NBsys::NWindowMenu::WindowMenu_Mode::Horizontal,
-			"title->drag",
+			"titledrag",
 			NBsys::NWindowMenu::WindowMenu_Offset(0.0f,0.0f),
 			NBsys::NWindowMenu::WindowMenu_Size(
 				NBsys::NWindowMenu::WindowMenu_SizeType::StretchParent,
@@ -70,7 +70,7 @@ Test12_WindowMenu_Texture::Test12_WindowMenu_Texture(s32 a_id,const STLWString& 
 		{
 			NBsys::NWindowMenu::WindowMenu_Window_Plate::InitItem t_titlebg_inititem(
 				NBsys::NWindowMenu::WindowMenu_Mode::Horizontal,
-				"title",
+				"titlebg",
 				NBsys::NWindowMenu::WindowMenu_Offset(0.0f,0.0f),
 				NBsys::NWindowMenu::WindowMenu_Size(
 					NBsys::NWindowMenu::WindowMenu_SizeType::StretchParent,
@@ -91,7 +91,7 @@ Test12_WindowMenu_Texture::Test12_WindowMenu_Texture(s32 a_id,const STLWString& 
 			{
 				NBsys::NWindowMenu::WindowMenu_Window_Text::InitItem t_titlelabel_inititem(
 					NBsys::NWindowMenu::WindowMenu_Mode::Horizontal,
-					"title",
+					"titlelabel",
 					NBsys::NWindowMenu::WindowMenu_Offset(0.0f,0.0f),
 					NBsys::NWindowMenu::WindowMenu_Size(
 						NBsys::NWindowMenu::WindowMenu_SizeType::StretchParent,
@@ -113,7 +113,7 @@ Test12_WindowMenu_Texture::Test12_WindowMenu_Texture(s32 a_id,const STLWString& 
 		{
 			NBsys::NWindowMenu::WindowMenu_Window_CloseButton::InitItem t_closebutton_inititem(
 				NBsys::NWindowMenu::WindowMenu_Mode::Free,
-				"title->closebutton",
+				"closebutton",
 				NBsys::NWindowMenu::WindowMenu_Offset(0.0f,0.0f),
 				NBsys::NWindowMenu::WindowMenu_Size(
 					NBsys::NWindowMenu::WindowMenu_SizeType::Fix,
@@ -190,6 +190,8 @@ void Test12_WindowMenu_Texture::CallBack_SetDeleteRequest()
 */
 void Test12_WindowMenu_Texture::CallBack_ChangeActive(bool a_active)
 {
+	ASSERT(0);
+
 	if(a_active){
 		this->titlebg->color = NBsys::NColor::Color_F(0.7f,0.3f,0.3f,1.0f);
 	}else{

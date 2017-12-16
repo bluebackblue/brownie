@@ -68,7 +68,7 @@ namespace NBsys{namespace NWindowMenu
 
 	/** 更新処理。
 	*/
-	bool WindowMenu_Window_CloseButton::CallBack_Update()
+	void WindowMenu_Window_CloseButton::CallBack_Update()
 	{
 		if(this->push_flag == true){
 			WindowMenu_Mouse& t_mouse = GetSystemInstance()->GetMouse();
@@ -89,8 +89,6 @@ namespace NBsys{namespace NWindowMenu
 			//マウスがボタンの上。
 			this->on_flag = this->IsRange(t_mouse.x,t_mouse.y);
 		}
-
-		return true;
 	}
 
 	/** 描画処理。

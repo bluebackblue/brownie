@@ -37,6 +37,10 @@ namespace NBlib
 		*/
 		static s32 memcmp(const void* a_data_1,const void* a_data_2,s32 a_size);
 
+		/** [static]strlen
+		*/
+		static s32 strlen(const char* a_string,s32 a_max);
+
 		/** Copy
 		*/
 		template <typename T> static T Copy(const u8*& a_current_pointer,s32 a_increment = -1)
@@ -46,10 +50,10 @@ namespace NBlib
 				Memory::memcpy(&t_ret,static_cast<s32>(sizeof(T)),a_current_pointer,static_cast<s32>(sizeof(T)));
 
 				if(a_increment < 0){
-					//自動。
+					//自動インクリメント。
 					a_current_pointer += sizeof(T);
 				}else{
-					//手動。
+					//手動インクリメント。
 					a_current_pointer += a_increment;
 				}
 			}
@@ -64,10 +68,10 @@ namespace NBlib
 				Memory::memcpy(&t_ret,static_cast<s32>(sizeof(T)),a_current_pointer,static_cast<s32>(sizeof(T)));
 
 				if(a_increment < 0){
-					//自動。
+					//自動インクリメント。
 					a_current_pointer += sizeof(T);
 				}else{
-					//手動。
+					//手動インクリメント。
 					a_current_pointer += a_increment;
 				}
 			}

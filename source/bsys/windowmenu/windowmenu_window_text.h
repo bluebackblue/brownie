@@ -75,7 +75,7 @@ namespace NBsys{namespace NWindowMenu
 			}
 		};
 
-	private:
+	public:
 		/** color
 		*/
 		NBsys::NColor::Color_F color;

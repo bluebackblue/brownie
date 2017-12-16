@@ -31,6 +31,9 @@
 
 
 /** ブレイク。 
+
+	コールバックからの戻り値が「false」の場合処理を中断します。
+
 */
 #if defined(ROM_MASTER)
 
@@ -40,14 +43,19 @@
 
 	#if(BLIB_DEBUGBREAK_CALLBACK_ENABLE)
 
-		extern void Blib_DebugBreak_Callback();
-		#define DEBUGBREAK() Blib_DebugBreak_Callback();
+		extern bool Blib_DebugBreak_Callback();
+
+		#if defined(PLATFORM_VCWIN)
+
+			#define DEBUGBREAK() do{if(Blib_DebugBreak_Callback()){__debugbreak();}}while(0)
+
+		#endif
 
 	#else
 
 		#if defined(PLATFORM_VCWIN)
 
-			#define DEBUGBREAK() __debugbreak();
+			#define DEBUGBREAK() __debugbreak()
 
 		#endif
 

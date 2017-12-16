@@ -27,10 +27,13 @@
 
 
 /** Blib_DebugAssert_Callback
+
+	コールバックからの戻り値が「false」の場合処理を中断します。
+
 */
 #if(BLIB_DEBUGASSERT_CALLBACK_ENABLE)
 
-extern void Blib_DebugAssert_Callback(const char* a_message,const char* a_filename,NBlib::s32 a_line);
+extern bool Blib_DebugAssert_Callback(const char* a_message,const char* a_filename,NBlib::s32 a_line);
 
 #endif
 
@@ -57,16 +60,17 @@ namespace NBlib
 
 			#if(BLIB_DEBUGASSERT_CALLBACK_ENABLE)
 			{
-				Blib_DebugAssert_Callback(a_message,a_filename,a_line);
-			}
-			#else
-			{
-				#if defined(PLATFORM_VCWIN)
-				{
-					DEBUGLOG("%s(%d): [ASSERT]%s\n",a_filename,a_line,t_message);	
-					DEBUGBREAK();
+				//コールバックからの戻り値が「false」の場合処理を中断します。
+				if(Blib_DebugAssert_Callback(a_message,a_filename,a_line) == false){
+					return;
 				}
-				#endif
+			}
+			#endif
+
+			#if defined(PLATFORM_VCWIN)
+			{
+				DEBUGLOG("%s(%d): [ASSERT]%s\n",a_filename,a_line,t_message);	
+				DEBUGBREAK();
 			}
 			#endif
 

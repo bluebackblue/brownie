@@ -31,6 +31,14 @@ private:
 	*/
 	sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Plate> titlebg;
 
+	/** logtext
+	*/
+	sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Text> logtext[16];
+
+	/** debuglog_counter
+	*/
+	s32 debuglog_counter;
+
 public:
 	/** constructor
 	*/
@@ -52,6 +60,10 @@ public:
 	/** アクティブ変更。
 	*/
 	virtual void CallBack_ChangeActive(bool a_active);
+
+	/** 更新処理。
+	*/
+	virtual void CallBack_Update();
 
 };
 

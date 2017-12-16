@@ -499,9 +499,8 @@ namespace NBsys{namespace NWindowMenu
 
 	/** 更新処理。
 	*/
-	bool WindowMenu_Window_Base::CallBack_Update()
+	void WindowMenu_Window_Base::CallBack_Update()
 	{
-		return true;
 	}
 
 	/** 描画処理。

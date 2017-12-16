@@ -103,7 +103,7 @@ namespace NBsys{namespace NWindowMenu
 
 		/** 更新処理。
 		*/
-		virtual bool CallBack_Update();
+		virtual void CallBack_Update();
 
 		/** 描画処理。
 		*/

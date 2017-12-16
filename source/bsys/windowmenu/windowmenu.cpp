@@ -121,9 +121,7 @@ namespace NBsys{namespace NWindowMenu
 						
 						this->list.erase(t_it_movetolast);
 						this->list.push_back(t_active);
-
 						this->listcahnge = true;
-
 					}
 				}
 

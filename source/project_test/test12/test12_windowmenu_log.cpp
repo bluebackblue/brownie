@@ -16,6 +16,11 @@
 
 /** include
 */
+#include "./test12_debug_callback.h"
+
+
+/** include
+*/
 #include "./test12_windowmenu_log.h"
 
 
@@ -29,7 +34,8 @@ Test12_WindowMenu_Log::Test12_WindowMenu_Log(f32 a_offset_x,f32 a_offset_y)
 	:
 	NBsys::NWindowMenu::WindowMenu_Window_Base("Test12_WindowMenu_Log"),
 	endrequest(false),
-	titlebg()
+	titlebg(),
+	debuglog_counter(-1)
 {
 	//メイン。
 	this->Initialize(
@@ -52,7 +58,7 @@ Test12_WindowMenu_Log::Test12_WindowMenu_Log(f32 a_offset_x,f32 a_offset_y)
 	{
 		NBsys::NWindowMenu::WindowMenu_Window_Drag::InitItem t_titledrag_inititem(
 			NBsys::NWindowMenu::WindowMenu_Mode::Horizontal,
-			"title->drag",
+			"titledrag",
 			NBsys::NWindowMenu::WindowMenu_Offset(0.0f,0.0f),
 			NBsys::NWindowMenu::WindowMenu_Size(
 				NBsys::NWindowMenu::WindowMenu_SizeType::StretchParent,
@@ -68,7 +74,7 @@ Test12_WindowMenu_Log::Test12_WindowMenu_Log(f32 a_offset_x,f32 a_offset_y)
 		{
 			NBsys::NWindowMenu::WindowMenu_Window_Plate::InitItem t_titlebg_inititem(
 				NBsys::NWindowMenu::WindowMenu_Mode::Horizontal,
-				"title",
+				"titlebg",
 				NBsys::NWindowMenu::WindowMenu_Offset(0.0f,0.0f),
 				NBsys::NWindowMenu::WindowMenu_Size(
 					NBsys::NWindowMenu::WindowMenu_SizeType::StretchParent,
@@ -89,7 +95,7 @@ Test12_WindowMenu_Log::Test12_WindowMenu_Log(f32 a_offset_x,f32 a_offset_y)
 			{
 				NBsys::NWindowMenu::WindowMenu_Window_Text::InitItem t_titlelabel_inititem(
 					NBsys::NWindowMenu::WindowMenu_Mode::Horizontal,
-					"title",
+					"titlelabel",
 					NBsys::NWindowMenu::WindowMenu_Offset(0.0f,0.0f),
 					NBsys::NWindowMenu::WindowMenu_Size(
 						NBsys::NWindowMenu::WindowMenu_SizeType::StretchParent,
@@ -111,7 +117,7 @@ Test12_WindowMenu_Log::Test12_WindowMenu_Log(f32 a_offset_x,f32 a_offset_y)
 		{
 			NBsys::NWindowMenu::WindowMenu_Window_CloseButton::InitItem t_closebutton_inititem(
 				NBsys::NWindowMenu::WindowMenu_Mode::Free,
-				"title->closebutton",
+				"closebutton",
 				NBsys::NWindowMenu::WindowMenu_Offset(0.0f,0.0f),
 				NBsys::NWindowMenu::WindowMenu_Size(
 					NBsys::NWindowMenu::WindowMenu_SizeType::Fix,
@@ -154,39 +160,22 @@ Test12_WindowMenu_Log::Test12_WindowMenu_Log(f32 a_offset_x,f32 a_offset_y)
 		this->AddChild(t_body);
 
 		{
-			NBsys::NWindowMenu::WindowMenu_Window_Text::InitItem t_text_inititem(
-				NBsys::NWindowMenu::WindowMenu_Mode::Horizontal,
-				"text",
-				NBsys::NWindowMenu::WindowMenu_Offset(0.0f,0.0f),
-				NBsys::NWindowMenu::WindowMenu_Size(
-					NBsys::NWindowMenu::WindowMenu_SizeType::StretchParent,
-					-1.0f,
-					NBsys::NWindowMenu::WindowMenu_SizeType::Fix,
-					16.0f
-				)
-			);
-
-			STLWString t_log[] = {
-				L"[blib]platform = PLATFORM_VCWIN",
-				L"[blib]rom = ROM_DEVELOP",
-				L"[blib]ROM_32BIT",
-				L"[blib]{0xFF,0x00,0x00,0x00} == 0x000000FF : little endian",
-				L"common\\common_debug_callback.cpp(19):#if(BLIB_DEBUGASSERT_CALLBACK_ENABLE)",
-			};
-
-			NBsys::NColor::Color_F t_color[] = {
-				NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f),
-				NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f),
-				NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f),
-				NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f),
-				NBsys::NColor::Color_F(1.0f,0.0f,0.0f,1.0f)
-			};
-
-			for(s32 ii=0;ii<COUNTOF(t_log);ii++){
-				t_text_inititem.color = t_color[ii];
-				t_text_inititem.string = t_log[ii];
-				sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_text(new NBsys::NWindowMenu::WindowMenu_Window_Text(t_text_inititem));
-				t_body->AddChild(t_text);
+			for(s32 ii=0;ii<COUNTOF(this->logtext);ii++){
+				NBsys::NWindowMenu::WindowMenu_Window_Text::InitItem t_logtext_inititem(
+					NBsys::NWindowMenu::WindowMenu_Mode::Horizontal,
+					"logtext",
+					NBsys::NWindowMenu::WindowMenu_Offset(0.0f,0.0f),
+					NBsys::NWindowMenu::WindowMenu_Size(
+						NBsys::NWindowMenu::WindowMenu_SizeType::StretchParent,
+						-1.0f,
+						NBsys::NWindowMenu::WindowMenu_SizeType::Fix,
+						16.0f
+					)
+				);
+				t_logtext_inititem.color = NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f);
+				t_logtext_inititem.string = L"";
+				this->logtext[ii] = new NBsys::NWindowMenu::WindowMenu_Window_Text(t_logtext_inititem);
+				t_body->AddChild(this->logtext[ii]);
 			}
 		}
 	}
@@ -220,6 +209,20 @@ void Test12_WindowMenu_Log::CallBack_ChangeActive(bool a_active)
 		this->titlebg->color = NBsys::NColor::Color_F(0.7f,0.3f,0.3f,1.0f);
 	}else{
 		this->titlebg->color = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
+	}
+}
+
+/** 更新処理。
+*/
+void Test12_WindowMenu_Log::CallBack_Update()
+{
+	if(this->debuglog_counter != GetDebugLogCounter()){
+		this->debuglog_counter = GetDebugLogCounter();
+
+		for(s32 ii=0;ii<COUNTOF(this->logtext);ii++){
+			CharToWchar(GetDebugLogString(ii),this->logtext[ii]->string);
+			this->logtext[ii]->color = GetDebugLogColor(ii);
+		}
 	}
 }
 

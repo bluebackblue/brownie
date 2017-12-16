@@ -58,5 +58,12 @@ namespace NBlib
 	{
 		return ::memcmp(a_data_1,a_data_2,a_size);
 	}
+
+	/** [static]strlen
+	*/
+	s32 Memory::strlen(const char* a_string,s32 a_max)
+	{
+		return ::strnlen_s(a_string,a_max);
+	}
 }
 

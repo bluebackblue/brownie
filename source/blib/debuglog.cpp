@@ -33,10 +33,13 @@
 
 
 /** Blib_DebugLog_Callback
+
+	コールバックからの戻り値が「false」の場合処理を中断します。
+
 */
 #if(BLIB_DEBUGLOG_CALLBACK_ENABLE)
 
-extern void Blib_DebugLog_Callback(const char* a_tag,const char* a_string);
+extern bool Blib_DebugLog_Callback(const char* a_tag,const char* a_string);
 
 #endif
 
@@ -51,27 +54,30 @@ namespace NBlib
 
 	#else
 
+		/** DebugLog
+		*/
 		void DebugLog(const char* a_tag,const char* a_string)
 		{
 			#if(BLIB_DEBUGLOG_CALLBACK_ENABLE)
 			{
-				Blib_DebugLog_Callback(a_tag,a_string);
-			}
-			#else
-			{
-				#if defined(PLATFORM_VCWIN)
-				{
-					if(a_tag != nullptr){
-						::OutputDebugStringA("[");
-						::OutputDebugStringA(a_tag);
-						::OutputDebugStringA("]");
-						::OutputDebugStringA(a_string);
-						::OutputDebugStringA("\n");
-					}else{
-						::OutputDebugStringA(a_string);
-					}
+				//コールバックからの戻り値が「false」の場合処理を中断します。
+				if(Blib_DebugLog_Callback(a_tag,a_string) == false){
+					return;
 				}
-				#endif
+			}
+			#endif
+
+			#if defined(PLATFORM_VCWIN)
+			{
+				if(a_tag != nullptr){
+					::OutputDebugStringA("[");
+					::OutputDebugStringA(a_tag);
+					::OutputDebugStringA("]");
+					::OutputDebugStringA(a_string);
+					::OutputDebugStringA("\n");
+				}else{
+					::OutputDebugStringA(a_string);
+				}
 			}
 			#endif
 		}
@@ -84,6 +90,8 @@ namespace NBlib
 
 	#else
 
+		/** DebugLog
+		*/
 		void DebugLog(const char* a_tag,const wchar* a_wstring)
 		{
 			#if defined(PLATFORM_VCWIN)
