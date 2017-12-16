@@ -34,8 +34,8 @@ Test12_WindowMenu_Texture::Test12_WindowMenu_Texture(s32 a_id,const STLWString& 
 	d3d11(a_d3d11)
 {
 	//自分。
-	WindowMenu_Window_Base::InitItem t_inititem;
 	{
+		WindowMenu_Window_Base::InitItem t_inititem;
 		t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Vertical;
 		t_inititem.offset.Set(a_offset_x,a_offset_y);
 		t_inititem.size.SetW(400.0f);
@@ -43,108 +43,25 @@ Test12_WindowMenu_Texture::Test12_WindowMenu_Texture(s32 a_id,const STLWString& 
 		this->Initialize(t_inititem);
 	}
 
+	//タイトルドラッグ。
+	sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Drag> t_titledrag = this->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Drag>();
+
+	//タイトルドラッグ -> タイトル背景。
+	this->titlebg = t_titledrag->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Plate>();
+
+	//タイトルドラッグ -> タイトル背景 -> タイトルラベル。
+	sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Text> t_titlelabel = this->titlebg->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Text>();
+
+	//タイトルドラッグ -> タイトル閉じるボタン。
+	sharedptr<NBsys::NWindowMenu::WindowMenu_Window_CloseButton> t_titleclosebutton = t_titledrag->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_CloseButton>();
+
+	//ボディー背景。
+	sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Plate> t_bodybg = this->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Plate>();
+
+	//ボディー背景 -> コントロール。
 
 
 	#if(0)
-
-	//メイン。
-	this->Initialize(
-		WindowMenu_Window_Base::InitItem(
-			NBsys::NWindowMenu::WindowMenu_Mode::Vertical,
-			NBsys::NWindowMenu::WindowMenu_Offset(a_offset_x,a_offset_y),
-			NBsys::NWindowMenu::WindowMenu_Size(
-				NBsys::NWindowMenu::WindowMenu_SizeType::Fix,
-				200.0f,
-				NBsys::NWindowMenu::WindowMenu_SizeType::StretchChild,
-				-1.0f
-			),
-			0
-		)
-	);
-
-	f32 t_title_h = 16.0f;
-
-	//タイトル。
-	{
-		NBsys::NWindowMenu::WindowMenu_Window_Drag::InitItem t_titledrag_inititem(
-			NBsys::NWindowMenu::WindowMenu_Mode::Horizontal,
-			"titledrag",
-			NBsys::NWindowMenu::WindowMenu_Offset(0.0f,0.0f),
-			NBsys::NWindowMenu::WindowMenu_Size(
-				NBsys::NWindowMenu::WindowMenu_SizeType::StretchParent,
-				-1.0f,
-				NBsys::NWindowMenu::WindowMenu_SizeType::Fix,
-				t_title_h
-			)
-		);
-		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_titledrag(new NBsys::NWindowMenu::WindowMenu_Window_Drag(t_titledrag_inititem));
-		this->AddChild(t_titledrag);
-
-		//タイトル背景。
-		{
-			NBsys::NWindowMenu::WindowMenu_Window_Plate::InitItem t_titlebg_inititem(
-				NBsys::NWindowMenu::WindowMenu_Mode::Horizontal,
-				"titlebg",
-				NBsys::NWindowMenu::WindowMenu_Offset(0.0f,0.0f),
-				NBsys::NWindowMenu::WindowMenu_Size(
-					NBsys::NWindowMenu::WindowMenu_SizeType::StretchParent,
-					-1.0f,
-					NBsys::NWindowMenu::WindowMenu_SizeType::Fix,
-					t_title_h
-				)
-			);
-			{
-				t_titlebg_inititem.color = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
-				t_titlebg_inititem.texture_id = -1;
-				t_titlebg_inititem.mouseblock = false;
-			}
-			this->titlebg = new NBsys::NWindowMenu::WindowMenu_Window_Plate(t_titlebg_inititem);
-			t_titledrag->AddChild(this->titlebg);
-
-			//タイトルラベル。
-			{
-				NBsys::NWindowMenu::WindowMenu_Window_Text::InitItem t_titlelabel_inititem(
-					NBsys::NWindowMenu::WindowMenu_Mode::Horizontal,
-					"titlelabel",
-					NBsys::NWindowMenu::WindowMenu_Offset(0.0f,0.0f),
-					NBsys::NWindowMenu::WindowMenu_Size(
-						NBsys::NWindowMenu::WindowMenu_SizeType::StretchParent,
-						-1.0f,
-						NBsys::NWindowMenu::WindowMenu_SizeType::Fix,
-						t_title_h
-					)
-				);
-				{
-					t_titlelabel_inititem.color = NBsys::NColor::Color_F(1.0f,0.9f,0.9f,1.0f);
-					t_titlelabel_inititem.string = a_string;
-				}
-				sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_titlelabel = new NBsys::NWindowMenu::WindowMenu_Window_Text(t_titlelabel_inititem);
-				this->titlebg->AddChild(t_titlelabel);
-			}
-		}
-
-		//閉じるボタン。
-		{
-			NBsys::NWindowMenu::WindowMenu_Window_CloseButton::InitItem t_closebutton_inititem(
-				NBsys::NWindowMenu::WindowMenu_Mode::Free,
-				"closebutton",
-				NBsys::NWindowMenu::WindowMenu_Offset(0.0f,0.0f),
-				NBsys::NWindowMenu::WindowMenu_Size(
-					NBsys::NWindowMenu::WindowMenu_SizeType::Fix,
-					t_title_h,
-					NBsys::NWindowMenu::WindowMenu_SizeType::Fix,
-					t_title_h
-				)
-			);
-			{
-				t_closebutton_inititem.color_nomal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
-				t_closebutton_inititem.color_on = NBsys::NColor::Color_F(0.4f,0.4f,0.4f,1.0f);
-				t_closebutton_inititem.color_ondown = NBsys::NColor::Color_F(0.3f,0.3f,1.0f,1.0f);
-			}
-			sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_closebutton(new NBsys::NWindowMenu::WindowMenu_Window_CloseButton(t_closebutton_inititem));
-			t_titledrag->AddChild(t_closebutton);
-		}
-	}
 
 	//ボディー。
 	{
