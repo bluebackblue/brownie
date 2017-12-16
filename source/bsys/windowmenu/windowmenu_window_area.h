@@ -31,32 +31,13 @@ namespace NBsys{namespace NWindowMenu
 	public:
 		/** InitItem
 		*/
-		struct InitItem
+		struct InitItem : public WindowMenu_Window_Base::InitItem
 		{
-			/** mode
-			*/
-			WindowMenu_Mode::Id mode;
-
-			/** name
-			*/
-			STLString name;
-			
-			/** offset
-			*/
-			WindowMenu_Offset offset;
-			
-			/** size
-			*/
-			WindowMenu_Size size;
-
 			/** constructor
 			*/
-			InitItem(WindowMenu_Mode::Id a_mode,const STLString& a_name,const WindowMenu_Offset& a_offset,const WindowMenu_Size& a_size)
+			InitItem()
 				:
-				mode(a_mode),
-				name(a_name),
-				offset(a_offset),
-				size(a_size)
+				WindowMenu_Window_Base::InitItem()
 			{
 			}
 
@@ -68,13 +49,19 @@ namespace NBsys{namespace NWindowMenu
 		};
 
 	public:
+
+	public:
 		/** constructor
 		*/
-		WindowMenu_Window_Area(const InitItem& a_inititem);
+		WindowMenu_Window_Area();
 
 		/** destructor
 		*/
 		virtual ~WindowMenu_Window_Area();
+
+		/** Initialize
+		*/
+		void Initialize(const InitItem& a_inititem);
 	};
 
 }}

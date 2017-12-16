@@ -36,21 +36,38 @@ namespace NBsys{namespace NWindowMenu
 {
 	/** constructor
 	*/
-	WindowMenu_Window_Plate::WindowMenu_Window_Plate(const InitItem& a_inititem)
+	WindowMenu_Window_Plate::WindowMenu_Window_Plate()
 		:
-		WindowMenu_Window_Base(a_inititem.name),
-
-		color(a_inititem.color),
-		texture_id(a_inititem.texture_id),
-		mouseblock(a_inititem.mouseblock)
+		WindowMenu_Window_Base(),
+		color(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f)),
+		texture_id(-1),
+		mouseblock(true)
 	{
-		this->Initialize(WindowMenu_Window_Base::InitItem(a_inititem.mode,a_inititem.offset,a_inititem.size,0));
 	}
 
 	/** destructor
 	*/
 	WindowMenu_Window_Plate::~WindowMenu_Window_Plate()
 	{
+	}
+
+	/** Initialize
+	*/
+	void WindowMenu_Window_Plate::Initialize(const InitItem& a_inititem)
+	{
+		WindowMenu_Window_Base::InitItem t_inititem;
+		{
+			t_inititem.mode = a_inititem.mode;
+			t_inititem.offset = a_inititem.offset;
+			t_inititem.size = a_inititem.size;
+			t_inititem.name = a_inititem.name;
+		}
+		WindowMenu_Window_Base::Initialize(t_inititem);
+		{
+			this->color = a_inititem.color;
+			this->texture_id = a_inititem.texture_id;
+			this->mouseblock = a_inititem.mouseblock;
+		}
 	}
 
 	/** 描画処理。
@@ -71,5 +88,6 @@ namespace NBsys{namespace NWindowMenu
 		//マウス操作を親に伝えない。
 		return this->mouseblock;
 	}
+
 }}
 

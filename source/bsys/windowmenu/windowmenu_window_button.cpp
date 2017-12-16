@@ -1,11 +1,11 @@
-ï»¿
+
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ãƒ‡ãƒãƒƒã‚°ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã€‚
+ * @brief ƒfƒoƒbƒOƒƒjƒ…[B
 */
 
 
@@ -22,7 +22,7 @@
 /** include
 */
 #include "./windowmenu.h"
-#include "./windowmenu_window_closebutton.h"
+#include "./windowmenu_window_button.h"
 
 
 /** NBsys::NWindowMenu
@@ -31,26 +31,27 @@ namespace NBsys{namespace NWindowMenu
 {
 	/** constructor
 	*/
-	WindowMenu_Window_CloseButton::WindowMenu_Window_CloseButton()
+	WindowMenu_Window_Button::WindowMenu_Window_Button()
 		:
 		WindowMenu_Window_Base(),
 		push_flag(false),
 		on_flag(false),
 		color_nomal(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f)),
 		color_on(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f)),
-		color_ondown(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f))
+		color_ondown(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f)),
+		string(L"")
 	{
 	}
 
 	/** destructor
 	*/
-	WindowMenu_Window_CloseButton::~WindowMenu_Window_CloseButton()
+	WindowMenu_Window_Button::~WindowMenu_Window_Button()
 	{
 	}
 
 	/** Initialize
 	*/
-	void WindowMenu_Window_CloseButton::Initialize(const InitItem& a_inititem)
+	void WindowMenu_Window_Button::Initialize(const InitItem& a_inititem)
 	{
 		WindowMenu_Window_Base::InitItem t_inititem;
 		{
@@ -67,38 +68,40 @@ namespace NBsys{namespace NWindowMenu
 			this->color_nomal = a_inititem.color_nomal;
 			this->color_on = a_inititem.color_on;
 			this->color_ondown = a_inititem.color_ondown;
+
+			this->string = a_inititem.string;
 		}
 	}
 
-	/** ãƒžã‚¦ã‚¹å‡¦ç†ã€‚
+	/** ƒ}ƒEƒXˆ—B
 	*/
-	bool WindowMenu_Window_CloseButton::CallBack_InRangeMouseUpdate(WindowMenu_Mouse& a_mouse)
+	bool WindowMenu_Window_Button::CallBack_InRangeMouseUpdate(WindowMenu_Mouse& a_mouse)
 	{
 		if(a_mouse.down_l){
-			//ãƒ—ãƒƒã‚·ãƒ¥é–‹å§‹ã€‚
+			//ƒvƒbƒVƒ…ŠJŽnB
 			this->push_flag = true;
 		}
 
-		//ãƒžã‚¦ã‚¹ãŒãƒœã‚¿ãƒ³ã®ä¸Šã€‚
+		//ƒ}ƒEƒX‚ªƒ{ƒ^ƒ“‚ÌãB
 		this->on_flag = true;
 
-		//ãƒžã‚¦ã‚¹æ“ä½œã‚’è¦ªã«ä¼ãˆãªã„ã€‚
+		//ƒ}ƒEƒX‘€ì‚ðe‚É“`‚¦‚È‚¢B
 		return true;
 	}
 
-	/** æ›´æ–°å‡¦ç†ã€‚
+	/** XVˆ—B
 	*/
-	void WindowMenu_Window_CloseButton::CallBack_Update()
+	void WindowMenu_Window_Button::CallBack_Update()
 	{
 		if(this->push_flag == true){
 			WindowMenu_Mouse& t_mouse = GetSystemInstance()->GetMouse();
 			if(t_mouse.up_l){
 				this->push_flag = false;
 				if(this->IsRange(t_mouse.x,t_mouse.y)){
-					//ãƒ—ãƒƒã‚·ãƒ¥ç¢ºå®šã€‚
-					this->CallBack_SetDeleteRequest();
+					//ƒvƒbƒVƒ…Šm’èB
+					//TODO:this->CallBack_SetDeleteRequest();
 				}else{
-					//ãƒ—ãƒƒã‚·ãƒ¥ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã€‚
+					//ƒvƒbƒVƒ…ƒLƒƒƒ“ƒZƒ‹B
 				}
 			}
 		}
@@ -106,14 +109,14 @@ namespace NBsys{namespace NWindowMenu
 		if(this->on_flag == true){
 			WindowMenu_Mouse& t_mouse = GetSystemInstance()->GetMouse();
 
-			//ãƒžã‚¦ã‚¹ãŒãƒœã‚¿ãƒ³ã®ä¸Šã€‚
+			//ƒ}ƒEƒX‚ªƒ{ƒ^ƒ“‚ÌãB
 			this->on_flag = this->IsRange(t_mouse.x,t_mouse.y);
 		}
 	}
 
-	/** æç”»å‡¦ç†ã€‚
+	/** •`‰æˆ—B
 	*/
-	bool WindowMenu_Window_CloseButton::CallBack_Draw(s32 a_z_sort)
+	bool WindowMenu_Window_Button::CallBack_Draw(s32 a_z_sort)
 	{
 		if((this->calc_w >= 0.0f)&&(this->calc_h >= 0.0f)){
 
@@ -133,21 +136,16 @@ namespace NBsys{namespace NWindowMenu
 				t_color_index = 1;
 			}
 
-			GetSystemInstance()->GetCallback()->DrawRect_Callback(a_z_sort + this->z_sort,this->calc_x+1,this->calc_y+1,this->calc_w-2,this->calc_h-2,-1,*t_color_list[t_color_index]);
+			GetSystemInstance()->GetCallback()->DrawRect_Callback(a_z_sort + this->z_sort,this->calc_x + 1,this->calc_y + 1,this->calc_w - 2,this->calc_h - 2,-1,*t_color_list[t_color_index]);
 
-			//TODO:Ã—ãƒœã‚¿ãƒ³ã‚’ãƒ•ã‚©ãƒ³ãƒˆã§è¡¨ç¾ã€‚
 			{
 				f32 t_font_size = 16.0f;
 				s32 t_font_texture_index = 2;
 
-				//L"x"
-				f32 t_fontdata_x = 4;
-				f32 t_fontdata_y = -2;
+				//f32 t_offst_x = (this->calc_w - t_font_size) / 2;
+				//f32 t_offst_y = (this->calc_h - t_font_size) / 2;
 
-				f32 t_offst_x = (this->calc_h - t_font_size) / 2 + t_fontdata_x;
-				f32 t_offst_y = (this->calc_w - t_font_size) / 2 + t_fontdata_y;
-
-				GetSystemInstance()->GetCallback()->DrawFont_Callback(a_z_sort + this->z_sort+1,this->calc_x + t_offst_x,this->calc_y + t_offst_y,-1.0f,-1.0f,t_font_size,t_font_texture_index,t_font_color,L"x");
+				GetSystemInstance()->GetCallback()->DrawFont_Callback(a_z_sort + this->z_sort + 1,this->calc_x,this->calc_y,-1.0f,-1.0f,t_font_size,t_font_texture_index,t_font_color,this->string);
 			}
 		}
 

@@ -54,28 +54,17 @@ namespace NBsys{namespace NWindowMenu
 			*/
 			WindowMenu_Size size;
 
-			/** z_sort
+			/** name
 			*/
-			s32 z_sort;
+			STLString name;
 
 			/** constructor
 			*/
 			InitItem()
 				:
 				mode(WindowMenu_Mode::Free),
-				offset(WindowMenu_Offset(0.0f,0.0f)),
-				size(WindowMenu_Size(WindowMenu_SizeType::Fix,0.0f,WindowMenu_SizeType::Fix,0.0f))
-			{
-			}
-
-			/** constructor
-			*/
-			InitItem(WindowMenu_Mode::Id a_mode,const WindowMenu_Offset& a_offset,const WindowMenu_Size& a_size,s32 a_z_sort)
-				:
-				mode(a_mode),
-				offset(a_offset),
-				size(a_size),
-				z_sort(a_z_sort)
+				offset(),
+				size()
 			{
 			}
 
@@ -89,14 +78,18 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		WindowMenu_Window_Base* parent;
 
+		/** child_list
+		*/
+		STLList<sharedptr<WindowMenu_Window_Base>>::Type child_list;
+
+		/** 優先順位。
+		*/
+		s32 z_sort;
+
 	public:
 		/** モード。
 		*/
 		WindowMenu_Mode::Id mode;
-
-		/** child_list
-		*/
-		STLList<sharedptr<WindowMenu_Window_Base>>::Type child_list;
 
 		/** name
 		*/
@@ -110,10 +103,6 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		WindowMenu_Size size;
 
-		/** [設定値]優先順位。
-		*/
-		s32 z_sort;
-
 		/** 計算結果。
 		*/
 		bool calc_x_fix;
@@ -124,7 +113,6 @@ namespace NBsys{namespace NWindowMenu
 		f32 calc_y;
 		f32 calc_w;
 		f32 calc_h;
-
 
 		/** 計算に必要な親が所持している自分のインデックス。
 		*/
@@ -137,7 +125,7 @@ namespace NBsys{namespace NWindowMenu
 	public:
 		/** constructor
 		*/
-		WindowMenu_Window_Base(const STLString& a_name);
+		WindowMenu_Window_Base();
 
 		/** destructor
 		*/
@@ -150,6 +138,15 @@ namespace NBsys{namespace NWindowMenu
 		/** 子の追加。
 		*/
 		void AddChild(sharedptr<WindowMenu_Window_Base> a_window,s32 a_z_sort_add = 10);
+
+		/** 子の作成。
+		*/
+		template <typename T> sharedptr<T> CreateChild(s32 a_z_sort_add = 10)
+		{
+			sharedptr<T> t_window(new T());
+			this->AddChild(t_window,a_z_sort_add);
+			return t_window;
+		}
 
 		/** 子の削除。
 		*/

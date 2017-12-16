@@ -30,6 +30,7 @@
 #include "./windowmenu_window_drag.h"
 #include "./windowmenu_window_closebutton.h"
 #include "./windowmenu_window_text.h"
+#include "./windowmenu_window_button.h"
 
 
 /** NBsys::NWindowMenu

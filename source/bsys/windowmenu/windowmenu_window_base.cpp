@@ -35,29 +35,11 @@ namespace NBsys{namespace NWindowMenu
 {
 	/** constructor
 	*/
-	WindowMenu_Window_Base::WindowMenu_Window_Base(const STLString& a_name)
+	WindowMenu_Window_Base::WindowMenu_Window_Base()
 		:
 		parent(nullptr),
-
-		mode(WindowMenu_Mode::Free),
 		child_list(),
-		name(a_name),
-		offset(0.0f,0.0f),
-		size(WindowMenu_SizeType::Fix,0.0f,WindowMenu_SizeType::Fix,0.0f),
-		z_sort(0),
-
-		calc_x_fix(false),
-		calc_y_fix(false),
-		calc_w_fix(false),
-		calc_h_fix(false),
-
-		calc_x(0.0f),
-		calc_y(0.0f),
-		calc_w(0.0f),
-		calc_h(0.0f),
-
-		calc_child_index(0),
-		calc_it(STLList<sharedptr<WindowMenu_Window_Base>>::iterator())
+		z_sort(0)
 	{
 	}
 
@@ -71,22 +53,15 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	void WindowMenu_Window_Base::Initialize(const InitItem& a_inititem)
 	{
-		this->parent = nullptr;
-
 		this->mode = a_inititem.mode;
-		this->child_list.clear();
-
-		//this->name = "";
-
+		this->name = a_inititem.name;
 		this->offset = a_inititem.offset;
 		this->size = a_inititem.size;
-		this->z_sort = a_inititem.z_sort;
 
 		this->calc_x_fix = false;
 		this->calc_y_fix = false;
 		this->calc_w_fix = false;
 		this->calc_h_fix = false;
-
 		this->calc_x = 0.0f;
 		this->calc_y = 0.0f;
 		this->calc_w = 0.0f;
@@ -281,11 +256,11 @@ namespace NBsys{namespace NWindowMenu
 
 					this->parent->CalcW(WindowMenu_SizeType::StretchParent);
 
-					if(t_stretch_count<1){
+					if(t_stretch_count < 1){
 						t_stretch_count = 1;
 					}
 
-					this->calc_w = (this->parent->calc_w - t_total)/t_stretch_count;
+					this->calc_w = (this->parent->calc_w - t_total) / t_stretch_count;
 					this->calc_w_fix = true;
 				}
 			}else if(this->size.type_w == WindowMenu_SizeType::StretchChild){
@@ -383,11 +358,11 @@ namespace NBsys{namespace NWindowMenu
 
 					this->parent->CalcH(WindowMenu_SizeType::StretchParent);
 
-					if(t_stretch_count<1){
+					if(t_stretch_count < 1){
 						t_stretch_count = 1;
 					}
 
-					this->calc_h = (this->parent->calc_h - t_total)/t_stretch_count;
+					this->calc_h = (this->parent->calc_h - t_total) / t_stretch_count;
 					this->calc_h_fix = true;
 				}
 			}else if(this->size.type_h == WindowMenu_SizeType::StretchChild){

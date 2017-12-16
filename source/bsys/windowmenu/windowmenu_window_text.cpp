@@ -36,20 +36,36 @@ namespace NBsys{namespace NWindowMenu
 {
 	/** constructor
 	*/
-	WindowMenu_Window_Text::WindowMenu_Window_Text(const InitItem& a_inititem)
+	WindowMenu_Window_Text::WindowMenu_Window_Text()
 		:
-		WindowMenu_Window_Base(a_inititem.name),
-
-		color(a_inititem.color),
-		string(a_inititem.string)
+		WindowMenu_Window_Base(),
+		color(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f)),
+		string(L"")
 	{
-		this->Initialize(WindowMenu_Window_Base::InitItem(a_inititem.mode,a_inititem.offset,a_inititem.size,0));
 	}
 
 	/** destructor
 	*/
 	WindowMenu_Window_Text::~WindowMenu_Window_Text()
 	{
+	}
+
+	/** Initialize
+	*/
+	void WindowMenu_Window_Text::Initialize(const InitItem& a_inititem)
+	{
+		WindowMenu_Window_Base::InitItem t_inititem;
+		{
+			t_inititem.mode = a_inititem.mode;
+			t_inititem.offset = a_inititem.offset;
+			t_inititem.size = a_inititem.size;
+			t_inititem.name = a_inititem.name;
+		}
+		WindowMenu_Window_Base::Initialize(t_inititem);
+		{
+			this->color = a_inititem.color;
+			this->string = a_inititem.string;
+		}
 	}
 
 	/** •`‰æˆ—B

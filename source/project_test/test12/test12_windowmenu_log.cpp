@@ -32,151 +32,114 @@
 */
 Test12_WindowMenu_Log::Test12_WindowMenu_Log(f32 a_offset_x,f32 a_offset_y)
 	:
-	NBsys::NWindowMenu::WindowMenu_Window_Base("Test12_WindowMenu_Log"),
+	NBsys::NWindowMenu::WindowMenu_Window_Base(),
 	endrequest(false),
 	titlebg(),
 	debuglog_counter(-1)
 {
-	//メイン。
-	this->Initialize(
-		WindowMenu_Window_Base::InitItem(
-			NBsys::NWindowMenu::WindowMenu_Mode::Vertical,
-			NBsys::NWindowMenu::WindowMenu_Offset(a_offset_x,a_offset_y),
-			NBsys::NWindowMenu::WindowMenu_Size(
-				NBsys::NWindowMenu::WindowMenu_SizeType::Fix,
-				400.0f,
-				NBsys::NWindowMenu::WindowMenu_SizeType::StretchChild,
-				-1.0f
-			),
-			0
-		)
-	);
-
-	f32 t_title_h = 16.0f;
-
-	//タイトル。
+	//自分。
 	{
-		NBsys::NWindowMenu::WindowMenu_Window_Drag::InitItem t_titledrag_inititem(
-			NBsys::NWindowMenu::WindowMenu_Mode::Horizontal,
-			"titledrag",
-			NBsys::NWindowMenu::WindowMenu_Offset(0.0f,0.0f),
-			NBsys::NWindowMenu::WindowMenu_Size(
-				NBsys::NWindowMenu::WindowMenu_SizeType::StretchParent,
-				-1.0f,
-				NBsys::NWindowMenu::WindowMenu_SizeType::Fix,
-				t_title_h
-			)
-		);
-		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_titledrag(new NBsys::NWindowMenu::WindowMenu_Window_Drag(t_titledrag_inititem));
-		this->AddChild(t_titledrag);
-
-		//タイトル背景。
-		{
-			NBsys::NWindowMenu::WindowMenu_Window_Plate::InitItem t_titlebg_inititem(
-				NBsys::NWindowMenu::WindowMenu_Mode::Horizontal,
-				"titlebg",
-				NBsys::NWindowMenu::WindowMenu_Offset(0.0f,0.0f),
-				NBsys::NWindowMenu::WindowMenu_Size(
-					NBsys::NWindowMenu::WindowMenu_SizeType::StretchParent,
-					-1.0f,
-					NBsys::NWindowMenu::WindowMenu_SizeType::Fix,
-					t_title_h
-				)
-			);
-			{
-				t_titlebg_inititem.color = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
-				t_titlebg_inititem.texture_id = -1;
-				t_titlebg_inititem.mouseblock = false;
-			}
-			this->titlebg = new NBsys::NWindowMenu::WindowMenu_Window_Plate(t_titlebg_inititem);
-			t_titledrag->AddChild(this->titlebg);
-
-			//タイトルラベル。
-			{
-				NBsys::NWindowMenu::WindowMenu_Window_Text::InitItem t_titlelabel_inititem(
-					NBsys::NWindowMenu::WindowMenu_Mode::Horizontal,
-					"titlelabel",
-					NBsys::NWindowMenu::WindowMenu_Offset(0.0f,0.0f),
-					NBsys::NWindowMenu::WindowMenu_Size(
-						NBsys::NWindowMenu::WindowMenu_SizeType::StretchParent,
-						-1.0f,
-						NBsys::NWindowMenu::WindowMenu_SizeType::Fix,
-						t_title_h
-					)
-				);
-				{
-					t_titlelabel_inititem.color = NBsys::NColor::Color_F(1.0f,0.9f,0.9f,1.0f);
-					t_titlelabel_inititem.string = L"log";
-				}
-				sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_titlelabel = new NBsys::NWindowMenu::WindowMenu_Window_Text(t_titlelabel_inititem);
-				this->titlebg->AddChild(t_titlelabel);
-			}
-		}
-
-		//閉じるボタン。
-		{
-			NBsys::NWindowMenu::WindowMenu_Window_CloseButton::InitItem t_closebutton_inititem(
-				NBsys::NWindowMenu::WindowMenu_Mode::Free,
-				"closebutton",
-				NBsys::NWindowMenu::WindowMenu_Offset(0.0f,0.0f),
-				NBsys::NWindowMenu::WindowMenu_Size(
-					NBsys::NWindowMenu::WindowMenu_SizeType::Fix,
-					t_title_h,
-					NBsys::NWindowMenu::WindowMenu_SizeType::Fix,
-					t_title_h
-				)
-			);
-			{
-				t_closebutton_inititem.color_nomal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
-				t_closebutton_inititem.color_on = NBsys::NColor::Color_F(0.4f,0.4f,0.4f,1.0f);
-				t_closebutton_inititem.color_ondown = NBsys::NColor::Color_F(0.3f,0.3f,1.0f,1.0f);
-			}
-			sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_closebutton(new NBsys::NWindowMenu::WindowMenu_Window_CloseButton(t_closebutton_inititem));
-			t_titledrag->AddChild(t_closebutton);
-		}
+		WindowMenu_Window_Base::InitItem t_inititem;
+		t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Vertical;
+		t_inititem.offset.Set(a_offset_x,a_offset_y);
+		t_inititem.size.SetW(400.0f);
+		t_inititem.size.SetH_StretchChild();
+		this->Initialize(t_inititem);
 	}
 
-	//ボディー。
+	//タイトルドラッグ。
+	sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Drag> t_titledrag = this->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Drag>();
+
+	//タイトルドラッグ -> タイトル背景。
+	this->titlebg = t_titledrag->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Plate>();
+
+	//タイトルドラッグ -> タイトル背景 -> タイトルラベル。
+	sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Text> t_titlelabel = this->titlebg->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Text>();
+
+	//タイトルドラッグ -> タイトル閉じるボタン。
+	sharedptr<NBsys::NWindowMenu::WindowMenu_Window_CloseButton> t_titleclosebutton = t_titledrag->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_CloseButton>();
+
+	//ボディー背景。
+	sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Plate> t_bodybg = this->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Plate>();
+
+	//ボディー背景　-> ログテキスト。
+	for(s32 ii=0;ii<COUNTOF(this->logtext);ii++){
+		this->logtext[ii] = t_bodybg->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Text>();
+	}
+
 	{
-		NBsys::NWindowMenu::WindowMenu_Window_Plate::InitItem t_body_inititem(
-			NBsys::NWindowMenu::WindowMenu_Mode::Vertical,
-			"body",
-			NBsys::NWindowMenu::WindowMenu_Offset(0.0f,0.0f),
-			NBsys::NWindowMenu::WindowMenu_Size(
-				NBsys::NWindowMenu::WindowMenu_SizeType::StretchParent,
-				-1.0f,
-				NBsys::NWindowMenu::WindowMenu_SizeType::StretchChild,
-				-1.0f
-			)
-		);
+		f32 t_titile_h = 16.0f;
+
+		//タイトルドラッグ。
 		{
-			t_body_inititem.color = NBsys::NColor::Color_F(0.1f,0.1f,0.1f,1.0f);
-			t_body_inititem.texture_id = -1;
-			t_body_inititem.size.h = 256;
-			t_body_inititem.mouseblock = true;
+			NBsys::NWindowMenu::WindowMenu_Window_Drag::InitItem t_inititem;
+			t_inititem.name = "titledrag";
+			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//横積み。
+			t_inititem.size.SetH(t_titile_h);
+			t_titledrag->Initialize(t_inititem);
 		}
 
-		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_body(new NBsys::NWindowMenu::WindowMenu_Window_Plate(t_body_inititem));
-		this->AddChild(t_body);
-
+		//タイトルドラッグ -> タイトル背景。
 		{
-			for(s32 ii=0;ii<COUNTOF(this->logtext);ii++){
-				NBsys::NWindowMenu::WindowMenu_Window_Text::InitItem t_logtext_inititem(
-					NBsys::NWindowMenu::WindowMenu_Mode::Horizontal,
-					"logtext",
-					NBsys::NWindowMenu::WindowMenu_Offset(0.0f,0.0f),
-					NBsys::NWindowMenu::WindowMenu_Size(
-						NBsys::NWindowMenu::WindowMenu_SizeType::StretchParent,
-						-1.0f,
-						NBsys::NWindowMenu::WindowMenu_SizeType::Fix,
-						16.0f
-					)
-				);
-				t_logtext_inititem.color = NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f);
-				t_logtext_inititem.string = L"";
-				this->logtext[ii] = new NBsys::NWindowMenu::WindowMenu_Window_Text(t_logtext_inititem);
-				t_body->AddChild(this->logtext[ii]);
+			NBsys::NWindowMenu::WindowMenu_Window_Plate::InitItem t_inititem;
+			t_inititem.name = "titledrag->titlebg";
+			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//横積み。
+			{
+				t_inititem.color = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
+				t_inititem.texture_id = -1;
+				t_inititem.mouseblock = false;
 			}
+			this->titlebg->Initialize(t_inititem);
+		}
+
+		//タイトルドラッグ -> タイトル背景 -> タイトルラベル。
+		{
+			NBsys::NWindowMenu::WindowMenu_Window_Text::InitItem t_inititem;
+			t_inititem.name = "titledrag->titlebg->titlelabel";
+			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//横積み。
+			{
+				t_inititem.color = NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f);
+				t_inititem.string = L"Log";
+			}
+			t_titlelabel->Initialize(t_inititem);
+		}
+
+		//タイトルドラッグ -> タイトル閉じるボタン。
+		{
+			NBsys::NWindowMenu::WindowMenu_Window_CloseButton::InitItem t_inititem;
+			t_inititem.name = "titledrag->closebutton";
+			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//横積み。
+			t_inititem.size.SetW(t_titile_h);
+			t_inititem.size.SetH(t_titile_h);
+			{
+				t_inititem.color_nomal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
+				t_inititem.color_on = NBsys::NColor::Color_F(0.4f,0.4f,0.4f,1.0f);
+				t_inititem.color_ondown = NBsys::NColor::Color_F(0.3f,0.3f,1.0f,1.0f);
+			}
+			t_titleclosebutton->Initialize(t_inititem);
+		}
+
+		//ボディー背景。
+		{
+			NBsys::NWindowMenu::WindowMenu_Window_Plate::InitItem t_inititem;
+			t_inititem.name = "bodybg";
+			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Vertical;	//縦積み。
+			t_inititem.size.SetH_StretchChild();
+			{
+				t_inititem.color = NBsys::NColor::Color_F(0.1f,0.1f,0.1f,1.0f);
+				t_inititem.texture_id = -1;
+				t_inititem.mouseblock = true;
+			}
+			t_bodybg->Initialize(t_inititem);
+		}
+
+		//ボディー背景　-> ログテキスト。
+		for(s32 ii=0;ii<COUNTOF(this->logtext);ii++){
+			NBsys::NWindowMenu::WindowMenu_Window_Text::InitItem t_inititem;
+			t_inititem.name = "bodybg->logtext";
+			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//横積み。
+			t_inititem.size.SetH(16);
+			this->logtext[ii]->Initialize(t_inititem);
 		}
 	}
 }

@@ -31,22 +31,42 @@ namespace NBsys{namespace NWindowMenu
 {
 	/** constructor
 	*/
-	WindowMenu_Window_Drag::WindowMenu_Window_Drag(const InitItem& a_inititem)
+	WindowMenu_Window_Drag::WindowMenu_Window_Drag()
 		:
-		WindowMenu_Window_Base(a_inititem.name),
+		WindowMenu_Window_Base(),
 		drag_flag(false),
 		start_x(0.0f),
 		start_y(0.0f),
 		old_x(0.0f),
 		old_y(0.0f)
 	{
-		this->Initialize(WindowMenu_Window_Base::InitItem(a_inititem.mode,a_inititem.offset,a_inititem.size,0));
 	}
 
 	/** destructor
 	*/
 	WindowMenu_Window_Drag::~WindowMenu_Window_Drag()
 	{
+	}
+
+	/** Initialize
+	*/
+	void WindowMenu_Window_Drag::Initialize(const InitItem& a_inititem)
+	{
+		WindowMenu_Window_Base::InitItem t_inititem;
+		{
+			t_inititem.mode = a_inititem.mode;
+			t_inititem.offset = a_inititem.offset;
+			t_inititem.size = a_inititem.size;
+			t_inititem.name = a_inititem.name;
+		}
+		WindowMenu_Window_Base::Initialize(t_inititem);
+		{
+			this->drag_flag = false;
+			this->start_x = 0.0f;
+			this->start_y = 0.0f;
+			this->old_x = 0.0f;
+			this->old_y = 0.0f;
+		}
 	}
 
 	/** マウス処理。

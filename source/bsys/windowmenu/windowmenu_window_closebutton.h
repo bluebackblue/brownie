@@ -31,24 +31,8 @@ namespace NBsys{namespace NWindowMenu
 	public:
 		/** InitItem
 		*/
-		struct InitItem
+		struct InitItem : public WindowMenu_Window_Base::InitItem
 		{
-			/** mode
-			*/
-			WindowMenu_Mode::Id mode;
-
-			/** name
-			*/
-			STLString name;
-			
-			/** offset
-			*/
-			WindowMenu_Offset offset;
-			
-			/** size
-			*/
-			WindowMenu_Size size;
-
 			/** color
 			*/
 			NBsys::NColor::Color_F color_nomal;
@@ -57,12 +41,12 @@ namespace NBsys{namespace NWindowMenu
 
 			/** constructor
 			*/
-			InitItem(WindowMenu_Mode::Id a_mode,const STLString& a_name,const WindowMenu_Offset& a_offset,const WindowMenu_Size& a_size)
+			InitItem()
 				:
-				mode(a_mode),
-				name(a_name),
-				offset(a_offset),
-				size(a_size)
+				WindowMenu_Window_Base::InitItem(),
+				color_nomal(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f)),
+				color_on(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f)),
+				color_ondown(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f))
 			{
 			}
 
@@ -73,7 +57,7 @@ namespace NBsys{namespace NWindowMenu
 			}
 		};
 
-	private:
+	public:
 		/** push_flag
 		*/
 		bool push_flag;
@@ -91,11 +75,15 @@ namespace NBsys{namespace NWindowMenu
 	public:
 		/** constructor
 		*/
-		WindowMenu_Window_CloseButton(const InitItem& a_inititem);
+		WindowMenu_Window_CloseButton();
 
 		/** destructor
 		*/
 		virtual ~WindowMenu_Window_CloseButton();
+
+		/** Initialize
+		*/
+		void Initialize(const InitItem& a_inititem);
 
 		/** マウス処理。
 		*/
