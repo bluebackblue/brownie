@@ -39,7 +39,7 @@ Test12_WindowMenu_Log::Test12_WindowMenu_Log(f32 a_offset_x,f32 a_offset_y)
 	:
 	NBsys::NWindowMenu::WindowMenu_Window_Base(),
 	endrequest(false),
-	title_bg(),
+	//window_logtext
 	debuglog_counter(-1)
 {
 	//自分。
@@ -62,8 +62,8 @@ Test12_WindowMenu_Log::Test12_WindowMenu_Log(f32 a_offset_x,f32 a_offset_y)
 	sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Plate> t_bodybg = t_window->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Plate>("");
 
 	//ウィンドウ -> ボディー背景　-> ログテキスト。
-	for(s32 ii=0;ii<COUNTOF(this->logtext);ii++){
-		this->logtext[ii] = t_bodybg->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Text>("");
+	for(s32 ii=0;ii<COUNTOF(this->window_logtext);ii++){
+		this->window_logtext[ii] = t_bodybg->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Text>("");
 	}
 
 	//ウィンドウ。
@@ -75,8 +75,6 @@ Test12_WindowMenu_Log::Test12_WindowMenu_Log(f32 a_offset_x,f32 a_offset_y)
 		t_inititem.size.SetH_StretchChild();
 		t_window->Initialize(t_inititem);
 		{
-			this->title_bg = t_window->window_title_bg;
-
 			t_window->title_h = 16.0f;
 
 			t_window->title_string = L"Log";
@@ -106,11 +104,11 @@ Test12_WindowMenu_Log::Test12_WindowMenu_Log(f32 a_offset_x,f32 a_offset_y)
 	}
 
 	//ウィンドウ -> ボディー背景　-> ログテキスト。
-	for(s32 ii=0;ii<COUNTOF(this->logtext);ii++){
+	for(s32 ii=0;ii<COUNTOF(this->window_logtext);ii++){
 		NBsys::NWindowMenu::WindowMenu_Window_Text::InitItem t_inititem;
 		t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//横積み。
 		t_inititem.size.SetH(16);
-		this->logtext[ii]->Initialize(t_inititem);
+		this->window_logtext[ii]->Initialize(t_inititem);
 	}
 }
 
@@ -141,10 +139,10 @@ void Test12_WindowMenu_Log::CallBack_Update()
 	if(this->debuglog_counter != GetDebugLogCounter()){
 		this->debuglog_counter = GetDebugLogCounter();
 
-		for(s32 ii=0;ii<COUNTOF(this->logtext);ii++){
-			CharToWchar(GetDebugLogString(ii),this->logtext[ii]->string);
-			this->logtext[ii]->string = std::regex_replace(this->logtext[ii]->string,std::wregex(L"\n"),L" ");
-			this->logtext[ii]->color = GetDebugLogColor(ii);
+		for(s32 ii=0;ii<COUNTOF(this->window_logtext);ii++){
+			CharToWchar(GetDebugLogString(ii),this->window_logtext[ii]->string);
+			this->window_logtext[ii]->string = std::regex_replace(this->window_logtext[ii]->string,std::wregex(L"\n"),L" ");
+			this->window_logtext[ii]->color = GetDebugLogColor(ii);
 		}
 	}
 }

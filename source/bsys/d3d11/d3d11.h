@@ -77,7 +77,7 @@ namespace NBsys{namespace ND3d11
 
 		/** CreateTextureIdList
 		*/
-		void CreateTextureIdList(STLList<s32>::Type& a_list);
+		void CreateTextureIdList(STLVector<s32>::Type& a_list);
 
 	public:
 		/** CreateVertexShader

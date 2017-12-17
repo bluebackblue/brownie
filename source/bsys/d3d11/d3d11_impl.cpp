@@ -117,7 +117,7 @@ namespace NBsys{namespace ND3d11
 
 	/** CreateTextureIdList
 	*/
-	void D3d11_Impl::CreateTextureIdList(STLList<s32>::Type& a_list)
+	void D3d11_Impl::CreateTextureIdList(STLVector<s32>::Type& a_list)
 	{
 		a_list.clear();
 

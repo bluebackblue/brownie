@@ -31,9 +31,9 @@ private:
 	*/
 	bool endrequest;
 
-	/** title_bg
+	/** window_texture
 	*/
-	sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Plate> title_bg;
+	sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Plate> window_texture;
 
 	/** d3d11
 	*/
@@ -56,6 +56,16 @@ public:
 	/** 削除リクエスト。設定。
 	*/
 	virtual void CallBack_SetDeleteRequest();
+
+public:
+	/** 左ボタン。
+	*/
+	void PushLeftButton();
+
+	/** 右ボタン。
+	*/
+	void PushRightButton();
+
 };
 
 #endif

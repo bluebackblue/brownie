@@ -30,7 +30,7 @@ Test12_WindowMenu_Texture::Test12_WindowMenu_Texture(s32 a_id,const STLWString& 
 	NBsys::NWindowMenu::WindowMenu_Window_Base("Test12_WindowMenu_Texture"),
 	id(a_id),
 	endrequest(false),
-	title_bg(),
+	window_texture(),
 	d3d11(a_d3d11)
 {
 	//自分。
@@ -76,8 +76,6 @@ Test12_WindowMenu_Texture::Test12_WindowMenu_Texture(s32 a_id,const STLWString& 
 		t_inititem.size.SetH_StretchChild();
 		t_window->Initialize(t_inititem);
 		{
-			this->title_bg = t_window->window_title_bg;
-
 			t_window->title_h = 16.0f;
 
 			t_window->title_string = L"Texture";
@@ -130,6 +128,7 @@ Test12_WindowMenu_Texture::Test12_WindowMenu_Texture(s32 a_id,const STLWString& 
 			t_lbutton->color_on = NBsys::NColor::Color_F(0.4f,0.4f,0.4f,1.0f);
 			t_lbutton->color_ondown = NBsys::NColor::Color_F(0.3f,0.3f,1.0f,1.0f);
 			t_lbutton->string = L"<";
+			t_lbutton->action = std::bind(&Test12_WindowMenu_Texture::PushLeftButton,this);
 		}
 	}
 
@@ -143,6 +142,7 @@ Test12_WindowMenu_Texture::Test12_WindowMenu_Texture(s32 a_id,const STLWString& 
 			t_rbutton->color_on = NBsys::NColor::Color_F(0.4f,0.4f,0.4f,1.0f);
 			t_rbutton->color_ondown = NBsys::NColor::Color_F(0.3f,0.3f,1.0f,1.0f);
 			t_rbutton->string = L">";
+			t_rbutton->action = std::bind(&Test12_WindowMenu_Texture::PushRightButton,this);
 		}
 	}
 
@@ -157,6 +157,7 @@ Test12_WindowMenu_Texture::Test12_WindowMenu_Texture(s32 a_id,const STLWString& 
 			t_texture->texture_id = -1;
 			t_texture->mouseblock = true;
 		}
+		this->window_texture = t_texture;
 	}
 }
 
@@ -178,6 +179,76 @@ bool Test12_WindowMenu_Texture::CallBack_GetDeleteRequest()
 void Test12_WindowMenu_Texture::CallBack_SetDeleteRequest()
 {
 	this->endrequest = true;
+}
+
+/** 左ボタン。
+*/
+void Test12_WindowMenu_Texture::PushLeftButton()
+{
+	STLVector<s32>::Type t_list;
+	this->d3d11->CreateTextureIdList(t_list);
+	if(t_list.size() <= 0){
+		this->window_texture->texture_id = -1;
+		DEBUGLOG("textureid = %d\n",this->window_texture->texture_id);
+		return;
+	}
+
+	std::sort(t_list.begin(),t_list.end());
+
+	if(this->window_texture->texture_id < 0){
+		this->window_texture->texture_id = *t_list.begin();
+		DEBUGLOG("textureid = %d\n",this->window_texture->texture_id);
+		return;
+	}
+
+	s32 t_texture_id = this->window_texture->texture_id;
+	STLVector<s32>::const_iterator t_it_end = t_list.end();
+	for(STLVector<s32>::const_iterator t_it = t_list.begin();t_it != t_it_end;++t_it){
+		if(t_texture_id < *t_it){
+			this->window_texture->texture_id = *t_it;
+			DEBUGLOG("textureid = %d\n",this->window_texture->texture_id);
+			return;
+		}
+	}
+
+	this->window_texture->texture_id = *t_list.begin();
+	DEBUGLOG("textureid = %d\n",this->window_texture->texture_id);
+	return;
+}
+
+/** 右ボタン。
+*/
+void Test12_WindowMenu_Texture::PushRightButton()
+{
+	STLVector<s32>::Type t_list;
+	this->d3d11->CreateTextureIdList(t_list);
+	if(t_list.size() <= 0){
+		this->window_texture->texture_id = -1;
+		DEBUGLOG("textureid = %d\n",this->window_texture->texture_id);
+		return;
+	}
+
+	std::sort(t_list.begin(),t_list.end(),std::greater<int>());
+
+	if(this->window_texture->texture_id < 0){
+		this->window_texture->texture_id = *t_list.begin();
+		DEBUGLOG("textureid = %d\n",this->window_texture->texture_id);
+		return;
+	}
+
+	s32 t_texture_id = this->window_texture->texture_id;
+	STLVector<s32>::const_iterator t_it_end = t_list.end();
+	for(STLVector<s32>::const_iterator t_it = t_list.begin();t_it != t_it_end;++t_it){
+		if(t_texture_id > *t_it){
+			this->window_texture->texture_id = *t_it;
+			DEBUGLOG("textureid = %d\n",this->window_texture->texture_id);
+			return;
+		}
+	}
+
+	this->window_texture->texture_id = *t_list.begin();
+	DEBUGLOG("textureid = %d\n",this->window_texture->texture_id);
+	return;
 }
 
 #endif

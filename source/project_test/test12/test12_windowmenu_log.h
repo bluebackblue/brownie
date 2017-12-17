@@ -27,13 +27,9 @@ private:
 	*/
 	bool endrequest;
 
-	/** titlebg
-	*/
-	sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Plate> title_bg;
-
 	/** logtext
 	*/
-	sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Text> logtext[16];
+	sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Text> window_logtext[16];
 
 	/** debuglog_counter
 	*/
