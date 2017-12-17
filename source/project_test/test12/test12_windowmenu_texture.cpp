@@ -204,94 +204,6 @@ Test12_WindowMenu_Texture::Test12_WindowMenu_Texture(s32 a_id,const STLWString& 
 		}
 
 	}
-
-	#if(0)
-
-	//ボディー。
-	{
-		NBsys::NWindowMenu::WindowMenu_Window_Plate::InitItem t_body_inititem(
-			NBsys::NWindowMenu::WindowMenu_Mode::Vertical,
-			"body",
-			NBsys::NWindowMenu::WindowMenu_Offset(0.0f,0.0f),
-			NBsys::NWindowMenu::WindowMenu_Size(
-				NBsys::NWindowMenu::WindowMenu_SizeType::StretchParent,
-				-1.0f,
-				NBsys::NWindowMenu::WindowMenu_SizeType::StretchChild,
-				1024.0f
-			)
-		);
-		{
-			t_body_inititem.mouseblock = true;
-			t_body_inititem.texture_id = -1;
-			t_body_inititem.color = NBsys::NColor::Color_F(0.1f,0.1f,0.1f,1.0f);
-		}
-		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_body(new NBsys::NWindowMenu::WindowMenu_Window_Plate(t_body_inititem));
-		this->AddChild(t_body);
-
-		//コントロール。
-		{
-			NBsys::NWindowMenu::WindowMenu_Window_Area::InitItem t_control_inititem(
-				NBsys::NWindowMenu::WindowMenu_Mode::Vertical,
-				"control",
-				NBsys::NWindowMenu::WindowMenu_Offset(0.0f,0.0f),
-				NBsys::NWindowMenu::WindowMenu_Size(
-					NBsys::NWindowMenu::WindowMenu_SizeType::StretchParent,
-					-1.0f,
-					NBsys::NWindowMenu::WindowMenu_SizeType::Fix,
-					100.0f
-				)
-			);
-			sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_control(new NBsys::NWindowMenu::WindowMenu_Window_Area(t_control_inititem));
-			t_body->AddChild(t_control);
-
-			//ボタン。
-			{
-				NBsys::NWindowMenu::WindowMenu_Window_Button::InitItem t_controlbutton_inititem(
-					NBsys::NWindowMenu::WindowMenu_Mode::Vertical,
-					"controlbutton",
-					NBsys::NWindowMenu::WindowMenu_Offset(0.0f,0.0f),
-					NBsys::NWindowMenu::WindowMenu_Size(
-						NBsys::NWindowMenu::WindowMenu_SizeType::StretchParent,
-						-1.0f,
-						NBsys::NWindowMenu::WindowMenu_SizeType::Fix,
-						30.0f
-					)
-				);
-				{
-					t_controlbutton_inititem.color_nomal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
-					t_controlbutton_inititem.color_on = NBsys::NColor::Color_F(0.4f,0.4f,0.4f,1.0f);
-					t_controlbutton_inititem.color_ondown = NBsys::NColor::Color_F(0.3f,0.3f,1.0f,1.0f);
-					t_controlbutton_inititem.string = L"あいうえお";
-				}
-				sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_controlbutton(new NBsys::NWindowMenu::WindowMenu_Window_Button(t_controlbutton_inititem));
-				t_control->AddChild(t_controlbutton);
-			}
-		}
-
-		//テクスチャ。
-		{
-			NBsys::NWindowMenu::WindowMenu_Window_Plate::InitItem t_texture_inititem(
-				NBsys::NWindowMenu::WindowMenu_Mode::Vertical,
-				"texture",
-				NBsys::NWindowMenu::WindowMenu_Offset(0.0f,0.0f),
-				NBsys::NWindowMenu::WindowMenu_Size(
-					NBsys::NWindowMenu::WindowMenu_SizeType::StretchParent,
-					-1.0f,
-					NBsys::NWindowMenu::WindowMenu_SizeType::Fix,
-					128.0f
-				)
-			);
-			{
-				t_texture_inititem.mouseblock = true;
-				t_texture_inititem.texture_id = this->d3d11->Render_GetFontTexture(0);
-				t_texture_inititem.color = NBsys::NColor::Color_F(1.0f,0.0f,0.0f,1.0f);
-			}
-			sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Base> t_texture(new NBsys::NWindowMenu::WindowMenu_Window_Plate(t_texture_inititem));
-			t_body->AddChild(t_texture);
-		}
-	}
-
-	#endif
 }
 
 /** destructor
@@ -318,13 +230,11 @@ void Test12_WindowMenu_Texture::CallBack_SetDeleteRequest()
 */
 void Test12_WindowMenu_Texture::CallBack_ChangeActive(bool a_active)
 {
-	/*
 	if(a_active){
 		this->titlebg->color = NBsys::NColor::Color_F(0.7f,0.3f,0.3f,1.0f);
 	}else{
 		this->titlebg->color = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
 	}
-	*/
 }
 
 #endif
