@@ -243,11 +243,11 @@ namespace NBlib
 		private:
 			/** インスタンス。
 			*/
-			T*		instance;
+			T* instance;
 
 			/** 削除子。
 			*/
-			D		deleter;
+			D deleter;
 
 		public:
 			/** constructor
@@ -370,6 +370,8 @@ namespace NBlib
 		template <typename T> class sharedptr
 		{
 		public:
+			typedef typename T element_type;
+
 			//カウント、インスタンス、削除子の管理。
 			sharedptrbase* impl;
 
@@ -516,10 +518,11 @@ namespace NBlib
 			{
 				//開始時は使用数１、参照数１。
 				if(a_instance != nullptr){
+					//「sharedptr<T>」の削除時に削除子に渡すポインタの型は「T2*」。
 					this->impl = new sharedptr_impl<T2,D>(a_instance,a_deleter);
 
 					#if(BLIB_SHAREDPTR_CACHE_ENABLE)
-					this->cache = const_cast<T2*>(a_instance);
+					this->cache = static_cast<T*>(const_cast<T2*>(a_instance));
 					#endif
 				}else{
 					this->impl = nullptr;
@@ -550,6 +553,34 @@ namespace NBlib
 				a_sharedptr.cache = nullptr;
 			}
 			#endif
+
+			/** [constructor]constructor cast
+			*/
+			sharedptr(sharedptrbase* a_impl) noexcept
+				:
+				impl(a_impl)
+			{
+				#if(BLIB_SHAREDPTR_CACHE_ENABLE)
+				if(this->impl){
+					this->cache = reinterpret_cast<T*>(this->impl->GetInstance());
+				}else{
+					this->cache = nullptr;
+				}
+				#endif
+
+				//新しい「sharedptrbase」の使用数、参照数をインクリメント。
+				if(this->impl){
+					if(this->get() != nullptr){
+						this->impl->UseAndWeak_Increment();
+					}else{
+						this->impl = nullptr;
+
+						#if(BLIB_SHAREDPTR_CACHE_ENABLE)
+						this->cache = nullptr;
+						#endif
+					}
+				}
+			}
 
 			/** [constructor]copy constructor
 			*/
@@ -660,7 +691,7 @@ namespace NBlib
 			/** 新規。削除子あり。
 			*/
 			#if(BLIB_STDNULLPTR_ENABLE)
-			template <typename D> void reset(nullptr_t,D a_deleter)
+			template <typename D> void reset(nullptr_t)
 			{
 				this->reset_impl(nullptr);
 			}
@@ -674,6 +705,7 @@ namespace NBlib
 
 				//開始時は使用数１、参照数１。
 				if(a_instance != nullptr){
+					//「sharedptr<T>」の削除時に削除子に渡すポインタの型は「T2*」。
 					this->impl = new sharedptr_impl<T2,D>(a_instance,a_deleter);
 
 					#if(BLIB_SHAREDPTR_CACHE_ENABLE)
@@ -929,120 +961,6 @@ namespace NBlib
 			#endif
 		}
 
-		/** scopedptr
-
-		削除子なし。
-
-		*/
-		template <typename T> class scopedptr
-		{
-		private:
-			/** pointer
-			*/
-			T* pointer;
-
-			/** reset_impl
-			*/
-			void reset_impl(T* a_pointer)
-			{
-				if(this->pointer != nullptr){
-					STATIC_ASSERT(0<sizeof(T));
-					delete this->pointer;
-				}
-				this->pointer = a_pointer;
-			}
-
-		public:
-			/** constructor
-			*/
-			explicit scopedptr(T* a_pointer = nullptr)
-				:
-				pointer(a_pointer)
-			{
-			}
-
-			/** destructor
-			*/
-			nonvirtual ~scopedptr()
-			{
-				this->reset_impl(nullptr);
-			}
-
-			/** reset
-			*/
-			void reset()
-			{
-				this->reset_impl(nullptr);
-			}
-
-			/** reset
-			*/
-			#if(BLIB_STDNULLPTR_ENABLE)
-			void reset(nullptr_t)
-			{
-				this->reset_impl(nullptr);
-			}
-			#endif
-
-			/** reset
-			*/
-			void reset(T* a_pointer)
-			{
-				this->reset_impl(a_pointer);
-			}
-		
-			/** 
-			*/
-			typename reference_type<T>::type operator *()
-			{
-				return *this->pointer;
-			}
-
-			/** 
-			*/
-			const typename reference_type<T>::type operator *() const
-			{
-				return *(this->get());
-			}
-
-			/** ポインタのように振舞う。
-			*/
-			T* operator ->()
-			{
-				return this->get();
-			}
-
-			/** ポインタのように振舞う。
-			*/
-			const T* operator ->() const
-			{
-				return this->get();
-			}
-
-			/** get
-			*/
-			T* get()
-			{
-				return this->pointer;
-			}
-
-			/** get
-			*/
-			const T* get() const
-			{
-				return this->pointer;
-			}
-     
-			/** swap
-			*/
-			void swap(scopedptr<T>& a_scopedptr)
-			{
-				T* t_temp = this->pointer;
-				this->pointer = a_scopedptr.pointer;
-				a_scopedptr.pointer = t_temp;
-			}
-		};
-
 	#endif
 
 }
@@ -1050,6 +968,13 @@ namespace NBlib
 #if(BLIB_STDSHAREDPTR_ENABLE)
 
 #else
+
+	/** static_pointer_cast
+	*/
+	template <typename TO,class FROM> inline NBlib::sharedptr<TO> static_pointer_cast(const NBlib::sharedptr<FROM>& a_shaderptr) noexcept
+	{
+		return NBlib::sharedptr<TO>(a_shaderptr.impl);
+	}
 
 	/** 比較。
 	*/
