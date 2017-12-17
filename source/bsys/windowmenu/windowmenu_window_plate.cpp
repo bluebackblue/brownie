@@ -38,7 +38,7 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	WindowMenu_Window_Plate::WindowMenu_Window_Plate()
 		:
-		WindowMenu_Window_Base(),
+		WindowMenu_Window_Base(WindowMenu_WindowType::Plate),
 		color(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f)),
 		texture_id(-1),
 		mouseblock(true)

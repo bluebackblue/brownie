@@ -35,8 +35,9 @@ namespace NBsys{namespace NWindowMenu
 {
 	/** constructor
 	*/
-	WindowMenu_Window_Base::WindowMenu_Window_Base()
+	WindowMenu_Window_Base::WindowMenu_Window_Base(WindowMenu_WindowType::Id a_type)
 		:
+		type(a_type),
 		parent(nullptr),
 		child_list(),
 		z_sort(0)

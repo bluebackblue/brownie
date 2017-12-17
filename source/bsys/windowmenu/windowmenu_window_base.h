@@ -74,6 +74,10 @@ namespace NBsys{namespace NWindowMenu
 		};
 
 	public:
+		/** type
+		*/
+		WindowMenu_WindowType::Id type;
+
 		/** 親。
 		*/
 		WindowMenu_Window_Base* parent;
@@ -125,7 +129,7 @@ namespace NBsys{namespace NWindowMenu
 	public:
 		/** constructor
 		*/
-		WindowMenu_Window_Base();
+		WindowMenu_Window_Base(WindowMenu_WindowType::Id a_type = NBsys::NWindowMenu::WindowMenu_WindowType::Custom);
 
 		/** destructor
 		*/

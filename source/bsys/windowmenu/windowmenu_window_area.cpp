@@ -38,7 +38,7 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	WindowMenu_Window_Area::WindowMenu_Window_Area()
 		:
-		WindowMenu_Window_Base()
+		WindowMenu_Window_Base(WindowMenu_WindowType::Area)
 	{
 	}
 

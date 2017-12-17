@@ -202,7 +202,6 @@ Test12_WindowMenu_Texture::Test12_WindowMenu_Texture(s32 a_id,const STLWString& 
 			}
 			t_texture->Initialize(t_inititem);
 		}
-
 	}
 }
 

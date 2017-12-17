@@ -33,7 +33,7 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	WindowMenu_Window_Button::WindowMenu_Window_Button()
 		:
-		WindowMenu_Window_Base(),
+		WindowMenu_Window_Base(WindowMenu_WindowType::Button),
 		push_flag(false),
 		on_flag(false),
 		color_nomal(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f)),

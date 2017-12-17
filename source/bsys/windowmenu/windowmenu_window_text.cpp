@@ -38,7 +38,7 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	WindowMenu_Window_Text::WindowMenu_Window_Text()
 		:
-		WindowMenu_Window_Base(),
+		WindowMenu_Window_Base(WindowMenu_WindowType::Text),
 		color(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f)),
 		string(L"")
 	{

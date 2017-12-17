@@ -33,7 +33,7 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	WindowMenu_Window_Drag::WindowMenu_Window_Drag()
 		:
-		WindowMenu_Window_Base(),
+		WindowMenu_Window_Base(WindowMenu_WindowType::Drag),
 		drag_flag(false),
 		start_x(0.0f),
 		start_y(0.0f),

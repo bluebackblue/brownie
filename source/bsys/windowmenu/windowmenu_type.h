@@ -24,6 +24,35 @@
 #if(BSYS_WINDOWMENU_ENABLE)
 namespace NBsys{namespace NWindowMenu
 {
+	/** WindowMenu_WindowType
+	*/
+	struct WindowMenu_WindowType
+	{
+		enum Id
+		{
+			//カスタム。
+			Custom,
+
+			//エリア。
+			Area,
+
+			//ボタン。
+			Button,
+
+			//閉じるボタン。
+			CloseButton,
+
+			//ドラッグ。
+			Drag,
+
+			//プレート。
+			Plate,
+
+			//テキスト。
+			Text,
+		};
+	};
+
 	/** WindowMenu_Mode
 	*/
 	struct WindowMenu_Mode
