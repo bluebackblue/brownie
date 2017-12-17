@@ -53,7 +53,7 @@ namespace NBsys{namespace NWindowMenu
 	public:
 		/** constructor
 		*/
-		WindowMenu_Window_Area();
+		WindowMenu_Window_Area(const STLString& a_name);
 
 		/** destructor
 		*/

@@ -31,9 +31,9 @@ namespace NBsys{namespace NWindowMenu
 {
 	/** constructor
 	*/
-	WindowMenu_Window_Drag::WindowMenu_Window_Drag()
+	WindowMenu_Window_Drag::WindowMenu_Window_Drag(const STLString& a_name)
 		:
-		WindowMenu_Window_Base(WindowMenu_WindowType::Drag),
+		WindowMenu_Window_Base(a_name,WindowMenu_WindowType::Drag),
 		drag_flag(false),
 		start_x(0.0f),
 		start_y(0.0f),
@@ -57,7 +57,6 @@ namespace NBsys{namespace NWindowMenu
 			t_inititem.mode = a_inititem.mode;
 			t_inititem.offset = a_inititem.offset;
 			t_inititem.size = a_inititem.size;
-			t_inititem.name = a_inititem.name;
 		}
 		WindowMenu_Window_Base::Initialize(t_inititem);
 		{

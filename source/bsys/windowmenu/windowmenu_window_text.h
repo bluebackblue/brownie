@@ -70,7 +70,7 @@ namespace NBsys{namespace NWindowMenu
 	public:
 		/** constructor
 		*/
-		WindowMenu_Window_Text();
+		WindowMenu_Window_Text(const STLString& a_name);
 
 		/** destructor
 		*/

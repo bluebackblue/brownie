@@ -342,7 +342,6 @@ public:
 
 				//ウィンドウメニュー。
 				{
-					NBsys::NWindowMenu::GetSystemInstance()->Update();
 					NBsys::NWindowMenu::GetSystemInstance()->Draw();
 
 					//描画。

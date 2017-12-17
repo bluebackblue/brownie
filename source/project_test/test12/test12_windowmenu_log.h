@@ -29,7 +29,7 @@ private:
 
 	/** titlebg
 	*/
-	sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Plate> titlebg;
+	sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Plate> title_bg;
 
 	/** logtext
 	*/
@@ -56,10 +56,6 @@ public:
 	/** 削除リクエスト。設定。
 	*/
 	virtual void CallBack_SetDeleteRequest();
-
-	/** アクティブ変更。
-	*/
-	virtual void CallBack_ChangeActive(bool a_active);
 
 	/** 更新処理。
 	*/

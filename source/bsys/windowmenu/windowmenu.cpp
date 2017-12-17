@@ -39,9 +39,10 @@ namespace NBsys{namespace NWindowMenu
 		:
 		callback(a_callback),
 		list(),
-		listcahnge(false),
 		mouse(),
-		active()
+		active(),
+		changeactive_check(true),
+		changerect_check(true)
 	{
 	}
 
@@ -61,45 +62,47 @@ namespace NBsys{namespace NWindowMenu
 			while(t_it != this->list.end()){
 				if((*t_it)->CallBack_GetDeleteRequest() == true){
 					t_it = this->list.erase(t_it);
-					this->listcahnge = true;
+
+					//アクティブ変更チェック。
+					this->changeactive_check = true;
 				}else{
 					t_it++;
 				}
 			}
 		}
 
+		//マウスの値取得。
+		GetSystemInstance()->callback->GetMouse_Callback(this->mouse.x,this->mouse.y,this->mouse.on_l,this->mouse.on_r,this->mouse.down_l,this->mouse.down_r,this->mouse.up_l,this->mouse.up_r);
+
 		{
 			STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_begin = this->list.begin();
 			STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->list.end();
 			if(t_it_begin != t_it_end){
 
-				//計算結果のクリア。
-				{
+				//領域再計算、親子関係変更。
+				if(this->changerect_check){
 					for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
 						(*t_it)->CallBack_CalcRectClear(STLList<sharedptr<WindowMenu_Window_Base>>::iterator(),-1);
 					}
-				}
 
-				//表示位置計算。
-				{
-					for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
-						t_it->get()->CalcRect();
+					//表示位置計算。
+					{
+						for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
+							t_it->get()->CalcRect();
+						}
 					}
 				}
 
 				//マウス更新。
 				{
-					GetSystemInstance()->callback->GetMouse_Callback(this->mouse.x,this->mouse.y,this->mouse.on_l,this->mouse.on_r,this->mouse.down_l,this->mouse.down_r,this->mouse.up_l,this->mouse.up_r);
-				
 					STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_movetolast = t_it_end;
-				
 					STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = t_it_end;
-				
+			
 					for(;;){
 						t_it--;
 						bool t_ret = (*t_it)->System_MouseUpdate(this->mouse);
 						if(t_ret == true){
-							//範囲内。
+							//マウス操作を次に伝えない。
 
 							//最後尾へ移動。
 							if(this->mouse.down_l || this->mouse.down_r){
@@ -121,26 +124,29 @@ namespace NBsys{namespace NWindowMenu
 						
 						this->list.erase(t_it_movetolast);
 						this->list.push_back(t_active);
-						this->listcahnge = true;
+
+						//アクティブ変更チェック。
+						this->changeactive_check = true;
+
 					}
 				}
 
 				//アクティブ変更チェック。
-				if(this->listcahnge  == true){
+				if(this->changeactive_check  == true){
 					STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_last = STLList<sharedptr<WindowMenu_Window_Base>>::get_last(this->list);
 
 					if(t_it_last != this->list.end()){
 						if(this->active.get() != (*t_it_last).get()){
 							//アクティブ解除。
 							if(this->active){
-								this->active->CallBack_ChangeActive(false);
+								this->active->System_ChangeActive(false);
 							}
 
 							this->active = *t_it_last;
 							
 							//アクティブ設定。
 							if(this->active){
-								this->active->CallBack_ChangeActive(true);
+								this->active->System_ChangeActive(true);
 							}
 						}
 					}else{
@@ -176,7 +182,16 @@ namespace NBsys{namespace NWindowMenu
 	void WindowMenu::Add(const sharedptr<WindowMenu_Window_Base> a_window)
 	{
 		this->list.push_back(a_window);
-		this->listcahnge = true;
+
+		//アクティブ変更チェック。
+		this->changeactive_check = true;
+	}
+
+	/** 領域再計算、親子関係変更。
+	*/
+	void WindowMenu::SetChangeRect()
+	{
+		this->changerect_check = true;
 	}
 
 	/** GetList

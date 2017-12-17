@@ -39,6 +39,10 @@ namespace NBsys{namespace NWindowMenu
 			NBsys::NColor::Color_F color_on;
 			NBsys::NColor::Color_F color_ondown;
 
+			/** space
+			*/
+			f32 space;
+
 			/** constructor
 			*/
 			InitItem()
@@ -46,7 +50,8 @@ namespace NBsys{namespace NWindowMenu
 				WindowMenu_Window_Base::InitItem(),
 				color_nomal(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f)),
 				color_on(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f)),
-				color_ondown(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f))
+				color_ondown(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f)),
+				space(1.0f)
 			{
 			}
 
@@ -72,10 +77,14 @@ namespace NBsys{namespace NWindowMenu
 		NBsys::NColor::Color_F color_on;
 		NBsys::NColor::Color_F color_ondown;
 
+		/** space
+		*/
+		f32 space;
+
 	public:
 		/** constructor
 		*/
-		WindowMenu_Window_CloseButton();
+		WindowMenu_Window_CloseButton(const STLString& a_name);
 
 		/** destructor
 		*/

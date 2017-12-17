@@ -50,6 +50,9 @@ namespace NBsys{namespace NWindowMenu
 
 			//テキスト。
 			Text,
+
+			//ウィンドウ。
+			Window,
 		};
 	};
 

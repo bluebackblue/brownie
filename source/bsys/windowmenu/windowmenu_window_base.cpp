@@ -35,11 +35,12 @@ namespace NBsys{namespace NWindowMenu
 {
 	/** constructor
 	*/
-	WindowMenu_Window_Base::WindowMenu_Window_Base(WindowMenu_WindowType::Id a_type)
+	WindowMenu_Window_Base::WindowMenu_Window_Base(const STLString& a_name,WindowMenu_WindowType::Id a_type)
 		:
 		type(a_type),
 		parent(nullptr),
 		child_list(),
+		name(a_name),
 		z_sort(0)
 	{
 	}
@@ -55,9 +56,9 @@ namespace NBsys{namespace NWindowMenu
 	void WindowMenu_Window_Base::Initialize(const InitItem& a_inititem)
 	{
 		this->mode = a_inititem.mode;
-		this->name = a_inititem.name;
 		this->offset = a_inititem.offset;
 		this->size = a_inititem.size;
+		this->outrange_mouseevent = false;
 
 		this->calc_x_fix = false;
 		this->calc_y_fix = false;
@@ -83,6 +84,9 @@ namespace NBsys{namespace NWindowMenu
 		this->child_list.push_back(a_window);
 		a_window->parent = this;
 		a_window->z_sort = this->z_sort + a_z_sort_add;
+
+		//領域再計算、親子関係変更。
+		GetSystemInstance()->SetChangeRect();
 	}
 
 	/** 子の削除。
@@ -98,6 +102,9 @@ namespace NBsys{namespace NWindowMenu
 		if(t_it != this->child_list.end()){
 			this->child_list.erase(t_it);
 			a_window->parent = nullptr;
+
+			//領域再計算、親子関係変更。
+			GetSystemInstance()->SetChangeRect();
 		}
 	}
 
@@ -418,7 +425,7 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	bool WindowMenu_Window_Base::System_MouseUpdate(WindowMenu_Mouse& a_mouse)
 	{
-		if(this->IsRange(a_mouse.x,a_mouse.y)){
+		if((this->outrange_mouseevent)||(this->IsRange(a_mouse.x,a_mouse.y))){
 			//範囲内。
 
 			//子から処理。
@@ -465,6 +472,18 @@ namespace NBsys{namespace NWindowMenu
 		this->CallBack_Draw(a_z_sort);
 	}
 
+	/** システムからのアクティブ変更処理。
+	*/
+	void WindowMenu_Window_Base::System_ChangeActive(bool a_active)
+	{
+		STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
+		for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
+			(*t_it)->System_ChangeActive(a_active);
+		}
+		this->CallBack_ChangeActive(a_active);
+	}
+
+
 	/** マウス処理。
 	*/
 	bool WindowMenu_Window_Base::CallBack_InRangeMouseUpdate(WindowMenu_Mouse& /*a_mouse*/)
@@ -488,7 +507,7 @@ namespace NBsys{namespace NWindowMenu
 
 	/** アクティブ変更。
 	*/
-	void WindowMenu_Window_Base::CallBack_ChangeActive(bool a_active)
+	void WindowMenu_Window_Base::CallBack_ChangeActive(bool /*a_active*/)
 	{
 	}
 

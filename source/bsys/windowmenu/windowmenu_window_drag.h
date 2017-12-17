@@ -66,7 +66,7 @@ namespace NBsys{namespace NWindowMenu
 	public:
 		/** constructor
 		*/
-		WindowMenu_Window_Drag();
+		WindowMenu_Window_Drag(const STLString& a_name);
 
 		/** destructor
 		*/

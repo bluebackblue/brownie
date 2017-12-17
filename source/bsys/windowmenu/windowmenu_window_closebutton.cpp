@@ -31,14 +31,15 @@ namespace NBsys{namespace NWindowMenu
 {
 	/** constructor
 	*/
-	WindowMenu_Window_CloseButton::WindowMenu_Window_CloseButton()
+	WindowMenu_Window_CloseButton::WindowMenu_Window_CloseButton(const STLString& a_name)
 		:
-		WindowMenu_Window_Base(WindowMenu_WindowType::CloseButton),
+		WindowMenu_Window_Base(a_name,WindowMenu_WindowType::CloseButton),
 		push_flag(false),
 		on_flag(false),
 		color_nomal(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f)),
 		color_on(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f)),
-		color_ondown(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f))
+		color_ondown(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f)),
+		space(1.0f)
 	{
 	}
 
@@ -57,7 +58,6 @@ namespace NBsys{namespace NWindowMenu
 			t_inititem.mode = a_inititem.mode;
 			t_inititem.offset = a_inititem.offset;
 			t_inititem.size = a_inititem.size;
-			t_inititem.name = a_inititem.name;
 		}
 		WindowMenu_Window_Base::Initialize(t_inititem);
 		{
@@ -67,6 +67,8 @@ namespace NBsys{namespace NWindowMenu
 			this->color_nomal = a_inititem.color_nomal;
 			this->color_on = a_inititem.color_on;
 			this->color_ondown = a_inititem.color_ondown;
+
+			this->space = a_inititem.space;
 		}
 	}
 
@@ -133,7 +135,7 @@ namespace NBsys{namespace NWindowMenu
 				t_color_index = 1;
 			}
 
-			GetSystemInstance()->GetCallback()->DrawRect_Callback(a_z_sort + this->z_sort,this->calc_x+1,this->calc_y+1,this->calc_w-2,this->calc_h-2,-1,*t_color_list[t_color_index]);
+			GetSystemInstance()->GetCallback()->DrawRect_Callback(a_z_sort + this->z_sort,this->calc_x + this->space,this->calc_y + this->space,this->calc_w - this->space * 2,this->calc_h - this->space * 2,-1,*t_color_list[t_color_index]);
 
 			//TODO:×ボタンをフォントで表現。
 			{

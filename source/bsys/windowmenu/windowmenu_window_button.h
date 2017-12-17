@@ -84,7 +84,7 @@ namespace NBsys{namespace NWindowMenu
 	public:
 		/** constructor
 		*/
-		WindowMenu_Window_Button();
+		WindowMenu_Window_Button(const STLString& a_name);
 
 		/** destructor
 		*/

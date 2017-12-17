@@ -36,9 +36,9 @@ namespace NBsys{namespace NWindowMenu
 {
 	/** constructor
 	*/
-	WindowMenu_Window_Plate::WindowMenu_Window_Plate()
+	WindowMenu_Window_Plate::WindowMenu_Window_Plate(const STLString& a_name)
 		:
-		WindowMenu_Window_Base(WindowMenu_WindowType::Plate),
+		WindowMenu_Window_Base(a_name,WindowMenu_WindowType::Plate),
 		color(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f)),
 		texture_id(-1),
 		mouseblock(true)
@@ -60,7 +60,6 @@ namespace NBsys{namespace NWindowMenu
 			t_inititem.mode = a_inititem.mode;
 			t_inititem.offset = a_inititem.offset;
 			t_inititem.size = a_inititem.size;
-			t_inititem.name = a_inititem.name;
 		}
 		WindowMenu_Window_Base::Initialize(t_inititem);
 		{

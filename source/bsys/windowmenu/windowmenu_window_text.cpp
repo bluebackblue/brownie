@@ -36,9 +36,9 @@ namespace NBsys{namespace NWindowMenu
 {
 	/** constructor
 	*/
-	WindowMenu_Window_Text::WindowMenu_Window_Text()
+	WindowMenu_Window_Text::WindowMenu_Window_Text(const STLString& a_name)
 		:
-		WindowMenu_Window_Base(WindowMenu_WindowType::Text),
+		WindowMenu_Window_Base(a_name,WindowMenu_WindowType::Text),
 		color(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f)),
 		string(L"")
 	{
@@ -59,7 +59,6 @@ namespace NBsys{namespace NWindowMenu
 			t_inititem.mode = a_inititem.mode;
 			t_inititem.offset = a_inititem.offset;
 			t_inititem.size = a_inititem.size;
-			t_inititem.name = a_inititem.name;
 		}
 		WindowMenu_Window_Base::Initialize(t_inititem);
 		{

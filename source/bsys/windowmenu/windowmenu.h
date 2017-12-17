@@ -31,6 +31,7 @@
 #include "./windowmenu_window_closebutton.h"
 #include "./windowmenu_window_text.h"
 #include "./windowmenu_window_button.h"
+#include "./windowmenu_window_window.h"
 
 
 /** NBsys::NWindowMenu
@@ -51,10 +52,6 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		STLList<sharedptr<WindowMenu_Window_Base>>::Type list;
 
-		/** listcahnge
-		*/
-		bool listcahnge;
-
 		/** mouse
 		*/
 		WindowMenu_Mouse mouse;
@@ -62,6 +59,14 @@ namespace NBsys{namespace NWindowMenu
 		/** active
 		*/
 		sharedptr<WindowMenu_Window_Base> active;
+
+		/** アクティブ変更チェック。
+		*/
+		bool changeactive_check;
+
+		/** 領域再計算、親子関係変更。
+		*/
+		bool changerect_check;
 
 	public:
 		/** constructor
@@ -97,6 +102,10 @@ namespace NBsys{namespace NWindowMenu
 		/** GetCallback
 		*/
 		sharedptr<WindowMenu_Callback_Base>& GetCallback();
+
+		/** SetChangeRect
+		*/
+		void SetChangeRect();
 
 	};
 

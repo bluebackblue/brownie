@@ -54,10 +54,6 @@ namespace NBsys{namespace NWindowMenu
 			*/
 			WindowMenu_Size size;
 
-			/** name
-			*/
-			STLString name;
-
 			/** constructor
 			*/
 			InitItem()
@@ -86,6 +82,10 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		STLList<sharedptr<WindowMenu_Window_Base>>::Type child_list;
 
+		/** name
+		*/
+		STLString name;
+
 		/** 優先順位。
 		*/
 		s32 z_sort;
@@ -95,10 +95,6 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		WindowMenu_Mode::Id mode;
 
-		/** name
-		*/
-		STLString name;
-
 		/** [設定値]自分の位置。
 		*/
 		WindowMenu_Offset offset;
@@ -106,6 +102,10 @@ namespace NBsys{namespace NWindowMenu
 		/** [設定値]自分のサイズ。
 		*/
 		WindowMenu_Size size;
+
+		/** 範囲外のマウスイベント通知。
+		*/
+		bool outrange_mouseevent;
 
 		/** 計算結果。
 		*/
@@ -129,7 +129,7 @@ namespace NBsys{namespace NWindowMenu
 	public:
 		/** constructor
 		*/
-		WindowMenu_Window_Base(WindowMenu_WindowType::Id a_type = NBsys::NWindowMenu::WindowMenu_WindowType::Custom);
+		WindowMenu_Window_Base(const STLString& a_name = "",WindowMenu_WindowType::Id a_type = NBsys::NWindowMenu::WindowMenu_WindowType::Custom);
 
 		/** destructor
 		*/
@@ -145,9 +145,9 @@ namespace NBsys{namespace NWindowMenu
 
 		/** 子の作成。
 		*/
-		template <typename T> sharedptr<T> CreateChild(s32 a_z_sort_add = 10)
+		template <typename T> sharedptr<T> CreateChild(const STLString& a_name,s32 a_z_sort_add = 10)
 		{
-			sharedptr<T> t_window(new T());
+			sharedptr<T> t_window(new T(a_name));
 			this->AddChild(t_window,a_z_sort_add);
 			return t_window;
 		}
@@ -192,6 +192,10 @@ namespace NBsys{namespace NWindowMenu
 		/** システムからの描画処理。
 		*/
 		virtual void System_Draw(s32 a_z_sort);
+
+		/** システムからのアクティブ変更処理。
+		*/
+		virtual void System_ChangeActive(bool a_active);
 
 		/** マウス処理。
 		*/

@@ -38,6 +38,10 @@ static void AddDebugLog(const char* a_string,const NBsys::NColor::Color_F& a_col
 	//ï∂éöÅB
 	{
 		s32 t_length = Memory::strlen(a_string,COUNTOF(LogItem::buffer) - 1);
+		if(t_length <= 0){
+			return;
+		}
+
 		Memory::memcpy(&t_logitem.buffer[0],sizeof(t_logitem.buffer),a_string,t_length);
 		t_logitem.buffer[t_length] = 0;
 	}

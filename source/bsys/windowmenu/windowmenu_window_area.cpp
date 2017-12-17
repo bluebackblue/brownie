@@ -36,9 +36,9 @@ namespace NBsys{namespace NWindowMenu
 {
 	/** constructor
 	*/
-	WindowMenu_Window_Area::WindowMenu_Window_Area()
+	WindowMenu_Window_Area::WindowMenu_Window_Area(const STLString& a_name)
 		:
-		WindowMenu_Window_Base(WindowMenu_WindowType::Area)
+		WindowMenu_Window_Base(a_name,WindowMenu_WindowType::Area)
 	{
 	}
 
@@ -57,7 +57,6 @@ namespace NBsys{namespace NWindowMenu
 			t_inititem.mode = a_inititem.mode;
 			t_inititem.offset = a_inititem.offset;
 			t_inititem.size = a_inititem.size;
-			t_inititem.name = a_inititem.name;
 		}
 		WindowMenu_Window_Base::Initialize(t_inititem);
 		{
