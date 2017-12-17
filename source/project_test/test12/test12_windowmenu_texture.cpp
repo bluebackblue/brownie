@@ -59,7 +59,151 @@ Test12_WindowMenu_Texture::Test12_WindowMenu_Texture(s32 a_id,const STLWString& 
 	sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Plate> t_bodybg = this->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Plate>();
 
 	//ボディー背景 -> コントロール。
+	sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Area> t_control = t_bodybg->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Area>();
 
+	//ボディー背景 -> コントロール -> ボタンエリア。
+	sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Area> t_buttonarea = t_control->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Area>();
+
+	//ボディー背景 -> コントロール -> ボタンエリア -> 左ボタン。
+	sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Button> t_lbutton = t_buttonarea->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Button>();
+
+	//ボディー背景 -> コントロール -> ボタンエリア -> 右ボタン。
+	sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Button> t_rbutton = t_buttonarea->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Button>();
+
+	//ボディー背景 -> テクスチャー。
+	sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Plate> t_texture = t_bodybg->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Plate>();
+	{
+		f32 t_titile_h = 16.0f;
+		STLWString t_titile_string = L"Texture";
+
+		//タイトルドラッグ。
+		{
+			NBsys::NWindowMenu::WindowMenu_Window_Drag::InitItem t_inititem;
+			t_inititem.name = "titledrag";
+			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//横積み。
+			t_inititem.size.SetH(t_titile_h);
+			t_titledrag->Initialize(t_inititem);
+		}
+
+		//タイトルドラッグ -> タイトル背景。
+		{
+			NBsys::NWindowMenu::WindowMenu_Window_Plate::InitItem t_inititem;
+			t_inititem.name = "titledrag->titlebg";
+			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//横積み。
+			{
+				t_inititem.color = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
+				t_inititem.texture_id = -1;
+				t_inititem.mouseblock = false;
+			}
+			this->titlebg->Initialize(t_inititem);
+		}
+
+		//タイトルドラッグ -> タイトル背景 -> タイトルラベル。
+		{
+			NBsys::NWindowMenu::WindowMenu_Window_Text::InitItem t_inititem;
+			t_inititem.name = "titledrag->titlebg->titlelabel";
+			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//横積み。
+			{
+				t_inititem.color = NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f);
+				t_inititem.string = t_titile_string;
+			}
+			t_titlelabel->Initialize(t_inititem);
+		}
+
+		//タイトルドラッグ -> タイトル閉じるボタン。
+		{
+			NBsys::NWindowMenu::WindowMenu_Window_CloseButton::InitItem t_inititem;
+			t_inititem.name = "titledrag->closebutton";
+			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//横積み。
+			t_inititem.size.SetW(t_titile_h);
+			t_inititem.size.SetH(t_titile_h);
+			{
+				t_inititem.color_nomal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
+				t_inititem.color_on = NBsys::NColor::Color_F(0.4f,0.4f,0.4f,1.0f);
+				t_inititem.color_ondown = NBsys::NColor::Color_F(0.3f,0.3f,1.0f,1.0f);
+			}
+			t_titleclosebutton->Initialize(t_inititem);
+		}
+
+		//ボディー背景。
+		{
+			NBsys::NWindowMenu::WindowMenu_Window_Plate::InitItem t_inititem;
+			t_inititem.name = "bodybg";
+			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Vertical;	//縦積み。
+			t_inititem.size.SetH_StretchChild();
+			{
+				t_inititem.color = NBsys::NColor::Color_F(0.1f,0.1f,0.1f,1.0f);
+				t_inititem.texture_id = -1;
+				t_inititem.mouseblock = true;
+			}
+			t_bodybg->Initialize(t_inititem);
+		}
+
+		//ボディー背景 -> コントロール。
+		{
+			NBsys::NWindowMenu::WindowMenu_Window_Area::InitItem t_inititem;
+			t_inititem.name = "bodybg->control";
+			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Vertical;	//縦積み。
+			t_inititem.size.SetH(100);
+			{
+			}
+			t_control->Initialize(t_inititem);
+		}
+
+		//ボディー背景 -> コントロール -> ボタンエリア。
+		{
+			NBsys::NWindowMenu::WindowMenu_Window_Area::InitItem t_inititem;
+			t_inititem.name = "bodybg->control->buttonarea";
+			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//横積み。
+			t_inititem.size.SetH(100);
+			{
+			}
+			t_buttonarea->Initialize(t_inititem);
+		}
+
+		//ボディー背景 -> コントロール -> ボタンエリア -> 左ボタン。
+		{
+			NBsys::NWindowMenu::WindowMenu_Window_Button::InitItem t_inititem;
+			t_inititem.name = "bodybg->control->buttonarea->lbutton";
+			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//横積み。
+			{
+				t_inititem.color_nomal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
+				t_inititem.color_on = NBsys::NColor::Color_F(0.4f,0.4f,0.4f,1.0f);
+				t_inititem.color_ondown = NBsys::NColor::Color_F(0.3f,0.3f,1.0f,1.0f);
+				t_inititem.string = L"<";
+			}
+			t_lbutton->Initialize(t_inititem);
+		}
+
+		//ボディー背景 -> コントロール -> ボタンエリア -> 右ボタン。
+		{
+			NBsys::NWindowMenu::WindowMenu_Window_Button::InitItem t_inititem;
+			t_inititem.name = "bodybg->control->buttonarea->rbutton";
+			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//横積み。
+			{
+				t_inititem.color_nomal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
+				t_inititem.color_on = NBsys::NColor::Color_F(0.4f,0.4f,0.4f,1.0f);
+				t_inititem.color_ondown = NBsys::NColor::Color_F(0.3f,0.3f,1.0f,1.0f);
+				t_inititem.string = L">";
+			}
+			t_rbutton->Initialize(t_inititem);
+		}
+
+		//ボディー背景 -> テクスチャー。
+		{
+			NBsys::NWindowMenu::WindowMenu_Window_Plate::InitItem t_inititem;
+			t_inititem.name = "bodybg->titlebg";
+			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//横積み。
+			t_inititem.size.SetH(100);
+			{
+				t_inititem.color = NBsys::NColor::Color_F(1.0f,0.0f,0.0f,1.0f);
+				t_inititem.texture_id = -1;
+				t_inititem.mouseblock = false;
+			}
+			t_texture->Initialize(t_inititem);
+		}
+
+	}
 
 	#if(0)
 

@@ -69,6 +69,7 @@ Test12_WindowMenu_Log::Test12_WindowMenu_Log(f32 a_offset_x,f32 a_offset_y)
 
 	{
 		f32 t_titile_h = 16.0f;
+		STLWString t_titile_string = L"Log";
 
 		//タイトルドラッグ。
 		{
@@ -99,7 +100,7 @@ Test12_WindowMenu_Log::Test12_WindowMenu_Log(f32 a_offset_x,f32 a_offset_y)
 			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//横積み。
 			{
 				t_inititem.color = NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f);
-				t_inititem.string = L"Log";
+				t_inititem.string = t_titile_string;
 			}
 			t_titlelabel->Initialize(t_inititem);
 		}
