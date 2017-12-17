@@ -50,19 +50,22 @@ namespace NBsys{namespace NWindowMenu
 
 	/** Initialize
 	*/
-	void WindowMenu_Window_Drag::Initialize(const InitItem& a_inititem)
+	void WindowMenu_Window_Drag::Initialize(const WindowMenu_Window_Base::InitItem& a_inititem)
 	{
-		WindowMenu_Window_Base::InitItem t_inititem;
+		WindowMenu_Window_Base::Initialize(a_inititem);
 		{
-			t_inititem.mode = a_inititem.mode;
-			t_inititem.offset = a_inititem.offset;
-			t_inititem.size = a_inititem.size;
-		}
-		WindowMenu_Window_Base::Initialize(t_inititem);
-		{
+			/** drag_flag
+			*/
 			this->drag_flag = false;
+
+
+			/** start
+			*/
 			this->start_x = 0.0f;
 			this->start_y = 0.0f;
+
+			/** old
+			*/
 			this->old_x = 0.0f;
 			this->old_y = 0.0f;
 		}

@@ -29,40 +29,6 @@ namespace NBsys{namespace NWindowMenu
 	class WindowMenu_Window_CloseButton : public WindowMenu_Window_Base
 	{
 	public:
-		/** InitItem
-		*/
-		struct InitItem : public WindowMenu_Window_Base::InitItem
-		{
-			/** color
-			*/
-			NBsys::NColor::Color_F color_nomal;
-			NBsys::NColor::Color_F color_on;
-			NBsys::NColor::Color_F color_ondown;
-
-			/** space
-			*/
-			f32 space;
-
-			/** constructor
-			*/
-			InitItem()
-				:
-				WindowMenu_Window_Base::InitItem(),
-				color_nomal(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f)),
-				color_on(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f)),
-				color_ondown(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f)),
-				space(1.0f)
-			{
-			}
-
-			/** destructor
-			*/
-			nonvirtual ~InitItem()
-			{
-			}
-		};
-
-	public:
 		/** push_flag
 		*/
 		bool push_flag;
@@ -92,7 +58,7 @@ namespace NBsys{namespace NWindowMenu
 
 		/** Initialize
 		*/
-		void Initialize(const InitItem& a_inititem);
+		void Initialize(const WindowMenu_Window_Base::InitItem& a_inititem);
 
 		/** マウス処理。
 		*/

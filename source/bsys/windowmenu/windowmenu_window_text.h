@@ -29,36 +29,6 @@ namespace NBsys{namespace NWindowMenu
 	class WindowMenu_Window_Text: public WindowMenu_Window_Base
 	{
 	public:
-		/** InitItem
-		*/
-		struct InitItem : public WindowMenu_Window_Base::InitItem
-		{
-			/** 色。
-			*/
-			NBsys::NColor::Color_F color;
-
-			/** 文字。
-			*/
-			STLWString string;
-
-			/** constructor
-			*/
-			InitItem()
-				:
-				WindowMenu_Window_Base::InitItem(),
-				color(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f)),
-				string(L"")
-			{
-			}
-
-			/** destructor
-			*/
-			nonvirtual ~InitItem()
-			{
-			}
-		};
-
-	public:
 		/** color
 		*/
 		NBsys::NColor::Color_F color;
@@ -78,7 +48,7 @@ namespace NBsys{namespace NWindowMenu
 
 		/** Initialize
 		*/
-		void Initialize(const InitItem& a_inititem);
+		void Initialize(const WindowMenu_Window_Base::InitItem& a_inititem);
 
 		/** 描画処理。
 		*/

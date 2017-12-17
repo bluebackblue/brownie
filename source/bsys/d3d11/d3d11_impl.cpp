@@ -104,6 +104,29 @@ namespace NBsys{namespace ND3d11
 		return this->height;
 	}
 
+	/** IsExistTexture
+	*/
+	bool D3d11_Impl::IsExistTexture(s32 a_texture_id)
+	{
+		sharedptr<D3d11_Impl_Texture>& t_texture = this->GetTexture(a_texture_id);
+		if(t_texture){
+			return true;
+		}
+		return false;
+	}
+
+	/** CreateTextureIdList
+	*/
+	void D3d11_Impl::CreateTextureIdList(STLList<s32>::Type& a_list)
+	{
+		a_list.clear();
+
+		STLMap<s32,sharedptr<D3d11_Impl_Texture>>::const_iterator t_it_end = this->texture_list.end();
+		for(STLMap<s32,sharedptr<D3d11_Impl_Texture>>::const_iterator t_it=this->texture_list.begin();t_it!=t_it_end;++t_it){
+			a_list.push_back(t_it->first);
+		}
+	}
+
 	/** Render_Create
 	*/
 	void D3d11_Impl::Render_Create(sharedptr<NWindow::Window>& a_window,s32 a_width,s32 a_height)
@@ -381,88 +404,104 @@ namespace NBsys{namespace ND3d11
 
 	/** GetVertexshader
 	*/
-	sharedptr<D3d11_Impl_VertexShader> D3d11_Impl::GetVertexShader(s32 a_vertexshader_id)
+	sharedptr<D3d11_Impl_VertexShader>& D3d11_Impl::GetVertexShader(s32 a_vertexshader_id)
 	{
 		STLMap<s32,sharedptr<D3d11_Impl_VertexShader>>::iterator t_it = this->vertexshader_list.find(a_vertexshader_id);
-		if(t_it->second != nullptr){
-			return t_it->second;
+		if(t_it != this->vertexshader_list.end()){
+			if(t_it->second != nullptr){
+				return t_it->second;
+			}
 		}
 		return sharedptr<D3d11_Impl_VertexShader>::null();
 	}
 
 	/** GetPixelshader
 	*/
-	sharedptr<D3d11_Impl_PixelShader> D3d11_Impl::GetPixelShader(s32 a_pixelshader_id)
+	sharedptr<D3d11_Impl_PixelShader>& D3d11_Impl::GetPixelShader(s32 a_pixelshader_id)
 	{
 		STLMap<s32,sharedptr<D3d11_Impl_PixelShader>>::iterator t_it = this->pixelshader_list.find(a_pixelshader_id);
-		if(t_it->second != nullptr){
-			return t_it->second;
+		if(t_it != this->pixelshader_list.end()){
+			if(t_it->second != nullptr){
+				return t_it->second;
+			}
 		}
 		return sharedptr<D3d11_Impl_PixelShader>::null();
 	}
 
 	/** GetVertexbuffer
 	*/
-	sharedptr<D3d11_Impl_VertexBuffer> D3d11_Impl::GetVertexBuffer(s32 a_vertexbuffer_id)
+	sharedptr<D3d11_Impl_VertexBuffer>& D3d11_Impl::GetVertexBuffer(s32 a_vertexbuffer_id)
 	{
 		STLMap<s32,sharedptr<D3d11_Impl_VertexBuffer>>::iterator t_it = this->vertexbuffer_list.find(a_vertexbuffer_id);
-		if(t_it->second != nullptr){
-			return t_it->second;
+		if(t_it != this->vertexbuffer_list.end()){
+			if(t_it->second != nullptr){
+				return t_it->second;
+			}
 		}
 		return sharedptr<D3d11_Impl_VertexBuffer>::null();
 	}
 
 	/** GetConstantBuffer
 	*/
-	sharedptr<D3d11_Impl_ConstantBuffer> D3d11_Impl::GetConstantBuffer(s32 a_constantbuffer_id)
+	sharedptr<D3d11_Impl_ConstantBuffer>& D3d11_Impl::GetConstantBuffer(s32 a_constantbuffer_id)
 	{
 		STLMap<s32,sharedptr<D3d11_Impl_ConstantBuffer>>::iterator t_it = this->constantbuffer_list.find(a_constantbuffer_id);
-		if(t_it->second != nullptr){
-			return t_it->second;
+		if(t_it != this->constantbuffer_list.end()){
+			if(t_it->second != nullptr){
+				return t_it->second;
+			}
 		}
 		return sharedptr<D3d11_Impl_ConstantBuffer>::null();
 	}
 
 	/** GetTexture
 	*/
-	sharedptr<D3d11_Impl_Texture> D3d11_Impl::GetTexture(s32 a_texture_id)
+	sharedptr<D3d11_Impl_Texture>& D3d11_Impl::GetTexture(s32 a_texture_id)
 	{
 		STLMap<s32,sharedptr<D3d11_Impl_Texture>>::iterator t_it = this->texture_list.find(a_texture_id);
-		if(t_it->second != nullptr){
-			return t_it->second;
+		if(t_it != this->texture_list.end()){
+			if(t_it->second != nullptr){
+				return t_it->second;
+			}
 		}
 		return sharedptr<D3d11_Impl_Texture>::null();
 	}
 
 	/** GetBlendState
 	*/
-	sharedptr<D3d11_Impl_BlendState> D3d11_Impl::GetBlendState(s32 a_blendstate_id)
+	sharedptr<D3d11_Impl_BlendState>& D3d11_Impl::GetBlendState(s32 a_blendstate_id)
 	{
 		STLMap<s32,sharedptr<D3d11_Impl_BlendState>>::iterator t_it = this->blendstate_list.find(a_blendstate_id);
-		if(t_it->second != nullptr){
-			return t_it->second;
+		if(t_it != this->blendstate_list.end()){
+			if(t_it->second != nullptr){
+				return t_it->second;
+			}
 		}
 		return sharedptr<D3d11_Impl_BlendState>::null();
 	}
 
 	/** GetRasterizerState
 	*/
-	sharedptr<D3d11_Impl_RasterizerState> D3d11_Impl::GetRasterizerState(s32 a_rasterizerstate_id)
+	sharedptr<D3d11_Impl_RasterizerState>& D3d11_Impl::GetRasterizerState(s32 a_rasterizerstate_id)
 	{
 		STLMap<s32,sharedptr<D3d11_Impl_RasterizerState>>::iterator t_it = this->rasterizerstate_list.find(a_rasterizerstate_id);
-		if(t_it->second != nullptr){
-			return t_it->second;
+		if(t_it != this->rasterizerstate_list.end()){
+			if(t_it->second != nullptr){
+				return t_it->second;
+			}
 		}
 		return sharedptr<D3d11_Impl_RasterizerState>::null();
 	}
 
 	/** GetDepthStencilState
 	*/
-	sharedptr<D3d11_Impl_DepthStencilState> D3d11_Impl::GetDepthStencilState(s32 a_depthstencilstate_id)
+	sharedptr<D3d11_Impl_DepthStencilState>& D3d11_Impl::GetDepthStencilState(s32 a_depthstencilstate_id)
 	{
 		STLMap<s32,sharedptr<D3d11_Impl_DepthStencilState>>::iterator t_it = this->depthstencilstate_list.find(a_depthstencilstate_id);
-		if(t_it->second != nullptr){
-			return t_it->second;
+		if(t_it != this->depthstencilstate_list.end()){
+			if(t_it->second != nullptr){
+				return t_it->second;
+			}
 		}
 		return sharedptr<D3d11_Impl_DepthStencilState>::null();
 	}
@@ -1150,7 +1189,7 @@ namespace NBsys{namespace ND3d11
 		this->actionbatching.Update(1.0f);
 	}
 
-	/** StartBatching
+	/** リクエスト登録。
 	*/
 	void D3d11_Impl::StartBatching(sharedptr<NBsys::NActionBatching::ActionBatching_ActionList>& a_actionlist)
 	{

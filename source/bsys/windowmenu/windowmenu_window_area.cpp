@@ -50,15 +50,9 @@ namespace NBsys{namespace NWindowMenu
 
 	/** Initialize
 	*/
-	void WindowMenu_Window_Area::Initialize(const InitItem& a_inititem)
+	void WindowMenu_Window_Area::Initialize(const WindowMenu_Window_Base::InitItem& a_inititem)
 	{
-		WindowMenu_Window_Base::InitItem t_inititem;
-		{
-			t_inititem.mode = a_inititem.mode;
-			t_inititem.offset = a_inititem.offset;
-			t_inititem.size = a_inititem.size;
-		}
-		WindowMenu_Window_Base::Initialize(t_inititem);
+		WindowMenu_Window_Base::Initialize(a_inititem);
 		{
 		}
 	}

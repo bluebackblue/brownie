@@ -36,10 +36,11 @@ namespace NBsys{namespace NWindowMenu
 		WindowMenu_Window_Base(a_name,WindowMenu_WindowType::Button),
 		push_flag(false),
 		on_flag(false),
-		color_nomal(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f)),
-		color_on(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f)),
-		color_ondown(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f)),
-		string(L"")
+		color_nomal(1.0f,1.0f,1.0f,1.0f),
+		color_on(1.0f,1.0f,1.0f,1.0f),
+		color_ondown(1.0f,1.0f,1.0f,1.0f),
+		string(L""),
+		action()
 	{
 	}
 
@@ -51,24 +52,31 @@ namespace NBsys{namespace NWindowMenu
 
 	/** Initialize
 	*/
-	void WindowMenu_Window_Button::Initialize(const InitItem& a_inititem)
+	void WindowMenu_Window_Button::Initialize(const WindowMenu_Window_Base::InitItem& a_inititem)
 	{
-		WindowMenu_Window_Base::InitItem t_inititem;
+		WindowMenu_Window_Base::Initialize(a_inititem);
 		{
-			t_inititem.mode = a_inititem.mode;
-			t_inititem.offset = a_inititem.offset;
-			t_inititem.size = a_inititem.size;
-		}
-		WindowMenu_Window_Base::Initialize(t_inititem);
-		{
+			/** push_flag
+			*/
 			this->push_flag = false;
+
+			/** on_flag
+			*/
 			this->on_flag = false;
 
-			this->color_nomal = a_inititem.color_nomal;
-			this->color_on = a_inititem.color_on;
-			this->color_ondown = a_inititem.color_ondown;
+			/** color
+			*/
+			this->color_nomal = NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f);
+			this->color_on = NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f);
+			this->color_ondown = NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f);
 
-			this->string = a_inititem.string;
+			/** string
+			*/
+			this->string = L"";
+
+			/** actions
+			*/
+			this->action = nullptr;
 		}
 	}
 
@@ -98,7 +106,9 @@ namespace NBsys{namespace NWindowMenu
 				this->push_flag = false;
 				if(this->IsRange(t_mouse.x,t_mouse.y)){
 					//プッシュ確定。
-					//TODO:this->CallBack_SetDeleteRequest();
+					if(this->action){
+						this->action();
+					}
 				}else{
 					//プッシュキャンセル。
 				}

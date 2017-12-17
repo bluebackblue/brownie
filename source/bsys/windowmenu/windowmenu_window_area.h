@@ -29,26 +29,6 @@ namespace NBsys{namespace NWindowMenu
 	class WindowMenu_Window_Area : public WindowMenu_Window_Base
 	{
 	public:
-		/** InitItem
-		*/
-		struct InitItem : public WindowMenu_Window_Base::InitItem
-		{
-			/** constructor
-			*/
-			InitItem()
-				:
-				WindowMenu_Window_Base::InitItem()
-			{
-			}
-
-			/** destructor
-			*/
-			nonvirtual ~InitItem()
-			{
-			}
-		};
-
-	public:
 
 	public:
 		/** constructor
@@ -61,7 +41,7 @@ namespace NBsys{namespace NWindowMenu
 
 		/** Initialize
 		*/
-		void Initialize(const InitItem& a_inititem);
+		void Initialize(const WindowMenu_Window_Base::InitItem& a_inititem);
 	};
 
 }}

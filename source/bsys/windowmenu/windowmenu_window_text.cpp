@@ -39,7 +39,7 @@ namespace NBsys{namespace NWindowMenu
 	WindowMenu_Window_Text::WindowMenu_Window_Text(const STLString& a_name)
 		:
 		WindowMenu_Window_Base(a_name,WindowMenu_WindowType::Text),
-		color(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f)),
+		color(1.0f,1.0f,1.0f,1.0f),
 		string(L"")
 	{
 	}
@@ -52,18 +52,17 @@ namespace NBsys{namespace NWindowMenu
 
 	/** Initialize
 	*/
-	void WindowMenu_Window_Text::Initialize(const InitItem& a_inititem)
+	void WindowMenu_Window_Text::Initialize(const WindowMenu_Window_Base::InitItem& a_inititem)
 	{
-		WindowMenu_Window_Base::InitItem t_inititem;
+		WindowMenu_Window_Base::Initialize(a_inititem);
 		{
-			t_inititem.mode = a_inititem.mode;
-			t_inititem.offset = a_inititem.offset;
-			t_inititem.size = a_inititem.size;
-		}
-		WindowMenu_Window_Base::Initialize(t_inititem);
-		{
-			this->color = a_inititem.color;
-			this->string = a_inititem.string;
+			/** color
+			*/
+			this->color = NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f);
+
+			/** string
+			*/
+			this->string = L"";
 		}
 	}
 

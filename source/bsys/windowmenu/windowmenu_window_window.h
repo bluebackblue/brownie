@@ -29,69 +29,38 @@ namespace NBsys{namespace NWindowMenu
 	class WindowMenu_Window_Window : public WindowMenu_Window_Base
 	{
 	public:
-		/** InitItem
+		/** title_h
 		*/
-		struct InitItem : public WindowMenu_Window_Base::InitItem
-		{
-			/** color
-			*/
-			NBsys::NColor::Color_F color_title_bg_normal;
-			NBsys::NColor::Color_F color_title_bg_active;
-			NBsys::NColor::Color_F color_closebutton_nomal;
-			NBsys::NColor::Color_F color_closebutton_on;
-			NBsys::NColor::Color_F color_closebutton_ondown;
-			NBsys::NColor::Color_F color_title_text;
+		f32 title_h;
 
-			/** constructor
-			*/
-			InitItem()
-				:
-				WindowMenu_Window_Base::InitItem(),
-				color_title_bg_normal(1.0f,1.0f,1.0f,1.0f),
-				color_title_bg_active(1.0f,1.0f,1.0f,1.0f),
-				color_closebutton_nomal(1.0f,1.0f,1.0f,1.0f),
-				color_closebutton_on(1.0f,1.0f,1.0f,1.0f),
-				color_closebutton_ondown(1.0f,1.0f,1.0f,1.0f),
-				color_title_text(1.0f,1.0f,1.0f,1.0f)
-			{
-			}
+		/** title_string
+		*/
+		STLWString title_string;
 
-			/** destructor
-			*/
-			nonvirtual ~InitItem()
-			{
-			}
-		};
-
-	public:
 		/** color
 		*/
 		NBsys::NColor::Color_F color_title_bg_normal;
 		NBsys::NColor::Color_F color_title_bg_active;
-		NBsys::NColor::Color_F color_closebutton_nomal;
-		NBsys::NColor::Color_F color_closebutton_on;
-		NBsys::NColor::Color_F color_closebutton_ondown;
-		NBsys::NColor::Color_F color_title_text;
 
-		/** title_drag
+		/** タイトルドラッグ。
 		*/
-		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Drag> title_drag;
+		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Drag> window_title_drag;
 
-		/** title_bg
+		/** タイトルドラッグ -> タイトル背景。
 		*/
-		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Plate> title_bg;
+		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Plate> window_title_bg;
 
-		/** title_area
+		/** タイトルドラッグ -> タイトル背景 -> タイトルエリア。
 		*/
-		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Area> title_area;
+		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Area> window_title_area;
 
-		/** title_text
+		/** タイトルドラッグ -> タイトル背景 -> タイトルエリア -> タイトルテキスト。
 		*/
-		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Text> title_text;
+		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Text> window_title_text;
 
-		/** title_closebutton
+		/** タイトルドラッグ -> タイトル背景 -> タイトルエリア -> タイトル閉じるボタン。
 		*/
-		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_CloseButton> title_closebutton;
+		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_CloseButton> window_title_closebutton;
 
 	public:
 		/** constructor
@@ -104,7 +73,7 @@ namespace NBsys{namespace NWindowMenu
 
 		/** Initialize
 		*/
-		void Initialize(const InitItem& a_inititem);
+		void Initialize(const WindowMenu_Window_Base::InitItem& a_inititem);
 
 		/** アクティブ変更。
 		*/

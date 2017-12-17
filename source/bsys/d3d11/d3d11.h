@@ -71,6 +71,15 @@ namespace NBsys{namespace ND3d11
 		*/
 		s32 GetHeight();
 
+		/** IsExistTexture
+		*/
+		bool IsExistTexture(s32 a_texture_id);
+
+		/** CreateTextureIdList
+		*/
+		void CreateTextureIdList(STLList<s32>::Type& a_list);
+
+	public:
 		/** CreateVertexShader
 		*/
 		s32 CreateVertexShader(AsyncResult<bool>& a_asyncresult,sharedptr<NBsys::NFile::File_Object>& a_fileobject,sharedptr<STLVector<NBsys::ND3d11::D3d11_Layout>::Type>& a_layout);

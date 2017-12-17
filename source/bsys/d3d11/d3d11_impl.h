@@ -196,6 +196,9 @@ namespace NBsys{namespace ND3d11
 	};
 
 	/** D3d11_Impl
+
+	デバイスへのアクセスを行う関数は「Render_」で始まります。
+
 	*/
 	class D3d11_Impl
 	{
@@ -255,7 +258,7 @@ namespace NBsys{namespace ND3d11
 		/** font
 		*/
 		#if(BSYS_FONT_ENABLE)
-		sharedptr<D3d11_Impl_Font> font_list[8];
+		sharedptr<D3d11_Impl_Font> font_list[4];
 		#endif
 
 	private:
@@ -310,6 +313,14 @@ namespace NBsys{namespace ND3d11
 		*/
 		s32 GetHeight();
 
+		/** IsExistTexture
+		*/
+		bool IsExistTexture(s32 a_texture_id);
+
+		/** CreateTextureIdList
+		*/
+		void CreateTextureIdList(STLList<s32>::Type& a_list);
+
 		/** Render_Create
 		*/
 		void Render_Create(sharedptr<NWindow::Window>& a_window,s32 a_width,s32 a_height);
@@ -354,35 +365,35 @@ namespace NBsys{namespace ND3d11
 
 		/** GetVertexshader
 		*/
-		sharedptr<D3d11_Impl_VertexShader> GetVertexShader(s32 a_vertexshader_id);
+		sharedptr<D3d11_Impl_VertexShader>& GetVertexShader(s32 a_vertexshader_id);
 
 		/** GetPixelshader
 		*/
-		sharedptr<D3d11_Impl_PixelShader> GetPixelShader(s32 a_pixelshader_id);
+		sharedptr<D3d11_Impl_PixelShader>& GetPixelShader(s32 a_pixelshader_id);
 
 		/** GetVertexbuffer
 		*/
-		sharedptr<D3d11_Impl_VertexBuffer> GetVertexBuffer(s32 a_vertexbuffer_id);
+		sharedptr<D3d11_Impl_VertexBuffer>& GetVertexBuffer(s32 a_vertexbuffer_id);
 
 		/** GetConstantBuffer
 		*/
-		sharedptr<D3d11_Impl_ConstantBuffer> GetConstantBuffer(s32 a_constantbuffer_id);
+		sharedptr<D3d11_Impl_ConstantBuffer>& GetConstantBuffer(s32 a_constantbuffer_id);
 
 		/** GetTexture
 		*/
-		sharedptr<D3d11_Impl_Texture> GetTexture(s32 a_texture_id);
+		sharedptr<D3d11_Impl_Texture>& GetTexture(s32 a_texture_id);
 
 		/** GetBlendState
 		*/
-		sharedptr<D3d11_Impl_BlendState> GetBlendState(s32 a_blendstate_id);
+		sharedptr<D3d11_Impl_BlendState>& GetBlendState(s32 a_blendstate_id);
 
 		/** GetRasterizerState
 		*/
-		sharedptr<D3d11_Impl_RasterizerState> GetRasterizerState(s32 a_rasterizerstate_id);
+		sharedptr<D3d11_Impl_RasterizerState>& GetRasterizerState(s32 a_rasterizerstate_id);
 
 		/** GetDepthStencilState
 		*/
-		sharedptr<D3d11_Impl_DepthStencilState> GetDepthStencilState(s32 a_depthstencilstate_id);
+		sharedptr<D3d11_Impl_DepthStencilState>& GetDepthStencilState(s32 a_depthstencilstate_id);
 
 	public:
 
@@ -496,7 +507,7 @@ namespace NBsys{namespace ND3d11
 		*/
 		void Render_Main();
 
-		/** StartBatching
+		/** リクエスト登録。
 		*/
 		void StartBatching(sharedptr<NBsys::NActionBatching::ActionBatching_ActionList>& a_actionlist);
 

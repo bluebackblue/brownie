@@ -74,15 +74,21 @@ Test12_WindowMenu_Texture::Test12_WindowMenu_Texture(s32 a_id,const STLWString& 
 		t_inititem.offset.Set(a_offset_x,a_offset_y);
 		t_inititem.size.SetW(400.0f);
 		t_inititem.size.SetH_StretchChild();
-		t_inititem.color_title_bg_normal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
-		t_inititem.color_title_bg_active = NBsys::NColor::Color_F(0.7f,0.3f,0.3f,1.0f);
-		t_inititem.color_closebutton_nomal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
-		t_inititem.color_closebutton_on = NBsys::NColor::Color_F(0.4f,0.4f,0.4f,1.0f);
-		t_inititem.color_closebutton_ondown = NBsys::NColor::Color_F(0.3f,0.3f,1.0f,1.0f);
-		t_inititem.color_title_text = NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f);
 		t_window->Initialize(t_inititem);
 		{
-			this->title_bg = t_window->title_bg;
+			this->title_bg = t_window->window_title_bg;
+
+			t_window->title_h = 16.0f;
+
+			t_window->title_string = L"Texture";
+
+			t_window->color_title_bg_normal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
+			t_window->color_title_bg_active = NBsys::NColor::Color_F(0.7f,0.3f,0.3f,1.0f);
+			t_window->window_title_bg->color = t_window->color_title_bg_normal;
+			t_window->window_title_closebutton->color_nomal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
+			t_window->window_title_closebutton->color_on = NBsys::NColor::Color_F(0.4f,0.4f,0.4f,1.0f);
+			t_window->window_title_closebutton->color_ondown = NBsys::NColor::Color_F(0.3f,0.3f,1.0f,1.0f);
+			t_window->window_title_text->color = NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f);
 		}
 	}
 
@@ -91,12 +97,12 @@ Test12_WindowMenu_Texture::Test12_WindowMenu_Texture(s32 a_id,const STLWString& 
 		NBsys::NWindowMenu::WindowMenu_Window_Plate::InitItem t_inititem;
 		t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Vertical;	//縦積み。
 		t_inititem.size.SetH_StretchChild();
-		{
-			t_inititem.color = NBsys::NColor::Color_F(0.1f,0.1f,0.1f,1.0f);
-			t_inititem.texture_id = -1;
-			t_inititem.mouseblock = true;
-		}
 		t_bodybg->Initialize(t_inititem);
+		{
+			t_bodybg->color = NBsys::NColor::Color_F(0.1f,0.1f,0.1f,1.0f);
+			t_bodybg->texture_id = -1;
+			t_bodybg->mouseblock = true;
+		}
 	}
 
 	//ウィンドウ -> ボディー背景 -> コントロール。
@@ -104,8 +110,6 @@ Test12_WindowMenu_Texture::Test12_WindowMenu_Texture(s32 a_id,const STLWString& 
 		NBsys::NWindowMenu::WindowMenu_Window_Area::InitItem t_inititem;
 		t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Vertical;	//縦積み。
 		t_inititem.size.SetH(32.0f);
-		{
-		}
 		t_control->Initialize(t_inititem);
 	}
 
@@ -113,8 +117,6 @@ Test12_WindowMenu_Texture::Test12_WindowMenu_Texture(s32 a_id,const STLWString& 
 	{
 		NBsys::NWindowMenu::WindowMenu_Window_Area::InitItem t_inititem;
 		t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//横積み。
-		{
-		}
 		t_buttonarea->Initialize(t_inititem);
 	}
 
@@ -122,26 +124,26 @@ Test12_WindowMenu_Texture::Test12_WindowMenu_Texture(s32 a_id,const STLWString& 
 	{
 		NBsys::NWindowMenu::WindowMenu_Window_Button::InitItem t_inititem;
 		t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//横積み。
-		{
-			t_inititem.color_nomal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
-			t_inititem.color_on = NBsys::NColor::Color_F(0.4f,0.4f,0.4f,1.0f);
-			t_inititem.color_ondown = NBsys::NColor::Color_F(0.3f,0.3f,1.0f,1.0f);
-			t_inititem.string = L"<";
-		}
 		t_lbutton->Initialize(t_inititem);
+		{
+			t_lbutton->color_nomal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
+			t_lbutton->color_on = NBsys::NColor::Color_F(0.4f,0.4f,0.4f,1.0f);
+			t_lbutton->color_ondown = NBsys::NColor::Color_F(0.3f,0.3f,1.0f,1.0f);
+			t_lbutton->string = L"<";
+		}
 	}
 
 	//ウィンドウ -> ボディー背景 -> コントロール -> ボタンエリア -> 右ボタン。
 	{
 		NBsys::NWindowMenu::WindowMenu_Window_Button::InitItem t_inititem;
 		t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//横積み。
-		{
-			t_inititem.color_nomal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
-			t_inititem.color_on = NBsys::NColor::Color_F(0.4f,0.4f,0.4f,1.0f);
-			t_inititem.color_ondown = NBsys::NColor::Color_F(0.3f,0.3f,1.0f,1.0f);
-			t_inititem.string = L">";
-		}
 		t_rbutton->Initialize(t_inititem);
+		{
+			t_rbutton->color_nomal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
+			t_rbutton->color_on = NBsys::NColor::Color_F(0.4f,0.4f,0.4f,1.0f);
+			t_rbutton->color_ondown = NBsys::NColor::Color_F(0.3f,0.3f,1.0f,1.0f);
+			t_rbutton->string = L">";
+		}
 	}
 
 	//ウィンドウ -> ボディー背景 -> テクスチャー。
@@ -149,12 +151,12 @@ Test12_WindowMenu_Texture::Test12_WindowMenu_Texture(s32 a_id,const STLWString& 
 		NBsys::NWindowMenu::WindowMenu_Window_Plate::InitItem t_inititem;
 		t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//横積み。
 		t_inititem.size.SetH(100);
-		{
-			t_inititem.color = NBsys::NColor::Color_F(1.0f,0.0f,0.0f,1.0f);
-			t_inititem.texture_id = -1;
-			t_inititem.mouseblock = true;
-		}
 		t_texture->Initialize(t_inititem);
+		{
+			t_texture->color = NBsys::NColor::Color_F(1.0f,0.0f,0.0f,1.0f);
+			t_texture->texture_id = -1;
+			t_texture->mouseblock = true;
+		}
 	}
 }
 

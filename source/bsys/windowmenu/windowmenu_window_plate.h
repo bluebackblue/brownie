@@ -29,41 +29,6 @@ namespace NBsys{namespace NWindowMenu
 	class WindowMenu_Window_Plate : public WindowMenu_Window_Base
 	{
 	public:
-		/** InitItem
-		*/
-		struct InitItem : public WindowMenu_Window_Base::InitItem
-		{
-			/** 色。
-			*/
-			NBsys::NColor::Color_F color;
-
-			/** テクスチャーＩＤ。
-			*/
-			s32 texture_id;
-
-			/** マウス操作を親に伝えない。
-			*/
-			bool mouseblock;
-
-			/** constructor
-			*/
-			InitItem()
-				:
-				WindowMenu_Window_Base::InitItem(),
-				color(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f)),
-				texture_id(-1),
-				mouseblock(false)
-			{
-			}
-
-			/** destructor
-			*/
-			nonvirtual ~InitItem()
-			{
-			}
-		};
-
-	public:
 		/** color
 		*/
 		NBsys::NColor::Color_F color;
@@ -87,7 +52,7 @@ namespace NBsys{namespace NWindowMenu
 
 		/** Initialize
 		*/
-		void Initialize(const InitItem& a_inititem);
+		void Initialize(const WindowMenu_Window_Base::InitItem& a_inititem);
 
 		/** 描画処理。
 		*/
