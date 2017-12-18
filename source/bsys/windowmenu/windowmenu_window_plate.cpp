@@ -79,6 +79,7 @@ namespace NBsys{namespace NWindowMenu
 			GetSystemInstance()->GetCallback()->DrawRect_Callback(a_z_sort + this->z_sort,this->calc_x,this->calc_y,this->calc_w,this->calc_h,this->texture_id,this->color);
 		}
 
+		//子の描画を行う。
 		return true;
 	}
 

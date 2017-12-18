@@ -37,6 +37,7 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	WindowMenu_Window_Base::WindowMenu_Window_Base(const STLString& a_name,WindowMenu_WindowType::Id a_type)
 		:
+		enable(false),
 		type(a_type),
 		parent(nullptr),
 		child_list(),
@@ -55,11 +56,13 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	void WindowMenu_Window_Base::Initialize(const InitItem& a_inititem)
 	{
+		this->enable = true;
+
 		this->mode = a_inititem.mode;
 		this->offset = a_inititem.offset;
 		this->size = a_inititem.size;
 		this->outrange_mouseevent = false;
-
+		this->draw_enable = true;
 		this->calc_x_fix = false;
 		this->calc_y_fix = false;
 		this->calc_w_fix = false;
@@ -465,11 +468,15 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	void WindowMenu_Window_Base::System_Draw(s32 a_z_sort)
 	{
-		STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
-		for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
-			(*t_it)->System_Draw(a_z_sort);
+		bool t_ret = this->CallBack_Draw(a_z_sort);
+		if(t_ret == true){
+			//子の描画を行う。
+
+			STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
+			for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
+				(*t_it)->System_Draw(a_z_sort);
+			}
 		}
-		this->CallBack_Draw(a_z_sort);
 	}
 
 	/** システムからのアクティブ変更処理。
@@ -502,6 +509,7 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	bool WindowMenu_Window_Base::CallBack_Draw(s32 /*a_z_sort*/)
 	{
+		//子の描画を行う。
 		return true;
 	}
 

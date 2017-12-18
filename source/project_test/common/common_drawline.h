@@ -188,7 +188,7 @@ namespace NCommon
 					this->blendstate_id = this->d3d11->CreateBlendState(true);
 
 					//ラスタライザー。
-					this->rasterizerstate_cull_none_id = this->d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::NONE);
+					this->rasterizerstate_cull_none_id = this->d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::None);
 
 					this->step++;
 				}break;

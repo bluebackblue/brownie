@@ -83,17 +83,41 @@ namespace NBsys{namespace ND3d11
 		{
 			/** 両面描画。
 			*/
-			NONE,
+			None,
 
 			/** 前向きを描画しない。
 			*/
-			FRONT,
+			Front,
 
 			/** 後ろ向きを描画しない。
 			*/
-			BACK,
+			Back,
 		};
 	};
+
+	/** D3d11_FontTextureType
+	*/
+	#if(BSYS_FONT_ENABLE)
+	struct D3d11_FontTextureType
+	{
+		enum Id
+		{
+			//小フォント。
+			SFont = 0,
+
+			//中フォント
+			MFont,
+
+			//大フォント。
+			LFont,
+
+			//特大フォント。
+			ExFont,
+
+			Max,
+		};
+	};
+	#endif
 
 }}
 #endif

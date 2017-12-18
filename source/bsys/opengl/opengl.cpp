@@ -319,11 +319,11 @@ namespace NBsys{namespace NOpengl
 		this->impl->Render_DrawArray_Quads(a_vertex_offset,a_vertex_countof);
 	}
 
-	/** Render_DrawFont_StartClear
+	/** Render_DrawFont_ClearLockFlag
 	*/
-	void Opengl::Render_DrawFont_StartClear()
+	void Opengl::Render_DrawFont_ClearLockFlag()
 	{
-		this->impl->Render_DrawFont_StartClear();
+		this->impl->Render_DrawFont_ClearLockFlag();
 	}
 
 	/** Render_DrawFont

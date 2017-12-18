@@ -76,17 +76,16 @@ Test12_WindowMenu_Texture::Test12_WindowMenu_Texture(s32 a_id,const STLWString& 
 		t_inititem.size.SetH_StretchChild();
 		t_window->Initialize(t_inititem);
 		{
-			t_window->title_h = 16.0f;
+			t_window->window_title_text->string = L"Texture";
 
-			t_window->title_string = L"Texture";
-
-			t_window->color_title_bg_normal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
-			t_window->color_title_bg_active = NBsys::NColor::Color_F(0.7f,0.3f,0.3f,1.0f);
 			t_window->window_title_bg->color = t_window->color_title_bg_normal;
-			t_window->window_title_closebutton->color_nomal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
+			t_window->window_title_closebutton->color_normal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
 			t_window->window_title_closebutton->color_on = NBsys::NColor::Color_F(0.4f,0.4f,0.4f,1.0f);
 			t_window->window_title_closebutton->color_ondown = NBsys::NColor::Color_F(0.3f,0.3f,1.0f,1.0f);
 			t_window->window_title_text->color = NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f);
+
+			t_window->SetTitleHeight(16.0f);
+			t_window->SetTitleBgColor(NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f),NBsys::NColor::Color_F(0.7f,0.3f,0.3f,1.0f));
 		}
 	}
 
@@ -124,7 +123,7 @@ Test12_WindowMenu_Texture::Test12_WindowMenu_Texture(s32 a_id,const STLWString& 
 		t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//横積み。
 		t_lbutton->Initialize(t_inititem);
 		{
-			t_lbutton->color_nomal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
+			t_lbutton->color_normal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
 			t_lbutton->color_on = NBsys::NColor::Color_F(0.4f,0.4f,0.4f,1.0f);
 			t_lbutton->color_ondown = NBsys::NColor::Color_F(0.3f,0.3f,1.0f,1.0f);
 			t_lbutton->string = L"<";
@@ -138,7 +137,7 @@ Test12_WindowMenu_Texture::Test12_WindowMenu_Texture(s32 a_id,const STLWString& 
 		t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//横積み。
 		t_rbutton->Initialize(t_inititem);
 		{
-			t_rbutton->color_nomal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
+			t_rbutton->color_normal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
 			t_rbutton->color_on = NBsys::NColor::Color_F(0.4f,0.4f,0.4f,1.0f);
 			t_rbutton->color_ondown = NBsys::NColor::Color_F(0.3f,0.3f,1.0f,1.0f);
 			t_rbutton->string = L">";
@@ -189,7 +188,6 @@ void Test12_WindowMenu_Texture::PushLeftButton()
 	this->d3d11->CreateTextureIdList(t_list);
 	if(t_list.size() <= 0){
 		this->window_texture->texture_id = -1;
-		DEBUGLOG("textureid = %d\n",this->window_texture->texture_id);
 		return;
 	}
 
@@ -197,7 +195,6 @@ void Test12_WindowMenu_Texture::PushLeftButton()
 
 	if(this->window_texture->texture_id < 0){
 		this->window_texture->texture_id = *t_list.begin();
-		DEBUGLOG("textureid = %d\n",this->window_texture->texture_id);
 		return;
 	}
 
@@ -206,13 +203,11 @@ void Test12_WindowMenu_Texture::PushLeftButton()
 	for(STLVector<s32>::const_iterator t_it = t_list.begin();t_it != t_it_end;++t_it){
 		if(t_texture_id < *t_it){
 			this->window_texture->texture_id = *t_it;
-			DEBUGLOG("textureid = %d\n",this->window_texture->texture_id);
 			return;
 		}
 	}
 
 	this->window_texture->texture_id = *t_list.begin();
-	DEBUGLOG("textureid = %d\n",this->window_texture->texture_id);
 	return;
 }
 
@@ -224,7 +219,6 @@ void Test12_WindowMenu_Texture::PushRightButton()
 	this->d3d11->CreateTextureIdList(t_list);
 	if(t_list.size() <= 0){
 		this->window_texture->texture_id = -1;
-		DEBUGLOG("textureid = %d\n",this->window_texture->texture_id);
 		return;
 	}
 
@@ -232,7 +226,6 @@ void Test12_WindowMenu_Texture::PushRightButton()
 
 	if(this->window_texture->texture_id < 0){
 		this->window_texture->texture_id = *t_list.begin();
-		DEBUGLOG("textureid = %d\n",this->window_texture->texture_id);
 		return;
 	}
 
@@ -241,13 +234,11 @@ void Test12_WindowMenu_Texture::PushRightButton()
 	for(STLVector<s32>::const_iterator t_it = t_list.begin();t_it != t_it_end;++t_it){
 		if(t_texture_id > *t_it){
 			this->window_texture->texture_id = *t_it;
-			DEBUGLOG("textureid = %d\n",this->window_texture->texture_id);
 			return;
 		}
 	}
 
 	this->window_texture->texture_id = *t_list.begin();
-	DEBUGLOG("textureid = %d\n",this->window_texture->texture_id);
 	return;
 }
 

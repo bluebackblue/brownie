@@ -39,8 +39,7 @@ namespace NBsys{namespace NWindowMenu
 	WindowMenu_Window_Window::WindowMenu_Window_Window(const STLString& a_name)
 		:
 		WindowMenu_Window_Base(a_name,WindowMenu_WindowType::Window),
-		title_h(16.0f),
-		title_string(L""),
+		is_active(false),
 		color_title_bg_normal(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f)),
 		color_title_bg_active(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f))
 	{
@@ -72,14 +71,6 @@ namespace NBsys{namespace NWindowMenu
 	{
 		WindowMenu_Window_Base::Initialize(a_inititem);
 		{
-			/** title_h
-			*/
-			this->title_h = 16.0f;
-
-			/** title_string
-			*/
-			this->title_string = L"";
-
 			/** color
 			*/
 			this->color_title_bg_normal = NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f);
@@ -90,7 +81,7 @@ namespace NBsys{namespace NWindowMenu
 				NBsys::NWindowMenu::WindowMenu_Window_Drag::InitItem t_inititem;
 				t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//横積み。
 				t_inititem.size.SetW_StretchParent();
-				t_inititem.size.SetH(this->title_h);
+				t_inititem.size.SetH(0.0f);
 				this->window_title_drag->Initialize(t_inititem);
 			}
 
@@ -121,7 +112,7 @@ namespace NBsys{namespace NWindowMenu
 				t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//横積み。
 				this->window_title_text->Initialize(t_inititem);
 				{
-					this->window_title_text->string = this->title_string;
+					this->window_title_text->string = L"";
 				}
 			}
 
@@ -129,8 +120,8 @@ namespace NBsys{namespace NWindowMenu
 			{
 				NBsys::NWindowMenu::WindowMenu_Window_CloseButton::InitItem t_inititem;
 				t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//横積み。
-				t_inititem.size.SetW(this->title_h);
-				t_inititem.size.SetH(this->title_h);
+				t_inititem.size.SetW(0.0f);
+				t_inititem.size.SetH(0.0f);
 				this->window_title_closebutton->Initialize(t_inititem);
 			}
 		}
@@ -140,11 +131,31 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	void WindowMenu_Window_Window::CallBack_ChangeActive(bool a_active)
 	{
-		if(a_active){
+		this->is_active = a_active;
+		if(this->is_active){
 			this->window_title_bg->color = this->color_title_bg_active;
 		}else{
 			this->window_title_bg->color = this->color_title_bg_normal;
 		}
+	}
+
+	/** タイトルの高さ設定。
+	*/
+	void WindowMenu_Window_Window::SetTitleHeight(f32 a_h)
+	{
+		this->window_title_drag->size.SetH(a_h);
+
+		this->window_title_closebutton->size.SetW(a_h);
+		this->window_title_closebutton->size.SetH(a_h);
+	}
+
+	/** タイトル背景の色設定。
+	*/
+	void WindowMenu_Window_Window::SetTitleBgColor(const NBsys::NColor::Color_F& a_color_normal,const NBsys::NColor::Color_F& a_active)
+	{
+		this->color_title_bg_normal = a_color_normal;
+		this->color_title_bg_active = a_active;
+		this->CallBack_ChangeActive(this->is_active);
 	}
 
 }}

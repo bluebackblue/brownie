@@ -39,7 +39,7 @@ namespace NBsys{namespace NWindowMenu
 
 		/** color
 		*/
-		NBsys::NColor::Color_F color_nomal;
+		NBsys::NColor::Color_F color_normal;
 		NBsys::NColor::Color_F color_on;
 		NBsys::NColor::Color_F color_ondown;
 

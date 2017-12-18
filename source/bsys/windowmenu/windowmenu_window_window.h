@@ -29,13 +29,9 @@ namespace NBsys{namespace NWindowMenu
 	class WindowMenu_Window_Window : public WindowMenu_Window_Base
 	{
 	public:
-		/** title_h
+		/** is_active
 		*/
-		f32 title_h;
-
-		/** title_string
-		*/
-		STLWString title_string;
+		bool is_active;
 
 		/** color
 		*/
@@ -78,6 +74,14 @@ namespace NBsys{namespace NWindowMenu
 		/** アクティブ変更。
 		*/
 		virtual void CallBack_ChangeActive(bool a_active);
+
+		/** タイトルの高さ設定。
+		*/
+		void SetTitleHeight(f32 a_h);
+
+		/** タイトル背景の色設定。
+		*/
+		void SetTitleBgColor(const NBsys::NColor::Color_F& a_color_normal,const NBsys::NColor::Color_F& a_active);
 	};
 
 }}

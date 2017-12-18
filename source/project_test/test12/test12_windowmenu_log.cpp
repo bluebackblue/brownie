@@ -75,17 +75,16 @@ Test12_WindowMenu_Log::Test12_WindowMenu_Log(f32 a_offset_x,f32 a_offset_y)
 		t_inititem.size.SetH_StretchChild();
 		t_window->Initialize(t_inititem);
 		{
-			t_window->title_h = 16.0f;
+			t_window->window_title_text->string = L"Log";
 
-			t_window->title_string = L"Log";
-
-			t_window->color_title_bg_normal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
-			t_window->color_title_bg_active = NBsys::NColor::Color_F(0.7f,0.3f,0.3f,1.0f);
 			t_window->window_title_bg->color = t_window->color_title_bg_normal;
-			t_window->window_title_closebutton->color_nomal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
+			t_window->window_title_closebutton->color_normal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
 			t_window->window_title_closebutton->color_on = NBsys::NColor::Color_F(0.4f,0.4f,0.4f,1.0f);
 			t_window->window_title_closebutton->color_ondown = NBsys::NColor::Color_F(0.3f,0.3f,1.0f,1.0f);
 			t_window->window_title_text->color = NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f);
+
+			t_window->SetTitleHeight(16.0f);
+			t_window->SetTitleBgColor(NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f),NBsys::NColor::Color_F(0.7f,0.3f,0.3f,1.0f));
 		}
 	}
 

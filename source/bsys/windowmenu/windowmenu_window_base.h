@@ -70,6 +70,10 @@ namespace NBsys{namespace NWindowMenu
 		};
 
 	public:
+		/** enable
+		*/
+		bool enable;
+
 		/** type
 		*/
 		WindowMenu_WindowType::Id type;
@@ -106,6 +110,10 @@ namespace NBsys{namespace NWindowMenu
 		/** 範囲外のマウスイベント通知。
 		*/
 		bool outrange_mouseevent;
+
+		/** 描画する。
+		*/
+		bool draw_enable;
 
 		/** 計算結果。
 		*/

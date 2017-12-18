@@ -211,6 +211,10 @@ namespace NBsys{namespace ND3d11
 		*/
 		s32 height;
 
+		/** testpresent_mode
+		*/
+		bool testpresent_mode;
+
 		/** id_maker
 		*/
 		IDMaker id_maker;
@@ -258,7 +262,7 @@ namespace NBsys{namespace ND3d11
 		/** font
 		*/
 		#if(BSYS_FONT_ENABLE)
-		sharedptr<D3d11_Impl_Font> font_list[4];
+		sharedptr<D3d11_Impl_Font> font_list[D3d11_FontTextureType::Id::Max];
 		#endif
 
 	private:
@@ -468,37 +472,37 @@ namespace NBsys{namespace ND3d11
 		/** Render_SetFont
 		*/
 		#if(BSYS_FONT_ENABLE)
-		void Render_SetFont(s32 a_fontindex,sharedptr<NBsys::NFont::Font>& a_font,s32 a_texture_width,const STLWString& a_name);
+		void Render_SetFont(D3d11_FontTextureType::Id a_fonttexture_type,sharedptr<NBsys::NFont::Font>& a_font,s32 a_texture_width,const STLWString& a_name);
 		#endif
 
-		/** Render_DrawFont_StartClear
+		/** Render_DrawFont_ClearLockFlag
 		*/
 		#if(BSYS_FONT_ENABLE)
-		void Render_DrawFont_StartClear(s32 a_fontindex);
+		void Render_DrawFont_ClearLockFlag(D3d11_FontTextureType::Id a_fonttexture_type);
 		#endif
 
-		/** Render_UpdateFontTexture
+		/** Render_PreUpdateFontTexture
 		*/
 		#if(BSYS_FONT_ENABLE)
-		bool Render_UpdateFontTexture(s32 a_fontindex,const STLWString& a_string);
+		bool Render_PreUpdateFontTexture(D3d11_FontTextureType::Id a_fonttexture_type,const STLWString& a_string);
 		#endif
 
 		/** Render_WriteFontTexture
 		*/
 		#if(BSYS_FONT_ENABLE)
-		void Render_WriteFontTexture(s32 a_fontindex);
+		void Render_WriteFontTexture(D3d11_FontTextureType::Id a_fonttexture_type);
 		#endif
 
 		/** Render_MakeFontVertex
 		*/
 		#if(BSYS_FONT_ENABLE)
-		void Render_MakeFontVertex(s32 a_fontindex,const STLWString& a_string,sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4>>& a_vertex,f32 a_x,f32 a_y,f32 a_z,f32 a_font_size_w,f32 a_font_size_h,const NBsys::NColor::Color_F& a_color);
+		void Render_MakeFontVertex(D3d11_FontTextureType::Id a_fonttexture_type,const STLWString& a_string,sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4>>& a_vertex,f32 a_x,f32 a_y,f32 a_z,f32 a_font_size_w,f32 a_font_size_h,const NBsys::NColor::Color_F& a_color);
 		#endif
 
 		/** Render_GetFontTexture
 		*/
 		#if(BSYS_FONT_ENABLE)
-		s32 Render_GetFontTexture(s32 a_fontindex);
+		s32 Render_GetFontTexture(D3d11_FontTextureType::Id a_fonttexture_type);
 		#endif
 
 	public:

@@ -225,9 +225,9 @@ namespace NBsys{namespace NOpengl
 		*/
 		void Render_DrawArray_Quads(s32 a_vertex_offset,s32 a_vertex_countof);
 
-		/** Render_DrawFont_StartClear。
+		/** Render_DrawFont_ClearLockFlag。
 		*/
-		void Render_DrawFont_StartClear();
+		void Render_DrawFont_ClearLockFlag();
 
 		/** Render_DrawFont。
 		*/

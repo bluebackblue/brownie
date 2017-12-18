@@ -165,13 +165,13 @@ namespace NCommon
 			case 0:
 				{
 					this->font16.reset(new NBsys::NFont::Font(L"Arial",14));
-					this->d3d11->Render_SetFont(0,this->font16,16,L"font16");
+					this->d3d11->Render_SetFont(NBsys::ND3d11::D3d11_FontTextureType::SFont,this->font16,16,L"font16");
 
 					this->font32.reset(new NBsys::NFont::Font(L"Arial",28));
-					this->d3d11->Render_SetFont(1,this->font32,32,L"font32");
+					this->d3d11->Render_SetFont(NBsys::ND3d11::D3d11_FontTextureType::MFont,this->font32,32,L"font32");
 
 					this->font64.reset(new NBsys::NFont::Font(L"Arial",60));
-					this->d3d11->Render_SetFont(2,this->font64,64,L"font64");
+					this->d3d11->Render_SetFont(NBsys::ND3d11::D3d11_FontTextureType::LFont,this->font64,64,L"font64");
 
 					//レイアウト。
 					sharedptr<STLVector<NBsys::ND3d11::D3d11_Layout>::Type> t_layout(new STLVector<NBsys::ND3d11::D3d11_Layout>::Type());
@@ -224,7 +224,7 @@ namespace NCommon
 					this->blendstate_id = this->d3d11->CreateBlendState(true);
 
 					//ラスタライザー。
-					this->rasterizerstate_cull_none_id = this->d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::NONE);
+					this->rasterizerstate_cull_none_id = this->d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::None);
 
 					this->step++;
 				}break;
@@ -251,17 +251,32 @@ namespace NCommon
 		*/
 		virtual void PreRenderOnce(STLList<Render2D_Item>::Type& a_list)
 		{
+			bool t_cahnge_list[NBsys::ND3d11::D3d11_FontTextureType::Max] = {true};
+
 			STLList<Render2D_Item>::iterator t_it_end = a_list.end();
 			for(STLList<Render2D_Item>::const_iterator t_it = a_list.begin();t_it != t_it_end;t_it++){
 				if(t_it->data.type == Render2D_Item::Type::Font){
 					//フォントテクスチャー更新。
-					this->d3d11->Render_UpdateFontTexture(t_it->data.texture_index,t_it->data.string);
+					bool t_cahnge = this->d3d11->Render_PreUpdateFontTexture(static_cast<NBsys::ND3d11::D3d11_FontTextureType::Id>(t_it->data.texture_index),t_it->data.string);
+					if(t_cahnge == true){
+						t_cahnge_list[t_it->data.texture_index] = true;
+					}
 				}
 			}
 
-			this->d3d11->Render_WriteFontTexture(0);
-			this->d3d11->Render_WriteFontTexture(1);
-			this->d3d11->Render_WriteFontTexture(2);
+			//フォントテクスチャー書き込み。
+			if(t_cahnge_list[NBsys::ND3d11::D3d11_FontTextureType::SFont]){
+				this->d3d11->Render_WriteFontTexture(NBsys::ND3d11::D3d11_FontTextureType::SFont);
+			}
+			if(t_cahnge_list[NBsys::ND3d11::D3d11_FontTextureType::MFont]){
+				this->d3d11->Render_WriteFontTexture(NBsys::ND3d11::D3d11_FontTextureType::MFont);
+			}
+			if(t_cahnge_list[NBsys::ND3d11::D3d11_FontTextureType::LFont]){
+				this->d3d11->Render_WriteFontTexture(NBsys::ND3d11::D3d11_FontTextureType::LFont);
+			}
+			if(t_cahnge_list[NBsys::ND3d11::D3d11_FontTextureType::ExFont]){
+				this->d3d11->Render_WriteFontTexture(NBsys::ND3d11::D3d11_FontTextureType::ExFont);
+			}
 		}
 
 		/** 描画。
@@ -348,17 +363,21 @@ namespace NCommon
 			//バーテックスクリア。
 			this->vertex->ClearVertex();
 
-			this->d3d11->Render_DrawFont_StartClear(0);
-			this->d3d11->Render_DrawFont_StartClear(1);
-			this->d3d11->Render_DrawFont_StartClear(2);
+			this->d3d11->Render_DrawFont_ClearLockFlag(NBsys::ND3d11::D3d11_FontTextureType::SFont);
+			this->d3d11->Render_DrawFont_ClearLockFlag(NBsys::ND3d11::D3d11_FontTextureType::MFont);
+			this->d3d11->Render_DrawFont_ClearLockFlag(NBsys::ND3d11::D3d11_FontTextureType::LFont);
+			this->d3d11->Render_DrawFont_ClearLockFlag(NBsys::ND3d11::D3d11_FontTextureType::ExFont);
 
 			for(STLList<Render2D_Item>::const_iterator t_it = a_it_start;t_it != a_it_end;t_it++){
+				NBsys::ND3d11::D3d11_FontTextureType::Id t_fonttexture_type = static_cast<NBsys::ND3d11::D3d11_FontTextureType::Id>(t_it->data.texture_index);
+
+
 				//フォントテクスチャー更新。
-				this->d3d11->Render_UpdateFontTexture(t_it->data.texture_index,t_it->data.string);
+				this->d3d11->Render_PreUpdateFontTexture(t_fonttexture_type,t_it->data.string);
 
 				//バーテックス作成。
 				this->d3d11->Render_MakeFontVertex(
-					t_it->data.texture_index,
+					t_fonttexture_type,
 					t_it->data.string,
 					this->vertex,
 					t_it->data.x - t_viewport_offset_x,
@@ -378,9 +397,10 @@ namespace NCommon
 				this->d3d11->Render_PSSetShader(this->pixelshader_id);
 
 				//テクスチャー設定。
-				this->d3d11->Render_SetTexture(0,this->d3d11->Render_GetFontTexture(0));
-				this->d3d11->Render_SetTexture(1,this->d3d11->Render_GetFontTexture(1));
-				this->d3d11->Render_SetTexture(2,this->d3d11->Render_GetFontTexture(2));
+				this->d3d11->Render_SetTexture(0,this->d3d11->Render_GetFontTexture(NBsys::ND3d11::D3d11_FontTextureType::SFont));
+				this->d3d11->Render_SetTexture(1,this->d3d11->Render_GetFontTexture(NBsys::ND3d11::D3d11_FontTextureType::MFont));
+				this->d3d11->Render_SetTexture(2,this->d3d11->Render_GetFontTexture(NBsys::ND3d11::D3d11_FontTextureType::LFont));
+				this->d3d11->Render_SetTexture(2,this->d3d11->Render_GetFontTexture(NBsys::ND3d11::D3d11_FontTextureType::ExFont));
 
 				//トポロジー。
 				this->d3d11->Render_SetPrimitiveTopology(NBsys::ND3d11::D3d11_TopologyType::Id::TriangleList);

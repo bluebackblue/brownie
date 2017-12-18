@@ -183,8 +183,8 @@ public:
 				this->blendstate_id = s_d3d11->CreateBlendState(true);
 
 				//ラスタライザー。
-				this->rasterizerstate_cull_back_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::BACK);
-				this->rasterizerstate_cull_none_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::NONE);
+				this->rasterizerstate_cull_back_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::Back);
+				this->rasterizerstate_cull_none_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::None);
 
 				//深度ステンシル。
 				this->depthstencilstate_check_on_write_on_id = s_d3d11->CreateDepthStencilState(true,true);
@@ -234,6 +234,13 @@ public:
 
 				//ライン描画。
 				s_drawline_manager->Clear();
+
+				//FPS。
+				{
+					char t_buffer[32];
+					STLWString t_string = VASTRING(t_buffer,sizeof(t_buffer),L"%d",static_cast<s32>(1.0f / a_delta));
+					s_render2d->DrawFont(0,0.0f,0.0f,-1.0f,-1.0f,16.0f,0,NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f),t_string);
+				}
 
 				{
 					//マウス。
@@ -415,9 +422,10 @@ void Test_Main()
 			u64 t_pcounter_now = PerformanceCounter::GetPerformanceCounter();
 			u64 t_pcounter_sec = PerformanceCounter::GetPerformanceSecCounter();
 			t_delta = static_cast<float>(t_pcounter_now - t_pcounter) / t_pcounter_sec;
-			if(t_delta < (1.0f / 60)){
+			if(t_delta <= 0.0f){
 				continue;
 			}
+
 			t_pcounter = t_pcounter_now;
 		}
 

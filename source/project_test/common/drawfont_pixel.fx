@@ -13,7 +13,7 @@
 */
 SamplerState DiffuseSampler
 {
-    Filter = MIN_MAG_MIP_LINEAR;
+    Filter = MIN_MAG_POINT_MIP_POINT;
     AddressU = Wrap;
     AddressV = Wrap;
 };
@@ -65,26 +65,30 @@ float4 PS(VS_IN a_vs_in) : SV_Target
 	uint t_texture_index = a_vs_in.in_texture_index[0];
 
 	if(t_texture_index == 0){
+		//小サイズフォント。
+
 		t_color *= tex_diffuse_1.Sample(DiffuseSampler,a_vs_in.in_uv);
+
+		if(t_color.a < 0.2){
+			discard;
+		}else{
+			t_color.a = t_color.a * t_color.a;
+			t_color.a = saturate(t_color.a + 0.3);
+		}
 	}else if(t_texture_index == 1){
+		//中サイズフォント。
+
 		t_color *= tex_diffuse_2.Sample(DiffuseSampler,a_vs_in.in_uv);
 	}else if(t_texture_index == 2){
+		//大サイズフォント。
+
 		t_color *= tex_diffuse_3.Sample(DiffuseSampler,a_vs_in.in_uv);
+	}else{
+		//特大サイズフォント。
+
+		t_color *= tex_diffuse_4.Sample(DiffuseSampler,a_vs_in.in_uv);
 	}
-
-	//画面左半分は描画しない。
-	//clip(a_vs_in.in_pos.x / screen_w - 0.5);
-
-	//画面左半分は描画しない。
-	//if(a_vs_in.in_pos.x / screen_w < 0.5){
-	//	discard;
-	//}
-
-	//debug
-	//if(t_color.a <= 0.5){
-	//	t_color.a = 0.5;
-	//}
-
+	
 	return t_color;
 }
 

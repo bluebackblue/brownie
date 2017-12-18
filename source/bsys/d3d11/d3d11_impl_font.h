@@ -68,7 +68,7 @@ namespace NBsys{namespace ND3d11
 
 		/** index
 		*/
-		s32 index;
+		D3d11_FontTextureType::Id fonttexture_type;
 
 		/** texturewidth
 		*/
@@ -101,11 +101,11 @@ namespace NBsys{namespace ND3d11
 	public:
 		/** constructor
 		*/
-		D3d11_Impl_Font(D3d11_Impl& a_opengl_impl,const sharedptr<NBsys::NFont::Font>& a_font,s32 a_texture_width,const STLWString& a_name,s32 a_index)
+		D3d11_Impl_Font(D3d11_Impl& a_opengl_impl,const sharedptr<NBsys::NFont::Font>& a_font,s32 a_texture_width,const STLWString& a_name,D3d11_FontTextureType::Id a_fonttexture_type)
 			:
 			d3d11_impl(a_opengl_impl),
 			font(a_font),
-			index(a_index)
+			fonttexture_type(a_fonttexture_type)
 		{
 			this->texturewidth = static_cast<s32>(NBlib::Math::powf(2,NBlib::Math::ceilf(NBlib::Math::log2f(static_cast<f32>(a_texture_width)))));
 			this->textureheight = static_cast<s32>(NBlib::Math::powf(2,NBlib::Math::ceilf(NBlib::Math::log2f(static_cast<f32>(this->texturewidth * BSYS_D3D11_FONT_DRAWTYPEMAX)))));
@@ -174,9 +174,9 @@ namespace NBsys{namespace ND3d11
 			return this->textureid;
 		}
 		
-		/** UpdateFontTexture
+		/** PreUpdateFontTexture
 		*/
-		bool UpdateFontTexture(const STLWString& a_string)
+		bool PreUpdateFontTexture(const STLWString& a_string)
 		{
 			bool t_change = false;
 
@@ -313,7 +313,7 @@ namespace NBsys{namespace ND3d11
 								t_vertex.color_bb = a_color.b;
 								t_vertex.color_aa = a_color.a;
 
-								t_vertex.texture_index_00 = static_cast<u8>(this->index);
+								t_vertex.texture_index_00 = static_cast<u8>(this->fonttexture_type);
 								t_vertex.texture_index_01 = 0;
 								t_vertex.texture_index_02 = 0;
 								t_vertex.texture_index_03 = 0;

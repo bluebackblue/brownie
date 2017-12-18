@@ -2273,9 +2273,9 @@ namespace NBsys{namespace NOpengl
 		}
 	}
 
-	/** Render_DrawFont_StartClear
+	/** Render_DrawFont_ClearLockFlag
 	*/
-	void Opengl_Impl::Render_DrawFont_StartClear()
+	void Opengl_Impl::Render_DrawFont_ClearLockFlag()
 	{
 		AutoLock t_autolock(this->lockobject);
 

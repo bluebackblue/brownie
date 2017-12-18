@@ -60,6 +60,7 @@ namespace NBsys{namespace ND3d11
 		:
 		width(),
 		height(),
+		testpresent_mode(false),
 		id_maker(),
 		actionbatching_lockobject(),
 		actionbatching(),
@@ -1055,9 +1056,9 @@ namespace NBsys{namespace ND3d11
 			t_desc.SlopeScaledDepthBias = 0;
 
 			switch(a_rasterizerstate->culltype){
-			case D3d11_CullType::NONE:		t_desc.CullMode = D3D11_CULL_NONE;		break;
-			case D3d11_CullType::FRONT:		t_desc.CullMode = D3D11_CULL_FRONT;		break;
-			case D3d11_CullType::BACK:		t_desc.CullMode = D3D11_CULL_BACK;		break;
+			case D3d11_CullType::None:		t_desc.CullMode = D3D11_CULL_NONE;		break;
+			case D3d11_CullType::Front:		t_desc.CullMode = D3D11_CULL_FRONT;		break;
+			case D3d11_CullType::Back:		t_desc.CullMode = D3D11_CULL_BACK;		break;
 			}
 		}
 
@@ -1113,30 +1114,30 @@ namespace NBsys{namespace ND3d11
 	/** Render_SetFont
 	*/
 	#if(BSYS_FONT_ENABLE)
-	void D3d11_Impl::Render_SetFont(s32 a_fontindex,sharedptr<NBsys::NFont::Font>& a_font,s32 a_texture_width,const STLWString& a_name)
+	void D3d11_Impl::Render_SetFont(D3d11_FontTextureType::Id a_fonttexture_type,sharedptr<NBsys::NFont::Font>& a_font,s32 a_texture_width,const STLWString& a_name)
 	{
-		this->font_list[a_fontindex].reset(new D3d11_Impl_Font(*this,a_font,a_texture_width,a_name,a_fontindex));
+		this->font_list[a_fonttexture_type].reset(new D3d11_Impl_Font(*this,a_font,a_texture_width,a_name,a_fonttexture_type));
 	}
 	#endif
 
-	/** Render_DrawFont_StartClear
+	/** Render_DrawFont_ClearLockFlag
 	*/
 	#if(BSYS_FONT_ENABLE)
-	void D3d11_Impl::Render_DrawFont_StartClear(s32 a_fontindex)
+	void D3d11_Impl::Render_DrawFont_ClearLockFlag(D3d11_FontTextureType::Id a_fonttexture_type)
 	{
-		if(this->font_list[a_fontindex] != nullptr){
-			this->font_list[a_fontindex]->ResetLock();
+		if(this->font_list[a_fonttexture_type] != nullptr){
+			this->font_list[a_fonttexture_type]->ResetLock();
 		}
 	}
 	#endif
 
-	/** Render_UpdateFontTexture
+	/** Render_PreUpdateFontTexture
 	*/
 	#if(BSYS_FONT_ENABLE)
-	bool D3d11_Impl::Render_UpdateFontTexture(s32 a_fontindex,const STLWString& a_string)
+	bool D3d11_Impl::Render_PreUpdateFontTexture(D3d11_FontTextureType::Id a_fonttexture_type,const STLWString& a_string)
 	{
-		if(this->font_list[a_fontindex] != nullptr){
-			return this->font_list[a_fontindex]->UpdateFontTexture(a_string);
+		if(this->font_list[a_fonttexture_type] != nullptr){
+			return this->font_list[a_fonttexture_type]->PreUpdateFontTexture(a_string);
 		}
 
 		return false;
@@ -1146,10 +1147,10 @@ namespace NBsys{namespace ND3d11
 	/** Render_WriteFontTexture
 	*/
 	#if(BSYS_FONT_ENABLE)
-	void D3d11_Impl::Render_WriteFontTexture(s32 a_fontindex)
+	void D3d11_Impl::Render_WriteFontTexture(D3d11_FontTextureType::Id a_fonttexture_type)
 	{
-		if(this->font_list[a_fontindex] != nullptr){
-			this->font_list[a_fontindex]->WriteFontTexture();
+		if(this->font_list[a_fonttexture_type] != nullptr){
+			this->font_list[a_fonttexture_type]->WriteFontTexture();
 		}
 
 		false;
@@ -1159,10 +1160,10 @@ namespace NBsys{namespace ND3d11
 	/** Render_MakeFontVertex
 	*/
 	#if(BSYS_FONT_ENABLE)
-	void D3d11_Impl::Render_MakeFontVertex(s32 a_fontindex,const STLWString& a_string,sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4>>& a_vertex,f32 a_x,f32 a_y,f32 a_z,f32 a_font_size_w,f32 a_font_size_h,const NBsys::NColor::Color_F& a_color)
+	void D3d11_Impl::Render_MakeFontVertex(D3d11_FontTextureType::Id a_fonttexture_type,const STLWString& a_string,sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4>>& a_vertex,f32 a_x,f32 a_y,f32 a_z,f32 a_font_size_w,f32 a_font_size_h,const NBsys::NColor::Color_F& a_color)
 	{
-		if(this->font_list[a_fontindex] != nullptr){
-			this->font_list[a_fontindex]->MakeFontVertex(a_string,a_vertex,a_x,a_y,a_z,a_font_size_w,a_font_size_h,a_color);
+		if(this->font_list[a_fonttexture_type] != nullptr){
+			this->font_list[a_fonttexture_type]->MakeFontVertex(a_string,a_vertex,a_x,a_y,a_z,a_font_size_w,a_font_size_h,a_color);
 		}
 	}
 	#endif
@@ -1170,10 +1171,10 @@ namespace NBsys{namespace ND3d11
 	/** Render_GetFontTexture
 	*/
 	#if(BSYS_FONT_ENABLE)
-	s32 D3d11_Impl::Render_GetFontTexture(s32 a_fontindex)
+	s32 D3d11_Impl::Render_GetFontTexture(D3d11_FontTextureType::Id a_fonttexture_type)
 	{
-		if(this->font_list[a_fontindex] != nullptr){
-			return this->font_list[a_fontindex]->GetTexture();
+		if(this->font_list[a_fonttexture_type] != nullptr){
+			return this->font_list[a_fonttexture_type]->GetTexture();
 		}
 		return -1;
 	}
@@ -1243,7 +1244,7 @@ namespace NBsys{namespace ND3d11
 	{
 		if(this->devicecontext){
 
-			this->devicecontext->ClearDepthStencilView(this->depthstencilview.get(),D3D11_CLEAR_DEPTH,1,0);
+			this->devicecontext->ClearDepthStencilView(this->depthstencilview.get(),D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL,1.0f,0);
 
 			return;
 		}
@@ -1255,13 +1256,36 @@ namespace NBsys{namespace ND3d11
 	*/
 	bool D3d11_Impl::Render_Present()
 	{
-		HRESULT t_result = this->swapchain->Present(0,0);
+		if(this->testpresent_mode == false){
+			HRESULT t_result = this->swapchain->Present(0,0);
 
-		if(FAILED(t_result)){
-			return false;
+			if(t_result == DXGI_STATUS_OCCLUDED){
+
+				/*
+				ターゲット ウィンドウ (または IDXGIOutput) が、z オーダーに基づいて別のウィンドウによってオクルードされています。
+				このステータスを受け取った場合、アプリケーションはレンダリングを停止し、
+				DXGI_PRESENT_TESTを使用してレンダリングを再開する時期を決定する必要があります。
+				*/
+
+				this->testpresent_mode = true;
+				TAGLOG("NBsys::ND3d11","DXGI_STATUS_OCCLUDED = true");
+
+				return false;
+			}else if(t_result == S_OK){
+				return true;
+			}
+		}else{
+			HRESULT t_result = this->swapchain->Present(0,DXGI_PRESENT_TEST);
+
+			if(t_result == DXGI_STATUS_OCCLUDED){
+			}else if(t_result == S_OK){
+				this->testpresent_mode = false;
+				TAGLOG("NBsys::ND3d11","DXGI_STAS_OKTUS_OCCLUDED = false");
+				return true;
+			}
 		}
 
-		return true;
+		return false;
 	}
 
 	/** Render_UpdateSubresource
@@ -1457,6 +1481,8 @@ namespace NBsys{namespace ND3d11
 
 				return;
 			}
+		}else{
+			return;
 		}
 
 		ASSERT(0);

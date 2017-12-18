@@ -80,6 +80,7 @@ namespace NBsys{namespace NWindowMenu
 			GetSystemInstance()->GetCallback()->DrawFont_Callback(a_z_sort + this->z_sort+1,this->calc_x + t_offset_x,this->calc_y + t_offset_y,this->calc_w,this->calc_h,t_font_size,t_font_texture_index,this->color,this->string);
 		}
 
+		//q‚Ì•`‰æ‚ğs‚¤B
 		return true;
 	}
 }}

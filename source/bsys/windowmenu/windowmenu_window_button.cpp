@@ -36,7 +36,7 @@ namespace NBsys{namespace NWindowMenu
 		WindowMenu_Window_Base(a_name,WindowMenu_WindowType::Button),
 		push_flag(false),
 		on_flag(false),
-		color_nomal(1.0f,1.0f,1.0f,1.0f),
+		color_normal(1.0f,1.0f,1.0f,1.0f),
 		color_on(1.0f,1.0f,1.0f,1.0f),
 		color_ondown(1.0f,1.0f,1.0f,1.0f),
 		string(L""),
@@ -66,7 +66,7 @@ namespace NBsys{namespace NWindowMenu
 
 			/** color
 			*/
-			this->color_nomal = NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f);
+			this->color_normal = NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f);
 			this->color_on = NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f);
 			this->color_ondown = NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f);
 
@@ -132,7 +132,7 @@ namespace NBsys{namespace NWindowMenu
 			s32 t_color_index = 0;
 
 			NBsys::NColor::Color_F* t_color_list[] = {
-				&this->color_nomal,
+				&this->color_normal,
 				&this->color_on,
 				&this->color_ondown,
 			};
