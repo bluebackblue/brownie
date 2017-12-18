@@ -402,7 +402,11 @@ void Test_Main()
 	NBsys::NWindowMenu::StartSystem(s_windowmenu_callback);
 
 	//パフォーマンスカウンター。
-	u64 t_pcounter = 0ULL;
+	u64 t_pcounter = PerformanceCounter::GetPerformanceCounter();
+
+	#if(DEF_TEST_AUTO)
+	f32 t_autotime = 0.0f;
+	#endif
 
 	while(true){
 
@@ -421,8 +425,13 @@ void Test_Main()
 			if(t_delta <= 0.0f){
 				continue;
 			}
-
 			t_pcounter = t_pcounter_now;
+			#if(DEF_TEST_AUTO)
+			t_autotime += t_delta;
+			if(t_autotime >= 3.0f){
+				break;
+			}
+			#endif
 		}
 
 		//更新。

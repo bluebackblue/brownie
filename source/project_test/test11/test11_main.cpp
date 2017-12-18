@@ -272,7 +272,11 @@ void Test_Main()
 	s_drawline_manager.reset(new NCommon::DrawLine_Manager(s_d3d11));
 
 	//パフォーマンスカウンター。
-	u64 t_pcounter = 0ULL;
+	u64 t_pcounter = PerformanceCounter::GetPerformanceCounter();
+
+	#if(DEF_TEST_AUTO)
+	f32 t_autotime = 0.0f;
+	#endif
 
 	while(true){
 
@@ -292,6 +296,12 @@ void Test_Main()
 				continue;
 			}
 			t_pcounter = t_pcounter_now;
+			#if(DEF_TEST_AUTO)
+			t_autotime += t_delta;
+			if(t_autotime >= 3.0f){
+				break;
+			}
+			#endif
 		}
 
 		//更新。
