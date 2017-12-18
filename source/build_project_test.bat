@@ -17,8 +17,8 @@ FOR /F %%D IN (TestDefine.txt) DO (
 )
 
 @REM ヘッダー戻す。
-@ECHO #define DEF_TEST_AUTO ^(1^) > .\project_test\brownie_config\test.h
-@ECHO #define DEF_TEST_INDEX ^(%%D^) >> .\project_test\brownie_config\test.h
+@ECHO #define DEF_TEST_AUTO ^(0^) > .\project_test\brownie_config\test.h
+@ECHO #define DEF_TEST_INDEX ^(0^) >> .\project_test\brownie_config\test.h
 
 FOR /F %%D IN (TestDefine.txt) DO (
 	FOR /F %%C IN (Configuration.txt) DO (

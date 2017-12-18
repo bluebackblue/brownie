@@ -363,6 +363,10 @@ void Test_Main()
 	//s_pcounter
 	s_pcounter = PerformanceCounter::GetPerformanceCounter();
 
+	#if(DEF_TEST_AUTO)
+	f32 t_autotime = 0.0f;
+	#endif
+
 	LoadPmx();
 
 	while (true)
@@ -388,6 +392,12 @@ void Test_Main()
 				continue;
 			}
 			s_pcounter = t_pcounter_now;
+			#if(DEF_TEST_AUTO)
+			t_autotime += t_delta;
+			if(t_autotime >= 3.0f){
+				break;
+			}
+			#endif
 		}
 
 		//Render_Main
