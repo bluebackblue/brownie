@@ -10,7 +10,7 @@ configurations
 
 platforms
 {
-	"x86",
+	"Win32",
 	"x64"
 }
 
@@ -65,7 +65,7 @@ do
 		optimize "On"
 	end
 
-	filter "platforms:x86"
+	filter "platforms:Win32"
 	do
 		defines { "ROM_32BIT" }
 	end
