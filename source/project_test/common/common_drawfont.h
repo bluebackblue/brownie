@@ -371,7 +371,6 @@ namespace NCommon
 			for(STLList<Render2D_Item>::const_iterator t_it = a_it_start;t_it != a_it_end;t_it++){
 				NBsys::ND3d11::D3d11_FontTextureType::Id t_fonttexture_type = static_cast<NBsys::ND3d11::D3d11_FontTextureType::Id>(t_it->data.texture_index);
 
-
 				//フォントテクスチャー更新。
 				this->d3d11->Render_PreUpdateFontTexture(t_fonttexture_type,t_it->data.string);
 
@@ -400,7 +399,7 @@ namespace NCommon
 				this->d3d11->Render_SetTexture(0,this->d3d11->Render_GetFontTexture(NBsys::ND3d11::D3d11_FontTextureType::SFont));
 				this->d3d11->Render_SetTexture(1,this->d3d11->Render_GetFontTexture(NBsys::ND3d11::D3d11_FontTextureType::MFont));
 				this->d3d11->Render_SetTexture(2,this->d3d11->Render_GetFontTexture(NBsys::ND3d11::D3d11_FontTextureType::LFont));
-				this->d3d11->Render_SetTexture(2,this->d3d11->Render_GetFontTexture(NBsys::ND3d11::D3d11_FontTextureType::ExFont));
+				this->d3d11->Render_SetTexture(3,this->d3d11->Render_GetFontTexture(NBsys::ND3d11::D3d11_FontTextureType::ExFont));
 
 				//トポロジー。
 				this->d3d11->Render_SetPrimitiveTopology(NBsys::ND3d11::D3d11_TopologyType::Id::TriangleList);

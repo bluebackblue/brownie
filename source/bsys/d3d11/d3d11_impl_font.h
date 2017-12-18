@@ -66,7 +66,7 @@ namespace NBsys{namespace ND3d11
 		*/
 		sharedptr<NBsys::NFont::Font> font;
 
-		/** index
+		/** fonttexture_type
 		*/
 		D3d11_FontTextureType::Id fonttexture_type;
 
@@ -108,7 +108,33 @@ namespace NBsys{namespace ND3d11
 			fonttexture_type(a_fonttexture_type)
 		{
 			this->texturewidth = static_cast<s32>(NBlib::Math::powf(2,NBlib::Math::ceilf(NBlib::Math::log2f(static_cast<f32>(a_texture_width)))));
-			this->textureheight = static_cast<s32>(NBlib::Math::powf(2,NBlib::Math::ceilf(NBlib::Math::log2f(static_cast<f32>(this->texturewidth * BSYS_D3D11_FONT_DRAWTYPEMAX)))));
+
+			s32 t_drawtypemax = 0;
+
+			switch(this->fonttexture_type){
+			case NBsys::ND3d11::D3d11_FontTextureType::SFont:
+				{
+					t_drawtypemax = BSYS_D3D11_FONT_DRAWTYPEMAX_S;
+				}break;
+			case NBsys::ND3d11::D3d11_FontTextureType::MFont:
+				{
+					t_drawtypemax = BSYS_D3D11_FONT_DRAWTYPEMAX_M;
+				}break;
+			case NBsys::ND3d11::D3d11_FontTextureType::LFont:
+				{
+					t_drawtypemax = BSYS_D3D11_FONT_DRAWTYPEMAX_L;
+				}break;
+			case NBsys::ND3d11::D3d11_FontTextureType::ExFont:
+				{
+					t_drawtypemax = BSYS_D3D11_FONT_DRAWTYPEMAX_EX;
+				}break;
+			default:
+				{
+					ASSERT(0);
+				}break;
+			}
+
+			this->textureheight = static_cast<s32>(NBlib::Math::powf(2,NBlib::Math::ceilf(NBlib::Math::log2f(static_cast<f32>(this->texturewidth * t_drawtypemax)))));
 
 			sharedptr<u8> t_pixel(new u8[this->texturewidth * this->textureheight * 4]);
 
@@ -124,7 +150,7 @@ namespace NBsys{namespace ND3d11
 
 			this->textureid = this->d3d11_impl.CreateTexture(this->texture,true);
 
-			for(s32 ii=0;ii<BSYS_D3D11_FONT_DRAWTYPEMAX;ii++){
+			for(s32 ii=0;ii<t_drawtypemax;ii++){
 				this->list.push_back(Item(nullwchar));
 			}
 		}
@@ -236,8 +262,33 @@ namespace NBsys{namespace ND3d11
 		*/
 		void WriteFontTexture()
 		{
+			s32 t_drawtypemax = 0;
+
+			switch(this->fonttexture_type){
+			case NBsys::ND3d11::D3d11_FontTextureType::SFont:
+				{
+					t_drawtypemax = BSYS_D3D11_FONT_DRAWTYPEMAX_S;
+				}break;
+			case NBsys::ND3d11::D3d11_FontTextureType::MFont:
+				{
+					t_drawtypemax = BSYS_D3D11_FONT_DRAWTYPEMAX_M;
+				}break;
+			case NBsys::ND3d11::D3d11_FontTextureType::LFont:
+				{
+					t_drawtypemax = BSYS_D3D11_FONT_DRAWTYPEMAX_L;
+				}break;
+			case NBsys::ND3d11::D3d11_FontTextureType::ExFont:
+				{
+					t_drawtypemax = BSYS_D3D11_FONT_DRAWTYPEMAX_EX;
+				}break;
+			default:
+				{
+					ASSERT(0);
+				}break;
+			}
+
 			s32 t_change_min = 0;
-			s32 t_change_max = BSYS_D3D11_FONT_DRAWTYPEMAX - 1;
+			s32 t_change_max = t_drawtypemax - 1;
 
 			sharedptr<D3d11_Impl_Texture>& t_texture = this->d3d11_impl.GetTexture(this->textureid);
 			if(t_texture){
