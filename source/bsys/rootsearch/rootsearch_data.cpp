@@ -50,7 +50,7 @@ namespace NBsys{namespace NRootSearch
 	{
 		STLVector<RootSearch_ConnectIndex>::Type& t_connectindex_list = this->node_pool[a_nodeindex_from.GetValue()].ConnectIndexList(a_root);
 
-		s32 ii_max = t_connectindex_list.size();
+		s32 ii_max = static_cast<s32>(t_connectindex_list.size());
 		for(s32 ii=0;ii<ii_max;ii++){
 			if(this->connect_pool[t_connectindex_list[ii].GetValue()].GetNodeIndex() == a_nodeindex_to){
 				return true;
@@ -85,12 +85,12 @@ namespace NBsys{namespace NRootSearch
 
 		if(this->ConnectCheck(a_nodeindex_a,a_nodeindex_b,a_root) == false){
 			this->connect_pool.push_back(RootSearch_Connect(a_nodeindex_b,a_cost));
-			t_node_a.ConnectIndexList(a_root).push_back(RootSearch_ConnectIndex(this->connect_pool.size()-1));
+			t_node_a.ConnectIndexList(a_root).push_back(RootSearch_ConnectIndex(static_cast<s32>(this->connect_pool.size())-1));
 		}
 
 		if(this->ConnectCheck(a_nodeindex_b,a_nodeindex_a,a_root) == false){
 			this->connect_pool.push_back(RootSearch_Connect(a_nodeindex_a,a_cost));
-			t_node_a.ConnectIndexList(a_root).push_back(RootSearch_ConnectIndex(this->connect_pool.size()-1));
+			t_node_a.ConnectIndexList(a_root).push_back(RootSearch_ConnectIndex(static_cast<s32>(this->connect_pool.size())-1));
 		}
 	}
 
@@ -101,7 +101,7 @@ namespace NBsys{namespace NRootSearch
 		s32 t_index = -1;
 		f32 t_min = -1;
 
-		s32 ii_max = this->node_pool.size();
+		s32 ii_max = static_cast<s32>(this->node_pool.size());
 		for(s32 ii=0;ii<ii_max;ii++){
 			f32 t_square_length = (this->node_pool[ii].GetPos() - a_pos).SquareLength();
 			if(t_index < 0 || t_index < t_min){
@@ -126,7 +126,7 @@ namespace NBsys{namespace NRootSearch
 	{
 		STLVector<RootSearch_Node*>::Type t_root_node_list;
 
-		s32 ii_max = this->node_pool.size();
+		s32 ii_max = static_cast<s32>(this->node_pool.size());
 		for(s32 ii=0;ii<ii_max;ii++){
 			if(this->node_pool[ii].IsRoot()){
 				t_root_node_list.push_back(&this->node_pool[ii]);
