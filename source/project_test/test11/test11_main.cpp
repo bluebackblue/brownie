@@ -14,9 +14,9 @@
 #include "../entry.h"
 
 
-/** DEF_TEST11
+/** DEF_TEST_INDEX
 */
-#if defined(DEF_TEST11)
+#if(DEF_TEST_INDEX == 11)
 
 
 /** include
@@ -26,7 +26,7 @@
 
 /** include
 */
-#include "../common/d3d11_drawline.h"
+#include "../common/common_drawline.h"
 
 
 /** s_width
@@ -51,7 +51,7 @@ static sharedptr<NBsys::ND3d11::D3d11> s_d3d11;
 
 /** ライン描画。
 */
-sharedptr<NCommon::D3d11_DrawLine_Manager> s_drawline_manager;
+sharedptr<NCommon::DrawLine_Manager> s_drawline_manager;
 
 
 /** App
@@ -67,11 +67,11 @@ private:
 	*/
 	bool draw;
 
-	/** blendstate_id
+	/** ブレンドステータス。
 	*/
 	s32 blendstate_id;
 
-	/** rasterizerstate_cull
+	/** ラスタライザー。
 	*/
 	s32 rasterizerstate_cull_back_id;
 	s32 rasterizerstate_cull_none_id;
@@ -112,13 +112,12 @@ public:
 	*/
 	void Update(f32 a_delta)
 	{
-		//ライン描画。
-		s_drawline_manager->PreUpdate();
-
 		switch(this->step){
 		case 0:
 			{
-				if(s_drawline_manager->IsBusy() == true){
+				//ライン描画。
+				s_drawline_manager->Initialize_Update();
+				if(s_drawline_manager->IsInitialized() == false){
 					break;
 				}
 
@@ -126,8 +125,8 @@ public:
 				this->blendstate_id = s_d3d11->CreateBlendState(true);
 
 				//ラスタライザー。
-				this->rasterizerstate_cull_back_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::BACK);
-				this->rasterizerstate_cull_none_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::NONE);
+				this->rasterizerstate_cull_back_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::Back);
+				this->rasterizerstate_cull_none_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::None);
 
 				//カメラ。
 				{
@@ -184,7 +183,6 @@ public:
 				//カメラ回転。
 				this->camera_position.x = Math::cosf(this->camera_time / 10) * 20;
 				this->camera_position.z = Math::sinf(this->camera_time / 10) * 20;
-
 			}break;
 		}
 	}
@@ -196,45 +194,56 @@ public:
 		//リクエスト処理。
 		s_d3d11->Render_Main();
 
+		//ビューポート。
 		s_d3d11->Render_ViewPort(0.0f,0.0f,static_cast<f32>(s_width),static_cast<f32>(s_height));
 
 		//クリア。
 		s_d3d11->Render_ClearRenderTargetView(NBsys::NColor::Color_F(0.3f,0.3f,0.8f,1.0f));
 
+		if(this->draw){
+
 		//深度ステンシルクリア。
 		s_d3d11->Render_ClearDepthStencilView();
 
-		if(this->draw){
 			//プロジェクション。
 			NBsys::NGeometry::Geometry_Matrix_44 t_projection;
-			t_projection.Set_PerspectiveProjectionMatrix(static_cast<f32>(s_width),static_cast<f32>(s_height),this->camera_fov_deg,this->camera_near,this->camera_far);
 
 			//ビュー。
 			NBsys::NGeometry::Geometry_Matrix_44 t_view;
-			t_view.Set_ViewMatrix(this->camera_target,this->camera_position,this->camera_up);
 
-			//ライン描画。
-			s_drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(-100,0,0),NBsys::NGeometry::Geometry_Vector3(100,0,0),NBsys::NColor::Color_F(1.0f,0.0f,0.0f,1.0f));
-			s_drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(0,-100,0),NBsys::NGeometry::Geometry_Vector3(0,100,0),NBsys::NColor::Color_F(0.0f,1.0f,0.0f,1.0f));
-			s_drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(0,0,-100),NBsys::NGeometry::Geometry_Vector3(0,0,100),NBsys::NColor::Color_F(0.0f,0.0f,1.0f,1.0f));
-
+			//３Ｄ描画。
 			{
-				//this->rootsearch.SearchRoot(NBsys::NGeometry::Geometry_Vector3(0,0,0),NBsys::NGeometry::Geometry_Vector3(10,0,-10));
+				//プロジェクション。
+				t_projection.Set_PerspectiveProjectionMatrix(static_cast<f32>(s_width),static_cast<f32>(s_height),this->camera_fov_deg,this->camera_near,this->camera_far);
 
-				/*
-				for(s32 ii=0;ii<static_cast<s32>(this->rootsearch.node_pool.size());ii++){
-					NBsys::NGeometry::Geometry_Vector3 t_start = this->rootsearch.node_pool[ii].pos;
-					for(s32 jj=0;jj<static_cast<s32>(this->rootsearch.node_pool[ii].connect_index_list.size());jj++){
-						s32 t_end_index = this->rootsearch.node_pool[ii].connect_index_list[jj];
-						NBsys::NGeometry::Geometry_Vector3 t_end = this->rootsearch.node_pool[t_end_index].pos;
-						this->drawline_manager->DrawLine(t_start,t_end,NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
-					}
+				//ビュー。
+				t_view.Set_ViewMatrix(this->camera_target,this->camera_position,this->camera_up);
+
+				{
+					//ライン描画。
+					s_drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(-100,0,0),NBsys::NGeometry::Geometry_Vector3(100,0,0),NBsys::NColor::Color_F(1.0f,0.0f,0.0f,1.0f));
+					s_drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(0,-100,0),NBsys::NGeometry::Geometry_Vector3(0,100,0),NBsys::NColor::Color_F(0.0f,1.0f,0.0f,1.0f));
+					s_drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(0,0,-100),NBsys::NGeometry::Geometry_Vector3(0,0,100),NBsys::NColor::Color_F(0.0f,0.0f,1.0f,1.0f));
 				}
-				*/
-			}
 
-			//ライン描画。
-			s_drawline_manager->Render(t_view * t_projection);
+				{
+					//this->rootsearch.SearchRoot(NBsys::NGeometry::Geometry_Vector3(0,0,0),NBsys::NGeometry::Geometry_Vector3(10,0,-10));
+
+					/*
+					for(s32 ii=0;ii<static_cast<s32>(this->rootsearch.node_pool.size());ii++){
+						NBsys::NGeometry::Geometry_Vector3 t_start = this->rootsearch.node_pool[ii].pos;
+						for(s32 jj=0;jj<static_cast<s32>(this->rootsearch.node_pool[ii].connect_index_list.size());jj++){
+							s32 t_end_index = this->rootsearch.node_pool[ii].connect_index_list[jj];
+							NBsys::NGeometry::Geometry_Vector3 t_end = this->rootsearch.node_pool[t_end_index].pos;
+							this->drawline_manager->DrawLine(t_start,t_end,NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
+						}
+					}
+					*/
+				}
+
+				//ライン描画。
+				s_drawline_manager->Render(t_view * t_projection);
+			}
 		}
 	}
 };
@@ -260,7 +269,7 @@ void Test_Main()
 	s_d3d11->Render_Create(s_window,s_width,s_height);
 
 	//ライン描画。
-	s_drawline_manager.reset(new NCommon::D3d11_DrawLine_Manager(s_d3d11));
+	s_drawline_manager.reset(new NCommon::DrawLine_Manager(s_d3d11));
 
 	//パフォーマンスカウンター。
 	u64 t_pcounter = 0ULL;
@@ -279,7 +288,7 @@ void Test_Main()
 			u64 t_pcounter_now = PerformanceCounter::GetPerformanceCounter();
 			u64 t_pcounter_sec = PerformanceCounter::GetPerformanceSecCounter();
 			t_delta = static_cast<float>(t_pcounter_now - t_pcounter) / t_pcounter_sec;
-			if(t_delta < (1.0f / 60)){
+			if(t_delta <= 0.0f){
 				continue;
 			}
 			t_pcounter = t_pcounter_now;

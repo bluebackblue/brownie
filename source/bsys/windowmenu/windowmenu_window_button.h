@@ -22,6 +22,7 @@
 
 /** NBsys::NWindowMenu
 */
+#if(BSYS_WINDOWMENU_ENABLE)
 namespace NBsys{namespace NWindowMenu
 {
 	/** É{É^ÉìÅB
@@ -78,4 +79,5 @@ namespace NBsys{namespace NWindowMenu
 	};
 
 }}
+#endif
 

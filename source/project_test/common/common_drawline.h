@@ -91,9 +91,9 @@ namespace NCommon
 		*/
 		s32 step;
 
-		/** isbusy
+		/** is_initialized
 		*/
-		bool isbusy;
+		bool is_initialized;
 
 		/** d3d11
 		*/
@@ -124,7 +124,7 @@ namespace NCommon
 		DrawLine_Manager(sharedptr<NBsys::ND3d11::D3d11>& a_d3d11)
 			:
 			step(0),
-			isbusy(true),
+			is_initialized(false),
 			d3d11(a_d3d11)
 		{
 		}
@@ -135,14 +135,7 @@ namespace NCommon
 		{
 		}
 
-		/** IsBusy
-		*/
-		bool IsBusy()
-		{
-			return this->isbusy;
-		}
-
-		/** Initialize_Update
+		/** 初期化。
 		*/
 		void Initialize_Update()
 		{
@@ -197,18 +190,18 @@ namespace NCommon
 					if(this->asyncresult_vertexshader.Get() == true){
 						if(this->asyncresult_pixelshader.Get() == true){
 							this->step++;
-							this->isbusy = false;
+							this->is_initialized = true;
 						}
 					}
 				}break;
 			}
 		}
 
-		/** クリア。
+		/** 初期化チェック。
 		*/
-		void Clear()
+		bool IsInitialized()
 		{
-			this->vertex->ClearVertex();
+			return this->is_initialized;
 		}
 
 		/** DrawLine
@@ -245,46 +238,46 @@ namespace NCommon
 		*/
 		void Render(NBsys::NGeometry::Geometry_Matrix_44& a_view_projection)
 		{
-			if(this->isbusy == false){
-				if(this->vertex->GetVertexCountOf(0) > 0){
-					NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = a_view_projection;
+			if(this->vertex->GetVertexCountOf(0) > 0){
+				NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = a_view_projection;
 
-					//シェーダー。
-					this->d3d11->Render_VSSetShader(this->vertexshader_id);
-					this->d3d11->Render_PSSetShader(this->pixelshader_id);
+				//シェーダー。
+				this->d3d11->Render_VSSetShader(this->vertexshader_id);
+				this->d3d11->Render_PSSetShader(this->pixelshader_id);
 
-					//トポロジー。
-					this->d3d11->Render_SetPrimitiveTopology(NBsys::ND3d11::D3d11_TopologyType::Id::LineList);
+				//トポロジー。
+				this->d3d11->Render_SetPrimitiveTopology(NBsys::ND3d11::D3d11_TopologyType::Id::LineList);
 
-					//ブレンドステータス。
-					this->d3d11->Render_SetBlendState(this->blendstate_id);
+				//ブレンドステータス。
+				this->d3d11->Render_SetBlendState(this->blendstate_id);
 
-					//コンスタントバッファ。
-					DrawLine_VS_ConstantBuffer_B0 t_vs_constantbuffer_b0;
-					DrawLine_PS_ConstantBuffer_B0 t_ps_constantbuffer_b0;
-					{
-						t_vs_constantbuffer_b0.view_projection = t_view_projection.Make_Transpose();
-					}
-
-					//コンスタントバッファーの内容更新。
-					this->d3d11->Render_UpdateSubresource(this->vs_constantbuffer_b0_id,&t_vs_constantbuffer_b0);
-					this->d3d11->Render_UpdateSubresource(this->ps_constantbuffer_b0_id,&t_ps_constantbuffer_b0);
-
-					//コンスタントバッファーをシェーダーに設定。
-					this->d3d11->Render_VSSetConstantBuffers(this->vs_constantbuffer_b0_id);
-					this->d3d11->Render_PSSetConstantBuffers(this->ps_constantbuffer_b0_id);
-
-					//ラスタライザー。
-					this->d3d11->Render_SetRasterizerState(this->rasterizerstate_cull_none_id);
-
-					//バーテックスバッファ。
-					this->d3d11->Render_ReMapVertexBuffer(this->vertex_buffer_id,this->vertex->GetVertexPointer(),this->vertex->GetVertexStrideByte() * this->vertex->GetVertexCountOf(0));
-					this->d3d11->Render_SetVertexBuffer(this->vertex_buffer_id);
-
-					//描画。
-					this->d3d11->Render_Draw(this->vertex->GetVertexCountOf(0),0);
+				//コンスタントバッファ。
+				DrawLine_VS_ConstantBuffer_B0 t_vs_constantbuffer_b0;
+				DrawLine_PS_ConstantBuffer_B0 t_ps_constantbuffer_b0;
+				{
+					t_vs_constantbuffer_b0.view_projection = t_view_projection.Make_Transpose();
 				}
+
+				//コンスタントバッファーの内容更新。
+				this->d3d11->Render_UpdateSubresource(this->vs_constantbuffer_b0_id,&t_vs_constantbuffer_b0);
+				this->d3d11->Render_UpdateSubresource(this->ps_constantbuffer_b0_id,&t_ps_constantbuffer_b0);
+
+				//コンスタントバッファーをシェーダーに設定。
+				this->d3d11->Render_VSSetConstantBuffers(this->vs_constantbuffer_b0_id);
+				this->d3d11->Render_PSSetConstantBuffers(this->ps_constantbuffer_b0_id);
+
+				//ラスタライザー。
+				this->d3d11->Render_SetRasterizerState(this->rasterizerstate_cull_none_id);
+
+				//バーテックスバッファ。
+				this->d3d11->Render_ReMapVertexBuffer(this->vertex_buffer_id,this->vertex->GetVertexPointer(),this->vertex->GetVertexStrideByte() * this->vertex->GetVertexCountOf(0));
+				this->d3d11->Render_SetVertexBuffer(this->vertex_buffer_id);
+
+				//描画。
+				this->d3d11->Render_Draw(this->vertex->GetVertexCountOf(0),0);
 			}
+
+			this->vertex->ClearVertex();
 		}
 
 	};

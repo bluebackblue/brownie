@@ -14,19 +14,14 @@
 #include "../entry.h"
 
 
-/** Test0_Main
+/** DEF_TEST_INDEX
 */
-#if defined(DEF_TEST22)
+#if(DEF_TEST_INDEX == 22)
 
 
 /** include
 */
 #include "./test22_main.h"
-
-
-/** include
-*/
-#include "../common/d3d11_drawline.h"
 
 
 /** USE_FOVE
@@ -172,8 +167,6 @@ struct ModelParts
 };
 sharedptr<STLVector<ModelParts>::Type> s_model;
 
-sharedptr<NCommon::D3d11_DrawLine_Manager> s_drawline_manager;
-
 
 void LoadPmx()
 {
@@ -268,7 +261,7 @@ void LoadPmx()
 
 			//テクスチャー作成。
 			t_model_patrs.texture = NBsys::NTexture::CreateTexture(t_model_patrs.texture_file->GetLoadData(),static_cast<s32>(t_model_patrs.texture_file->GetLoadSize()),t_model_patrs.texture_file->GetFileNameShort());
-			t_model_patrs.texture_id = s_d3d11->CreateTexture(t_model_patrs.texture);
+			t_model_patrs.texture_id = s_d3d11->CreateTexture(t_model_patrs.texture,false);
 
 		}
 	}
@@ -364,15 +357,13 @@ void Test_Main()
 	t_blendstate_id = s_d3d11->CreateBlendState(true);
 
 	//ラスタライザー。
-	t_rasterizerstate_cull_back_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::BACK);
-	t_rasterizerstate_cull_none_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::NONE);
+	t_rasterizerstate_cull_back_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::Back);
+	t_rasterizerstate_cull_none_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::None);
 
 	//s_pcounter
 	s_pcounter = PerformanceCounter::GetPerformanceCounter();
 
 	LoadPmx();
-
-	s_drawline_manager.reset(new NCommon::D3d11_DrawLine_Manager(s_d3d11));
 
 	while (true)
 	{
@@ -440,12 +431,7 @@ void Test_Main()
 
 			if(t_asyncresult_vertexshader.Get() == true){
 				if(t_asyncresult_pixelshader.Get() == true){
-
-					s_drawline_manager->PreUpdate();
-					if(s_drawline_manager->IsBusy() == false){
-						s_step++;
-					}
-
+					s_step++;
 				}
 			}
 
@@ -471,9 +457,6 @@ void Test_Main()
 			#endif
 
 			for(s32 t_left_right_index=0;t_left_right_index<t_left_right_index_max;t_left_right_index++){
-
-				//ライン描画開始。
-				s_drawline_manager->PreUpdate();
 
 				//ビュープロジェクション。
 				NBsys::NGeometry::Geometry_Matrix_44 t_view_projection;
@@ -563,7 +546,7 @@ void Test_Main()
 						t_start = (NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(t_start.x,t_start.y,t_start.z) * t_matrix).Make_Translate_Vector();
 						t_end = (NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(t_end.x,t_end.y,t_end.z) * t_matrix).Make_Translate_Vector();
 
-						s_drawline_manager->DrawLine(t_start,t_end,NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
+						//s_drawline_manager->DrawLine(t_start,t_end,NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
 
 					}
 				}
@@ -578,9 +561,6 @@ void Test_Main()
 					s_drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(0.0f,0.0f,0.0f),NBsys::NGeometry::Geometry_Vector3(t_x,5.0f,0.0f),NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
 				}
 				*/
-
-				//ライン描画。
-				s_drawline_manager->Update(t_view_projection);
 			}
 
 			#if(USE_FOVE)

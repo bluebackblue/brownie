@@ -22,6 +22,7 @@
 
 /** NBsys::NWindowMenu
 */
+#if(BSYS_WINDOWMENU_ENABLE)
 namespace NBsys{namespace NWindowMenu
 {
 	/** プレート。
@@ -45,4 +46,5 @@ namespace NBsys{namespace NWindowMenu
 	};
 
 }}
+#endif
 

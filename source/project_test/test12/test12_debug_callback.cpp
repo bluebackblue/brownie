@@ -14,6 +14,11 @@
 #include "../entry.h"
 
 
+/** DEF_TEST_INDEX
+*/
+#if(DEF_TEST_INDEX == 12)
+
+
 /** s_loglist
 */
 struct LogItem
@@ -98,10 +103,6 @@ s32 GetDebugLogCounter()
 {
 	return s_loglist_counter;
 }
-
-/** DEF_TEST12
-*/
-#if defined(DEF_TEST12)
 
 /** Blib_DebugAssert_Callback
 */

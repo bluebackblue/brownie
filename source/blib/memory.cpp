@@ -63,7 +63,7 @@ namespace NBlib
 	*/
 	s32 Memory::strlen(const char* a_string,s32 a_max)
 	{
-		return ::strnlen_s(a_string,a_max);
+		return static_cast<s32>(::strnlen_s(a_string,a_max));
 	}
 }
 

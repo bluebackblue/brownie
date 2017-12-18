@@ -128,7 +128,7 @@ namespace NBsys{namespace NVertex
 	*/
 	template <typename T> void Vertex<T>::AddVertex(const T& a_vertex)
 	{
-		ASSERT(this->vertex_list.capacity() > this->vertex_list.size());
+		//ASSERT(this->vertex_list.capacity() > this->vertex_list.size());
 
 		this->vertex_list.push_back(a_vertex);
 		this->parts_list[this->parts_list.size() - 1]->vertex_countof++;

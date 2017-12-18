@@ -22,6 +22,7 @@
 
 /** NBsys::NWindowMenu
 */
+#if(BSYS_WINDOWMENU_ENABLE)
 namespace NBsys{namespace NWindowMenu
 {
 	/** 閉じるボタン。
@@ -74,4 +75,5 @@ namespace NBsys{namespace NWindowMenu
 	};
 
 }}
+#endif
 

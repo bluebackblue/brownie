@@ -29,9 +29,9 @@
 #include <regex>
 
 
-/** DEF_TEST12
+/** DEF_TEST_INDEX
 */
-#if defined(DEF_TEST12)
+#if(DEF_TEST_INDEX == 12)
 
 /** constructor
 */

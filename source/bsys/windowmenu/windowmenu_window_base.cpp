@@ -31,6 +31,7 @@
 
 /** NBsys::NWindowMenu
 */
+#if(BSYS_WINDOWMENU_ENABLE)
 namespace NBsys{namespace NWindowMenu
 {
 	/** constructor
@@ -562,4 +563,5 @@ namespace NBsys{namespace NWindowMenu
 		}
 	}
 }}
+#endif
 

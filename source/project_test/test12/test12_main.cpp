@@ -14,9 +14,9 @@
 #include "../entry.h"
 
 
-/** DEF_TEST12
+/** DEF_TEST_INDEX
 */
-#if defined(DEF_TEST12)
+#if(DEF_TEST_INDEX == 12)
 
 
 /** include
@@ -163,7 +163,7 @@ public:
 			{
 				//ライン描画。
 				s_drawline_manager->Initialize_Update();
-				if(s_drawline_manager->IsBusy() == true){
+				if(s_drawline_manager->IsInitialized() == false){
 					break;
 				}
 
@@ -175,7 +175,7 @@ public:
 
 				//フォント描画。
 				s_drawfont_material->Initialize_Update();
-				if(s_drawfont_material->IsInitialized() == true){
+				if(s_drawfont_material->IsInitialized() == false){
 					break;
 				}
 
@@ -209,9 +209,6 @@ public:
 			}break;
 		case 1:
 			{
-				this->step++;
-				this->draw = true;
-
 				//ウィンドウメニュー。
 				s_window_texture_1.reset(new Test12_WindowMenu_Texture(0,L"フォントテクスチャー[0]",150.0f,150.0f,s_d3d11));
 				s_window_texture_2.reset(new Test12_WindowMenu_Texture(1,L"フォントテクスチャー[1]",150.0f,150.0f,s_d3d11));
@@ -223,6 +220,8 @@ public:
 				s_window_log.reset(new Test12_WindowMenu_Log(150.0f,150.0f));
 				NBsys::NWindowMenu::GetSystemInstance()->Add(s_window_log);
 
+				this->step++;
+				this->draw = true;
 			}break;
 		case 2:
 			{
@@ -231,9 +230,6 @@ public:
 				//カメラ回転。
 				this->camera_position.x = Math::cosf(this->camera_time / 10) * 20;
 				this->camera_position.z = Math::sinf(this->camera_time / 10) * 20;
-
-				//ライン描画。
-				s_drawline_manager->Clear();
 
 				//FPS。
 				{
@@ -317,13 +313,13 @@ public:
 					s_drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(-100,0,0),NBsys::NGeometry::Geometry_Vector3(100,0,0),NBsys::NColor::Color_F(1.0f,0.0f,0.0f,1.0f));
 					s_drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(0,-100,0),NBsys::NGeometry::Geometry_Vector3(0,100,0),NBsys::NColor::Color_F(0.0f,1.0f,0.0f,1.0f));
 					s_drawline_manager->DrawLine(NBsys::NGeometry::Geometry_Vector3(0,0,-100),NBsys::NGeometry::Geometry_Vector3(0,0,100),NBsys::NColor::Color_F(0.0f,0.0f,1.0f,1.0f));
-
-					//深度ステンシル。チェックあり。書き込みあり。
-					s_d3d11->Render_SetDepthStencilState(this->depthstencilstate_check_on_write_on_id);
-
-					//ライン描画。
-					s_drawline_manager->Render(t_view * t_projection);
 				}
+
+				//深度ステンシル。チェックあり。書き込みあり。
+				s_d3d11->Render_SetDepthStencilState(this->depthstencilstate_check_on_write_on_id);
+
+				//ライン描画。
+				s_drawline_manager->Render(t_view * t_projection);
 			}
 
 			//２Ｄ描画。

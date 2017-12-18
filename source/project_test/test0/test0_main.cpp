@@ -14,9 +14,9 @@
 #include "../entry.h"
 
 
-/** DEF_TEST0
+/** DEF_TEST_INDEX
 */
-#if defined(DEF_TEST0)
+#if(DEF_TEST_INDEX == 0)
 
 
 /** include

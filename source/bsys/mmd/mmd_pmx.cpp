@@ -396,7 +396,7 @@ namespace NBsys{namespace NMmd
 				}else if(this->header_ex.texture_index_size == 2){
 					t_parts.textureindex = Memory::Copy<s16>(a_raw);
 				}else{
-					t_parts.textureindex = Memory::Copy<s3>(a_raw);
+					t_parts.textureindex = Memory::Copy<s32>(a_raw);
 				}
 
 				if(this->header_ex.texture_index_size == 1){

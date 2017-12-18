@@ -31,6 +31,7 @@
 
 /** NBsys::NWindowMenu
 */
+#if(BSYS_WINDOWMENU_ENABLE)
 namespace NBsys{namespace NWindowMenu
 {
 	/** WindowMenu_Window_Base
@@ -234,4 +235,5 @@ namespace NBsys{namespace NWindowMenu
 		virtual void CallBack_CalcRectClear(STLList<sharedptr<WindowMenu_Window_Base>>::iterator a_it,s32 a_index);
 	};
 }}
+#endif
 

@@ -22,6 +22,7 @@
 /** NCommon
 */
 #if(BSYS_D3D11_ENABLE)
+#if(BSYS_FONT_ENABLE)
 namespace NCommon
 {
 	/** DrawFont_VS_ConstantBuffer_B0
@@ -435,5 +436,6 @@ namespace NCommon
 		}
 	};
 }
+#endif
 #endif
 

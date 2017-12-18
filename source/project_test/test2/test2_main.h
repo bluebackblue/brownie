@@ -14,9 +14,9 @@
 #include "../include.h"
 
 
-/** DEF_TEST2
+/** DEF_TEST_INDEX
 */
-#if defined(DEF_TEST2)
+#if(DEF_TEST_INDEX == 2)
 void Test_Main();
 #endif
 
