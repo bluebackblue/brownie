@@ -9,18 +9,21 @@
 */
 
 
-/** DEF_TEST
+/** DEF_TEST_INDEX
 
-	DEF_TEST0	:	デバッグログ、デバッグブレイク、アサート。
-	DEF_TEST1	:	型、リスト。
-	DEF_TEST2	:	ファイル、ＪＳＯＮ。
+	0	:	デバッグログ、デバッグブレイク、アサート。
+	1	:	型、リスト。
+	2	:	ファイル、ＪＳＯＮ。
 
-	DEF_TEST10	:	Ｄ３Ｄ１１。
-	DEF_TEST11	:	ダイクストラ法。
-	DEF_TEST12	:	ウィンドウメニュー。
+	10	:	Ｄ３Ｄ１１。
+	11	:	ダイクストラ法。
+	12	:	ウィンドウメニュー。
 
 */
-#define DEF_TEST_INDEX	22
+
+/** include
+*/
+#include "./test.h"
 
 
 #if(DEF_TEST_INDEX == 0)
