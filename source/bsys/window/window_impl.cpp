@@ -56,6 +56,17 @@ namespace NBsys{namespace NWindow
 		this->Delete();
 	}
 
+	/** [static]GetDesktopSize
+	*/
+	std::tuple<s32,s32> Window_Impl::GetDesktopSize()
+	{
+		RECT t_rect;
+		HWND t_hwnd_desktop = ::GetDesktopWindow();
+		::GetWindowRect(t_hwnd_desktop, &t_rect);
+
+		return std::tuple<s32,s32>(t_rect.right - t_rect.left,t_rect.bottom - t_rect.top);
+	}
+
 	/** GetClientWidth
 	*/
 	s32 Window_Impl::GetClientWidth()
@@ -154,6 +165,12 @@ namespace NBsys{namespace NWindow
 		{
 			if(this->handle != WIN_NULL){
 				SendMessage(this->handle,WM_CLOSE,0,0);
+			}
+
+			{
+				HINSTANCE t_instance = ::GetModuleHandle(WIN_NULL);
+				const wchar_t* t_classname = L"brownie window class";
+				::UnregisterClass(t_classname,t_instance);
 			}
 		}
 		#endif

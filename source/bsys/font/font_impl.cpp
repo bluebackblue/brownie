@@ -109,7 +109,7 @@ namespace NBsys{namespace NFont
 						{0,0,},
 						{0,1,}
 					};
-					t_buffer_size = ::GetGlyphOutlineW(this->hdc,t_code,GGO_GRAY8_BITMAP,&t_glyphmetrics,0,NULL,&t_mat2);
+					t_buffer_size = ::GetGlyphOutlineW(this->hdc,t_code,GGO_GRAY8_BITMAP,&t_glyphmetrics,0,WIN_NULL,&t_mat2);
 					ASSERT(t_buffer_size <= sizeof(t_buffer));
 				}
 

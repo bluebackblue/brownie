@@ -47,6 +47,11 @@ namespace NBsys{namespace NWindow
 		nonvirtual ~Window();
 
 	public:
+		/** [static]GetDesktopSize
+		*/
+		static std::tuple<s32,s32> GetDesktopSize();
+
+	public:
 		/** 作成。
 		*/
 		void Create(const STLWString& a_title,s32 a_width,s32 a_height);
