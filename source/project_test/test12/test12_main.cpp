@@ -247,7 +247,7 @@ public:
 						t_font->fonttexture_type = NBsys::ND3d11::D3d11_FontTextureType::SFont;
 						t_font->color = NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f);
 						t_font->alignment_x = -1;
-						t_font->alignment_y = 0;
+						t_font->alignment_y = -1;
 						t_font->string = t_string;
 
 						s_render2d->Draw(t_font);
@@ -434,6 +434,10 @@ void Test_Main()
 	s_window.reset(new NBsys::NWindow::Window());
 	s_d3d11.reset(new NBsys::ND3d11::D3d11());
 	s_app.reset(new App());
+
+	std::tuple<s32,s32> t_size = NBsys::NWindow::Window::GetDesktopSize();
+	s_width = std::get<0>(t_size);
+	s_height = std::get<1>(t_size);
 
 	s_window->Create(DEF_TEST_TITLE,s_width,s_height);
 	s_d3d11->Render_Create(s_window,s_width,s_height);
