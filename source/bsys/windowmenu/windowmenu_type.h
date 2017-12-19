@@ -122,7 +122,7 @@ namespace NBsys{namespace NWindowMenu
 
 		/** destructor
 		*/
-		~WindowMenu_Offset()
+		nonvirtual ~WindowMenu_Offset()
 		{
 		}
 
@@ -184,7 +184,7 @@ namespace NBsys{namespace NWindowMenu
 
 		/** destructor
 		*/
-		~WindowMenu_Size()
+		nonvirtual ~WindowMenu_Size()
 		{
 		}
 

@@ -40,7 +40,11 @@ namespace NBsys{namespace NWindowMenu
 		color_normal(1.0f,1.0f,1.0f,1.0f),
 		color_on(1.0f,1.0f,1.0f,1.0f),
 		color_ondown(1.0f,1.0f,1.0f,1.0f),
-		space(1.0f)
+		space(1.0f),
+		to_callback_fonttexture_type(0),
+		to_callback_font_view_size(16.0f),
+		to_callback_font_offset_x(0.0f),
+		to_callback_font_offset_y(0.0f)
 	{
 	}
 
@@ -141,19 +145,23 @@ namespace NBsys{namespace NWindowMenu
 
 			GetSystemInstance()->GetCallback()->DrawRect_Callback(a_z_sort + this->z_sort,this->calc_x + this->space,this->calc_y + this->space,this->calc_w - this->space * 2,this->calc_h - this->space * 2,-1,*t_color_list[t_color_index]);
 
-			//TODO:×ボタンをフォントで表現。
+			//×ボタンをフォントで表現。
 			{
-				f32 t_font_size = 16.0f;
-				s32 t_font_texture_index = 2;
-
 				//L"x"
-				f32 t_fontdata_x = 4;
-				f32 t_fontdata_y = -2;
-
-				f32 t_offst_x = (this->calc_h - t_font_size) / 2 + t_fontdata_x;
-				f32 t_offst_y = (this->calc_w - t_font_size) / 2 + t_fontdata_y;
-
-				GetSystemInstance()->GetCallback()->DrawFont_Callback(a_z_sort + this->z_sort+1,this->calc_x + t_offst_x,this->calc_y + t_offst_y,-1.0f,-1.0f,t_font_size,t_font_texture_index,t_font_color,L"x");
+				GetSystemInstance()->GetCallback()->DrawFont_Callback(
+					a_z_sort + this->z_sort + 1,
+					this->calc_x + this->to_callback_font_offset_x,
+					this->calc_y + this->to_callback_font_offset_y,
+					this->calc_w,
+					this->calc_h,
+					false,
+					this->to_callback_font_view_size,
+					this->to_callback_fonttexture_type,
+					t_font_color,
+					L"×",
+					0,
+					0
+				);
 			}
 		}
 

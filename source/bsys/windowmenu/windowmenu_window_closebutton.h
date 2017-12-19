@@ -48,6 +48,22 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		f32 space;
 
+		/** to_callback_fonttexture_type
+		*/
+		s32 to_callback_fonttexture_type;
+
+		/** to_callback_font_view_size
+		*/
+		f32 to_callback_font_view_size;
+
+		/** to_callback_font_offset_x
+		*/
+		f32 to_callback_font_offset_x;
+
+		/** to_callback_font_offset_y
+		*/
+		f32 to_callback_font_offset_y;
+
 	public:
 		/** constructor
 		*/

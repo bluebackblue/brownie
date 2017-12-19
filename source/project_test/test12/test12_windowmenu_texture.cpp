@@ -126,7 +126,7 @@ Test12_WindowMenu_Texture::Test12_WindowMenu_Texture(s32 a_id,const STLWString& 
 			t_lbutton->color_normal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
 			t_lbutton->color_on = NBsys::NColor::Color_F(0.4f,0.4f,0.4f,1.0f);
 			t_lbutton->color_ondown = NBsys::NColor::Color_F(0.3f,0.3f,1.0f,1.0f);
-			t_lbutton->string = L"<";
+			t_lbutton->string = L"<<<<<<<<<";
 			t_lbutton->action = std::bind(&Test12_WindowMenu_Texture::PushLeftButton,this);
 		}
 	}
@@ -140,7 +140,7 @@ Test12_WindowMenu_Texture::Test12_WindowMenu_Texture(s32 a_id,const STLWString& 
 			t_rbutton->color_normal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
 			t_rbutton->color_on = NBsys::NColor::Color_F(0.4f,0.4f,0.4f,1.0f);
 			t_rbutton->color_ondown = NBsys::NColor::Color_F(0.3f,0.3f,1.0f,1.0f);
-			t_rbutton->string = L">";
+			t_rbutton->string = L">>>>>>>>>";
 			t_rbutton->action = std::bind(&Test12_WindowMenu_Texture::PushRightButton,this);
 		}
 	}

@@ -325,126 +325,169 @@ namespace NBsys{namespace ND3d11
 		
 		/** MakeFontVertex
 		*/
-		void MakeFontVertex(const STLWString& a_string,sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4>>& a_vertex,f32 a_x,f32 a_y,f32 a_z,f32 a_font_size_w,f32 a_font_size_h,const NBsys::NColor::Color_F& a_color)
+		void MakeFontVertex(const STLWString& a_string,sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4>>& a_vertex,f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_alignment_x,s32 a_alignment_y,f32 a_z,f32 a_view_size_w,f32 a_view_size_h,const NBsys::NColor::Color_F& a_color)
 		{
+			f32 t_scale_w = a_view_size_w / static_cast<f32>(this->texturewidth);
+			f32 t_scale_h = a_view_size_h / static_cast<f32>(this->texturewidth);
+
+			f32 t_string_w = 0.0f;
+			f32 t_string_h = a_view_size_h;
+
+			STLVector<s32>::Type t_work_list;
 			{
-				f32 t_scale_w = a_font_size_w / static_cast<f32>(this->texturewidth);
-				f32 t_scale_h = a_font_size_h / static_cast<f32>(this->texturewidth);
-
-				f32 t_x = a_x;
-				f32 t_y = a_y;
-
 				for(s32 ii=0;ii<static_cast<s32>(a_string.length());ii++){
 					wchar t_code = a_string[ii];
-
 					if(t_code != nullwchar){
 						STLMap<wchar,s32>::iterator t_it = this->maplist.find(t_code);
 						if(t_it != this->maplist.end()){
-
+							//リストに追加。
 							s32 t_font_index = t_it->second;
+							t_work_list.push_back(t_font_index);
 
+							//幅。
 							NBsys::NFont::Font_State& t_font_state = this->list[t_font_index].fontstate;
-
-							{
-								f32 t_cell_y_rate = static_cast<f32>(this->texturewidth) / this->textureheight;
-
-								f32 t_uv_x0 = 0.0f;
-								f32 t_uv_x1 = 1.0f;
-								f32 t_uv_y0 = t_cell_y_rate * t_font_index;
-								f32 t_uv_y1 = t_cell_y_rate * (t_font_index + 1);
-
-								f32 t_rect_x0 = t_x + static_cast<f32>(t_font_state.x) * t_scale_w;
-								f32 t_rect_x1 = t_rect_x0 + this->texturewidth * t_scale_w;
-								f32 t_rect_y0 = t_y + static_cast<f32>(t_font_state.y) * t_scale_h;
-								f32 t_rect_y1 = t_rect_y0 + this->texturewidth * t_scale_h;
-
-								NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4 t_vertex;
-								t_vertex.color_rr = a_color.r;
-								t_vertex.color_gg = a_color.g;
-								t_vertex.color_bb = a_color.b;
-								t_vertex.color_aa = a_color.a;
-
-								t_vertex.texture_index_00 = static_cast<u8>(this->fonttexture_type);
-								t_vertex.texture_index_01 = 0;
-								t_vertex.texture_index_02 = 0;
-								t_vertex.texture_index_03 = 0;
-
-								//00
-								{
-									t_vertex.pos_xx = t_rect_x0;
-									t_vertex.pos_yy = t_rect_y0;
-									t_vertex.pos_zz = a_z;
-
-									t_vertex.uv_xx = t_uv_x0;
-									t_vertex.uv_yy = t_uv_y0;
-
-									a_vertex->AddVertex(t_vertex);
-								}
-
-								//10
-								{
-									t_vertex.pos_xx = t_rect_x1;
-									t_vertex.pos_yy = t_rect_y0;
-									t_vertex.pos_zz = a_z;
-
-									t_vertex.uv_xx = t_uv_x1;
-									t_vertex.uv_yy = t_uv_y0;
-
-									a_vertex->AddVertex(t_vertex);
-								}
-
-								//01
-								{
-									t_vertex.pos_xx = t_rect_x0;
-									t_vertex.pos_yy = t_rect_y1;
-									t_vertex.pos_zz = a_z;
-
-									t_vertex.uv_xx = t_uv_x0;
-									t_vertex.uv_yy = t_uv_y1;
-
-									a_vertex->AddVertex(t_vertex);
-								}
-
-								//01
-								{
-									t_vertex.pos_xx = t_rect_x0;
-									t_vertex.pos_yy = t_rect_y1;
-									t_vertex.pos_zz = a_z;
-
-									t_vertex.uv_xx = t_uv_x0;
-									t_vertex.uv_yy = t_uv_y1;
-
-									a_vertex->AddVertex(t_vertex);
-								}
-
-								//10
-								{
-									t_vertex.pos_xx = t_rect_x1;
-									t_vertex.pos_yy = t_rect_y0;
-									t_vertex.pos_zz = a_z;
-
-									t_vertex.uv_xx = t_uv_x1;
-									t_vertex.uv_yy = t_uv_y0;
-
-									a_vertex->AddVertex(t_vertex);
-								}
-
-								//11
-								{
-									t_vertex.pos_xx = t_rect_x1;
-									t_vertex.pos_yy = t_rect_y1;
-									t_vertex.pos_zz = a_z;
-
-									t_vertex.uv_xx = t_uv_x1;
-									t_vertex.uv_yy = t_uv_y1;
-
-									a_vertex->AddVertex(t_vertex);
-								}
-							}
-
-							t_x += static_cast<f32>(t_font_state.cell_inc_x) * t_scale_w;
+							t_string_w += static_cast<f32>(t_font_state.cell_inc_x) * t_scale_w;
 						}
 					}
+				}
+			}
+
+			{
+				f32 t_x = a_x;
+				f32 t_y = a_y;
+
+				if(a_alignment_x < 0){
+					//左寄せ。
+				}else if(a_alignment_x == 0){
+					//中寄。
+					t_x = a_x + (a_w - t_string_w) / 2;
+				}else{
+					//右寄せ。
+					t_x = a_x + a_w - t_string_w;
+				}
+				
+				if(a_alignment_y < 0){
+					//左寄せ。
+				}else if(a_alignment_y == 0){
+					//中寄。
+					t_y = a_y + (a_h - t_string_h) / 2;
+				}else{
+					//右寄せ。
+					t_y = a_y + a_h - t_string_h;
+				}
+
+				s32 ii_max = static_cast<s32>(t_work_list.size());
+				for(s32 ii=0;ii<ii_max;ii++){
+					s32 t_font_index = t_work_list[ii];
+					NBsys::NFont::Font_State& t_font_state = this->list[t_font_index].fontstate;
+
+					{
+						f32 t_cell_y_rate = static_cast<f32>(this->texturewidth) / this->textureheight;
+
+						f32 t_uv_x0 = 0.0f;
+						f32 t_uv_x1 = 1.0f;
+						f32 t_uv_y0 = t_cell_y_rate * t_font_index;
+						f32 t_uv_y1 = t_cell_y_rate * (t_font_index + 1);
+
+						f32 t_rect_x0 = t_x + static_cast<f32>(t_font_state.x) * t_scale_w;
+						f32 t_rect_y0 = t_y + static_cast<f32>(t_font_state.y) * t_scale_h;
+
+						{
+							s32 t_temp_x = static_cast<s32>(t_rect_x0);
+							t_rect_x0 = static_cast<f32>(t_temp_x);
+
+							s32 t_temp_y = static_cast<s32>(t_rect_y0);
+							t_rect_y0 = static_cast<f32>(t_temp_y);
+						}
+
+						f32 t_rect_x1 = t_rect_x0 + (this->texturewidth) * t_scale_w;
+						f32 t_rect_y1 = t_rect_y0 + (this->texturewidth) * t_scale_h;
+
+						NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4 t_vertex;
+						t_vertex.color_rr = a_color.r;
+						t_vertex.color_gg = a_color.g;
+						t_vertex.color_bb = a_color.b;
+						t_vertex.color_aa = a_color.a;
+
+						t_vertex.texture_index_00 = static_cast<u8>(this->fonttexture_type);
+						t_vertex.texture_index_01 = 0;
+						t_vertex.texture_index_02 = 0;
+						t_vertex.texture_index_03 = 0;
+
+						//00
+						{
+							t_vertex.pos_xx = t_rect_x0;
+							t_vertex.pos_yy = t_rect_y0;
+							t_vertex.pos_zz = a_z;
+
+							t_vertex.uv_xx = t_uv_x0;
+							t_vertex.uv_yy = t_uv_y0;
+
+							a_vertex->AddVertex(t_vertex);
+						}
+
+						//10
+						{
+							t_vertex.pos_xx = t_rect_x1;
+							t_vertex.pos_yy = t_rect_y0;
+							t_vertex.pos_zz = a_z;
+
+							t_vertex.uv_xx = t_uv_x1;
+							t_vertex.uv_yy = t_uv_y0;
+
+							a_vertex->AddVertex(t_vertex);
+						}
+
+						//01
+						{
+							t_vertex.pos_xx = t_rect_x0;
+							t_vertex.pos_yy = t_rect_y1;
+							t_vertex.pos_zz = a_z;
+
+							t_vertex.uv_xx = t_uv_x0;
+							t_vertex.uv_yy = t_uv_y1;
+
+							a_vertex->AddVertex(t_vertex);
+						}
+
+						//01
+						{
+							t_vertex.pos_xx = t_rect_x0;
+							t_vertex.pos_yy = t_rect_y1;
+							t_vertex.pos_zz = a_z;
+
+							t_vertex.uv_xx = t_uv_x0;
+							t_vertex.uv_yy = t_uv_y1;
+
+							a_vertex->AddVertex(t_vertex);
+						}
+
+						//10
+						{
+							t_vertex.pos_xx = t_rect_x1;
+							t_vertex.pos_yy = t_rect_y0;
+							t_vertex.pos_zz = a_z;
+
+							t_vertex.uv_xx = t_uv_x1;
+							t_vertex.uv_yy = t_uv_y0;
+
+							a_vertex->AddVertex(t_vertex);
+						}
+
+						//11
+						{
+							t_vertex.pos_xx = t_rect_x1;
+							t_vertex.pos_yy = t_rect_y1;
+							t_vertex.pos_zz = a_z;
+
+							t_vertex.uv_xx = t_uv_x1;
+							t_vertex.uv_yy = t_uv_y1;
+
+							a_vertex->AddVertex(t_vertex);
+						}
+					}
+
+					t_x += t_font_state.cell_inc_x * t_scale_w;
 				}
 			}
 		}

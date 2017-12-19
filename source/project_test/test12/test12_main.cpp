@@ -202,8 +202,8 @@ public:
 				}
 
 				//マテリアル設定。
-				s_render2d->SetMaterial(NCommon::Render2D_Item::Type::Rect,s_drawrect_material);
-				s_render2d->SetMaterial(NCommon::Render2D_Item::Type::Font,s_drawfont_material);
+				s_render2d->SetMaterial(NCommon::Render2D_ItemType::Rect,s_drawrect_material);
+				s_render2d->SetMaterial(NCommon::Render2D_ItemType::Font,s_drawfont_material);
 
 				this->step++;
 			}break;
@@ -235,7 +235,23 @@ public:
 				{
 					char t_buffer[32];
 					STLWString t_string = VASTRING(t_buffer,sizeof(t_buffer),L"%d",static_cast<s32>(1.0f / a_delta));
-					s_render2d->DrawFont(0,0.0f,0.0f,-1.0f,-1.0f,16.0f,0,NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f),t_string);
+
+					{
+						sharedptr<NCommon::Render2D_Item_Font> t_font(new NCommon::Render2D_Item_Font(99999));
+						t_font->x = 0.0f;
+						t_font->y = 0.0f;
+						t_font->w = 0.0f;
+						t_font->h = 0.0f;
+						t_font->clip = false;
+						t_font->size = 16.0f;
+						t_font->fonttexture_type = NBsys::ND3d11::D3d11_FontTextureType::SFont;
+						t_font->color = NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f);
+						t_font->alignment_x = -1;
+						t_font->alignment_y = 0;
+						t_font->string = t_string;
+
+						s_render2d->Draw(t_font);
+					}
 				}
 
 				{
@@ -247,29 +263,74 @@ public:
 						char t_buffer[32];
 						STLWString t_string = VASTRING(t_buffer,sizeof(t_buffer),L"%d %d",static_cast<s32>(t_mouse_l.x),static_cast<s32>(t_mouse_l.y));
 						
-						s_render2d->DrawFont(0,t_mouse_l.x+50,t_mouse_l.y+50,-1.0f,-1.0f,16.0f,0,NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f),t_string);
-						s_render2d->DrawFont(0,t_mouse_l.x-50,t_mouse_l.y-50,-1.0f,-1.0f,16.0f,0,NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f),t_string);
+						{
+							sharedptr<NCommon::Render2D_Item_Font> t_font(new NCommon::Render2D_Item_Font(99999));
+							t_font->x = t_mouse_l.x + 50;
+							t_font->y = t_mouse_l.y + 50;
+							t_font->w = 0.0f;
+							t_font->h = 0.0f;
+							t_font->clip = false;
+							t_font->size = 16.0f;
+							t_font->fonttexture_type = NBsys::ND3d11::D3d11_FontTextureType::SFont;
+							t_font->color = NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f);
+							t_font->alignment_x = -1;
+							t_font->alignment_y = 0;
+							t_font->string = t_string;
+
+							s_render2d->Draw(t_font);
+						}
+
+						{
+							sharedptr<NCommon::Render2D_Item_Font> t_font(new NCommon::Render2D_Item_Font(99999));
+							t_font->x = t_mouse_l.x - 50;
+							t_font->y = t_mouse_l.y - 50;
+							t_font->w = 0.0f;
+							t_font->h = 0.0f;
+							t_font->clip = false;
+							t_font->size = 16.0f;
+							t_font->fonttexture_type = NBsys::ND3d11::D3d11_FontTextureType::SFont;
+							t_font->color = NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f);
+							t_font->alignment_x = -1;
+							t_font->alignment_y = 0;
+							t_font->string = t_string;
+
+							s_render2d->Draw(t_font);
+						}
 					}
 
-					s_render2d->DrawFont(1,200.0f,			200.0f,			-1.0f,-1.0f,		32.0f,		1,	NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f),L"あいうえお");
-					s_render2d->DrawFont(1,s_width/2.0f,	s_height/2.0f,	-1.0f,-1.0f,		64.0f,		2,	NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f),L"あいうえお");
-					
-					/*
 					{
-						s32 t_texture_id = s_d3d11->Render_GetFontTexture(0);
-						s_render2d->DrawRect(0,100,100,16*3,256*4,t_texture_id,NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
+						sharedptr<NCommon::Render2D_Item_Font> t_font(new NCommon::Render2D_Item_Font(99999));
+						t_font->x = 200;
+						t_font->y = 200;
+						t_font->w = 0.0f;
+						t_font->h = 0.0f;
+						t_font->clip = false;
+						t_font->size = 32.0f;
+						t_font->fonttexture_type = NBsys::ND3d11::D3d11_FontTextureType::MFont;
+						t_font->color = NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f);
+						t_font->alignment_x = -1;
+						t_font->alignment_y = 0;
+						t_font->string = L"あいうえお";
+
+						s_render2d->Draw(t_font);
 					}
 
 					{
-						s32 t_texture_id = s_d3d11->Render_GetFontTexture(1);
-						s_render2d->DrawRect(0,200,100,32,256,t_texture_id,NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
-					}
+						sharedptr<NCommon::Render2D_Item_Font> t_font(new NCommon::Render2D_Item_Font(99999));
+						t_font->x = s_width / 2.0f;
+						t_font->y = s_height / 2.0f;
+						t_font->w = 0.0f;
+						t_font->h = 0.0f;
+						t_font->clip = false;
+						t_font->size = 32.0f;
+						t_font->fonttexture_type = NBsys::ND3d11::D3d11_FontTextureType::MFont;
+						t_font->color = NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f);
+						t_font->alignment_x = -1;
+						t_font->alignment_y = 0;
+						t_font->string = L"あいうえお";
 
-					{
-						s32 t_texture_id = s_d3d11->Render_GetFontTexture(2);
-						s_render2d->DrawRect(0,300,100,64,4096,t_texture_id,NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
+						s_render2d->Draw(t_font);
 					}
-					*/
 				}
 
 			}break;
@@ -325,10 +386,10 @@ public:
 			//２Ｄ描画。
 			{
 				//プロジェクション。
-				t_projection.Set_OrthographicProjectionMatrix(0,static_cast<f32>(s_width),0,static_cast<f32>(s_height),0.0f,1.0f);
+				//t_projection.Set_OrthographicProjectionMatrix(0,static_cast<f32>(s_width),0,static_cast<f32>(s_height),0.0f,1.0f);
 
 				//ビュー。
-				t_view.Set_Identity();
+				//t_view.Set_Identity();
 
 				//クリア。
 				s_d3d11->Render_ClearDepthStencilView();
@@ -340,7 +401,7 @@ public:
 				//文字描画。
 				{
 					//描画。
-					s_render2d->Render(t_view * t_projection);
+					s_render2d->Render(/*t_view * t_projection*/);
 				}
 
 				//ウィンドウメニュー。
@@ -348,7 +409,7 @@ public:
 					NBsys::NWindowMenu::GetSystemInstance()->Draw();
 
 					//描画。
-					s_render2d->Render(t_view * t_projection);
+					s_render2d->Render(/*t_view * t_projection*/);
 				}
 			}
 		}

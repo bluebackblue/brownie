@@ -68,10 +68,12 @@ namespace NBsys{namespace ND3d11
 		devicecontext(),
 		swapchain(),
 		backbuffer(),
-		rendertargetview(),
+		backbuffer_rendertargetview(),
+		backbuffer_shaderresourceview(),
 		depthbuffer(),
-		depthstencilstate(),
-		depthstencilview(),
+		depthbuffer_depthstencilview(),
+		depthbuffer_shaderresourceview(),
+		depthbuffer_depthstencilstate(),
 		//font_list(),
 		vertexshader_list(),
 		pixelshader_list(),
@@ -135,195 +137,263 @@ namespace NBsys{namespace ND3d11
 		this->width = a_width;
 		this->height = a_height;
 
-		D3D_FEATURE_LEVEL t_featureLevel = D3D_FEATURE_LEVEL_11_0;
+		D3D_FEATURE_LEVEL t_featurelevel_list[] = {D3D_FEATURE_LEVEL_11_0};
+
+		sharedptr<IDXGIAdapter> t_adapter;
 
 		{
-			ID3D11Device* t_raw_device = nullptr;
-			ID3D11DeviceContext* t_raw_devicecontext = nullptr;
-			const HRESULT t_result = D3D11CreateDevice(nullptr,D3D_DRIVER_TYPE_HARDWARE,nullptr,0,&t_featureLevel,1,D3D11_SDK_VERSION,&t_raw_device,nullptr,&t_raw_devicecontext);
-			if(t_raw_device != nullptr){
-				this->device.reset(t_raw_device,release_delete<ID3D11Device>());
+			sharedptr<IDXGIDevice> t_dxgidevice;
+
+			if(this->device){
+				IDXGIDevice* t_raw = nullptr;
+				HRESULT t_result = this->device->QueryInterface(__uuidof(IDXGIDevice), reinterpret_cast<void**>(&t_raw));
+				if(t_raw != nullptr){
+					t_dxgidevice.reset(t_raw,release_delete<IDXGIDevice>());
+				}
+				if(FAILED(t_result)){
+					DEEPDEBUG_ASSERT(0);
+					t_dxgidevice.reset();
+				}
 			}
-			if(t_raw_devicecontext != nullptr){
-				this->devicecontext.reset(t_raw_devicecontext,release_delete<ID3D11DeviceContext>());
+
+			sharedptr<IDXGIAdapter> t_adapter;
+
+			if(t_dxgidevice){
+				IDXGIAdapter* t_raw = nullptr;
+				HRESULT t_result = t_dxgidevice->GetAdapter(&t_raw);
+				if(t_raw != nullptr){
+					t_adapter.reset(t_raw,release_delete<IDXGIAdapter>());
+				}
+				if(FAILED(t_result)){
+					DEEPDEBUG_ASSERT(0);
+					t_adapter.reset();
+				}
 			}
-			if(FAILED(t_result)){
-				this->device.reset();
-				this->devicecontext.reset();
-			} 
 		}
 
+		HWND t_hwnd = a_window->GetImpl()->GetHandle();
+		if(t_hwnd != INVALID_HANDLE_VALUE){
+
+			DXGI_SWAP_CHAIN_DESC t_swapchain_desc;
+			{
+				Memory::memset(&t_swapchain_desc,0,sizeof(t_swapchain_desc));
+
+				//スワップ チェーンのバッファー数を表す値です。フロント バッファーを含みます。
+				t_swapchain_desc.BufferCount = 1;
+
+				//バックバッファーの表示モードを表す。
+				t_swapchain_desc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+				t_swapchain_desc.BufferDesc.Height = static_cast<UINT>(this->height);
+				t_swapchain_desc.BufferDesc.RefreshRate.Denominator = 60;
+				t_swapchain_desc.BufferDesc.RefreshRate.Numerator = 1;
+				t_swapchain_desc.BufferDesc.Scaling;
+				t_swapchain_desc.BufferDesc.ScanlineOrdering;
+				t_swapchain_desc.BufferDesc.Width = static_cast<UINT>(this->width);
+
+				//バックバッファーのサーフェス使用法および CPU アクセス オプションを表すDXGI_USAGE 列挙型のメンバーです。
+				//バック バッファーは、シェーダー入力またはレンダー ターゲット出力に使用することができます。
+				t_swapchain_desc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT | DXGI_USAGE_SHADER_INPUT;
+
+				//スワップ チェーンの動作のオプションを表す DXGI_SWAP_CHAIN_FLAG 列挙型のメンバーです。
+				t_swapchain_desc.Flags = 0;
+
+				//出力ウィンドウへの HWND ハンドルです。このメンバーを NULL にすることはできません。
+				t_swapchain_desc.OutputWindow = t_hwnd;
+
+				//マルチサンプリング パラメーターを表す DXGI_SAMPLE_DESC 構造体です。
+				t_swapchain_desc.SampleDesc.Count = 1;
+				t_swapchain_desc.SampleDesc.Quality = 0;
+
+				//サーフェスの表示後に表示バッファーの内容を処理するためのオプションを表すDXGI_SWAP_EFFECT 列挙型のメンバーです。
+				t_swapchain_desc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
+
+				//出力がウィンドウモードの場合はTRUE です。
+				//それ以外の場合はFALSEです。詳細については、「IDXGIFactory::CreateSwapChain」を参照してください。
+				t_swapchain_desc.Windowed = TRUE;
+			}
+
+			{
+				D3D_FEATURE_LEVEL t_feature_level = D3D_FEATURE_LEVEL_11_0;
+
+				IDXGISwapChain* t_raw_swapchain = nullptr;
+				ID3D11Device* t_raw_device = nullptr;
+				ID3D11DeviceContext* t_raw_devicecontext = nullptr;
+				const HRESULT t_result = D3D11CreateDeviceAndSwapChain(
+					t_adapter.get(),
+					D3D_DRIVER_TYPE_HARDWARE,
+					WIN_NULL,
+					#if defined(ROM_DEVELOP) || defined(ROM_DEEPDEBUG) || defined(ROM_FULLDEBUG)
+					D3D11_CREATE_DEVICE_DEBUG,
+					#else
+					0,
+					#endif
+					t_featurelevel_list,
+					COUNTOF(t_featurelevel_list),
+					D3D11_SDK_VERSION,
+					&t_swapchain_desc,
+					&t_raw_swapchain,
+					&t_raw_device,
+					&t_feature_level,
+					&t_raw_devicecontext
+				);
+				if(t_raw_swapchain != nullptr){
+					this->swapchain.reset(t_raw_swapchain,release_delete<IDXGISwapChain>());
+				}
+				if(t_raw_device != nullptr){
+					this->device.reset(t_raw_device,release_delete<ID3D11Device>());
+				}
+				if(t_raw_devicecontext != nullptr){
+					this->devicecontext.reset(t_raw_devicecontext,release_delete<ID3D11DeviceContext>());
+				}
+				if(FAILED(t_result)){
+					DEEPDEBUG_ASSERT(0);
+					this->swapchain.reset();
+					this->devicecontext.reset();
+					this->device.reset();
+				}
+			}
+		}
+
+		//バックバッファ。
 		{
-			sharedptr<IDXGIFactory2> t_factory;
-
-			{
-				sharedptr<IDXGIDevice> t_dxgidevice;
-
-				if(this->device){
-					IDXGIDevice* t_raw = nullptr;
-					HRESULT t_result = this->device->QueryInterface(__uuidof(IDXGIDevice), reinterpret_cast<void**>(&t_raw));
-					if(t_raw != nullptr){
-						t_dxgidevice.reset(t_raw,release_delete<IDXGIDevice>());
-					}
-					if(FAILED(t_result)){
-						t_dxgidevice.reset();
-					}
+			if(this->swapchain){
+				ID3D11Texture2D* t_raw = nullptr;
+				HRESULT t_result = this->swapchain->GetBuffer(0,__uuidof(ID3D11Texture2D),reinterpret_cast<void**>(&t_raw));
+				if(t_raw != nullptr){
+					this->backbuffer.reset(t_raw,release_delete<ID3D11Texture2D>());
 				}
-
-				sharedptr<IDXGIAdapter> t_adapter;
-
-				if(t_dxgidevice){
-					IDXGIAdapter* t_raw = nullptr;
-					HRESULT t_result = t_dxgidevice->GetAdapter(&t_raw);
-					if(t_raw != nullptr){
-						t_adapter.reset(t_raw,release_delete<IDXGIAdapter>());
-					}
-					if(FAILED(t_result)){
-						t_adapter.reset();
-					}
-				}
-
-				if(t_adapter){
-					IDXGIFactory2* t_raw = nullptr;
-					HRESULT t_result = t_adapter->GetParent(__uuidof(IDXGIFactory2), reinterpret_cast<void**>(&t_raw));
-					if(t_raw != nullptr){
-						t_factory.reset(t_raw,release_delete<IDXGIFactory2>());
-					}
-					if(FAILED(t_result)){
-						t_factory.reset();
-					}
+				if(FAILED(t_result)){
+					DEEPDEBUG_ASSERT(0);
+					this->backbuffer.reset();
 				}
 			}
 
-			DXGI_SWAP_CHAIN_DESC1 t_swapchain_desc_1;
-			{
-				Memory::memset(&t_swapchain_desc_1,0,sizeof(t_swapchain_desc_1));
-				t_swapchain_desc_1.Width = static_cast<UINT>(this->width);
-				t_swapchain_desc_1.Height = static_cast<UINT>(this->height);
-				t_swapchain_desc_1.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-				t_swapchain_desc_1.SampleDesc.Count = 1;
-				t_swapchain_desc_1.SampleDesc.Quality = 0;
-				t_swapchain_desc_1.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT | DXGI_USAGE_SHADER_INPUT;
-				t_swapchain_desc_1.BufferCount = 1;
+			if(this->device){
+				ID3D11RenderTargetView* t_raw = nullptr;
+				HRESULT t_result = this->device->CreateRenderTargetView(this->backbuffer.get(),nullptr,&t_raw);
+				if(t_raw != nullptr){
+					this->backbuffer_rendertargetview.reset(t_raw,release_delete<ID3D11RenderTargetView>());
+				}
+				if(FAILED(t_result)){
+					DEEPDEBUG_ASSERT(0);
+					this->backbuffer_rendertargetview.reset();
+				}
 			}
 
-			HWND t_hwnd = a_window->GetImpl()->GetHandle();
-			if(t_hwnd != INVALID_HANDLE_VALUE){
+			if(this->device){
+				ID3D11ShaderResourceView* t_raw = nullptr;
+				HRESULT t_result = this->device->CreateShaderResourceView(this->backbuffer.get(),nullptr,&t_raw);
+				if(t_raw != nullptr){
+					this->backbuffer_shaderresourceview.reset(t_raw,release_delete<ID3D11ShaderResourceView>());
+				}
+				if(FAILED(t_result)){
+					DEEPDEBUG_ASSERT(0);
+					this->backbuffer_shaderresourceview.reset();
+				}
+			}
+		}
 
-				sharedptr<IDXGISwapChain1> t_swapchain_1;
+		//深度ステンシル。
+		{
+			DXGI_FORMAT t_format_depthstencil = DXGI_FORMAT_D24_UNORM_S8_UINT;
+			DXGI_FORMAT t_format_depthstencil_texture  = DXGI_FORMAT_R24G8_TYPELESS;
+			DXGI_FORMAT t_format_depthstencil_resource = DXGI_FORMAT_R24_UNORM_X8_TYPELESS;
+		
+			if(this->device){
+				D3D11_TEXTURE2D_DESC t_desc;
 				{
-					IDXGISwapChain1* t_raw = nullptr;
-					HRESULT t_result = t_factory->CreateSwapChainForHwnd(this->device.get(),t_hwnd,&t_swapchain_desc_1,nullptr,nullptr,&t_raw);
-					if(t_raw != nullptr){
-						t_swapchain_1.reset(t_raw,release_delete<IDXGISwapChain1>());
-					}
-					if(FAILED(t_result)){
-						t_swapchain_1.reset();
-					}
+					Memory::memset(&t_desc,0,sizeof(t_desc));
+					t_desc.Width = static_cast<UINT>(this->width);
+					t_desc.Height = static_cast<UINT>(this->height);
+					t_desc.MipLevels = 1;
+					t_desc.ArraySize = 1;
+					t_desc.Format = t_format_depthstencil_texture;
+					t_desc.SampleDesc.Count = 1;
+					t_desc.SampleDesc.Quality = 0;
+					t_desc.Usage = D3D11_USAGE_DEFAULT;
+					t_desc.BindFlags = D3D11_BIND_DEPTH_STENCIL | D3D11_BIND_SHADER_RESOURCE;
+					t_desc.CPUAccessFlags = 0;
+					t_desc.MiscFlags = 0;
+				}
+				ID3D11Texture2D* t_raw = nullptr;
+				HRESULT t_result = this->device->CreateTexture2D(&t_desc,nullptr,&t_raw);
+				if(t_raw != nullptr){
+					this->depthbuffer.reset(t_raw,release_delete<ID3D11Texture2D>());
+				}
+				if(FAILED(t_result)){
+					DEEPDEBUG_ASSERT(0);
+					this->depthbuffer.reset();
+				}
+			}
+
+			if(this->device){
+				D3D11_DEPTH_STENCIL_VIEW_DESC t_desc;
+				{
+					Memory::memset(&t_desc,0,sizeof(t_desc));
+					t_desc.Format = t_format_depthstencil;
+					t_desc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+				}
+				ID3D11DepthStencilView* t_raw = nullptr;
+				HRESULT t_result = this->device->CreateDepthStencilView(this->depthbuffer.get(),&t_desc,&t_raw);
+				if(t_raw != nullptr){
+					this->depthbuffer_depthstencilview.reset(t_raw,release_delete<ID3D11DepthStencilView>());
+				}
+				if(FAILED(t_result)){
+					DEEPDEBUG_ASSERT(0);
+					this->depthbuffer_depthstencilview.reset();
+				}
+			}
+
+			{
+				D3D11_SHADER_RESOURCE_VIEW_DESC t_desc;
+				{
+					Memory::memset(&t_desc,0,sizeof(t_desc));
+					t_desc.Format = t_format_depthstencil_resource;
+					t_desc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+					t_desc.Texture2D.MipLevels = 1;
 				}
 
-				if(t_swapchain_1){
-					IDXGISwapChain* t_raw = nullptr;
-					HRESULT t_result = t_swapchain_1->QueryInterface(__uuidof(IDXGISwapChain),reinterpret_cast<void**>(&t_raw));
+				ID3D11ShaderResourceView* t_raw = nullptr;
+				HRESULT t_result = this->device->CreateShaderResourceView(this->depthbuffer.get(),&t_desc,&t_raw);
+				if(t_raw != nullptr){
+					this->depthbuffer_shaderresourceview.reset(t_raw,release_delete<ID3D11ShaderResourceView>());
+				}
+				if(FAILED(t_result)){
+					DEEPDEBUG_ASSERT(0);
+					this->depthbuffer_shaderresourceview.reset();
+				}
+			}
+
+			{
+				if(this->device){
+					D3D11_DEPTH_STENCIL_DESC t_desc;
+					{
+						Memory::memset(&t_desc,0,sizeof(t_desc));
+						t_desc.DepthEnable = TRUE;
+						t_desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+						t_desc.DepthFunc = D3D11_COMPARISON_LESS;
+					}
+					ID3D11DepthStencilState* t_raw = nullptr;
+					HRESULT t_result = this->device->CreateDepthStencilState(&t_desc,&t_raw);
 					if(t_raw != nullptr){
-						this->swapchain.reset(t_raw,release_delete<IDXGISwapChain>());
+						this->depthbuffer_depthstencilstate.reset(t_raw,release_delete<ID3D11DepthStencilState>());
 					}
 					if(FAILED(t_result)){
-						this->swapchain.reset();
+						DEEPDEBUG_ASSERT(0);
+						this->depthbuffer_depthstencilstate.reset();
 					}
 				}
 			}
 		}
 
-		if(this->swapchain){
-			ID3D11Texture2D* t_raw = nullptr;
-			HRESULT t_result = this->swapchain->GetBuffer(0, __uuidof(ID3D11Texture2D),reinterpret_cast<void**>(&t_raw));
-			if(t_raw != nullptr){
-				this->backbuffer.reset(t_raw,release_delete<ID3D11Texture2D>());
-			}
-			if(FAILED(t_result)){
-				this->backbuffer.reset();
-			}
-		}
-
-		if(this->device){
-			ID3D11RenderTargetView* t_raw = nullptr;
-			HRESULT t_result = this->device->CreateRenderTargetView(this->backbuffer.get(),nullptr,&t_raw);
-			if(t_raw != nullptr){
-				this->rendertargetview.reset(t_raw,release_delete<ID3D11RenderTargetView>());
-			}
-			if(FAILED(t_result)){
-				this->rendertargetview.reset();
-			}
-		}
-
-		if(this->device){
-			D3D11_TEXTURE2D_DESC t_desc;
-			{
-				Memory::memset(&t_desc,0,sizeof(t_desc));
-				t_desc.Width = static_cast<UINT>(this->width);
-				t_desc.Height = static_cast<UINT>(this->height);
-				t_desc.MipLevels = 0;
-				t_desc.ArraySize = 1;
-				t_desc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-				t_desc.SampleDesc.Count = 1;
-				t_desc.SampleDesc.Quality = 0;
-				t_desc.Usage = D3D11_USAGE_DEFAULT;
-				t_desc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
-				t_desc.CPUAccessFlags = 0;
-				t_desc.MiscFlags = 0;
-			}
-			ID3D11Texture2D* t_raw = nullptr;
-			HRESULT t_result = this->device->CreateTexture2D(&t_desc,nullptr,&t_raw);
-			if(t_raw != nullptr){
-				this->depthbuffer.reset(t_raw,release_delete<ID3D11Texture2D>());
-			}
-			if(FAILED(t_result)){
-				this->depthbuffer.reset();
-			}
-		}
-
-		if(this->device){
-			D3D11_DEPTH_STENCIL_DESC t_desc;
-			{
-				Memory::memset(&t_desc,0,sizeof(t_desc));
-				t_desc.DepthEnable = TRUE;
-				t_desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
-				t_desc.DepthFunc = D3D11_COMPARISON_LESS;
-			}
-			ID3D11DepthStencilState* t_raw = nullptr;
-			HRESULT t_result = this->device->CreateDepthStencilState(&t_desc,&t_raw);
-			if(t_raw != nullptr){
-				this->depthstencilstate.reset(t_raw,release_delete<ID3D11DepthStencilState>());
-			}
-			if(FAILED(t_result)){
-				this->depthstencilstate.reset();
-			}
-		}
-
-		if(this->device){
-			D3D11_DEPTH_STENCIL_VIEW_DESC t_desc;
-			{
-				Memory::memset(&t_desc,0,sizeof(t_desc));
-				t_desc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
-				t_desc.Texture2D.MipSlice = 0;
-			}
-			ID3D11DepthStencilView* t_raw = nullptr;
-			HRESULT t_result = this->device->CreateDepthStencilView(this->depthbuffer.get(),&t_desc,&t_raw);
-			if(t_raw != nullptr){
-				this->depthstencilview.reset(t_raw,release_delete<ID3D11DepthStencilView>());
-			}
-			if(FAILED(t_result)){
-				this->depthstencilview.reset();
-			}
-		}
-
+		//レンダーターゲット設定。
 		if(this->devicecontext){
-			ID3D11RenderTargetView* t_rendertargetview[] = {
-				this->rendertargetview.get()
-			};
-			this->devicecontext->OMSetRenderTargets(1,t_rendertargetview,this->depthstencilview.get());
-			this->devicecontext->OMSetDepthStencilState(this->depthstencilstate.get(),1);
+			if(this->depthbuffer_depthstencilview){
+				ID3D11RenderTargetView* t_rendertargetview[] = {
+					this->backbuffer_rendertargetview.get()
+				};
+				this->devicecontext->OMSetRenderTargets(1,t_rendertargetview,this->depthbuffer_depthstencilview.get());
+			}
 		}
 	}
 
@@ -336,12 +406,19 @@ namespace NBsys{namespace ND3d11
 		this->vertexbuffer_list.clear();
 		this->constantbuffer_list.clear();
 		this->texture_list.clear();
+		this->blendstate_list.clear();
+		this->rasterizerstate_list.clear();
+		this->depthstencilstate_list.clear();
 
-		this->depthstencilview.reset();
-		this->depthstencilstate.reset();
+		this->depthbuffer_depthstencilstate.reset();
+		this->depthbuffer_shaderresourceview.reset();
+		this->depthbuffer_depthstencilview.reset();
 		this->depthbuffer.reset();
-		this->rendertargetview.reset();
+
+		this->backbuffer_shaderresourceview.reset();
+		this->backbuffer_rendertargetview.reset();
 		this->backbuffer.reset();
+
 		this->swapchain.reset();
 		this->devicecontext.reset();
 		this->device.reset();
@@ -379,7 +456,7 @@ namespace NBsys{namespace ND3d11
 	*/
 	sharedptr<ID3D11RenderTargetView>& D3d11_Impl::GetRenderTargetView()
 	{
-		return this->rendertargetview;
+		return this->backbuffer_rendertargetview;
 	}
 
 	/** Render_GetDepthBuffer
@@ -393,14 +470,14 @@ namespace NBsys{namespace ND3d11
 	*/
 	sharedptr<ID3D11DepthStencilState>& D3d11_Impl::GetDepthStencilState()
 	{
-		return this->depthstencilstate;
+		return this->depthbuffer_depthstencilstate;
 	}
 
 	/** Render_GetDepthStencilView
 	*/
 	sharedptr<ID3D11DepthStencilView>& D3d11_Impl::GetDepthStencilView()
 	{
-		return this->depthstencilview;
+		return this->depthbuffer_depthstencilview;
 	}
 
 	/** GetVertexshader
@@ -1160,10 +1237,10 @@ namespace NBsys{namespace ND3d11
 	/** Render_MakeFontVertex
 	*/
 	#if(BSYS_FONT_ENABLE)
-	void D3d11_Impl::Render_MakeFontVertex(D3d11_FontTextureType::Id a_fonttexture_type,const STLWString& a_string,sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4>>& a_vertex,f32 a_x,f32 a_y,f32 a_z,f32 a_font_size_w,f32 a_font_size_h,const NBsys::NColor::Color_F& a_color)
+	void D3d11_Impl::Render_MakeFontVertex(D3d11_FontTextureType::Id a_fonttexture_type,const STLWString& a_string,sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4>>& a_vertex,f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_alignment_x,s32 a_alignment_y,f32 a_z,f32 a_view_size_w,f32 a_view_size_h,const NBsys::NColor::Color_F& a_color)
 	{
 		if(this->font_list[a_fonttexture_type] != nullptr){
-			this->font_list[a_fonttexture_type]->MakeFontVertex(a_string,a_vertex,a_x,a_y,a_z,a_font_size_w,a_font_size_h,a_color);
+			this->font_list[a_fonttexture_type]->MakeFontVertex(a_string,a_vertex,a_x,a_y,a_w,a_h,a_alignment_x,a_alignment_y,a_z,a_view_size_w,a_view_size_h,a_color);
 		}
 	}
 	#endif
@@ -1230,7 +1307,7 @@ namespace NBsys{namespace ND3d11
 	{
 		if(this->devicecontext){
 
-			this->devicecontext->ClearRenderTargetView(this->rendertargetview.get(),a_color.p);
+			this->devicecontext->ClearRenderTargetView(this->backbuffer_rendertargetview.get(),a_color.p);
 
 			return;
 		}
@@ -1243,10 +1320,10 @@ namespace NBsys{namespace ND3d11
 	void D3d11_Impl::Render_ClearDepthStencilView()
 	{
 		if(this->devicecontext){
-
-			this->devicecontext->ClearDepthStencilView(this->depthstencilview.get(),D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL,1.0f,0);
-
-			return;
+			if(this->depthbuffer_depthstencilview){
+				this->devicecontext->ClearDepthStencilView(this->depthbuffer_depthstencilview.get(),D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL,1.0f,0);
+				return;
+			}
 		}
 
 		ASSERT(0);
@@ -1257,31 +1334,35 @@ namespace NBsys{namespace ND3d11
 	bool D3d11_Impl::Render_Present()
 	{
 		if(this->testpresent_mode == false){
-			HRESULT t_result = this->swapchain->Present(0,0);
+			if(this->swapchain){
+				HRESULT t_result = this->swapchain->Present(0,0);
 
-			if(t_result == DXGI_STATUS_OCCLUDED){
+				if(t_result == DXGI_STATUS_OCCLUDED){
 
-				/*
-				ターゲット ウィンドウ (または IDXGIOutput) が、z オーダーに基づいて別のウィンドウによってオクルードされています。
-				このステータスを受け取った場合、アプリケーションはレンダリングを停止し、
-				DXGI_PRESENT_TESTを使用してレンダリングを再開する時期を決定する必要があります。
-				*/
+					/*
+					ターゲット ウィンドウ (または IDXGIOutput) が、z オーダーに基づいて別のウィンドウによってオクルードされています。
+					このステータスを受け取った場合、アプリケーションはレンダリングを停止し、
+					DXGI_PRESENT_TESTを使用してレンダリングを再開する時期を決定する必要があります。
+					*/
 
-				this->testpresent_mode = true;
-				TAGLOG("NBsys::ND3d11","DXGI_STATUS_OCCLUDED = true");
+					this->testpresent_mode = true;
+					TAGLOG("NBsys::ND3d11","DXGI_STATUS_OCCLUDED = true");
 
-				return false;
-			}else if(t_result == S_OK){
-				return true;
+					return false;
+				}else if(t_result == S_OK){
+					return true;
+				}
 			}
 		}else{
-			HRESULT t_result = this->swapchain->Present(0,DXGI_PRESENT_TEST);
+			if(this->swapchain){
+				HRESULT t_result = this->swapchain->Present(0,DXGI_PRESENT_TEST);
 
-			if(t_result == DXGI_STATUS_OCCLUDED){
-			}else if(t_result == S_OK){
-				this->testpresent_mode = false;
-				TAGLOG("NBsys::ND3d11","DXGI_STAS_OKTUS_OCCLUDED = false");
-				return true;
+				if(t_result == DXGI_STATUS_OCCLUDED){
+				}else if(t_result == S_OK){
+					this->testpresent_mode = false;
+					TAGLOG("NBsys::ND3d11","DXGI_STAS_OKTUS_OCCLUDED = false");
+					return true;
+				}
 			}
 		}
 
@@ -1312,11 +1393,12 @@ namespace NBsys{namespace ND3d11
 		if(a_vertexshader_id >= 0){
 			sharedptr<D3d11_Impl_VertexShader>& t_vertexshader = this->GetVertexShader(a_vertexshader_id);
 			if(t_vertexshader){
+				if(this->devicecontext){
+					this->devicecontext->IASetInputLayout(t_vertexshader->inputlayout.get());
+					this->devicecontext->VSSetShader(t_vertexshader->vertexshader.get(),nullptr,0);
 
-				this->devicecontext->IASetInputLayout(t_vertexshader->inputlayout.get());
-				this->devicecontext->VSSetShader(t_vertexshader->vertexshader.get(),nullptr,0);
-
-				return;
+					return;
+				}
 			}
 		}
 
@@ -1330,10 +1412,11 @@ namespace NBsys{namespace ND3d11
 		if(a_pixelshader_id >= 0){
 			sharedptr<D3d11_Impl_PixelShader>& t_pixelshader = this->GetPixelShader(a_pixelshader_id);
 			if(t_pixelshader){
+				if(this->devicecontext){
+					this->devicecontext->PSSetShader(t_pixelshader->pixelshader.get(),nullptr,0);
 
-				this->devicecontext->PSSetShader(t_pixelshader->pixelshader.get(),nullptr,0);
-
-				return;
+					return;
+				}
 			}
 		}
 
@@ -1345,10 +1428,11 @@ namespace NBsys{namespace ND3d11
 	void D3d11_Impl::Render_Draw(s32 a_count_of_vertex,s32 a_start_of_vertex)
 	{
 		if(this->devicecontext){
-
-			this->devicecontext->Draw(a_count_of_vertex,a_start_of_vertex);
+			if(this->devicecontext){
+				this->devicecontext->Draw(a_count_of_vertex,a_start_of_vertex);
 			
-			return;
+				return;
+			}
 		}
 
 		ASSERT(0);
@@ -1361,15 +1445,17 @@ namespace NBsys{namespace ND3d11
 		if(a_constantbuffer_id >= 0){
 			sharedptr<D3d11_Impl_ConstantBuffer>& t_constantbuffer = this->GetConstantBuffer(a_constantbuffer_id);
 			if(t_constantbuffer){
+				if(this->devicecontext){
 
-				ID3D11Buffer* t_list[] = 
-				{
-					t_constantbuffer->buffer.get()
-				};
+					ID3D11Buffer* t_list[] = 
+					{
+						t_constantbuffer->buffer.get()
+					};
 
-				this->devicecontext->VSSetConstantBuffers(t_constantbuffer->register_b_index,COUNTOF(t_list),t_list);
+					this->devicecontext->VSSetConstantBuffers(t_constantbuffer->register_b_index,COUNTOF(t_list),t_list);
 
-				return;
+					return;
+				}
 			}
 		}
 
@@ -1383,15 +1469,16 @@ namespace NBsys{namespace ND3d11
 		if(a_constantbuffer_id >= 0){
 			sharedptr<D3d11_Impl_ConstantBuffer>& t_constantbuffer = this->GetConstantBuffer(a_constantbuffer_id);
 			if(t_constantbuffer){
+				if(this->devicecontext){
+					ID3D11Buffer* t_list[] = 
+					{
+						t_constantbuffer->buffer.get()
+					};
 
-				ID3D11Buffer* t_list[] = 
-				{
-					t_constantbuffer->buffer.get()
-				};
+					this->devicecontext->PSSetConstantBuffers(t_constantbuffer->register_b_index,COUNTOF(t_list),t_list);
 
-				this->devicecontext->PSSetConstantBuffers(t_constantbuffer->register_b_index,COUNTOF(t_list),t_list);
-
-				return;
+					return;
+				}
 			}
 		}
 
@@ -1405,18 +1492,19 @@ namespace NBsys{namespace ND3d11
 		if(a_vertexbuffer_id >= 0){
 			sharedptr<D3d11_Impl_VertexBuffer>& t_vertexbuffer = this->GetVertexBuffer(a_vertexbuffer_id);
 			if(t_vertexbuffer){
-
-				ID3D11Buffer* t_list[] = {
-					t_vertexbuffer->buffer.get(),
-				};
+				if(this->devicecontext){
+					ID3D11Buffer* t_list[] = {
+						t_vertexbuffer->buffer.get(),
+					};
 					
-				UINT t_stride = t_vertexbuffer->stridebyte;
+					UINT t_stride = t_vertexbuffer->stridebyte;
 					
-				UINT t_offset = t_vertexbuffer->offset;
+					UINT t_offset = t_vertexbuffer->offset;
 
-				this->devicecontext->IASetVertexBuffers(0,COUNTOF(t_list),t_list,&t_stride,&t_offset);
+					this->devicecontext->IASetVertexBuffers(0,COUNTOF(t_list),t_list,&t_stride,&t_offset);
 
-				return;
+					return;
+				}
 			}
 		}
 
@@ -1430,16 +1518,17 @@ namespace NBsys{namespace ND3d11
 		if(a_vertexbuffer_id >= 0){
 			sharedptr<D3d11_Impl_VertexBuffer>& t_vertexbuffer = this->GetVertexBuffer(a_vertexbuffer_id);
 			if(t_vertexbuffer){
+				if(this->devicecontext){
+					D3D11_MAPPED_SUBRESOURCE t_mapped_resource;
 
-				D3D11_MAPPED_SUBRESOURCE t_mapped_resource;
+					HRESULT t_result = this->devicecontext->Map(t_vertexbuffer->buffer.get(),0,D3D11_MAP_WRITE_DISCARD,0,&t_mapped_resource);
+					if(SUCCEEDED(t_result)){
 
-				HRESULT t_result = this->devicecontext->Map(t_vertexbuffer->buffer.get(),0,D3D11_MAP_WRITE_DISCARD,0,&t_mapped_resource);
-				if(SUCCEEDED(t_result)){
+						s32 t_size = t_vertexbuffer->stridebyte * t_vertexbuffer->countofvertex;
+						Memory::memcpy(t_mapped_resource.pData,t_size,a_data,a_size);
+						this->devicecontext->Unmap(t_vertexbuffer->buffer.get(),0);
 
-					s32 t_size = t_vertexbuffer->stridebyte * t_vertexbuffer->countofvertex;
-					Memory::memcpy(t_mapped_resource.pData,t_size,a_data,a_size);
-					this->devicecontext->Unmap(t_vertexbuffer->buffer.get(),0);
-
+					}
 				}
 			}
 		}
@@ -1472,14 +1561,15 @@ namespace NBsys{namespace ND3d11
 		if(a_texture_id >= 0){
 			sharedptr<D3d11_Impl_Texture>& t_texture = this->GetTexture(a_texture_id);
 			if(t_texture){
+				if(this->devicecontext){
+					ID3D11ShaderResourceView* t_resourceview_list[] = {
+						t_texture->resourceview.get()
+					};
 
-				ID3D11ShaderResourceView* t_resourceview_list[] = {
-					t_texture->resourceview.get()
-				};
+					this->devicecontext->PSSetShaderResources(a_register_t_index,COUNTOF(t_resourceview_list),t_resourceview_list);
 
-				this->devicecontext->PSSetShaderResources(a_register_t_index,COUNTOF(t_resourceview_list),t_resourceview_list);
-
-				return;
+					return;
+				}
 			}
 		}else{
 			return;
@@ -1495,17 +1585,18 @@ namespace NBsys{namespace ND3d11
 		if(a_blendstate_id >= 0){
 			sharedptr<D3d11_Impl_BlendState>& t_blendstate = this->GetBlendState(a_blendstate_id);
 			if(t_blendstate){
+				if(this->devicecontext){
+					FLOAT t_blendfactor[4] = {
+						D3D11_BLEND_ZERO,
+						D3D11_BLEND_ZERO,
+						D3D11_BLEND_ZERO,
+						D3D11_BLEND_ZERO
+					};
 
-				FLOAT t_blendfactor[4] = {
-					D3D11_BLEND_ZERO,
-					D3D11_BLEND_ZERO,
-					D3D11_BLEND_ZERO,
-					D3D11_BLEND_ZERO
-				};
+					this->devicecontext->OMSetBlendState(t_blendstate->blendstate.get(),t_blendfactor,0xFFFFFFFF);
 
-				this->devicecontext->OMSetBlendState(t_blendstate->blendstate.get(),t_blendfactor,0xFFFFFFFF);
-
-				return;
+					return;
+				}
 			}
 		}
 
@@ -1519,10 +1610,11 @@ namespace NBsys{namespace ND3d11
 		if(a_rasterizerstate_id >= 0){
 			sharedptr<D3d11_Impl_RasterizerState>& t_rasterizerstate = this->GetRasterizerState(a_rasterizerstate_id);
 			if(t_rasterizerstate){
+				if(this->devicecontext){
+					this->devicecontext->RSSetState(t_rasterizerstate->rasterizerstate.get());
 
-				this->devicecontext->RSSetState(t_rasterizerstate->rasterizerstate.get());
-
-				return;
+					return;
+				}
 			}
 		}
 
@@ -1536,10 +1628,11 @@ namespace NBsys{namespace ND3d11
 		if(a_depthstencilstate_id >= 0){
 			sharedptr<D3d11_Impl_DepthStencilState>& t_depthstencilstate = this->GetDepthStencilState(a_depthstencilstate_id);
 			if(t_depthstencilstate){
+				if(this->devicecontext){
+					this->devicecontext->OMSetDepthStencilState(t_depthstencilstate->depthstencilstate.get(),0);
 
-				this->devicecontext->OMSetDepthStencilState(t_depthstencilstate->depthstencilstate.get(),0);
-
-				return;
+					return;
+				}
 			}
 		}
 

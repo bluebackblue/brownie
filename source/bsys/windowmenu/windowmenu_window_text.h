@@ -38,6 +38,18 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		STLWString string;
 
+		/** clip
+		*/
+		bool clip;
+
+		/** alignment_x
+		*/
+		s32 alignment_x;
+
+		/** alignment_y
+		*/
+		s32 alignment_y;
+
 	public:
 		/** constructor
 		*/

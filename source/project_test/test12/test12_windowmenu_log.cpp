@@ -75,7 +75,7 @@ Test12_WindowMenu_Log::Test12_WindowMenu_Log(f32 a_offset_x,f32 a_offset_y)
 		t_inititem.size.SetH_StretchChild();
 		t_window->Initialize(t_inititem);
 		{
-			t_window->window_title_text->string = L"Log";
+			t_window->window_title_text->string = L"x‚w~‚ ‚¢‚¤‚¦‚¨";
 
 			t_window->window_title_bg->color = t_window->color_title_bg_normal;
 			t_window->window_title_closebutton->color_normal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);

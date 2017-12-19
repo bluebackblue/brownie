@@ -94,7 +94,6 @@ namespace NCommon
 		}
 	};
 
-
 	/** DrawRect_Material
 	*/
 	class DrawRect_Material : public Render2D_Material_Base
@@ -222,28 +221,31 @@ namespace NCommon
 
 		/** 描画。
 		*/
-		virtual void PreRenderOnce(STLList<Render2D_Item>::Type& a_list)
+		virtual void PreRenderOnce(STLList<sharedptr<Render2D_Item_Base>>::Type& /*a_list*/)
 		{
 		}
 
 		/** 描画。
 		*/
-		virtual void Render(NBsys::NGeometry::Geometry_Matrix_44& a_view_projection,STLList<Render2D_Item>::const_iterator a_it_start,STLList<Render2D_Item>::const_iterator a_it_end)
+		virtual void Render(STLList<sharedptr<Render2D_Item_Base>>::const_iterator a_it_start,STLList<sharedptr<Render2D_Item_Base>>::const_iterator a_it_end)
 		{
 			s32 t_current_texture_id = -1;
 
-			STLList<Render2D_Item>::const_iterator t_it = a_it_start;
-			STLList<Render2D_Item>::const_iterator t_it_renderstart = t_it;
+			STLList<sharedptr<Render2D_Item_Base>>::const_iterator t_it = a_it_start;
+			STLList<sharedptr<Render2D_Item_Base>>::const_iterator t_it_renderstart = t_it;
 			if(t_it != a_it_end){
-				t_current_texture_id = t_it->data.texture_id;
+				const Render2D_Item_Rect* t_instence = reinterpret_cast<const Render2D_Item_Rect*>(t_it->get());
+
+				t_current_texture_id = t_instence->texture_id;
 			}
 
 			while(t_it != a_it_end){
+				const Render2D_Item_Rect* t_instence = reinterpret_cast<const Render2D_Item_Rect*>(t_it->get());
 
-				if(t_it->data.texture_id != t_current_texture_id){
-					this->RenderCall(a_view_projection,t_it_renderstart,t_it);
+				if(t_instence->texture_id != t_current_texture_id){
+					this->RenderCall(t_it_renderstart,t_it);
 
-					t_current_texture_id = t_it->data.texture_id;
+					t_current_texture_id = t_instence->texture_id;
 					t_it_renderstart = t_it;
 				}
 
@@ -251,13 +253,13 @@ namespace NCommon
 			}
 
 			if(t_it_renderstart != a_it_end){
-				this->RenderCall(a_view_projection,t_it_renderstart,a_it_end);
+				this->RenderCall(t_it_renderstart,a_it_end);
 			}
 		}
 
 		/** 描画。
 		*/
-		void RenderCall(NBsys::NGeometry::Geometry_Matrix_44& a_view_projection,STLList<Render2D_Item>::const_iterator a_it_start,STLList<Render2D_Item>::const_iterator a_it_end)
+		void RenderCall(STLList<sharedptr<Render2D_Item_Base>>::const_iterator a_it_start,STLList<sharedptr<Render2D_Item_Base>>::const_iterator a_it_end)
 		{
 			//ビューポート。
 			this->d3d11->Render_ViewPort(0.0f,0.0f,static_cast<f32>(this->d3d11->GetWidth()),static_cast<f32>(this->d3d11->GetHeight()));
@@ -265,23 +267,26 @@ namespace NCommon
 			//バーテックスクリア。
 			this->vertex->ClearVertex();
 
-			s32 t_texture_id = a_it_start->data.texture_id;
+			const Render2D_Item_Rect* t_instence_start = reinterpret_cast<const Render2D_Item_Rect*>(a_it_start->get());
 
-			for(STLList<Render2D_Item>::const_iterator t_it = a_it_start;t_it != a_it_end;t_it++){
-				
+			s32 t_texture_id = t_instence_start->texture_id;
+
+			for(STLList<sharedptr<Render2D_Item_Base>>::const_iterator t_it = a_it_start;t_it != a_it_end;t_it++){
+				const Render2D_Item_Rect* t_instence = reinterpret_cast<const Render2D_Item_Rect*>(t_it->get());
+
 				//バーテックス作成。
 
 				NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 t_vector;
 
-				t_vector.color_rr = t_it->data.color.r; 
-				t_vector.color_gg = t_it->data.color.g;
-				t_vector.color_bb = t_it->data.color.b;
-				t_vector.color_aa = t_it->data.color.a;
+				t_vector.color_rr = t_instence->color.r; 
+				t_vector.color_gg = t_instence->color.g;
+				t_vector.color_bb = t_instence->color.b;
+				t_vector.color_aa = t_instence->color.a;
 
 				//00
 				{
-					t_vector.pos_xx = t_it->data.x;
-					t_vector.pos_yy = t_it->data.y;
+					t_vector.pos_xx = t_instence->x;
+					t_vector.pos_yy = t_instence->y;
 					t_vector.pos_zz = 0.0f;
 
 					t_vector.uv_xx = 0.0f;
@@ -292,8 +297,8 @@ namespace NCommon
 
 				//10
 				{
-					t_vector.pos_xx = t_it->data.x + t_it->data.w;
-					t_vector.pos_yy = t_it->data.y;
+					t_vector.pos_xx = t_instence->x + t_instence->w;
+					t_vector.pos_yy = t_instence->y;
 					t_vector.pos_zz = 0.0f;
 
 					t_vector.uv_xx = 1.0f;
@@ -304,8 +309,8 @@ namespace NCommon
 
 				//01
 				{
-					t_vector.pos_xx = t_it->data.x;
-					t_vector.pos_yy = t_it->data.y + t_it->data.h;
+					t_vector.pos_xx = t_instence->x;
+					t_vector.pos_yy = t_instence->y + t_instence->h;
 					t_vector.pos_zz = 0.0f;
 
 					t_vector.uv_xx = 0.0f;
@@ -316,8 +321,8 @@ namespace NCommon
 
 				//01
 				{
-					t_vector.pos_xx = t_it->data.x;
-					t_vector.pos_yy = t_it->data.y + t_it->data.h;
+					t_vector.pos_xx = t_instence->x;
+					t_vector.pos_yy = t_instence->y + t_instence->h;
 					t_vector.pos_zz = 0.0f;
 
 					t_vector.uv_xx = 0.0f;
@@ -328,8 +333,8 @@ namespace NCommon
 
 				//10
 				{
-					t_vector.pos_xx = t_it->data.x + t_it->data.w;
-					t_vector.pos_yy = t_it->data.y;
+					t_vector.pos_xx = t_instence->x + t_instence->w;
+					t_vector.pos_yy = t_instence->y;
 					t_vector.pos_zz = 0.0f;
 
 					t_vector.uv_xx = 1.0f;
@@ -340,8 +345,8 @@ namespace NCommon
 
 				//11
 				{
-					t_vector.pos_xx = t_it->data.x + t_it->data.w;
-					t_vector.pos_yy = t_it->data.y + t_it->data.h;
+					t_vector.pos_xx = t_instence->x + t_instence->w;
+					t_vector.pos_yy = t_instence->y + t_instence->h;
 					t_vector.pos_zz = 0.0f;
 
 					t_vector.uv_xx = 1.0f;
@@ -352,7 +357,8 @@ namespace NCommon
 			}
 
 			if(this->vertex->GetVertexCountOf(0) > 0){
-				NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = a_view_projection;
+				NBsys::NGeometry::Geometry_Matrix_44 t_view_projection;
+				t_view_projection.Set_OrthographicProjectionMatrix(0,static_cast<f32>(this->d3d11->GetWidth()),0,static_cast<f32>(this->d3d11->GetHeight()),0.0f,1.0f);
 
 				//シェーダー。
 				this->d3d11->Render_VSSetShader(this->vertexshader_id);

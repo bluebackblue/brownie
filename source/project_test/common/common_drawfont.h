@@ -250,17 +250,19 @@ namespace NCommon
 
 		/** 描画。
 		*/
-		virtual void PreRenderOnce(STLList<Render2D_Item>::Type& a_list)
+		virtual void PreRenderOnce(STLList<sharedptr<Render2D_Item_Base>>::Type& a_list)
 		{
 			bool t_cahnge_list[NBsys::ND3d11::D3d11_FontTextureType::Max] = {true};
 
-			STLList<Render2D_Item>::iterator t_it_end = a_list.end();
-			for(STLList<Render2D_Item>::const_iterator t_it = a_list.begin();t_it != t_it_end;t_it++){
-				if(t_it->data.type == Render2D_Item::Type::Font){
+			STLList<sharedptr<Render2D_Item_Base>>::iterator t_it_end = a_list.end();
+			for(STLList<sharedptr<Render2D_Item_Base>>::const_iterator t_it = a_list.begin();t_it != t_it_end;t_it++){
+				const Render2D_Item_Font* t_instence = reinterpret_cast<const Render2D_Item_Font*>(t_it->get());
+
+				if(t_instence->itemtype == Render2D_ItemType::Font){
 					//フォントテクスチャー更新。
-					bool t_cahnge = this->d3d11->Render_PreUpdateFontTexture(static_cast<NBsys::ND3d11::D3d11_FontTextureType::Id>(t_it->data.texture_index),t_it->data.string);
+					bool t_cahnge = this->d3d11->Render_PreUpdateFontTexture(t_instence->fonttexture_type,t_instence->string);
 					if(t_cahnge == true){
-						t_cahnge_list[t_it->data.texture_index] = true;
+						t_cahnge_list[t_instence->fonttexture_type] = true;
 					}
 				}
 			}
@@ -282,38 +284,48 @@ namespace NCommon
 
 		/** 描画。
 		*/
-		virtual void Render(NBsys::NGeometry::Geometry_Matrix_44& a_view_projection,STLList<Render2D_Item>::const_iterator a_it_start,STLList<Render2D_Item>::const_iterator a_it_end)
+		virtual void Render(STLList<sharedptr<Render2D_Item_Base>>::const_iterator a_it_start,STLList<sharedptr<Render2D_Item_Base>>::const_iterator a_it_end)
 		{
-			auto t_minus = [](f32 a_value) -> f32{
-				if(a_value >= 0.0f){
-					return a_value;
+			auto t_clip_value = [](bool a_clip,f32 a_value) -> f32{
+				if(a_clip){
+					if(a_value >= 0.0f){
+						return a_value;
+					}
 				}
 				return -1.0f;
 			};
 
-			f32 t_current_clip_x = -1;
-			f32 t_current_clip_y = -1;
-			f32 t_current_clip_w = -1;
-			f32 t_current_clip_h = -1;
+			f32 t_current_clip_x = -1.0f;
+			f32 t_current_clip_y = -1.0f;
+			f32 t_current_clip_w = -1.0f;
+			f32 t_current_clip_h = -1.0f;
 
-			STLList<Render2D_Item>::const_iterator t_it = a_it_start;
-			STLList<Render2D_Item>::const_iterator t_it_renderstart = t_it;
+			STLList<sharedptr<Render2D_Item_Base>>::const_iterator t_it = a_it_start;
+			STLList<sharedptr<Render2D_Item_Base>>::const_iterator t_it_renderstart = t_it;
 			if(t_it != a_it_end){
-				t_current_clip_x = t_minus(t_it->data.x);
-				t_current_clip_y = t_minus(t_it->data.y);
-				t_current_clip_w = t_minus(t_it->data.w);
-				t_current_clip_h = t_minus(t_it->data.h);
+				const Render2D_Item_Font* t_instence = reinterpret_cast<const Render2D_Item_Font*>(t_it->get());
+
+				t_current_clip_x = t_clip_value(t_instence->clip,t_instence->x);
+				t_current_clip_y = t_clip_value(t_instence->clip,t_instence->y);
+				t_current_clip_w = t_clip_value(t_instence->clip,t_instence->w);
+				t_current_clip_h = t_clip_value(t_instence->clip,t_instence->h);
 			}
 
 			while(t_it != a_it_end){
+				const Render2D_Item_Font* t_instence = reinterpret_cast<const Render2D_Item_Font*>(t_it->get());
 
-				if((t_minus(t_it->data.x) != t_current_clip_x)||(t_minus(t_it->data.y) != t_current_clip_y)||(t_minus(t_it->data.w) != t_current_clip_w)||(t_minus(t_it->data.h) != t_current_clip_h)){
-					this->RenderCall(a_view_projection,t_it_renderstart,t_it);
+				if(
+					(t_clip_value(t_instence->clip,t_instence->x) != t_current_clip_x)||
+					(t_clip_value(t_instence->clip,t_instence->y) != t_current_clip_y)||
+					(t_clip_value(t_instence->clip,t_instence->w) != t_current_clip_w)||
+					(t_clip_value(t_instence->clip,t_instence->h) != t_current_clip_h)
+				){
+					this->RenderCall(t_it_renderstart,t_it);
 
-					t_current_clip_x = t_minus(t_it->data.x);
-					t_current_clip_y = t_minus(t_it->data.y);
-					t_current_clip_w = t_minus(t_it->data.w);
-					t_current_clip_h = t_minus(t_it->data.h);
+					t_current_clip_x = t_clip_value(t_instence->clip,t_instence->x);
+					t_current_clip_y = t_clip_value(t_instence->clip,t_instence->y);
+					t_current_clip_w = t_clip_value(t_instence->clip,t_instence->w);
+					t_current_clip_h = t_clip_value(t_instence->clip,t_instence->h);
 
 					t_it_renderstart = t_it;
 				}
@@ -322,44 +334,37 @@ namespace NCommon
 			}
 
 			if(t_it_renderstart != a_it_end){
-				this->RenderCall(a_view_projection,t_it_renderstart,a_it_end);
+				this->RenderCall(t_it_renderstart,a_it_end);
 			}
 		}
 
 		/** 描画。
 		*/
-		void RenderCall(NBsys::NGeometry::Geometry_Matrix_44& a_view_projection,STLList<Render2D_Item>::const_iterator a_it_start,STLList<Render2D_Item>::const_iterator a_it_end)
+		void RenderCall(STLList<sharedptr<Render2D_Item_Base>>::const_iterator a_it_start,STLList<sharedptr<Render2D_Item_Base>>::const_iterator a_it_end)
 		{
-			f32 t_scale_w = 1.0f;
-			f32 t_scale_h = 1.0f;
+			const Render2D_Item_Font* t_instence_start = reinterpret_cast<const Render2D_Item_Font*>(a_it_start->get());
+
 			f32 t_viewport_offset_x = 0.0f;
 			f32 t_viewport_offset_y = 0.0f;
-			f32 t_viewport_w = a_it_start->data.w;
-			f32 t_viewport_h = a_it_start->data.h;
+			f32 t_viewport_w = static_cast<f32>(this->d3d11->GetWidth());
+			f32 t_viewport_h = static_cast<f32>(this->d3d11->GetHeight());
 
-			if((t_viewport_w > 0.0f)&&(t_viewport_h > 0.0f)){
-				t_viewport_offset_x = a_it_start->data.x;
-				t_viewport_offset_y = a_it_start->data.y;
+			if(t_instence_start->clip == true && false){	//TODO。
+				//クリップ処理あり。
 
-				t_scale_w = this->d3d11->GetWidth() / t_viewport_w;
-				t_scale_h = this->d3d11->GetHeight() / t_viewport_h;
-
-				//ビューポート。
-				this->d3d11->Render_ViewPort(
-					t_viewport_offset_x,
-					t_viewport_offset_y,
-					t_viewport_w,
-					t_viewport_h
-				);
-			}else{
-				//ビューポート。
-				this->d3d11->Render_ViewPort(
-					0,
-					0,
-					static_cast<f32>(this->d3d11->GetWidth()),
-					static_cast<f32>(this->d3d11->GetHeight())
-				);
+				t_viewport_offset_x = t_instence_start->x;
+				t_viewport_offset_y = t_instence_start->y;
+				t_viewport_w = t_instence_start->w;
+				t_viewport_h = t_instence_start->h;
 			}
+
+			//ビューポート。
+			this->d3d11->Render_ViewPort(
+				t_viewport_offset_x,
+				t_viewport_offset_y,
+				t_viewport_w,
+				t_viewport_h
+			);
 
 			//バーテックスクリア。
 			this->vertex->ClearVertex();
@@ -369,28 +374,35 @@ namespace NCommon
 			this->d3d11->Render_DrawFont_ClearLockFlag(NBsys::ND3d11::D3d11_FontTextureType::LFont);
 			this->d3d11->Render_DrawFont_ClearLockFlag(NBsys::ND3d11::D3d11_FontTextureType::ExFont);
 
-			for(STLList<Render2D_Item>::const_iterator t_it = a_it_start;t_it != a_it_end;t_it++){
-				NBsys::ND3d11::D3d11_FontTextureType::Id t_fonttexture_type = static_cast<NBsys::ND3d11::D3d11_FontTextureType::Id>(t_it->data.texture_index);
+			for(STLList<sharedptr<Render2D_Item_Base>>::const_iterator t_it = a_it_start;t_it != a_it_end;t_it++){
+				const Render2D_Item_Font* t_instence = reinterpret_cast<const Render2D_Item_Font*>(t_it->get());
+
+				NBsys::ND3d11::D3d11_FontTextureType::Id t_fonttexture_type = t_instence->fonttexture_type;
 
 				//フォントテクスチャー更新。
-				this->d3d11->Render_PreUpdateFontTexture(t_fonttexture_type,t_it->data.string);
+				this->d3d11->Render_PreUpdateFontTexture(t_fonttexture_type,t_instence->string);
 
 				//バーテックス作成。
 				this->d3d11->Render_MakeFontVertex(
 					t_fonttexture_type,
-					t_it->data.string,
+					t_instence->string,
 					this->vertex,
-					t_it->data.x - t_viewport_offset_x,
-					t_it->data.y - t_viewport_offset_y,
+					t_instence->x - t_viewport_offset_x,
+					t_instence->y - t_viewport_offset_y,
+					t_instence->w,
+					t_instence->h,
+					t_instence->alignment_x,
+					t_instence->alignment_y,
 					0.0f,
-					t_it->data.size * t_scale_w,
-					t_it->data.size * t_scale_h,
-					t_it->data.color
+					t_instence->size,
+					t_instence->size,
+					t_instence->color
 				);
 			}
 
 			if(this->vertex->GetVertexCountOf(0) > 0){
-				NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = a_view_projection;
+				NBsys::NGeometry::Geometry_Matrix_44 t_view_projection;
+				t_view_projection.Set_OrthographicProjectionMatrix(0,static_cast<f32>(t_viewport_w),0,static_cast<f32>(t_viewport_h),0.0f,1.0f);
 
 				//シェーダー。
 				this->d3d11->Render_VSSetShader(this->vertexshader_id);

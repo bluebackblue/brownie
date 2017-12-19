@@ -26,16 +26,51 @@ namespace NCommon
 {
 	/** DrawFontProcType
 	*/
-	void WindowMenu_Callback::DrawFont_Callback(s32 a_z_sort,f32 a_x,f32 a_y,f32 a_clip_w,f32 a_clip_h,f32 a_size,s32 a_font_texture_index,const NBsys::NColor::Color_F& a_color,const STLWString& a_string)
+	void WindowMenu_Callback::DrawFont_Callback(s32 a_z_sort,f32 a_x,f32 a_y,f32 a_w,f32 a_h,bool a_clip,f32 a_size,s32 a_fonttexture_type,const NBsys::NColor::Color_F& a_color,const STLWString& a_string,s32 a_alignment_x,s32 a_alignment_y)
 	{
-		this->render2d->DrawFont(a_z_sort,a_x,a_y,a_clip_w,a_clip_h,a_size,a_font_texture_index,a_color,a_string);
+		sharedptr<Render2D_Item_Font> t_item = new Render2D_Item_Font(a_z_sort);
+
+		{
+			t_item->x = a_x;
+			t_item->y = a_y;
+			t_item->w = a_w;
+			t_item->h = a_h;
+
+			t_item->clip = a_clip;
+
+			t_item->size = a_size;
+
+			t_item->fonttexture_type = static_cast<NBsys::ND3d11::D3d11_FontTextureType::Id>(a_fonttexture_type);
+
+			t_item->color = a_color;
+
+			t_item->alignment_x = a_alignment_x;
+			t_item->alignment_y = a_alignment_y;
+
+			t_item->string = a_string;
+		}
+
+		this->render2d->Draw(t_item);
 	}
 
 	/** DrawRectProcType
 	*/
 	void WindowMenu_Callback::DrawRect_Callback(s32 a_z_sort,f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_texture_id,const NBsys::NColor::Color_F& a_color)
 	{
-		this->render2d->DrawRect(a_z_sort,a_x,a_y,a_w,a_h,a_texture_id,a_color);
+		sharedptr<Render2D_Item_Rect> t_item = new Render2D_Item_Rect(a_z_sort);
+
+		{
+			t_item->x = a_x;
+			t_item->y = a_y;
+			t_item->w = a_w;
+			t_item->h = a_h;
+
+			t_item->texture_id = a_texture_id;
+
+			t_item->color = a_color;
+		}
+
+		this->render2d->Draw(t_item);
 	}
 
 	/** GetMouseProcType

@@ -84,9 +84,9 @@ namespace NBsys{namespace NFont
 
 	/** GetPixel_R8G8B8A8
 	*/
-	Font_State Font_Impl::GetPixel_R8G8B8A8(sharedptr<u8>& a_dest_data,s32 a_offset,s32 a_dest_width,s32 a_dest_height,wchar a_wchar)
+	Font_State Font_Impl::GetPixel_R8G8B8A8(sharedptr<u8>& a_dest_data,s32 a_offset,s32 a_dest_width,s32 a_dest_height,wchar a_code)
 	{
-		Font_State t_font_state;
+		Font_State t_font_state = {0};
 
 		#if defined(PLATFORM_VCWIN)
 		{
@@ -97,7 +97,7 @@ namespace NBsys{namespace NFont
 			{
 				::SelectObject(this->hdc,this->font_handle);
 
-				UINT t_wchar = a_wchar;
+				UINT t_code = a_code;
 
 				::GetTextMetricsW(this->hdc,&t_text_metric);
 
@@ -109,7 +109,7 @@ namespace NBsys{namespace NFont
 						{0,0,},
 						{0,1,}
 					};
-					t_buffer_size = ::GetGlyphOutlineW(this->hdc,t_wchar,GGO_GRAY8_BITMAP,&t_glyphmetrics,0,NULL,&t_mat2);
+					t_buffer_size = ::GetGlyphOutlineW(this->hdc,t_code,GGO_GRAY8_BITMAP,&t_glyphmetrics,0,NULL,&t_mat2);
 					ASSERT(t_buffer_size <= sizeof(t_buffer));
 				}
 
@@ -121,12 +121,13 @@ namespace NBsys{namespace NFont
 						{0,0,},
 						{0,1,}
 					};
-					::GetGlyphOutlineW(this->hdc,t_wchar,GGO_GRAY8_BITMAP,&t_glyphmetrics,t_buffer_size,(LPVOID)&t_buffer[0],&t_mat2);
+					::GetGlyphOutlineW(this->hdc,t_code,GGO_GRAY8_BITMAP,&t_glyphmetrics,t_buffer_size,(LPVOID)&t_buffer[0],&t_mat2);
 				}
 			}
 
 			//フォントステータス。
 			{
+				t_font_state.code = a_code;
 				t_font_state.x = t_glyphmetrics.gmptGlyphOrigin.x;
 				t_font_state.y = t_text_metric.tmAscent - t_glyphmetrics.gmptGlyphOrigin.y;
 				t_font_state.black_box_x = t_glyphmetrics.gmBlackBoxX;
@@ -173,6 +174,22 @@ namespace NBsys{namespace NFont
 							t_dest_data[t_dest_offset+2] = 0xFF;
 							t_dest_data[t_dest_offset+3] = t_alpha;
 						}
+
+						#if(0)
+						if(a_dest_width == 16){
+							if((xx % 2 == 0) && (yy % 2 == 0)){
+								t_dest_data[t_dest_offset+0] = 0xFF;
+								t_dest_data[t_dest_offset+1] = 0xFF;
+								t_dest_data[t_dest_offset+2] = 0xFF;
+								t_dest_data[t_dest_offset+3] = 0xFF;
+							}else{
+								t_dest_data[t_dest_offset+0] = 0x00;
+								t_dest_data[t_dest_offset+1] = 0x00;
+								t_dest_data[t_dest_offset+2] = 0x00;
+								t_dest_data[t_dest_offset+3] = 0x00;
+							}
+						}
+						#endif
 					}
 				}
 			}

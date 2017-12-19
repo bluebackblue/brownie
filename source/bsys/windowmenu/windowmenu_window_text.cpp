@@ -41,7 +41,10 @@ namespace NBsys{namespace NWindowMenu
 		:
 		WindowMenu_Window_Base(a_name,WindowMenu_WindowType::Text),
 		color(1.0f,1.0f,1.0f,1.0f),
-		string(L"")
+		string(L""),
+		clip(true),
+		alignment_x(-1),
+		alignment_y(0)
 	{
 	}
 
@@ -76,9 +79,23 @@ namespace NBsys{namespace NWindowMenu
 			f32 t_offset_x = 0.0f;
 			f32 t_offset_y = 0.0f;
 			f32 t_font_size = 16.0f;
-			s32 t_font_texture_index = 0;
+			s32 t_font_texture_index = 0;	//TODO:
 
-			GetSystemInstance()->GetCallback()->DrawFont_Callback(a_z_sort + this->z_sort+1,this->calc_x + t_offset_x,this->calc_y + t_offset_y,this->calc_w,this->calc_h,t_font_size,t_font_texture_index,this->color,this->string);
+			if(this->string.size() > 0){
+				GetSystemInstance()->GetCallback()->DrawFont_Callback(
+					a_z_sort + this->z_sort + 1,
+					this->calc_x + t_offset_x,
+					this->calc_y + t_offset_y,
+					this->calc_w,
+					this->calc_h,
+					this->clip,
+					t_font_size,
+					t_font_texture_index,
+					this->color,
+					this->string,
+					this->alignment_x,
+					this->alignment_y);
+			}
 		}
 
 		//q‚Ì•`‰æ‚ğs‚¤B

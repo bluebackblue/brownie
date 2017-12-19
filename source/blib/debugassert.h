@@ -35,10 +35,17 @@ namespace NBlib
 #if defined(ROM_MASTER)
 
 	#define ASSERT(X)
+	#define DEEPDEBUG_ASSERT(X)
 
 #else
 
-	#define ASSERT(X)				NBlib::DebugAssert((X),"",__FILE__,__LINE__)
+	#define ASSERT(X)							NBlib::DebugAssert((X),"",__FILE__,__LINE__)
+
+	#if defined(ROM_DEEPDEBUG) || defined(ROM_FULLDEBUG)
+		#define DEEPDEBUG_ASSERT(X)				ASSERT(X)
+	#else
+		#define DEEPDEBUG_ASSERT(X)
+	#endif
 
 #endif
 
@@ -50,7 +57,13 @@ namespace NBlib
 
 #else
 
-	#define ASSERT_MSG(X,MSG)		NBlib::DebugAssert((X),MSG,__FILE__,__LINE__)
+	#define ASSERT_MSG(X,MSG)					NBlib::DebugAssert((X),MSG,__FILE__,__LINE__)
+
+	#if defined(ROM_DEEPDEBUG) || defined(ROM_FULLDEBUG)
+		#define DEEPDEBUG_ASSERT_MSG(X,MSG)		ASSERT_MSG(X,MSG)
+	#else
+		#define DEEPDEBUG_ASSERT_MSG(X,MSG)
+	#endif
 
 #endif
 

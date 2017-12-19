@@ -150,12 +150,24 @@ namespace NBsys{namespace NWindowMenu
 
 			{
 				f32 t_font_size = 16.0f;
-				s32 t_font_texture_index = 2;
+				s32 t_font_texture_index = 2;	//TODO:
 
-				//f32 t_offst_x = (this->calc_w - t_font_size) / 2;
-				//f32 t_offst_y = (this->calc_h - t_font_size) / 2;
-
-				GetSystemInstance()->GetCallback()->DrawFont_Callback(a_z_sort + this->z_sort + 1,this->calc_x,this->calc_y,-1.0f,-1.0f,t_font_size,t_font_texture_index,t_font_color,this->string);
+				if(this->string.size() > 0){
+					GetSystemInstance()->GetCallback()->DrawFont_Callback(
+						a_z_sort + this->z_sort + 1,
+						this->calc_x,
+						this->calc_y,
+						this->calc_w,
+						this->calc_h,
+						true,
+						t_font_size,
+						t_font_texture_index,
+						t_font_color,
+						this->string,
+						0,
+						0
+					);
+				}
 			}
 		}
 

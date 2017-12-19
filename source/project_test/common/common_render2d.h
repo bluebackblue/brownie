@@ -19,156 +19,140 @@
 #if(BSYS_D3D11_ENABLE)
 namespace NCommon
 {
-	/** 描画アイテム。
+	/** Render2D_ItemType
 	*/
-	struct Render2D_Item
+	struct Render2D_ItemType
 	{
-		/** Type
-		*/
-		struct Type
+		enum Id
 		{
-			enum Id
-			{
-				None = 0,
+			None = 0,
 
-				//レクト描画。
-				Rect,
+			//レクト。
+			Rect,
 
-				//フォント描画。
-				Font,
+			//フォント。
+			Font,
 
-				Max,
-			};
+			Max,
 		};
+	};
 
-		/** レクト描画。
+	/** Render2D_Item_Base
+	*/
+	class Render2D_Item_Base
+	{
+	public:
+		/** z_sort
 		*/
-		struct RectData
-		{
-			s32 z_sort;
+		s32 z_sort;
 
-			f32 x;
-			f32 y;
-			f32 w;
-			f32 h;
-
-			s32 texture_id;
-			NBsys::NColor::Color_F color;
-
-			RectData(s32 a_z_sort,f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_texture_id,const NBsys::NColor::Color_F& a_color)
-				:
-				z_sort(a_z_sort),
-				x(a_x),
-				y(a_y),
-				w(a_w),
-				h(a_h),
-				texture_id(a_texture_id),
-				color(a_color)
-			{
-			}
-			nonvirtual ~RectData()
-			{
-			}
-		};
-
-		/** フォント描画。
+		/** itemtype
 		*/
-		struct FontData
-		{
-			s32 z_sort;
+		Render2D_ItemType::Id itemtype;
 
-			f32 x;
-			f32 y;
-			f32 clip_w;
-			f32 clip_h;
-			f32 size;
-			s32 font_texture_index;
-
-			NBsys::NColor::Color_F color;
-			STLWString string;
-
-			FontData(s32 a_z_sort,f32 a_x,f32 a_y,f32 a_clip_w,f32 a_clip_h,f32 a_size,s32 a_font_texture_index,const NBsys::NColor::Color_F& a_color,const STLWString& a_string)
-				:
-				z_sort(a_z_sort),
-				x(a_x),
-				y(a_y),
-				clip_w(a_clip_w),
-				clip_h(a_clip_h),
-				size(a_size),
-				font_texture_index(a_font_texture_index),
-				color(a_color),
-				string(a_string)
-			{
-			}
-			nonvirtual ~FontData()
-			{
-			}
-		};
-
-		/** バリアント型。
-		*/
-		struct Data
-		{
-			s32 z_sort;
-
-			Type::Id type;
-
-			f32 x;
-			f32 y;
-			f32 w;
-			f32 h;
-			f32 size;
-
-			s32 texture_index;
-			s32 texture_id;
-			NBsys::NColor::Color_F color;
-
-			STLWString string;
-		};
-
-		Data data;
-		u8 raw[32];
-
+	public:
 		/** constructor
 		*/
-		Render2D_Item(const RectData& a_data)
+		Render2D_Item_Base(s32 a_z_sort,Render2D_ItemType::Id a_itemtype)
+			:
+			z_sort(a_z_sort),
+			itemtype(a_itemtype)
 		{
-			this->data.z_sort = a_data.z_sort;
-
-			this->data.type = Type::Rect;
-
-			this->data.x = a_data.x;
-			this->data.y = a_data.y;
-			this->data.w = a_data.w;
-			this->data.h = a_data.h;
-			this->data.texture_id = a_data.texture_id;
-			this->data.color = a_data.color;
-		}
-
-		/** constructor
-		*/
-		Render2D_Item(const FontData& a_data)
-		{
-			this->data.z_sort = a_data.z_sort;
-
-			this->data.type = Type::Font;
-
-			this->data.x = a_data.x;
-			this->data.y = a_data.y;
-			this->data.w = a_data.clip_w;
-			this->data.h = a_data.clip_h;
-			this->data.size = a_data.size;
-			this->data.texture_index = a_data.font_texture_index;
-			this->data.color = a_data.color;
-			this->data.string = a_data.string;
 		}
 
 		/** destructor
 		*/
-		nonvirtual ~Render2D_Item()
+		virtual ~Render2D_Item_Base()
 		{
 		}
 	};
+
+	/** Render2D_Item_Rect
+	*/
+	class Render2D_Item_Rect : public Render2D_Item_Base
+	{
+	public:
+		f32 x;
+		f32 y;
+		f32 w;
+		f32 h;
+
+		s32 texture_id;
+		NBsys::NColor::Color_F color;
+		
+	public:
+		/** constructor
+		*/
+		Render2D_Item_Rect(s32 a_z_sort)
+			:
+			Render2D_Item_Base(a_z_sort,Render2D_ItemType::Rect),
+			x(0.0f),
+			y(0.0f),
+			w(0.0f),
+			h(0.0f),
+			texture_id(-1),
+			color(1.0f,1.0f,1.0f,1.0f)
+		{
+		}
+
+		/** destructor
+		*/
+		virtual ~Render2D_Item_Rect()
+		{
+		}
+	};
+
+	/** Render2D_Item_Font
+	*/
+	#if(BSYS_FONT_ENABLE)
+	class Render2D_Item_Font : public Render2D_Item_Base
+	{
+	public:
+		f32 x;
+		f32 y;
+		f32 w;
+		f32 h;
+
+		bool clip;
+
+		f32 size;
+
+		NBsys::ND3d11::D3d11_FontTextureType::Id fonttexture_type;
+
+		NBsys::NColor::Color_F color;
+
+		s32 alignment_x;
+		s32 alignment_y;
+
+		STLWString string;
+		
+	public:
+		/** constructor
+		*/
+		Render2D_Item_Font(s32 a_z_sort)
+			:
+			Render2D_Item_Base(a_z_sort,Render2D_ItemType::Font),
+			x(0.0f),
+			y(0.0f),
+			w(0.0f),
+			h(0.0f),
+			clip(false),
+			size(0),
+			fonttexture_type(NBsys::ND3d11::D3d11_FontTextureType::SFont),
+			color(1.0f,1.0f,1.0f,1.0f),
+			alignment_x(0),
+			alignment_y(0),
+			string(L"")
+		{
+		}
+
+		/** destructor
+		*/
+		virtual ~Render2D_Item_Font()
+		{
+		}
+	};
+	#endif
 
 	/** Render2D_Material_Base
 	*/
@@ -192,11 +176,11 @@ namespace NCommon
 
 		/** 描画。
 		*/
-		virtual void PreRenderOnce(STLList<Render2D_Item>::Type& a_list) = 0;
+		virtual void PreRenderOnce(STLList<sharedptr<Render2D_Item_Base>>::Type& a_list) = 0;
 
 		/** 描画。
 		*/
-		virtual void Render(NBsys::NGeometry::Geometry_Matrix_44& a_view_projection,STLList<Render2D_Item>::const_iterator a_it_start,STLList<Render2D_Item>::const_iterator a_it_end) = 0;
+		virtual void Render(STLList<sharedptr<Render2D_Item_Base>>::const_iterator a_it_start,STLList<sharedptr<Render2D_Item_Base>>::const_iterator a_it_end) = 0;
 	};
 
 	class Render2D
@@ -204,11 +188,11 @@ namespace NCommon
 	private:
 		/** list
 		*/
-		STLList<Render2D_Item>::Type list;
+		STLList<sharedptr<Render2D_Item_Base>>::Type list;
 
 		/** material_list
 		*/
-		sharedptr<Render2D_Material_Base> material_list[Render2D_Item::Type::Max];
+		sharedptr<Render2D_Material_Base> material_list[Render2D_ItemType::Max];
 
 	public:
 
@@ -226,40 +210,31 @@ namespace NCommon
 
 		/** SetMaterial
 		*/
-		void SetMaterial(Render2D_Item::Type::Id a_type,sharedptr<Render2D_Material_Base> a_material)
+		void SetMaterial(Render2D_ItemType::Id a_itemtype,sharedptr<Render2D_Material_Base> a_material)
 		{
-			this->material_list[a_type] = a_material;
+			this->material_list[a_itemtype] = a_material;
 		}
 
-		/** DrawRect
+		/** Draw
 		*/
-		void DrawRect(s32 a_z_sort,f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_texture_id,const NBsys::NColor::Color_F& a_color)
+		void Draw(sharedptr<Render2D_Item_Base> a_item)
 		{
-			Render2D_Item t_item(Render2D_Item::RectData(a_z_sort,a_x,a_y,a_w,a_h,a_texture_id,a_color));
-			this->list.push_back(t_item);
-		}
-
-		/** DrawFont
-		*/
-		void DrawFont(s32 a_z_sort,f32 a_x,f32 a_y,f32 a_clip_w,f32 a_clip_h,f32 a_size,s32 a_font_texture_index,const NBsys::NColor::Color_F& a_color,const STLWString& a_string)
-		{
-			Render2D_Item t_item(Render2D_Item::FontData(a_z_sort,a_x,a_y,a_clip_w,a_clip_h,a_size,a_font_texture_index,a_color,a_string));
-			this->list.push_back(t_item);
+			this->list.push_back(a_item);
 		}
 
 		/** Render
 		*/
-		void Render(NBsys::NGeometry::Geometry_Matrix_44& a_view_projection)
+		void Render()
 		{
 			//ソート。
-			this->list.sort([](const Render2D_Item& a_item_a,const Render2D_Item& a_item_b){
-				return (a_item_a.data.z_sort < a_item_b.data.z_sort);
+			this->list.sort([](const sharedptr<Render2D_Item_Base>& a_item_a,const sharedptr<Render2D_Item_Base>& a_item_b){
+				return (a_item_a->z_sort < a_item_b->z_sort);
 			});
 
 			//描画。
 			{
-				STLList<Render2D_Item>::const_iterator t_it_end = this->list.end();
-				STLList<Render2D_Item>::const_iterator t_it = this->list.begin();
+				STLList<sharedptr<Render2D_Item_Base>>::const_iterator t_it_end = this->list.end();
+				STLList<sharedptr<Render2D_Item_Base>>::const_iterator t_it = this->list.begin();
 
 				for(s32 ii=0;ii<COUNTOF(this->material_list);ii++){
 					if(this->material_list[ii].get() != nullptr){
@@ -267,18 +242,18 @@ namespace NCommon
 					}
 				}
 
-				Render2D_Item::Type::Id t_current_type = Render2D_Item::Type::None;
-				STLList<Render2D_Item>::const_iterator t_it_renderstart = t_it;
+				Render2D_ItemType::Id t_current_itemtype = Render2D_ItemType::None;
+				STLList<sharedptr<Render2D_Item_Base>>::const_iterator t_it_renderstart = t_it;
 				if(t_it != t_it_end){
-					t_current_type = t_it->data.type;
+					t_current_itemtype = t_it->get()->itemtype;
 				}
 
 				while(t_it != t_it_end){
 
-					if(t_it->data.type != t_current_type){
-						this->material_list[t_current_type]->Render(a_view_projection,t_it_renderstart,t_it);
+					if(t_it->get()->itemtype != t_current_itemtype){
+						this->material_list[t_current_itemtype]->Render(t_it_renderstart,t_it);
 
-						t_current_type = t_it->data.type;
+						t_current_itemtype = t_it->get()->itemtype;
 						t_it_renderstart = t_it;
 					}
 
@@ -286,7 +261,7 @@ namespace NCommon
 				}
 
 				if(t_it_renderstart != t_it_end){
-					this->material_list[t_current_type]->Render(a_view_projection,t_it_renderstart,t_it_end);
+					this->material_list[t_current_itemtype]->Render(t_it_renderstart,t_it_end);
 				}
 			}
 

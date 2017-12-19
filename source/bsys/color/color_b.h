@@ -19,6 +19,11 @@
 #include "./color_decl.h"
 
 
+/** include
+*/
+#include <type_traits>
+
+
 /** NBsys::NColor
 */
 #if(BSYS_COLOR_ENABLE)
@@ -42,6 +47,12 @@ namespace NBsys{namespace NColor
 			u8 p[4];
 		};
 	};
+
+
+	/** Color_B_Raw is POD
+	*/
+	STATIC_ASSERT(std::is_pod<Color_B_Raw>::value == true);
+
 
 	/** Color_B
 	*/
