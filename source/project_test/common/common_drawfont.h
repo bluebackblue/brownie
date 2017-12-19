@@ -353,7 +353,7 @@ namespace NCommon
 			f32 t_viewport_w = static_cast<f32>(this->d3d11->GetWidth());
 			f32 t_viewport_h = static_cast<f32>(this->d3d11->GetHeight());
 
-			if(t_instence_start->clip == true && false){	//TODO。
+			if(t_instence_start->clip == true){
 				//クリップ処理あり。
 
 				t_viewport_offset_x = t_instence_start->x;
