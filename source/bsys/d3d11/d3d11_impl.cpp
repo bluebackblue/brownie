@@ -139,38 +139,6 @@ namespace NBsys{namespace ND3d11
 
 		D3D_FEATURE_LEVEL t_featurelevel_list[] = {D3D_FEATURE_LEVEL_11_0};
 
-		sharedptr<IDXGIAdapter> t_adapter;
-
-		{
-			sharedptr<IDXGIDevice> t_dxgidevice;
-
-			if(this->device){
-				IDXGIDevice* t_raw = nullptr;
-				HRESULT t_result = this->device->QueryInterface(__uuidof(IDXGIDevice), reinterpret_cast<void**>(&t_raw));
-				if(t_raw != nullptr){
-					t_dxgidevice.reset(t_raw,release_delete<IDXGIDevice>());
-				}
-				if(FAILED(t_result)){
-					DEEPDEBUG_ASSERT(0);
-					t_dxgidevice.reset();
-				}
-			}
-
-			sharedptr<IDXGIAdapter> t_adapter;
-
-			if(t_dxgidevice){
-				IDXGIAdapter* t_raw = nullptr;
-				HRESULT t_result = t_dxgidevice->GetAdapter(&t_raw);
-				if(t_raw != nullptr){
-					t_adapter.reset(t_raw,release_delete<IDXGIAdapter>());
-				}
-				if(FAILED(t_result)){
-					DEEPDEBUG_ASSERT(0);
-					t_adapter.reset();
-				}
-			}
-		}
-
 		HWND t_hwnd = a_window->GetImpl()->GetHandle();
 		if(t_hwnd != INVALID_HANDLE_VALUE){
 
@@ -179,7 +147,7 @@ namespace NBsys{namespace ND3d11
 				Memory::memset(&t_swapchain_desc,0,sizeof(t_swapchain_desc));
 
 				//スワップ チェーンのバッファー数を表す値です。フロント バッファーを含みます。
-				t_swapchain_desc.BufferCount = 1;
+				t_swapchain_desc.BufferCount = 3;
 
 				//バックバッファーの表示モードを表す。
 				t_swapchain_desc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -190,26 +158,27 @@ namespace NBsys{namespace ND3d11
 				t_swapchain_desc.BufferDesc.ScanlineOrdering;
 				t_swapchain_desc.BufferDesc.Width = static_cast<UINT>(this->width);
 
-				//バックバッファーのサーフェス使用法および CPU アクセス オプションを表すDXGI_USAGE 列挙型のメンバーです。
+				//バックバッファーのサーフェス使用法およびCPUアクセス オプションを表すDXGI_USAGE 列挙型のメンバーです。
 				//バック バッファーは、シェーダー入力またはレンダー ターゲット出力に使用することができます。
 				t_swapchain_desc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT | DXGI_USAGE_SHADER_INPUT;
 
-				//スワップ チェーンの動作のオプションを表す DXGI_SWAP_CHAIN_FLAG 列挙型のメンバーです。
+				//スワップ チェーンの動作のオプションを表すDXGI_SWAP_CHAIN_FLAG列挙型のメンバーです。
 				t_swapchain_desc.Flags = 0;
 
-				//出力ウィンドウへの HWND ハンドルです。このメンバーを NULL にすることはできません。
+				//出力ウィンドウへの HWND ハンドルです。
+				//このメンバーをNULLにすることはできません。
 				t_swapchain_desc.OutputWindow = t_hwnd;
 
-				//マルチサンプリング パラメーターを表す DXGI_SAMPLE_DESC 構造体です。
+				//マルチサンプリング パラメーターを表すDXGI_SAMPLE_DESC構造体です。
 				t_swapchain_desc.SampleDesc.Count = 1;
 				t_swapchain_desc.SampleDesc.Quality = 0;
 
-				//サーフェスの表示後に表示バッファーの内容を処理するためのオプションを表すDXGI_SWAP_EFFECT 列挙型のメンバーです。
+				//サーフェスの表示後に表示バッファーの内容を処理するためのオプションを表すDXGI_SWAP_EFFECT列挙型のメンバーです。
 				t_swapchain_desc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 
 				//出力がウィンドウモードの場合はTRUE です。
-				//それ以外の場合はFALSEです。詳細については、「IDXGIFactory::CreateSwapChain」を参照してください。
-				t_swapchain_desc.Windowed = TRUE;
+				//それ以外の場合はFALSEです。詳細については「IDXGIFactory::CreateSwapChain」を参照してください。
+				t_swapchain_desc.Windowed = FALSE;
 			}
 
 			{
@@ -218,8 +187,8 @@ namespace NBsys{namespace ND3d11
 				IDXGISwapChain* t_raw_swapchain = nullptr;
 				ID3D11Device* t_raw_device = nullptr;
 				ID3D11DeviceContext* t_raw_devicecontext = nullptr;
-				const HRESULT t_result = D3D11CreateDeviceAndSwapChain(
-					t_adapter.get(),
+				const HRESULT t_result = ::D3D11CreateDeviceAndSwapChain(
+					WIN_NULL,
 					D3D_DRIVER_TYPE_HARDWARE,
 					WIN_NULL,
 					#if defined(ROM_DEVELOP) || defined(ROM_DEEPDEBUG) || defined(ROM_FULLDEBUG)
@@ -332,6 +301,7 @@ namespace NBsys{namespace ND3d11
 					Memory::memset(&t_desc,0,sizeof(t_desc));
 					t_desc.Format = t_format_depthstencil;
 					t_desc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+					t_desc.Texture2D.MipSlice = 0;
 				}
 				ID3D11DepthStencilView* t_raw = nullptr;
 				HRESULT t_result = this->device->CreateDepthStencilView(this->depthbuffer.get(),&t_desc,&t_raw);
@@ -351,6 +321,7 @@ namespace NBsys{namespace ND3d11
 					t_desc.Format = t_format_depthstencil_resource;
 					t_desc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 					t_desc.Texture2D.MipLevels = 1;
+					t_desc.Texture2D.MostDetailedMip = 0;
 				}
 
 				ID3D11ShaderResourceView* t_raw = nullptr;
@@ -401,6 +372,11 @@ namespace NBsys{namespace ND3d11
 	*/
 	void D3d11_Impl::Render_Delete()
 	{
+		if(this->devicecontext){
+			this->devicecontext->ClearState();
+			this->devicecontext->Flush();
+		}
+
 		this->vertexshader_list.clear();
 		this->pixelshader_list.clear();
 		this->vertexbuffer_list.clear();
@@ -1331,11 +1307,11 @@ namespace NBsys{namespace ND3d11
 
 	/** Render_Present
 	*/
-	bool D3d11_Impl::Render_Present()
+	bool D3d11_Impl::Render_Present(s32 a_sync_interval)
 	{
 		if(this->testpresent_mode == false){
 			if(this->swapchain){
-				HRESULT t_result = this->swapchain->Present(0,0);
+				HRESULT t_result = this->swapchain->Present(a_sync_interval,0);
 
 				if(t_result == DXGI_STATUS_OCCLUDED){
 

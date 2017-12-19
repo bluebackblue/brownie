@@ -182,9 +182,9 @@ namespace NBsys{namespace ND3d11
 
 	/** Render_Present
 	*/
-	bool D3d11::Render_Present()
+	bool D3d11::Render_Present(s32 a_sync_interval)
 	{
-		return this->impl->Render_Present();
+		return this->impl->Render_Present(a_sync_interval);
 	}
 
 	/** Render_SetFont

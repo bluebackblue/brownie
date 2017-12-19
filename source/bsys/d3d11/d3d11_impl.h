@@ -537,7 +537,7 @@ namespace NBsys{namespace ND3d11
 
 		/** Render_Present
 		*/
-		bool Render_Present();
+		bool Render_Present(s32 a_sync_interval);
 
 	public:
 
