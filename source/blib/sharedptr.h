@@ -268,12 +268,20 @@ namespace NBlib
 
 		public:
 
+			#if defined(new)
+			#undef new
+			#endif
+
 			/** operator new
 			*/
 			static void* operator new(size_t a_size) noexcept
 			{
 				return sharedptrbase::Alloc(a_size);
 			}
+
+			#if defined(custom_new)
+			#define new custom_new
+			#endif
 		
 			/** operator delete
 			*/
@@ -330,6 +338,10 @@ namespace NBlib
 
 		public:
 
+			#if defined(new)
+			#undef new
+			#endif
+
 			/** operator new
 			*/
 			static void* operator new(size_t /*a_size*/) noexcept
@@ -337,6 +349,10 @@ namespace NBlib
 				ASSERT(0);
 				return nullptr;
 			}
+
+			#if defined(custom_new)
+			#define new custom_new
+			#endif
 		
 			/** operator delete
 			*/
@@ -498,7 +514,16 @@ namespace NBlib
 			{
 				//開始時は使用数１、参照数１。
 				if(a_instance != nullptr){
+
+					#if defined(new)
+					#undef new
+					#endif
+
 					this->impl = new sharedptr_impl<T,default_delete<T>>(a_instance,default_delete<T>());
+
+					#if defined(custom_new)
+					#define new custom_new
+					#endif
 
 					#if(BLIB_SHAREDPTR_CACHE_ENABLE)
 					this->cache = const_cast<T*>(a_instance);
@@ -518,8 +543,17 @@ namespace NBlib
 			{
 				//開始時は使用数１、参照数１。
 				if(a_instance != nullptr){
+
+					#if defined(new)
+					#undef new
+					#endif
+
 					//「sharedptr<T>」の削除時に削除子に渡すポインタの型は「T2*」。
 					this->impl = new sharedptr_impl<T2,D>(a_instance,a_deleter);
+
+					#if defined(custom_new)
+					#define new custom_new
+					#endif
 
 					#if(BLIB_SHAREDPTR_CACHE_ENABLE)
 					this->cache = static_cast<T*>(const_cast<T2*>(a_instance));
@@ -680,7 +714,16 @@ namespace NBlib
 
 				//開始時は使用数１、参照数１。
 				if(a_instance != nullptr){
+
+					#if defined(new)
+					#undef new
+					#endif
+
 					this->impl = new sharedptr_impl<T,default_delete<T>>(a_instance,default_delete<T>());
+
+					#if defined(custom_new)
+					#define new custom_new
+					#endif
 
 					#if(BLIB_SHAREDPTR_CACHE_ENABLE)
 					this->cache = a_instance;
@@ -705,8 +748,17 @@ namespace NBlib
 
 				//開始時は使用数１、参照数１。
 				if(a_instance != nullptr){
+
+					#if defined(new)
+					#undef new
+					#endif
+
 					//「sharedptr<T>」の削除時に削除子に渡すポインタの型は「T2*」。
 					this->impl = new sharedptr_impl<T2,D>(a_instance,a_deleter);
+
+					#if defined(custom_new)
+					#define new custom_new
+					#endif
 
 					#if(BLIB_SHAREDPTR_CACHE_ENABLE)
 					this->cache = a_instance;

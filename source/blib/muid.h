@@ -47,6 +47,10 @@ namespace NBlib
 
 	public:
 
+		#if defined(new)
+		#undef new
+		#endif
+
 		/** operator new
 		*/
 		static void* operator new(size_t a_size) noexcept
@@ -54,6 +58,10 @@ namespace NBlib
 			return Muid_Impl::Alloc(a_size);
 		}
 		
+		#if defined(custom_new)
+		#define new custom_new
+		#endif
+
 		/** operator delete
 		*/
 		static void operator delete(void* a_pointer)
@@ -89,7 +97,17 @@ namespace NBlib
 		explicit Muid(bool a_auto_create)
 		{
 			if(a_auto_create == true){
+
+				#if defined(new)
+				#undef new
+				#endif
+
 				this->id.reset(new Muid_Impl());
+
+				#if defined(custom_new)
+				#define new custom_new
+				#endif
+
 			}else{
 				this->id.reset();
 			}
@@ -142,7 +160,15 @@ namespace NBlib
 		*/
 		void Create()
 		{
+			#if defined(new)
+			#undef new
+			#endif
+
 			this->id.reset(new Muid_Impl());
+
+			#if defined(custom_new)
+			#define new custom_new
+			#endif
 		}
 
 		/** 削除。

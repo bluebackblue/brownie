@@ -817,7 +817,17 @@ namespace NBlib
 			
 				//リストの最後に追加。
 				if(t_value_size > 0){
+
+					#if defined(new)
+					#undef new
+					#endif
+
 					sharedptr<JsonItem> t_additem(new JsonItem());
+
+					#if defined(custom_new)
+					#define new custom_new
+					#endif
+
 					{
 						t_additem->SetJsonString(a_jsonstring.substr(t_index,t_value_size));
 					}
@@ -948,7 +958,17 @@ namespace NBlib
 			
 				//リストに追加。
 				if(t_value_size > 0){
+
+					#if defined(new)
+					#undef new
+					#endif
+
 					sharedptr<JsonItem> t_additem(new JsonItem());
+
+					#if defined(custom_new)
+					#define new custom_new
+					#endif
+
 					{
 						t_additem->SetJsonString(a_jsonstring.substr(t_index,t_value_size));
 					}
@@ -1176,7 +1196,16 @@ namespace NBlib
 	*/
 	sharedptr<JsonItem> JsonItem::DeepCopy() const
 	{
+		#if defined(new)
+		#undef new
+		#endif
+
 		sharedptr<JsonItem> t_new_jsonitem(new JsonItem(this->ConvertJsonString()));
+
+		#if defined(custom_new)
+		#define new custom_new
+		#endif
+
 		return t_new_jsonitem;
 	}
 

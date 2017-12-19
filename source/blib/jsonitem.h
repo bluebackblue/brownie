@@ -199,6 +199,10 @@ namespace NBlib
 
 	public:
 
+		#if defined(new)
+		#undef new
+		#endif
+
 		/** operator new
 		*/
 		static void* operator new(size_t a_size) noexcept
@@ -206,6 +210,10 @@ namespace NBlib
 			return JsonItem::Alloc(a_size);
 		}
 		
+		#if defined(custom_new)
+		#define new custom_new
+		#endif
+
 		/** operator delete
 		*/
 		static void operator delete(void* a_pointer)

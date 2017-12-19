@@ -146,16 +146,32 @@ namespace NBlib
 		*/
 		void construct(T* a_pointer)
 		{
+			#if defined(new)
+			#undef new
+			#endif
+
 			//placement new
 			::new (static_cast<void*>(a_pointer)) T();
+
+			#if defined(custom_new)
+			#define new custom_new
+			#endif
 		}
 
 		/** 明示的なコンストラクタの呼び出し。
 		*/
 		void construct(pointer a_pointer,const T& a_value)
 		{
+			#if defined(new)
+			#undef new
+			#endif
+
 			//placement new
 			::new ((void*)a_pointer) T(a_value);
+
+			#if defined(custom_new)
+			#define new custom_new
+			#endif
 		}
 
 		/** 明示的なデストラクタの呼び出し。
@@ -285,16 +301,32 @@ namespace NBlib
 		*/
 		void construct(T* a_pointer)
 		{
+			#if defined(new)
+			#undef new
+			#endif
+
 			//placement new
 			::new (static_cast<void*>(a_pointer)) T();
+
+			#if defined(custom_new)
+			#define new custom_new
+			#endif
 		}
 
 		/** 明示的なコンストラクタの呼び出し。
 		*/
 		void construct(pointer a_pointer,const T& a_value)
 		{
+			#if defined(new)
+			#undef new
+			#endif
+
 			//placement new
 			::new ((void*)a_pointer) T(a_value);
+
+			#if defined(custom_new)
+			#define new custom_new
+			#endif
 		}
 
 		/** 明示的なデストラクタの呼び出し。
