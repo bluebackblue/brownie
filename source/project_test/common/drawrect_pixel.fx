@@ -9,14 +9,10 @@
 */
 
 
-/** DiffuseSampler
+/** diffuse_sampler
 */
-SamplerState DiffuseSampler
-{
-    Filter = MIN_MAG_MIP_LINEAR;
-    AddressU = Wrap;
-    AddressV = Wrap;
-};
+SamplerState diffuse_sampler : register(s0);
+
 
 
 /** tex_diffuse
@@ -54,7 +50,7 @@ float4 PS(VS_IN a_vs_in) : SV_Target
 
 	if(flag1 & 0x00000001){
 		//use texture
-		t_color *= tex_diffuse.Sample(DiffuseSampler,a_vs_in.in_uv);
+		t_color *= tex_diffuse.Sample(diffuse_sampler,a_vs_in.in_uv);
 	}
 
 	//debug

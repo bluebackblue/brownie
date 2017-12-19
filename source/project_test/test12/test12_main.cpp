@@ -106,15 +106,6 @@ private:
 	*/
 	bool draw;
 
-	/** blendstate_id
-	*/
-	s32 blendstate_id;
-
-	/** rasterizerstate_cull
-	*/
-	s32 rasterizerstate_cull_back_id;
-	s32 rasterizerstate_cull_none_id;
-
 	/** depthstencilstate
 	*/
 	s32 depthstencilstate_check_on_write_on_id;
@@ -178,13 +169,6 @@ public:
 				if(s_drawfont_material->IsInitialized() == false){
 					break;
 				}
-
-				//ブレンドステータス。
-				this->blendstate_id = s_d3d11->CreateBlendState(true);
-
-				//ラスタライザー。
-				this->rasterizerstate_cull_back_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::Back);
-				this->rasterizerstate_cull_none_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::None);
 
 				//深度ステンシル。
 				this->depthstencilstate_check_on_write_on_id = s_d3d11->CreateDepthStencilState(true,true);
@@ -515,6 +499,18 @@ void Test_Main()
 
 	s_window->Delete();
 	s_window.reset();
+
+	s_window_texture_1.reset();
+	s_window_texture_2.reset();
+	s_window_texture_3.reset();
+	s_window_log.reset();
+
+	s_drawfont_material.reset();
+	s_drawrect_material.reset();
+	s_drawline_manager.reset();
+	s_windowmenu_callback.reset();
+	s_pad_device.reset();
+	s_render2d.reset();
 
 	s_app.reset();
 

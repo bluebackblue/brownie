@@ -1,11 +1,11 @@
-ï»¿#pragma once
+#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ï¼¤ï¼“ï¼¤ï¼‘ï¼‘ã€‚
+ * @brief ‚c‚R‚c‚P‚PB
 */
 
 
@@ -25,9 +25,9 @@
 #if(BSYS_D3D11_ENABLE)
 namespace NBsys{namespace ND3d11
 {
-	/** æ·±åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ä½œæˆã€‚
+	/** ƒTƒ“ƒvƒ‰[ƒXƒe[ƒgì¬B
 	*/
-	class D3d11_Impl_ActionBatching_DepthStencilState_Create : public NBsys::NActionBatching::ActionBatching_ActionItem_Base
+	class D3d11_Impl_ActionBatching_SamplerState_Create : public NBsys::NActionBatching::ActionBatching_ActionItem_Base
 	{
 	private:
 
@@ -35,47 +35,47 @@ namespace NBsys{namespace ND3d11
 		*/
 		D3d11_Impl& d3d11_impl;
 
-		/** DepthStencilState
+		/** SamplerState
 		*/
-		sharedptr<D3d11_Impl_DepthStencilState> depthstencilstate;
+		sharedptr<D3d11_Impl_SamplerState> samplerstate;
 
 	public:
 
 		/** constructor
 		*/
-		D3d11_Impl_ActionBatching_DepthStencilState_Create(D3d11_Impl& a_d3d11_impl,sharedptr<D3d11_Impl_DepthStencilState>& a_depthstencilstate)
+		D3d11_Impl_ActionBatching_SamplerState_Create(D3d11_Impl& a_d3d11_impl,sharedptr<D3d11_Impl_SamplerState>& a_samplerstate)
 			:
 			d3d11_impl(a_d3d11_impl),
-			depthstencilstate(a_depthstencilstate)
+			samplerstate(a_samplerstate)
 		{
 		}
 
 		/** destructor
 		*/
-		virtual ~D3d11_Impl_ActionBatching_DepthStencilState_Create()
+		virtual ~D3d11_Impl_ActionBatching_SamplerState_Create()
 		{
 		}
 
 	public:
 
-		/** ã‚¢ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹ã€‚
+		/** ƒAƒNƒVƒ‡ƒ“ŠJnB
 		*/
 		virtual void Start()
 		{
 		}
 
-		/** ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ä¸­ã€‚
+		/** ƒAƒNƒVƒ‡ƒ“’†B
 		*/
 		virtual s32 Do(f32& a_delta,bool a_endrequest)
 		{
 			if(a_endrequest == true){
-				//ä¸­æ–­ã€‚
+				//’†’fB
 			}
 
-			//Render_CreateDepthStencilState
-			this->d3d11_impl.Render_CreateDepthStencilState(this->depthstencilstate);
+			//Render_CreateSamplerState
+			this->d3d11_impl.Render_CreateSamplerState(this->samplerstate);
 
-			//æˆåŠŸã€‚
+			//¬Œ÷B
 			return 1;
 		}
 

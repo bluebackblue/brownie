@@ -138,6 +138,13 @@ namespace NBsys{namespace ND3d11
 		return this->impl->CreateDepthStencilState(a_depthtest_flag,a_depthwrie_flag);
 	}
 
+	/** CreateSamplerState
+	*/
+	s32 D3d11::CreateSamplerState(bool a_todo_flag)
+	{
+		return this->impl->CreateSamplerState(a_todo_flag);
+	}
+
 	/** Render_Create
 	*/
 	void D3d11::Render_Create(sharedptr<NWindow::Window>& a_window,s32 a_width,s32 a_height)
@@ -330,6 +337,13 @@ namespace NBsys{namespace ND3d11
 	void D3d11::Render_SetDepthStencilState(s32 a_depthstencilstate_id)
 	{
 		this->impl->Render_SetDepthStencilState(a_depthstencilstate_id);
+	}
+
+	/** Render_SetSamplerState
+	*/
+	void D3d11::Render_SetSamplerState(s32 a_register_index,s32 a_samplerstate_id)
+	{
+		this->impl->Render_SetSamplerState(a_register_index,a_samplerstate_id);
 	}
 
 }}

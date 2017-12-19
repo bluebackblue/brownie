@@ -123,6 +123,7 @@ namespace NCommon
 		s32 vs_constantbuffer_b0_id;
 		s32 ps_constantbuffer_b0_id;
 		s32 blendstate_id;
+		s32 samplerstate_id;
 		s32 rasterizerstate_cull_none_id;
 
 		/** vertex
@@ -192,8 +193,11 @@ namespace NCommon
 					this->vertex_buffer_id = this->d3d11->CreateVertexBuffer(this->vertex->GetVertexPointer(),this->vertex->GetVertexStrideByte(),0,t_vertex_allcountof,true);
 					this->vertex->ClearVertex();
 
-					//ブレンドステータス。
+					//ブレンドステート。
 					this->blendstate_id = this->d3d11->CreateBlendState(true);
+
+					//サンプラーステート。
+					this->samplerstate_id = this->d3d11->CreateSamplerState(true);
 
 					//ラスタライザー。
 					this->rasterizerstate_cull_none_id = this->d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::None);
@@ -364,16 +368,14 @@ namespace NCommon
 				this->d3d11->Render_VSSetShader(this->vertexshader_id);
 				this->d3d11->Render_PSSetShader(this->pixelshader_id);
 
-				//テクスチャー設定。
-				if(t_texture_id >= 0){
-					this->d3d11->Render_SetTexture(0,t_texture_id);
-				}
-
 				//トポロジー。
 				this->d3d11->Render_SetPrimitiveTopology(NBsys::ND3d11::D3d11_TopologyType::Id::TriangleList);
 
-				//ブレンドステータス。
+				//ブレンドステート。
 				this->d3d11->Render_SetBlendState(this->blendstate_id);
+
+				//サンプラーステート。
+				this->d3d11->Render_SetSamplerState(0,this->samplerstate_id);
 
 				//コンスタントバッファ。
 				DrawRect_VS_ConstantBuffer_B0 t_vs_constantbuffer_b0;
@@ -402,6 +404,13 @@ namespace NCommon
 				//バーテックスバッファ。
 				this->d3d11->Render_ReMapVertexBuffer(this->vertex_buffer_id,this->vertex->GetVertexPointer(),this->vertex->GetVertexStrideByte() * this->vertex->GetVertexCountOf(0));
 				this->d3d11->Render_SetVertexBuffer(this->vertex_buffer_id);
+
+				//テクスチャー設定。
+				if(t_texture_id >= 0){
+					this->d3d11->Render_SetTexture(0,t_texture_id);
+				}else{
+					this->d3d11->Render_SetTexture(0,-1);
+				}
 
 				//描画。
 				this->d3d11->Render_Draw(this->vertex->GetVertexCountOf(0),0);

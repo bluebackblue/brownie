@@ -177,8 +177,11 @@ namespace NCommon
 					this->vertex_buffer_id = this->d3d11->CreateVertexBuffer(this->vertex->GetVertexPointer(),this->vertex->GetVertexStrideByte(),0,t_vertex_allcountof,true);
 					this->vertex->ClearVertex();
 
-					//ブレンドステータス。
+					//ブレンドステート。
 					this->blendstate_id = this->d3d11->CreateBlendState(true);
+
+					//サンプラーステート。
+					//
 
 					//ラスタライザー。
 					this->rasterizerstate_cull_none_id = this->d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::None);
@@ -248,8 +251,10 @@ namespace NCommon
 				//トポロジー。
 				this->d3d11->Render_SetPrimitiveTopology(NBsys::ND3d11::D3d11_TopologyType::Id::LineList);
 
-				//ブレンドステータス。
+				//ブレンドステート。
 				this->d3d11->Render_SetBlendState(this->blendstate_id);
+
+				//サンプラーステート。
 
 				//コンスタントバッファ。
 				DrawLine_VS_ConstantBuffer_B0 t_vs_constantbuffer_b0;

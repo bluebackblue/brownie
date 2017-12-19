@@ -195,6 +195,19 @@ namespace NBsys{namespace ND3d11
 		bool depthwrie_flag;
 	};
 
+	/** D3d11_Impl_SamplerState
+	*/
+	struct D3d11_Impl_SamplerState
+	{
+		/** rasterizerstate
+		*/
+		sharedptr<ID3D11SamplerState> samplerstate;
+
+		/** todo_flag
+		*/
+		bool todo_flag;
+	};
+
 	/** D3d11_Impl
 
 	デバイスへのアクセスを行う関数は「Render_」で始まります。
@@ -307,6 +320,10 @@ namespace NBsys{namespace ND3d11
 		*/
 		STLMap<s32,sharedptr<D3d11_Impl_DepthStencilState>>::Type depthstencilstate_list;
 
+		/** samplerstate_list
+		*/
+		STLMap<s32,sharedptr<D3d11_Impl_SamplerState>>::Type samplerstate_list;
+
 	public:
 		/** constructor
 		*/
@@ -369,6 +386,10 @@ namespace NBsys{namespace ND3d11
 		*/
 		sharedptr<ID3D11DepthStencilState>& GetDepthStencilState();
 
+		/** Render_GetSamplerState
+		*/
+		sharedptr<ID3D11SamplerState>& GetSamplerState();
+
 		/** Render_GetDepthStencilView
 		*/
 		sharedptr<ID3D11DepthStencilView>& GetDepthStencilView();
@@ -407,6 +428,10 @@ namespace NBsys{namespace ND3d11
 		*/
 		sharedptr<D3d11_Impl_DepthStencilState>& GetDepthStencilState(s32 a_depthstencilstate_id);
 
+		/** GetSamplerState
+		*/
+		sharedptr<D3d11_Impl_SamplerState>& GetSamplerState(s32 a_samplerstate_id);
+
 	public:
 
 		/** CreateVertexShader
@@ -441,6 +466,9 @@ namespace NBsys{namespace ND3d11
 		*/
 		s32 CreateDepthStencilState(bool a_depthtest_flag,bool a_depthwrie_flag);
 
+		/** CreateSamplerState
+		*/
+		s32 CreateSamplerState(bool a_todo_flag);
 	public:
 
 		/** Render_CreateVertexShader
@@ -475,6 +503,9 @@ namespace NBsys{namespace ND3d11
 		*/
 		void Render_CreateDepthStencilState(sharedptr<D3d11_Impl_DepthStencilState>& a_depthstencilstate);
 
+		/** Render_CreateSamplerState
+		*/
+		void Render_CreateSamplerState(sharedptr<D3d11_Impl_SamplerState>& a_samplerstate);
 	public:
 
 		/** Render_SetFont
@@ -592,6 +623,11 @@ namespace NBsys{namespace ND3d11
 		/** Render_SetDepthStencilState
 		*/
 		void Render_SetDepthStencilState(s32 a_depthstencilstate_id);
+
+		/** Render_SetSamplerState
+		*/
+		void Render_SetSamplerState(s32 a_register_t_index,s32 a_samplerstate_id);
+
 	};
 
 }}

@@ -40,6 +40,7 @@
 #include "./d3d11_impl_actionbatching_blendstate_create.h"
 #include "./d3d11_impl_actionbatching_rasterizerstate_create.h"
 #include "./d3d11_impl_actionbatching_depthstencilstate_create.h"
+#include "./d3d11_impl_actionbatching_samplerstate_create.h"
 
 
 /** lib
@@ -82,7 +83,8 @@ namespace NBsys{namespace ND3d11
 		texture_list(),
 		blendstate_list(),
 		rasterizerstate_list(),
-		depthstencilstate_list()
+		depthstencilstate_list(),
+		samplerstate_list()
 	{
 	}
 
@@ -178,7 +180,7 @@ namespace NBsys{namespace ND3d11
 
 				//出力がウィンドウモードの場合はTRUE です。
 				//それ以外の場合はFALSEです。詳細については「IDXGIFactory::CreateSwapChain」を参照してください。
-				t_swapchain_desc.Windowed = FALSE;
+				t_swapchain_desc.Windowed = TRUE;
 			}
 
 			{
@@ -385,6 +387,7 @@ namespace NBsys{namespace ND3d11
 		this->blendstate_list.clear();
 		this->rasterizerstate_list.clear();
 		this->depthstencilstate_list.clear();
+		this->samplerstate_list.clear();
 
 		this->depthbuffer_depthstencilstate.reset();
 		this->depthbuffer_shaderresourceview.reset();
@@ -558,6 +561,19 @@ namespace NBsys{namespace ND3d11
 			}
 		}
 		return sharedptr<D3d11_Impl_DepthStencilState>::null();
+	}
+
+	/** GetSamplerState
+	*/
+	sharedptr<D3d11_Impl_SamplerState>& D3d11_Impl::GetSamplerState(s32 a_samplerstate_id)
+	{
+		STLMap<s32,sharedptr<D3d11_Impl_SamplerState>>::iterator t_it = this->samplerstate_list.find(a_samplerstate_id);
+		if(t_it != this->samplerstate_list.end()){
+			if(t_it->second != nullptr){
+				return t_it->second;
+			}
+		}
+		return sharedptr<D3d11_Impl_SamplerState>::null();
 	}
 
 	/** CreateVertexShader
@@ -767,6 +783,31 @@ namespace NBsys{namespace ND3d11
 		this->depthstencilstate_list.insert(STLMap<s32,sharedptr<D3d11_Impl_DepthStencilState>>::value_type(t_depthstencilstate_id,t_depthstencilstate));
 
 		return t_depthstencilstate_id;
+	}
+
+	/** CreateSamplerState
+	*/
+	s32 D3d11_Impl::CreateSamplerState(bool a_todo_flag)
+	{
+		//ＩＤ。
+		s32 t_samplerstate_id = this->id_maker.MakeID();
+
+		sharedptr<D3d11_Impl_SamplerState> t_samplerstate = new D3d11_Impl_SamplerState();
+		{
+			t_samplerstate->todo_flag = a_todo_flag;
+		}
+
+		//レンダーコマンド。
+		sharedptr<NBsys::NActionBatching::ActionBatching_ActionList> t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
+		{
+			t_actionlist->Add(new D3d11_Impl_ActionBatching_SamplerState_Create(*this,t_samplerstate));
+		}
+		this->StartBatching(t_actionlist);
+
+		//管理リスト。
+		this->samplerstate_list.insert(STLMap<s32,sharedptr<D3d11_Impl_SamplerState>>::value_type(t_samplerstate_id,t_samplerstate));
+
+		return t_samplerstate_id;
 	}
 
 	/** Render_CreateVertexShader
@@ -1164,6 +1205,38 @@ namespace NBsys{namespace ND3d11
 		}
 	}
 
+	/** Render_CreateSamplerState
+	*/
+	void D3d11_Impl::Render_CreateSamplerState(sharedptr<D3d11_Impl_SamplerState>& a_samplerstate)
+	{
+		D3D11_SAMPLER_DESC t_desc;
+		{
+			Memory::memset(&t_desc,0,sizeof(t_desc));
+
+			t_desc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+			t_desc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+			t_desc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+			t_desc.ComparisonFunc = D3D11_COMPARISON_NEVER;
+			t_desc.MinLOD = 0;
+			t_desc.MaxLOD = D3D11_FLOAT32_MAX;
+
+			if(a_samplerstate->todo_flag){
+				t_desc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+			}else{
+				t_desc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+			}
+		}
+
+		ID3D11SamplerState* t_raw = nullptr;
+		HRESULT t_result = this->device->CreateSamplerState(&t_desc,&t_raw);
+		if(t_raw != nullptr){
+			a_samplerstate->samplerstate.reset(t_raw,release_delete<ID3D11SamplerState>());
+		}
+		if(FAILED(t_result)){
+			a_samplerstate->samplerstate.reset();
+		}
+	}
+
 	/** Render_SetFont
 	*/
 	#if(BSYS_FONT_ENABLE)
@@ -1548,6 +1621,13 @@ namespace NBsys{namespace ND3d11
 				}
 			}
 		}else{
+
+			ID3D11ShaderResourceView* t_resourceview_list[] = {
+				nullptr
+			};
+
+			this->devicecontext->PSSetShaderResources(a_register_t_index,COUNTOF(t_resourceview_list),t_resourceview_list);
+
 			return;
 		}
 
@@ -1606,6 +1686,28 @@ namespace NBsys{namespace ND3d11
 			if(t_depthstencilstate){
 				if(this->devicecontext){
 					this->devicecontext->OMSetDepthStencilState(t_depthstencilstate->depthstencilstate.get(),0);
+
+					return;
+				}
+			}
+		}
+
+		ASSERT(0);
+	}
+
+	/** Render_SetSamplerState
+	*/
+	void D3d11_Impl::Render_SetSamplerState(s32 a_register_t_index,s32 a_samplerstate_id)
+	{
+		if(a_samplerstate_id >= 0){
+			sharedptr<D3d11_Impl_SamplerState>& t_samplerstate = this->GetSamplerState(a_samplerstate_id);
+			if(t_samplerstate){
+				if(this->devicecontext){
+					ID3D11SamplerState* t_samplerstate_list[] = {
+						t_samplerstate->samplerstate.get()
+					};
+
+					this->devicecontext->PSSetSamplers(a_register_t_index,1,t_samplerstate_list);
 
 					return;
 				}

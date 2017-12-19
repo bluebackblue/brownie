@@ -25,7 +25,7 @@
 #if(BSYS_D3D11_ENABLE)
 namespace NBsys{namespace ND3d11
 {
-	/** テクスチャー作成。
+	/** ラスタライザステート作成。
 	*/
 	class D3d11_Impl_ActionBatching_RasterizerState_Create : public NBsys::NActionBatching::ActionBatching_ActionItem_Base
 	{

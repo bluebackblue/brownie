@@ -9,14 +9,9 @@
 */
 
 
-/** DiffuseSampler
+/** diffuse_sampler
 */
-SamplerState DiffuseSampler
-{
-    Filter = MIN_MAG_POINT_MIP_POINT;
-    AddressU = Wrap;
-    AddressV = Wrap;
-};
+SamplerState diffuse_sampler : register(s0);
 
 
 /** tex_diffuse
@@ -67,7 +62,7 @@ float4 PS(VS_IN a_vs_in) : SV_Target
 	if(t_texture_index == 0){
 		//小サイズフォント。
 
-		t_color *= tex_diffuse_1.Sample(DiffuseSampler,a_vs_in.in_uv);
+		t_color *= tex_diffuse_1.Sample(diffuse_sampler,a_vs_in.in_uv);
 
 		if(t_color.a < 0.2){
 			discard;
@@ -78,15 +73,15 @@ float4 PS(VS_IN a_vs_in) : SV_Target
 	}else if(t_texture_index == 1){
 		//中サイズフォント。
 
-		t_color *= tex_diffuse_2.Sample(DiffuseSampler,a_vs_in.in_uv);
+		t_color *= tex_diffuse_2.Sample(diffuse_sampler,a_vs_in.in_uv);
 	}else if(t_texture_index == 2){
 		//大サイズフォント。
 
-		t_color *= tex_diffuse_3.Sample(DiffuseSampler,a_vs_in.in_uv);
+		t_color *= tex_diffuse_3.Sample(diffuse_sampler,a_vs_in.in_uv);
 	}else{
 		//特大サイズフォント。
 
-		t_color *= tex_diffuse_4.Sample(DiffuseSampler,a_vs_in.in_uv);
+		t_color *= tex_diffuse_4.Sample(diffuse_sampler,a_vs_in.in_uv);
 	}
 	
 	return t_color;
