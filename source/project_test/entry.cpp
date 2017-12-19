@@ -64,11 +64,23 @@ EntryParam& GetEntryParamReference()
 	return s_entryparam;
 }
 
+#if defined(ROM_DEVELOP) || defined(ROM_DEEPDEBUG) || defined(ROM_FULLDEBUG)
+bool s_leakcheck = false;
+#endif
 
 /** Main
 */
 void main(int a_argc,char** a_argv)
 {
+	#if defined(PLATFORM_VCWIN)
+	#if defined(ROM_DEVELOP) || defined(ROM_DEEPDEBUG) || defined(ROM_FULLDEBUG)
+	if(s_leakcheck == false){
+		s_leakcheck = true;
+		::_CrtSetDbgFlag(_CRTDBG_LEAK_CHECK_DF|_CRTDBG_ALLOC_MEM_DF);
+	}
+	#endif
+	#endif
+
 	if(NBlib::IsBootInitialize() == false){
 		NBlib::BootInitialize();
 	}
@@ -86,6 +98,13 @@ void main(int a_argc,char** a_argv)
 #if defined(PLATFORM_VCWIN)
 int WINAPI WinMain(_In_ HINSTANCE a_hinstance,_In_opt_ HINSTANCE /*a_prev_hinstance*/,_In_ LPSTR a_commandline,_In_ int a_cmdshow)
 {
+	#if defined(ROM_DEVELOP) || defined(ROM_DEEPDEBUG) || defined(ROM_FULLDEBUG)
+	if(s_leakcheck == false){
+		s_leakcheck = true;
+		::_CrtSetDbgFlag(_CRTDBG_LEAK_CHECK_DF|_CRTDBG_ALLOC_MEM_DF);
+	}
+	#endif
+
 	if(NBlib::IsBootInitialize() == false){
 		NBlib::BootInitialize();
 	}

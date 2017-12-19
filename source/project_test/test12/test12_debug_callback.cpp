@@ -149,5 +149,68 @@ bool Blib_DebugLog_Callback(const char* a_tag,const char* a_string)
 }
 #endif
 
+#if defined(new)
+#undef new
+#endif
+
+void * operator new ( std::size_t size ) throw( std::bad_alloc )
+{
+    if ( size == 0 ) size = 1 ;
+
+    // Executes a loop: Within the loop,
+    while( true )
+    {
+        // the function first attempts to allocate the requested storage.
+        void * ptr = std::malloc( size ) ;
+
+        // if the attempt is successful
+        if ( ptr != nullptr )
+        {// Returns a pointer to the allocated storage
+            return ptr ;
+        }
+
+        // Otherwise, 
+        std::new_handler handler = std::set_new_handler( nullptr ) ;
+        std::set_new_handler( handler ) ;
+
+        // if the argument in the most recent call to set_new_handler() was a null pointer,
+        if ( handler == nullptr )
+        {// throws bad_alloc.
+            throw std::bad_alloc() ;
+        }
+
+        // Otherwise, the function calls the current new_handler function.
+        handler() ;
+        // If the called function returns, the loop repeats.
+    }
+}
+
+void * operator new( std::size_t size, const std::nothrow_t & ) throw()
+{
+    try {
+        // Calls operator new(size).
+        // If the call returns normally, returns the result of that call. 
+        return operator new( size ) ;
+    } catch( ... )
+    {
+        // Otherwise, returns a null pointer.
+        return nullptr ;
+    }
+}
+
+void operator delete( void * ptr ) throw()
+{
+    // If ptr is null, does nothing.(std::free does nothing too)
+    // Otherwise, reclaims the storage allocated by the earlier call to operator new.
+    std::free( ptr ) ;
+}
+
+void operator delete(void * ptr, const std::nothrow_t & ) throw()
+{
+       // calls operator delete(ptr).
+       operator delete( ptr ) ;
+}
+
+
 #endif
 
