@@ -76,7 +76,7 @@ Test12_WindowMenu_Texture::Test12_WindowMenu_Texture(s32 a_id,const STLWString& 
 		t_inititem.size.SetH_StretchChild();
 		t_window->Initialize(t_inititem);
 		{
-			t_window->window_title_text->string = L"Texture";
+			t_window->window_title_text->string = L"テクスチャー";
 
 			t_window->window_title_bg->color = t_window->color_title_bg_normal;
 			t_window->window_title_closebutton->color_normal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
@@ -149,7 +149,7 @@ Test12_WindowMenu_Texture::Test12_WindowMenu_Texture(s32 a_id,const STLWString& 
 	{
 		NBsys::NWindowMenu::WindowMenu_Window_Plate::InitItem t_inititem;
 		t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//横積み。
-		t_inititem.size.SetH(100);
+		t_inititem.size.SetH(400);
 		t_texture->Initialize(t_inititem);
 		{
 			t_texture->color = NBsys::NColor::Color_F(1.0f,0.0f,0.0f,1.0f);
