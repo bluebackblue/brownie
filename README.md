@@ -5,6 +5,12 @@ C++ library
 MIT License
 https://github.com/bluebackblue/brownie/blob/master/LICENSE
 
+## coverity scan
+<a href="https://scan.coverity.com/projects/brownie">
+  <img alt="Coverity Scan Build Status"
+       src="https://scan.coverity.com/projects/14637/badge.svg"/>
+</a>
+
 ## blib
 low-level library
 
