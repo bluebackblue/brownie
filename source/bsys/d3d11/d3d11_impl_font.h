@@ -49,7 +49,8 @@ namespace NBsys{namespace ND3d11
 			Item(wchar a_code)
 				:
 				code(a_code),
-				lock(false)
+				lock(false),
+				fontstate()
 			{
 			}
 			nonvirtual ~Item()
@@ -105,7 +106,13 @@ namespace NBsys{namespace ND3d11
 			:
 			d3d11_impl(a_opengl_impl),
 			font(a_font),
-			fonttexture_type(a_fonttexture_type)
+			fonttexture_type(a_fonttexture_type),
+			//texturewidth,
+			//textureheight,
+			//texture,
+			//textureid,
+			list(),
+			maplist()
 		{
 			this->texturewidth = static_cast<s32>(NBlib::Math::powf(2,NBlib::Math::ceilf(NBlib::Math::log2f(static_cast<f32>(a_texture_width)))));
 

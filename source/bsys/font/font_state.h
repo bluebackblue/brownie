@@ -33,6 +33,29 @@ namespace NBsys{namespace NFont
 		s32		cell_inc_x;
 		s32		cell_inc_y;
 		s32		ascent;
+
+		/** constructor
+		*/
+		Font_State()
+			:
+			code(0x00),
+			x(0),
+			y(0),
+			black_box_x(0),
+			black_box_y(0),
+			glyph_origin_x(0),
+			glyph_origin_y(0),
+			cell_inc_x(0),
+			cell_inc_y(0),
+			ascent(0)
+		{
+		}
+
+		/** destructor
+		*/
+		nonvirtual ~Font_State()
+		{
+		}
 	};
 
 }}

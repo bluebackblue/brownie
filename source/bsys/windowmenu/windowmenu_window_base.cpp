@@ -43,7 +43,23 @@ namespace NBsys{namespace NWindowMenu
 		parent(nullptr),
 		child_list(),
 		name(a_name),
-		z_sort(0)
+		z_sort(0),
+
+		mode(WindowMenu_Mode::Free),
+		offset(),
+		size(),
+		outrange_mouseevent(false),
+		draw_enable(true),
+		calc_x_fix(false),
+		calc_y_fix(false),
+		calc_w_fix(false),
+		calc_h_fix(false),
+		calc_x(0.0f),
+		calc_y(0.0f),
+		calc_w(0.0f),
+		calc_h(0.0f),
+		calc_child_index(-1),
+		calc_it(STLList<sharedptr<WindowMenu_Window_Base>>::iterator())
 	{
 	}
 

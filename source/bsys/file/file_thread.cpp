@@ -84,10 +84,8 @@ namespace NBsys{namespace NFile
 					//■排他。
 					AutoLock t_autolock(this->lockobject);
 
-					t_request = false;
 					for(s32 ii=0;ii<COUNTOF(this->worklist_pack);ii++){
 						if(this->worklist_pack[ii] != nullptr){
-							t_request = true;
 							t_workitem_pack = this->worklist_pack[ii];
 							this->worklist_pack[ii].reset();
 							break;
@@ -124,10 +122,8 @@ namespace NBsys{namespace NFile
 					//■排他。
 					AutoLock t_autolock(this->lockobject);
 
-					t_request = false;
 					for(s32 ii=0;ii<COUNTOF(this->worklist);ii++){
 						if(this->worklist[ii] != nullptr){
-							t_request = true;
 							t_workitem = this->worklist[ii];
 							this->worklist[ii].reset();
 							break;

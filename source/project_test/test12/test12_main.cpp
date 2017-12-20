@@ -128,7 +128,16 @@ public:
 	App()
 		:
 		step(0),
-		draw(false)
+		draw(false),
+		depthstencilstate_check_on_write_on_id(-1),
+		depthstencilstate_check_off_write_off_id(-1),
+		camera_position(),
+		camera_up(),
+		camera_target(0.0f),
+		camera_fov_deg(0.0f),
+		camera_near(0.0f),
+		camera_far(0.0f),
+		camera_time(0.0f)
 	{
 	}
 

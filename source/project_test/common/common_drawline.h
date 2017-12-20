@@ -125,7 +125,17 @@ namespace NCommon
 			:
 			step(0),
 			is_initialized(false),
-			d3d11(a_d3d11)
+			d3d11(a_d3d11),
+			asyncresult_vertexshader(),
+			asyncresult_pixelshader(),
+			vertexshader_id(-1),
+			pixelshader_id(-1),
+			vs_constantbuffer_b0_id(-1),
+			ps_constantbuffer_b0_id(-1),
+			blendstate_id(-1),
+			rasterizerstate_cull_none_id(-1),
+			vertex(),
+			vertex_buffer_id()
 		{
 		}
 

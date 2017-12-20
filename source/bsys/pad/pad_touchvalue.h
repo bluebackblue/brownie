@@ -29,6 +29,10 @@ namespace NBsys{namespace NPad
 		/** constructor
 		*/
 		TouchValue()
+			:
+			x(0.0f),
+			y(0.0f),
+			flag(false)
 		{
 		}
 

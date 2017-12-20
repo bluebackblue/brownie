@@ -86,7 +86,7 @@ namespace NBsys{namespace NFont
 	*/
 	Font_State Font_Impl::GetPixel_R8G8B8A8(sharedptr<u8>& a_dest_data,s32 a_offset,s32 a_dest_width,s32 a_dest_height,wchar a_code)
 	{
-		Font_State t_font_state = {0};
+		Font_State t_font_state;
 
 		#if defined(PLATFORM_VCWIN)
 		{

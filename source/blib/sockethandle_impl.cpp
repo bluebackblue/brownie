@@ -287,6 +287,7 @@ namespace NBlib
 			{
 				sockaddr_in t_sockaddr_in;
 				{
+					Memory::memset(&t_sockaddr_in,0,sizeof(t_sockaddr_in));
 					t_sockaddr_in.sin_family = AF_INET;
 					t_sockaddr_in.sin_port = ::htons(a_port);
 					t_sockaddr_in.sin_addr.S_un.S_addr = INADDR_ANY;
@@ -375,7 +376,9 @@ namespace NBlib
 		{
 			s32 t_flag = (a_flag ? 1 : 0);
 
-			::setsockopt(this->rawhandle,SOL_SOCKET,SO_BROADCAST,reinterpret_cast<char*>(&t_flag),sizeof(t_flag));
+			s32 t_ret = ::setsockopt(this->rawhandle,SOL_SOCKET,SO_BROADCAST,reinterpret_cast<char*>(&t_flag),sizeof(t_flag));
+
+			ASSERT(t_ret == 0);
 		}
 		#else
 		{
@@ -394,7 +397,9 @@ namespace NBlib
 		{
 			u32 t_flag = (a_flag ? 1 : 0);
 
-			::ioctlsocket(this->rawhandle,FIONBIO,reinterpret_cast<u_long*>(&t_flag));
+			s32 t_ret = ::ioctlsocket(this->rawhandle,FIONBIO,reinterpret_cast<u_long*>(&t_flag));
+
+			ASSERT(t_ret == 0);
 		}
 		#else
 		{
