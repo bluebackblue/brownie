@@ -113,10 +113,10 @@ namespace NBlib
 			ThreadLocal& t_threadlocal_reference = GetThreadLocal(BLIB_VASTRING_DEBUG_THREADLOCALSLOT);
 
 			if(t_threadlocal_reference.pointer == nullptr){
-				t_threadlocal_reference.pointer = ::malloc(BLIB_VASTRING_DEBUG_SIZE);
+				t_threadlocal_reference.pointer = std::malloc(BLIB_VASTRING_DEBUG_SIZE);
 
 				CallOnExit(std::bind([](void* a_pointer){
-					return ::free(a_pointer);
+					return std::free(a_pointer);
 				},t_threadlocal_reference.pointer));
 			}
 

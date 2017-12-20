@@ -88,7 +88,7 @@
 
 /** メモリリークチェック。
 */
-#if defined(PLATFORM_VCWIN)
+#if defined(PLATFORM_VCWIN) && (0)
 #if defined(ROM_DEVELOP) || defined(ROM_DEEPDEBUG) || defined(ROM_FULLDEBUG)
 
 	#define _CRTDBG_MAP_ALLOC

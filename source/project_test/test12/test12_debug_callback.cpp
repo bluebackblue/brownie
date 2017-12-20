@@ -153,64 +153,99 @@ bool Blib_DebugLog_Callback(const char* a_tag,const char* a_string)
 #undef new
 #endif
 
-void * operator new ( std::size_t size ) throw( std::bad_alloc )
+/** 単純な記憶域の確保。確保に失敗した場合bad_alloc例外をスローする。
+*/
+void* operator new(std::size_t a_size)
 {
-    if ( size == 0 ) size = 1 ;
+	void* t_pointer = operator new(a_size,std::nothrow_t());
 
-    // Executes a loop: Within the loop,
-    while( true )
-    {
-        // the function first attempts to allocate the requested storage.
-        void * ptr = std::malloc( size ) ;
+	if(t_pointer == nullptr){
+		throw(std::bad_alloc());
+	}
 
-        // if the attempt is successful
-        if ( ptr != nullptr )
-        {// Returns a pointer to the allocated storage
-            return ptr ;
-        }
-
-        // Otherwise, 
-        std::new_handler handler = std::set_new_handler( nullptr ) ;
-        std::set_new_handler( handler ) ;
-
-        // if the argument in the most recent call to set_new_handler() was a null pointer,
-        if ( handler == nullptr )
-        {// throws bad_alloc.
-            throw std::bad_alloc() ;
-        }
-
-        // Otherwise, the function calls the current new_handler function.
-        handler() ;
-        // If the called function returns, the loop repeats.
-    }
+	return t_pointer;
 }
 
-void * operator new( std::size_t size, const std::nothrow_t & ) throw()
+/** 単純な記憶域の確保。例外をスローしない。
+*/
+void* operator new(std::size_t a_size,const std::nothrow_t& /*_*/) noexcept
 {
-    try {
-        // Calls operator new(size).
-        // If the call returns normally, returns the result of that call. 
-        return operator new( size ) ;
-    } catch( ... )
-    {
-        // Otherwise, returns a null pointer.
-        return nullptr ;
-    }
+	return std::malloc(a_size);
 }
 
-void operator delete( void * ptr ) throw()
+/** 配置newによる記憶域の確保。
+*/
+#if(0)
+void* operator new(std::size_t a_size,void* a_pointer) noexcept
 {
-    // If ptr is null, does nothing.(std::free does nothing too)
-    // Otherwise, reclaims the storage allocated by the earlier call to operator new.
-    std::free( ptr ) ;
+}
+#endif
+
+/** 単純な記憶域の解放。
+*/
+void operator delete(void* a_pointer,std::size_t a_size) noexcept
+{
+	operator delete(a_pointer,std::nothrow_t());
 }
 
-void operator delete(void * ptr, const std::nothrow_t & ) throw()
+/** 単純な記憶域の解放。例外をスローしない。
+*/
+void operator delete(void* a_pointer,const std::nothrow_t& /**/) noexcept
 {
-       // calls operator delete(ptr).
-       operator delete( ptr ) ;
+	std::free(a_pointer);
 }
 
+/** replacement-newに対応する記憶域の解放。
+*/
+#if(0)
+void operator delete(void* a_pointer,void* /**/) noexcept
+{
+}
+#endif
+
+/** 単純な配列の記憶域の確保。
+*/
+void* operator new[](std::size_t a_size)
+{
+	return operator new(a_size);
+}
+
+/** 単純な配列の記憶域の確保。例外をスローしない。
+*/
+void* operator new[](std::size_t a_size,const std::nothrow_t& /*_*/) noexcept
+{
+	return operator new(a_size,std::nothrow_t());
+}
+
+/** 配置newによる配列の記憶域の確保。
+*/
+#if(0)
+void* operator new[](std::size_t a_size,void* a_pointer) noexcept
+{
+}
+#endif
+
+/** 単純な配列の記憶域の解放。
+*/
+void operator delete[](void* a_pointer,std::size_t a_size) noexcept
+{
+	operator delete(a_pointer);
+}
+
+/** 単純な配列の記憶域の解放。例外をスローしない。
+*/
+void operator delete[](void* a_pointer,const std::nothrow_t& /*_*/) noexcept
+{
+	operator delete(a_pointer,std::nothrow_t());
+}
+
+/** replacement-newによる配列の記憶域の確保。
+*/
+#if(0)
+void operator delete[](void* a_pointer,void* /*_*/) noexcept
+{
+}
+#endif
 
 #endif
 

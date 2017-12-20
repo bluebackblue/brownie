@@ -62,10 +62,10 @@ namespace NBlib
 
 		if(t_threadlocal_reference.pointer == nullptr){
 
-			t_threadlocal_reference.pointer = ::malloc(sizeof(MemoryContainer_Data));
+			t_threadlocal_reference.pointer = std::malloc(sizeof(MemoryContainer_Data));
 
 			NBlib::CallOnExit(std::bind([](void* a_pointer){
-				return ::free(a_pointer);
+				return std::free(a_pointer);
 			},t_threadlocal_reference.pointer));
 
 			t_data = reinterpret_cast<MemoryContainer_Data*>(t_threadlocal_reference.pointer);

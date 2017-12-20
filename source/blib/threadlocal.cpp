@@ -76,10 +76,10 @@ namespace NBlib
 		#endif
 
 		if(t_data == nullptr){
-			t_data = reinterpret_cast<ThreadLocalData*>(::malloc(sizeof(ThreadLocalData)));
+			t_data = reinterpret_cast<ThreadLocalData*>(std::malloc(sizeof(ThreadLocalData)));
 
 			NBlib::CallOnExit(std::bind([](void* a_pointer){
-				return ::free(a_pointer);
+				return std::free(a_pointer);
 			},t_data));
 
 			t_data->Reset();
