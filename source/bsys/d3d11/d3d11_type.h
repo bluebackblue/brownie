@@ -47,6 +47,73 @@ namespace NBsys{namespace ND3d11
 		};
 	};
 
+	/** D3d11_TextureAddressType
+	*/
+	struct D3d11_TextureAddressType
+	{
+		enum Id
+		{
+			/**
+			
+			(u,v)整数区切りごとにテクスチャーを繰り返します。
+			たとえば、uの値が0から3までの場合、テクスチャーが3回繰り返されます。
+			
+			*/
+			Wrap,
+
+			/** Mirror
+
+			(u,v)整数区切りごとにテクスチャーを反転させます。
+			たとえば、uの値が0から1までの場合、テクスチャーの処理が通常どおりに行われますが、
+			1から2までの場合は反転表示(ミラー化)され、2から3までの場合は再び通常の処理が行われます。
+			これ以降も、このパターンで処理されます。
+
+			*/
+			Mirror,
+
+			/** Clamp
+
+			範囲[0.0,1.0]の外にあるテクスチャー座標には、
+			それぞれ0.0または1.0のテクスチャーカラーが設定されます。
+
+			*/
+			Clamp,
+
+			/** Border
+
+			範囲[0.0,1.0]の外にあるテクスチャー座標には、
+			D3D11_SAMPLER_DESCまたはHLSLコードで指定した境界色が設定されます。
+
+			*/
+			Border,
+
+			/** Mirror_Once
+
+			D3D11_TEXTURE_ADDRESS_MIRRORおよびD3D11_TEXTURE_ADDRESS_CLAMPと似ています。
+			テクスチャー座標の絶対値を取得し(0を中心としたミラーリング)、最大値に固定します。
+
+			*/
+			Mirror_Once,
+		};
+	};
+
+	/** D3d11_FilterType
+	*/
+	struct D3d11_FilterType
+	{
+		enum Id
+		{
+			/** MIN=POINT MAG=POINT MIP=POINT
+ 			*/
+			MIN_MAG_MIP_POINT,
+
+			/** MIN=LINEAR MAG=LINEAR MIP=LINEAR
+			*/
+			MIN_MAG_MIP_LINEAR,
+		};
+	};
+
+
 	/** D3d11_TopologyType
 	*/
 	struct D3d11_TopologyType

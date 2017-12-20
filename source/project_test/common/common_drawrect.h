@@ -208,7 +208,16 @@ namespace NCommon
 					this->blendstate_id = this->d3d11->CreateBlendState(true);
 
 					//サンプラーステート。
-					this->samplerstate_id = this->d3d11->CreateSamplerState(true);
+					{
+						NBsys::ND3d11::D3d11_Sampler t_sampler;
+						{
+							t_sampler.textureaddrestype_u = NBsys::ND3d11::D3d11_TextureAddressType::Clamp;
+							t_sampler.textureaddrestype_v = NBsys::ND3d11::D3d11_TextureAddressType::Clamp;
+							t_sampler.textureaddrestype_w = NBsys::ND3d11::D3d11_TextureAddressType::Clamp;
+							t_sampler.filtertype = NBsys::ND3d11::D3d11_FilterType::MIN_MAG_MIP_POINT;
+						}
+						this->samplerstate_id = this->d3d11->CreateSamplerState(t_sampler);
+					}
 
 					//ラスタライザー。
 					this->rasterizerstate_cull_none_id = this->d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::None);

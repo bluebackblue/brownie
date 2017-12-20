@@ -316,7 +316,7 @@ namespace NBsys{namespace ND3d11
 				}
 			}
 
-			{
+			if(this->device){
 				D3D11_SHADER_RESOURCE_VIEW_DESC t_desc;
 				{
 					Memory::memset(&t_desc,0,sizeof(t_desc));
@@ -337,24 +337,22 @@ namespace NBsys{namespace ND3d11
 				}
 			}
 
-			{
-				if(this->device){
-					D3D11_DEPTH_STENCIL_DESC t_desc;
-					{
-						Memory::memset(&t_desc,0,sizeof(t_desc));
-						t_desc.DepthEnable = TRUE;
-						t_desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
-						t_desc.DepthFunc = D3D11_COMPARISON_LESS;
-					}
-					ID3D11DepthStencilState* t_raw = nullptr;
-					HRESULT t_result = this->device->CreateDepthStencilState(&t_desc,&t_raw);
-					if(t_raw != nullptr){
-						this->depthbuffer_depthstencilstate.reset(t_raw,release_delete<ID3D11DepthStencilState>());
-					}
-					if(FAILED(t_result)){
-						DEEPDEBUG_ASSERT(0);
-						this->depthbuffer_depthstencilstate.reset();
-					}
+			if(this->device){
+				D3D11_DEPTH_STENCIL_DESC t_desc;
+				{
+					Memory::memset(&t_desc,0,sizeof(t_desc));
+					t_desc.DepthEnable = TRUE;
+					t_desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+					t_desc.DepthFunc = D3D11_COMPARISON_LESS;
+				}
+				ID3D11DepthStencilState* t_raw = nullptr;
+				HRESULT t_result = this->device->CreateDepthStencilState(&t_desc,&t_raw);
+				if(t_raw != nullptr){
+					this->depthbuffer_depthstencilstate.reset(t_raw,release_delete<ID3D11DepthStencilState>());
+				}
+				if(FAILED(t_result)){
+					DEEPDEBUG_ASSERT(0);
+					this->depthbuffer_depthstencilstate.reset();
 				}
 			}
 		}
@@ -787,14 +785,14 @@ namespace NBsys{namespace ND3d11
 
 	/** CreateSamplerState
 	*/
-	s32 D3d11_Impl::CreateSamplerState(bool a_todo_flag)
+	s32 D3d11_Impl::CreateSamplerState(const D3d11_Sampler& a_sampler)
 	{
 		//ＩＤ。
 		s32 t_samplerstate_id = this->id_maker.MakeID();
 
 		sharedptr<D3d11_Impl_SamplerState> t_samplerstate = new D3d11_Impl_SamplerState();
 		{
-			t_samplerstate->todo_flag = a_todo_flag;
+			t_samplerstate->sampler = a_sampler;
 		}
 
 		//レンダーコマンド。
@@ -1213,17 +1211,41 @@ namespace NBsys{namespace ND3d11
 		{
 			Memory::memset(&t_desc,0,sizeof(t_desc));
 
-			t_desc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
-			t_desc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
-			t_desc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
 			t_desc.ComparisonFunc = D3D11_COMPARISON_NEVER;
 			t_desc.MinLOD = 0;
 			t_desc.MaxLOD = D3D11_FLOAT32_MAX;
 
-			if(a_samplerstate->todo_flag){
-				t_desc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
-			}else{
-				t_desc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+			switch(a_samplerstate->sampler.textureaddrestype_u){
+			case D3d11_TextureAddressType::Wrap:			t_desc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;			break;
+			case D3d11_TextureAddressType::Mirror:			t_desc.AddressU = D3D11_TEXTURE_ADDRESS_MIRROR;			break;
+			case D3d11_TextureAddressType::Clamp:			t_desc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;			break;
+			case D3d11_TextureAddressType::Border:			t_desc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;			break;
+			case D3d11_TextureAddressType::Mirror_Once:		t_desc.AddressU = D3D11_TEXTURE_ADDRESS_MIRROR_ONCE;	break;
+			default:ASSERT(0);break;
+			}
+
+			switch(a_samplerstate->sampler.textureaddrestype_v){
+			case D3d11_TextureAddressType::Wrap:			t_desc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;			break;
+			case D3d11_TextureAddressType::Mirror:			t_desc.AddressV = D3D11_TEXTURE_ADDRESS_MIRROR;			break;
+			case D3d11_TextureAddressType::Clamp:			t_desc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;			break;
+			case D3d11_TextureAddressType::Border:			t_desc.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;			break;
+			case D3d11_TextureAddressType::Mirror_Once:		t_desc.AddressV = D3D11_TEXTURE_ADDRESS_MIRROR_ONCE;	break;
+			default:ASSERT(0);break;
+			}
+
+			switch(a_samplerstate->sampler.textureaddrestype_w){
+			case D3d11_TextureAddressType::Wrap:			t_desc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;			break;
+			case D3d11_TextureAddressType::Mirror:			t_desc.AddressW = D3D11_TEXTURE_ADDRESS_MIRROR;			break;
+			case D3d11_TextureAddressType::Clamp:			t_desc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;			break;
+			case D3d11_TextureAddressType::Border:			t_desc.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;			break;
+			case D3d11_TextureAddressType::Mirror_Once:		t_desc.AddressW = D3D11_TEXTURE_ADDRESS_MIRROR_ONCE;	break;
+			default:ASSERT(0);break;
+			}
+
+			switch(a_samplerstate->sampler.filtertype){
+			case D3d11_FilterType::MIN_MAG_MIP_POINT:		t_desc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;			break;
+			case D3d11_FilterType::MIN_MAG_MIP_LINEAR:		t_desc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;		break;
+			default:ASSERT(0);break;
 			}
 		}
 

@@ -27,6 +27,7 @@
 /** include
 */
 #include "./d3d11_layout.h"
+#include "./d3d11_sampler.h"
 
 
 /** NBsys::ND3d11
@@ -114,7 +115,7 @@ namespace NBsys{namespace ND3d11
 
 		/** CreateSamplerState
 		*/
-		s32 CreateSamplerState(bool a_todo_flag);
+		s32 CreateSamplerState(const D3d11_Sampler& a_sampler);
 
 	public:
 		/** 作成。

@@ -35,6 +35,7 @@
 /** include
 */
 #include "./d3d11_layout.h"
+#include "./d3d11_sampler.h"
 
 
 /** include
@@ -203,9 +204,9 @@ namespace NBsys{namespace ND3d11
 		*/
 		sharedptr<ID3D11SamplerState> samplerstate;
 
-		/** todo_flag
+		/** sampler
 		*/
-		bool todo_flag;
+		D3d11_Sampler sampler;
 	};
 
 	/** D3d11_Impl
@@ -468,7 +469,7 @@ namespace NBsys{namespace ND3d11
 
 		/** CreateSamplerState
 		*/
-		s32 CreateSamplerState(bool a_todo_flag);
+		s32 CreateSamplerState(const D3d11_Sampler& a_sampler);
 	public:
 
 		/** Render_CreateVertexShader

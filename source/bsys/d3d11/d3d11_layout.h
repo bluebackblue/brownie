@@ -43,6 +43,12 @@ namespace NBsys{namespace ND3d11
 			offset(a_offset)
 		{
 		}
+
+		/** destructor
+		*/
+		nonvirtual D3d11_Layout()
+		{
+		}
 	};
 }}
 #endif

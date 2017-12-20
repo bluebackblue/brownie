@@ -140,9 +140,9 @@ namespace NBsys{namespace ND3d11
 
 	/** CreateSamplerState
 	*/
-	s32 D3d11::CreateSamplerState(bool a_todo_flag)
+	s32 D3d11::CreateSamplerState(const D3d11_Sampler& a_sampler)
 	{
-		return this->impl->CreateSamplerState(a_todo_flag);
+		return this->impl->CreateSamplerState(a_sampler);
 	}
 
 	/** Render_Create
