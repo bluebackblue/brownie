@@ -50,7 +50,7 @@ namespace NBsys{namespace NWindowMenu
 
 		/** action
 		*/
-		std::function< void(void) > action;
+		std::function<void(void)> action;
 
 	public:
 		/** constructor

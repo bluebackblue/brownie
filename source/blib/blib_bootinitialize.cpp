@@ -30,6 +30,7 @@
 #include "./random.h"
 #include "./blib_bootinitialize.h"
 #include "./math.h"
+#include "./sharedptr.h"
 
 
 /** NBlib
@@ -61,10 +62,32 @@ namespace NBlib
 	*/
 	static LockObject s_globalrand_lockobject;
 
+	/** インスｋタンス。
+	*/
+	static weakptr<Blib> s_instance;
+
+	/** constructor
+	*/
+	Blib::Blib()
+		:
+		call_list()
+	{
+	}
+
+	/** destructor
+	*/
+	nonvirtual Blib::~Blib()
+	{
+		STLVector<std::function<void(void)>>::iterator t_it_end = this->call_list.end();
+		for(STLVector<std::function<void(void)>>::iterator t_it = this->call_list.begin();t_it!=t_it_end;++t_it){
+			(*t_it)();
+		}
+		this->call_list.clear();
+	}
 
 	/** 起動時初期化。
 	*/
-	void BootInitialize()
+	sharedptr<Blib> BootInitialize()
 	{
 		//グローバル固定長アロケータの初期化。
 		#if(BLIB_GLOBALFIXEDALLOCATOR_ENABLE)
@@ -73,6 +96,13 @@ namespace NBlib
 			s_globalfixedallocator.Reset();
 		}
 		#endif
+
+		//ログを表示するまえに。
+		s_is_boot_initialize = true;
+
+		//インスタンス作成。
+		sharedptr<Blib> t_instance(new Blib());
+		s_instance = t_instance;
 
 		Math::Initialize();
 
@@ -149,7 +179,7 @@ namespace NBlib
 			s_globalrand.SetSeedFromDevice();
 		}
 
-		s_is_boot_initialize = true;
+		return t_instance;
 	}
 
 	/** 初期化済みかどうか。
@@ -157,6 +187,16 @@ namespace NBlib
 	bool IsBootInitialize()
 	{
 		return s_is_boot_initialize;
+	}
+
+	/** 終了時に呼び出す。
+	*/
+	void CallOnExit(const std::function<void(void)>& a_function)
+	{
+		sharedptr<Blib> t_instance = s_instance;
+		if(t_instance){
+			t_instance->call_list.push_back(a_function);
+		}
 	}
 
 	/** グローバル固定長アロケータ。

@@ -20,6 +20,12 @@
 #include "./threadlocal.h"
 
 
+/** include
+*/
+#include <iostream>
+#include <functional>
+
+
 /** NBlib
 */
 namespace NBlib
@@ -28,47 +34,24 @@ namespace NBlib
 	*/
 	const char* VaString(void* a_buffer,s32 a_buffer_size,const char* a_format,...);
 
-	/** WVaString
+	/** VaString
 	*/
 	const wchar* VaString(void* a_buffer,s32 a_buffer_size,const wchar* a_format,...);
 
 	/** デバッグ用のバッファ。
 	*/
-	#if defined(ROM_MASTER)
+	#if !defined(ROM_MASTER)
+	class DebugLogBuffer
+	{
+	public:
+		/** GetBuffer
+		*/
+		static char* GetBuffer();
 
-	#else
-
-		class DebugLogBuffer
-		{
-		public:
-			/** GetBuffer
-			*/
-			static char* GetBuffer()
-			{
-				#if(BLIB_THREADLOCAL_ENABLE)
-				{
-					ThreadLocal& t_threadlocal_reference = GetThreadLocal(BLIB_VASTRING_DEBUG_THREADLOCALSLOT);
-
-					if(t_threadlocal_reference.pointer == nullptr){
-						t_threadlocal_reference.pointer = ::malloc(BLIB_VASTRING_DEBUG_SIZE);
-					}
-
-					return reinterpret_cast<char*>(t_threadlocal_reference.pointer);
-				}
-				#else
-				{
-					ASSERT(0);
-				}
-				#endif
-			}
-			/** GetBufferSize
-			*/
-			static s32 GetBufferSize()
-			{
-				return BLIB_VASTRING_DEBUG_SIZE;
-			}
-		};
-
+		/** GetBufferSize
+		*/
+		static s32 GetBufferSize();
+	};
 	#endif
 
 }

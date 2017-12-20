@@ -20,19 +20,49 @@
 #include "./fixedallocator.h"
 #include "./lockobject.h"
 #include "./random.h"
+#include "./stlvector.h"
+#include "./sharedptr.h"
+
+
+/** include
+*/
+#include <functional>
 
 
 /** NBlib
 */
 namespace NBlib
 {
+	/** Blib
+	*/
+	class Blib
+	{
+	public:
+		/** call_list
+		*/
+		STLVector<std::function<void(void)>>::Type call_list;
+
+	public:
+		/** constructor
+		*/
+		Blib();
+
+		/** destructor
+		*/
+		nonvirtual ~Blib();
+	};
+
 	/** 起動時初期化。
 	*/
-	void BootInitialize();
+	sharedptr<Blib> BootInitialize();
 
 	/** 初期化済みかどうか。
 	*/
 	bool IsBootInitialize();
+
+	/** 終了時に呼び出す。
+	*/
+	void CallOnExit(const std::function<void(void)>& a_function);
 
 	/** グローバル固定長アロケータ。
 	*/
@@ -54,6 +84,7 @@ namespace NBlib
 	/** グローバル乱数。ロックオブジェクト。
 	*/
 	LockObject& GlobalRand_LockObject();
+
 }
 
 

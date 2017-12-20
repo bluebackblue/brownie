@@ -81,8 +81,9 @@ void main(int a_argc,char** a_argv)
 	#endif
 	#endif
 
+	sharedptr<Blib> t_blib;
 	if(NBlib::IsBootInitialize() == false){
-		NBlib::BootInitialize();
+		t_blib = NBlib::BootInitialize();
 	}
 
 	try{
@@ -105,8 +106,9 @@ int WINAPI WinMain(_In_ HINSTANCE a_hinstance,_In_opt_ HINSTANCE /*a_prev_hinsta
 	}
 	#endif
 
+	sharedptr<Blib> t_blib;
 	if(NBlib::IsBootInitialize() == false){
-		NBlib::BootInitialize();
+		t_blib = NBlib::BootInitialize();
 	}
 
 	GetEntryParamReference().hinstance = a_hinstance;

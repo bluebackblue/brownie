@@ -18,6 +18,7 @@
 */
 #include "./types.h"
 #include "./platform.h"
+#include "./blib_bootinitialize.h"
 
 
 /** include
@@ -98,5 +99,43 @@ namespace NBlib
 
 		return reinterpret_cast<wchar*>(a_buffer);
 	}
+
+	#if defined(ROM_MASTER)
+
+	#else
+
+	/** [static]GetBuffer
+	*/
+	char* DebugLogBuffer::GetBuffer()
+	{
+		#if(BLIB_THREADLOCAL_ENABLE)
+		{
+			ThreadLocal& t_threadlocal_reference = GetThreadLocal(BLIB_VASTRING_DEBUG_THREADLOCALSLOT);
+
+			if(t_threadlocal_reference.pointer == nullptr){
+				t_threadlocal_reference.pointer = ::malloc(BLIB_VASTRING_DEBUG_SIZE);
+
+				CallOnExit(std::bind([](void* a_pointer){
+					return ::free(a_pointer);
+				},t_threadlocal_reference.pointer));
+			}
+
+			return reinterpret_cast<char*>(t_threadlocal_reference.pointer);
+		}
+		#else
+		{
+			ASSERT(0);
+		}
+		#endif
+	}
+
+	/** [static]GetBufferSize
+	*/
+	s32 DebugLogBuffer::GetBufferSize()
+	{
+		return BLIB_VASTRING_DEBUG_SIZE;
+	}
+
+	#endif
 }
 

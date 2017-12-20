@@ -24,6 +24,7 @@
 */
 #include "./debugassert.h"
 #include "./threadlocal.h"
+#include "./blib_bootinitialize.h"
 
 
 /** NBlib
@@ -76,6 +77,11 @@ namespace NBlib
 
 		if(t_data == nullptr){
 			t_data = reinterpret_cast<ThreadLocalData*>(::malloc(sizeof(ThreadLocalData)));
+
+			NBlib::CallOnExit(std::bind([](void* a_pointer){
+				return ::free(a_pointer);
+			},t_data));
+
 			t_data->Reset();
 
 			#if(BLIB_STDTHREADLOCAL_ENABLE)
