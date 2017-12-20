@@ -62,3 +62,7 @@ mid-level library
 * DEF_TEST0: デバッグログ、デバッグブレイク、アサート。
 * DEF_TEST1: 型、リスト。
 * DEF_TEST2: ファイル、ＪＳＯＮ。
+
+## brownie_config.h
+制御デファインの各種説明、デフォルト値の記述
+
