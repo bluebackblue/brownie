@@ -18,6 +18,10 @@
 */
 namespace NBsys
 {
+	/** NBlib
+	*/
 	using namespace NBlib;
+
+
 }
 

@@ -254,5 +254,7 @@ namespace NBsys{namespace NGeometry
 		inline Geometry_Matrix_44 operator +(const Geometry_Matrix_44& a_matrix) const;
 	};
 
+
 }}
 #endif
+

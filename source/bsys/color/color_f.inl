@@ -14,17 +14,23 @@
 #include "../types/types.h"
 
 
+/** include
+*/
+#include "./color_b.h"
+#include "./color_f.h"
+
+
 /** NBsys::NColor
 */
 #if(BSYS_COLOR_ENABLE)
 namespace NBsys{namespace NColor
 {
-
 	/** constructor
 	*/
 	inline Color_F::Color_F()
 	{
 	}
+
 
 	/** constructor
 	*/
@@ -33,6 +39,7 @@ namespace NBsys{namespace NColor
 		this->F_Set(a_r,a_g,a_b,a_a);
 	}
 
+
 	/** constructor
 	*/
 	inline Color_F::Color_F(const Color_F& a_color)
@@ -40,12 +47,14 @@ namespace NBsys{namespace NColor
 		this->F_SetColor(a_color);
 	}
 
+
 	/** constructor
 	*/
 	inline Color_F::Color_F(const Color_B& a_color)
 	{
 		this->B_SetColor(a_color);
 	}
+
 
 	/** 代入。
 	*/
@@ -56,6 +65,7 @@ namespace NBsys{namespace NColor
 		return *this;
 	}
 
+
 	/** SetColorF
 	*/
 	inline void Color_F::F_SetColor(const Color_F& a_color)
@@ -63,12 +73,14 @@ namespace NBsys{namespace NColor
 		this->F_Set(a_color.r,a_color.g,a_color.b,a_color.a);
 	}
 
+
 	/** SetColorB
 	*/
 	inline void Color_F::B_SetColor(const Color_B& a_color)
 	{
 		this->B_Set(a_color.r,a_color.g,a_color.b,a_color.a);
 	}
+
 
 	/** SetF
 	*/
@@ -80,6 +92,7 @@ namespace NBsys{namespace NColor
 		this->F_SetA(a_a);
 	}
 
+
 	/** SetB
 	*/
 	inline void Color_F::B_Set(u8 a_r,u8 a_g,u8 a_b,u8 a_a)
@@ -90,12 +103,14 @@ namespace NBsys{namespace NColor
 		this->B_SetA(a_a);
 	}
 
+
 	/** F_GetR
 	*/
 	inline f32 Color_F::F_GetR() const
 	{
 		return this->r;
 	}
+
 
 	/** F_GetG
 	*/
@@ -104,6 +119,7 @@ namespace NBsys{namespace NColor
 		return this->g;
 	}
 
+
 	/** F_GetB
 	*/
 	inline f32 Color_F::F_GetB() const
@@ -111,12 +127,14 @@ namespace NBsys{namespace NColor
 		return this->b;
 	}
 
+
 	/** F_GetA
 	*/
 	inline f32 Color_F::F_GetA() const
 	{
 		return this->a;
 	}
+
 
 	/** B_GetR
 	*/
@@ -126,6 +144,7 @@ namespace NBsys{namespace NColor
 		return t_r;
 	}
 
+
 	/** B_GetG
 	*/
 	inline u8 Color_F::B_GetG() const
@@ -133,6 +152,7 @@ namespace NBsys{namespace NColor
 		u8 t_g = static_cast<u8>(255 * this->g);
 		return t_g;
 	}
+
 
 	/** B_GetB
 	*/
@@ -142,6 +162,7 @@ namespace NBsys{namespace NColor
 		return t_b;
 	}
 
+
 	/** B_GetA
 	*/
 	inline u8 Color_F::B_GetA() const
@@ -150,12 +171,14 @@ namespace NBsys{namespace NColor
 		return t_a;
 	}
 
+
 	/** F_SetR
 	*/
 	inline void Color_F::F_SetR(f32 a_r)
 	{
 		this->r = a_r;
 	}
+
 
 	/** F_SetG
 	*/
@@ -164,12 +187,14 @@ namespace NBsys{namespace NColor
 		this->g = a_g;
 	}
 
+
 	/** F_SetB
 	*/
 	inline void Color_F::F_SetB(f32 a_b)
 	{
 		this->b = a_b;
 	}
+
 
 	/** F_SetA
 	*/
@@ -178,12 +203,14 @@ namespace NBsys{namespace NColor
 		this->a = a_a;
 	}
 
+
 	/** B_SetR
 	*/
 	inline void Color_F::B_SetR(u8 a_r)
 	{
 		this->r = (static_cast<f32>(a_r) / 255.0f);
 	}
+
 
 	/** B_SetG
 	*/
@@ -192,12 +219,14 @@ namespace NBsys{namespace NColor
 		this->g = (static_cast<f32>(a_g) / 255.0f);
 	}
 
+
 	/** B_SetB
 	*/
 	inline void Color_F::B_SetB(u8 a_b)
 	{
 		this->b = (static_cast<f32>(a_b) / 255.0f);
 	}
+
 
 	/** B_SetA
 	*/
@@ -206,5 +235,7 @@ namespace NBsys{namespace NColor
 		this->a = (static_cast<f32>(a_a) / 255.0f);
 	}
 
+
 }}
 #endif
+

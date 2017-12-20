@@ -35,5 +35,8 @@ namespace NBsys{namespace NFile
 			AlreadyConverted,
 		};
 	};
+
+
 }}
 #endif
+

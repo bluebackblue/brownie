@@ -24,18 +24,19 @@
 #if(BSYS_GEOMETRY_ENABLE)
 namespace NBsys{namespace NGeometry
 {
-
 	/** constructor
 	*/
 	inline Geometry_Frustum::Geometry_Frustum()
 	{
 	}
 
+
 	/** destructor
 	*/
 	inline Geometry_Frustum::~Geometry_Frustum()
 	{
 	}
+
 
 	/** SetProjection
 	*/
@@ -44,12 +45,14 @@ namespace NBsys{namespace NGeometry
 		this->projection = a_projection;
 	}
 
+
 	/** SetView
 	*/
 	inline void Geometry_Frustum::SetView(const Geometry_Matrix_44& a_view)
 	{
 		this->view = a_view;
 	}
+
 
 	/** CalcPlane
 	*/
@@ -89,6 +92,7 @@ namespace NBsys{namespace NGeometry
 		this->plane[5].SetABCD(t_matrix.ax_w - t_matrix.ax_z,t_matrix.ay_w - t_matrix.ay_z,t_matrix.az_w - t_matrix.az_z,- t_matrix.tr_w + t_matrix.tr_z);
 	}
 
+
 	/** InFrustumCheck
 	*/
 	inline bool Geometry_Frustum::InFrustumCheck(Geometry_Vector3& a_position)
@@ -104,6 +108,7 @@ namespace NBsys{namespace NGeometry
 		//フラスタム内。
 		return true;
 	}
+
 
 }}
 #endif

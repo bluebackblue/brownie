@@ -30,11 +30,13 @@ namespace NBsys{namespace NFile
 	class File_Cache
 	{
 	private:
+
 		/** キャッシュマップ。
 		*/
 		STLMap<STLWString,sharedptr<File_Cache_Item>>::Type map;
 	
 	public:
+
 		/** constructor
 		*/
 		File_Cache();
@@ -60,6 +62,7 @@ namespace NBsys{namespace NFile
 		void LeakCheck() const;
 
 	};
+
 
 }}
 #endif

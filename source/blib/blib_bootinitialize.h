@@ -67,7 +67,7 @@ namespace NBlib
 	/** グローバル固定長アロケータ。
 	*/
 	#if(BLIB_GLOBALFIXEDALLOCATOR_ENABLE)
-	typedef FixedAllocator<BLIB_GLOBALFIXEDALLOCATOR_BLOCKSIZE,BLIB_GLOBALFIXEDALLOCATOR_SIZE> GlobalFixedAllocator_Type;
+	typedef FixedAllocator<BLIB_GLOBALFIXEDALLOCATOR_BLOCKSIZE,BLIB_GLOBALFIXEDALLOCATOR_BLOCKMAX> GlobalFixedAllocator_Type;
 	GlobalFixedAllocator_Type& GlobalFixedAllocator_Get();
 	#endif
 

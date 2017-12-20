@@ -25,12 +25,15 @@ namespace NBsys{namespace NGeometry
 	{
 	};
 
+
 	/** Geometry_Identity
 	*/
 	inline Geometry_Identity_Type Geometry_Identity()
 	{
 		return Geometry_Identity_Type();
 	}
+
+
 }}
 #endif
 

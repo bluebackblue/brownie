@@ -56,6 +56,7 @@ namespace NBsys{namespace NWindowMenu
 		};
 	};
 
+
 	/** WindowMenu_Mode
 	*/
 	struct WindowMenu_Mode
@@ -73,6 +74,7 @@ namespace NBsys{namespace NWindowMenu
 		};
 	};
 
+
 	/** WindowMenu_SizeType
 	*/
 	struct WindowMenu_SizeType
@@ -89,6 +91,7 @@ namespace NBsys{namespace NWindowMenu
 			StretchChild
 		};
 	};
+
 
 	/** オフセット。
 	*/
@@ -134,6 +137,7 @@ namespace NBsys{namespace NWindowMenu
 			this->y = a_y;
 		}
 	};
+
 
 	/** サイズ。
 	*/
@@ -236,6 +240,8 @@ namespace NBsys{namespace NWindowMenu
 			this->h = 0.0f;
 		}
 	};
+
+
 }}
 #endif
 

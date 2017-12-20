@@ -31,7 +31,6 @@
 #if(BSYS_FILE_ENABLE)
 namespace NBsys{namespace NFile
 {
-
 	/** constructor
 	*/
 	File_Object::File_Object(s32 a_device_index,const STLWString& a_filename_short,s32 a_cachegroup_id,sharedptr<File_Allocator>& a_allocator,s32 a_add_allocatesize)
@@ -41,12 +40,14 @@ namespace NBsys{namespace NFile
 		this->workitem = (*t_instance)->LoadRequest(Path::Name(a_filename_short),a_cachegroup_id,a_allocator,a_add_allocatesize);
 	}
 
+
 	/** destructor
 	*/
 	File_Object::~File_Object()
 	{
 		this->workitem.reset();
 	}
+
 
 	/** データ取得。
 	*/
@@ -55,12 +56,14 @@ namespace NBsys{namespace NFile
 		return this->workitem->GetData();
 	}
 
+
 	/** ロードサイズ取得。
 	*/
 	s64 File_Object::GetLoadSize() const
 	{
 		return this->workitem->GetSize();
 	}
+
 
 	/** GetFileNameShort
 	*/
@@ -69,12 +72,14 @@ namespace NBsys{namespace NFile
 		return this->workitem->GetFileNameShort();
 	}
 
+
 	/** GetAddAllocateSize
 	*/
 	s32 File_Object::GetAddAllocateSize() const
 	{
 		return this->workitem->GetAddAllocateSize();
 	}
+
 
 	/** コンバートロック。
 	*/
@@ -83,12 +88,14 @@ namespace NBsys{namespace NFile
 		return this->workitem->ConvertLock();
 	}
 
+
 	/** コンバートアンロック。
 	*/
 	void File_Object::ConvertUnlock()
 	{
 		this->workitem->ConvertUnlock();
 	}
+
 
 	/** 処理中。
 	*/
@@ -97,12 +104,15 @@ namespace NBsys{namespace NFile
 		return this->workitem->IsBusy();
 	}
 
+
 	/** エラーコード取得。
 	*/
 	ErrorCode::Id File_Object::GetErrorCode() const
 	{
 		return this->workitem->GetErrorCode();
 	}
+
+
 }}
 #endif
 

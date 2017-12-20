@@ -40,6 +40,7 @@ namespace NBsys{namespace NMmd
 		}
 	};
 
+
 	/** Mmd_Vmd_Header_B
 	*/
 	struct Mmd_Vmd_Header_B
@@ -54,6 +55,7 @@ namespace NBsys{namespace NMmd
 			this->string_end = 0x00;
 		}
 	};
+
 
 }}
 #endif

@@ -26,12 +26,12 @@
 #if(BSYS_WINDOW_ENABLE)
 namespace NBsys{namespace NWindow
 {
-
 	/** Window_Impl
 	*/
 	class Window_Impl
 	{
 	private:
+
 		/** handle
 		*/
 		#if defined(PLATFORM_VCWIN)
@@ -60,6 +60,7 @@ namespace NBsys{namespace NWindow
 		s32 client_height;
 
 	public:
+
 		/** constructor
 		*/
 		Window_Impl();
@@ -69,9 +70,13 @@ namespace NBsys{namespace NWindow
 		nonvirtual ~Window_Impl();
 
 	public:
+
+		/** GetDesktopSize
+		*/
 		static std::tuple<s32,s32> GetDesktopSize();
 
 	public:
+
 		/** Create
 		*/
 		void Create(const STLWString& a_title,s32 a_width,s32 a_height);
@@ -131,6 +136,7 @@ namespace NBsys{namespace NWindow
 		#endif
 
 	};
+
 
 }}
 #endif

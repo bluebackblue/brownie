@@ -29,7 +29,6 @@
 #if(BSYS_MMD_PMX_ENABLE)
 namespace NBsys{namespace NMmd
 {
-
 	/** Load_Header
 	*/
 	bool Mmd_Pmx::Load_Header(u8*& a_raw)
@@ -109,6 +108,7 @@ namespace NBsys{namespace NMmd
 
 		return true;
 	}
+
 
 	/** Load_Vertex
 	*/
@@ -226,6 +226,7 @@ namespace NBsys{namespace NMmd
 		return true;
 	}
 
+
 	/** Load_Index
 	*/
 	bool Mmd_Pmx::Load_Index(u8*& a_raw)
@@ -249,6 +250,7 @@ namespace NBsys{namespace NMmd
 
 		return true;
 	}
+
 
 	/** Load_TextureName
 	*/
@@ -276,6 +278,7 @@ namespace NBsys{namespace NMmd
 
 		return true;
 	}
+
 
 	/** Load_Parts
 	*/
@@ -459,6 +462,7 @@ namespace NBsys{namespace NMmd
 		return true;
 	}
 
+
 	/** Load_Bone
 	*/
 	bool Mmd_Pmx::Load_Bone(u8*& a_raw)
@@ -627,6 +631,7 @@ namespace NBsys{namespace NMmd
 		return true;
 	}
 
+
 	/** Load
 	*/
 	bool Mmd_Pmx::Load(sharedptr<NFile::File_Object>& a_file)
@@ -666,6 +671,7 @@ namespace NBsys{namespace NMmd
 
 		return true;
 	}
+
 
 }}
 #endif

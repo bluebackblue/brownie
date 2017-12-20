@@ -39,11 +39,13 @@ namespace NBsys{namespace NFile
 	{
 	}
 
+
 	/** destructor
 	*/
 	File_Pack_FileHandle::~File_Pack_FileHandle()
 	{
 	}
+
 
 	/** ファイルサイズ取得。
 	*/
@@ -52,12 +54,14 @@ namespace NBsys{namespace NFile
 		return this->data_size;
 	}
 
+
 	/** 読み込み。
 	*/
 	bool File_Pack_FileHandle::Read(u8* a_buffer,s64 a_size,s64 a_offset)
 	{
 		return this->filehandle.Read(a_buffer,a_size,this->data_offset + a_offset);
 	}
+
 
 }}
 #endif

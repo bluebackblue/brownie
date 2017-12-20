@@ -29,7 +29,6 @@
 #if(BSYS_ACTIONBATCHING_ENABLE)
 namespace NBsys{namespace NActionBatching
 {
-
 	/** constructor
 	*/
 	ActionBatching_ActionList::ActionBatching_ActionList()
@@ -39,11 +38,13 @@ namespace NBsys{namespace NActionBatching
 	{
 	}
 
+
 	/** destructor
 	*/
 	ActionBatching_ActionList::~ActionBatching_ActionList()
 	{
 	}
+
 
 	/** Add
 	*/
@@ -51,6 +52,7 @@ namespace NBsys{namespace NActionBatching
 	{
 		this->actionlist.push_back(a_actionitem);
 	}
+
 
 	/** アクション開始。
 	*/
@@ -66,6 +68,7 @@ namespace NBsys{namespace NActionBatching
 			ASSERT(0);
 		}
 	}
+
 
 	/** アクション中。
 	*/
@@ -101,12 +104,14 @@ namespace NBsys{namespace NActionBatching
 		return false;
 	}
 
+
 	/** GetCurrentIndex
 	*/
 	s32 ActionBatching_ActionList::GetCurrentIndex() const
 	{
 		return this->index;
 	}
+
 
 	/** 中断。
 	*/
@@ -116,6 +121,7 @@ namespace NBsys{namespace NActionBatching
 			this->endrequest = true;
 		}
 	}
+
 
 }}
 #endif

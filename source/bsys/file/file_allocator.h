@@ -24,6 +24,7 @@ namespace NBsys{namespace NFile
 	class File_Allocator
 	{
 	public:
+
 		/** constructor
 		*/
 		explicit File_Allocator(){}
@@ -33,6 +34,7 @@ namespace NBsys{namespace NFile
 		virtual ~File_Allocator(){}
 
 	public:
+
 		/** 継承先でロード時の確保処理を記述する。
 		*/
 		virtual void* Alloc(u32 a_size) = 0;
@@ -40,12 +42,15 @@ namespace NBsys{namespace NFile
 		/** 継承先で解放処理を記述する。
 		*/
 		virtual void Free(void* a_pointer) = 0;
+
 	};
+
 
 	/** 削除子。
 	*/
 	struct File_Alloc_Deleter
 	{
+
 		/** 削除に使用するアロケータ。
 		*/
 		sharedptr<File_Allocator> allocator;
@@ -69,6 +74,7 @@ namespace NBsys{namespace NFile
 			}
 		}
 	};
+
 
 }}
 #endif

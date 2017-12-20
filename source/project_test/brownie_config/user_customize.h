@@ -9,6 +9,19 @@
 */
 
 
+/** include
+
+	「test.h」は「build_project_test.bat」から自動生成され上書きされます。
+
+	DEF_TEST_AUTO	: 自動チェック用デファインです。
+	DEF_TEST_INDEX	: テストの切り替え用デファインです。説明は以下です。
+
+	定義しているデファインの説明、デフォルト値は「brownie_config.h」に記述しています。
+
+*/
+#include "./test.h"
+
+
 /** DEF_TEST_INDEX
 
 	0	:	デバッグログ、デバッグブレイク、アサート。
@@ -20,10 +33,6 @@
 	12	:	ウィンドウメニュー。
 
 */
-
-/** include
-*/
-#include "./test.h"
 
 
 #if(DEF_TEST_INDEX == 0)
@@ -70,6 +79,8 @@
 	#define BSYS_D3D11_FONT_DRAWTYPEMAX_M					(128)
 	#define BSYS_D3D11_FONT_DRAWTYPEMAX_L					(32)
 	#define BSYS_D3D11_FONT_DRAWTYPEMAX_EX					(16)
+
+	#define BSYS_HTTP_ENABLE								(0)
 
 #elif(DEF_TEST_INDEX == 22)
 

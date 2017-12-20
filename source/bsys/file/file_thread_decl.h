@@ -19,10 +19,11 @@
 #if(BSYS_FILE_ENABLE)
 namespace NBsys{namespace NFile
 {
-
 	/** File_Thread
 	*/
 	class File_Thread;
 
+
 }}
 #endif
+

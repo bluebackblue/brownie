@@ -59,6 +59,7 @@ namespace NBsys{namespace NFont
 		STLWString font_name;
 
 	public:
+
 		/** constructor
 		*/
 		Font_Impl(const STLWString& a_font_name,s32 a_font_size);
@@ -72,7 +73,9 @@ namespace NBsys{namespace NFont
 		/** GetPixel_R8G8B8A8
 		*/
 		Font_State GetPixel_R8G8B8A8(sharedptr<u8>& a_dest_data,s32 a_offset,s32 a_dest_width,s32 a_dest_height,wchar a_code);
+
 	};
+
 
 }}
 #endif

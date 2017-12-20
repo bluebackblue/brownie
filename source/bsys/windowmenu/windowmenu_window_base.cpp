@@ -44,7 +44,6 @@ namespace NBsys{namespace NWindowMenu
 		child_list(),
 		name(a_name),
 		z_sort(0),
-
 		mode(WindowMenu_Mode::Free),
 		offset(),
 		size(),
@@ -63,11 +62,13 @@ namespace NBsys{namespace NWindowMenu
 	{
 	}
 
+
 	/** destructor
 	*/
 	WindowMenu_Window_Base::~WindowMenu_Window_Base()
 	{
 	}
+
 
 	/** SetBase
 	*/
@@ -93,6 +94,7 @@ namespace NBsys{namespace NWindowMenu
 		this->calc_it = STLList<sharedptr<WindowMenu_Window_Base>>::iterator();
 	}
 
+
 	/** 子の追加。
 	*/
 	void WindowMenu_Window_Base::AddChild(sharedptr<WindowMenu_Window_Base> a_window,s32 a_z_sort_add)
@@ -108,6 +110,7 @@ namespace NBsys{namespace NWindowMenu
 		//領域再計算、親子関係変更。
 		GetSystemInstance()->SetChangeRect();
 	}
+
 
 	/** 子の削除。
 	*/
@@ -128,6 +131,7 @@ namespace NBsys{namespace NWindowMenu
 		}
 	}
 
+
 	/** IsRange
 	*/
 	bool WindowMenu_Window_Base::IsRange(f32 a_x,f32 a_y)
@@ -137,6 +141,7 @@ namespace NBsys{namespace NWindowMenu
 		}
 		return false;
 	}
+
 
 	/** サイズ計算。
 	*/
@@ -152,6 +157,7 @@ namespace NBsys{namespace NWindowMenu
 			t_it->get()->CalcRect();
 		}
 	}
+
 
 	/** サイズ計算。
 	*/
@@ -195,6 +201,7 @@ namespace NBsys{namespace NWindowMenu
 		}
 	}
 
+
 	/** サイズ計算。
 	*/
 	void WindowMenu_Window_Base::CalcY(WindowMenu_SizeType::Id a_from_sizetype)
@@ -236,6 +243,7 @@ namespace NBsys{namespace NWindowMenu
 			}
 		}
 	}
+
 
 	/** サイズ計算。
 	*/
@@ -339,6 +347,7 @@ namespace NBsys{namespace NWindowMenu
 		}
 	}
 
+
 	/** サイズ計算。
 	*/
 	void WindowMenu_Window_Base::CalcH(WindowMenu_SizeType::Id a_from_sizetype)
@@ -441,6 +450,7 @@ namespace NBsys{namespace NWindowMenu
 		}
 	}
 
+
 	/** システムからのマウス再起処理。
 	*/
 	bool WindowMenu_Window_Base::System_MouseUpdate(WindowMenu_Mouse& a_mouse)
@@ -469,6 +479,7 @@ namespace NBsys{namespace NWindowMenu
 		return false;
 	}
 
+
 	/** システムからの更新処理。
 	*/
 	void WindowMenu_Window_Base::System_Update()
@@ -480,6 +491,7 @@ namespace NBsys{namespace NWindowMenu
 			(*t_it)->System_Update();
 		}
 	}
+
 
 	/** システムからの描画処理。
 	*/
@@ -495,6 +507,7 @@ namespace NBsys{namespace NWindowMenu
 			}
 		}
 	}
+
 
 	/** システムからのアクティブ変更処理。
 	*/
@@ -516,11 +529,13 @@ namespace NBsys{namespace NWindowMenu
 		return false;
 	}
 
+
 	/** 更新処理。
 	*/
 	void WindowMenu_Window_Base::CallBack_Update()
 	{
 	}
+
 
 	/** 描画処理。
 	*/
@@ -530,11 +545,13 @@ namespace NBsys{namespace NWindowMenu
 		return true;
 	}
 
+
 	/** アクティブ変更。
 	*/
 	void WindowMenu_Window_Base::CallBack_ChangeActive(bool /*a_active*/)
 	{
 	}
+
 
 	/** 親の削除リクエスト。取得。
 	*/
@@ -542,6 +559,7 @@ namespace NBsys{namespace NWindowMenu
 	{
 		return false;
 	}
+
 
 	/** 削除リクエスト。設定。
 	*/
@@ -551,6 +569,7 @@ namespace NBsys{namespace NWindowMenu
 			this->parent->CallBack_SetDeleteRequest();
 		}
 	}
+
 
 	/** 計算結果のクリア。
 	*/
@@ -578,6 +597,8 @@ namespace NBsys{namespace NWindowMenu
 			t_index++;
 		}
 	}
+
+
 }}
 #endif
 

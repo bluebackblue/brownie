@@ -44,16 +44,19 @@ namespace NBsys{namespace ND3d11
 	class D3d11
 	{
 	private:
+
 		/** impl
 		*/
 		sharedptr<D3d11_Impl> impl;
 
 	public:
+
 		/** GetImpl
 		*/
 		sharedptr<D3d11_Impl>& GetImpl();
 
 	public:
+
 		/** constructor
 		*/
 		D3d11();
@@ -81,6 +84,7 @@ namespace NBsys{namespace ND3d11
 		void CreateTextureIdList(STLVector<s32>::Type& a_list);
 
 	public:
+
 		/** CreateVertexShader
 		*/
 		s32 CreateVertexShader(AsyncResult<bool>& a_asyncresult,sharedptr<NBsys::NFile::File_Object>& a_fileobject,sharedptr<STLVector<NBsys::ND3d11::D3d11_Layout>::Type>& a_layout);
@@ -118,6 +122,7 @@ namespace NBsys{namespace ND3d11
 		s32 CreateSamplerState(const D3d11_Sampler& a_sampler);
 
 	public:
+
 		/** 作成。
 		*/
 		void Render_Create(sharedptr<NWindow::Window>& a_window,s32 a_width,s32 a_height);
@@ -131,6 +136,7 @@ namespace NBsys{namespace ND3d11
 		void Render_Main();
 
 	public:
+
 		/** Render_ViewPort
 		*/
 		void Render_ViewPort(f32 a_x,f32 a_y,f32 a_width,f32 a_height);
@@ -184,6 +190,7 @@ namespace NBsys{namespace ND3d11
 		#endif
 
 	public:
+
 		/** Render_UpdateSubresource
 		*/
 		void Render_UpdateSubresource(s32 a_constantbuffer_id,const void* a_data);
@@ -239,7 +246,9 @@ namespace NBsys{namespace ND3d11
 		/** Render_SetSamplerState
 		*/
 		void Render_SetSamplerState(s32 a_register_index,s32 a_samplerstate_id);
+
 	};
+
 
 }}
 #endif

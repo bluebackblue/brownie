@@ -30,13 +30,13 @@
 #if(BSYS_OPENGL_ENABLE)
 namespace NBsys{namespace NOpengl
 {
-
 	/** constructor
 	*/
 	Opengl::Opengl()
 	{
 		this->impl.reset(new Opengl_Impl());
 	}
+
 
 	/** destructor
 	*/
@@ -45,6 +45,7 @@ namespace NBsys{namespace NOpengl
 		this->impl.reset();
 	}
 
+
 	/** GetImpl
 	*/
 	sharedptr<Opengl_Impl>& Opengl::GetImpl()
@@ -52,13 +53,14 @@ namespace NBsys{namespace NOpengl
 		return this->impl;
 	}
 
-
+	
 	/** Init
 	*/
 	void Opengl::Init(bool (*a_update_proc)(f32 a_delta,bool a_endrequest),void (*a_draw_proc)())
 	{
 		this->impl->Init(a_update_proc,a_draw_proc);
 	}
+
 
 	/** Main
 	*/
@@ -67,12 +69,14 @@ namespace NBsys{namespace NOpengl
 		this->impl->Main();
 	}
 
+
 	/** バーテックスバッファ作成。
 	*/
 	s32 Opengl::CreateVertexBuffer(const sharedptr<u8>& a_data_byte,s32 a_size_byte,s32 a_stride_byte)
 	{
 		return this->impl->CreateVertexBuffer(a_data_byte,a_size_byte,a_stride_byte);
 	}
+
 
 	/** バーテックスバッファ削除。
 	*/
@@ -81,12 +85,14 @@ namespace NBsys{namespace NOpengl
 		this->impl->DeleteVertexBuffer(a_vertexbufferid);
 	}
 
+
 	/** シェーダーロード開始。
 	*/
 	void Opengl::LoadShaderRequest(const sharedptr<Opengl_ShaderLayout>& a_shaderlayout,AsyncResult<bool>& a_asyncresult)
 	{
 		this->impl->LoadShaderRequest(a_shaderlayout,a_asyncresult);
 	}
+
 
 	/** シェーダー削除。
 	*/
@@ -95,7 +101,9 @@ namespace NBsys{namespace NOpengl
 		this->impl->DeleteShader(a_shaderid);
 	}
 
+
 	#if(0)
+
 
 	/** SetShadeModel
 	*/
@@ -104,12 +112,14 @@ namespace NBsys{namespace NOpengl
 		this->impl->SetShadeModel(a_shademodeltype);
 	}
 
+
 	/** テクスチャ―登録。
 	*/
 	s32 Opengl::CreateTexture(const sharedptr<NBsys::NTexture::Texture>& a_texture)
 	{
 		return this->impl->CreateTexture(a_texture);
 	}
+
 
 	/** テクスチャ―解除。
 	*/
@@ -118,12 +128,14 @@ namespace NBsys{namespace NOpengl
 		this->impl->DeleteTexture(a_textureid);
 	}
 
+
 	/** フレームバッファ作成。
 	*/
 	s32 Opengl::CreateFrameBuffer(s32 a_textureid_depth,s32 a_textureid_color0)
 	{
 		return this->impl->CreateFrameBuffer(a_textureid_depth,a_textureid_color0);
 	}
+
 
 	/** フレームバッファ削除。
 	*/
@@ -134,12 +146,14 @@ namespace NBsys{namespace NOpengl
 	}
 	*/
 
+
 	/** マウス取得。
 	*/
 	void Opengl::GetMouse(s32& a_x,s32& a_y,bool& a_left,bool& a_right)
 	{
 		this->impl->GetMouse(a_x,a_y,a_left,a_right);
 	}
+
 
 	/** SetFont
 	*/
@@ -148,7 +162,9 @@ namespace NBsys{namespace NOpengl
 		this->impl->SetFont(a_font,a_texture_width,a_name);
 	}
 
+
 	#if !defined(ROM_MASTER)
+
 
 	/** ＲＡＷテクスチャーＩＤ取得。
 	*/
@@ -157,9 +173,12 @@ namespace NBsys{namespace NOpengl
 		return this->impl->GetTexture_RawID(a_textureid).rawid;
 	}
 
-	#endif
 
 	#endif
+
+
+	#endif
+
 
 	/** [描画命令]クリアカラー設定。
 	*/
@@ -168,12 +187,14 @@ namespace NBsys{namespace NOpengl
 		this->impl->Render_SetClearColor(a_color);
 	}
 
+
 	/** [描画命令]クリアバッファ。
 	*/
 	void Opengl::Render_ClearBuffer(bool a_depth,bool a_color)
 	{
 		this->impl->Render_ClearBuffer(a_depth,a_color);
 	}
+
 
 	/** [描画命令]ワールドライン描画。
 	*/
@@ -184,6 +205,7 @@ namespace NBsys{namespace NOpengl
 	}
 	#endif
 
+
 	/** [描画命令]シェーダー設定。
 	*/
 	void Opengl::Render_SetShader(s32 a_shaderid)
@@ -191,12 +213,14 @@ namespace NBsys{namespace NOpengl
 		this->impl->Render_SetShader(a_shaderid);
 	}
 
+
 	/** [描画命令]バーテックスバッファ設定。
 	*/
 	void Opengl::Render_SetVertexBuffer(s32 a_vertexbufferid)
 	{
 		this->impl->Render_SetVertexBuffer(a_vertexbufferid);
 	}
+
 
 	/** Render_SetVertexAttribute。
 
@@ -208,12 +232,14 @@ namespace NBsys{namespace NOpengl
 		return this->impl->Render_SetAttributeParameter(a_shaderid,a_name,a_stride_byte,a_offset_byte);
 	}
 
+
 	/** Render_DrawArray_Triangle
 	*/
 	void Opengl::Render_DrawArray_Triangle(s32 a_vertex_offset,s32 a_vertex_countof)
 	{
 		this->impl->Render_DrawArray_Triangle(a_vertex_offset,a_vertex_countof);
 	}
+
 
 	/** Render_ViewPort。
 	*/
@@ -222,12 +248,14 @@ namespace NBsys{namespace NOpengl
 		this->impl->Render_ViewPort(a_x,a_y,a_width,a_height);
 	}
 
+
 	/** Render_SetUniformParameter
 	*/
 	void Opengl::Render_SetUniformParameter(s32 a_shaderid,const STLString& a_name,const void* a_data_byte,s32 a_countof)
 	{
 		this->impl->Render_SetUniformParameter(a_shaderid,a_name,a_data_byte,a_countof);
 	}
+
 
 	/** Render_SetDepthTest
 	*/
@@ -238,6 +266,7 @@ namespace NBsys{namespace NOpengl
 
 
 	#if(0)
+
 
 	/** アクションバッチング更新。
 	*/
@@ -254,12 +283,14 @@ namespace NBsys{namespace NOpengl
 		this->impl->Render_SetColorMask(a_r,a_g,a_b,a_a);
 	}
 
+
 	/** Render_SetPolygonOffset。
 	*/
 	void Opengl::Render_SetPolygonOffset(bool a_flag,f32 a_factor,f32 a_unit)
 	{
 		this->impl->Render_SetPolygonOffset(a_flag,a_factor,a_unit);
 	}
+
 
 	/** Render_SetTextureDirect
 	*/
@@ -268,12 +299,14 @@ namespace NBsys{namespace NOpengl
 		this->impl->Render_SetTextureDirect(a_textureunitid,a_textureid);
 	}
 
+
 	/** Render_SetFrameBuffer。
 	*/
 	void Opengl::Render_SetFrameBuffer(s32 a_framebufferid)
 	{
 		this->impl->Render_SetFrameBuffer(a_framebufferid);
 	}
+
 
 	/** Render_SetProjectionMatrix。
 	*/
@@ -282,14 +315,13 @@ namespace NBsys{namespace NOpengl
 		this->impl->Render_SetProjectionMatrix(a_projection);
 	}
 
+
 	/** Render_SetViewMatrix。
 	*/
 	void Opengl::Render_SetViewMatrix(const NBsys::NGeometry::Geometry_Matrix_44& a_view)
 	{
 		this->impl->Render_SetViewMatrix(a_view);
 	}
-
-
 
 
 	/** Render_SetAlphaBlend。
@@ -300,16 +332,12 @@ namespace NBsys{namespace NOpengl
 	}
 
 
-
-
-
 	/** Render_SetUniformTexture
 	*/
 	void Opengl::Render_SetUniformTexture(s32 a_shaderid,const STLString& a_name,s32 a_textureid)
 	{
 		this->impl->Render_SetUniformTexture(a_shaderid,a_name,a_textureid);
 	}
-
 
 
 	/** Render_DrawArray_Quads
@@ -319,12 +347,14 @@ namespace NBsys{namespace NOpengl
 		this->impl->Render_DrawArray_Quads(a_vertex_offset,a_vertex_countof);
 	}
 
+
 	/** Render_DrawFont_ClearLockFlag
 	*/
 	void Opengl::Render_DrawFont_ClearLockFlag()
 	{
 		this->impl->Render_DrawFont_ClearLockFlag();
 	}
+
 
 	/** Render_DrawFont
 	*/
@@ -333,6 +363,7 @@ namespace NBsys{namespace NOpengl
 		this->impl->Render_DrawFont(a_string,a_font_size,a_x,a_y,a_color);
 	}
 
+
 	/** Render_DrawRect。
 	*/
 	void Opengl::Render_DrawRect(f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_textureid,const NBsys::NColor::Color_F& a_color)
@@ -340,7 +371,9 @@ namespace NBsys{namespace NOpengl
 		this->impl->Render_DrawRect(a_x,a_y,a_w,a_h,a_textureid,a_color);
 	}
 
+
 	#endif
+
 
 }}
 #endif

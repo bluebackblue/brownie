@@ -43,11 +43,13 @@ namespace NBsys{namespace NWindowMenu
 	{
 	}
 
+
 	/** destructor
 	*/
 	WindowMenu_Window_Drag::~WindowMenu_Window_Drag()
 	{
 	}
+
 
 	/** Initialize
 	*/
@@ -72,6 +74,7 @@ namespace NBsys{namespace NWindowMenu
 		}
 	}
 
+
 	/** マウス処理。
 	*/
 	bool WindowMenu_Window_Drag::CallBack_InRangeMouseUpdate(WindowMenu_Mouse& a_mouse)
@@ -90,6 +93,7 @@ namespace NBsys{namespace NWindowMenu
 		//マウス操作を親に伝えない。
 		return true;
 	}
+
 
 	/** 更新処理。
 	*/
@@ -113,7 +117,7 @@ namespace NBsys{namespace NWindowMenu
 		}
 	}
 
+
 }}
 #endif
-
 

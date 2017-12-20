@@ -78,6 +78,7 @@ namespace NBsys{namespace NActionBatching
 
 	};
 
+
 }}
 #endif
 

@@ -39,6 +39,7 @@ namespace NBsys{namespace NWindowMenu
 	class WindowMenu_Window_Base
 	{
 	public:
+
 		/** InitItem
 		*/
 		struct InitItem
@@ -71,6 +72,7 @@ namespace NBsys{namespace NWindowMenu
 		};
 
 	public:
+
 		/** enable
 		*/
 		bool enable;
@@ -96,6 +98,7 @@ namespace NBsys{namespace NWindowMenu
 		s32 z_sort;
 
 	public:
+
 		/** モード。
 		*/
 		WindowMenu_Mode::Id mode;
@@ -136,6 +139,7 @@ namespace NBsys{namespace NWindowMenu
 		STLList<sharedptr<WindowMenu_Window_Base>>::iterator calc_it;
 
 	public:
+
 		/** constructor
 		*/
 		WindowMenu_Window_Base(const STLString& a_name = "",WindowMenu_WindowType::Id a_type = NBsys::NWindowMenu::WindowMenu_WindowType::Custom);
@@ -190,6 +194,7 @@ namespace NBsys{namespace NWindowMenu
 		void CalcH(WindowMenu_SizeType::Id a_from_sizetype);
 
 	public:
+
 		/** システムからのマウス再起処理。
 		*/
 		virtual bool System_MouseUpdate(WindowMenu_Mouse& a_mouse);
@@ -233,7 +238,10 @@ namespace NBsys{namespace NWindowMenu
 		/** 計算結果のクリア。
 		*/
 		virtual void CallBack_CalcRectClear(STLList<sharedptr<WindowMenu_Window_Base>>::iterator a_it,s32 a_index);
+
 	};
+
+
 }}
 #endif
 

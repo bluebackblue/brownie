@@ -34,6 +34,7 @@ namespace NBsys{namespace NFile
 	*/
 	sharedptr<STLVector<sharedptr<ThreadTemplate<File_Thread>>>::Type> s_thread_list;
 
+
 	/** システムの開始。
 	*/
 	void StartSystem(s32 a_device_max)
@@ -51,6 +52,7 @@ namespace NBsys{namespace NFile
 			ASSERT(0);
 		}
 	}
+
 
 	/** ルートの設定。
 	*/
@@ -75,6 +77,7 @@ namespace NBsys{namespace NFile
 		}
 	}
 
+
 	/** システムのインスタンス取得。
 	*/
 	sharedptr<ThreadTemplate<File_Thread>>& GetSystemInstance(s32 a_device_index)
@@ -83,6 +86,7 @@ namespace NBsys{namespace NFile
 
 		return s_thread_list->at(a_device_index);
 	}
+
 
 	/** リークチェック。
 	*/
@@ -104,6 +108,7 @@ namespace NBsys{namespace NFile
 		}
 	}
 
+
 	/** キャッシュクリア。
 	*/
 	void CacheClear(s32 a_device_index,s32 a_cachegroup_id)
@@ -114,6 +119,7 @@ namespace NBsys{namespace NFile
 			ASSERT(0);
 		}
 	}
+
 
 	/** システムの終了リクエスト。
 	*/
@@ -135,12 +141,14 @@ namespace NBsys{namespace NFile
 		}
 	}
 
+
 	/** システムの終了待ち。
 	*/
 	void EndWaitSystem()
 	{
 		s_thread_list.reset();
 	}
+
 
 	/** [パック]作成。
 	*/
@@ -161,6 +169,7 @@ namespace NBsys{namespace NFile
 	}
 	#endif
 
+
 	/** [パック]ロードリクエスト。
 	*/
 	#if(BSYS_FILE_PACK_ENABLE)
@@ -169,6 +178,7 @@ namespace NBsys{namespace NFile
 		NBsys::NFile::GetSystemInstance(a_device_index)->get()->Pack_LoadRequest(a_pack_filename_short,a_pack_rootpath_short);
 	}
 	#endif
+
 
 	/** [パック]読み込み済みチェック。
 	*/
@@ -179,5 +189,7 @@ namespace NBsys{namespace NFile
 	}
 	#endif
 
+
 }}
 #endif
+

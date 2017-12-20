@@ -24,7 +24,6 @@
 #if(BSYS_FILE_PACK_ENABLE)
 namespace NBsys{namespace NFile
 {
-
 	/** File_Pack_WorkItem
 	*/
 	class File_Pack_WorkItem
@@ -73,7 +72,8 @@ namespace NBsys{namespace NFile
 		*/
 		STLMap<STLWString,sharedptr<File_Pack_FileHandle>>::Type filelist;
 
-public:
+	public:
+
 		/** constructor
 		*/
 		explicit File_Pack_WorkItem(const STLWString& a_pack_filename_short,const STLWString& a_pack_rootpath_short);
@@ -101,6 +101,7 @@ public:
 		bool Update(const STLWString& a_rootpath_full);
 
 	};
+
 
 }}
 #endif

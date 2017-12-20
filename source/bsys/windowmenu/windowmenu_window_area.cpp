@@ -43,11 +43,13 @@ namespace NBsys{namespace NWindowMenu
 	{
 	}
 
+
 	/** destructor
 	*/
 	WindowMenu_Window_Area::~WindowMenu_Window_Area()
 	{
 	}
+
 
 	/** Initialize
 	*/
@@ -57,6 +59,8 @@ namespace NBsys{namespace NWindowMenu
 		{
 		}
 	}
+
+
 }}
 #endif
 

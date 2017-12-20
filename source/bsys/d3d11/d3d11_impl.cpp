@@ -88,12 +88,14 @@ namespace NBsys{namespace ND3d11
 	{
 	}
 
+
 	/** destructor
 	*/
 	D3d11_Impl::~D3d11_Impl()
 	{
 		this->Render_Delete();
 	}
+
 
 	/** GetWidth
 	*/
@@ -102,12 +104,14 @@ namespace NBsys{namespace ND3d11
 		return this->width;
 	}
 
+
 	/** GetHeight
 	*/
 	s32 D3d11_Impl::GetHeight()
 	{
 		return this->height;
 	}
+
 
 	/** IsExistTexture
 	*/
@@ -120,6 +124,7 @@ namespace NBsys{namespace ND3d11
 		return false;
 	}
 
+
 	/** CreateTextureIdList
 	*/
 	void D3d11_Impl::CreateTextureIdList(STLVector<s32>::Type& a_list)
@@ -131,6 +136,7 @@ namespace NBsys{namespace ND3d11
 			a_list.push_back(t_it->first);
 		}
 	}
+
 
 	/** Render_Create
 	*/
@@ -368,6 +374,7 @@ namespace NBsys{namespace ND3d11
 		}
 	}
 
+
 	/** Render_Delete
 	*/
 	void D3d11_Impl::Render_Delete()
@@ -401,12 +408,14 @@ namespace NBsys{namespace ND3d11
 		this->device.reset();
 	}
 
+
 	/** Render_GetDevice
 	*/
 	sharedptr<ID3D11Device>& D3d11_Impl::GetDevice()
 	{
 		return this->device;
 	}
+
 
 	/** Render_GetDeviceContext
 	*/
@@ -415,12 +424,14 @@ namespace NBsys{namespace ND3d11
 		return this->devicecontext;
 	}
 
+
 	/** Render_GetSwapChain
 	*/
 	sharedptr<IDXGISwapChain>& D3d11_Impl::GetSwapChain()
 	{
 		return this->swapchain;
 	}
+
 
 	/** Render_GetBackBuffer
 	*/
@@ -429,12 +440,14 @@ namespace NBsys{namespace ND3d11
 		return this->backbuffer;
 	}
 
+
 	/** Render_GetRenderTargetView
 	*/
 	sharedptr<ID3D11RenderTargetView>& D3d11_Impl::GetRenderTargetView()
 	{
 		return this->backbuffer_rendertargetview;
 	}
+
 
 	/** Render_GetDepthBuffer
 	*/
@@ -443,6 +456,7 @@ namespace NBsys{namespace ND3d11
 		return this->depthbuffer;
 	}
 
+
 	/** Render_GetDepthStencilState
 	*/
 	sharedptr<ID3D11DepthStencilState>& D3d11_Impl::GetDepthStencilState()
@@ -450,12 +464,14 @@ namespace NBsys{namespace ND3d11
 		return this->depthbuffer_depthstencilstate;
 	}
 
+
 	/** Render_GetDepthStencilView
 	*/
 	sharedptr<ID3D11DepthStencilView>& D3d11_Impl::GetDepthStencilView()
 	{
 		return this->depthbuffer_depthstencilview;
 	}
+
 
 	/** GetVertexshader
 	*/
@@ -470,6 +486,7 @@ namespace NBsys{namespace ND3d11
 		return sharedptr<D3d11_Impl_VertexShader>::null();
 	}
 
+
 	/** GetPixelshader
 	*/
 	sharedptr<D3d11_Impl_PixelShader>& D3d11_Impl::GetPixelShader(s32 a_pixelshader_id)
@@ -482,6 +499,7 @@ namespace NBsys{namespace ND3d11
 		}
 		return sharedptr<D3d11_Impl_PixelShader>::null();
 	}
+
 
 	/** GetVertexbuffer
 	*/
@@ -496,6 +514,7 @@ namespace NBsys{namespace ND3d11
 		return sharedptr<D3d11_Impl_VertexBuffer>::null();
 	}
 
+
 	/** GetConstantBuffer
 	*/
 	sharedptr<D3d11_Impl_ConstantBuffer>& D3d11_Impl::GetConstantBuffer(s32 a_constantbuffer_id)
@@ -508,6 +527,7 @@ namespace NBsys{namespace ND3d11
 		}
 		return sharedptr<D3d11_Impl_ConstantBuffer>::null();
 	}
+
 
 	/** GetTexture
 	*/
@@ -522,6 +542,7 @@ namespace NBsys{namespace ND3d11
 		return sharedptr<D3d11_Impl_Texture>::null();
 	}
 
+
 	/** GetBlendState
 	*/
 	sharedptr<D3d11_Impl_BlendState>& D3d11_Impl::GetBlendState(s32 a_blendstate_id)
@@ -534,6 +555,7 @@ namespace NBsys{namespace ND3d11
 		}
 		return sharedptr<D3d11_Impl_BlendState>::null();
 	}
+
 
 	/** GetRasterizerState
 	*/
@@ -548,6 +570,7 @@ namespace NBsys{namespace ND3d11
 		return sharedptr<D3d11_Impl_RasterizerState>::null();
 	}
 
+
 	/** GetDepthStencilState
 	*/
 	sharedptr<D3d11_Impl_DepthStencilState>& D3d11_Impl::GetDepthStencilState(s32 a_depthstencilstate_id)
@@ -561,6 +584,7 @@ namespace NBsys{namespace ND3d11
 		return sharedptr<D3d11_Impl_DepthStencilState>::null();
 	}
 
+
 	/** GetSamplerState
 	*/
 	sharedptr<D3d11_Impl_SamplerState>& D3d11_Impl::GetSamplerState(s32 a_samplerstate_id)
@@ -573,6 +597,7 @@ namespace NBsys{namespace ND3d11
 		}
 		return sharedptr<D3d11_Impl_SamplerState>::null();
 	}
+
 
 	/** CreateVertexShader
 	*/
@@ -600,6 +625,7 @@ namespace NBsys{namespace ND3d11
 		return t_vertexshader_id;
 	}
 
+
 	/** CreatePixelShader
 	*/
 	s32 D3d11_Impl::CreatePixelShader(AsyncResult<bool>& a_asyncresult,sharedptr<NBsys::NFile::File_Object>& a_fileobject)
@@ -624,6 +650,7 @@ namespace NBsys{namespace ND3d11
 
 		return t_pixelshader_id;
 	}
+
 
 	/** CreateVertexBuffer
 	*/
@@ -654,6 +681,7 @@ namespace NBsys{namespace ND3d11
 		return t_vertexbuffer_id;
 	}
 
+
 	/** CreateConstantBuffer
 	*/
 	s32 D3d11_Impl::CreateConstantBuffer(s32 a_register_b_index,s32 a_size)
@@ -682,6 +710,7 @@ namespace NBsys{namespace ND3d11
 		return t_constantbuffer_id;
 	}
 
+
 	/** CreateTexture
 	*/
 	s32 D3d11_Impl::CreateTexture(sharedptr<NBsys::NTexture::Texture>& a_texture,bool a_write_flag)
@@ -706,6 +735,7 @@ namespace NBsys{namespace ND3d11
 
 		return t_texture_id;
 	}
+
 
 	/** CreateBlendState
 	*/
@@ -732,6 +762,7 @@ namespace NBsys{namespace ND3d11
 		return t_blendstate_id;
 	}
 
+
 	/** CreateRasterizerState
 	*/
 	s32 D3d11_Impl::CreateRasterizerState(D3d11_CullType::Id a_culltype)
@@ -756,6 +787,7 @@ namespace NBsys{namespace ND3d11
 
 		return t_rasterizerstate_id;
 	}
+
 
 	/** CreateDepthStencilState
 	*/
@@ -783,6 +815,7 @@ namespace NBsys{namespace ND3d11
 		return t_depthstencilstate_id;
 	}
 
+
 	/** CreateSamplerState
 	*/
 	s32 D3d11_Impl::CreateSamplerState(const D3d11_Sampler& a_sampler)
@@ -807,6 +840,7 @@ namespace NBsys{namespace ND3d11
 
 		return t_samplerstate_id;
 	}
+
 
 	/** Render_CreateVertexShader
 	*/
@@ -905,6 +939,7 @@ namespace NBsys{namespace ND3d11
 		}
 	}
 
+
 	/** Render_CreatePixelShader
 	*/
 	void D3d11_Impl::Render_CreatePixelShader(sharedptr<D3d11_Impl_PixelShader>& a_pixelshader)
@@ -959,6 +994,7 @@ namespace NBsys{namespace ND3d11
 		}
 	}
 
+
 	/** Render_CreateVertexBuffer
 	*/
 	void D3d11_Impl::Render_CreateVertexBuffer(sharedptr<D3d11_Impl_VertexBuffer>& a_vertexbuffer)
@@ -992,6 +1028,7 @@ namespace NBsys{namespace ND3d11
 			a_vertexbuffer->buffer.reset();
 		}
 	}
+
 	
 	/** Render_CreateConstantBuffer
 	*/
@@ -1015,6 +1052,7 @@ namespace NBsys{namespace ND3d11
 			a_constantbuffer->buffer.reset();
 		}
 	}
+
 
 	/** Render_CreateTexture
 	*/
@@ -1085,6 +1123,7 @@ namespace NBsys{namespace ND3d11
 		}
 	}
 
+
 	/** Render_CreateBlendState
 	*/
 	void D3d11_Impl::Render_CreateBlendState(sharedptr<D3d11_Impl_BlendState>& a_blendstate)
@@ -1133,6 +1172,7 @@ namespace NBsys{namespace ND3d11
 		}
 	}
 
+
 	/** Render_CreateRasterizerState
 	*/
 	void D3d11_Impl::Render_CreateRasterizerState(sharedptr<D3d11_Impl_RasterizerState>& a_rasterizerstate)
@@ -1163,6 +1203,7 @@ namespace NBsys{namespace ND3d11
 			a_rasterizerstate->rasterizerstate.reset();
 		}
 	}
+
 
 	/** Render_CreateDepthStencilState
 	*/
@@ -1202,6 +1243,7 @@ namespace NBsys{namespace ND3d11
 			a_depthstencilstate->depthstencilstate.reset();
 		}
 	}
+
 
 	/** Render_CreateSamplerState
 	*/
@@ -1259,6 +1301,7 @@ namespace NBsys{namespace ND3d11
 		}
 	}
 
+
 	/** Render_SetFont
 	*/
 	#if(BSYS_FONT_ENABLE)
@@ -1267,6 +1310,7 @@ namespace NBsys{namespace ND3d11
 		this->font_list[a_fonttexture_type].reset(new D3d11_Impl_Font(*this,a_font,a_texture_width,a_name,a_fonttexture_type));
 	}
 	#endif
+
 
 	/** Render_DrawFont_ClearLockFlag
 	*/
@@ -1278,6 +1322,7 @@ namespace NBsys{namespace ND3d11
 		}
 	}
 	#endif
+
 
 	/** Render_PreUpdateFontTexture
 	*/
@@ -1292,6 +1337,7 @@ namespace NBsys{namespace ND3d11
 	}
 	#endif
 
+
 	/** Render_WriteFontTexture
 	*/
 	#if(BSYS_FONT_ENABLE)
@@ -1305,6 +1351,7 @@ namespace NBsys{namespace ND3d11
 	}
 	#endif
 
+
 	/** Render_MakeFontVertex
 	*/
 	#if(BSYS_FONT_ENABLE)
@@ -1315,6 +1362,7 @@ namespace NBsys{namespace ND3d11
 		}
 	}
 	#endif
+
 
 	/** Render_GetFontTexture
 	*/
@@ -1328,6 +1376,7 @@ namespace NBsys{namespace ND3d11
 	}
 	#endif
 
+
 	/** リクエスト処理。
 	*/
 	void D3d11_Impl::Render_Main()
@@ -1338,6 +1387,7 @@ namespace NBsys{namespace ND3d11
 		this->actionbatching.Update(1.0f);
 	}
 
+
 	/** リクエスト登録。
 	*/
 	void D3d11_Impl::StartBatching(sharedptr<NBsys::NActionBatching::ActionBatching_ActionList>& a_actionlist)
@@ -1347,6 +1397,7 @@ namespace NBsys{namespace ND3d11
 
 		this->actionbatching.StartBatching(a_actionlist);
 	}
+
 
 	/** Render_ViewPort。
 	*/
@@ -1372,6 +1423,7 @@ namespace NBsys{namespace ND3d11
 		ASSERT(0);
 	}
 
+
 	/** Render_ClearRenderTargetView
 	*/
 	void D3d11_Impl::Render_ClearRenderTargetView(NBsys::NColor::Color_F& a_color)
@@ -1386,6 +1438,7 @@ namespace NBsys{namespace ND3d11
 		ASSERT(0);
 	}
 
+
 	/** Render_ClearDepthStencilView
 	*/
 	void D3d11_Impl::Render_ClearDepthStencilView()
@@ -1399,6 +1452,7 @@ namespace NBsys{namespace ND3d11
 
 		ASSERT(0);
 	}
+
 
 	/** Render_Present
 	*/
@@ -1440,6 +1494,7 @@ namespace NBsys{namespace ND3d11
 		return false;
 	}
 
+
 	/** Render_UpdateSubresource
 	*/
 	void D3d11_Impl::Render_UpdateSubresource(s32 a_constantbuffer_id,const void* a_data)
@@ -1456,6 +1511,7 @@ namespace NBsys{namespace ND3d11
 
 		ASSERT(0);
 	}
+
 
 	/** Render_VSSetShader
 	*/
@@ -1476,6 +1532,7 @@ namespace NBsys{namespace ND3d11
 		ASSERT(0);
 	}
 
+
 	/** Render_PSSetShader
 	*/
 	void D3d11_Impl::Render_PSSetShader(s32 a_pixelshader_id)
@@ -1494,6 +1551,7 @@ namespace NBsys{namespace ND3d11
 		ASSERT(0);
 	}
 
+
 	/** Render_Draw
 	*/
 	void D3d11_Impl::Render_Draw(s32 a_count_of_vertex,s32 a_start_of_vertex)
@@ -1508,6 +1566,7 @@ namespace NBsys{namespace ND3d11
 
 		ASSERT(0);
 	}
+
 
 	/** Render_VSSetConstantBuffers
 	*/
@@ -1533,6 +1592,7 @@ namespace NBsys{namespace ND3d11
 		ASSERT(0);
 	}
 
+
 	/** Render_PSSetConstantBuffers
 	*/
 	void D3d11_Impl::Render_PSSetConstantBuffers(s32 a_constantbuffer_id)
@@ -1555,6 +1615,7 @@ namespace NBsys{namespace ND3d11
 
 		ASSERT(0);
 	}
+
 
 	/** Render_SetVertexBuffer
 	*/
@@ -1582,6 +1643,7 @@ namespace NBsys{namespace ND3d11
 		ASSERT(0);
 	}
 
+
 	/** Render_ReMapVertexBuffer
 	*/
 	void D3d11_Impl::Render_ReMapVertexBuffer(s32 a_vertexbuffer_id,const void* a_data,s32 a_size)
@@ -1605,6 +1667,7 @@ namespace NBsys{namespace ND3d11
 		}
 	}
 
+
 	/** Render_SetPrimitiveTopology
 	*/
 	void D3d11_Impl::Render_SetPrimitiveTopology(D3d11_TopologyType::Id a_topology_type)
@@ -1624,6 +1687,7 @@ namespace NBsys{namespace ND3d11
 
 		ASSERT(0);
 	}
+
 
 	/** Render_SetTexture
 	*/
@@ -1656,6 +1720,7 @@ namespace NBsys{namespace ND3d11
 		ASSERT(0);
 	}
 
+
 	/** Render_SetBlendState
 	*/
 	void D3d11_Impl::Render_SetBlendState(s32 a_blendstate_id)
@@ -1681,6 +1746,7 @@ namespace NBsys{namespace ND3d11
 		ASSERT(0);
 	}
 
+
 	/** Render_SetRasterizerState
 	*/
 	void D3d11_Impl::Render_SetRasterizerState(s32 a_rasterizerstate_id)
@@ -1699,6 +1765,7 @@ namespace NBsys{namespace ND3d11
 		ASSERT(0);
 	}
 
+
 	/** Render_SetDepthStencilState
 	*/
 	void D3d11_Impl::Render_SetDepthStencilState(s32 a_depthstencilstate_id)
@@ -1716,6 +1783,7 @@ namespace NBsys{namespace ND3d11
 
 		ASSERT(0);
 	}
+
 
 	/** Render_SetSamplerState
 	*/
@@ -1738,6 +1806,7 @@ namespace NBsys{namespace ND3d11
 
 		ASSERT(0);
 	}
+
 
 }}
 #endif

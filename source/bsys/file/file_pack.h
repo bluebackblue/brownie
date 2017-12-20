@@ -29,6 +29,7 @@ namespace NBsys{namespace NFile
 	class File_Pack
 	{
 	private:
+
 		/** ロックオブジェクト。
 		*/
 		LockObject& lockobject;
@@ -38,6 +39,7 @@ namespace NBsys{namespace NFile
 		STLList<sharedptr<File_Pack_WorkItem>>::Type list;
 
 	public:
+
 		/** constructor
 		*/
 		File_Pack(LockObject& a_lockobject);
@@ -59,6 +61,7 @@ namespace NBsys{namespace NFile
 		sharedptr<File_Pack_FileHandle>& CreatePackFileHandle(const STLWString& a_filename);
 
 	};
+
 
 }}
 #endif

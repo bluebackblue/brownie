@@ -37,11 +37,13 @@ namespace NBsys{namespace NFile
 	{
 	}
 
+
 	/** destructor
 	*/
 	File_Cache_Item::~File_Cache_Item()
 	{
 	}
+
 
 	/** ＩＤ追加。
 	*/
@@ -55,6 +57,7 @@ namespace NBsys{namespace NFile
 		}
 	}
 
+
 	/** ＩＤ削除。
 	*/
 	void File_Cache_Item::KillID(s32 a_cachegroup_id)
@@ -65,6 +68,7 @@ namespace NBsys{namespace NFile
 			t_it->second = false;
 		}
 	}
+
 
 	/** 検索。
 	*/
@@ -79,6 +83,7 @@ namespace NBsys{namespace NFile
 		return false;
 	}
 
+
 	/** 空かどうか。
 	*/
 	bool File_Cache_Item::IsEmpty()
@@ -90,6 +95,7 @@ namespace NBsys{namespace NFile
 		}
 		return true;
 	}
+
 
 }}
 #endif

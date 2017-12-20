@@ -29,7 +29,6 @@
 #if(BSYS_MMD_VMD_ENABLE)
 namespace NBsys{namespace NMmd
 {
-
 	/** Load_Header
 	*/
 	bool Mmd_Vmd::Load_Header(u8*& a_raw)
@@ -44,6 +43,7 @@ namespace NBsys{namespace NMmd
 
 		return true;
 	}
+
 
 	/** Load
 	*/
@@ -64,6 +64,7 @@ namespace NBsys{namespace NMmd
 
 		return true;
 	}
+
 
 }}
 #endif

@@ -28,21 +28,25 @@ namespace NBsys{namespace NFovehmd
 	*/
 	class Fovehmd_Impl;
 
+
 	/** Fovehmd
 	*/
 	class Fovehmd
 	{
 	private:
+
 		/** impl
 		*/
 		sharedptr<Fovehmd_Impl> impl;
 
 	public:
+
 		/** GetImpl
 		*/
 		sharedptr<Fovehmd_Impl> GetImpl();
 
 	public:
+
 		/** constructor
 		*/
 		Fovehmd();
@@ -52,6 +56,7 @@ namespace NBsys{namespace NFovehmd
 		nonvirtual ~Fovehmd();
 
 	public:
+
 		/** ResetErrorCode
 		*/
 		void ResetErrorCode();
@@ -117,6 +122,8 @@ namespace NBsys{namespace NFovehmd
 		NBsys::NGeometry::Geometry_Matrix_44 GetRightViewProjection(f32 a_near,f32 a_far,const NGeometry::Geometry_Vector3& a_camera_position);
 
 	};
+
+
 }}
 #endif
 

@@ -19,18 +19,20 @@
 #if(BSYS_GEOMETRY_ENABLE)
 namespace NBsys{namespace NGeometry
 {
-
 	/** Geometry_Vector2
 	*/
 	struct Geometry_Vector2;
+
 
 	/** Geometry_Vector3
 	*/
 	struct Geometry_Vector3;
 
+
 	/** Geometry_Vector4
 	*/
 	struct Geometry_Vector4;
+
 
 }}
 #endif

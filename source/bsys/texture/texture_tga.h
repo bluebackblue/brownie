@@ -27,5 +27,6 @@ namespace NBsys{namespace NTexture
 	*/
 	sharedptr<Texture> CreateTexture_Tga(const sharedptr<u8>& a_data,s32 a_size,const STLWString& a_name);
 
+
 }}
 

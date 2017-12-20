@@ -49,11 +49,13 @@ namespace NBsys{namespace NFile
 		}
 	}
 
+
 	/** destructor
 	*/
 	File_Thread::~File_Thread()
 	{
 	}
+
 
 	/** スレッドメイン。
 	*/
@@ -155,6 +157,7 @@ namespace NBsys{namespace NFile
 		}
 	}
 
+
 	/** [メインスレッド]EndRequest
 	*/
 	void File_Thread::EndRequest()
@@ -166,12 +169,14 @@ namespace NBsys{namespace NFile
 		this->request_event.Signal();
 	}
 
+
 	/** [メインスレッド]ロックオブジェクトの取得。
 	*/
 	LockObject& File_Thread::GetLockObject()
 	{
 		return this->lockobject;
 	}
+
 	
 	/** [メインスレッド][パック]ロードリクエスト。
 	*/
@@ -202,6 +207,7 @@ namespace NBsys{namespace NFile
 	}
 	#endif
 
+
 	/** [メインスレッド]読み込み済みチェック。
 	*/
 	#if(BSYS_FILE_PACK_ENABLE)
@@ -216,6 +222,7 @@ namespace NBsys{namespace NFile
 		}
 	}
 	#endif
+
 
 	/** [メインスレッド]ロードリクエスト。
 	*/
@@ -270,6 +277,7 @@ namespace NBsys{namespace NFile
 		}
 	}
 
+
 	/** [メインスレッド]キャッシュクリア。
 	*/
 	void File_Thread::CacheClear(s32 a_cachegroup_id)
@@ -281,6 +289,7 @@ namespace NBsys{namespace NFile
 		}
 	}
 
+
 	/** [メインスレッド]リークチェック。
 	*/
 	void File_Thread::LeakCheck()
@@ -291,6 +300,7 @@ namespace NBsys{namespace NFile
 			this->cache.LeakCheck();
 		}
 	}
+
 
 	/** [ファイルスレッド]Pack_GetInstance
 
@@ -304,5 +314,7 @@ namespace NBsys{namespace NFile
 	}
 	#endif
 
+
 }}
 #endif
+

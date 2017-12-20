@@ -40,12 +40,14 @@ namespace NBsys{namespace NFont
 		this->impl.reset(new Font_Impl(a_font_name,a_font_size));
 	}
 
+
 	/** destructor
 	*/
 	Font::~Font()
 	{
 		this->impl.reset();
 	}
+
 
 	/** GetImpl
 	*/
@@ -54,12 +56,15 @@ namespace NBsys{namespace NFont
 		return this->impl;
 	}
 
+
 	/** GetPixel_R8G8B8A8
 	*/
 	Font_State Font::GetPixel_R8G8B8A8(sharedptr<u8>& a_dest_data,s32 a_offset,s32 a_dest_width,s32 a_dest_height,wchar a_code)
 	{
 		return this->impl->GetPixel_R8G8B8A8(a_dest_data,a_offset,a_dest_width,a_dest_height,a_code);
 	}
+
+
 }}
 #endif
 

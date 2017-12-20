@@ -30,6 +30,7 @@ namespace NBsys{namespace NWindowMenu
 	class WindowMenu_Window_CloseButton : public WindowMenu_Window_Base
 	{
 	public:
+
 		/** push_flag
 		*/
 		bool push_flag;
@@ -65,6 +66,7 @@ namespace NBsys{namespace NWindowMenu
 		f32 to_callback_font_offset_y;
 
 	public:
+
 		/** constructor
 		*/
 		WindowMenu_Window_CloseButton(const STLString& a_name);
@@ -88,7 +90,9 @@ namespace NBsys{namespace NWindowMenu
 		/** 描画処理。
 		*/
 		virtual bool CallBack_Draw(s32 a_z_sort);
+
 	};
+
 
 }}
 #endif

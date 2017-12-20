@@ -33,6 +33,7 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	sharedptr<WindowMenu> s_windowmenu;
 
+
 	/** constructor
 	*/
 	WindowMenu::WindowMenu(sharedptr<WindowMenu_Callback_Base> a_callback)
@@ -46,11 +47,13 @@ namespace NBsys{namespace NWindowMenu
 	{
 	}
 
+
 	/** destructor
 	*/
 	WindowMenu::~WindowMenu()
 	{
 	}
+
 
 	/** Update
 	*/
@@ -188,6 +191,7 @@ namespace NBsys{namespace NWindowMenu
 		}
 	}
 
+
 	/** Draw
 	*/
 	void WindowMenu::Draw(s32 a_z_sort_add)
@@ -230,6 +234,7 @@ namespace NBsys{namespace NWindowMenu
 		}
 	}
 
+
 	/** Add
 	*/
 	void WindowMenu::Add(const sharedptr<WindowMenu_Window_Base> a_window)
@@ -240,12 +245,14 @@ namespace NBsys{namespace NWindowMenu
 		this->changeactive_check = true;
 	}
 
+
 	/** 領域再計算、親子関係変更。
 	*/
 	void WindowMenu::SetChangeRect()
 	{
 		this->changerect_check = true;
 	}
+
 
 	/** GetList
 	*/
@@ -254,12 +261,14 @@ namespace NBsys{namespace NWindowMenu
 		return this->list;
 	}
 
+
 	/** GetMouse
 	*/
 	WindowMenu_Mouse& WindowMenu::GetMouse()
 	{
 		return this->mouse;
 	}
+
 
 	/** GetCallback
 	*/
@@ -268,12 +277,14 @@ namespace NBsys{namespace NWindowMenu
 		return this->callback;
 	}
 
+
 	/** システムの開始。
 	*/
 	void StartSystem(sharedptr<WindowMenu_Callback_Base> a_callback)
 	{
 		s_windowmenu.reset(new WindowMenu(a_callback));
 	}
+
 
 	/** システムの終了。
 	*/
@@ -283,12 +294,15 @@ namespace NBsys{namespace NWindowMenu
 		s_windowmenu.reset();
 	}
 
+
 	/** システムのインスタンス取得。
 	*/
 	sharedptr<WindowMenu>& GetSystemInstance()
 	{
 		return s_windowmenu;
 	}
+
+
 }}
 #endif
 

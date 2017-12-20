@@ -75,12 +75,14 @@ namespace NBsys{namespace NFont
 		#endif
 	}
 
+
 	/** destructor
 	*/
 	Font_Impl::~Font_Impl()
 	{
 		DeleteObject(this->font_handle);
 	}
+
 
 	/** GetPixel_R8G8B8A8
 	*/
@@ -198,6 +200,8 @@ namespace NBsys{namespace NFont
 
 		return t_font_state;
 	}
+
+
 }}
 #endif
 

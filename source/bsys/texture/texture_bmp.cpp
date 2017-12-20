@@ -106,5 +106,6 @@ namespace NBsys{namespace NTexture
 		return t_texture;
 	}
 
+
 }}
 

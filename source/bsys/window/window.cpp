@@ -41,6 +41,7 @@ namespace NBsys{namespace NWindow
 		this->impl.reset(new Window_Impl());
 	}
 
+
 	/** GetImpl
 	*/
 	sharedptr<Window_Impl>& Window::GetImpl()
@@ -48,11 +49,13 @@ namespace NBsys{namespace NWindow
 		return this->impl;
 	}
 
+
 	/** destructor
 	*/
 	Window::~Window()
 	{
 	}
+
 
 	/** [static]GetDesktopSize
 	*/
@@ -61,12 +64,14 @@ namespace NBsys{namespace NWindow
 		return Window_Impl::GetDesktopSize();
 	}
 
+
 	/** 作成。
 	*/
 	void Window::Create(const STLWString& a_title,s32 a_width,s32 a_height)
 	{
 		this->impl->Create(a_title,a_width,a_height);
 	}
+
 
 	/** 削除。
 	*/
@@ -75,12 +80,14 @@ namespace NBsys{namespace NWindow
 		this->impl->Delete();
 	}
 
+
 	/** GetClientWidth
 	*/
 	s32 Window::GetClientWidth()
 	{
 		return this->impl->GetClientWidth();
 	}
+
 
 	/** GetClientHeight
 	*/
@@ -89,12 +96,14 @@ namespace NBsys{namespace NWindow
 		return this->impl->GetClientHeight();
 	}
 
+
 	/** GetMouseX
 	*/
 	s32 Window::GetMouseX()
 	{
 		return this->impl->GetMouseX();
 	}
+
 
 	/** GetMouseY
 	*/
@@ -103,12 +112,14 @@ namespace NBsys{namespace NWindow
 		return this->impl->GetMouseY();
 	}
 
+
 	/** 更新。
 	*/
 	void Window::Update()
 	{
 		this->impl->Update();
 	}
+
 
 	/** 終了チェック。
 	*/
@@ -117,6 +128,7 @@ namespace NBsys{namespace NWindow
 		return this->impl->IsEnd();
 	}
 
+
 	/** 表示中チェック。
 	*/
 	bool Window::IsView()
@@ -124,12 +136,14 @@ namespace NBsys{namespace NWindow
 		return this->impl->IsView();
 	}
 
+
 	/** アクティブチェック。
 	*/
 	bool Window::IsActive()
 	{
 		return this->impl->IsActive();
 	}
+
 
 }}
 #endif

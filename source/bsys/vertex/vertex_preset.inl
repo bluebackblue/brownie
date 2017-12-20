@@ -90,6 +90,7 @@ namespace NBsys{namespace NVertex
 		return t_plane;
 	}
 
+
 	/** Preset_Box
 	*/
 	template <typename T> inline sharedptr<Vertex<T>> Preset_Box()
@@ -212,6 +213,7 @@ namespace NBsys{namespace NVertex
 
 		return t_box;
 	}
+
 
 }}
 #endif

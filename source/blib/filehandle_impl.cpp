@@ -126,8 +126,8 @@ namespace NBlib
 			s64 t_index = 0;
 			while(t_index < a_size){
 				s64 t_blocksize = (a_size - t_index);
-				if(t_blocksize > BLIB_FILEHANDLE_BLOCKSIZE){
-					t_blocksize = BLIB_FILEHANDLE_BLOCKSIZE;
+				if(t_blocksize > BLIB_FILEHANDLE_READWRITE_BLOCKSIZE){
+					t_blocksize = BLIB_FILEHANDLE_READWRITE_BLOCKSIZE;
 				}
 
 				//読み込み。
@@ -182,8 +182,8 @@ namespace NBlib
 			s64 t_index = 0;
 			while(t_index < a_size){
 				s64 t_blocksize = (a_size - t_index);
-				if(t_blocksize > BLIB_FILEHANDLE_BLOCKSIZE){
-					t_blocksize = BLIB_FILEHANDLE_BLOCKSIZE;
+				if(t_blocksize > BLIB_FILEHANDLE_READWRITE_BLOCKSIZE){
+					t_blocksize = BLIB_FILEHANDLE_READWRITE_BLOCKSIZE;
 				}
 
 				//書き込み。

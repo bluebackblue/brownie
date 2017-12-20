@@ -28,7 +28,6 @@
 #if(BSYS_GEOMETRY_ENABLE)
 namespace NBsys{namespace NGeometry
 {
-
 	/** Geometry_Frustum
 	*/
 	class Geometry_Frustum
@@ -88,6 +87,7 @@ namespace NBsys{namespace NGeometry
 		inline bool InFrustumCheck(Geometry_Vector3& a_position);
 		
 	};
+
 
 }}
 #endif

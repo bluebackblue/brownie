@@ -36,21 +36,25 @@ namespace NBsys{namespace NOpengl
 	*/
 	class Opengl_Impl;
 
+
 	/** Opengl
 	*/
 	class Opengl
 	{
 	private:
+
 		/** impl
 		*/
 		sharedptr<Opengl_Impl> impl;
 
 	public:
+
 		/** GetImpl
 		*/
 		sharedptr<Opengl_Impl>& GetImpl();
 
 	public:
+
 		/** constructor
 		*/
 		Opengl();
@@ -207,15 +211,9 @@ namespace NBsys{namespace NOpengl
 		*/
 		void Render_SetViewMatrix(const NBsys::NGeometry::Geometry_Matrix_44& a_view);
 
-
-
-
-
 		/** Render_SetAlphaBlend。
 		*/
 		void Render_SetAlphaBlend(bool a_flag);
-
-
 
 		/** Render_SetUniformTexture。
 		*/
@@ -238,7 +236,9 @@ namespace NBsys{namespace NOpengl
 		void Render_DrawRect(f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_textureid,const NBsys::NColor::Color_F& a_color);
 
 		#endif
+
 	};
+
 
 }}
 #endif

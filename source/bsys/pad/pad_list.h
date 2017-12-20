@@ -29,6 +29,7 @@ namespace NBsys{namespace NPad
 	class Pad_List
 	{
 	public:
+
 		/** constructor
 		*/
 		Pad_List(s32 a_virtualpad_max);
@@ -38,6 +39,7 @@ namespace NBsys{namespace NPad
 		nonvirtual ~Pad_List();
 
 	private:
+
 		/** デバイスリスト。
 		*/
 		STLVector<sharedptr<Pad_Device_Base>>::Type device_list;
@@ -47,6 +49,7 @@ namespace NBsys{namespace NPad
 		STLVector<sharedptr<Pad_Virtual>>::Type virtual_list;
 
 	public:
+
 		/** デバイス追加。
 		*/
 		void AddDevice(sharedptr<Pad_Device_Base> a_device_instance);
@@ -56,10 +59,13 @@ namespace NBsys{namespace NPad
 		sharedptr<Pad_Virtual>& GetVirtualPad(s32 a_virtualpad_index);
 
 	public:
+
 		/** 更新。
 		*/
 		void Update(bool a_device_update);
 
 	};
+
+
 }}
 

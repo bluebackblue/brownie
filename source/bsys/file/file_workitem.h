@@ -116,6 +116,7 @@ namespace NBsys{namespace NFile
 		s32 add_allocatesize;
 
 	public:
+
 		/** constructor
 		*/
 		File_WorkItem(LockObject& a_lockobject,const STLWString& a_filename_short,sharedptr<File_Allocator>& a_allocator,s32 a_add_allocatesize);
@@ -125,6 +126,7 @@ namespace NBsys{namespace NFile
 		nonvirtual ~File_WorkItem();
 
 	public:
+
 		/** GetData
 		*/
 		sharedptr<u8>& GetData();
@@ -154,6 +156,7 @@ namespace NBsys{namespace NFile
 		void ConvertUnlock();
 
 	public:
+
 		/** 更新。
 		*/
 		bool Update(File_Thread& a_thread,const STLWString& a_rootpath_full,bool a_cancel);
@@ -164,5 +167,7 @@ namespace NBsys{namespace NFile
 
 	};
 
+
 }}
 #endif
+

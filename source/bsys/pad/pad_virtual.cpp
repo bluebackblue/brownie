@@ -62,11 +62,13 @@ namespace NBsys{namespace NPad
 		}
 	}
 
+
 	/** destructor
 	*/
 	Pad_Virtual::~Pad_Virtual()
 	{
 	}
+
 
 	/** AddButton
 	*/
@@ -81,6 +83,7 @@ namespace NBsys{namespace NPad
 
 		this->list_button.push_back(t_item);
 	}
+
 
 	/** AddAnalog
 	*/
@@ -97,6 +100,7 @@ namespace NBsys{namespace NPad
 
 	}
 
+
 	/** AddTouch
 	*/
 	void Pad_Virtual::AddTouch(Pad_Virtual::TouchType::Id a_virtual_touch,Pad_Device_Base::TouchType::Id a_device_touch,sharedptr<Pad_Device_Base> a_device)
@@ -111,6 +115,7 @@ namespace NBsys{namespace NPad
 		this->list_touch.push_back(t_item);
 	}
 
+
 	/** SetButton
 	*/
 	void Pad_Virtual::SetButton(Pad_Virtual::ButtonType::Id a_virtual_button,Pad_Device_Base::ButtonType::Id a_device_button,sharedptr<Pad_Device_Base> a_device)
@@ -123,6 +128,7 @@ namespace NBsys{namespace NPad
 			}
 		}
 	}
+
 
 	/** SetAnalog
 	*/
@@ -137,6 +143,7 @@ namespace NBsys{namespace NPad
 		}
 	}
 
+
 	/** SetTouch
 	*/
 	void Pad_Virtual::SetTouch(Pad_Virtual::TouchType::Id a_virtual_touch,Pad_Device_Base::TouchType::Id a_device_touch,sharedptr<Pad_Device_Base> a_device)
@@ -149,6 +156,7 @@ namespace NBsys{namespace NPad
 			}
 		}
 	}
+
 
 	/** Update
 	*/
@@ -259,12 +267,14 @@ namespace NBsys{namespace NPad
 		}
 	}
 
+
 	/** SetEnable
 	*/
 	void Pad_Virtual::SetEnable(bool a_flag)
 	{
 		this->enable = a_flag;
 	}
+
 
 	/** IsButtonOn
 	*/
@@ -279,6 +289,7 @@ namespace NBsys{namespace NPad
 		return false;
 	}
 
+
 	/** IsButtonDown
 	*/
 	bool Pad_Virtual::IsButtonDown(Pad_Virtual::ButtonType::Id a_virtual_button) const
@@ -291,6 +302,7 @@ namespace NBsys{namespace NPad
 
 		return false;
 	}
+
 
 	/** IsButtonUp
 	*/
@@ -305,6 +317,7 @@ namespace NBsys{namespace NPad
 		return false;
 	}
 
+
 	/** IsButtonRepeat
 	*/
 	bool Pad_Virtual::IsButtonRepeat(Pad_Virtual::ButtonType::Id a_virtual_button) const
@@ -318,6 +331,7 @@ namespace NBsys{namespace NPad
 		return false;
 	}
 
+
 	/** GetAnalogValue
 	*/
 	f32 Pad_Virtual::GetAnalogValue(NPad::Pad_Virtual::AnalogType::Id a_virtual_analog) const
@@ -328,6 +342,7 @@ namespace NBsys{namespace NPad
 
 		return false;
 	}
+
 
 	/** GetTouchValue
 	*/
@@ -342,6 +357,7 @@ namespace NBsys{namespace NPad
 		return false;
 	}
 
+
 	/** IsTouchOn
 	*/
 	bool Pad_Virtual::IsTouchOn(Pad_Virtual::TouchType::Id a_virtual_touch) const
@@ -355,6 +371,7 @@ namespace NBsys{namespace NPad
 		return false;
 	}
 
+
 	/** GetTouchValue
 	*/
 	const TouchValue& Pad_Virtual::GetTouchValue(Pad_Virtual::TouchType::Id a_virtual_touch) const
@@ -365,5 +382,7 @@ namespace NBsys{namespace NPad
 
 		return TouchValue::Zero();
 	}
+
+
 }}
 

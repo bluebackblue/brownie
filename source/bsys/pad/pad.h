@@ -29,24 +29,31 @@ namespace NBsys{namespace NPad
 	*/
 	void StartSystem(s32 a_virtualpad_max);
 
+
 	/** システムのインスタンス取得。
 	*/
 	sharedptr<Pad_List>& GetSystemInstance();
+
 
 	/** デバイス追加。
 	*/
 	void AddDevice(sharedptr<Pad_Device_Base> a_device_instance);
 
+
 	/** 仮想パッド取得。
 	*/
 	sharedptr<Pad_Virtual>& GetVirtualPad(s32 a_virtualpad_index);
+
 
 	/** 更新。
 	*/
 	void Update(bool a_device_update);
 
+
 	/** システムの終了。
 	*/
 	void EndSystem();
+
+
 }}
 

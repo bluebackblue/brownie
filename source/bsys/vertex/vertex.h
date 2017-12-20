@@ -60,6 +60,7 @@ namespace NBsys{namespace NVertex
 		typename STLVector<VertexType>::Type vertex_list;
 
 	public:
+
 		/** constructor
 		*/
 		Vertex();
@@ -91,6 +92,7 @@ namespace NBsys{namespace NVertex
 		void ClearVertex();
 
 	public:
+
 		/** GetMaxParts
 		*/
 		s32 GetMaxParts();
@@ -114,13 +116,15 @@ namespace NBsys{namespace NVertex
 		/** GetVertexStrideByte
 		*/
 		s32 GetVertexStrideByte() const;
+
 	};
+
 
 }}
 #endif
 
+
 /** include
 */
 #include "./vertex.inl"
-
 

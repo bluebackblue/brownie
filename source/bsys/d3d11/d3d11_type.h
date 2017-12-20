@@ -47,6 +47,7 @@ namespace NBsys{namespace ND3d11
 		};
 	};
 
+
 	/** D3d11_TextureAddressType
 	*/
 	struct D3d11_TextureAddressType
@@ -97,6 +98,7 @@ namespace NBsys{namespace ND3d11
 		};
 	};
 
+
 	/** D3d11_FilterType
 	*/
 	struct D3d11_FilterType
@@ -142,6 +144,7 @@ namespace NBsys{namespace ND3d11
 		};
 	};
 
+
 	/** D3d11_CullType
 	*/
 	struct D3d11_CullType
@@ -161,6 +164,7 @@ namespace NBsys{namespace ND3d11
 			Back,
 		};
 	};
+
 
 	/** D3d11_FontTextureType
 	*/
@@ -185,6 +189,7 @@ namespace NBsys{namespace ND3d11
 		};
 	};
 	#endif
+
 
 }}
 #endif

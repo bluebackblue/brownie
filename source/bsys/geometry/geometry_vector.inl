@@ -36,6 +36,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
+
 	/** [作成]乗算。
 	*/
 	inline Geometry_Vector3 operator *(f32 a_scale,const Geometry_Vector3& a_vector)
@@ -48,6 +49,7 @@ namespace NBsys{namespace NGeometry
 		}
 		return t_temp;
 	}
+
 
 	/** [作成]乗算。
 	*/
@@ -63,11 +65,13 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
+
 	/** constructor
 	*/
 	inline Geometry_Vector2::Geometry_Vector2()
 	{
 	}
+
 
 	/** constructor
 	*/
@@ -77,6 +81,7 @@ namespace NBsys{namespace NGeometry
 		this->y = a_y;
 	}
 
+
 	/** constructor
 	*/
 	inline Geometry_Vector2::Geometry_Vector2(f32 a_value)
@@ -84,6 +89,7 @@ namespace NBsys{namespace NGeometry
 		this->x = a_value;
 		this->y = a_value;
 	}
+
 
 	/** constructor
 	*/
@@ -93,12 +99,14 @@ namespace NBsys{namespace NGeometry
 		this->y = a_value_pointer[1];
 	}
 
+
 	/** constructor
 	*/
 	inline Geometry_Vector2::Geometry_Vector2(const Geometry_Vector2& a_vector)
 	{
 		*this = a_vector;
 	}
+
 
 	/** constructor
 	*/
@@ -107,11 +115,13 @@ namespace NBsys{namespace NGeometry
 		this->Set_Zero();
 	}
 
+
 	/** destructor
 	*/
 	inline Geometry_Vector2::~Geometry_Vector2()
 	{
 	}
+
 
 	/** [static]Zero。
 	*/
@@ -122,6 +132,7 @@ namespace NBsys{namespace NGeometry
 		return s_zero;
 	}
 
+
 	/** [static]One。
 	*/
 	inline const Geometry_Vector2& Geometry_Vector2::One()
@@ -130,6 +141,7 @@ namespace NBsys{namespace NGeometry
 
 		return s_one;
 	}
+
 
 	/** [設定]。
 	*/
@@ -141,6 +153,7 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
+
 	/** [設定]。
 	*/
 	inline Geometry_Vector2& Geometry_Vector2::Set(const Geometry_Vector2& a_vector)
@@ -151,6 +164,7 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
+
 	/** [設定]Set_Zero。
 	*/
 	inline Geometry_Vector2& Geometry_Vector2::Set_Zero()
@@ -160,12 +174,14 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
+
 	/** [キャスト]。
 	*/
 	inline Geometry_Vector2::operator f32*()
 	{
 		return &this->v[0];
 	}
+
 
 	/** [キャスト]。
 	*/
@@ -174,11 +190,13 @@ namespace NBsys{namespace NGeometry
 		return &this->v[0];
 	}
 
+
 	/** constructor
 	*/
 	inline Geometry_Vector3::Geometry_Vector3()
 	{
 	}
+
 
 	/** constructor
 	*/
@@ -189,6 +207,7 @@ namespace NBsys{namespace NGeometry
 		this->z = a_z;
 	}
 
+
 	/** constructor
 	*/
 	inline Geometry_Vector3::Geometry_Vector3(f32 a_value)
@@ -197,6 +216,7 @@ namespace NBsys{namespace NGeometry
 		this->y = a_value;
 		this->z = a_value;
 	}
+
 
 	/** constructor
 	*/
@@ -207,6 +227,7 @@ namespace NBsys{namespace NGeometry
 		this->z = a_value_pointer[2];
 	}
 
+
 	/** constructor
 	*/
 	inline Geometry_Vector3::Geometry_Vector3(const Geometry_Vector3& a_vector)
@@ -216,6 +237,7 @@ namespace NBsys{namespace NGeometry
 		this->z = a_vector.z;
 	}
 
+
 	/** constructor
 	*/
 	inline Geometry_Vector3::Geometry_Vector3(const Geometry_Identity_Type& /*a_identity*/)
@@ -223,11 +245,13 @@ namespace NBsys{namespace NGeometry
 		this->Set_Zero();
 	}
 
+
 	/** destructor
 	*/
 	inline Geometry_Vector3::~Geometry_Vector3()
 	{
 	}
+
 
 	/** [static]Zero。
 	*/
@@ -238,6 +262,7 @@ namespace NBsys{namespace NGeometry
 		return s_zero;
 	}
 
+
 	/** [static]One。
 	*/
 	inline const Geometry_Vector3& Geometry_Vector3::One()
@@ -246,6 +271,7 @@ namespace NBsys{namespace NGeometry
 
 		return s_one;
 	}
+
 
 	/** [設定]。
 	*/
@@ -258,6 +284,7 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
+
 	/** [設定]。
 	*/
 	inline Geometry_Vector3& Geometry_Vector3::Set(const Geometry_Vector3& a_vector)
@@ -269,6 +296,7 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
+
 	/** [設定]Set_Zero。
 	*/
 	inline Geometry_Vector3& Geometry_Vector3::Set_Zero()
@@ -278,6 +306,7 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
+
 	/** [キャスト]。
 	*/
 	inline Geometry_Vector3::operator f32*()
@@ -285,12 +314,14 @@ namespace NBsys{namespace NGeometry
 		return &this->v[0];
 	}
 
+
 	/** [キャスト]。
 	*/
 	inline Geometry_Vector3::operator const f32*() const
 	{
 		return &this->v[0];
 	}
+
 
 	/** [作成]外積。
 	*/
@@ -304,6 +335,7 @@ namespace NBsys{namespace NGeometry
 		}
 		return t_temp;
 	}
+
 
 	/** [設定]外積。
 	*/
@@ -320,6 +352,7 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
+
 	/** [設定]外積。
 	*/
 	inline Geometry_Vector3& Geometry_Vector3::Set_Cross(const Geometry_Vector3& a_vector_1,const Geometry_Vector3& a_vector_2)
@@ -334,6 +367,7 @@ namespace NBsys{namespace NGeometry
 
 		return *this;
 	}
+
 
 	/** [設定]正規化。
 	*/
@@ -353,6 +387,7 @@ namespace NBsys{namespace NGeometry
 
 		return *this;
 	}
+
 
 	/** [設定]正規化。
 	*/
@@ -379,6 +414,7 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
+
 	/** [設定]正規化。
 	*/
 	inline f32 Geometry_Vector3::Set_Normalize_GetLength()
@@ -404,6 +440,7 @@ namespace NBsys{namespace NGeometry
 		return t_length;
 	}
 
+
 	/** [作成]正規化。
 	*/
 	inline Geometry_Vector3 Geometry_Vector3::Make_Normalize() const
@@ -424,6 +461,7 @@ namespace NBsys{namespace NGeometry
 		}
 		return t_temp;
 	}
+
 
 	/** [作成]正規化。
 	*/
@@ -450,6 +488,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
+
 	/** [設定]加算。
 	*/
 	inline Geometry_Vector3& Geometry_Vector3::operator +=(const Geometry_Vector3& a_vector)
@@ -460,6 +499,7 @@ namespace NBsys{namespace NGeometry
 
 		return *this;
 	}
+
 
 	/** [設定]減算。
 	*/
@@ -472,6 +512,7 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
+
 	/** [設定]乗算。
 	*/
 	inline Geometry_Vector3& Geometry_Vector3::operator *=(f32 a_value)
@@ -482,6 +523,7 @@ namespace NBsys{namespace NGeometry
 
 		return *this;
 	}
+
 
 	/** [設定]乗算。
 	*/
@@ -494,6 +536,7 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
+
 	/** [設定]除算。
 	*/
 	inline Geometry_Vector3& Geometry_Vector3::operator /=(f32 a_value)
@@ -503,12 +546,14 @@ namespace NBsys{namespace NGeometry
 		return operator *=(1.0f / a_value);
 	}
 
+
 	/** [作成]自身のベクトルを返します。
 	*/
 	inline Geometry_Vector3 Geometry_Vector3::operator +() const
 	{
 		return *this;
 	}
+
 
 	/** [作成]逆向きベクトル。
 	*/
@@ -518,6 +563,7 @@ namespace NBsys{namespace NGeometry
 
 		return t_temp;
 	}
+
 
 	/** [作成]加算。
 	*/
@@ -533,6 +579,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
+
 	/** [作成]減算。
 	*/
 	inline Geometry_Vector3 Geometry_Vector3::operator -(const Geometry_Vector3& a_vector) const
@@ -546,6 +593,7 @@ namespace NBsys{namespace NGeometry
 
 		return t_temp;
 	}
+
 
 	/** [作成]乗算。
 	*/
@@ -561,6 +609,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
+
 	/** [作成]除算。
 	*/
 	inline Geometry_Vector3 Geometry_Vector3::operator /(f32 a_value) const
@@ -572,6 +621,7 @@ namespace NBsys{namespace NGeometry
 		return operator *(t_value);
 	}
 
+
 	/** [比較]。
 	*/
 	inline bool Geometry_Vector3::operator ==(const Geometry_Vector3& a_vector) const
@@ -579,12 +629,14 @@ namespace NBsys{namespace NGeometry
 		return (this->x == a_vector.x) && (this->y == a_vector.y) && (this->z == a_vector.z);
 	}
 
+
 	/** [比較]。
 	*/
 	inline bool Geometry_Vector3::operator !=(const Geometry_Vector3& a_vector) const
 	{
 		return (x != a_vector.x) || (y != a_vector.y) || (z != a_vector.z);
 	}
+
 
 	/** [内積]length(this)*length(a_vector)*cos(θ)。
 	*/
@@ -595,12 +647,14 @@ namespace NBsys{namespace NGeometry
 		return t_value;
 	}
 
+
 	/** [チェック]。
 	*/
 	inline bool Geometry_Vector3::IsZero() const
 	{
 		return (this->x == 0.0f)&&(this->y == 0.0f)&&(this->z == 0.0f);
 	}
+
 
 	/** [作成]長さ。
 	*/
@@ -613,12 +667,14 @@ namespace NBsys{namespace NGeometry
 		return t_value;
 	}
 
+
 	/** [作成]長さの２乗。
 	*/
 	inline f32 Geometry_Vector3::SquareLength() const
 	{
 		return (this->x * this->x) + (this->y * this->y) + (this->z * this->z);
 	}
+
 
 	/** [作成]２点間の距離の２乗。
 	*/
@@ -632,6 +688,7 @@ namespace NBsys{namespace NGeometry
 
 		return t_value;
 	}
+
 
 	/** [作成]Make_Lerp。
 
@@ -650,6 +707,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
+
 	/** [static][作成]Lerp
 
 	a_per = 0.0f : return = this
@@ -667,6 +725,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
+
 	/** [設定]Set_Lerp。
 
 	a_per = 0.0f : this = this
@@ -679,6 +738,7 @@ namespace NBsys{namespace NGeometry
 		this->y += (a_vector.y - this->y) * a_per;
 		this->z += (a_vector.z - this->z) * a_per;
 	}
+
 
 	/** [設定]Lerp。
 
@@ -693,11 +753,13 @@ namespace NBsys{namespace NGeometry
 		this->z = a_vector_1.z + (a_vector_2.z - a_vector_1.z) * a_per;
 	}
 
+
 	/** constructor
 	*/
 	inline Geometry_Vector4::Geometry_Vector4()
 	{
 	}
+
 
 	/** constructor
 	*/
@@ -709,6 +771,7 @@ namespace NBsys{namespace NGeometry
 		this->w = a_w;
 	}
 
+
 	/** constructor
 	*/
 	inline Geometry_Vector4::Geometry_Vector4(const f32* a_value_pointer)
@@ -718,6 +781,7 @@ namespace NBsys{namespace NGeometry
 		this->z = a_value_pointer[2];
 		this->w = a_value_pointer[3];
 	}
+
 
 	/** constructor
 	*/
@@ -729,6 +793,7 @@ namespace NBsys{namespace NGeometry
 		this->w = a_vector.w;
 	}
 
+
 	/** constructor
 	*/
 	inline Geometry_Vector4::Geometry_Vector4(const Geometry_Identity_Type& /*a_identity*/)
@@ -736,11 +801,13 @@ namespace NBsys{namespace NGeometry
 		this->Set_Zero();
 	}
 
+
 	/** destructor
 	*/
 	inline Geometry_Vector4::~Geometry_Vector4()
 	{
 	}
+
 
 	/** [static]Zero。
 	*/
@@ -751,6 +818,7 @@ namespace NBsys{namespace NGeometry
 		return s_zero;
 	}
 
+
 	/** [static]One。
 	*/
 	inline const Geometry_Vector4& Geometry_Vector4::One()
@@ -759,6 +827,7 @@ namespace NBsys{namespace NGeometry
 
 		return s_one;
 	}
+
 
 	/** [設定]。
 	*/
@@ -772,6 +841,7 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
+
 	/** [設定]。
 	*/
 	inline Geometry_Vector4& Geometry_Vector4::Set(const Geometry_Vector4& a_vector)
@@ -784,6 +854,7 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
+
 	/** [設定]Set_Zero。
 	*/
 	inline Geometry_Vector4& Geometry_Vector4::Set_Zero()
@@ -792,6 +863,7 @@ namespace NBsys{namespace NGeometry
 
 		return *this;
 	}
+
 
 	/** [キャスト]。
 	*/
@@ -807,5 +879,7 @@ namespace NBsys{namespace NGeometry
 		return &this->v[0];
 	}
 
+
 }}
 #endif
+

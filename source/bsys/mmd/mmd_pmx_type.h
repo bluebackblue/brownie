@@ -38,6 +38,7 @@ namespace NBsys{namespace NMmd
 		f32 version;
 	};
 
+
 	/** Mmd_Pmx_Header_Ex
 	*/
 	struct Mmd_Pmx_Header_Ex
@@ -53,6 +54,7 @@ namespace NBsys{namespace NMmd
 		u8 morph_index_size;
 		u8 rigid_body_index_size;
 	};
+
 
 	/** Mmd_Pmx_VertexData
 	*/
@@ -75,6 +77,7 @@ namespace NBsys{namespace NMmd
 
 		f32									edge_mag;
 	};
+
 
 	/** Mmd_Pmx_Parts
 	*/
@@ -162,6 +165,7 @@ namespace NBsys{namespace NMmd
 		u32 count_of_index;
 	};
 
+
 	/** Mmd_Pmx_Bone_Ik
 	*/
 	struct Mmd_Pmx_Bone_Ik
@@ -176,6 +180,7 @@ namespace NBsys{namespace NMmd
 		NBsys::NGeometry::Geometry_Vector3 ik_link_limit_min;
 		NBsys::NGeometry::Geometry_Vector3 ik_link_limit_max;
 	};
+
 
 	/** Mmd_Pmx_Bone
 	*/
@@ -252,6 +257,7 @@ namespace NBsys{namespace NMmd
 		u32 bone_ik_list_size;
 		STLVector<Mmd_Pmx_Bone_Ik>::Type bone_ik_list;
 	};
+
 
 }}
 #endif

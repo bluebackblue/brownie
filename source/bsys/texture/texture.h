@@ -36,29 +36,49 @@ namespace NBsys{namespace NTexture
 		};
 	};
 
+
 	/** Texture
 	*/
 	class Texture
 	{
 	private:
+
+		/** pixel
+		*/
 		sharedptr<u8> pixel;
+
+		/** width
+		*/
 		s32 width;
+
+		/** height
+		*/
 		s32 height;
+
+		/** pitch
+		*/
 		s32 pitch;
 
+		/** texturetype
+		*/
 		TextureType::Id texturetype;
+
+		/** name
+		*/
 		STLWString name;
 
 	public:
-		/** コンストラクタ。
+
+		/** constructor
 		*/
 		Texture(const sharedptr<u8>& a_pixel,s32 a_width,s32 a_height,s32 a_pitch,TextureType::Id a_texturetype,const STLWString& a_name);
 
-		/** デストラクタ。
+		/** destructor
 		*/
 		nonvirtual ~Texture();
 
 	public:
+
 		/** GetPixel
 		*/
 		sharedptr<u8>& GetPixel();
@@ -80,6 +100,7 @@ namespace NBsys{namespace NTexture
 		s32 GetPitch();
 
 	};
+
 
 	/** CreateTexture
 	*/

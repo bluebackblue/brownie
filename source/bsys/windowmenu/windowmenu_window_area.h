@@ -31,7 +31,6 @@ namespace NBsys{namespace NWindowMenu
 	{
 	public:
 
-	public:
 		/** constructor
 		*/
 		WindowMenu_Window_Area(const STLString& a_name);
@@ -43,7 +42,9 @@ namespace NBsys{namespace NWindowMenu
 		/** Initialize
 		*/
 		void Initialize(const WindowMenu_Window_Base::InitItem& a_inititem);
+
 	};
+
 
 }}
 #endif

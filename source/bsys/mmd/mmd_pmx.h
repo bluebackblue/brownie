@@ -36,6 +36,7 @@ namespace NBsys{namespace NMmd
 	class Mmd_Pmx
 	{
 	public:
+
 		/** header
 		*/
 		Mmd_Pmx_Header header;
@@ -80,6 +81,7 @@ namespace NBsys{namespace NMmd
 		STLVector<Mmd_Pmx_Bone>::Type bone_list;
 
 	public:
+
 		/** constructor
 		*/
 		Mmd_Pmx()
@@ -125,6 +127,7 @@ namespace NBsys{namespace NMmd
 		bool Load(sharedptr<NFile::File_Object>& a_file);
 
 	};
+
 
 }}
 #endif

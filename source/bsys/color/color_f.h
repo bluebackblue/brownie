@@ -42,14 +42,17 @@ namespace NBsys{namespace NColor
 		};
 	};
 
+
 	/** Color_F_Raw is POD
 	*/
 	STATIC_ASSERT(std::is_pod<Color_F_Raw>::value == true);
+
 
 	/** Color_F
 	*/
 	struct Color_F : public Color_F_Raw
 	{
+
 		/** constructor
 		*/
 		inline Color_F();
@@ -149,7 +152,9 @@ namespace NBsys{namespace NColor
 		/** B_SetA
 		*/
 		inline void B_SetA(u8 a_a);
+
 	};
+
 
 }}
 #endif

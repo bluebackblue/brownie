@@ -24,18 +24,19 @@
 #if(BSYS_GEOMETRY_ENABLE)
 namespace NBsys{namespace NGeometry
 {
-
 	/** constructor
 	*/
 	inline Geometry_Plane::Geometry_Plane()
 	{
 	}
 
+
 	/** destructor
 	*/
 	inline Geometry_Plane::~Geometry_Plane()
 	{
 	}
+
 
 	/** 面の向き。
 	*/
@@ -44,12 +45,14 @@ namespace NBsys{namespace NGeometry
 		return this->normal;
 	}
 
+
 	/** 原点と面との距離。
 	*/
 	inline f32 Geometry_Plane::GetDistance()
 	{
 		return this->distance;
 	}
+
 
 	/** SetPlanePoint。
 	*/
@@ -63,6 +66,7 @@ namespace NBsys{namespace NGeometry
 
 		this->distance = this->normal.Dot(a_planepoint_2);
 	}
+
 
 	/** 係数設定。
 	*/
@@ -86,6 +90,7 @@ namespace NBsys{namespace NGeometry
 	{
 		return this->normal.Dot(a_position) - this->distance;
 	}
+
 
 }}
 #endif

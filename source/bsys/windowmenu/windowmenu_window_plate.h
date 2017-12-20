@@ -30,6 +30,7 @@ namespace NBsys{namespace NWindowMenu
 	class WindowMenu_Window_Plate : public WindowMenu_Window_Base
 	{
 	public:
+
 		/** color
 		*/
 		NBsys::NColor::Color_F color;
@@ -43,6 +44,7 @@ namespace NBsys{namespace NWindowMenu
 		bool mouseblock;
 
 	public:
+
 		/** constructor
 		*/
 		WindowMenu_Window_Plate(const STLString& a_name);
@@ -62,7 +64,10 @@ namespace NBsys{namespace NWindowMenu
 		/** マウス処理。
 		*/
 		virtual bool CallBack_InRangeMouseUpdate(WindowMenu_Mouse& a_mouse);
+
 	};
+
 
 }}
 #endif
+

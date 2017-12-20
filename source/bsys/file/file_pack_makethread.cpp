@@ -37,11 +37,13 @@ namespace NBsys{namespace NFile
 	{
 	}
 
+
 	/** destructor
 	*/
 	File_Pack_MakeThread::~File_Pack_MakeThread()
 	{
 	}
+
 
 	/** スレッドメイン。
 	*/
@@ -225,6 +227,7 @@ namespace NBsys{namespace NFile
 			}
 		}
 	}
+
 
 }}
 #endif

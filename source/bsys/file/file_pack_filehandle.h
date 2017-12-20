@@ -19,7 +19,6 @@
 #if(BSYS_FILE_PACK_ENABLE)
 namespace NBsys{namespace NFile
 {
-
 	/** File_Pack_FileHandle
 	*/
 	class File_Pack_FileHandle
@@ -39,6 +38,7 @@ namespace NBsys{namespace NFile
 		s64 data_offset;
 
 	public:
+
 		/** constructor
 		*/
 		explicit File_Pack_FileHandle(FileHandle& a_filehandle,s64 a_data_size,s64 a_data_offset);
@@ -58,6 +58,7 @@ namespace NBsys{namespace NFile
 		bool Read(u8* a_buffer,s64 a_size,s64 a_offset);
 
 	};
+
 
 }}
 #endif

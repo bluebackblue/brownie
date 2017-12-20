@@ -30,6 +30,7 @@ namespace NBsys{namespace NWindowMenu
 	class WindowMenu_Window_Window : public WindowMenu_Window_Base
 	{
 	public:
+
 		/** is_active
 		*/
 		bool is_active;
@@ -60,6 +61,7 @@ namespace NBsys{namespace NWindowMenu
 		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_CloseButton> window_title_closebutton;
 
 	public:
+
 		/** constructor
 		*/
 		WindowMenu_Window_Window(const STLString& a_name);
@@ -83,7 +85,9 @@ namespace NBsys{namespace NWindowMenu
 		/** タイトル背景の色設定。
 		*/
 		void SetTitleBgColor(const NBsys::NColor::Color_F& a_color_normal,const NBsys::NColor::Color_F& a_active);
+
 	};
+
 
 }}
 #endif

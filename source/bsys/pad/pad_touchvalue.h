@@ -63,5 +63,7 @@ namespace NBsys{namespace NPad
 			return s_zero;
 		}
 	};
+
+
 }}
 

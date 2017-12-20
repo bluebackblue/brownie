@@ -30,6 +30,7 @@ namespace NBsys{namespace NFovehmd
 	class Fovehmd_Impl
 	{
 	public:
+
 		/** constructor
 		*/
 		Fovehmd_Impl() noexcept;
@@ -39,6 +40,7 @@ namespace NBsys{namespace NFovehmd
 		nonvirtual ~Fovehmd_Impl() noexcept;
 
 	public:
+
 		/** errorcode
 		*/
 		ErrorCode errorcode;
@@ -88,6 +90,7 @@ namespace NBsys{namespace NFovehmd
 		NBsys::NGeometry::Geometry_Matrix_44 eye_translate_right;
 
 	public:
+
 		/** ResetErrorCode
 		*/
 		void ResetErrorCode();
@@ -153,6 +156,8 @@ namespace NBsys{namespace NFovehmd
 		NBsys::NGeometry::Geometry_Matrix_44 GetRightViewProjection(f32 a_near,f32 a_far,const NGeometry::Geometry_Vector3& a_camera_position);
 
 	};
+
+
 }}
 #endif
 

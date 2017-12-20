@@ -30,6 +30,7 @@ namespace NBsys{namespace NWindowMenu
 	class WindowMenu_Window_Drag : public WindowMenu_Window_Base
 	{
 	public:
+
 		/** drag_flag
 		*/
 		bool drag_flag;
@@ -45,6 +46,7 @@ namespace NBsys{namespace NWindowMenu
 		f32 old_y;
 
 	public:
+
 		/** constructor
 		*/
 		WindowMenu_Window_Drag(const STLString& a_name);
@@ -64,7 +66,9 @@ namespace NBsys{namespace NWindowMenu
 		/** 更新処理。
 		*/
 		virtual void CallBack_Update();
+
 	};
+
 
 }}
 #endif

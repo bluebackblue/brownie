@@ -23,21 +23,25 @@ namespace NBsys{namespace NWindow
 	*/
 	class Window_Impl;
 
+
 	/** Window
 	*/
 	class Window
 	{
 	private:
+
 		/** impl
 		*/
 		sharedptr<Window_Impl> impl;
 
 	public:
+
 		/** GetImpl
 		*/
 		sharedptr<Window_Impl>& GetImpl();
 
 	public:
+
 		/** constructor
 		*/
 		Window();
@@ -47,11 +51,13 @@ namespace NBsys{namespace NWindow
 		nonvirtual ~Window();
 
 	public:
+
 		/** [static]GetDesktopSize
 		*/
 		static std::tuple<s32,s32> GetDesktopSize();
 
 	public:
+
 		/** 作成。
 		*/
 		void Create(const STLWString& a_title,s32 a_width,s32 a_height);
@@ -93,6 +99,7 @@ namespace NBsys{namespace NWindow
 		bool IsActive();
 
 	};
+
 
 }}
 #endif

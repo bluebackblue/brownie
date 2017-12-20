@@ -30,6 +30,7 @@ namespace NBsys{namespace NVertex
 	{
 	}
 
+
 	/** constructor
 	*/
 	template <typename T> Vertex<T>::Vertex(const sharedptr<JsonItem>& a_jsonitem)
@@ -107,11 +108,13 @@ namespace NBsys{namespace NVertex
 		}
 	}
 
+
 	/** destructor
 	*/
 	template <typename T> Vertex<T>::~Vertex()
 	{
 	}
+
 
 	/** 新規パーツを追加。
 	*/
@@ -124,6 +127,7 @@ namespace NBsys{namespace NVertex
 		this->parts_list[this->parts_list.size() - 1]->vertex_countof = 0;
 	}
 
+
 	/** 最後のパーツにバーテックスを追加。
 	*/
 	template <typename T> void Vertex<T>::AddVertex(const T& a_vertex)
@@ -134,12 +138,14 @@ namespace NBsys{namespace NVertex
 		this->parts_list[this->parts_list.size() - 1]->vertex_countof++;
 	}
 
+
 	/** バーテックスの容量確保。
 	*/
 	template <typename T> void Vertex<T>::ReserveVertex(s32 a_count_of)
 	{
 		this->vertex_list.reserve(a_count_of);
 	}
+
 
 	/** バーテクスのクリア。
 	*/
@@ -149,12 +155,14 @@ namespace NBsys{namespace NVertex
 		this->parts_list[0]->vertex_countof = 0;
 	}
 
+
 	/** GetMaxParts
 	*/
 	template <typename T> s32 Vertex<T>::GetMaxParts()
 	{
 		return static_cast<s32>(this->parts_list.size());
 	}
+
 
 	/** GetVertexCountOf
 	*/
@@ -163,12 +171,14 @@ namespace NBsys{namespace NVertex
 		return this->parts_list[a_parts_index]->vertex_countof;
 	}
 
+
 	/** 全バーテックス数。
 	*/
 	template <typename T> s32 Vertex<T>::GetVertexAllCountOf()
 	{
 		return static_cast<s32>(this->vertex_list.size());
 	}
+
 
 	/** GetVertexOffset
 	*/
@@ -177,6 +187,7 @@ namespace NBsys{namespace NVertex
 		return this->parts_list[a_parts_index]->vertex_offset;
 	}
 
+
 	/** GetVertexPointer
 	*/
 	template <typename T> const typename Vertex<T>::VertexType* Vertex<T>::GetVertexPointer() const
@@ -184,12 +195,14 @@ namespace NBsys{namespace NVertex
 		return &this->vertex_list[0];
 	}
 
+
 	/** GetVertexStrideByte
 	*/
 	template <typename T> s32 Vertex<T>::GetVertexStrideByte() const
 	{
 		return sizeof(VertexType);
 	}
+
 
 }}
 #endif

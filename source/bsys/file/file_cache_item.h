@@ -24,7 +24,6 @@
 #if(BSYS_FILE_ENABLE)
 namespace NBsys{namespace NFile
 {
-
 	/** File_Cache_Item
 	*/
 	struct File_Cache_Item
@@ -61,8 +60,8 @@ namespace NBsys{namespace NFile
 		/** 空かどうか。
 		*/
 		bool IsEmpty();
-
 	};
+
 
 }}
 #endif

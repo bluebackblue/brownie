@@ -36,6 +36,7 @@ namespace NBsys{namespace NMmd
 	class Mmd_Vmd
 	{
 	public:
+
 		/** header_a
 		*/
 		Mmd_Vmd_Header_A header_a;
@@ -45,6 +46,7 @@ namespace NBsys{namespace NMmd
 		Mmd_Vmd_Header_B header_b;
 
 	public:
+
 		/** constructor
 		*/
 		Mmd_Vmd()
@@ -70,6 +72,7 @@ namespace NBsys{namespace NMmd
 		bool Load(sharedptr<NFile::File_Object>& a_file);
 
 	};
+
 
 }}
 #endif

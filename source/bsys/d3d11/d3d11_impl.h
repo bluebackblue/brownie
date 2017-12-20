@@ -55,7 +55,6 @@
 #if(BSYS_D3D11_ENABLE)
 namespace NBsys{namespace ND3d11
 {
-
 	/** D3d11_Impl_VertexShader
 	*/
 	struct D3d11_Impl_VertexShader
@@ -77,6 +76,7 @@ namespace NBsys{namespace ND3d11
 		sharedptr<STLVector<NBsys::ND3d11::D3d11_Layout>::Type> layout;
 	};
 
+
 	/** D3d11_Impl_PixelShader
 	*/
 	struct D3d11_Impl_PixelShader
@@ -89,6 +89,7 @@ namespace NBsys{namespace ND3d11
 		*/
 		sharedptr<NBsys::NFile::File_Object> fileobject; 
 	};
+
 
 	/** D3d11_Impl_VertexBuffer
 	*/
@@ -119,6 +120,7 @@ namespace NBsys{namespace ND3d11
 		bool write_flag;
 	};
 
+
 	/** D3d11_Impl_ConstantBuffer
 	*/
 	struct D3d11_Impl_ConstantBuffer
@@ -135,6 +137,7 @@ namespace NBsys{namespace ND3d11
 		*/
 		s32 register_b_index;
 	};
+
 
 	/** D3d11_Impl_Texture
 	*/
@@ -153,6 +156,7 @@ namespace NBsys{namespace ND3d11
 		sharedptr<ID3D11ShaderResourceView> resourceview;
 	};
 
+
 	/** D3d11_Impl_BlendState
 	*/
 	struct D3d11_Impl_BlendState
@@ -166,6 +170,7 @@ namespace NBsys{namespace ND3d11
 		bool alpha_blend;
 	};
 
+
 	/** D3d11_Impl_RasterizerState
 	*/
 	struct D3d11_Impl_RasterizerState
@@ -178,6 +183,7 @@ namespace NBsys{namespace ND3d11
 		*/
 		D3d11_CullType::Id culltype;
 	};
+
 
 	/** D3d11_Impl_DepthStencilState
 	*/
@@ -196,6 +202,7 @@ namespace NBsys{namespace ND3d11
 		bool depthwrie_flag;
 	};
 
+
 	/** D3d11_Impl_SamplerState
 	*/
 	struct D3d11_Impl_SamplerState
@@ -209,6 +216,7 @@ namespace NBsys{namespace ND3d11
 		D3d11_Sampler sampler;
 	};
 
+
 	/** D3d11_Impl
 
 	デバイスへのアクセスを行う関数は「Render_」で始まります。
@@ -217,6 +225,7 @@ namespace NBsys{namespace ND3d11
 	class D3d11_Impl
 	{
 	private:
+
 		/** width
 		*/
 		s32 width;
@@ -326,6 +335,7 @@ namespace NBsys{namespace ND3d11
 		STLMap<s32,sharedptr<D3d11_Impl_SamplerState>>::Type samplerstate_list;
 
 	public:
+
 		/** constructor
 		*/
 		D3d11_Impl();
@@ -335,6 +345,7 @@ namespace NBsys{namespace ND3d11
 		nonvirtual ~D3d11_Impl();
 
 	public:
+
 		/** GetWidth
 		*/
 		s32 GetWidth();
@@ -507,6 +518,7 @@ namespace NBsys{namespace ND3d11
 		/** Render_CreateSamplerState
 		*/
 		void Render_CreateSamplerState(sharedptr<D3d11_Impl_SamplerState>& a_samplerstate);
+
 	public:
 
 		/** Render_SetFont
@@ -630,6 +642,7 @@ namespace NBsys{namespace ND3d11
 		void Render_SetSamplerState(s32 a_register_t_index,s32 a_samplerstate_id);
 
 	};
+
 
 }}
 #endif

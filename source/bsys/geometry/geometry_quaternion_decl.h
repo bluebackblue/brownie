@@ -23,6 +23,7 @@ namespace NBsys{namespace NGeometry
 	*/
 	struct Geometry_Quaternion;
 
+
 }}
 #endif
 

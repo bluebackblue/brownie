@@ -87,6 +87,8 @@ namespace NBsys{namespace NGeometry
 		*/
 		inline Geometry_Quaternion Make_Slerp(const Geometry_Quaternion& a_quaternion,f32 a_per) const;
 	};
+
+
 }}
 #endif
 

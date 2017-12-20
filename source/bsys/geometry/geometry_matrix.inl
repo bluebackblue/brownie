@@ -40,6 +40,7 @@ namespace NBsys{namespace NGeometry
 			#endif
 		}
 
+
 		/** cosf
 		*/
 		inline f32 cosf(f32 a_rad)
@@ -52,11 +53,13 @@ namespace NBsys{namespace NGeometry
 		}
 	}
 
+
 	/** constructor
 	*/
 	inline Geometry_Matrix_44::Geometry_Matrix_44()
 	{
 	}
+
 
 	/** constructor
 	*/
@@ -88,6 +91,7 @@ namespace NBsys{namespace NGeometry
 		this->tr_w = a_tr_w;
 	}
 
+
 	/** constructor
 	*/
 	inline Geometry_Matrix_44::Geometry_Matrix_44(const Geometry_Identity_Type& /*a_identity*/)
@@ -95,12 +99,14 @@ namespace NBsys{namespace NGeometry
 		*this = Geometry_Matrix_44::Identity();
 	}
 
+
 	/** constructor
 	*/
 	inline Geometry_Matrix_44::Geometry_Matrix_44(const Geometry_Quaternion& a_quaternion)
 	{
 		this->Set_Quaternion(a_quaternion);
 	}
+
 
 	/** constructor
 	*/
@@ -127,11 +133,13 @@ namespace NBsys{namespace NGeometry
 		this->m_44 = a_m[15];
 	}
 
+
 	/** destructor
 	*/
 	inline Geometry_Matrix_44::~Geometry_Matrix_44()
 	{
 	}
+
 
 	/** [static]Identity。
 	*/
@@ -147,12 +155,14 @@ namespace NBsys{namespace NGeometry
 		return s_identity;
 	}
 
+
 	/** [設定]Identity。
 	*/
 	inline void Geometry_Matrix_44::Set_Identity()
 	{
 		*this = Geometry_Matrix_44::Identity();
 	}
+
 
 	/** [設定]。
 	*/
@@ -184,6 +194,7 @@ namespace NBsys{namespace NGeometry
 		this->tr_w = a_tr_w;
 	}
 
+
 	/** [作成]Ｘ軸。
 	*/
 	inline Geometry_Vector3 Geometry_Matrix_44::Make_AxisX() const
@@ -196,6 +207,7 @@ namespace NBsys{namespace NGeometry
 		}
 		return t_temp;
 	}
+
 
 	/** [作成]Ｙ軸。
 	*/
@@ -210,6 +222,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
+
 	/** [作成]Ｚ軸。
 	*/
 	inline Geometry_Vector3 Geometry_Matrix_44::Make_AxisZ() const
@@ -223,6 +236,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
+
 	/** [設定]Ｘ軸。
 	*/
 	inline void Geometry_Matrix_44::Set_AxisX(const Geometry_Vector3& a_vector)
@@ -231,6 +245,7 @@ namespace NBsys{namespace NGeometry
 		this->ax_y = a_vector.y;
 		this->ax_z = a_vector.z;
 	}
+
 
 	/** [設定]Ｙ軸。
 	*/
@@ -241,6 +256,7 @@ namespace NBsys{namespace NGeometry
 		this->ay_z = a_vector.z;
 	}
 
+
 	/** [設定]Ｚ軸。
 	*/
 	inline void Geometry_Matrix_44::Set_AxisZ(const Geometry_Vector3& a_vector)
@@ -249,6 +265,7 @@ namespace NBsys{namespace NGeometry
 		this->az_y = a_vector.y;
 		this->az_z = a_vector.z;
 	}
+
 
 	/** [設定]平行移動。
 	*/
@@ -259,6 +276,7 @@ namespace NBsys{namespace NGeometry
 		this->tr_z = a_z;
 	}
 
+
 	/** [設定]平行移動。
 	*/
 	inline void Geometry_Matrix_44::Set_Translate(const Geometry_Vector3& a_vector)
@@ -267,6 +285,7 @@ namespace NBsys{namespace NGeometry
 		this->tr_y = a_vector.y;
 		this->tr_z = a_vector.z;
 	}
+
 
 	/** [static][作成]平行移動。
 	*/
@@ -282,6 +301,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
+
 	/** [作成]平行移動。
 	*/
 	inline Geometry_Vector3 Geometry_Matrix_44::Make_Translate_Vector() const
@@ -290,6 +310,7 @@ namespace NBsys{namespace NGeometry
 
 		return t_temp;
 	}
+
 
 	/** [作成]平行移動。
 	*/
@@ -304,6 +325,7 @@ namespace NBsys{namespace NGeometry
 
 		return t_temp;
 	}
+
 
 	/** [設定]スケール。
 	*/
@@ -322,12 +344,14 @@ namespace NBsys{namespace NGeometry
 		this->Set_AxisZ(t_axis_z * a_z);
 	}
 
+
 	/** [設定]スケール。
 	*/
 	inline void Geometry_Matrix_44::Calc_Scale(const Geometry_Vector3& a_vector)
 	{
 		this->Calc_Scale(a_vector.x,a_vector.y,a_vector.z);
 	}
+
 
 	/** [作成]各軸のスケール。
 	*/
@@ -344,6 +368,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
+
 	/** [static][作成]回転行列。
 	*/
 	inline Geometry_Matrix_44 Geometry_Matrix_44::Make_RotationXYZ(f32 a_rad_x,f32 a_rad_y,f32 a_rad_z)
@@ -352,6 +377,7 @@ namespace NBsys{namespace NGeometry
 
 		return t_temp;
 	}
+
 
 	/** [作成]回転行列。
 	*/
@@ -389,6 +415,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
+
 	/** [static][作成]回転行列。
 	*/
 	inline Geometry_Matrix_44 Geometry_Matrix_44::Make_RotationX(f32 a_rad)
@@ -420,6 +447,7 @@ namespace NBsys{namespace NGeometry
 		}
 		return t_temp;
 	}
+
 
 	/** [static][作成]回転行列。
 	*/
@@ -453,6 +481,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
+
 	/** [static][作成]回転行列。
 	*/
 	inline Geometry_Matrix_44 Geometry_Matrix_44::Make_RotationZ(f32 a_rad)
@@ -485,6 +514,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
+
 	/** [設定]回転行列。
 	*/
 	inline void Geometry_Matrix_44::Set_RotationX(f32 a_rad)
@@ -512,6 +542,7 @@ namespace NBsys{namespace NGeometry
 		this->tr_z = 0.0f;
 		this->tr_w = 1.0f;
 	}
+
 
 	/** [設定]回転行列。
 	*/
@@ -541,6 +572,7 @@ namespace NBsys{namespace NGeometry
 		this->tr_w = 1.0f;
 	}
 
+
 	/** [設定]回転行列。
 	*/
 	inline void Geometry_Matrix_44::Set_RotationZ(f32 a_rad)
@@ -568,6 +600,7 @@ namespace NBsys{namespace NGeometry
 		this->tr_z = 0.0f;
 		this->tr_w = 1.0f;
 	}
+
 
 	/** [設定]回転行列。
 	*/
@@ -599,6 +632,7 @@ namespace NBsys{namespace NGeometry
 		this->tr_z = 0.0f;
 		this->tr_w = 1.0f;
 	}
+
 
 	/** [作成]逆行列。
 	*/
@@ -649,6 +683,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
+
 	/** [設定]逆行列。
 	*/
 	inline void Geometry_Matrix_44::Set_Inverse()
@@ -695,6 +730,7 @@ namespace NBsys{namespace NGeometry
 		}
 	}
 
+
 	/** [作成]転置行列。
 	*/
 	inline Geometry_Matrix_44 Geometry_Matrix_44::Make_Transpose()
@@ -725,6 +761,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
+
 	/** [設定]転置行列。
 	*/
 	inline void Geometry_Matrix_44::Set_Transpose()
@@ -754,6 +791,7 @@ namespace NBsys{namespace NGeometry
 		this->m[3][1] = t_m_1_3;
 		this->m[3][2] = t_m_2_3;
 	}
+
 
 	/** [設定]Set_Lookat。
 	*/
@@ -791,6 +829,7 @@ namespace NBsys{namespace NGeometry
 			this->tr_w = 1.0f;
 		}
 	}
+
 	
 	/** [設定]Set_LookatLimit。
 	*/
@@ -831,6 +870,7 @@ namespace NBsys{namespace NGeometry
 			this->tr_w = 1.0f;
 		}
 	}
+
 
 	/** [作成]クオータニオン。
 	*/
@@ -886,6 +926,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp_quaternion;
 	}
 
+
 	/** [作成]クオータニオン。
 	*/
 	inline Geometry_Quaternion Geometry_Matrix_44::Make_Quaternion_Safe() const
@@ -893,6 +934,7 @@ namespace NBsys{namespace NGeometry
 		Geometry_Matrix_44 t_temp = this->Make_Rotation();
 		return t_temp.Make_Quaternion();
 	}
+
 
 	/** [設定]クオータニオン。
 	*/
@@ -932,6 +974,7 @@ namespace NBsys{namespace NGeometry
 		this->tr_z = 0.0f;
 		this->tr_w = 1.0f;
 	}
+
 
 	/** [設定]プロジェクション。透視投影。
 	*/
@@ -1061,6 +1104,7 @@ namespace NBsys{namespace NGeometry
 		#endif
 	}
 
+
 	/** [設定]プロジェクション。正射影。
 	*/
 	inline void Geometry_Matrix_44::Set_OrthographicProjectionMatrix(f32 a_left,f32 a_right,f32 a_top,f32 a_bottom,f32 a_near,f32 a_far)
@@ -1072,6 +1116,7 @@ namespace NBsys{namespace NGeometry
 			-(a_right + a_left) / (a_right - a_left), -(a_top + a_bottom)/(a_top - a_bottom), -(a_far + a_near) / (a_far - a_near), 1.0f
 		);
 	}
+
 
 	/** [設定]ビュー。
 	*/
@@ -1143,6 +1188,7 @@ namespace NBsys{namespace NGeometry
 		#endif
 	}
 
+
 	/** [設定]ビューポート、
 	*/
 	inline void Geometry_Matrix_44::Set_ViewPortMatrix(f32 a_width,f32 a_height)
@@ -1155,6 +1201,7 @@ namespace NBsys{namespace NGeometry
 		);
 	}
 
+
 	/** [設定]単位型。
 	*/
 	inline Geometry_Matrix_44& Geometry_Matrix_44::operator =(const Geometry_Identity_Type& /*a_identity*/)
@@ -1163,6 +1210,7 @@ namespace NBsys{namespace NGeometry
 
 		return *this;
 	}
+
 
 	/** [設定]乗算。
 	*/
@@ -1211,6 +1259,7 @@ namespace NBsys{namespace NGeometry
 		return *this;
 	}
 
+
 	/** [作成]乗算。
 	*/
 	inline Geometry_Matrix_44 Geometry_Matrix_44::operator *(const Geometry_Matrix_44& a_matrix) const
@@ -1240,6 +1289,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
+
 	/** [設定]乗算。
 	*/
 	inline Geometry_Matrix_44& Geometry_Matrix_44::operator *=(f32 a_value)
@@ -1266,6 +1316,7 @@ namespace NBsys{namespace NGeometry
 
 		return *this;
 	}
+
 
 	/** [作成]乗算。
 	*/
@@ -1296,6 +1347,7 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
+
 	/** [設定]加算。
 	*/
 	inline Geometry_Matrix_44& Geometry_Matrix_44::operator +=(const Geometry_Matrix_44& a_matrix)
@@ -1322,6 +1374,7 @@ namespace NBsys{namespace NGeometry
 
 		return *this;
 	}
+
 
 	/** [作成]加算。
 	*/
@@ -1351,6 +1404,7 @@ namespace NBsys{namespace NGeometry
 		}
 		return t_temp;
 	}
+
 
 }}
 #endif

@@ -35,6 +35,7 @@ namespace NBsys{namespace NGeometry
 		};
 	};
 
+
 	/** Geometry_Vector_3_Raw
 	*/
 	struct Geometry_Vector_3_Raw
@@ -51,6 +52,7 @@ namespace NBsys{namespace NGeometry
 			f32 v[3];
 		};
 	};
+
 
 	/** Geometry_Vector_4_Raw
 	*/
@@ -69,6 +71,8 @@ namespace NBsys{namespace NGeometry
 			f32 v[4];
 		};
 	};
+
+
 }}
 #endif
 

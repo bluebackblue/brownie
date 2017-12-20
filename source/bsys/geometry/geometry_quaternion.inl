@@ -30,12 +30,12 @@
 #if(BSYS_GEOMETRY_ENABLE)
 namespace NBsys{namespace NGeometry
 {
-
 	/** constructor
 	*/
 	inline Geometry_Quaternion::Geometry_Quaternion()
 	{
 	}
+
 
 	/** constructor
 	*/
@@ -46,6 +46,7 @@ namespace NBsys{namespace NGeometry
 		this->z = 0.0f;
 		this->w = 1.0f;
 	}
+
 
 	/** constructor
 	*/
@@ -62,6 +63,7 @@ namespace NBsys{namespace NGeometry
 		this->w = a_quaternion.w;
 	}
 
+
 	/** constructor
 	*/
 	inline Geometry_Quaternion::Geometry_Quaternion(const f32* a_list)
@@ -77,6 +79,7 @@ namespace NBsys{namespace NGeometry
 		this->w = a_list[3];
 	}
 
+
 	/** constructor
 	*/
 	inline Geometry_Quaternion::Geometry_Quaternion(f32 a_x,f32 a_y,f32 a_z,f32 a_w)
@@ -91,6 +94,7 @@ namespace NBsys{namespace NGeometry
 		this->z = a_z;
 		this->w = a_w;
 	}
+
 
 	/** constructor
 	*/
@@ -112,11 +116,13 @@ namespace NBsys{namespace NGeometry
 		this->w = t_cos_half;
 	}
 
+
 	/** destructor
 	*/
 	inline Geometry_Quaternion::~Geometry_Quaternion()
 	{
 	}
+
 
 	/** Set_Normalize
 	*/
@@ -138,6 +144,7 @@ namespace NBsys{namespace NGeometry
 		this->w *= t_s;
 	}
 
+
 	/** Set_Conjugate
 	*/
 	inline void Geometry_Quaternion::Set_Conjugate()
@@ -146,6 +153,7 @@ namespace NBsys{namespace NGeometry
 		this->y *= -1;
 		this->z *= -1;
 	}
+
 
 	/** Make_Conjugate
 	*/
@@ -161,12 +169,14 @@ namespace NBsys{namespace NGeometry
 		return t_temp;
 	}
 
+
 	/** [作成]マトリックス。
 	*/
 	inline Geometry_Matrix_44 Geometry_Quaternion::Make_Matrix()
 	{
 		return Geometry_Matrix_44(*this);
 	}
+
 
 	/** [作成]Make_Slerp。
 
@@ -196,6 +206,8 @@ namespace NBsys{namespace NGeometry
 
 		return t_temp;
 	}
+
+
 }}
 #endif
 

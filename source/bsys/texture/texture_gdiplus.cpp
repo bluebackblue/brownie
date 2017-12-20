@@ -114,5 +114,6 @@ namespace NBsys{namespace NTexture
 	}
 	#endif
 
+
 }}
 

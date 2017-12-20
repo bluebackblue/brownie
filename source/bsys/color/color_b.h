@@ -29,7 +29,6 @@
 #if(BSYS_COLOR_ENABLE)
 namespace NBsys{namespace NColor
 {
-
 	/** Color_B_Raw
 	*/
 	struct Color_B_Raw
@@ -158,7 +157,9 @@ namespace NBsys{namespace NColor
 		/** F_SetA
 		*/
 		inline void F_SetA(f32 a_a);
+
 	};
+
 
 }}
 #endif

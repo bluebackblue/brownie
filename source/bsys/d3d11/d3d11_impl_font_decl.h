@@ -24,6 +24,8 @@ namespace NBsys{namespace ND3d11
 	#if(BSYS_FONT_ENABLE)
 	class D3d11_Impl_Font;
 	#endif
+
+
 }}
 #endif
 

@@ -29,6 +29,7 @@ namespace NBsys{namespace NPad
 	class Pad_Device_Base
 	{
 	public:
+
 		/** constructor
 		*/
 		Pad_Device_Base()
@@ -42,6 +43,7 @@ namespace NBsys{namespace NPad
 		}
 
 	public:
+
 		/** ButtonType
 		*/
 		struct ButtonType
@@ -117,6 +119,7 @@ namespace NBsys{namespace NPad
 		};
 
 	public:
+
 		/** デバイスの更新。
 		*/
 		virtual void DeviceUpdate() = 0;
@@ -132,6 +135,9 @@ namespace NBsys{namespace NPad
 		/** タッチ取得。
 		*/
 		virtual TouchValue GetTouch(s32 a_virtualpad_index,NBsys::NPad::Pad_Device_Base::TouchType::Id a_device_touch) = 0;
+
 	};
+
+
 }}
 

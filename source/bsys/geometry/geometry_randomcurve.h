@@ -38,11 +38,13 @@ namespace NBsys{namespace NGeometry
 		}
 	}
 
+
 	/** Geometry_RandomCurve
 	*/
 	struct Geometry_RandomCurve
 	{
 	public:
+
 		/** 速度。
 		*/
 		s32 speed_inverse_range;
@@ -72,6 +74,7 @@ namespace NBsys{namespace NGeometry
 		f32 value_17;
 
 	public:
+
 		/** constructor
 		*/
 		Geometry_RandomCurve()
@@ -197,6 +200,7 @@ namespace NBsys{namespace NGeometry
 			);
 		}
 	};
+
 
 }}
 #endif

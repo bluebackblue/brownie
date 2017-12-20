@@ -29,18 +29,19 @@
 #if(BSYS_ACTIONBATCHING_ENABLE)
 namespace NBsys{namespace NActionBatching
 {
-
 	/** constructor
 	*/
 	ActionBatching::ActionBatching()
 	{
 	}
 
+
 	/** destructor
 	*/
 	nonvirtual ActionBatching::~ActionBatching()
 	{
 	}
+
 
 	/** Update
 	*/
@@ -59,6 +60,7 @@ namespace NBsys{namespace NActionBatching
 		}
 	}
 
+
 	/** StartBatching
 	*/
 	void ActionBatching::StartBatching(sharedptr<ActionBatching_ActionList>& a_actionlist)
@@ -68,6 +70,7 @@ namespace NBsys{namespace NActionBatching
 
 		this->worklist.push_back(a_actionlist);
 	}
+
 
 	/** IsBusy
 	*/
@@ -79,6 +82,7 @@ namespace NBsys{namespace NActionBatching
 
 		return false;
 	}
+
 
 }}
 #endif

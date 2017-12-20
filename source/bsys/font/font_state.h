@@ -23,16 +23,45 @@ namespace NBsys{namespace NFont
 	*/
 	struct Font_State
 	{
-		wchar	code;
-		s32		x;
-		s32		y;
-		s32		black_box_x;
-		s32		black_box_y;
-		s32		glyph_origin_x;
-		s32		glyph_origin_y;
-		s32		cell_inc_x;
-		s32		cell_inc_y;
-		s32		ascent;
+		/** code
+		*/
+		wchar code;
+
+		/** x
+		*/
+		s32 x;
+
+		/** y
+		*/
+		s32 y;
+
+		/** black_box_x
+		*/
+		s32 black_box_x;
+
+		/** black_box_y
+		*/
+		s32 black_box_y;
+
+		/** glyph_origin_x
+		*/
+		s32 glyph_origin_x;
+
+		/** glyph_origin_y
+		*/
+		s32 glyph_origin_y;
+
+		/** cell_inc_x
+		*/
+		s32 cell_inc_x;
+
+		/** cell_inc_y
+		*/
+		s32 cell_inc_y;
+
+		/** ascent
+		*/
+		s32 ascent;
 
 		/** constructor
 		*/
@@ -57,6 +86,7 @@ namespace NBsys{namespace NFont
 		{
 		}
 	};
+
 
 }}
 #endif

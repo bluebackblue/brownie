@@ -26,7 +26,6 @@
 #if(BSYS_GEOMETRY_ENABLE)
 namespace NBsys{namespace NGeometry
 {
-
 	/** エルミート曲線。
 
 	a_start_pos		: 始点
@@ -50,6 +49,7 @@ namespace NBsys{namespace NGeometry
 		);
 	}
 
+
 	/** ベジェ曲線。４点。
 	*/
 	inline f32 GetBezierCurve(f32 a_pos_1,f32 a_pos_2,f32 a_pos_3,f32 a_pos_4,f32 a_rate)
@@ -63,6 +63,7 @@ namespace NBsys{namespace NGeometry
 
 		return t_1 * a_pos_1 + t_2 * a_pos_2 + t_3 * a_pos_3 + t_4 * a_pos_4;
 	}
+
 
 	/** ベジェ曲線。３点。
 	*/
@@ -79,6 +80,7 @@ namespace NBsys{namespace NGeometry
 			t_1 * a_pos_1.y + t_2 * a_pos_2.y + t_3 * a_pos_3.y
 		);
 	}
+
 
 	/** ベジェ曲線。４点。
 	*/
@@ -97,6 +99,7 @@ namespace NBsys{namespace NGeometry
 		);
 	}
 
+
 	/** ベジェ曲線。５点。
 	*/
 	inline Geometry_Vector2 GetBezierCurve(Geometry_Vector2& a_pos_1,Geometry_Vector2& a_pos_2,Geometry_Vector2& a_pos_3,Geometry_Vector2& a_pos_4,Geometry_Vector2& a_pos_5,f32 a_rate)
@@ -114,6 +117,7 @@ namespace NBsys{namespace NGeometry
 			t_1 * a_pos_1.y + t_2 * a_pos_2.y + t_3 * a_pos_3.y + t_4 * a_pos_4.y + t_5 * a_pos_5.y
 		);
 	}
+
 
 }}
 #endif

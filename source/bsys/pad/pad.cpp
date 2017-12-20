@@ -33,6 +33,7 @@ namespace NBsys{namespace NPad
 	*/
 	sharedptr<Pad_List> s_instance;
 
+
 	/** システムの開始。
 	*/
 	void StartSystem(s32 a_virtualpad_max)
@@ -44,12 +45,14 @@ namespace NBsys{namespace NPad
 		}
 	}
 
+
 	/** システムのインスタンス取得。
 	*/
 	sharedptr<Pad_List>& GetSystemInstance()
 	{
 		return s_instance;
 	}
+
 
 	/** デバイス追加。
 	*/
@@ -61,6 +64,7 @@ namespace NBsys{namespace NPad
 			ASSERT(0);
 		}
 	}
+
 
 	/** 仮想パッド取得。
 	*/
@@ -74,6 +78,7 @@ namespace NBsys{namespace NPad
 		}
 	}
 
+
 	/** 更新。
 	*/
 	void Update(bool a_device_update)
@@ -85,11 +90,14 @@ namespace NBsys{namespace NPad
 		}
 	}
 
+
 	/** システムの終了。
 	*/
 	void EndSystem()
 	{
 		s_instance.reset();
 	}
+
+
 }}
 

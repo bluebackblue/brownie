@@ -30,6 +30,7 @@ namespace NBsys{namespace NWindowMenu
 	class WindowMenu_Window_Text: public WindowMenu_Window_Base
 	{
 	public:
+
 		/** color
 		*/
 		NBsys::NColor::Color_F color;
@@ -51,6 +52,7 @@ namespace NBsys{namespace NWindowMenu
 		s32 alignment_y;
 
 	public:
+
 		/** constructor
 		*/
 		WindowMenu_Window_Text(const STLString& a_name);
@@ -69,5 +71,7 @@ namespace NBsys{namespace NWindowMenu
 
 	};
 
+
 }}
 #endif
+

@@ -42,6 +42,7 @@ namespace NBsys{namespace NFile
 	{
 	}
 
+
 	/** destructor
 	*/
 	File_Pack_WorkItem::~File_Pack_WorkItem()
@@ -52,6 +53,7 @@ namespace NBsys{namespace NFile
 		}
 	}
 
+
 	/** エラーコード取得。
 	*/
 	ErrorCode::Id File_Pack_WorkItem::GetErrorCode() const
@@ -59,12 +61,14 @@ namespace NBsys{namespace NFile
 		return this->errorcode;
 	}
 
+
 	/** パックファイル名取得。
 	*/
 	const STLWString& File_Pack_WorkItem::GetPackFileNameShort()
 	{
 		return this->pack_filename_short;
 	}
+
 
 	/** ファイル検索。
 	*/
@@ -76,6 +80,7 @@ namespace NBsys{namespace NFile
 		}
 		return sharedptr<File_Pack_FileHandle>::null();
 	}
+
 
 	/** [スレッドから]更新。
 
@@ -200,6 +205,7 @@ namespace NBsys{namespace NFile
 
 		return false;
 	}
+
 
 }}
 #endif

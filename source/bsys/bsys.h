@@ -15,11 +15,13 @@
 #include "./actionbatching/actionbatching.h"
 #endif
 
+
 /** include
 */
 #if(BSYS_COLOR_ENABLE)
 #include "./color/color.h"
 #endif
+
 
 /** include
 */
@@ -27,11 +29,13 @@
 #include "./file/file.h"
 #endif
 
+
 /** include
 */
 #if(BSYS_FOVEHMD_ENABLE)
 #include "./fovehmd/fovehmd.h"
 #endif
+
 
 /** include
 */
@@ -39,11 +43,13 @@
 #include "./geometry/geometry.h"
 #endif
 
+
 /** include
 */
 #if(BSYS_VERTEX_ENABLE)
 #include "./vertex/vertex.h"
 #endif
+
 
 /** include
 */
@@ -51,11 +57,13 @@
 #include "./window/window.h"
 #endif
 
+
 /** include
 */
 #if(BSYS_OPENGL_ENABLE)
 #include "./opengl/opengl.h"
 #endif
+
 
 /** include
 */
@@ -63,17 +71,20 @@
 #include "./d3d11/d3d11.h"
 #endif
 
+
 /** include
 */
 #if(BSYS_MMD_PMX_ENABLE)
 #include "./mmd/mmd.h"
 #endif
 
+
 /** include
 */
 #if(BSYS_TEXTURE_ENABLE)
 #include "./texture/texture.h"
 #endif
+
 
 /** include
 */
@@ -100,5 +111,12 @@
 */
 #if(BSYS_WINDOWMENU_ENABLE)
 #include "./windowmenu/windowmenu.h"
+#endif
+
+
+/** include
+*/
+#if(BSYS_HTTP_ENABLE)
+#include "./html/html.h"
 #endif
 

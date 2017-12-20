@@ -29,12 +29,12 @@
 #if(BSYS_FILE_ENABLE)
 namespace NBsys{namespace NFile
 {
-
 	/** File_Thread
 	*/
 	class File_Thread
 	{
 	private:
+
 		/** endrequest
 		*/
 		AtomicValue<bool> endrequest;
@@ -68,6 +68,7 @@ namespace NBsys{namespace NFile
 		File_Cache cache;
 
 	public:
+
 		/** constructor
 		*/
 		File_Thread();
@@ -77,6 +78,7 @@ namespace NBsys{namespace NFile
 		nonvirtual ~File_Thread();
 
 	public:
+
 		/** 引数。
 		*/
 		struct ThreadArgument
@@ -162,5 +164,7 @@ namespace NBsys{namespace NFile
 
 	};
 
+
 }}
 #endif
+

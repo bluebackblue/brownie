@@ -60,11 +60,13 @@ namespace NBsys{namespace NWindowMenu
 		this->window_title_closebutton = this->window_title_area->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_CloseButton>("title_closebutton");
 	}
 
+
 	/** destructor
 	*/
 	WindowMenu_Window_Window::~WindowMenu_Window_Window()
 	{
 	}
+
 
 	/** Initialize
 	*/
@@ -128,6 +130,7 @@ namespace NBsys{namespace NWindowMenu
 		}
 	}
 
+
 	/** アクティブ変更。
 	*/
 	void WindowMenu_Window_Window::CallBack_ChangeActive(bool a_active)
@@ -140,6 +143,7 @@ namespace NBsys{namespace NWindowMenu
 		}
 	}
 
+
 	/** タイトルの高さ設定。
 	*/
 	void WindowMenu_Window_Window::SetTitleHeight(f32 a_h)
@@ -150,6 +154,7 @@ namespace NBsys{namespace NWindowMenu
 		this->window_title_closebutton->size.SetH(a_h);
 	}
 
+
 	/** タイトル背景の色設定。
 	*/
 	void WindowMenu_Window_Window::SetTitleBgColor(const NBsys::NColor::Color_F& a_color_normal,const NBsys::NColor::Color_F& a_active)
@@ -158,6 +163,7 @@ namespace NBsys{namespace NWindowMenu
 		this->color_title_bg_active = a_active;
 		this->CallBack_ChangeActive(this->is_active);
 	}
+
 
 }}
 #endif

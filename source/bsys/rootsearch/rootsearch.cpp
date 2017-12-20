@@ -29,20 +29,15 @@
 #if(BSYS_ROOTSEARCH_ENABLE)
 namespace NBsys{namespace NRootSearch
 {
-
-	
-
-
-
-
-
 	#if(0)
+
 
 	/** constructor
 	*/
 	RootSearch::RootSearch()
 	{
 	}
+
 
 	/** destructor
 	*/

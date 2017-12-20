@@ -30,6 +30,7 @@ namespace NBsys{namespace NWindowMenu
 	class WindowMenu_Window_Button : public WindowMenu_Window_Base
 	{
 	public:
+
 		/** push_flag
 		*/
 		bool push_flag;
@@ -53,6 +54,7 @@ namespace NBsys{namespace NWindowMenu
 		std::function<void(void)> action;
 
 	public:
+
 		/** constructor
 		*/
 		WindowMenu_Window_Button(const STLString& a_name);
@@ -76,7 +78,9 @@ namespace NBsys{namespace NWindowMenu
 		/** ï`âÊèàóùÅB
 		*/
 		virtual bool CallBack_Draw(s32 a_z_sort);
+
 	};
+
 
 }}
 #endif

@@ -37,7 +37,6 @@
 */
 namespace NBlib
 {
-
 	/** 初期化済みフラグ。
 	*/
 	static bool s_is_boot_initialize = false;

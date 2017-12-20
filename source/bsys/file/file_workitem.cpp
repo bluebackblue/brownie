@@ -32,7 +32,6 @@
 #if(BSYS_FILE_ENABLE)
 namespace NBsys{namespace NFile
 {
-
 	/** constructor
 	*/
 	File_WorkItem::File_WorkItem(LockObject& a_lockobject,const STLWString& a_filename_short,sharedptr<File_Allocator>& a_allocator,s32 a_add_allocatesize)
@@ -58,11 +57,13 @@ namespace NBsys{namespace NFile
 		this->data.reset();
 	}
 
+
 	/** destructor
 	*/
 	File_WorkItem::~File_WorkItem()
 	{
 	}
+
 
 	/** エラーコード取得。
 	*/
@@ -72,6 +73,7 @@ namespace NBsys{namespace NFile
 
 		return this->errorcode;
 	}
+
 
 	/** GetData。
 	*/
@@ -87,6 +89,7 @@ namespace NBsys{namespace NFile
 		return sharedptr<u8>::null();
 	}
 
+
 	/** GetSize
 	*/
 	s64 File_WorkItem::GetSize() const
@@ -96,6 +99,7 @@ namespace NBsys{namespace NFile
 		return this->data_size;
 	}
 
+
 	/** GetAddAllocateSize
 	*/
 	s32 File_WorkItem::GetAddAllocateSize() const
@@ -104,6 +108,7 @@ namespace NBsys{namespace NFile
 
 		return this->add_allocatesize;
 	}
+
 
 	/** IsBusy
 	*/
@@ -117,6 +122,7 @@ namespace NBsys{namespace NFile
 		return true;
 	}
 
+
 	/** GetFileNameShort
 	*/
 	const STLWString& File_WorkItem::GetFileNameShort() const
@@ -125,6 +131,7 @@ namespace NBsys{namespace NFile
 
 		return this->filename_short;
 	}
+
 
 	/** コンバートロック。
 	*/
@@ -150,6 +157,7 @@ namespace NBsys{namespace NFile
 		return File_ConvertLock_ReturnType::AlreadyConverted;
 	}
 
+
 	/** コンバートアンロック。
 	*/
 	void File_WorkItem::ConvertUnlock()
@@ -174,6 +182,7 @@ namespace NBsys{namespace NFile
 		ASSERT(0);
 		return;
 	}
+
 
 	/** [スレッドから]更新。
 
@@ -360,6 +369,7 @@ namespace NBsys{namespace NFile
 
 		return false;
 	}
+
 
 }}
 #endif

@@ -48,11 +48,13 @@ namespace NBsys{namespace NWindowMenu
 	{
 	}
 
+
 	/** destructor
 	*/
 	WindowMenu_Window_Text::~WindowMenu_Window_Text()
 	{
 	}
+
 
 	/** Initialize
 	*/
@@ -69,6 +71,7 @@ namespace NBsys{namespace NWindowMenu
 			this->string = L"";
 		}
 	}
+
 
 	/** 描画処理。
 	*/
@@ -101,6 +104,8 @@ namespace NBsys{namespace NWindowMenu
 		//子の描画を行う。
 		return true;
 	}
+
+
 }}
 #endif
 

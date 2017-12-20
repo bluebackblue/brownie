@@ -45,11 +45,13 @@ namespace NBsys{namespace NWindowMenu
 	{
 	}
 
+
 	/** destructor
 	*/
 	WindowMenu_Window_Button::~WindowMenu_Window_Button()
 	{
 	}
+
 
 	/** Initialize
 	*/
@@ -81,6 +83,7 @@ namespace NBsys{namespace NWindowMenu
 		}
 	}
 
+
 	/** マウス処理。
 	*/
 	bool WindowMenu_Window_Button::CallBack_InRangeMouseUpdate(WindowMenu_Mouse& a_mouse)
@@ -96,6 +99,7 @@ namespace NBsys{namespace NWindowMenu
 		//マウス操作を親に伝えない。
 		return true;
 	}
+
 
 	/** 更新処理。
 	*/
@@ -123,6 +127,7 @@ namespace NBsys{namespace NWindowMenu
 			this->on_flag = this->IsRange(t_mouse.x,t_mouse.y);
 		}
 	}
+
 
 	/** 描画処理。
 	*/
@@ -173,6 +178,8 @@ namespace NBsys{namespace NWindowMenu
 
 		return true;
 	}
+
+
 }}
 #endif
 

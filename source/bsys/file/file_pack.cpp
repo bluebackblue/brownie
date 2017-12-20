@@ -37,11 +37,13 @@ namespace NBsys{namespace NFile
 	{
 	}
 
+
 	/** destructor
 	*/
 	File_Pack::~File_Pack()
 	{
 	}
+
 
 	/** 登録。
 	*/
@@ -52,6 +54,7 @@ namespace NBsys{namespace NFile
 
 		this->list.push_back(a_workitem);
 	}
+
 
 	/** 読み込み済みチェック。
 	*/
@@ -70,6 +73,7 @@ namespace NBsys{namespace NFile
 		return false;
 	}
 
+
 	/** パックからファイルを開く。
 	*/
 	sharedptr<File_Pack_FileHandle>& File_Pack::CreatePackFileHandle(const STLWString& a_filename_short)
@@ -87,6 +91,7 @@ namespace NBsys{namespace NFile
 
 		return sharedptr<File_Pack_FileHandle>::null();
 	}
+
 
 }}
 #endif

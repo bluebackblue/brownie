@@ -29,17 +29,18 @@
 #if(BSYS_FILE_PACK_ENABLE)
 namespace NBsys{namespace NFile
 {
-
 	/** File_Pack_MakeThread
 	*/
 	class File_Pack_MakeThread
 	{
 	private:
+
 		/** ロックオブジェクト。
 		*/
 		LockObject lockobject;
 
 	public:
+
 		/** constructor
 		*/
 		File_Pack_MakeThread();
@@ -49,6 +50,7 @@ namespace NBsys{namespace NFile
 		nonvirtual ~File_Pack_MakeThread();
 
 	public:
+
 		/** 引数。
 		*/
 		struct ThreadArgument
@@ -102,6 +104,7 @@ namespace NBsys{namespace NFile
 		void ThreadMain(ThreadArgument& a_threadargument);
 
 	};
+
 
 }}
 #endif

@@ -25,7 +25,6 @@
 #if(BSYS_GEOMETRY_ENABLE)
 namespace NBsys{namespace NGeometry
 {
-
 	/** Geometry_Vector2
 	*/
 	struct Geometry_Vector2 : public Geometry_Vector_2_Raw
@@ -86,6 +85,7 @@ namespace NBsys{namespace NGeometry
 		*/
 		inline operator const f32*() const;
 	};
+
 
 	/** Geometry_Vector3
 	*/
@@ -284,6 +284,7 @@ namespace NBsys{namespace NGeometry
 		inline void Set_Lerp(const Geometry_Vector3& a_vector_1,const Geometry_Vector3& a_vector_2,f32 a_per);
 	};
 
+
 	/** Geometry_Vector4
 	*/
 	struct Geometry_Vector4 : public Geometry_Vector_4_Raw
@@ -339,8 +340,8 @@ namespace NBsys{namespace NGeometry
 		/** [キャスト]。
 		*/
 		inline operator const f32*() const;
-
 	};
+
 
 }}
 #endif

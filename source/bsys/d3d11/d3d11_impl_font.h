@@ -59,6 +59,7 @@ namespace NBsys{namespace ND3d11
 		};
 
 	private:
+
 		/** d3d11_impl
 		*/
 		D3d11_Impl& d3d11_impl;
@@ -100,6 +101,7 @@ namespace NBsys{namespace ND3d11
 		STLMap<wchar,s32>::Type maplist;
 
 	public:
+
 		/** constructor
 		*/
 		D3d11_Impl_Font(D3d11_Impl& a_opengl_impl,const sharedptr<NBsys::NFont::Font>& a_font,s32 a_texture_width,const STLWString& a_name,D3d11_FontTextureType::Id a_fonttexture_type)
@@ -500,6 +502,7 @@ namespace NBsys{namespace ND3d11
 		}
 	};
 	#endif
+
 
 }}
 #endif

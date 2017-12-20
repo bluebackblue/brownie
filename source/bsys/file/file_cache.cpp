@@ -36,11 +36,13 @@ namespace NBsys{namespace NFile
 	{
 	}
 
+
 	/** destructor
 	*/
 	File_Cache::~File_Cache()
 	{
 	}
+
 
 	/** キャッシュへ登録。
 	*/
@@ -64,6 +66,7 @@ namespace NBsys{namespace NFile
 		}
 	}
 
+
 	/** 名前からキャッシュを検索。
 	*/
 	const sharedptr<File_WorkItem>& File_Cache::GetCacheFromFileNameShort(const STLWString& a_filename_short) const
@@ -75,6 +78,7 @@ namespace NBsys{namespace NFile
 
 		return sharedptr<File_WorkItem>::null();
 	}
+
 
 	/** キャッシュクリア。
 	*/
@@ -101,6 +105,7 @@ namespace NBsys{namespace NFile
 		}
 	}
 
+
 	/** リークチェック。
 	*/
 	void File_Cache::LeakCheck() const
@@ -114,6 +119,7 @@ namespace NBsys{namespace NFile
 			t_it++;
 		}
 	}
+
 
 }}
 #endif

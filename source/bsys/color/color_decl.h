@@ -19,14 +19,16 @@
 #if(BSYS_COLOR_ENABLE)
 namespace NBsys{namespace NColor
 {
-
 	/** Color_F
 	*/
 	struct Color_F;
+
 
 	/** Color_B
 	*/
 	struct Color_B;
 
+
 }}
 #endif
+

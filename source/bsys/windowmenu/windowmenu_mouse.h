@@ -23,15 +23,40 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	struct WindowMenu_Mouse
 	{
+		/** x
+		*/
 		f32 x;
+
+		/** y
+		*/
 		f32 y;
+
+		/** on_l
+		*/
 		bool on_l;
+
+		/** on_r
+		*/
 		bool on_r;
+
+		/** down_l
+		*/
 		bool down_l;
+
+		/** down_r
+		*/
 		bool down_r;
+
+		/** up_l
+		*/
 		bool up_l;
+
+		/** up_r
+		*/
 		bool up_r;
 	};
+
+
 }}
 #endif
 

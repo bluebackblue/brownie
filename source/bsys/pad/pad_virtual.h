@@ -29,6 +29,7 @@ namespace NBsys{namespace NPad
 	class Pad_Virtual
 	{
 	public:
+
 		/** constructor
 		*/
 		Pad_Virtual(s32 a_virtualpad_index);
@@ -38,6 +39,7 @@ namespace NBsys{namespace NPad
 		virtual ~Pad_Virtual();
 
 	public:
+
 		/** ButtonType
 		*/
 		struct ButtonType
@@ -110,6 +112,7 @@ namespace NBsys{namespace NPad
 		};
 
 	private:
+
 		/** ButtonItem
 		*/
 		struct ButtonItem
@@ -138,6 +141,7 @@ namespace NBsys{namespace NPad
 		};
 
 	private:
+
 		/** virtualpad_index
 		*/
 		s32 virtualpad_index;
@@ -180,6 +184,7 @@ namespace NBsys{namespace NPad
 		s32 touch_flag_repeat[TouchType::Max];
 
 	public:
+
 		/** AddButton
 		*/
 		void AddButton(Pad_Virtual::ButtonType::Id a_virtual_button,Pad_Device_Base::ButtonType::Id a_device_button,sharedptr<Pad_Device_Base> a_device);
@@ -243,6 +248,9 @@ namespace NBsys{namespace NPad
 		/** GetTouchValue
 		*/
 		const TouchValue& GetTouchValue(Pad_Virtual::TouchType::Id a_virtual_touch) const;
+
 	};
+
+
 }}
 

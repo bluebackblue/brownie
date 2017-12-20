@@ -46,11 +46,13 @@ namespace NBsys{namespace NWindowMenu
 	{
 	}
 
+
 	/** destructor
 	*/
 	WindowMenu_Window_Plate::~WindowMenu_Window_Plate()
 	{
 	}
+
 
 	/** Initialize
 	*/
@@ -72,6 +74,7 @@ namespace NBsys{namespace NWindowMenu
 		}
 	}
 
+
 	/** 描画処理。
 	*/
 	bool WindowMenu_Window_Plate::CallBack_Draw(s32 a_z_sort)
@@ -84,6 +87,7 @@ namespace NBsys{namespace NWindowMenu
 		return true;
 	}
 
+
 	/** マウス処理。
 	*/
 	bool WindowMenu_Window_Plate::CallBack_InRangeMouseUpdate(WindowMenu_Mouse& a_mouse)
@@ -91,6 +95,7 @@ namespace NBsys{namespace NWindowMenu
 		//マウス操作を親に伝えない。
 		return this->mouseblock;
 	}
+
 
 }}
 #endif

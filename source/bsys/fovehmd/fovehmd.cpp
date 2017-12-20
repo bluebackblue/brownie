@@ -37,12 +37,14 @@ namespace NBsys{namespace NFovehmd
 		this->impl.reset(new Fovehmd_Impl());
 	}
 
+
 	/** destructor
 	*/
 	nonvirtual Fovehmd::~Fovehmd()
 	{
 		this->impl.reset();
 	}
+
 
 	/** GetImpl
 	*/
@@ -51,12 +53,14 @@ namespace NBsys{namespace NFovehmd
 		return this->impl;
 	}
 
+
 	/** ResetErrorCode
 	*/
 	void Fovehmd::ResetErrorCode()
 	{
 		this->impl->ResetErrorCode();
 	}
+
 
 	/** GetErrorCode
 	*/
@@ -65,12 +69,14 @@ namespace NBsys{namespace NFovehmd
 		return this->impl->GetErrorCode();
 	}
 
+
 	/** 接続開始。
 	*/
 	void Fovehmd::ConnectStart()
 	{
 		this->impl->ConnectStart();
 	}
+
 
 	/** 接続中。
 	*/
@@ -79,12 +85,14 @@ namespace NBsys{namespace NFovehmd
 		return this->impl->ConnectUpdate();
 	}
 
+
 	/** サイズ取得。
 	*/
 	NGeometry::Geometry_Vector2& Fovehmd::GetSingleEyeResolution()
 	{
 		return this->impl->GetSingleEyeResolution();
 	}
+
 
 	/** 更新。
  	*/
@@ -93,12 +101,14 @@ namespace NBsys{namespace NFovehmd
 		this->impl->Update();
 	}
 
+
 	/** GetLeftProjection
 	*/
 	NBsys::NGeometry::Geometry_Matrix_44 Fovehmd::GetLeftProjection(f32 a_near,f32 a_far)
 	{
 		return this->impl->GetLeftProjection(a_near,a_far);
 	}
+
 
 	/** GetRightProjection
 	*/
@@ -107,12 +117,14 @@ namespace NBsys{namespace NFovehmd
 		return this->impl->GetRightProjection(a_near,a_far);
 	}
 
+
 	/** GetLeftEyeTranslate
 	*/
 	NBsys::NGeometry::Geometry_Matrix_44& Fovehmd::GetLeftEyeTranslate()
 	{
 		return this->impl->GetLeftEyeTranslate();
 	}
+
 
 	/** GetRightEyeTranslate
 	*/
@@ -121,12 +133,14 @@ namespace NBsys{namespace NFovehmd
 		return this->impl->GetRightEyeTranslate();
 	}
 
+
 	/** GetIOD
 	*/
 	f32 Fovehmd::GetIOD()
 	{
 		return this->impl->GetIOD();
 	}
+
 
 	/** SetTexture
 	*/
@@ -135,12 +149,14 @@ namespace NBsys{namespace NFovehmd
 		this->impl->SetTexture(a_texture_pointer);
 	}
 
+
 	/** GetCameraPosition
 	*/
 	NBsys::NGeometry::Geometry_Vector3& Fovehmd::GetCameraPosition()
 	{
 		return this->impl->GetCameraPosition();
 	}
+
 
 	/** GetCameraQuaternion
 	*/
@@ -149,6 +165,7 @@ namespace NBsys{namespace NFovehmd
 		return this->impl->GetCameraQuaternion();
 	}
 
+
 	/** GetLeftViewProjection
 	*/
 	NBsys::NGeometry::Geometry_Matrix_44 Fovehmd::GetLeftViewProjection(f32 a_near,f32 a_far,const NGeometry::Geometry_Vector3& a_camera_position)
@@ -156,12 +173,14 @@ namespace NBsys{namespace NFovehmd
 		return this->impl->GetLeftViewProjection(a_near,a_far,a_camera_position);
 	}
 
+
 	/** GetRightEyeTranslate
 	*/
 	NBsys::NGeometry::Geometry_Matrix_44 Fovehmd::GetRightViewProjection(f32 a_near,f32 a_far,const NGeometry::Geometry_Vector3& a_camera_position)
 	{
 		return this->impl->GetRightViewProjection(a_near,a_far,a_camera_position);
 	}
+
 
 }}
 #endif

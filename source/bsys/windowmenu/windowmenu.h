@@ -44,6 +44,7 @@ namespace NBsys{namespace NWindowMenu
 	class WindowMenu
 	{
 	private:
+
 		/** callback
 		*/
 		sharedptr<WindowMenu_Callback_Base> callback;
@@ -69,6 +70,7 @@ namespace NBsys{namespace NWindowMenu
 		bool changerect_check;
 
 	public:
+
 		/** constructor
 		*/
 		WindowMenu(sharedptr<WindowMenu_Callback_Base> a_callback);
@@ -78,6 +80,7 @@ namespace NBsys{namespace NWindowMenu
 		nonvirtual ~WindowMenu();
 
 	public:
+
 		/** Update
 		*/
 		void Update();
@@ -87,6 +90,7 @@ namespace NBsys{namespace NWindowMenu
 		void Draw(s32 a_z_sort_add = 100);
 
 	public:
+
 		/** 追加。
 		*/
 		void Add(const sharedptr<WindowMenu_Window_Base> a_window);
@@ -109,17 +113,22 @@ namespace NBsys{namespace NWindowMenu
 
 	};
 
+
 	/** システムの開始。
 	*/
 	void StartSystem(sharedptr<WindowMenu_Callback_Base> a_callback);
+
 
 	/** システムの終了。
 	*/
 	void EndSystem();
 
+
 	/** システムのインスタンス取得。
 	*/
 	sharedptr<WindowMenu>& GetSystemInstance();
+
+
 }}
 #endif
 

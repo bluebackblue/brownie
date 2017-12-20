@@ -29,13 +29,13 @@ namespace NBsys{namespace NFile
 	*/
 	struct File_CacheGroupID
 	{
-		/** Id
-		*/
 		enum Id
 		{
 			NoCache = -1,
 		};
 	};
 
+
 }}
 #endif
+

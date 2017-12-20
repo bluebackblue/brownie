@@ -29,6 +29,7 @@ namespace NBsys{namespace NActionBatching
 	class ActionBatching_Action_Call : public ActionBatching_ActionItem_Base
 	{
 	private:
+
 		/** actionlist
 		*/
 		sharedptr<NBsys::NActionBatching::ActionBatching_ActionList> actionlist;
@@ -77,6 +78,7 @@ namespace NBsys{namespace NActionBatching
 		}
 
 	};
+
 
 }}
 #endif

@@ -14,7 +14,7 @@
 #include "../types/types.h"
 
 
-/**
+/** include
 */
 #include "./d3d11_type.h"
 
@@ -34,6 +34,8 @@ namespace NBsys{namespace ND3d11
 		s32								input_slot;
 		s32								offset;
 
+		/** constructor
+		*/
 		D3d11_Layout(const STLString& a_semantic_name,s32 a_semantic_index,D3d11_LayoutFormatType::Id a_format,s32 a_input_slot,s32 a_offset)
 			:
 			semantic_name(a_semantic_name),
@@ -50,6 +52,8 @@ namespace NBsys{namespace ND3d11
 		{
 		}
 	};
+
+
 }}
 #endif
 

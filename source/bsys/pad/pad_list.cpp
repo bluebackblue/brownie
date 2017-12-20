@@ -38,11 +38,13 @@ namespace NBsys{namespace NPad
 		}
 	}
 
+
 	/** destructor
 	*/
 	Pad_List::~Pad_List()
 	{
 	}
+
 
 	/** デバイス追加。
 	*/
@@ -51,12 +53,14 @@ namespace NBsys{namespace NPad
 		this->device_list.push_back(a_device_instance);
 	}
 
+
 	/** 仮想パッド取得。
 	*/
 	sharedptr<Pad_Virtual>& Pad_List::GetVirtualPad(s32 a_virtualpad_index)
 	{
 		return this->virtual_list[a_virtualpad_index];
 	}
+
 
 	/** 更新。
 	*/
@@ -82,5 +86,7 @@ namespace NBsys{namespace NPad
 			}
 		}
 	}
+
+
 }}
 

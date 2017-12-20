@@ -52,6 +52,7 @@ namespace NBsys{namespace NFovehmd
 	{
 	}
 
+
 	/** constructor
 	*/
 	Fovehmd_Impl::~Fovehmd_Impl() noexcept
@@ -60,6 +61,7 @@ namespace NBsys{namespace NFovehmd
 		this->headset.reset();
 	}
 
+
 	/** ResetErrorCode
 	*/
 	void Fovehmd_Impl::ResetErrorCode()
@@ -67,12 +69,14 @@ namespace NBsys{namespace NFovehmd
 		this->errorcode.code = ErrorCode::Success;
 	}
 
+
 	/** GetErrorCode
 	*/
 	ErrorCode Fovehmd_Impl::GetErrorCode()
 	{
 		return this->errorcode;
 	}
+
 
 	/** 接続開始。
 	*/
@@ -105,6 +109,7 @@ namespace NBsys{namespace NFovehmd
 			return;
 		}
 	}
+
 
 	/** 接続中。
 	*/
@@ -147,12 +152,14 @@ namespace NBsys{namespace NFovehmd
 		return false;
 	}
 
+
 	/** サイズ取得。
 	*/
 	NGeometry::Geometry_Vector2& Fovehmd_Impl::GetSingleEyeResolution()
 	{
 		return this->singleeye_resolution;
 	}
+
 
 	/** Update
 	*/
@@ -179,6 +186,7 @@ namespace NBsys{namespace NFovehmd
 		this->eye_translate_right = NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(t_iod,0,0);
 	}
 
+
 	/** GetIOD
 	*/
 	f32 Fovehmd_Impl::GetIOD()
@@ -189,6 +197,7 @@ namespace NBsys{namespace NFovehmd
 		
 		return t_half_iod;
 	}
+
 
 	/** SetTexture
 	*/
@@ -216,6 +225,7 @@ namespace NBsys{namespace NFovehmd
 		}
 	}
 
+
 	/** GetCameraPosition
 	*/
 	NBsys::NGeometry::Geometry_Vector3& Fovehmd_Impl::GetCameraPosition()
@@ -223,12 +233,14 @@ namespace NBsys{namespace NFovehmd
 		return this->camera_position;
 	}
 
+
 	/** GetCameraQuaternion
 	*/
 	NBsys::NGeometry::Geometry_Quaternion& Fovehmd_Impl::GetCameraQuaternion()
 	{
 		return this->camera_quaternion;
 	}
+
 
 	/** GetLeftProjection
 	*/
@@ -239,6 +251,7 @@ namespace NBsys{namespace NFovehmd
 		return NBsys::NGeometry::Geometry_Matrix_44(&t_projection.mat[0][0]);
 	}
 
+
 	/** GetRightProjection
 	*/
 	NBsys::NGeometry::Geometry_Matrix_44 Fovehmd_Impl::GetRightProjection(f32 a_near,f32 a_far)
@@ -248,6 +261,7 @@ namespace NBsys{namespace NFovehmd
 		return NBsys::NGeometry::Geometry_Matrix_44(&t_projection.mat[0][0]);
 	}
 
+
 	/** GetLeftEyeTranslate
 	*/
 	NBsys::NGeometry::Geometry_Matrix_44& Fovehmd_Impl::GetLeftEyeTranslate()
@@ -255,12 +269,14 @@ namespace NBsys{namespace NFovehmd
 		return this->eye_translate_left;
 	}
 
+
 	/** GetRightEyeTranslate
 	*/
 	NBsys::NGeometry::Geometry_Matrix_44& Fovehmd_Impl::GetRightEyeTranslate()
 	{
 		return this->eye_translate_right;
 	}
+
 
 	/** GetLeftViewProjection
 	*/
@@ -278,6 +294,7 @@ namespace NBsys{namespace NFovehmd
 		return t_camera_matrix;
 	}
 
+
 	/** GetRightViewProjection
 	*/
 	NBsys::NGeometry::Geometry_Matrix_44 Fovehmd_Impl::GetRightViewProjection(f32 a_near,f32 a_far,const NGeometry::Geometry_Vector3& a_camera_position)
@@ -293,6 +310,7 @@ namespace NBsys{namespace NFovehmd
 
 		return t_camera_matrix;
 	}
+
 
 }}
 #endif

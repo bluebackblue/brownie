@@ -28,21 +28,25 @@ namespace NBsys{namespace NFont
 	*/
 	class Font_Impl;
 
+
 	/** Font
 	*/
 	class Font
 	{
 	private:
+
 		/** impl
 		*/
 		sharedptr<Font_Impl> impl;
 
 	public:
+
 		/** GetImpl
 		*/
 		const sharedptr<Font_Impl>& GetImpl() const;
 
 	public:
+
 		/** constructor
 		*/
 		Font(const STLWString& a_font_name,s32 a_font_size);
@@ -52,11 +56,13 @@ namespace NBsys{namespace NFont
 		nonvirtual ~Font();
 
 	public:
+
 		/** GetPixel_R8G8B8A8
 		*/
 		Font_State GetPixel_R8G8B8A8(sharedptr<u8>& a_dest_data,s32 a_offset,s32 a_dest_width,s32 a_dest_height,wchar a_code);
 
 	};
+
 
 }}
 #endif

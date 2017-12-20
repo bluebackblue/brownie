@@ -29,7 +29,6 @@
 #if(BSYS_WINDOW_ENABLE)
 namespace NBsys{namespace NWindow
 {
-
 	/** constructor
 	*/
 	Window_Impl::Window_Impl()
@@ -49,12 +48,14 @@ namespace NBsys{namespace NWindow
 	{
 	}
 
+
 	/** destructor
 	*/
 	Window_Impl::~Window_Impl()
 	{
 		this->Delete();
 	}
+
 
 	/** [static]GetDesktopSize
 	*/
@@ -67,12 +68,14 @@ namespace NBsys{namespace NWindow
 		return std::tuple<s32,s32>(t_rect.right - t_rect.left,t_rect.bottom - t_rect.top);
 	}
 
+
 	/** GetClientWidth
 	*/
 	s32 Window_Impl::GetClientWidth()
 	{
 		return this->client_width;
 	}
+
 
 	/** GetClientHeight
 	*/
@@ -81,6 +84,7 @@ namespace NBsys{namespace NWindow
 		return this->client_height;
 	}
 
+
 	/** GetMouseX
 	*/
 	s32 Window_Impl::GetMouseX()
@@ -88,12 +92,14 @@ namespace NBsys{namespace NWindow
 		return this->mouse_x;
 	}
 
+
 	/** GetMouseY
 	*/
 	s32 Window_Impl::GetMouseY()
 	{
 		return this->mouse_y;
 	}
+
 
 	/** Create
 	*/
@@ -157,6 +163,7 @@ namespace NBsys{namespace NWindow
 		#endif
 	}
 
+
 	/** Delete
 	*/
 	void Window_Impl::Delete()
@@ -176,6 +183,7 @@ namespace NBsys{namespace NWindow
 		#endif
 	}
 
+
 	/** Update
 	*/
 	void Window_Impl::Update()
@@ -191,6 +199,7 @@ namespace NBsys{namespace NWindow
 		#endif
 	}
 
+
 	/** IsEnd
 	*/
 	bool Window_Impl::IsEnd()
@@ -201,6 +210,7 @@ namespace NBsys{namespace NWindow
 		return true;
 	}
 
+
 	/** IsView
 	*/
 	bool Window_Impl::IsView()
@@ -208,12 +218,14 @@ namespace NBsys{namespace NWindow
 		return this->isview;
 	}
 
+
 	/** IsActive
 	*/
 	bool Window_Impl::IsActive()
 	{
 		return this->isactive;
 	}
+
 
 	/** GetHandle
 	*/
@@ -223,6 +235,7 @@ namespace NBsys{namespace NWindow
 		return this->handle;
 	}
 	#endif
+
 	
 	/** CallBackProc
 	*/
@@ -295,6 +308,7 @@ namespace NBsys{namespace NWindow
 	}
 	#endif
 
+
 	/** StaticCallBackProc
 	*/
 	#if defined(PLATFORM_VCWIN)
@@ -315,6 +329,7 @@ namespace NBsys{namespace NWindow
 		}
 	}
 	#endif
+
 
 }}
 #endif

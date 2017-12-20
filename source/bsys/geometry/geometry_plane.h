@@ -27,7 +27,6 @@
 #if(BSYS_GEOMETRY_ENABLE)
 namespace NBsys{namespace NGeometry
 {
-
 	/** Geometry_Plane
 	*/
 	class Geometry_Plane
@@ -73,6 +72,7 @@ namespace NBsys{namespace NGeometry
 		/** 点と面との距離。
 		*/
 		inline f32 Distance(NBsys::NGeometry::Geometry_Vector3 &a_position);
+
 	};
 
 }}
