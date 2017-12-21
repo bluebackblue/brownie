@@ -60,10 +60,10 @@ void Test_Main()
 {
 	STATIC_ASSERT(sizeof(s32) == 4);
 
-	TAGLOG("main","DEF_TEST0");
-	TAGLOG("main",L"DEF_TEST0");
+	TAGLOG(L"main","DEF_TEST0");
+	TAGLOG(L"main",L"DEF_TEST0");
 
-	DEBUGLOG("%s%s\n","デバッグ","ログ");	
+	DEBUGLOG(L"%s%s\n","デバッグ","ログ");	
 	DEBUGLOG(L"%s%s\n",L"デバッグ",L"ログ");	
 
 	DEBUGBREAK();

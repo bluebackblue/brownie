@@ -16,7 +16,7 @@
 
 /** DEF_TEST_INDEX
 */
-#if(DEF_TEST_INDEX == 12)
+#if(DEF_TEST_INDEX == 13)
 
 
 /** s_loglist
