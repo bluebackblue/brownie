@@ -25,10 +25,39 @@ namespace NBlib
 
 	#else
 
-		void DebugAssert(bool a_flag,const char* a_message,const char* a_filename,s32 a_line);
+		#if defined(PLATFORM_VCWIN)
+			void DebugAssert(bool a_flag,const wchar* a_message,const wchar* a_filename,s32 a_line);
+		#else
+			void DebugAssert(bool a_flag,const wchar* a_message,const char* a_filename,s32 a_line);
+		#endif
 
 	#endif
 }
+
+
+/** アサート。
+*/
+#if defined(ROM_MASTER)
+
+	#define ASSERT_MSG(X,MSG)
+
+#else
+
+	#if defined(PLATFORM_VCWIN)
+		#define ASSERT_MSG(X,MSG)					NBlib::DebugAssert((X),MSG,__FILEW__,__LINE__)
+	#else
+		#define ASSERT_MSG(X,MSG)					NBlib::DebugAssert((X),MSG,__ILEW__,__LINE__)
+	#endif
+
+
+	#if defined(ROM_DEEPDEBUG) || defined(ROM_FULLDEBUG)
+		#define DEEPDEBUG_ASSERT_MSG(X,MSG)			ASSERT_MSG(X,MSG)
+	#else
+		#define DEEPDEBUG_ASSERT_MSG(X,MSG)
+	#endif
+
+#endif
+
 
 /** アサート。
 */
@@ -39,31 +68,15 @@ namespace NBlib
 
 #else
 
-	#define ASSERT(X)							NBlib::DebugAssert((X),"",__FILE__,__LINE__)
+	#define ASSERT(X)								ASSERT_MSG((X),L"")
 
 	#if defined(ROM_DEEPDEBUG) || defined(ROM_FULLDEBUG)
-		#define DEEPDEBUG_ASSERT(X)				ASSERT(X)
+		#define DEEPDEBUG_ASSERT(X)					ASSERT(X)
 	#else
 		#define DEEPDEBUG_ASSERT(X)
 	#endif
 
 #endif
 
-/** アサート。
-*/
-#if defined(ROM_MASTER)
 
-	#define ASSERT_MSG(X,MSG)
-
-#else
-
-	#define ASSERT_MSG(X,MSG)					NBlib::DebugAssert((X),MSG,__FILE__,__LINE__)
-
-	#if defined(ROM_DEEPDEBUG) || defined(ROM_FULLDEBUG)
-		#define DEEPDEBUG_ASSERT_MSG(X,MSG)		ASSERT_MSG(X,MSG)
-	#else
-		#define DEEPDEBUG_ASSERT_MSG(X,MSG)
-	#endif
-
-#endif
 

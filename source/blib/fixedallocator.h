@@ -128,7 +128,7 @@ namespace NBlib
 				return this->free_index[this->free_size];
 			}
 
-			TAGLOG("FixedAllocator::GetFreeIndex","-1");
+			TAGLOG(L"FixedAllocator::GetFreeIndex","-1");
 
 			return -1;
 		}

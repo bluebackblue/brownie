@@ -80,7 +80,20 @@
 	#define BSYS_D3D11_FONT_DRAWTYPEMAX_L					(32)
 	#define BSYS_D3D11_FONT_DRAWTYPEMAX_EX					(16)
 
-	#define BSYS_HTTP_ENABLE								(0)
+#elif(DEF_TEST_INDEX == 13)
+
+	#define DEF_TEST_TITLE									L"TEST 13"
+
+	#define BSYS_WINDOW_ENABLE								(1)
+	#define BSYS_D3D11_ENABLE								(1)
+	#define BSYS_FONT_ENABLE								(1)
+	#define BSYS_PAD_ENABLE									(1)
+	#define BSYS_WINDOWMENU_ENABLE							(1)
+	#define BLIB_DEBUGASSERT_CALLBACK_ENABLE				(1)
+	#define BLIB_DEBUGBREAK_CALLBACK_ENABLE					(1)
+	#define BLIB_DEBUGLOG_CALLBACK_ENABLE					(1)
+
+	#define BSYS_HTTP_ENABLE								(1)
 
 #elif(DEF_TEST_INDEX == 22)
 

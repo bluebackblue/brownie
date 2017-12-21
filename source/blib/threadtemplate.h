@@ -146,7 +146,7 @@ namespace NBlib
 		{
 			if(this->threadhandle){
 
-				TAGLOG("ThreadTemplate::EndWait","start");
+				TAGLOG(L"ThreadTemplate::EndWait","start");
 				{
 					#if(BLIB_STDTHREAD_ENABLE)
 					{
@@ -158,7 +158,7 @@ namespace NBlib
 					}
 					#endif
 				}
-				TAGLOG("ThreadTemplate::EndWait","end");
+				TAGLOG(L"ThreadTemplate::EndWait","end");
 			}
 			this->threadhandle.reset();
 			this->implimentation.reset();

@@ -23,6 +23,7 @@
 /** include
 */
 #include "./stringtool.h"
+#include "./debuglog.h"
 
 
 /** include
@@ -39,7 +40,7 @@
 */
 #if(BLIB_DEBUGLOG_CALLBACK_ENABLE)
 
-extern bool Blib_DebugLog_Callback(const char* a_tag,const char* a_string);
+extern bool Blib_DebugLog_Callback(const NBlib::wchar* a_tag,const NBlib::wchar* a_wstring);
 
 #endif
 
@@ -56,28 +57,13 @@ namespace NBlib
 
 		/** DebugLog
 		*/
-		void DebugLog(const char* a_tag,const char* a_string)
+		void DebugLog(const wchar* a_tag,const char* a_string)
 		{
-			#if(BLIB_DEBUGLOG_CALLBACK_ENABLE)
-			{
-				//コールバックからの戻り値が「false」の場合処理を中断します。
-				if(Blib_DebugLog_Callback(a_tag,a_string) == false){
-					return;
-				}
-			}
-			#endif
-
 			#if defined(PLATFORM_VCWIN)
 			{
-				if(a_tag != nullptr){
-					::OutputDebugStringA("[");
-					::OutputDebugStringA(a_tag);
-					::OutputDebugStringA("]");
-					::OutputDebugStringA(a_string);
-					::OutputDebugStringA("\n");
-				}else{
-					::OutputDebugStringA(a_string);
-				}
+				STLWString t_wstring;
+				CharToWchar(a_string,t_wstring);
+				DebugLog(a_tag,t_wstring.c_str());
 			}
 			#endif
 		}
@@ -92,13 +78,28 @@ namespace NBlib
 
 		/** DebugLog
 		*/
-		void DebugLog(const char* a_tag,const wchar* a_wstring)
+		void DebugLog(const wchar* a_tag,const wchar* a_wstring)
 		{
+			#if(BLIB_DEBUGLOG_CALLBACK_ENABLE)
+			{
+				//コールバックからの戻り値が「false」の場合処理を中断します。
+				if(Blib_DebugLog_Callback(a_tag,a_wstring) == false){
+					return;
+				}
+			}
+			#endif
+
 			#if defined(PLATFORM_VCWIN)
 			{
-				STLString t_string;
-				WcharToSjis(STLWString(a_wstring),t_string);
-				DebugLog(a_tag,t_string.c_str());
+				if(a_tag != nullptr){
+					::OutputDebugStringW(L"[");
+					::OutputDebugStringW(a_tag);
+					::OutputDebugStringW(L"]");
+					::OutputDebugStringW(a_wstring);
+					::OutputDebugStringW(L"\n");
+				}else{
+					::OutputDebugStringW(a_wstring);
+				}
 			}
 			#endif
 		}

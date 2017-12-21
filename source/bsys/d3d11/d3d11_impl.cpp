@@ -879,8 +879,8 @@ namespace NBsys{namespace ND3d11
 				if(t_blob_error != nullptr){
 					t_errorstring = std::string((const char*)t_blob_error->GetBufferPointer(),t_blob_error->GetBufferSize());
 				}
-				TAGLOG("compile vertex","FAILED");
-				TAGLOG("compile vertex",t_errorstring.c_str());
+				TAGLOG(L"compile vertex","FAILED");
+				TAGLOG(L"compile vertex",t_errorstring.c_str());
 			}
 
 			t_blob_error.reset();
@@ -975,8 +975,8 @@ namespace NBsys{namespace ND3d11
 				if(t_blob_error != nullptr){
 					t_errorstring = std::string((const char*)t_blob_error->GetBufferPointer(),t_blob_error->GetBufferSize());
 				}
-				TAGLOG("compile vertex","FAILED");
-				TAGLOG("compile vertex",t_errorstring.c_str());
+				TAGLOG(L"compile vertex","FAILED");
+				TAGLOG(L"compile vertex",t_errorstring.c_str());
 			}
 
 			t_blob_error.reset();
@@ -1471,7 +1471,7 @@ namespace NBsys{namespace ND3d11
 					*/
 
 					this->testpresent_mode = true;
-					TAGLOG("NBsys::ND3d11","DXGI_STATUS_OCCLUDED = true");
+					TAGLOG(L"NBsys::ND3d11","DXGI_STATUS_OCCLUDED = true");
 
 					return false;
 				}else if(t_result == S_OK){
@@ -1485,7 +1485,7 @@ namespace NBsys{namespace ND3d11
 				if(t_result == DXGI_STATUS_OCCLUDED){
 				}else if(t_result == S_OK){
 					this->testpresent_mode = false;
-					TAGLOG("NBsys::ND3d11","DXGI_STAS_OKTUS_OCCLUDED = false");
+					TAGLOG(L"NBsys::ND3d11","DXGI_STAS_OKTUS_OCCLUDED = false");
 					return true;
 				}
 			}

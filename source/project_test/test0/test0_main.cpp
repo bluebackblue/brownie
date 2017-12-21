@@ -27,7 +27,7 @@
 /** Blib_DebugAssert_Callback
 */
 #if(BLIB_DEBUGASSERT_CALLBACK_ENABLE)
-bool Blib_DebugAssert_Callback(const char* a_message,const char* a_filename,s32 a_line)
+bool Blib_DebugAssert_Callback(const wchar* a_wmessage,const wchar* a_wfilename,s32 a_line)
 {
 	return true;
 }
@@ -47,7 +47,7 @@ bool Blib_DebugBreak_Callback()
 /** Blib_DebugLog_Callback
 */
 #if(BLIB_DEBUGLOG_CALLBACK_ENABLE)
-bool Blib_DebugLog_Callback(const char* a_tag,const char* a_string)
+bool Blib_DebugLog_Callback(const NBlib::wchar* a_tag,const NBlib::wchar* a_wstring)
 {
 	return true;
 }

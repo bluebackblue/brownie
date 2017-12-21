@@ -41,6 +41,10 @@ namespace NBlib
 		*/
 		static s32 strlen(const char* a_string,s32 a_max);
 
+		/** [static]wstrlen
+		*/
+		static s32 wstrlen(const wchar* a_wstring,s32 a_max);
+
 		/** Copy
 		*/
 		template <typename T> static T Copy(const u8*& a_current_pointer,s32 a_increment = -1)

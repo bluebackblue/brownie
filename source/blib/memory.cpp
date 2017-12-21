@@ -65,5 +65,12 @@ namespace NBlib
 	{
 		return static_cast<s32>(::strnlen_s(a_string,a_max));
 	}
+
+	/**
+	*/
+	s32 Memory::wstrlen(const wchar* a_strin,s32 a_max)
+	{
+		return static_cast<s32>(::wcsnlen_s(a_strin,a_max));
+	}
 }
 

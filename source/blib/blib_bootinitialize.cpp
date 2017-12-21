@@ -108,11 +108,11 @@ namespace NBlib
 		{
 			#if defined(PLATFORM_VCWIN)
 			{
-				TAGLOG("blib","platform = PLATFORM_VCWIN");
+				TAGLOG(L"blib",L"platform = PLATFORM_VCWIN");
 			}
 			#else
 			{
-				TAGLOG("blib","platform = PLATFORM_XX");
+				TAGLOG(L"blib",L"platform = PLATFORM_XX");
 			}
 			#endif
 		}
@@ -120,23 +120,23 @@ namespace NBlib
 		{
 			#if defined(ROM_MASTER)
 			{
-				TAGLOG("blib","rom = ROM_MASTER");
+				TAGLOG(L"blib",L"rom = ROM_MASTER");
 			}
 			#elif defined(ROM_DEVELOP)
 			{
-				TAGLOG("blib","rom = ROM_DEVELOP");
+				TAGLOG(L"blib",L"rom = ROM_DEVELOP");
 			}
 			#elif defined(ROM_DEEPDEBUG)
 			{
-				TAGLOG("blib","rom = ROM_DEEPDEBUG");
+				TAGLOG(L"blib",L"rom = ROM_DEEPDEBUG");
 			}
 			#elif defined(ROM_FULLDEBUG)
 			{
-				TAGLOG("blib","rom = ROM_FULLDEBUG");
+				TAGLOG(L"blib",L"rom = ROM_FULLDEBUG");
 			}
 			#else
 			{
-				TAGLOG("blib","rom = ROM_XX");
+				TAGLOG(L"blib",L"rom = ROM_XX");
 			}
 			#endif
 		}
@@ -144,15 +144,15 @@ namespace NBlib
 		{
 			#if defined(ROM_64BIT)
 			{
-				TAGLOG("blib","ROM_64BIT");
+				TAGLOG(L"blib",L"ROM_64BIT");
 			}
 			#elif defined(ROM_32BIT)
 			{
-				TAGLOG("blib","ROM_32BIT");
+				TAGLOG(L"blib",L"ROM_32BIT");
 			}
 			#else
 			{
-				TAGLOG("blib","ROM_XXBIT");
+				TAGLOG(L"blib",L"ROM_XXBIT");
 			}
 			#endif
 		}
@@ -165,10 +165,10 @@ namespace NBlib
 
 		if(t_list_form == 0x000000FF){
 			//little endian
-			TAGLOG("blib","{0xFF,0x00,0x00,0x00} == 0x000000FF : little endian");
+			TAGLOG(L"blib",L"{0xFF,0x00,0x00,0x00} == 0x000000FF : little endian");
 		}else{
 			//big endian
-			TAGLOG("blib","{0xFF,0x00,0x00,0x00} == 0xFF000000 : big endian");
+			TAGLOG(L"blib",L"{0xFF,0x00,0x00,0x00} == 0xFF000000 : big endian");
 		}
 
 		PerformanceCounter::InitPerformanceCounter();

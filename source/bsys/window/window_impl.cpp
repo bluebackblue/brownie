@@ -114,12 +114,12 @@ namespace NBsys{namespace NWindow
 		this->client_width = a_width;
 		this->client_height = a_height;
 
-		const wchar_t* t_classname = L"brownie window class";
-
 		RECT t_rect = { 0, 0, a_width, a_height };
 		::AdjustWindowRect(&t_rect,WS_OVERLAPPEDWINDOW,FALSE);
 
-		WNDCLASSEX t_wndclass;
+		const wchar* t_classname = L"brownie window class";
+
+		WNDCLASSEXW t_wndclass;
 		{
 			t_wndclass.cbSize			= sizeof(WNDCLASSEX);
 			t_wndclass.style			= CS_VREDRAW | CS_HREDRAW;
@@ -135,9 +135,9 @@ namespace NBsys{namespace NWindow
 			t_wndclass.lpszClassName	= t_classname;
 		}
 
-		::RegisterClassEx(&t_wndclass);
+		::RegisterClassExW(&t_wndclass);
 
-		HWND t_handle = ::CreateWindowEx(0,t_classname,a_title.c_str(),WS_OVERLAPPEDWINDOW,CW_USEDEFAULT,CW_USEDEFAULT,t_rect.right - t_rect.left,t_rect.bottom - t_rect.top,(HWND)WIN_NULL,(HMENU)WIN_NULL,t_instance,(LPSTR)WIN_NULL);
+		HWND t_handle = ::CreateWindowExW(0,t_classname,a_title.c_str(),WS_OVERLAPPEDWINDOW,CW_USEDEFAULT,CW_USEDEFAULT,t_rect.right - t_rect.left,t_rect.bottom - t_rect.top,(HWND)WIN_NULL,(HMENU)WIN_NULL,t_instance,(LPSTR)WIN_NULL);
 		if(t_handle != WIN_NULL){
 
 			#if defined(ROM_64BIT)
@@ -177,7 +177,7 @@ namespace NBsys{namespace NWindow
 			{
 				HINSTANCE t_instance = ::GetModuleHandle(WIN_NULL);
 				const wchar_t* t_classname = L"brownie window class";
-				::UnregisterClass(t_classname,t_instance);
+				::UnregisterClassW(t_classname,t_instance);
 			}
 		}
 		#endif

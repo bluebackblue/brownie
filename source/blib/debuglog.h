@@ -30,8 +30,8 @@ namespace NBlib
 
 	#else
 
-		void DebugLog(const char* a_tag,const char* a_string);
-		void DebugLog(const char* a_tag,const wchar* a_wstring);
+		void DebugLog(const wchar* a_tag,const char* a_string);
+		void DebugLog(const wchar* a_tag,const wchar* a_wstring);
 
 	#endif
 }

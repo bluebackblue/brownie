@@ -139,7 +139,7 @@ void Test12_WindowMenu_Log::CallBack_Update()
 		this->debuglog_counter = GetDebugLogCounter();
 
 		for(s32 ii=0;ii<COUNTOF(this->window_logtext);ii++){
-			CharToWchar(GetDebugLogString(ii),this->window_logtext[ii]->string);
+			this->window_logtext[ii]->string = GetDebugLogString(ii);
 			this->window_logtext[ii]->string = std::regex_replace(this->window_logtext[ii]->string,std::wregex(L"\n"),L" ");
 			this->window_logtext[ii]->color = GetDebugLogColor(ii);
 		}

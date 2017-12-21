@@ -20,7 +20,7 @@
 
 /** GetDebugLogString
 */
-const char* GetDebugLogString(s32 a_index);
+const wchar* GetDebugLogString(s32 a_index);
 
 /** GetDebugLogColor
 */

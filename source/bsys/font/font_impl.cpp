@@ -93,7 +93,7 @@ namespace NBsys{namespace NFont
 		#if defined(PLATFORM_VCWIN)
 		{
 			GLYPHMETRICS t_glyphmetrics = {0};
-			TEXTMETRIC t_text_metric = {0};
+			TEXTMETRICW t_text_metric = {0};
 			DWORD t_buffer_size = 0;
 			u8 t_buffer[256*256*4];
 			{

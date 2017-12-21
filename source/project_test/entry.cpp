@@ -21,17 +21,9 @@
 #endif
 
 
-/** include
+/** Test_Main
 */
-#include "./test0/test0_main.h"
-#include "./test1/test1_main.h"
-#include "./test2/test2_main.h"
-
-#include "./test10/test10_main.h"
-#include "./test11/test11_main.h"
-#include "./test12/test12_main.h"
-
-#include "./test22/test22_main.h"
+void Test_Main();
 
 
 /** include
@@ -67,6 +59,7 @@ EntryParam& GetEntryParamReference()
 #if defined(ROM_DEVELOP) || defined(ROM_DEEPDEBUG) || defined(ROM_FULLDEBUG)
 bool s_leakcheck = false;
 #endif
+
 
 /** Main
 */
