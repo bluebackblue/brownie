@@ -36,7 +36,7 @@ namespace NBsys{namespace NHttp
 				StateCode,
 				Header,
 
-				Data_NoChunkData,
+				Data_OneChunkData,
 
 				Data_ChunkSize,
 				Data_ChunkData,
@@ -70,17 +70,29 @@ namespace NBsys{namespace NHttp
 		*/
 		s32 need_recv_size;
 
-		/** copy_to_offset
+		/** copy_content_recv_size
 		*/
-		s32 copy_to_offset;
+		s32 copy_content_recv_size;
 
-		/** is_transfer_encodeing_chunked
+		/** copy_chunk_size
 		*/
-		bool is_transfer_encodeing_chunked;
+		s32 copy_chunk_size;
+
+		/** header_is_recv
+		*/
+		bool header_is_recv;
+
+		/** header_is_transfer_encodeing_chunked
+		*/
+		bool header_is_transfer_encodeing_chunked;
 
 		/** header_content_length
 		*/
 		s32 header_content_length;
+
+		/** header_status_code
+		*/
+		s32 header_status_code;
 
 		/** step
 		*/
@@ -108,7 +120,23 @@ namespace NBsys{namespace NHttp
 
 		/** 受信データ解析用バッファの使用サイズ。
 		*/
-		s32 GetRecvRingBufferSize();
+		s32 GetRecvRingBufferUseSize();
+
+		/** 受信済みのコンテンツサイズ。
+		*/
+		s32 GetContentRecvSize();
+
+		/** IsRecvHeader
+		*/
+		bool IsRecvHeader();
+
+		/** GetStatusCode
+		*/
+		s32 GetStatusCode();
+
+		/** GetContentLength
+		*/
+		s32 GetContentLength();
 
 		/** 更新。
 		*/

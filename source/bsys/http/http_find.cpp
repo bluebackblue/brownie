@@ -102,6 +102,20 @@ namespace NBsys{namespace NHttp
 		return -1;
 	}
 
+
+	/** FindStatusCode
+	*/
+	s32 FindStatusCode(const STLString& a_string)
+	{
+		std::smatch t_result;
+		if(std::regex_match(a_string,t_result,std::regex("HTTP/1.1 ([-]?[0-9]+) .*"))){
+			s32 t_value = std::atoi(t_result[1].str().c_str());
+			return t_value;
+		}
+
+		return -1;
+	}
+
 }}
 #endif
 

@@ -93,6 +93,11 @@ sharedptr<Test13_WindowMenu_Texture> s_window_texture_3;
 sharedptr<Test13_WindowMenu_Log> s_window_log;
 
 
+/** s_texture
+*/
+sharedptr<NBsys::NTexture::Texture> s_texture;
+
+
 /** App
 */
 class App
@@ -471,11 +476,11 @@ void Test_Main()
 
 	sharedptr<NBsys::NHttp::Http> t_http(new NBsys::NHttp::Http());
 	{
-		t_http->SetHost("192.168.32.16");
+		t_http->SetHost("pbs.twimg.com");
 		t_http->SetPort(80);
 		t_http->SetMode(NBsys::NHttp::Http_Mode::Get);
-		t_http->SetUrl("/mantis/login_page.php");
-		t_http->SetBoundaryString("----123456789123456789");
+		t_http->SetUrl("/media/CpRKF_UUAAAZ4Qt.jpg");
+		t_http->SetBoundaryString(NBsys::NHttp::MakeBoundaryString());
 	}
 
 	{
@@ -485,29 +490,47 @@ void Test_Main()
 
 		bool t_connectupdate_req = true;
 
+		sharedptr<u8> t_pix;
+
+		s32 t_fix_size = 0;
 		while((t_connectupdate_req == true)||(t_recv_buffer->GetUseSize()>0)){
 			u8* t_data = t_recv_buffer->GetItemFromUseList(0);
-			s32 t_size = t_recv_buffer->GetContinuousUseSize();
+			s32 t_size = t_recv_buffer->GetUseSize();
 
 			if(t_size > 0){
 				//受信データあり。
 
-				//表示。
-				{
-					char t_view_buffer[1024*16+1] = {0};
-					Memory::memcpy(t_view_buffer,sizeof(t_view_buffer),t_data,t_size);
-					//DEBUGLOG("%s",t_view_buffer);
+				if(t_http->IsRecvHeader()){
+					//ヘッダー読み込み済み。
+
+					if(t_pix == nullptr){
+						t_pix.reset(new u8[t_http->GetContentLength()]);
+					}
+
+					//表示。
+					{
+						char t_view_buffer[1024*16+1] = {0};
+						Memory::memcpy(t_view_buffer,sizeof(t_view_buffer),t_data,t_size);
+					}
+
+					//リングバッファから読み込み。
+					t_recv_buffer->CopyFromBuffer(&t_pix.get()[t_fix_size],t_size);
+
+					t_fix_size += t_size;
+
+					DEBUGLOG("%d / %d\n",t_fix_size,t_http->GetContentLength());
 				}
-
-				//リングバッファから読み込み分を破棄。
-				t_recv_buffer->AddFree(t_size);
-
 			}else{
 				t_connectupdate_req = t_http->ConnectUpdate();
 			}
+
+			if(t_recv_buffer->GetUseSize() <= 0){
+				ThreadSleep(1);
+			}
 		}
 
-
+		s_texture = NBsys::NTexture::CreateTexture(t_pix,t_fix_size,L"http");
+		s_d3d11->CreateTexture(s_texture,false);
 	}
 
 	while(true){

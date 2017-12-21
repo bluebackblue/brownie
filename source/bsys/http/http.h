@@ -16,8 +16,9 @@
 
 /** include
 */
-#include "./http_recv.h"
-#include "./http_send.h"
+#include "./http_recv_decl.h"
+#include "./http_send_decl.h"
+#include "./http_boundarystring.h"
 #include "./http_type.h"
 
 
@@ -46,6 +47,9 @@ namespace NBsys{namespace NHttp
 
 				//送信待ち。初回データ。
 				SendWait_StartData,
+
+				//受信待ち。
+				RecvHeader,
 
 				//受信待ち。
 				Recv,
@@ -138,9 +142,27 @@ namespace NBsys{namespace NHttp
 
 	public:
 
+		/** IsRecvHeader
+		*/
+		bool IsRecvHeader();
+
+		/** GetStatusCode
+		*/
+		s32 GetStatusCode();
+
+		/** GetContentLength
+		*/
+		s32 GetContentLength();
+
+	public:
+
 		/** 開始。
 		*/
 		void ConnectStart(sharedptr<RingBufferBase<u8>>& a_recv_buffer);
+
+		/** 終了。
+		*/
+		void ConnectEnd();
 
 		/** 更新。
 
@@ -150,6 +172,8 @@ namespace NBsys{namespace NHttp
 
 		*/
 		bool ConnectUpdate();
+
+
 
 	};
 

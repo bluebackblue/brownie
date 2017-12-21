@@ -11,7 +11,7 @@
 
 /** _WINSOCKAPI_
 */
-#define NOMINMAX
+//#define NOMINMAX
 #define _WINSOCKAPI_
 
 
@@ -29,14 +29,14 @@
 
 /** max
 */
-#if defined(max)
-	#undef max
-#endif
+//#if defined(max)
+//	#undef max
+//#endif
 
 
 /** min
 */
-#if defined(max)
-	#undef max
-#endif
+//#if defined(max)
+//	#undef max
+//#endif
 

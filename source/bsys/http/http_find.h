@@ -37,6 +37,12 @@ namespace NBsys{namespace NHttp
 	/** FindContentsLength
 	*/
 	s32 FindContentsLength(const STLString& a_string);
+
+
+	/** FindStatusCode
+	*/
+	s32 FindStatusCode(const STLString& a_string);
+
 }}
 #endif
 

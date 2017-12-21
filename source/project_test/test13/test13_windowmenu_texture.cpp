@@ -152,7 +152,7 @@ Test13_WindowMenu_Texture::Test13_WindowMenu_Texture(s32 a_id,const STLWString& 
 		t_inititem.size.SetH(400);
 		t_texture->Initialize(t_inititem);
 		{
-			t_texture->color = NBsys::NColor::Color_F(1.0f,0.0f,0.0f,1.0f);
+			t_texture->color = NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f);
 			t_texture->texture_id = -1;
 			t_texture->mouseblock = true;
 		}

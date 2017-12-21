@@ -23,6 +23,7 @@
 */
 #include "./http.h"
 #include "./http_recv.h"
+#include "./http_send.h"
 #include "./http_bodystring.h"
 
 
@@ -103,6 +104,42 @@ namespace NBsys{namespace NHttp
 	}
 
 
+	/** IsRecvHeader
+	*/
+	bool Http::IsRecvHeader()
+	{
+		if(this->recv){
+			return this->recv->IsRecvHeader();
+		}
+
+		return false;
+	}
+
+
+	/** IsRecvHeader
+	*/
+	s32 Http::GetStatusCode()
+	{
+		if(this->recv){
+			return this->recv->GetStatusCode();
+		}
+
+		return -1;
+	}
+
+
+	/** GetContentLength
+	*/
+	s32 Http::GetContentLength()
+	{
+		if(this->recv){
+			return this->recv->GetContentLength();
+		}
+
+		return -1;
+	}
+
+
 	/** 開始。
 	*/
 	void Http::ConnectStart(sharedptr<RingBufferBase<u8>>& a_recv_buffer)
@@ -110,6 +147,20 @@ namespace NBsys{namespace NHttp
 		this->recv_buffer = a_recv_buffer;
 		this->step = Step::Connect;
 		this->iserror = false;
+	}
+
+
+	/** 終了。
+	*/
+	void Http::ConnectEnd()
+	{
+		this->step = Step::Connect;
+		this->socket.reset();
+		this->iserror = false;
+		this->send_buffer.reset();
+		this->recv_buffer.reset();
+		this->send.reset();
+		this->recv.reset();
 	}
 
 
@@ -198,7 +249,7 @@ namespace NBsys{namespace NHttp
 					//デバッグ。
 					{
 						this->send_buffer.get()[t_send_buffer_size] = 0x00;
-						DEBUGLOG("%s",reinterpret_cast<char*>(this->send_buffer.get()));
+						DEBUGLOG("%s",t_send_body.c_str());
 					}
 
 					//送信バッファ設定。
@@ -213,11 +264,23 @@ namespace NBsys{namespace NHttp
 					if(this->send->IsBusy() == false){
 						//受信開始。
 						this->recv->StartRecv();
+						this->step = Step::RecvHeader;
+					}
+				}break;
+			case Step::RecvHeader:
+				{
+					if(this->recv->IsRecvHeader()){
 						this->step = Step::Recv;
 					}
 				}break;
 			case Step::Recv:
 				{
+					if(this->recv->GetContentLength() <= this->recv->GetContentRecvSize()){
+						if(this->socket != nullptr){
+							this->socket.reset();
+						}
+					}
+
 					bool t_close = false;
 					if(this->socket == nullptr){
 						t_close = true;
@@ -228,9 +291,8 @@ namespace NBsys{namespace NHttp
 					}
 
 					if(t_close == true){
-						if(this->recv->GetRecvRingBufferSize() <= 0){
-							this->socket.reset();
-
+						//受信済みで未解析データのサイズ。
+						if(this->recv->GetRecvRingBufferUseSize() <= 0){
 							//中断終了。
 							return false;
 						}

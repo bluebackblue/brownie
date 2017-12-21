@@ -45,9 +45,12 @@ namespace NBsys{namespace NHttp
 		ringbuffer_data(a_ringbuffer),
 		header_line(),
 		need_recv_size(0),
-		copy_to_offset(0),
-		is_transfer_encodeing_chunked(false),
+		copy_content_recv_size(0),
+		copy_chunk_size(0),
+		header_is_recv(false),
+		header_is_transfer_encodeing_chunked(false),
 		header_content_length(-1),
+		header_status_code(-1),
 		step(Step::None)
 	{
 	}
@@ -79,11 +82,43 @@ namespace NBsys{namespace NHttp
 	}
 
 
-	/** 受信データ解析用バッファの使用サイズ。
+	/** 受信済みで未解析データのサイズ。
 	*/
-	s32 Http_Recv::GetRecvRingBufferSize()
+	s32 Http_Recv::GetRecvRingBufferUseSize()
 	{
 		return this->ringbuffer_recv->GetUseSize();
+	}
+
+
+	/** 受信済みのコンテンツサイズ。
+	*/
+	s32 Http_Recv::GetContentRecvSize()
+	{
+		return this->copy_content_recv_size;
+	}
+
+
+	/** IsRecvHeader
+	*/
+	bool Http_Recv::IsRecvHeader()
+	{
+		return this->header_is_recv;
+	}
+
+
+	/** GetStatusCode
+	*/
+	s32 Http_Recv::GetStatusCode()
+	{
+		return this->header_status_code;
+	}
+
+
+	/** GetContentLength
+	*/
+	s32 Http_Recv::GetContentLength()
+	{
+		return this->header_content_length;
 	}
 
 
@@ -101,6 +136,9 @@ namespace NBsys{namespace NHttp
 		}else if(this->need_recv_size > 0){
 			//指定サイズ分の受信が必要。
 			t_need_recv_size = this->need_recv_size;
+			if(t_need_recv_size > sizeof(t_data)){
+				t_need_recv_size = sizeof(t_data);
+			}
 		}
 
 		if(this->socket){
@@ -137,7 +175,11 @@ namespace NBsys{namespace NHttp
 					t_tempbuffer[t_end_offset + 0] = 0x00;
 					t_tempbuffer[t_end_offset + 1] = 0x00;
 
-					//TODO:this->statecode = reinterpret_cast<const char*>(&t_tempbuffer[0]);
+					STLString t_line = reinterpret_cast<char*>(&t_tempbuffer[0]);
+
+					this->header_line.push_back(t_line);
+
+					this->header_status_code = FindStatusCode(t_line);
 
 					this->step = Step::Header;
 
@@ -181,23 +223,28 @@ namespace NBsys{namespace NHttp
 						if(t_line == ""){
 							//ヘッダー終端。
 
-							if(this->is_transfer_encodeing_chunked == true){
+							if(this->header_is_transfer_encodeing_chunked == true){
 								this->step = Step::Data_ChunkSize;
 							}else{
-								this->step = Step::Data_NoChunkData;
+								this->step = Step::Data_OneChunkData;
 							}
 
-							this->copy_to_offset = 0;
+							this->copy_content_recv_size = 0;
+							this->copy_chunk_size = 0;
+
+							this->header_is_recv = true;
 
 							//再評価するために、ループリクエスト。
 							return true;
 						}else{
 							//行。
 
+							TAGLOG(L"Http_Recv","%s",t_line.c_str());
+
 							this->header_line.push_back(t_line);
 
 							if(t_line == "Transfer-Encoding: chunked"){
-								this->is_transfer_encodeing_chunked = true;
+								this->header_is_transfer_encodeing_chunked = true;
 							}
 
 							s32 t_content_length = NHttp::FindContentsLength(t_line);
@@ -224,7 +271,7 @@ namespace NBsys{namespace NHttp
 					}
 				}
 			}break;
-		case Step::Data_NoChunkData:
+		case Step::Data_OneChunkData:
 			{
 				//データ。
 
@@ -239,21 +286,25 @@ namespace NBsys{namespace NHttp
 
 					this->ringbuffer_data->CopyToBuffer(this->ringbuffer_recv->GetItemFromUseList(0),t_size_from_continuous);
 					this->ringbuffer_recv->AddFree(t_size_from_continuous);
-					this->copy_to_offset += t_size_from_continuous;
+					this->copy_chunk_size += t_size_from_continuous;
 
 					t_size_from_continuous = this->ringbuffer_recv->GetContinuousUseSize();
 					t_size_to_freesize = this->ringbuffer_data->GetFreeSize();
 				}
 
-				if(this->copy_to_offset >= 0){
-					if(this->copy_to_offset >= this->header_content_length){
+				//コピー済みのサイズ + コピー待ちのサイズ。
+				this->copy_content_recv_size = this->copy_chunk_size + this->ringbuffer_recv->GetUseSize();
+
+				if(this->header_content_length >= 0){
+					if(this->header_content_length <= this->copy_content_recv_size){
 						//受信完了。
-						//再評価するために、ループリクエスト。
-						this->need_recv_size = -1;
+						this->need_recv_size = 0;
 					}else{
-						//TODO:未確認。
-						this->need_recv_size = this->header_content_length - (this->copy_to_offset + this->ringbuffer_recv->GetUseSize());
+						//受信継続。
+						this->need_recv_size = this->header_content_length - this->copy_content_recv_size;
 					}
+				}else{
+					//受信サイズ不明。
 				}
 			}break;
 		case Step::Data_ChunkSize:
