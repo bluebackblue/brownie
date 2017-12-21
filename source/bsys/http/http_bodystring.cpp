@@ -24,55 +24,55 @@
 #if(BSYS_HTTP_ENABLE)
 namespace NBsys{namespace NHttp
 {
-	/** MakeBodyString_DataHeader
+	/** MakeBodyString_BinarHeader
 	*/
-	STLString MakeBodyString_DataHeader(const STLString& a_boundarystring,const STLString& a_formname,const STLString& a_filename)
+	STLString MakeBodyString_BinarHeader(const STLString& a_boundarystring,const STLString& a_formname,const STLString& a_filename)
 	{
-		STLString t_body_dataheader;
+		STLString t_body_binaryheader;
 
 		//セパレート。
 		{
 			//------****<0D 0A>
-			t_body_dataheader += "--";
-			t_body_dataheader += "----" + a_boundarystring;
-			t_body_dataheader += "\r\n";
+			t_body_binaryheader += "--";
+			t_body_binaryheader += "----" + a_boundarystring;
+			t_body_binaryheader += "\r\n";
 		}
 
 		//Content-Disposition: form-data; name="****"; filename="****.****"<0D 0A>
 		{
-			t_body_dataheader += "Content-Disposition: form-data; name=\"";
-			t_body_dataheader += a_formname;
-			t_body_dataheader += "\"; filename=\"";
-			t_body_dataheader += a_filename;
-			t_body_dataheader += "\"";
-			t_body_dataheader += "\r\n";
+			t_body_binaryheader += "Content-Disposition: form-data; name=\"";
+			t_body_binaryheader += a_formname;
+			t_body_binaryheader += "\"; filename=\"";
+			t_body_binaryheader += a_filename;
+			t_body_binaryheader += "\"";
+			t_body_binaryheader += "\r\n";
 		}
 
 		//Content-Type: application/octet-stream<0D 0A>
 		{
-			t_body_dataheader += "Content-Type: application/octet-stream";
-			t_body_dataheader += "\r\n";
+			t_body_binaryheader += "Content-Type: application/octet-stream";
+			t_body_binaryheader += "\r\n";
 		}
 
 		//<0D 0A>
 		{
-			t_body_dataheader += "\r\n";
+			t_body_binaryheader += "\r\n";
 		}
 
-		return t_body_dataheader;
+		return t_body_binaryheader;
 	}
 
 
-	/** MakeBodyString_Footer
+	/** MakeBodyString_BinarFooter
 	*/
-	STLString MakeBodyString_DataFooter()
+	STLString MakeBodyString_BinarFooter()
 	{
-		STLString t_body_datafooter;
+		STLString t_body_binaryfooter;
 
 		//<0D 0A>
-		t_body_datafooter += "\r\n";
+		t_body_binaryfooter += "\r\n";
 
-		return t_body_datafooter;
+		return t_body_binaryfooter;
 	}
 
 
@@ -122,7 +122,7 @@ namespace NBsys{namespace NHttp
 
 	/** MakeBodyString_Header
 	*/
-	STLString MakeBodyString_Header(const STLString& a_boundarystring,Http_Mode::Id a_mode,const STLString& a_request,const STLString& a_host,s32 a_all_content_size)
+	STLString MakeBodyString_Header(const STLString& a_boundarystring,Http_Mode::Id a_mode,const STLString& a_path,const STLString& a_host,s32 a_binary_size)
 	{
 		STLString t_body;
 	
@@ -133,7 +133,7 @@ namespace NBsys{namespace NHttp
 			}else{
 				t_body += "GET ";
 			}
-			t_body += a_request;
+			t_body += a_path;
 			t_body += " HTTP/1.1";
 			t_body += "\r\n";
 		}
@@ -155,7 +155,7 @@ namespace NBsys{namespace NHttp
 		if(a_mode == Http_Mode::Post){
 			char t_temp[32];
 			t_body += "Content-Length: ";
-			t_body += VASTRING(t_temp,COUNTOF(t_temp),"%ld",a_all_content_size);
+			t_body += VASTRING(t_temp,COUNTOF(t_temp),"%ld",a_binary_size);
 			t_body += "\r\n";
 		}
 
@@ -168,7 +168,8 @@ namespace NBsys{namespace NHttp
 		t_body += "\r\n";
 
 		//User-Agent: ブラウザバージョン。
-		t_body += "User-Agent: brownie x.x.x";//TODO:
+		t_body += "User-Agent: ";
+		t_body += BSYS_HTTP_USERAGENT;
 		t_body += "\r\n";
 
 		//Content-Type: マルチパートデータ。
@@ -193,20 +194,20 @@ namespace NBsys{namespace NHttp
 	}
 
 
-	/** MakeBodyString_PostDataFooter
+	/** MakeBodyString_PostBinarFooter
 	*/
-	STLString MakeBodyString_PostDataFooter(const STLString& a_boundarystring)
+	STLString MakeBodyString_PostBinarFooter(const STLString& a_boundarystring)
 	{
-		STLString t_postdata_footer;
+		STLString t_postbinary_footer;
 
-		t_postdata_footer += "--";
-		t_postdata_footer += "----" + a_boundarystring;
-		t_postdata_footer += "--";
+		t_postbinary_footer += "--";
+		t_postbinary_footer += "----" + a_boundarystring;
+		t_postbinary_footer += "--";
 
 		//終端。
-		t_postdata_footer += "\r\n";
+		t_postbinary_footer += "\r\n";
 
-		return t_postdata_footer;
+		return t_postbinary_footer;
 	}
 
 

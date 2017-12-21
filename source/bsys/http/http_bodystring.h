@@ -19,29 +19,29 @@
 #if(BSYS_HTTP_ENABLE)
 namespace NBsys{namespace NHttp
 {
-	/** MakeBodyString_DataHeader
+	/** MakeBodyString_BinarHeader
 	*/
-	STLString MakeBodyString_DataHeader(const STLString& a_boundarystring,const STLString& a_formname,const STLString& a_filename);
+	STLString MakeBodyString_BinaryHeader(const STLString& a_boundarystring,const STLString& a_formname,const STLString& a_filename);
 
-	/** MakeBodyString_DataFooter
+	/** MakeBodyString_BinarFooter
 	*/
-	STLString MakeBodyString_DataFooter();
+	STLString MakeBodyString_BinarFooter();
 
 	/** MakeBodyString_TextHeader
 	*/
 	STLString MakeBodyString_TextHeader(const STLString& a_boundarystring,const STLString& a_formname);
 
-	/** MakeBodyString_DataFooter
+	/** MakeBodyString_BinarFooter
 	*/
 	STLString MakeBodyString_TextFooter();
 
 	/** MakeBodyString_Header
 	*/
-	STLString MakeBodyString_Header(const STLString& a_boundarystring,Http_Mode::Id a_mode,const STLString& a_request,const STLString& a_host,s32 a_all_content_size);
+	STLString MakeBodyString_Header(const STLString& a_boundarystring,Http_Mode::Id a_mode,const STLString& a_path,const STLString& a_host,s32 a_binary_size);
 
-	/** MakeBodyString_PostDataFooter
+	/** MakeBodyString_PostBinarFooter
 	*/
-	STLString MakeBodyString_PostDataFooter(const STLString& a_boundarystring);
+	STLString MakeBodyString_PostBinarFooter(const STLString& a_boundarystring);
 }}
 #endif
 

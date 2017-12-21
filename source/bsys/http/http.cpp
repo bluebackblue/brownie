@@ -39,6 +39,19 @@ namespace NBsys{namespace NHttp
 	/** constructor
 	*/
 	Http::Http()
+		:
+		host(""),
+		port(80),
+		mode(Http_Mode::Get),
+		url(""),
+		boundary_string(""),
+		step(Step::Connect),
+		socket(),
+		iserror(false),
+		send_buffer(),
+		recv_buffer(),
+		send(),
+		recv()
 	{
 	}
 
@@ -47,6 +60,188 @@ namespace NBsys{namespace NHttp
 	*/
 	Http::~Http()
 	{
+	}
+
+
+	/** SetHost
+	*/
+	void Http::SetHost(const STLString& a_host)
+	{
+		this->host = a_host;
+	}
+
+
+	/** SetPort
+	*/
+	void Http::SetPort(s32 a_port)
+	{
+		this->port = a_port;
+	}
+
+
+	/** SetMode
+	*/
+	void Http::SetMode(Http_Mode::Id a_mode)
+	{
+		this->mode = a_mode;
+	}
+
+
+	/** SetUrl
+	*/
+	void Http::SetUrl(const STLString& a_url)
+	{
+		this->url = a_url;
+	}
+
+
+	/** SetBoundaryString
+	*/
+	void Http::SetBoundaryString(const STLString& a_boundary_string)
+	{
+		this->boundary_string = a_boundary_string;
+	}
+
+
+	/** 開始。
+	*/
+	void Http::ConnectStart(sharedptr<RingBufferBase<u8>>& a_recv_buffer)
+	{
+		this->recv_buffer = a_recv_buffer;
+		this->step = Step::Connect;
+		this->iserror = false;
+	}
+
+
+	/** 更新。
+	*/
+	bool Http::ConnectUpdate()
+	{
+		if(this->iserror == true){
+			//中断。
+			return false;
+		}
+
+		bool t_loop = true;
+		while(t_loop){
+			t_loop = false;
+
+			if(this->send){
+				if(this->send->Update() == true){
+					//ループリクエスト。
+					t_loop = true;
+				}
+				this->iserror = this->send->IsError();
+			}
+			if(this->recv){
+				if(this->recv->Update() == true){
+					//ループリクエスト。
+					t_loop = true;
+				}
+			}
+
+			switch(this->step){
+			case Step::Connect:
+				{
+					//接続。
+
+					//ソケット作成。
+					this->socket.reset(new SocketHandle());
+
+					//受信設定。
+					this->recv.reset(new Http_Recv(this->socket,this->recv_buffer));
+
+					//送信設定。
+					this->send.reset(new Http_Send());
+
+					//接続。
+					if(this->socket->OpenTcp()){
+						if(this->socket->ConnectTcp(this->host.c_str(),this->port) == true){
+							this->step = Step::Send_StartData;
+							t_loop = true;
+						}else{
+							//エラー。
+							this->iserror = true;
+						}
+					}else{
+						//エラー。
+						this->iserror = true;
+					}
+				}break;
+			case Step::Send_StartData:
+				{
+					s32 t_binary_size = 0;
+					s32 t_send_buffer_size = 0;
+
+					//バイナリ作成。
+					{
+					}
+
+					//ボディ作成。				
+					STLString t_send_body = NHttp::MakeBodyString_Header(this->boundary_string,this->mode,this->url,this->host,t_binary_size);
+					t_send_buffer_size += t_send_body.length();
+
+					this->send_buffer.reset( new u8[t_send_buffer_size + 1024],default_delete<u8>());
+
+					s32 t_offset = 0;
+
+					//ボディーコピー。
+					{
+						Memory::memcpy(&this->send_buffer.get()[t_offset],t_send_buffer_size - t_offset,t_send_body.c_str(),static_cast<s32>(t_send_body.length()));
+						t_offset += t_send_body.length();
+					}
+
+					//バイナリコピー。
+					{
+					}
+
+					//デバッグ。
+					{
+						this->send_buffer.get()[t_send_buffer_size] = 0x00;
+						DEBUGLOG("%s",reinterpret_cast<char*>(this->send_buffer.get()));
+					}
+
+					//送信バッファ設定。
+					this->send->Send(this->socket,this->send_buffer,t_send_buffer_size);
+
+					this->step = Step::SendWait_StartData;
+
+					t_loop = true;
+				}break;
+			case Step::SendWait_StartData:
+				{
+					if(this->send->IsBusy() == false){
+						//受信開始。
+						this->recv->StartRecv();
+						this->step = Step::Recv;
+					}
+				}break;
+			case Step::Recv:
+				{
+					bool t_close = false;
+					if(this->socket == nullptr){
+						t_close = true;
+					}else{
+						if(this->socket->IsOpen() == false){
+							t_close = true;
+						}
+					}
+
+					if(t_close == true){
+						if(this->recv->GetRecvRingBufferSize() <= 0){
+							this->socket.reset();
+
+							//中断終了。
+							return false;
+						}
+					}
+					
+				}break;
+			}
+		}
+
+		//継続。
+		return true;
 	}
 
 

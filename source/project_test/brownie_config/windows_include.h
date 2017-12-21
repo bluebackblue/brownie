@@ -11,6 +11,7 @@
 
 /** _WINSOCKAPI_
 */
+#define NOMINMAX
 #define _WINSOCKAPI_
 
 
@@ -18,4 +19,24 @@
 */
 #include <windows.h>
 
+
+/** SetPort
+*/
+#if defined(SetPort)
+	#undef SetPort
+#endif
+
+
+/** max
+*/
+#if defined(max)
+	#undef max
+#endif
+
+
+/** min
+*/
+#if defined(max)
+	#undef max
+#endif
 

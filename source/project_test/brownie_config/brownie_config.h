@@ -16,6 +16,18 @@
 
 /*
 	-------------------
+	version
+	
+		バージョンを制御します。
+	-------------------
+*/
+#define BROWNIE_VERSION_A								(1)
+#define BROWNIE_VERSION_B								(0)
+#define BROWNIE_VERSION_C								(1)
+#define BROWNIE_VERSION_STRING							"Brownie 1.0.1"
+
+/*
+	-------------------
 	std atomic
 
 		std::atomicを制御します。
@@ -970,4 +982,46 @@
 #if !defined(BSYS_WINDOWMENU_ENABLE)
 	#define BSYS_WINDOWMENU_ENABLE							(0)
 #endif
+
+
+/*
+	-------------------
+	winsock
+
+		winsockを制御します。
+	-------------------
+
+	-------------------
+	BSYS_WINSOCK_ENABLE
+
+		0 : オフ
+		1 : オン
+	-------------------
+*/
+#if !defined(BSYS_WINSOCK_ENABLE)
+	#define BSYS_WINSOCK_ENABLE								(0)
+#endif
+
+
+/*
+	-------------------
+	http
+
+		HTTP通信を制御します。
+	-------------------
+
+	-------------------
+	BSYS_HTTP_ENABLE
+
+		0 : オフ
+		1 : オン
+	-------------------
+*/
+#if !defined(BSYS_HTTP_ENABLE)
+	#define BSYS_HTTP_ENABLE								(0)
+#endif
+#if !defined(BSYS_HTTP_USERAGENT)
+	#define BSYS_HTTP_USERAGENT								BROWNIE_VERSION_STRING
+#endif
+
 

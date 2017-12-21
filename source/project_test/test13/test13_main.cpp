@@ -419,8 +419,7 @@ static sharedptr<App> s_app;
 */
 void Test_Main()
 {
-	DEBUGLOG(u8"あいうえお\n");
-	DEBUGLOG(L"あいうえお\n");
+	NBsys::NWinsock::StartSystem();
 
 	NBsys::NFile::StartSystem(1);
 	NBsys::NFile::SetRoot(0,L"./project_test");
@@ -468,6 +467,48 @@ void Test_Main()
 	#if(DEF_TEST_AUTO)
 	f32 t_autotime = 0.0f;
 	#endif
+
+
+	sharedptr<NBsys::NHttp::Http> t_http(new NBsys::NHttp::Http());
+	{
+		t_http->SetHost("192.168.32.16");
+		t_http->SetPort(80);
+		t_http->SetMode(NBsys::NHttp::Http_Mode::Get);
+		t_http->SetUrl("/mantis/login_page.php");
+		t_http->SetBoundaryString("----123456789123456789");
+	}
+
+	{
+		//受信開始。
+		sharedptr<RingBufferBase<u8>> t_recv_buffer(new RingBuffer<u8,1024*16,true>());
+		t_http->ConnectStart(t_recv_buffer);
+
+		bool t_connectupdate_req = true;
+
+		while((t_connectupdate_req == true)||(t_recv_buffer->GetUseSize()>0)){
+			u8* t_data = t_recv_buffer->GetItemFromUseList(0);
+			s32 t_size = t_recv_buffer->GetContinuousUseSize();
+
+			if(t_size > 0){
+				//受信データあり。
+
+				//表示。
+				{
+					char t_view_buffer[1024*16+1] = {0};
+					Memory::memcpy(t_view_buffer,sizeof(t_view_buffer),t_data,t_size);
+					//DEBUGLOG("%s",t_view_buffer);
+				}
+
+				//リングバッファから読み込み分を破棄。
+				t_recv_buffer->AddFree(t_size);
+
+			}else{
+				t_connectupdate_req = t_http->ConnectUpdate();
+			}
+		}
+
+
+	}
 
 	while(true){
 
@@ -532,6 +573,8 @@ void Test_Main()
 
 	NBsys::NFile::EndSystemRequest();
 	NBsys::NFile::EndWaitSystem();
+
+	NBsys::NWinsock::EndSystem();
 
 	return;
 }

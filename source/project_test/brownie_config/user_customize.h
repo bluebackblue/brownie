@@ -94,6 +94,7 @@
 	#define BLIB_DEBUGLOG_CALLBACK_ENABLE					(1)
 
 	#define BSYS_HTTP_ENABLE								(1)
+	#define BSYS_WINSOCK_ENABLE								(1)
 
 #elif(DEF_TEST_INDEX == 22)
 
