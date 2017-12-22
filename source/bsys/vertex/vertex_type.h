@@ -748,11 +748,11 @@ namespace NBsys{namespace NVertex
 	*/
 	template <typename T> inline void SetMatrixIndex(T& a_vertex,s32 a_matrix_index_0,s32 a_matrix_index_1,s32 a_matrix_index_2,s32 a_matrix_index_3)
 	{
-		NImpl::Vertex_SetMatrixIndex<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetMatrixIndex<T,true>*>::value>::Set(a_vertex,a_matrix_index_0,a_matrix_index_1,a_matrix_index_2,a_matrix_index_3);
+		NImpl::Vertex_SetMatrixindex4<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetMatrixindex4<T,true>*>::value>::Set(a_vertex,a_matrix_index_0,a_matrix_index_1,a_matrix_index_2,a_matrix_index_3);
 	}
 	template <typename T> inline s32 GetMatrixIndexOffset()
 	{
-		return NImpl::Vertex_SetMatrixIndex<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetMatrixIndex<T,true>*>::value>::GetOffset();
+		return NImpl::Vertex_SetMatrixindex4<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetMatrixindex4<T,true>*>::value>::GetOffset();
 	}
 
 
@@ -760,7 +760,7 @@ namespace NBsys{namespace NVertex
 	*/
 	template <typename T> inline void SetMatrixWeight(T& a_vertex,f32 a_matrix_weight_0,f32 a_matrix_weight_1,f32 a_matrix_weight_2,f32 a_matrix_weight_3)
 	{
-		NImpl::Vertex_SetMatrixWeight<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetMatrixWeight<T,true>*>::value>::Set(a_vertex,a_matrix_weight_0,a_matrix_weight_1,a_matrix_weight_2,a_matrix_weight_3);
+		NImpl::Vertex_SetMatrixweight4<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetMatrixweight4<T,true>*>::value>::Set(a_vertex,a_matrix_weight_0,a_matrix_weight_1,a_matrix_weight_2,a_matrix_weight_3);
 	}
 
 
@@ -768,7 +768,7 @@ namespace NBsys{namespace NVertex
 	*/
 	template <typename T> inline s32 GetMatrixWeightOffset()
 	{
-		return NImpl::Vertex_SetMatrixWeight<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetMatrixWeight<T,true>*>::value>::GetOffset();
+		return NImpl::Vertex_SetMatrixweight4<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetMatrixweight4<T,true>*>::value>::GetOffset();
 	}
 
 

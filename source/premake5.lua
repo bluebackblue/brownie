@@ -45,12 +45,22 @@ do
 	do
 		-- buildoptions
 		-- {
-		-- 	"/MP",
+		-- 	"/Gm-",
+		--	"/MP"
 		-- }
 
 		defines{
 			"PLATFORM_VCWIN"
 		}
+	end
+
+	filter "action:gmake"
+	do
+		defines{
+			"PLATFORM_GNUC"
+		}
+
+		buildoptions { "-std=c++17" }
 	end
 
 	filter "configurations:Debug"

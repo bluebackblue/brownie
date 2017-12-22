@@ -155,7 +155,7 @@ namespace NBlib
 		{
 			#if(BLIB_STDREGEX_ENABLE)
 			{
-				return std::regex_match(a_string.c_str(),std::cmatch(),std::regex("^[-]?[0-9]+"));
+				return std::regex_match(a_string.c_str(),std::regex("^[-]?[0-9]+"));
 			}
 			#else
 			{

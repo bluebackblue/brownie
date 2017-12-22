@@ -139,7 +139,7 @@ namespace NBlib
 				}
 				#else
 				{
-					#error
+					#warning
 				}
 				#endif
 
@@ -173,7 +173,7 @@ namespace NBlib
 				}
 				#else
 				{
-					#error
+					#warning
 				}
 				#endif
 			}
@@ -189,7 +189,7 @@ namespace NBlib
 				}
 				#else
 				{
-					#error
+					#warning
 				}
 				#endif
 			}
@@ -208,7 +208,7 @@ namespace NBlib
 				}
 				#else
 				{
-					#error
+					#warning
 				}
 				#endif
 
@@ -225,7 +225,7 @@ namespace NBlib
 				}
 				#else
 				{
-					#error
+					#warning
 				}
 				#endif
 			}

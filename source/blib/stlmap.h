@@ -62,6 +62,7 @@ namespace NBlib
 
 	};
 
+
 	/** STLBtMapType
 	*/
 	#if(BLIB_STDALIASTEMPLATE_ENABLE)
@@ -69,6 +70,7 @@ namespace NBlib
 		template <typename KEY,typename T,typename PR=std::less<KEY>,typename STLALLOCATOR=STLAllocator<std::pair<const KEY,T>>> using STLBtMapType=typename STLBtMap<KEY,T,PR,STLALLOCATOR>::Type;
 
 	#endif
+
 
 	/** STLMap
 	*/
@@ -88,18 +90,21 @@ namespace NBlib
 
 		};
 
+
+		/** STLMapType
+		*/
+		#if(BLIB_STDALIASTEMPLATE_ENABLE)
+
+			template <typename KEY,typename T,typename H=std::hash<KEY>,typename KEYEQ=std::equal_to<KEY>,class STLALLOCATOR=STLAllocator<std::pair<const KEY,T>>> using STLMapType=typename STLMap<KEY,T,H,KEYEQ,STLALLOCATOR>::Type;
+
+		#endif
+
 	#else
 
 		#define STLMap STLBtMap
 
 	#endif
 
-	/** STLMapType
-	*/
-	#if(BLIB_STDALIASTEMPLATE_ENABLE)
 
-		template <typename KEY,typename T,typename H=std::hash<KEY>,typename KEYEQ=std::equal_to<KEY>,class STLALLOCATOR=STLAllocator<std::pair<const KEY,T>>> using STLMapType=typename STLMap<KEY,T,H,KEYEQ,STLALLOCATOR>::Type;
-
-	#endif
 }
 

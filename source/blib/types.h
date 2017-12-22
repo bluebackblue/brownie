@@ -59,7 +59,7 @@ namespace NBlib
 
 	#else
 
-		#define _countof(X)	static_cast<s32>(sizeof(X)/sizeof(X[0]))
+		#define COUNTOF(X)	static_cast<s32>(sizeof(X)/sizeof(X[0]))
 
 	#endif
 

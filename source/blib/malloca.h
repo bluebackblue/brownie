@@ -28,7 +28,9 @@
 
 #else
 
-	#error
+	#define MALLOCA(SIZE)	::malloc(SIZE)
+
+	#warning
 
 #endif
 
@@ -39,7 +41,9 @@
 
 #else
 
-	#error
+	#define FREEA(POINTER)	::free(POINTER)
+
+	#warning
 
 #endif
 

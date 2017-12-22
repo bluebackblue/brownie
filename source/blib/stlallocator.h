@@ -21,6 +21,11 @@
 #include "./debugassert.h"
 
 
+/** include
+*/
+#include <limits>
+
+
 /** NBlib
 */
 namespace NBlib
