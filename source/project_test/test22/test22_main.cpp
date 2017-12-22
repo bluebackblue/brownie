@@ -179,7 +179,7 @@ void LoadPmx()
 
 	//ＰＭＸ読み込み。
 	{
-		sharedptr<NBsys::NFile::File_Object> t_fileobject_pmx(new NBsys::NFile::File_Object(1,t_pmx_path + t_pmx_name,-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
+		sharedptr<NBsys::NFile::File_Object> t_fileobject_pmx(new NBsys::NFile::File_Object(2,t_pmx_path + t_pmx_name,-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
 		while(t_fileobject_pmx->IsBusy()){
 			ThreadSleep(10);
 		}
@@ -189,7 +189,7 @@ void LoadPmx()
 
 	//ＶＭＤ読み込み。
 	{
-		sharedptr<NBsys::NFile::File_Object> t_fileobject_vmd(new NBsys::NFile::File_Object(1,t_vmd_path + t_vmd_name,-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
+		sharedptr<NBsys::NFile::File_Object> t_fileobject_vmd(new NBsys::NFile::File_Object(2,t_vmd_path + t_vmd_name,-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
 		while(t_fileobject_vmd->IsBusy()){
 			ThreadSleep(10);
 		}
@@ -241,10 +241,10 @@ void LoadPmx()
 		//テクスチャー読み込み開始。
 		if(t_model_patrs.texture_index >= 0){
 			t_model_patrs.texture_filepath = Path::DirAndName(t_pmx_path,s_mmd_pmx->texturename_list[t_model_patrs.texture_index]);
-			t_model_patrs.texture_file = new NBsys::NFile::File_Object(1,t_model_patrs.texture_filepath,-1,sharedptr<NBsys::NFile::File_Allocator>(),1);
+			t_model_patrs.texture_file = new NBsys::NFile::File_Object(2,t_model_patrs.texture_filepath,-1,sharedptr<NBsys::NFile::File_Allocator>(),1);
 		}else{
 			t_model_patrs.texture_filepath = Path::DirAndName(L"",L"white.bmp");
-			t_model_patrs.texture_file = new NBsys::NFile::File_Object(1,t_model_patrs.texture_filepath,-1,sharedptr<NBsys::NFile::File_Allocator>(),1);
+			t_model_patrs.texture_file = new NBsys::NFile::File_Object(2,t_model_patrs.texture_filepath,-1,sharedptr<NBsys::NFile::File_Allocator>(),1);
 		}
 	}
 
@@ -325,9 +325,10 @@ void DrawOnce(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeome
 */
 void Test_Main()
 {
-	NBsys::NFile::StartSystem(2);
-	NBsys::NFile::SetRoot(0,L"./project_test");
-	NBsys::NFile::SetRoot(1,L"../../sdk/mmd");
+	NBsys::NFile::StartSystem(3);
+	NBsys::NFile::SetRoot(0,L"./project_test/test" DEF_TEST_STRING);
+	NBsys::NFile::SetRoot(1,L"./project_test/common");
+	NBsys::NFile::SetRoot(2,L"../../sdk/mmd");
 
 	#if(USE_FOVE)
 	s_fovehmd.reset(new NBsys::NFovehmd::Fovehmd());
@@ -346,12 +347,12 @@ void Test_Main()
 
 	s_window.reset(new NBsys::NWindow::Window());
 	s_d3d11.reset(new NBsys::ND3d11::D3d11());
-
+	
 	#if(USE_FOVE)
-	s_window->Create(DEF_TEST_TITLE,static_cast<s32>(s_fovehmd->GetSingleEyeResolution().x * 2)/3,static_cast<s32>(s_fovehmd->GetSingleEyeResolution().y)/3);
+	s_window->Create(L"TEST " DEF_TEST_STRING,static_cast<s32>(s_fovehmd->GetSingleEyeResolution().x * 2)/3,static_cast<s32>(s_fovehmd->GetSingleEyeResolution().y)/3);
 	s_d3d11->Render_Create(s_window,static_cast<s32>(s_fovehmd->GetSingleEyeResolution().x * 2),static_cast<s32>(s_fovehmd->GetSingleEyeResolution().y));
 	#else
-	s_window->Create(DEF_TEST_TITLE,s_width,s_height);
+	s_window->Create(L"TEST " DEF_TEST_STRING,s_width,s_height);
 	s_d3d11->Render_Create(s_window,s_width,s_height);
 	#endif
 

@@ -37,26 +37,26 @@
 
 #if(DEF_TEST_INDEX == 0)
 
-	#define DEF_TEST_TITLE									L"TEST 0"
+	#define DEF_TEST_STRING									L"0"
 
 #elif(DEF_TEST_INDEX == 1)
 
-	#define DEF_TEST_TITLE									L"TEST 1"
+	#define DEF_TEST_STRING									L"1"
 
 #elif(DEF_TEST_INDEX == 2)
 
-	#define DEF_TEST_TITLE									L"TEST 2"
+	#define DEF_TEST_STRING									L"2"
 
 #elif(DEF_TEST_INDEX == 10)
 
-	#define DEF_TEST_TITLE									L"TEST 10"
+	#define DEF_TEST_STRING									L"10"
 
 	#define BSYS_WINDOW_ENABLE								(1)
 	#define BSYS_D3D11_ENABLE								(1)
 
 #elif(DEF_TEST_INDEX == 11)
 
-	#define DEF_TEST_TITLE									L"TEST 11"
+	#define DEF_TEST_STRING									L"11"
 
 	#define BSYS_WINDOW_ENABLE								(1)
 	#define BSYS_D3D11_ENABLE								(1)
@@ -64,7 +64,7 @@
 
 #elif(DEF_TEST_INDEX == 12)
 
-	#define DEF_TEST_TITLE									L"TEST 12"
+	#define DEF_TEST_STRING									L"12"
 
 	#define BSYS_WINDOW_ENABLE								(1)
 	#define BSYS_D3D11_ENABLE								(1)
@@ -82,7 +82,7 @@
 
 #elif(DEF_TEST_INDEX == 13)
 
-	#define DEF_TEST_TITLE									L"TEST 13"
+	#define DEF_TEST_STRING									L"13"
 
 	#define BSYS_WINDOW_ENABLE								(1)
 	#define BSYS_D3D11_ENABLE								(1)
@@ -99,7 +99,7 @@
 
 #elif(DEF_TEST_INDEX == 22)
 
-	#define DEF_TEST_TITLE									L"TEST 22"
+	#define DEF_TEST_STRING									L"22"
 
 	#define BSYS_MMD_PMX_ENABLE								(1)
 	#define BSYS_MMD_VMD_ENABLE								(1)

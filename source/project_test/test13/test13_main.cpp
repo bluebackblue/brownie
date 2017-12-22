@@ -426,8 +426,9 @@ void Test_Main()
 {
 	NBsys::NWinsock::StartSystem();
 
-	NBsys::NFile::StartSystem(1);
-	NBsys::NFile::SetRoot(0,L"./project_test");
+	NBsys::NFile::StartSystem(2);
+	NBsys::NFile::SetRoot(0,L"./project_test/test" DEF_TEST_STRING);
+	NBsys::NFile::SetRoot(1,L"./project_test/common");
 
 	NBsys::NPad::StartSystem(1);
 
@@ -439,7 +440,7 @@ void Test_Main()
 	s_width = std::get<0>(t_size);
 	s_height = std::get<1>(t_size);
 
-	s_window->Create(DEF_TEST_TITLE,s_width,s_height);
+	s_window->Create(L"TEST " DEF_TEST_STRING,s_width,s_height);
 	s_d3d11->Render_Create(s_window,s_width,s_height);
 
 	s_pad_device.reset(new NCommon::Pad_Device(s_window,s_d3d11));

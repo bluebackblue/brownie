@@ -37,7 +37,11 @@ namespace NBsys{namespace NFile
 	{
 		//ロード開始。
 		sharedptr<ThreadTemplate<File_Thread>>& t_instance = GetSystemInstance(a_device_index);
-		this->workitem = (*t_instance)->LoadRequest(Path::Name(a_filename_short),a_cachegroup_id,a_allocator,a_add_allocatesize);
+		if(t_instance){
+			this->workitem = (*t_instance)->LoadRequest(Path::Name(a_filename_short),a_cachegroup_id,a_allocator,a_add_allocatesize);
+		}else{
+			ASSERT(0);
+		}
 	}
 
 

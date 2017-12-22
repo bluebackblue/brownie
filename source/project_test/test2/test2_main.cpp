@@ -30,7 +30,7 @@ void Test_Main()
 {
 	//ファイル開始。
 	NBsys::NFile::StartSystem(1);
-	NBsys::NFile::SetRoot(0,L"./project_test/test2");
+	NBsys::NFile::SetRoot(0,L"./project_test/test" DEF_TEST_STRING);
 
 	//読み込み開始。
 	sharedptr<NBsys::NFile::File_Object> t_fileobject(new NBsys::NFile::File_Object(0,L"test2.json",-1,sharedptr<NBsys::NFile::File_Allocator>(),1));

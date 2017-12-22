@@ -215,8 +215,8 @@ namespace NCommon
 					}
 
 					//シェーダー。
-					sharedptr<NBsys::NFile::File_Object> t_vertex_fx(new NBsys::NFile::File_Object(0,L"common/drawfont_vertex.fx",-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
-					sharedptr<NBsys::NFile::File_Object> t_pixel_fx(new NBsys::NFile::File_Object(0,L"common/drawfont_pixel.fx",-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
+					sharedptr<NBsys::NFile::File_Object> t_vertex_fx(new NBsys::NFile::File_Object(1,L"drawfont_vertex.fx",-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
+					sharedptr<NBsys::NFile::File_Object> t_pixel_fx(new NBsys::NFile::File_Object(1,L"drawfont_pixel.fx",-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
 					this->asyncresult_vertexshader.Create(false);
 					this->asyncresult_pixelshader.Create(false);
 					this->vertexshader_id = this->d3d11->CreateVertexShader(this->asyncresult_vertexshader,t_vertex_fx,t_layout);

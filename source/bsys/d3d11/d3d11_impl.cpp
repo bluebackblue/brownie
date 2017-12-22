@@ -850,7 +850,9 @@ namespace NBsys{namespace ND3d11
 		s32 t_size = static_cast<s32>(a_vertexshader->fileobject->GetLoadSize());
 
 		if(a_vertexshader->fileobject->GetAddAllocateSize() > 0){
-			t_data[t_size] = 0x00;
+			if(t_data){
+				t_data[t_size] = 0x00;
+			}
 		}else{
 			ASSERT(0);
 		}
@@ -858,7 +860,7 @@ namespace NBsys{namespace ND3d11
 		/** t_blob
 		*/
 		sharedptr<ID3DBlob> t_blob;
-		{
+		if(t_data){
 			sharedptr<ID3DBlob> t_blob_error;
 			ID3DBlob* t_raw = nullptr;
 			ID3DBlob* t_raw_error = nullptr;

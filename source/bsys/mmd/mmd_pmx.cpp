@@ -643,7 +643,7 @@ namespace NBsys{namespace NMmd
 		sharedptr<u8>& t_data = a_file->GetLoadData();
 		u8* t_raw = t_data.get();
 		
-		{
+		if(t_raw){
 			if(this->Load_Header(t_raw) == false){
 				return false;
 			}

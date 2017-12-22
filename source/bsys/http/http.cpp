@@ -123,6 +123,7 @@ namespace NBsys{namespace NHttp
 		u8* t_buffer_data = t_binary_item->data.get();
 		t_binary_item->size = t_buffer_size;
 
+		//コピー。
 		{
 			s32 t_offset = 0;
 
@@ -138,9 +139,7 @@ namespace NBsys{namespace NHttp
 			ASSERT(t_offset == t_buffer_size);
 		}
 
-		{
-			this->binary_list.insert(STLMap<STLString,sharedptr<Http_BinaryItem>>::value_type(a_name,t_binary_item));
-		}
+		this->binary_list.insert(STLMap<STLString,sharedptr<Http_BinaryItem>>::value_type(a_name,t_binary_item));
 	}
 
 
@@ -161,6 +160,7 @@ namespace NBsys{namespace NHttp
 		u8* t_buffer_data = t_binary_item->data.get();
 		t_binary_item->size = t_buffer_size;
 
+		//コピー。
 		{
 			s32 t_offset = 0;
 
@@ -176,9 +176,7 @@ namespace NBsys{namespace NHttp
 			ASSERT(t_offset == t_buffer_size);
 		}
 
-		{
-			this->binary_list.insert(STLMap<STLString,sharedptr<Http_BinaryItem>>::value_type(a_name,t_binary_item));
-		}
+		this->binary_list.insert(STLMap<STLString,sharedptr<Http_BinaryItem>>::value_type(a_name,t_binary_item));
 	}
 
 

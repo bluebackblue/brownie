@@ -258,14 +258,15 @@ static sharedptr<App> s_app;
 */
 void Test_Main()
 {
-	NBsys::NFile::StartSystem(1);
-	NBsys::NFile::SetRoot(0,L"./project_test");
+	NBsys::NFile::StartSystem(2);
+	NBsys::NFile::SetRoot(0,L"./project_test/test" DEF_TEST_STRING);
+	NBsys::NFile::SetRoot(1,L"./project_test/common");
 
 	s_window.reset(new NBsys::NWindow::Window());
 	s_d3d11.reset(new NBsys::ND3d11::D3d11());
 	s_app.reset(new App());
 
-	s_window->Create(DEF_TEST_TITLE,s_width,s_height);
+	s_window->Create(L"TEST " DEF_TEST_STRING,s_width,s_height);
 	s_d3d11->Render_Create(s_window,s_width,s_height);
 
 	//ライン描画。
