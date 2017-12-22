@@ -119,7 +119,8 @@ namespace NBlib
 					//スレッド起動。
 					#if(BLIB_STDTHREAD_ENABLE)
 					{
-						this->threadhandle.reset(new std::thread(&ThreadTemplate<T>::ThreadMain,*this->argument.get()));
+						Argument* t_argument = this->argument.get();
+						this->threadhandle.reset(new std::thread(&ThreadTemplate<T>::ThreadMain,t_argument));
 					}
 					#else
 					{
@@ -202,14 +203,14 @@ namespace NBlib
 		/** ThreadMain
 		*/
 		#if(BLIB_STDTHREAD_ENABLE)
-		static void ThreadMain(Argument& a_argument_ref)
+		static void ThreadMain(Argument* a_argument)
 		#else
 		static void ThreadMain(void* a_argument)
 		#endif
 		{
 			#if(BLIB_STDTHREAD_ENABLE)
 
-				Argument* t_argument = &a_argument_ref;
+				Argument* t_argument = a_argument;
 			
 			#else
 
