@@ -73,7 +73,7 @@ namespace NBlib
 			const char* t_filename = a_filename;
 			STLWString t_wstring;
 			CharToWchar(t_filename,t_wstring);
-			t_wfilename = t_wstring.c_str();
+			const wchar* t_wfilename = t_wstring.c_str();
 			
 			#endif
 

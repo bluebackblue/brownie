@@ -23,7 +23,7 @@
 
 /** include
 */
-#if defined(PLATFORM_VCWIN)
+#if defined(PLATFORM_VCWIN) || defined(PLATFORM_GNUC)
 
 	#include <stdarg.h>
 

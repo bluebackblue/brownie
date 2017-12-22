@@ -20,6 +20,10 @@
 
 	//PLATFORM_VCWIN
 
+#elif defined(PLATFORM_GNUC)
+
+	//PLATFORM_GNUC
+
 #elif defined(PLATFORM_UNKNOWN)
 
 	//PLATFORM_UNKNOWN

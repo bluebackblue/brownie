@@ -386,7 +386,7 @@ namespace NBlib
 		template <typename T> class sharedptr
 		{
 		public:
-			typedef typename T element_type;
+			typedef T element_type;
 
 			//カウント、インスタンス、削除子の管理。
 			sharedptrbase* impl;

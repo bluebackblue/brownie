@@ -53,7 +53,16 @@ namespace NBlib
 */
 #if !defined(COUNTOF)
 
-	#define COUNTOF(X)	static_cast<s32>(_countof(X))
+	#if defined(PLATFORM_VCWIN)
+
+		#define COUNTOF(X)	static_cast<s32>(_countof(X))
+
+	#else
+
+		#define _countof(X)	static_cast<s32>(sizeof(X)/sizeof(X[0]))
+
+	#endif
+
 
 #endif
 

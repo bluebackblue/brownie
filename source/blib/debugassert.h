@@ -46,7 +46,7 @@ namespace NBlib
 	#if defined(PLATFORM_VCWIN)
 		#define ASSERT_MSG(X,MSG)					NBlib::DebugAssert((X),MSG,__FILEW__,__LINE__)
 	#else
-		#define ASSERT_MSG(X,MSG)					NBlib::DebugAssert((X),MSG,__ILEW__,__LINE__)
+		#define ASSERT_MSG(X,MSG)					NBlib::DebugAssert((X),MSG,__FILE__,__LINE__)
 	#endif
 
 
