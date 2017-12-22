@@ -91,15 +91,7 @@ namespace NBsys{namespace NHttp
 		return this->ringbuffer_recv->GetUseSize();
 	}
 
-
-	/** 受信済みのコンテンツサイズ。
-	*/
-	//s32 Http_Recv::GetContentRecvSize()
-	//{
-	//	return this->copy_content_recv_size;
-	//}
-
-
+	
 	/** IsRecvHeader
 	*/
 	bool Http_Recv::IsRecvHeader()

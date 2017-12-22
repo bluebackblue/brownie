@@ -130,10 +130,6 @@ namespace NBsys{namespace NHttp
 		*/
 		s32 GetRecvRingBufferUseSize();
 
-		/** 受信済みのコンテンツサイズ。
-		*/
-		s32 GetContentRecvSize();
-
 		/** IsRecvHeader
 		*/
 		bool IsRecvHeader();
