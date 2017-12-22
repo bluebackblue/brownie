@@ -20,6 +20,7 @@
 #include "./http_send_decl.h"
 #include "./http_boundarystring.h"
 #include "./http_type.h"
+#include "./http_binaryitem.h"
 
 
 /** NBsys::NHttp
@@ -108,6 +109,10 @@ namespace NBsys{namespace NHttp
 		*/
 		sharedptr<Http_Recv> recv;
 
+		/** binary_list
+		*/
+		STLMap<STLString,sharedptr<Http_BinaryItem>>::Type binary_list;
+
 	public:
 
 		/** constructor
@@ -142,6 +147,16 @@ namespace NBsys{namespace NHttp
 
 	public:
 
+		/** コンテンツ追加。
+		*/
+		void AddPostContent(const STLString& a_name,const STLString& a_filename,sharedptr< u8 >& a_data,s32 a_size);
+
+		/** コンテンツ追加。
+		*/
+		void AddPostContent(const STLString& a_name,const STLString& a_value);
+
+	public:
+
 		/** IsRecvHeader
 		*/
 		bool IsRecvHeader();
@@ -172,8 +187,6 @@ namespace NBsys{namespace NHttp
 
 		*/
 		bool ConnectUpdate();
-
-
 
 	};
 

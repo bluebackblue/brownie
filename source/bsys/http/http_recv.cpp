@@ -106,6 +106,17 @@ namespace NBsys{namespace NHttp
 	}
 
 
+	/** IsRecvContent
+	*/
+	bool Http_Recv::IsRecvContent()
+	{
+		if(this->header_content_length <= this->copy_content_recv_size){
+			return true;
+		}
+		return false;
+	}
+
+
 	/** GetStatusCode
 	*/
 	s32 Http_Recv::GetStatusCode()

@@ -43,6 +43,7 @@ namespace NBsys{namespace NHttp
 	*/
 	s32 FindStatusCode(const STLString& a_string);
 
+
 }}
 #endif
 

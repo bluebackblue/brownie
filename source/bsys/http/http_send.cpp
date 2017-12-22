@@ -71,6 +71,7 @@ namespace NBsys{namespace NHttp
 		return true;
 	}
 
+
 	/** エラー。
 	*/
 	bool Http_Send::IsError()
@@ -108,6 +109,7 @@ namespace NBsys{namespace NHttp
 		//ループリクエスト。なし。
 		return false;
 	}
+
 
 }}
 #endif

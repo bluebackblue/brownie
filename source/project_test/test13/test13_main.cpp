@@ -476,10 +476,10 @@ void Test_Main()
 
 	sharedptr<NBsys::NHttp::Http> t_http(new NBsys::NHttp::Http());
 	{
-		t_http->SetHost("pbs.twimg.com");
+		t_http->SetHost("bbbproject.sakura.ne.jp");
 		t_http->SetPort(80);
 		t_http->SetMode(NBsys::NHttp::Http_Mode::Get);
-		t_http->SetUrl("/media/CpRKF_UUAAAZ4Qt.jpg");
+		t_http->SetUrl("/wordpress/wp-content/uploads/2016/06/IMGP0202.jpg");
 		t_http->SetBoundaryString(NBsys::NHttp::MakeBoundaryString());
 	}
 

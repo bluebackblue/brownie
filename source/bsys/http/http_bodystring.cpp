@@ -24,9 +24,9 @@
 #if(BSYS_HTTP_ENABLE)
 namespace NBsys{namespace NHttp
 {
-	/** MakeBodyString_BinarHeader
+	/** MakeBodyString_BinaryHeader
 	*/
-	STLString MakeBodyString_BinarHeader(const STLString& a_boundarystring,const STLString& a_formname,const STLString& a_filename)
+	STLString MakeBodyString_BinaryHeader(const STLString& a_boundarystring,const STLString& a_formname,const STLString& a_filename)
 	{
 		STLString t_body_binaryheader;
 

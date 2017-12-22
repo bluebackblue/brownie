@@ -130,6 +130,10 @@ namespace NBsys{namespace NHttp
 		*/
 		bool IsRecvHeader();
 
+		/** IsRecvContent
+		*/
+		bool IsRecvContent();
+
 		/** GetStatusCode
 		*/
 		s32 GetStatusCode();
