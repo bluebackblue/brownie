@@ -474,14 +474,27 @@ void Test_Main()
 	f32 t_autotime = 0.0f;
 	#endif
 
+	sharedptr<NBsys::NFile::File_Object> t_fileobject;
+	{
+		//読み込み開始。
+		t_fileobject = new NBsys::NFile::File_Object(0,L"test.xlsx",-1,sharedptr<NBsys::NFile::File_Allocator>(),0);
+
+		//読み込み中。
+		while(t_fileobject->IsBusy()){
+			ThreadSleep(10);
+		}
+	}
 
 	sharedptr<NBsys::NHttp::Http> t_http(new NBsys::NHttp::Http());
 	{
 		t_http->SetHost("bbbproject.sakura.ne.jp");
 		t_http->SetPort(80);
-		t_http->SetMode(NBsys::NHttp::Http_Mode::Get);
-		t_http->SetUrl("/wordpress/wp-content/uploads/2016/06/IMGP0202.jpg");
+		t_http->SetMode(NBsys::NHttp::Http_Mode::Post);
+		t_http->SetUrl("/www/project_exceltojson/index.php?mode=upload");
 		t_http->SetBoundaryString(NBsys::NHttp::MakeBoundaryString());
+
+		t_http->AddPostContent("upfile","filename",t_fileobject->GetLoadData(),t_fileobject->GetLoadSize());
+		t_http->AddPostContent("type","json");
 	}
 
 	{
@@ -530,8 +543,8 @@ void Test_Main()
 			}
 		}
 
-		s_texture = NBsys::NTexture::CreateTexture(t_pix,t_fix_size,L"http");
-		s_d3d11->CreateTexture(s_texture,false);
+		//s_texture = NBsys::NTexture::CreateTexture(t_pix,t_fix_size,L"http");
+		//s_d3d11->CreateTexture(s_texture,false);
 	}
 
 	while(true){
