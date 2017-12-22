@@ -99,6 +99,7 @@ s32 t_ps_constantbuffer_b1_id = -1;
 s32 t_vertexbuffer_id = -1;
 
 s32 t_blendstate_id = -1;
+s32 t_samplerstate_id = -1;
 
 s32 t_rasterizerstate_cull_back_id = -1;
 s32 t_rasterizerstate_cull_none_id = -1;
@@ -281,6 +282,7 @@ void DrawOnce(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeome
 	s_d3d11->Render_PSSetShader(t_pixelshader_id);
 	s_d3d11->Render_SetPrimitiveTopology(NBsys::ND3d11::D3d11_TopologyType::Id::TriangleList);
 	s_d3d11->Render_SetBlendState(t_blendstate_id);
+	s_d3d11->Render_SetSamplerState(0,t_samplerstate_id);
 
 	//バーテックスバッファ。
 	s_d3d11->Render_SetVertexBuffer(t_vertexbuffer_id);
@@ -355,6 +357,18 @@ void Test_Main()
 
 	//ブレンドステータス。
 	t_blendstate_id = s_d3d11->CreateBlendState(true);
+
+	//サンプラーステート。
+	{
+		NBsys::ND3d11::D3d11_Sampler t_sampler;
+		{
+			t_sampler.textureaddrestype_u = NBsys::ND3d11::D3d11_TextureAddressType::Clamp;
+			t_sampler.textureaddrestype_v = NBsys::ND3d11::D3d11_TextureAddressType::Clamp;
+			t_sampler.textureaddrestype_w = NBsys::ND3d11::D3d11_TextureAddressType::Clamp;
+			t_sampler.filtertype = NBsys::ND3d11::D3d11_FilterType::MIN_MAG_MIP_POINT;
+		}
+		t_samplerstate_id = s_d3d11->CreateSamplerState(t_sampler);
+	}
 
 	//ラスタライザー。
 	t_rasterizerstate_cull_back_id = s_d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::Back);

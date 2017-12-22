@@ -11,7 +11,7 @@
 
 /** VS_ConstantBuffer_B0
 */
-cbuffer VS_ConstantBuffer_B0 : register( b0 )
+cbuffer VS_ConstantBuffer_B0 : register(b0)
 {
 	float4x4 view_projection;
 }
@@ -22,8 +22,8 @@ cbuffer VS_ConstantBuffer_B0 : register( b0 )
 struct VS_IN
 {
 	float4 in_pos		: POSITION0;
-	float4 in_color		: COLOR0;
 	float2 in_uv		: TEXCOORD0;
+	float4 in_color		: COLOR0;
 };
 
 
@@ -32,8 +32,8 @@ struct VS_IN
 struct VS_OUT
 {
 	float4 out_pos		: SV_POSITION0;
-	float4 out_color	: COLOR0;
 	float2 out_uv		: TEXCOORD0;
+	float4 out_color	: COLOR0;
 };
 
 
