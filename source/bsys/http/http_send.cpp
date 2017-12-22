@@ -89,8 +89,8 @@ namespace NBsys{namespace NHttp
 				if(this->buffer_offset < this->buffer_size){
 					s32 t_send_size = this->buffer_size - this->buffer_offset;
 
-					if(t_send_size >= 4096){
-						t_send_size = 4096;
+					if(t_send_size >= 1 * 1024 * 1024){
+						t_send_size = 1 * 1024 * 1024;
 					}
 
 					TAGLOG(L"Http_Send","sendsize = %d\n",t_send_size);

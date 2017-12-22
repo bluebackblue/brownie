@@ -320,7 +320,8 @@ namespace NBsys{namespace NHttp
 
 					//バッファ。
 					s32 t_buffer_size = t_send_body.length() + t_binary_size;
-					this->send_buffer.reset(new u8[t_buffer_size],default_delete<u8>());
+					this->send_buffer.reset(new u8[t_buffer_size + 1],default_delete<u8>());
+					this->send_buffer.get()[t_buffer_size] = 0x00;
 					u8* t_buffer_data = this->send_buffer.get();
 
 					{
@@ -336,7 +337,7 @@ namespace NBsys{namespace NHttp
 							for(STLMap<STLString,sharedptr<Http_BinaryItem>>::iterator t_it = this->binary_list.begin();t_it!=this->binary_list.end();t_it++){
 								if(t_it->second != nullptr){
 									Memory::memcpy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_it->second->data.get(),t_it->second->size);
-									t_offset += static_cast<s32>(t_send_body.length());
+									t_offset += t_it->second->size;
 								}
 							}
 

@@ -147,7 +147,7 @@ namespace NBsys{namespace NHttp
 
 		//Connection: ‘±Ú‘±İ’èB
 		{
-			#if(0)
+			#if(1)
 			t_body += "Connection: keep-alive";
 			#else
 			t_body += "Connection: close";

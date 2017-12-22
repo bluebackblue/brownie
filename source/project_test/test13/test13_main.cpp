@@ -493,58 +493,52 @@ void Test_Main()
 		t_http->SetUrl("/www/project_exceltojson/index.php?mode=upload");
 		t_http->SetBoundaryString(NBsys::NHttp::MakeBoundaryString());
 
-		t_http->AddPostContent("upfile","filename",t_fileobject->GetLoadData(),t_fileobject->GetLoadSize());
+		t_http->AddPostContent("upfile","filename",t_fileobject->GetLoadData(),static_cast<s32>(t_fileobject->GetLoadSize()));
 		t_http->AddPostContent("type","json");
 	}
 
 	{
 		//受信開始。
-		sharedptr<RingBufferBase<u8>> t_recv_buffer(new RingBuffer<u8,1024*16,true>());
+		sharedptr<RingBufferBase<u8>> t_recv_buffer(new RingBuffer<u8,1*1024*1024,true>());
 		t_http->ConnectStart(t_recv_buffer);
 
 		bool t_connectupdate_req = true;
 
-		sharedptr<u8> t_pix;
+		sharedptr<u8> t_fix_data;
 
 		s32 t_fix_size = 0;
 		while((t_connectupdate_req == true)||(t_recv_buffer->GetUseSize()>0)){
-			u8* t_data = t_recv_buffer->GetItemFromUseList(0);
-			s32 t_size = t_recv_buffer->GetUseSize();
+			u8* t_recv_data = t_recv_buffer->GetItemFromUseList(0);
+			s32 t_recv_size = t_recv_buffer->GetUseSize();
 
-			if(t_size > 0){
+			if((t_recv_size > 0)&&(t_http->GetContentLength() >= 0)){
 				//受信データあり。
 
 				if(t_http->IsRecvHeader()){
 					//ヘッダー読み込み済み。
 
-					if(t_pix == nullptr){
-						t_pix.reset(new u8[t_http->GetContentLength()]);
-					}
-
-					//表示。
-					{
-						char t_view_buffer[1024*16+1] = {0};
-						Memory::memcpy(t_view_buffer,sizeof(t_view_buffer),t_data,t_size);
+					if(t_fix_data == nullptr){
+						if(t_http->GetContentLength() >= 0){
+							t_fix_data.reset(new u8[t_http->GetContentLength() + 1]);
+						}
 					}
 
 					//リングバッファから読み込み。
-					t_recv_buffer->CopyFromBuffer(&t_pix.get()[t_fix_size],t_size);
-
-					t_fix_size += t_size;
-
-					DEBUGLOG("%d / %d\n",t_fix_size,t_http->GetContentLength());
+					if(t_fix_data){
+						t_recv_buffer->CopyFromBuffer(&t_fix_data.get()[t_fix_size],t_recv_size);
+						t_fix_size += t_recv_size;
+						t_fix_data.get()[t_fix_size] = 0x00;
+						DEBUGLOG("%s\n",reinterpret_cast<char*>(t_fix_data.get()));
+					}
 				}
 			}else{
 				t_connectupdate_req = t_http->ConnectUpdate();
 			}
 
 			if(t_recv_buffer->GetUseSize() <= 0){
-				ThreadSleep(1);
+				//ThreadSleep(1);
 			}
 		}
-
-		//s_texture = NBsys::NTexture::CreateTexture(t_pix,t_fix_size,L"http");
-		//s_d3d11->CreateTexture(s_texture,false);
 	}
 
 	while(true){

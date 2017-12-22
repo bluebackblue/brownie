@@ -66,17 +66,21 @@ namespace NBsys{namespace NHttp
 		*/
 		STLVector<STLString>::Type header_line;
 
-		/** need_recv_size
+		/** 受信が必要なサイズ。
 		*/
 		s32 need_recv_size;
 
-		/** copy_content_recv_size
-		*/
-		s32 copy_content_recv_size;
-
-		/** copy_chunk_size
+		/** 現在のチャンクのコピー済みサイズ。
 		*/
 		s32 copy_chunk_size;
+
+		/** 完了しているチャンクのコピー済みサイズ。
+		*/
+		s32 copyfix_chunk_size;
+
+		/** コピー済みコンテンツサイズ。
+		*/
+		s32 copy_content_size;
 
 		/** header_is_recv
 		*/
@@ -89,6 +93,10 @@ namespace NBsys{namespace NHttp
 		/** header_content_length
 		*/
 		s32 header_content_length;
+
+		/** header_chunk_length
+		*/
+		s32 header_chunk_length;
 
 		/** header_status_code
 		*/
