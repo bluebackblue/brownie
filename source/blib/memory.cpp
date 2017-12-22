@@ -45,7 +45,7 @@ namespace NBlib
 	*/
 	void Memory::memcpy(void* a_dest,s32 a_check_dest_size,const void* a_src,s32 a_src_size)
 	{
-		std::memcpy_s(a_dest,a_check_dest_size,a_src,a_src_size);
+		::memcpy_s(a_dest,a_check_dest_size,a_src,a_src_size);
 	}
 
 	/** [static]memcmp

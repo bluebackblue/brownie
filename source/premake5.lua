@@ -56,7 +56,7 @@ do
 	filter "configurations:Debug"
 	do
 		defines { "ROM_DEVELOP" }
-		flags { "Symbols" }
+		symbols "On"
 	end
 
 	filter "configurations:Release"
