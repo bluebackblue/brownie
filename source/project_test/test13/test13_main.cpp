@@ -485,16 +485,27 @@ void Test_Main()
 		}
 	}
 
+	bool t_data_is_texture = false;
+
 	sharedptr<NBsys::NHttp::Http> t_http(new NBsys::NHttp::Http());
 	{
+		#if(0)
+		//POST
+		t_data_is_texture = false;
 		t_http->SetHost("bbbproject.sakura.ne.jp");
 		t_http->SetPort(80);
 		t_http->SetMode(NBsys::NHttp::Http_Mode::Post);
 		t_http->SetUrl("/www/project_exceltojson/index.php?mode=upload");
-		t_http->SetBoundaryString(NBsys::NHttp::MakeBoundaryString());
-
 		t_http->AddPostContent("upfile","filename",t_fileobject->GetLoadData(),static_cast<s32>(t_fileobject->GetLoadSize()));
 		t_http->AddPostContent("type","json");
+		#else
+		//GET
+		t_data_is_texture = true;
+		t_http->SetHost("bbbproject.sakura.ne.jp");
+		t_http->SetPort(80);
+		t_http->SetMode(NBsys::NHttp::Http_Mode::Get);
+		t_http->SetUrl("/wordpress/wp-content/uploads/2016/06/IMGP0214-1.jpg");
+		#endif
 	}
 
 	{
@@ -528,16 +539,22 @@ void Test_Main()
 						t_recv_buffer->CopyFromBuffer(&t_fix_data.get()[t_fix_size],t_recv_size);
 						t_fix_size += t_recv_size;
 						t_fix_data.get()[t_fix_size] = 0x00;
-						DEBUGLOG("%s\n",reinterpret_cast<char*>(t_fix_data.get()));
+
+						if(t_data_is_texture == false){
+							DEBUGLOG("%s\n",reinterpret_cast<char*>(t_fix_data.get()));
+						}
 					}
 				}
 			}else{
 				t_connectupdate_req = t_http->ConnectUpdate();
 			}
+		}
 
-			if(t_recv_buffer->GetUseSize() <= 0){
-				//ThreadSleep(1);
-			}
+		t_http->ConnectEnd();
+
+		if(t_data_is_texture == true){
+			s_texture = NBsys::NTexture::CreateTexture(t_fix_data,t_fix_size,L"http");
+			s_d3d11->CreateTexture(s_texture,false);
 		}
 	}
 

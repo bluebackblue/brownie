@@ -214,7 +214,7 @@ namespace NBsys{namespace NHttp
 
 						this->step = Step::Header;
 
-						//ループリクエスト。連続処理。
+						//ループリクエスト。連続処理。 
 						return true;
 					}else{
 						//解析エラー。
@@ -296,37 +296,42 @@ namespace NBsys{namespace NHttp
 			{
 				//データ。
 
-				//TODO:Data_ChunkDataに合わせる。
-
 				//受信データ解析用リングバッファから受信データリングバッファにデータを移動。
 				s32 t_size_from_continuous = this->ringbuffer_recv->GetContinuousUseSize();
 				s32 t_size_to_freesize = this->ringbuffer_data->GetFreeSize();
-				while((t_size_from_continuous > 0)&&(t_size_to_freesize > 0)){
 
-					if(t_size_from_continuous > t_size_to_freesize){
-						t_size_from_continuous = t_size_to_freesize;
-					}
+				//空き容量以上のコピーはできない。
+				if(t_size_from_continuous > t_size_to_freesize){
+					t_size_from_continuous = t_size_to_freesize;
+				}
 
+				//残りのコピーが必要なサイズ。
+				if(t_size_from_continuous >= this->header_content_length - this->copy_chunk_size){
+					t_size_from_continuous = this->header_content_length - this->copy_chunk_size;
+				}
+
+				//コピー。
+				if(t_size_from_continuous){
 					this->ringbuffer_data->CopyToBuffer(this->ringbuffer_recv->GetItemFromUseList(0),t_size_from_continuous);
 					this->ringbuffer_recv->AddFree(t_size_from_continuous);
 					this->copy_chunk_size += t_size_from_continuous;
-
-					t_size_from_continuous = this->ringbuffer_recv->GetContinuousUseSize();
-					t_size_to_freesize = this->ringbuffer_data->GetFreeSize();
 				}
 
 				//コピー済みのコンテンツ総サイズ。
 				this->copy_content_size = this->copy_chunk_size;
 
-				if(this->header_content_length >= 0){
-					this->need_recv_size = this->header_content_length - (this->copy_chunk_size + this->ringbuffer_recv->GetUseSize());
+				//受信が必要なサイズ。
+				this->need_recv_size = this->header_content_length - (this->copy_chunk_size + this->ringbuffer_recv->GetUseSize());
+				if(this->need_recv_size < 0){
+					this->need_recv_size = 0;
+				}
 
-					if(this->need_recv_size < 0){
-						this->need_recv_size = 0;
-					}
-				}else{
-					//受信サイズが不明なので切断されるまで受信する。
-					this->need_recv_size = -1;
+				if(this->copy_chunk_size >= this->header_content_length){
+					//チャンクのコピー完了。
+					this->step = Step::Data_ChunkEnd;
+
+					//ループリクエスト。連続処理。
+					return true;
 				}
 
 				//ループリクエスト。なし。

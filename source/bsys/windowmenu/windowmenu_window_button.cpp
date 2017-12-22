@@ -155,7 +155,7 @@ namespace NBsys{namespace NWindowMenu
 
 			{
 				f32 t_font_size = 16.0f;
-				s32 t_font_texture_index = 2;	//TODO:
+				s32 t_font_texture_index = 0;
 
 				if(this->string.size() > 0){
 					GetSystemInstance()->GetCallback()->DrawFont_Callback(

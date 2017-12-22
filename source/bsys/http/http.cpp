@@ -379,7 +379,7 @@ namespace NBsys{namespace NHttp
 				{
 					bool t_close = false;
 					if(this->recv->IsCopyContent()){
-						//コンテンツの外部アクセスバッファへのコピー完了。
+						//コンテンツの外部バッファへのコピー完了。
 						t_close = true;
 					}
 
@@ -390,7 +390,6 @@ namespace NBsys{namespace NHttp
 					}else{
 						t_close = true;
 					}
-
 
 					if(t_close == true){
 						if(this->socket){
