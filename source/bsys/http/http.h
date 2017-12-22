@@ -40,11 +40,14 @@ namespace NBsys{namespace NHttp
 		{
 			enum Id
 			{
+				//待ち。
+				None = 0,
+
+				//開始。
+				Start,
+
 				//接続。
 				Connect,
-
-				//送信。初回データ。
-				Send_StartData,
 
 				//送信待ち。初回データ。
 				SendWait_StartData,

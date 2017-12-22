@@ -47,7 +47,7 @@ namespace NBsys{namespace NHttp
 		mode(Http_Mode::Get),
 		url(""),
 		boundary_string(NHttp::MakeBoundaryString()),
-		step(Step::Connect),
+		step(Step::None),
 		socket(),
 		iserror(false),
 		send_buffer(),
@@ -119,7 +119,8 @@ namespace NBsys{namespace NHttp
 		//バッファ。
 		s32 t_buffer_size = a_size + t_body_header.length() + t_body_footer.length();
 		sharedptr<Http_BinaryItem> t_binary_item(new Http_BinaryItem());
-		t_binary_item->data.reset(new u8[t_buffer_size],default_delete<u8>());
+		t_binary_item->data.reset(new u8[t_buffer_size + 1],default_delete<u8>());
+		t_binary_item->data.get()[t_buffer_size] = 0x00;
 		u8* t_buffer_data = t_binary_item->data.get();
 		t_binary_item->size = t_buffer_size;
 
@@ -156,7 +157,8 @@ namespace NBsys{namespace NHttp
 		//バッファ。
 		s32 t_buffer_size = a_value.length() + t_body_header.length() + t_body_footer.length();
 		sharedptr<Http_BinaryItem> t_binary_item(new Http_BinaryItem());
-		t_binary_item->data.reset(new u8[t_buffer_size],default_delete<u8>());
+		t_binary_item->data.reset(new u8[t_buffer_size + 1],default_delete<u8>());
+		t_binary_item->data.get()[t_buffer_size] = 0x00;
 		u8* t_buffer_data = t_binary_item->data.get();
 		t_binary_item->size = t_buffer_size;
 
@@ -221,8 +223,17 @@ namespace NBsys{namespace NHttp
 	void Http::ConnectStart(sharedptr<RingBufferBase<u8>>& a_recv_buffer)
 	{
 		this->recv_buffer = a_recv_buffer;
-		this->step = Step::Connect;
+		this->step = Step::Start;
 		this->iserror = false;
+
+		//ソケット作成。
+		this->socket.reset(new SocketHandle());
+
+		//受信設定。
+		this->recv.reset(new Http_Recv(this->socket,this->recv_buffer));
+	
+		//送信設定。
+		this->send.reset(new Http_Send());
 	}
 
 
@@ -230,7 +241,7 @@ namespace NBsys{namespace NHttp
 	*/
 	void Http::ConnectEnd()
 	{
-		this->step = Step::Connect;
+		this->step = Step::None;
 		this->socket.reset();
 		this->iserror = false;
 		this->send_buffer.reset();
@@ -268,23 +279,77 @@ namespace NBsys{namespace NHttp
 			}
 
 			switch(this->step){
+			case Step::Start:
+				{
+					{
+						s32 t_binary_size = 0;
+
+						//バイナリ総サイズ。
+						if(this->mode == Http_Mode::Post){
+							for(STLMap<STLString,sharedptr<Http_BinaryItem>>::iterator t_it = this->binary_list.begin();t_it!=this->binary_list.end();t_it++){
+								if(t_it->second != nullptr){
+									t_binary_size += t_it->second->size;
+								}
+							}
+						}
+
+						//バイナリ終端文字列。
+						STLString t_binary_footer = "";
+						if(this->mode == Http_Mode::Post){
+							NHttp::MakeBodyString_PostBinarFooter(this->boundary_string);
+							t_binary_size += static_cast<s32>(t_binary_footer.length());
+						}
+
+						//ボディ作成。				
+						STLString t_send_body = NHttp::MakeBodyString_Header(this->boundary_string,this->mode,this->url,this->host,t_binary_size);
+
+						//バッファ。
+						s32 t_buffer_size = t_send_body.length() + t_binary_size;
+						this->send_buffer.reset(new u8[t_buffer_size + 1],default_delete<u8>());
+						this->send_buffer.get()[t_buffer_size] = 0x00;
+						u8* t_buffer_data = this->send_buffer.get();
+
+						//送信バッファの作成。
+						{
+							s32 t_offset = 0;
+
+							//ボディー。
+							Memory::memcpy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_send_body.c_str(),static_cast<s32>(t_send_body.length()));
+							t_offset += static_cast<s32>(t_send_body.length());
+
+							if(this->mode == Http_Mode::Post){
+
+								//バイナリ。
+								for(STLMap<STLString,sharedptr<Http_BinaryItem>>::iterator t_it = this->binary_list.begin();t_it!=this->binary_list.end();t_it++){
+									if(t_it->second != nullptr){
+										Memory::memcpy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_it->second->data.get(),t_it->second->size);
+										t_offset += t_it->second->size;
+									}
+								}
+
+								//バイナリ終端。
+								Memory::memcpy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_binary_footer.c_str(),static_cast<s32>(t_binary_footer.length()));
+								t_offset += static_cast<s32>(t_binary_footer.length());
+							}
+
+							ASSERT(t_offset == t_buffer_size);
+						}
+
+						//送信バッファ設定。
+						this->send->Send(this->socket,this->send_buffer,t_buffer_size);
+					}
+
+					this->step = Step::Connect;
+
+					t_loop = true;
+				}break;
 			case Step::Connect:
 				{
 					//接続。
 
-					//ソケット作成。
-					this->socket.reset(new SocketHandle());
-
-					//受信設定。
-					this->recv.reset(new Http_Recv(this->socket,this->recv_buffer));
-
-					//送信設定。
-					this->send.reset(new Http_Send());
-
-					//接続。
 					if(this->socket->OpenTcp()){
 						if(this->socket->ConnectTcp(this->host.c_str(),this->port) == true){
-							this->step = Step::Send_StartData;
+							this->step = Step::SendWait_StartData;
 							t_loop = true;
 						}else{
 							//エラー。
@@ -294,67 +359,6 @@ namespace NBsys{namespace NHttp
 						//エラー。
 						this->iserror = true;
 					}
-				}break;
-			case Step::Send_StartData:
-				{
-					s32 t_binary_size = 0;
-
-					//バイナリ総サイズ。
-					if(this->mode == Http_Mode::Post){
-						for(STLMap<STLString,sharedptr<Http_BinaryItem>>::iterator t_it = this->binary_list.begin();t_it!=this->binary_list.end();t_it++){
-							if(t_it->second != nullptr){
-								t_binary_size += t_it->second->size;
-							}
-						}
-					}
-
-					//バイナリ終端文字列。
-					STLString t_binary_footer = "";
-					if(this->mode == Http_Mode::Post){
-						NHttp::MakeBodyString_PostBinarFooter(this->boundary_string);
-						t_binary_size += static_cast<s32>(t_binary_footer.length());
-					}
-
-					//ボディ作成。				
-					STLString t_send_body = NHttp::MakeBodyString_Header(this->boundary_string,this->mode,this->url,this->host,t_binary_size);
-
-					//バッファ。
-					s32 t_buffer_size = t_send_body.length() + t_binary_size;
-					this->send_buffer.reset(new u8[t_buffer_size + 1],default_delete<u8>());
-					this->send_buffer.get()[t_buffer_size] = 0x00;
-					u8* t_buffer_data = this->send_buffer.get();
-
-					{
-						s32 t_offset = 0;
-
-						//ボディーのコピー。
-						Memory::memcpy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_send_body.c_str(),static_cast<s32>(t_send_body.length()));
-						t_offset += static_cast<s32>(t_send_body.length());
-
-						if(this->mode == Http_Mode::Post){
-
-							//バイナリのコピー。
-							for(STLMap<STLString,sharedptr<Http_BinaryItem>>::iterator t_it = this->binary_list.begin();t_it!=this->binary_list.end();t_it++){
-								if(t_it->second != nullptr){
-									Memory::memcpy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_it->second->data.get(),t_it->second->size);
-									t_offset += t_it->second->size;
-								}
-							}
-
-							//バイナリ終端のコピー。
-							Memory::memcpy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_binary_footer.c_str(),static_cast<s32>(t_binary_footer.length()));
-							t_offset += static_cast<s32>(t_binary_footer.length());
-						}
-
-						ASSERT(t_offset == t_buffer_size);
-					}
-
-					//送信バッファ設定。
-					this->send->Send(this->socket,this->send_buffer,t_buffer_size);
-
-					this->step = Step::SendWait_StartData;
-
-					t_loop = true;
 				}break;
 			case Step::SendWait_StartData:
 				{
@@ -373,28 +377,30 @@ namespace NBsys{namespace NHttp
 				}break;
 			case Step::Recv:
 				{
-					//コンテンツ受信完了チェック。
-					if(this->recv->IsRecvContent()){
-						if(this->socket != nullptr){
-							this->socket.reset();
-						}
+					bool t_close = false;
+					if(this->recv->IsCopyContent()){
+						//コンテンツの外部アクセスバッファへのコピー完了。
+						t_close = true;
 					}
 
-					bool t_close = false;
-					if(this->socket == nullptr){
-						t_close = true;
-					}else{
+					if(this->socket){
 						if(this->socket->IsOpen() == false){
-							t_close = true;
+							t_close =  true;
 						}
+					}else{
+						t_close = true;
 					}
+
 
 					if(t_close == true){
-						//受信済みで未解析データのサイズ。
-						if(this->recv->GetRecvRingBufferUseSize() <= 0){
-							//中断終了。
-							return false;
+						if(this->socket){
+							if(this->socket->IsOpen()){
+								this->socket->Close();
+							}
 						}
+
+						//正常終了 or 中断終了。
+						return false;
 					}
 				}break;
 			}

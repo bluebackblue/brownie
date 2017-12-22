@@ -54,6 +54,14 @@ namespace NBsys{namespace NHttp
 		*/
 		bool iserror;
 
+		/** 受信バッファ。
+		*/
+		sharedptr<u8> recvbuffer;
+
+		/** 受信バッファサイズ。
+		*/
+		s32 recvbuffer_size;
+
 		/** 受信データ解析用バッファ。
 		*/
 		sharedptr<RingBufferBase<u8>> ringbuffer_recv;
@@ -134,9 +142,9 @@ namespace NBsys{namespace NHttp
 		*/
 		bool IsRecvHeader();
 
-		/** IsRecvContent
+		/** IsCopyContent
 		*/
-		bool IsRecvContent();
+		bool IsCopyContent();
 
 		/** GetStatusCode
 		*/

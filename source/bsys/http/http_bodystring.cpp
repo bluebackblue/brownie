@@ -30,7 +30,7 @@ namespace NBsys{namespace NHttp
 	{
 		STLString t_body_binaryheader;
 
-		//セパレート。
+		//バウンダリ文字列。
 		{
 			//------****<0D 0A>
 			t_body_binaryheader += "--";
@@ -82,7 +82,7 @@ namespace NBsys{namespace NHttp
 	{
 		STLString t_body_textheader;
 
-		//セパレート。
+		//バウンダリ文字列。
 		{
 			//------****<0D 0A>
 			t_body_textheader += "--";
@@ -147,7 +147,7 @@ namespace NBsys{namespace NHttp
 
 		//Connection: 持続接続設定。
 		{
-			#if(1)
+			#if(0)
 			t_body += "Connection: keep-alive";
 			#else
 			t_body += "Connection: close";
@@ -205,6 +205,7 @@ namespace NBsys{namespace NHttp
 	{
 		STLString t_postbinary_footer;
 
+		//バウンダリ文字列。
 		t_postbinary_footer += "--";
 		t_postbinary_footer += "----" + a_boundarystring;
 		t_postbinary_footer += "--";

@@ -88,18 +88,10 @@ namespace NBsys{namespace NHttp
 			if(this->socket->IsOpen()){
 				if(this->buffer_offset < this->buffer_size){
 					s32 t_send_size = this->buffer_size - this->buffer_offset;
-
-					if(t_send_size >= 1 * 1024 * 1024){
-						t_send_size = 1 * 1024 * 1024;
-					}
-
-					TAGLOG(L"Http_Send","sendsize = %d\n",t_send_size);
 					if(this->socket->Send(this->buffer.get(),this->buffer_offset + t_send_size,this->buffer_offset) == true){
-						TAGLOG(L"Http_Send","sendend\n");
 						this->buffer_offset += t_send_size;
 					}else{
 						//ƒGƒ‰[B
-						TAGLOG(L"Http_Send","[ERROR]senderror\n");
 						this->iserror = true;
 					}
 				}

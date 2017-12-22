@@ -41,7 +41,9 @@ namespace NBsys{namespace NHttp
 		:
 		socket(a_socket),
 		iserror(false),
-		ringbuffer_recv(new RingBuffer<u8,1024 * 16,true>()),
+		recvbuffer(),
+		recvbuffer_size(64*1024),
+		ringbuffer_recv(new RingBuffer<u8,64*1024,true>()),
 		ringbuffer_data(a_ringbuffer),
 		header_line(),
 		need_recv_size(0),
@@ -73,6 +75,7 @@ namespace NBsys{namespace NHttp
 
 		this->need_recv_size = -1;
 		this->step = Step::StateCode;
+		this->recvbuffer.reset(new u8[this->recvbuffer_size]);
 	}
 
 
@@ -88,7 +91,10 @@ namespace NBsys{namespace NHttp
 	*/
 	s32 Http_Recv::GetRecvRingBufferUseSize()
 	{
-		return this->ringbuffer_recv->GetUseSize();
+		if(this->ringbuffer_recv){
+			return this->ringbuffer_recv->GetUseSize();
+		}
+		return 0;
 	}
 
 	
@@ -100,9 +106,9 @@ namespace NBsys{namespace NHttp
 	}
 
 
-	/** IsRecvContent
+	/** IsCopyContent
 	*/
-	bool Http_Recv::IsRecvContent()
+	bool Http_Recv::IsCopyContent()
 	{
 		if(this->header_content_length >= 0){
 			if(this->header_content_length <= this->copy_content_size){
@@ -133,33 +139,42 @@ namespace NBsys{namespace NHttp
 	*/
 	bool Http_Recv::Update()
 	{
-		u8 t_data[1024 * 16];
+		//u8 t_data[64*1024];
 		s32 t_size = 0;
 		s32 t_need_recv_size = 0;
 
 		if(this->need_recv_size < 0){
 			//受信が必要。サイズは自動。
-			t_need_recv_size = sizeof(t_data);
+			t_need_recv_size = this->recvbuffer_size;
 		}else if(this->need_recv_size > 0){
 			//指定サイズ分の受信が必要。
 			t_need_recv_size = this->need_recv_size;
-			if(t_need_recv_size > sizeof(t_data)){
-				t_need_recv_size = sizeof(t_data);
-			}
 		}
 
 		if(this->socket){
 			if(this->socket->IsOpen()){
+
+				//受信バッファ以上の受信はできない。
+				if(t_need_recv_size > this->recvbuffer_size){
+					t_need_recv_size = this->recvbuffer_size;
+				}
+
+				//空き容量以上の受信はできない。
+				if(this->ringbuffer_recv->GetFreeSize() < t_need_recv_size){
+					t_need_recv_size = this->ringbuffer_recv->GetFreeSize();
+				}
+
 				if(t_need_recv_size > 0){
-					t_size = static_cast<s32>(this->socket->Recv(t_data,t_need_recv_size,0,false));
-					if(t_size < 0){
-						//サーバからの切断。
-						this->socket.reset();
-					}else{
-						if(this->ringbuffer_recv){
-							this->ringbuffer_recv->CopyToBuffer(t_data,t_size);
+					if(this->recvbuffer){
+						t_size = static_cast<s32>(this->socket->Recv(this->recvbuffer.get(),t_need_recv_size,0,false));
+						if(t_size < 0){
+							this->socket->Close();
+						}else{
+							if(this->ringbuffer_recv){
+								this->ringbuffer_recv->CopyToBuffer(this->recvbuffer.get(),t_size);
+							}
+							this->need_recv_size = 0;
 						}
-						this->need_recv_size = 0;
 					}
 				}
 			}
@@ -181,7 +196,7 @@ namespace NBsys{namespace NHttp
 
 				s32 t_end_offset = NHttp::FindFromRingBuffer(*this->ringbuffer_recv.get(),'\r','\n');
 				if(t_end_offset >= 0){
-					u8 t_tempbuffer[1024];
+					u8 t_tempbuffer[128];
 					if(t_end_offset < (sizeof(t_tempbuffer) - 2)){
 
 						this->ringbuffer_recv->CopyFromBuffer(t_tempbuffer,t_end_offset + 2);
@@ -219,7 +234,7 @@ namespace NBsys{namespace NHttp
 
 				s32 t_end_offset = NHttp::FindFromRingBuffer(*this->ringbuffer_recv.get(),'\r','\n');
 				if(t_end_offset >= 0){
-					u8 t_tempbuffer[1024];
+					u8 t_tempbuffer[128];
 					if(t_end_offset < (sizeof(t_tempbuffer) - 2)){
 
 						this->ringbuffer_recv->CopyFromBuffer(t_tempbuffer,t_end_offset + 2);
@@ -323,7 +338,7 @@ namespace NBsys{namespace NHttp
 
 				s32 t_end_offset = NHttp::FindFromRingBuffer(*this->ringbuffer_recv.get(),'\r','\n');
 				if(t_end_offset >= 0){
-					u8 t_tempbuffer[1024];
+					u8 t_tempbuffer[128];
 					if(t_end_offset < (sizeof(t_tempbuffer) - 2)){
 
 						this->ringbuffer_recv->CopyFromBuffer(t_tempbuffer,t_end_offset + 2);
@@ -410,7 +425,7 @@ namespace NBsys{namespace NHttp
 
 				s32 t_end_offset = NHttp::FindFromRingBuffer(*this->ringbuffer_recv.get(),'\r','\n');
 				if(t_end_offset >= 0){
-					u8 t_tempbuffer[1024];
+					u8 t_tempbuffer[128];
 					if(t_end_offset < (sizeof(t_tempbuffer) - 2)){
 
 						this->ringbuffer_recv->CopyFromBuffer(t_tempbuffer,t_end_offset + 2);
