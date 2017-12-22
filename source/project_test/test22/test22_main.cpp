@@ -301,6 +301,12 @@ void DrawOnce(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeome
 
 		t_vs_constantbuffer_b0.view_projection = t_view_projection.Make_Transpose();
 
+		//テクスチャー設定。
+		if(s_model->at(ii).texture_index >= 0){
+			s_d3d11->Render_SetTexture(0,s_model->at(ii).texture_id);
+			t_ps_constantbuffer_b1.flag1 = 1;
+		}
+
 		//コンスタントバッファーの内容更新。
 		s_d3d11->Render_UpdateSubresource(t_vs_constantbuffer_b0_id,&t_vs_constantbuffer_b0);
 		s_d3d11->Render_UpdateSubresource(t_ps_constantbuffer_b1_id,&t_ps_constantbuffer_b1);
@@ -308,12 +314,6 @@ void DrawOnce(NBsys::NGeometry::Geometry_Matrix_44& a_model_matrix,NBsys::NGeome
 		//コンスタントバッファーをシェーダーに設定。
 		s_d3d11->Render_VSSetConstantBuffers(t_vs_constantbuffer_b0_id);
 		s_d3d11->Render_PSSetConstantBuffers(t_ps_constantbuffer_b1_id);
-
-		//テクスチャー設定。
-		if(s_model->at(ii).texture_index >= 0){
-			s_d3d11->Render_SetTexture(0,s_model->at(ii).texture_id);
-			t_ps_constantbuffer_b1.flag1 = 1;
-		}
 
 		//描画。
 		s_d3d11->Render_Draw(s_vertex->GetVertexCountOf(ii),s_vertex->GetVertexOffset(ii));
