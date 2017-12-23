@@ -525,7 +525,7 @@ void Test_Main()
 
 			{
 				STLWString t_log;
-				t_log += L"'''''''\n";
+				t_log += L"TODO:ダミーのｊＰＧではなくキャプチャ画像をアップロードする ==>";
 				STLString t_log_utf8;
 				WcharToChar(t_log,t_log_utf8);
 				t_http->AddPostContent("log",t_log_utf8);
