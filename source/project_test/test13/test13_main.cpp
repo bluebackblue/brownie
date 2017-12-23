@@ -477,7 +477,12 @@ void Test_Main()
 	sharedptr<NBsys::NFile::File_Object> t_fileobject;
 	{
 		//読み込み開始。
+		#if(0)
 		t_fileobject = new NBsys::NFile::File_Object(0,L"test.xlsx",-1,sharedptr<NBsys::NFile::File_Allocator>(),0);
+		#else
+		t_fileobject = new NBsys::NFile::File_Object(0,L"test.jpg",-1,sharedptr<NBsys::NFile::File_Allocator>(),0);
+		#endif
+
 
 		//読み込み中。
 		while(t_fileobject->IsBusy()){
@@ -496,6 +501,15 @@ void Test_Main()
 		t_http->SetPort(80);
 		t_http->SetMode(NBsys::NHttp::Http_Mode::Post);
 		t_http->SetUrl("/www/project_exceltojson/index.php?mode=upload");
+		t_http->AddPostContent("upfile","filename",t_fileobject->GetLoadData(),static_cast<s32>(t_fileobject->GetLoadSize()));
+		t_http->AddPostContent("type","json");
+		#elif(1)
+		//POST
+		t_data_is_texture = false;
+		t_http->SetHost("bbbproject.sakura.ne.jp");
+		t_http->SetPort(80);
+		t_http->SetMode(NBsys::NHttp::Http_Mode::Post);
+		t_http->SetUrl("/www/project_autotest/index.php?mode=upload");
 		t_http->AddPostContent("upfile","filename",t_fileobject->GetLoadData(),static_cast<s32>(t_fileobject->GetLoadSize()));
 		t_http->AddPostContent("type","json");
 		#else
