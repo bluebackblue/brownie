@@ -135,6 +135,10 @@ namespace NBsys{namespace ND3d11
 		*/
 		void Render_Main();
 
+		/** スクリーンショット。
+		*/
+		sharedptr<u8> Render_ScreenShot();
+
 	public:
 
 		/** Render_ViewPort

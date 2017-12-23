@@ -185,6 +185,14 @@ namespace NBsys{namespace ND3d11
 	}
 
 
+	/** スクリーンショット。
+	*/
+	sharedptr<u8> D3d11::Render_ScreenShot()
+	{
+		return this->impl->Render_ScreenShot();
+	}
+
+
 	/** Render_ViewPort。
 	*/
 	void D3d11::Render_ViewPort(f32 a_x,f32 a_y,f32 a_width,f32 a_height)

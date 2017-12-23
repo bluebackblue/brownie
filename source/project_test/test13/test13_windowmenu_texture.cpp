@@ -184,6 +184,12 @@ void Test13_WindowMenu_Texture::CallBack_SetDeleteRequest()
 */
 void Test13_WindowMenu_Texture::PushLeftButton()
 {
+
+
+	this->d3d11->Render_ScreenShot();
+
+
+
 	STLVector<s32>::Type t_list;
 	this->d3d11->CreateTextureIdList(t_list);
 	if(t_list.size() <= 0){

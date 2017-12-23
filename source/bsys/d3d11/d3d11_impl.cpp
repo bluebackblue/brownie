@@ -1389,6 +1389,77 @@ namespace NBsys{namespace ND3d11
 		this->actionbatching.Update(1.0f);
 	}
 
+	/** スクリーンショット。
+	*/
+	sharedptr<u8> D3d11_Impl::Render_ScreenShot()
+	{
+		sharedptr<u8> t_screenshot;
+
+		D3D11_TEXTURE2D_DESC t_backbuffer_desc;
+		{
+			this->backbuffer->GetDesc(&t_backbuffer_desc);
+		}
+
+		D3D11_TEXTURE2D_DESC t_dest_desc;
+		{
+			t_dest_desc.ArraySize = 1;
+			t_dest_desc.BindFlags = 0;
+			t_dest_desc.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
+			t_dest_desc.Format = t_backbuffer_desc.Format;
+			t_dest_desc.Height = t_backbuffer_desc.Height;
+			t_dest_desc.Width = t_backbuffer_desc.Width;
+			t_dest_desc.MipLevels = 1;
+			t_dest_desc.MiscFlags = 0;
+			t_dest_desc.SampleDesc.Count = 1;
+			t_dest_desc.SampleDesc.Quality = 0;
+			t_dest_desc.Usage = D3D11_USAGE_STAGING;
+		}
+
+		sharedptr<ID3D11Texture2D> t_texture;
+		sharedptr<ID3D11Resource> t_backbuffer_resource;
+
+		//テクスチャー作成。
+		{
+			ID3D11Texture2D* t_texture_raw = nullptr;
+			HRESULT t_result = this->device.get()->CreateTexture2D(&t_dest_desc,0,&t_texture_raw);
+			if(t_texture_raw != nullptr){
+				t_texture.reset(t_texture_raw,release_delete<ID3D11Texture2D>());
+			}
+			if(FAILED(t_result)){
+				t_texture.reset();
+			}
+		}
+
+		//リソース取得。
+		{
+			ID3D11Resource* t_backbuffer_resource_raw = nullptr;
+			this->backbuffer_rendertargetview.get()->GetResource(&t_backbuffer_resource_raw);
+			if(t_backbuffer_resource_raw != nullptr){
+				t_backbuffer_resource.reset(t_backbuffer_resource_raw,release_delete<ID3D11Resource>());
+			}
+		}
+
+		//コピー。
+		{
+			this->devicecontext.get()->CopyResource(t_texture.get(),t_backbuffer_resource.get());
+			t_backbuffer_resource.reset();
+		}
+
+
+		D3D11_MAPPED_SUBRESOURCE t_mapped_resource;
+		{
+			HRESULT t_result = this->devicecontext.get()->Map(t_texture.get(),0,D3D11_MAP_READ,0,&t_mapped_resource);
+			if(SUCCEEDED(t_result)){
+				s32 t_size = t_mapped_resource.RowPitch * t_backbuffer_desc.Height;
+				t_screenshot.reset(new u8[t_size]);
+				
+				Memory::memcpy(t_screenshot.get(),t_size,t_mapped_resource.pData,t_size);
+				this->devicecontext.get()->Unmap(t_texture.get(),0);
+			}
+		}
+    
+		return t_screenshot;
+	}
 
 	/** リクエスト登録。
 	*/
