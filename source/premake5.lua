@@ -19,48 +19,50 @@ project "brownie"
 do
 	kind "WindowedApp"
 
-	flags
-	{
-		"WinMain"
-	}
+	entrypoint "mainCRTStartup"
 
 	language "C++"
 
-	files{
+	files
+	{
 		"**.inl",
 		"**.h",
 		"**.cpp"
 	}
 
-	includedirs{
+	includedirs
+	{
 		"./project_test",
 		"../../sdk"
 	}
 
-	libdirs{
+	libdirs
+	{
 		"../../sdk"
 	}
 
 	filter "action:vs*"
 	do
-		-- buildoptions
-		-- {
-		-- 	"/Gm-",
-		--	"/MP"
-		-- }
-
 		defines{
 			"PLATFORM_VCWIN"
+		}
+
+		-- https://github.com/premake/premake-core/wiki/flags
+		flags
+		{
+			"MultiProcessorCompile",
 		}
 	end
 
 	filter "action:gmake"
 	do
-		defines{
-			"PLATFORM_GNUC"
+		defines
+		{
+			"PLATFORM_GNUCWIN"
 		}
 
-		buildoptions { "-std=c++17" }
+		-- https://github.com/premake/premake-core/wiki/cppdialect
+		cppdialect "gnu++17"
 	end
 
 	filter "configurations:Debug"

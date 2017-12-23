@@ -33,6 +33,8 @@ namespace NBsys{namespace NWinsock
 	*/
 	Winsock_Impl::Winsock_Impl()
 	{
+		#if defined(PLATFORM_VCWIN)
+
 		WSADATA t_wsadata;
 		int t_ret = ::WSAStartup(MAKEWORD(2,0),&t_wsadata);
 
@@ -45,6 +47,8 @@ namespace NBsys{namespace NWinsock
 		case WSAEFAULT:				DEBUGLOG("WSAEFAULT\n");				break;
 		default:					DEBUGLOG("WSAStartup = 0x%8x\n",t_ret);	break;
 		}
+
+		#endif
 	}
 
 
@@ -52,7 +56,11 @@ namespace NBsys{namespace NWinsock
 	*/
 	Winsock_Impl::~Winsock_Impl()
 	{
+		#if defined(PLATFORM_VCWIN)
+
 		::WSACleanup();
+
+		#endif
 	}
 
 

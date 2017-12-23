@@ -63,7 +63,11 @@ bool s_leakcheck = false;
 
 /** Main
 */
+#if defined(PLATFORM_VCWIN)
 void main(int a_argc,char** a_argv)
+#elif defined(PLATFORM_GNUCWIN)
+int main(int a_argc,char** a_argv)
+#endif
 {
 	#if defined(PLATFORM_VCWIN)
 	#if defined(ROM_DEVELOP) || defined(ROM_DEEPDEBUG) || defined(ROM_FULLDEBUG)
@@ -84,6 +88,10 @@ void main(int a_argc,char** a_argv)
 	//}catch(...){
 	//	DEBUGBREAK();
 	//}
+
+	#if defined(PLATFORM_GNUCWIN)
+	return 0;
+	#endif
 }
 
 

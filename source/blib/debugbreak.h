@@ -57,6 +57,10 @@
 
 			#define DEBUGBREAK() __debugbreak()
 
+		#elif defined(PLATFORM_GNUCWIN)
+
+			#define DEBUGBREAK() __asm__("int3");
+
 		#endif
 
 	#endif

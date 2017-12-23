@@ -192,8 +192,8 @@ namespace NBsys{namespace NGeometry
 		f32 t_omega = Math::acosf(Math::absf(t_omega_v));
 
 		f32 t_s = Math::sinf(t_omega);
-		if(t_s < FLT_EPSILON){
-			t_s = FLT_EPSILON;
+		if(t_s < std::numeric_limits<float>::epsilon()){
+			t_s = std::numeric_limits<float>::epsilon();
 		}
 
 		f32 t_from_per = Math::sinf(t_omega - a_per * t_omega) / t_s;

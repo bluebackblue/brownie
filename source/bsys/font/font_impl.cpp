@@ -80,7 +80,9 @@ namespace NBsys{namespace NFont
 	*/
 	Font_Impl::~Font_Impl()
 	{
-		DeleteObject(this->font_handle);
+		#if defined(PLATFORM_VCWIN)
+		::DeleteObject(this->font_handle);
+		#endif
 	}
 
 
