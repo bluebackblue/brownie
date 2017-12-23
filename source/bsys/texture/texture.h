@@ -83,6 +83,10 @@ namespace NBsys{namespace NTexture
 		*/
 		sharedptr<u8>& GetPixel();
 
+		/** GetPixel
+		*/
+		const sharedptr<u8>& GetPixel() const;
+
 		/** GetWidth
 		*/
 		s32 GetWidth() const;
@@ -97,7 +101,7 @@ namespace NBsys{namespace NTexture
 
 		/** GetPitch
 		*/
-		s32 GetPitch();
+		s32 GetPitch() const;
 
 	};
 
@@ -105,6 +109,11 @@ namespace NBsys{namespace NTexture
 	/** CreateTexture
 	*/
 	sharedptr<Texture> CreateTexture(const sharedptr<u8>& a_data,s32 a_size,const STLWString& a_name);
+
+
+	/** EncodeToJpg
+	*/
+	std::tuple<sharedptr<u8>,s32> EncodeToJpg(const sharedptr<Texture>& a_texture);
 
 
 }}

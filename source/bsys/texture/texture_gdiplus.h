@@ -30,5 +30,12 @@ namespace NBsys{namespace NTexture
 	#endif
 
 
+	/** EncodeToJpg_GdiPlus
+	*/
+	#if(BSYS_TEXTURE_GDIPLUS_ENABLE)
+	std::tuple<sharedptr<u8>,s32> EncodeToJpg_GdiPlus(const sharedptr<Texture>& a_texture);
+	#endif
+
+
 }}
 

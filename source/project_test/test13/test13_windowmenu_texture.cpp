@@ -184,11 +184,84 @@ void Test13_WindowMenu_Texture::CallBack_SetDeleteRequest()
 */
 void Test13_WindowMenu_Texture::PushLeftButton()
 {
+	//スクリーンショット。
+	sharedptr<NBsys::NTexture::Texture> t_screenshot = this->d3d11->Render_ScreenShot();
+	if(t_screenshot){
 
+		//スクリーンショットのＪＰＧエンコード。
+		std::tuple<sharedptr<u8>,s32> t_jpg_data = NBsys::NTexture::EncodeToJpg(t_screenshot);
 
-	this->d3d11->Render_ScreenShot();
+		//通信。
+		sharedptr<NBsys::NHttp::Http> t_http(new NBsys::NHttp::Http());
 
+		t_http->SetHost("bbbproject.sakura.ne.jp");
+		t_http->SetPort(80);
+		t_http->SetMode(NBsys::NHttp::Http_Mode::Post);
+		t_http->SetUrl("/www/project_autotest/index.php?mode=upload");
+		t_http->AddPostContent("upfile","filename",std::get<0>(t_jpg_data),std::get<1>(t_jpg_data));
 
+		{
+			char t_buffer[16];
+			STLString t_index_string = VASTRING(t_buffer,sizeof(t_buffer),"%d",DEF_TEST_INDEX);
+			t_http->AddPostContent("index",t_index_string);
+		}
+
+		{
+			STLWString t_log;
+			t_log += L"TODO:自動テスト用のログ収集と送信";
+			STLString t_log_utf8;
+			WcharToChar(t_log,t_log_utf8);
+			t_http->AddPostContent("log",t_log_utf8);
+		}
+
+		{
+			STLWString t_title = L"ポスト通信テスト";
+			STLString t_title_utf8;
+			WcharToChar(t_title,t_title_utf8);
+			t_http->AddPostContent("title",t_title_utf8);
+		}
+
+		sharedptr<RingBufferBase<u8>> t_recv_buffer(new RingBuffer<u8,1*1024*1024,true>());
+		t_http->ConnectStart(t_recv_buffer);
+
+		bool t_connectupdate_req = true;
+
+		sharedptr<u8> t_fix_data;
+
+		s32 t_fix_size = 0;
+		while((t_connectupdate_req == true)||(t_recv_buffer->GetUseSize()>0)){
+			u8* t_recv_data = t_recv_buffer->GetItemFromUseList(0);
+			s32 t_recv_size = t_recv_buffer->GetUseSize();
+
+			if((t_recv_size > 0)&&(t_http->GetContentLength() >= 0)){
+				//受信データあり。
+
+				if(t_http->IsRecvHeader()){
+					//ヘッダー読み込み済み。
+
+					if(t_fix_data == nullptr){
+						if(t_http->GetContentLength() >= 0){
+							t_fix_data.reset(new u8[t_http->GetContentLength() + 1]);
+						}
+					}
+
+					//リングバッファから読み込み。
+					if(t_fix_data){
+						t_recv_buffer->CopyFromBuffer(&t_fix_data.get()[t_fix_size],t_recv_size);
+						t_fix_size += t_recv_size;
+						t_fix_data.get()[t_fix_size] = 0x00;
+					}
+				}
+			}else{
+				t_connectupdate_req = t_http->ConnectUpdate();
+			}
+		}
+
+		t_http->ConnectEnd();
+
+		//ＪＰＧ送信。
+		DEBUGLOG("%s\n",reinterpret_cast<char*>(t_fix_data.get()));
+	}
 
 	STLVector<s32>::Type t_list;
 	this->d3d11->CreateTextureIdList(t_list);

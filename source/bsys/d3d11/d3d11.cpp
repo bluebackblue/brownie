@@ -187,7 +187,7 @@ namespace NBsys{namespace ND3d11
 
 	/** スクリーンショット。
 	*/
-	sharedptr<u8> D3d11::Render_ScreenShot()
+	sharedptr<NBsys::NTexture::Texture> D3d11::Render_ScreenShot()
 	{
 		return this->impl->Render_ScreenShot();
 	}

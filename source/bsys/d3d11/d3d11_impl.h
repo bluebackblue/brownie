@@ -565,7 +565,7 @@ namespace NBsys{namespace ND3d11
 
 		/** スクリーンショット。
 		*/
-		sharedptr<u8> Render_ScreenShot();
+		sharedptr<NBsys::NTexture::Texture> Render_ScreenShot();
 
 		/** リクエスト登録。
 		*/

@@ -1391,9 +1391,9 @@ namespace NBsys{namespace ND3d11
 
 	/** スクリーンショット。
 	*/
-	sharedptr<u8> D3d11_Impl::Render_ScreenShot()
+	sharedptr<NBsys::NTexture::Texture> D3d11_Impl::Render_ScreenShot()
 	{
-		sharedptr<u8> t_screenshot;
+		sharedptr<NBsys::NTexture::Texture> t_screenshot;
 
 		D3D11_TEXTURE2D_DESC t_backbuffer_desc;
 		{
@@ -1450,13 +1450,26 @@ namespace NBsys{namespace ND3d11
 		{
 			HRESULT t_result = this->devicecontext.get()->Map(t_texture.get(),0,D3D11_MAP_READ,0,&t_mapped_resource);
 			if(SUCCEEDED(t_result)){
+
 				s32 t_size = t_mapped_resource.RowPitch * t_backbuffer_desc.Height;
-				t_screenshot.reset(new u8[t_size]);
-				
-				Memory::memcpy(t_screenshot.get(),t_size,t_mapped_resource.pData,t_size);
+			
+				t_screenshot.reset(
+					new NBsys::NTexture::Texture(
+						new u8[t_size],
+						t_backbuffer_desc.Width,
+						t_backbuffer_desc.Height,
+						t_mapped_resource.RowPitch,
+						NBsys::NTexture::TextureType::R8G8B8A8,
+						L"screenshot"
+					)
+				);
+
+				Memory::memcpy(t_screenshot->GetPixel().get(),t_size,t_mapped_resource.pData,t_size);
 				this->devicecontext.get()->Unmap(t_texture.get(),0);
 			}
 		}
+
+		
     
 		return t_screenshot;
 	}

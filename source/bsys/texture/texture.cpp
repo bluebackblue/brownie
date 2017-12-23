@@ -57,6 +57,14 @@ namespace NBsys{namespace NTexture
 	}
 
 
+	/** GetPixel
+	*/
+	const sharedptr<u8>& Texture::GetPixel() const
+	{
+		return this->pixel;
+	}
+
+
 	/** GetWidth
 	*/
 	s32 Texture::GetWidth() const
@@ -83,7 +91,7 @@ namespace NBsys{namespace NTexture
 
 	/** GetPitch
 	*/
-	s32 Texture::GetPitch()
+	s32 Texture::GetPitch() const
 	{
 		return this->pitch;
 	}
@@ -118,5 +126,23 @@ namespace NBsys{namespace NTexture
 	}
 
 
+	/** EncodeToJpg
+	*/
+	std::tuple<sharedptr<u8>,s32> EncodeToJpg(const sharedptr<Texture>& a_texture)
+	{
+		std::tuple<sharedptr<u8>,s32> t_ret;
+
+		#if(BSYS_TEXTURE_GDIPLUS_ENABLE)
+		t_ret = EncodeToJpg_GdiPlus(a_texture);
+		
+		if((std::get<0>(t_ret).get() != nullptr)&&(std::get<1>(t_ret) > 0)){
+			return t_ret;
+		}
+		#endif
+
+		return t_ret;
+	}
+
+	
 }}
 
