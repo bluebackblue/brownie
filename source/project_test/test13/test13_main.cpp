@@ -474,14 +474,21 @@ void Test_Main()
 	f32 t_autotime = 0.0f;
 	#endif
 
+	s32 t_http_mode = 1;
+
 	sharedptr<NBsys::NFile::File_Object> t_fileobject;
 	{
 		//読み込み開始。
-		#if(0)
-		t_fileobject = new NBsys::NFile::File_Object(0,L"test.xlsx",-1,sharedptr<NBsys::NFile::File_Allocator>(),0);
-		#else
-		t_fileobject = new NBsys::NFile::File_Object(0,L"test.jpg",-1,sharedptr<NBsys::NFile::File_Allocator>(),0);
-		#endif
+		if(t_http_mode == 0){
+			//エクセル送信 => ＪＳＯＮ受信。
+			t_fileobject = new NBsys::NFile::File_Object(0,L"test.xlsx",-1,sharedptr<NBsys::NFile::File_Allocator>(),0);
+		}else if(t_http_mode == 1){
+			//ＪＰＧ送信。
+			t_fileobject = new NBsys::NFile::File_Object(0,L"test2.jpg",-1,sharedptr<NBsys::NFile::File_Allocator>(),0);
+		}else{
+			//ＪＰＧ受信。
+			t_fileobject.reset();
+		}
 
 
 		//読み込み中。
@@ -494,32 +501,49 @@ void Test_Main()
 
 	sharedptr<NBsys::NHttp::Http> t_http(new NBsys::NHttp::Http());
 	{
-		#if(0)
-		//POST
-		t_data_is_texture = false;
-		t_http->SetHost("bbbproject.sakura.ne.jp");
-		t_http->SetPort(80);
-		t_http->SetMode(NBsys::NHttp::Http_Mode::Post);
-		t_http->SetUrl("/www/project_exceltojson/index.php?mode=upload");
-		t_http->AddPostContent("upfile","filename",t_fileobject->GetLoadData(),static_cast<s32>(t_fileobject->GetLoadSize()));
-		t_http->AddPostContent("type","json");
-		#elif(1)
-		//POST
-		t_data_is_texture = false;
-		t_http->SetHost("bbbproject.sakura.ne.jp");
-		t_http->SetPort(80);
-		t_http->SetMode(NBsys::NHttp::Http_Mode::Post);
-		t_http->SetUrl("/www/project_autotest/index.php?mode=upload");
-		t_http->AddPostContent("upfile","filename",t_fileobject->GetLoadData(),static_cast<s32>(t_fileobject->GetLoadSize()));
-		t_http->AddPostContent("type","json");
-		#else
-		//GET
-		t_data_is_texture = true;
-		t_http->SetHost("bbbproject.sakura.ne.jp");
-		t_http->SetPort(80);
-		t_http->SetMode(NBsys::NHttp::Http_Mode::Get);
-		t_http->SetUrl("/wordpress/wp-content/uploads/2016/06/IMGP0214-1.jpg");
-		#endif
+		if(t_http_mode == 0){
+			//エクセル送信 => ＪＳＯＮ受信。
+			t_http->SetHost("bbbproject.sakura.ne.jp");
+			t_http->SetPort(80);
+			t_http->SetMode(NBsys::NHttp::Http_Mode::Post);
+			t_http->SetUrl("/www/project_exceltojson/index.php?mode=upload");
+			t_http->AddPostContent("upfile","filename",t_fileobject->GetLoadData(),static_cast<s32>(t_fileobject->GetLoadSize()));
+			t_http->AddPostContent("type","json");
+		}else if(t_http_mode == 1){
+			//ＪＰＧ送信。
+			t_http->SetHost("bbbproject.sakura.ne.jp");
+			t_http->SetPort(80);
+			t_http->SetMode(NBsys::NHttp::Http_Mode::Post);
+			t_http->SetUrl("/www/project_autotest/index.php?mode=upload");
+			t_http->AddPostContent("upfile","filename",t_fileobject->GetLoadData(),static_cast<s32>(t_fileobject->GetLoadSize()));
+
+			{
+				char t_buffer[16];
+				STLString t_index_string = VASTRING(t_buffer,sizeof(t_buffer),"%d",DEF_TEST_INDEX);
+				t_http->AddPostContent("index",t_index_string);
+			}
+
+			{
+				STLWString t_log;
+				t_log += L"'''''''\n";
+				STLString t_log_utf8;
+				WcharToChar(t_log,t_log_utf8);
+				t_http->AddPostContent("log",t_log_utf8);
+			}
+
+			{
+				STLWString t_title = L"ポスト通信テスト";
+				STLString t_title_utf8;
+				WcharToChar(t_title,t_title_utf8);
+				t_http->AddPostContent("title",t_title_utf8);
+			}
+		}else{
+			//ＪＰＧ受信。
+			t_http->SetHost("bbbproject.sakura.ne.jp");
+			t_http->SetPort(80);
+			t_http->SetMode(NBsys::NHttp::Http_Mode::Get);
+			t_http->SetUrl("/wordpress/wp-content/uploads/2016/06/IMGP0214-1.jpg");
+		}
 	}
 
 	{
@@ -553,10 +577,6 @@ void Test_Main()
 						t_recv_buffer->CopyFromBuffer(&t_fix_data.get()[t_fix_size],t_recv_size);
 						t_fix_size += t_recv_size;
 						t_fix_data.get()[t_fix_size] = 0x00;
-
-						if(t_data_is_texture == false){
-							DEBUGLOG("%s\n",reinterpret_cast<char*>(t_fix_data.get()));
-						}
 					}
 				}
 			}else{
@@ -566,7 +586,14 @@ void Test_Main()
 
 		t_http->ConnectEnd();
 
-		if(t_data_is_texture == true){
+		if(t_http_mode == 0){
+			//エクセル送信 => ＪＳＯＮ受信。
+			DEBUGLOG("%s\n",reinterpret_cast<char*>(t_fix_data.get()));
+		}else if(t_http_mode == 1){
+			//ＪＰＧ送信。
+			DEBUGLOG("%s\n",reinterpret_cast<char*>(t_fix_data.get()));
+		}else{
+			//ＪＰＧ受信。
 			s_texture = NBsys::NTexture::CreateTexture(t_fix_data,t_fix_size,L"http");
 			s_d3d11->CreateTexture(s_texture,false);
 		}
