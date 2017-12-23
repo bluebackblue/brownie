@@ -49,6 +49,7 @@ namespace NBlib
 		#endif
 	}
 
+
 	/** [static]memcpy
 	*/
 	void Memory::memcpy(void* a_dest,s32 a_check_dest_size,const void* a_src,s32 a_src_size)
@@ -63,6 +64,7 @@ namespace NBlib
 
 		#endif
 	}
+
 
 	/** [static]memcmp
 	*/
@@ -80,6 +82,7 @@ namespace NBlib
 		#endif
 	}
 
+
 	/** [static]strlen
 	*/
 	s32 Memory::strlen(const char* a_string,s32 a_max)
@@ -96,7 +99,8 @@ namespace NBlib
 		#endif
 	}
 
-	/**
+
+	/** [static]wstrlen
 	*/
 	s32 Memory::wstrlen(const wchar* a_strin,s32 a_max)
 	{
@@ -111,5 +115,41 @@ namespace NBlib
 
 		#endif
 	}
+
+
+	/** [static]strcmp
+	*/
+	s32 Memory::strcmp(const char* a_string_1,const char* a_string_2)
+	{
+		#if defined(PLATFORM_VCWIN)
+
+		return ::strcmp(a_string_1,a_string_2);
+
+		#else
+
+		#warning
+		return 0;
+
+		#endif
+	}
+
+
+	/** [static]wcscmp
+	*/
+	s32 Memory::wcscmp(const wchar* a_string_1,const wchar* a_string_2)
+	{
+		#if defined(PLATFORM_VCWIN)
+
+		return ::wcscmp(a_string_1,a_string_2);
+
+		#else
+
+		#warning
+		return 0;
+
+		#endif
+	}
+
+
 }
 
