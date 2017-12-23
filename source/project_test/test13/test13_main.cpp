@@ -474,6 +474,8 @@ void Test_Main()
 	f32 t_autotime = 0.0f;
 	#endif
 
+	#if(0)
+
 	s32 t_http_mode = 1;
 
 	sharedptr<NBsys::NFile::File_Object> t_fileobject;
@@ -599,6 +601,8 @@ void Test_Main()
 		}
 	}
 
+	#endif
+
 	while(true){
 
 		//s_window
@@ -634,6 +638,8 @@ void Test_Main()
 		if(s_d3d11->Render_Present() == false){
 			break;
 		}
+
+		ThreadSleep(1);
 	}
 
 	s_d3d11->Render_Delete();
