@@ -24,6 +24,7 @@
 /** include
 */
 #include <limits>
+#include <memory>
 
 
 /** NBlib
@@ -46,6 +47,7 @@ namespace NBlib
 
 	};
 
+
 	/** STLAllocatorBase_String
 	*/
 	class STLAllocatorBase_String
@@ -62,343 +64,108 @@ namespace NBlib
 
 	};
 
+
 	/** STLAllocator
 	*/
-	template <class T> class STLAllocator
+	#if(0)
+	#define STLAllocator std::allocator
+	#else
+	template <typename T> class STLAllocator : public std::allocator<T>
 	{
 	public:
-		/** typedef
+		/** constructor
 		*/
-		typedef T			value_type;
-		typedef T*			pointer;
-		typedef const T*	const_pointer;
-		typedef T&			reference;
-		typedef const T&	const_reference;
-		typedef size_t		size_type;
-		typedef ptrdiff_t	difference_type;
+		STLAllocator()
+		{
+		}
 
-		/** size
+		/** constructor
 		*/
-		size_type size;
+		STLAllocator(const STLAllocator& a_allocator)
+		{
+		}
+
+		/** constructor
+		*/
+		template<class T2> STLAllocator(const STLAllocator<T2>& a_allocator)
+		{
+		}
+
+		/** allocate
+		*/
+		typename std::allocator<T>::pointer allocate(typename std::allocator<T>::size_type a_count)
+		{
+			return reinterpret_cast<typename std::allocator<T>::pointer>(STLAllocatorBase::Alloc(a_count * sizeof(T)));
+		}
+
+		/** deallocate
+		*/
+		void deallocate(T* a_pointer,size_t a_count)
+		{
+			UNUSED(a_count);
+			STLAllocatorBase::Free(a_pointer);
+		}
 
 		/** rebind
 		*/
-		template <class OTHER> struct rebind
+		template<class T2> struct rebind
 		{
-			typedef STLAllocator<OTHER> other;
+			typedef STLAllocator<T2> other;
 		};
-
-		/** constructor
-		*/
-		STLAllocator() noexcept
-			:
-			size(0)
-		{
-		}
-
-		/** constructor
-		*/
-		STLAllocator(const STLAllocator<T>& a_other) noexcept
-			:
-			size(a_other.size)
-		{
-		}
-
-		/** constructor
-		*/
-		template <class OTHER> STLAllocator(const STLAllocator<OTHER>& a_other) noexcept
-			:
-			size(a_other.size)
-		{
-		}
-
-		/** destructor
-		*/
-		nonvirtual ~STLAllocator() noexcept
-		{
-		}
-
-		/** アドレス取得。
-		*/
-		pointer address(reference a_value) const
-		{
-			return &a_value;
-		}
-
-		/** アドレス取得。
-		*/
-		const_pointer address(const_reference a_value) const
-		{
-			return &a_value;
-		}
-
-		/** 割当てることができる最大の要素数を返す。
-		*/
-		size_type max_size() const noexcept
-		{
-			STATIC_ASSERT(sizeof(T) > 0);
-			return std::numeric_limits<size_type>::max()/sizeof(T);
-		}
-
-		/** 代入。
-		*/
-		template <class OTHER> STLAllocator<T>&  operator =(const STLAllocator<OTHER>&)
-		{
-			return (*this);
-		}
-
-		/** 明示的なコンストラクタの呼び出し。
-		*/
-		void construct(T* a_pointer)
-		{
-			#if defined(new)
-			#undef new
-			#endif
-
-			//placement new
-			::new (static_cast<void*>(a_pointer)) T();
-
-			#if defined(custom_new)
-			#define new custom_new
-			#endif
-		}
-
-		/** 明示的なコンストラクタの呼び出し。
-		*/
-		void construct(pointer a_pointer,const T& a_value)
-		{
-			#if defined(new)
-			#undef new
-			#endif
-
-			//placement new
-			::new ((void*)a_pointer) T(a_value);
-
-			#if defined(custom_new)
-			#define new custom_new
-			#endif
-		}
-
-		/** 明示的なデストラクタの呼び出し。
-		*/
-		void destroy(pointer a_pointer)
-		{
-			a_pointer->~T();
-		}
-
-		/** 明示的なデストラクタの呼び出し。
-		*/
-		template <class U> void destroy(U* a_pointer)
-		{
-			a_pointer->~U();
-		}
-
-		/** 領域確保。
-		*/
-		pointer allocate(size_type a_count,const void* a_hint = nullptr)
-		{
-			this->size += (a_count);
-
-			UNUSED(a_hint);
-			return reinterpret_cast<pointer>(STLAllocatorBase::Alloc(a_count * sizeof(T)));
-		}
-
-		/** 領域開放。
-		*/
-		void deallocate(pointer a_pointer,size_type a_count)
-		{
-			if((a_pointer == nullptr)&&(a_count == 0)){
-			}else{
-
-				this->size -= (a_count);
-
-				STLAllocatorBase::Free(a_pointer);
-			}
-		}
 	};
+	#endif
+
 
 	/** STLAllocator_String
 	*/
-	template <class T> class STLAllocator_String
+	#if(0)
+	#define STLAllocator_String std::allocator
+	#else
+	template <typename T> class STLAllocator_String : public std::allocator<T>
 	{
 	public:
-		/** typedef
+		/** constructor
 		*/
-		typedef T			value_type;
-		typedef T*			pointer;
-		typedef const T*	const_pointer;
-		typedef T&			reference;
-		typedef const T&	const_reference;
-		typedef size_t		size_type;
-		typedef ptrdiff_t	difference_type;
+		STLAllocator_String()
+		{
+		}
 
-		/** size
+		/** constructor
 		*/
-		size_type size;
+		STLAllocator_String(const STLAllocator_String& a_allocator)
+		{
+		}
+
+		/** constructor
+		*/
+		template <class T2> STLAllocator_String(const STLAllocator_String<T2>& a_allocator)
+		{
+		}
+
+		/** allocate
+		*/
+		typename std::allocator<T>::pointer allocate(typename std::allocator<T>::size_type a_count)
+		{
+			return reinterpret_cast<typename std::allocator<T>::pointer>(STLAllocatorBase_String::Alloc(a_count * sizeof(T)));
+		}
+
+		/** deallocate
+		*/
+		void deallocate(T* a_pointer,size_t a_count)
+		{
+			UNUSED(a_count);
+			STLAllocatorBase_String::Free(a_pointer);
+		}
 
 		/** rebind
 		*/
-		template <class OTHER> struct rebind
+		template<class T2> struct rebind
 		{
-			typedef STLAllocator_String<OTHER> other;
+			typedef STLAllocator_String<T2> other;
 		};
-
-		/** constructor
-		*/
-		STLAllocator_String() noexcept
-			:
-			size(0)
-		{
-		}
-
-		/** constructor
-		*/
-		STLAllocator_String(const STLAllocator_String<T>& a_other) noexcept
-			:
-			size(a_other.size)
-		{
-		}
-
-		/** constructor
-		*/
-		template <class OTHER> STLAllocator_String(const STLAllocator_String<OTHER>& a_other) noexcept
-			:
-			size(a_other.size)
-		{
-		}
-
-		/** destructor
-		*/
-		nonvirtual ~STLAllocator_String() noexcept
-		{
-		}
-
-		/** アドレス取得。
-		*/
-		pointer address(reference a_value) const
-		{
-			return &a_value;
-		}
-
-		/** アドレス取得。
-		*/
-		const_pointer address(const_reference a_value) const
-		{
-			return &a_value;
-		}
-
-		/** 割当てることができる最大の要素数を返す。
-		*/
-		size_type max_size() const noexcept
-		{
-			STATIC_ASSERT(sizeof(T) > 0);
-			return std::numeric_limits<size_type>::max()/sizeof(T);
-		}
-
-		/** 代入。
-		*/
-		template <class OTHER> STLAllocator_String<T>&  operator =(const STLAllocator_String<OTHER>&)
-		{
-			return (*this);
-		}
-
-		/** 明示的なコンストラクタの呼び出し。
-		*/
-		void construct(T* a_pointer)
-		{
-			#if defined(new)
-			#undef new
-			#endif
-
-			//placement new
-			::new (static_cast<void*>(a_pointer)) T();
-
-			#if defined(custom_new)
-			#define new custom_new
-			#endif
-		}
-
-		/** 明示的なコンストラクタの呼び出し。
-		*/
-		void construct(pointer a_pointer,const T& a_value)
-		{
-			#if defined(new)
-			#undef new
-			#endif
-
-			//placement new
-			::new ((void*)a_pointer) T(a_value);
-
-			#if defined(custom_new)
-			#define new custom_new
-			#endif
-		}
-
-		/** 明示的なデストラクタの呼び出し。
-		*/
-		void destroy(pointer a_pointer)
-		{
-			a_pointer->~T();
-		}
-
-		/** 明示的なデストラクタの呼び出し。
-		*/
-		template <class U> void destroy(U* a_pointer)
-		{
-			a_pointer->~U();
-		}
-
-		/** 領域確保。
-		*/
-		pointer allocate(size_type a_count,const void* a_hint = nullptr)
-		{
-			this->size += (a_count);
-
-			UNUSED(a_hint);
-			return reinterpret_cast<pointer>(STLAllocatorBase_String::Alloc(a_count * sizeof(T)));
-		}
-
-		/** 領域開放。
-		*/
-		void deallocate(pointer a_pointer,size_type a_count)
-		{
-			if((a_pointer == nullptr)&&(a_count == 0)){
-			}else{
-
-				this->size -= (a_count);
-
-				STLAllocatorBase_String::Free(a_pointer);
-			}
-		}
 	};
+	#endif
 
-	/** 比較。アロケーターに互換性があるかどうか。
-	*/
-	template <class T1,class T2> inline bool operator ==(const STLAllocator<T1>& /*a_allocator_1*/,const STLAllocator<T2>& /*a_allocator_2*/) noexcept
-	{	
-		return true;
-	}
-
-	/** 比較。アロケーターに互換性があるかどうか。
-	*/
-	template <class T1,class T2> inline bool operator !=(const STLAllocator<T1>& /*a_allocator_1*/,const STLAllocator<T2>& /*a_allocator_2*/) noexcept
-	{
-		return false;
-	}
-
-	/** 比較。アロケーターに互換性があるかどうか。
-	*/
-	template <class T1,class T2> inline bool operator ==(const STLAllocator_String<T1>& /*a_allocator_1*/,const STLAllocator_String<T2>& /*a_allocator_2*/) noexcept
-	{	
-		return true;
-	}
-
-	/** 比較。アロケーターに互換性があるかどうか。
-	*/
-	template <class T1,class T2> inline bool operator !=(const STLAllocator_String<T1>& /*a_allocator_1*/,const STLAllocator_String<T2>& /*a_allocator_2*/) noexcept
-	{
-		return false;
-	}
 
 }
 
