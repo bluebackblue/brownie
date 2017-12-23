@@ -58,19 +58,22 @@ bool Blib_DebugLog_Callback(const NBlib::wchar* a_tag,const NBlib::wchar* a_wstr
 */
 void Test_Main()
 {
+	std::unordered_map<Key,s32> list;
+
+
 	STATIC_ASSERT(sizeof(s32) == 4);
 
-	TAGLOG(L"main","TEST");
-	TAGLOG(L"main",L"TEST");
+	TAGLOG(L"main",u8"テスト");
+	TAGLOG(L"main",L"テスト");
 
-	DEBUGLOG(L"%s%s\n","デバッグ","ログ");	
+	DEBUGLOG(u8"%s%s\n",u8"デバッグ",u8"ログ");	
 	DEBUGLOG(L"%s%s\n",L"デバッグ",L"ログ");	
 
 	DEBUGBREAK();
 
 	STLString t_string;
 	STACKTRACE(t_string,-1);
-	DEBUGLOG("%s\n",t_string.c_str());	
+	DEBUGLOG(u8"%s\n",t_string.c_str());	
 
 	ASSERT(0);
 
