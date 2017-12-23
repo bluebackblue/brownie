@@ -81,6 +81,8 @@ namespace NBsys{namespace ND3d11
 			if(this->pixelshader != nullptr){
 				if(this->pixelshader->fileobject != nullptr){
 					if(this->pixelshader->fileobject->IsBusy() == true){
+						//１フレーム消費。
+						a_delta -= 1.0f;
 						return 0;
 					}
 				}
