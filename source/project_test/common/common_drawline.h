@@ -249,7 +249,7 @@ namespace NCommon
 
 		/** 描画。
 		*/
-		void Render(NBsys::NGeometry::Geometry_Matrix_44& a_view_projection)
+		void Render(const NBsys::NGeometry::Geometry_Matrix_44& a_view_projection)
 		{
 			if(this->vertex->GetVertexCountOf(0) > 0){
 				NBsys::NGeometry::Geometry_Matrix_44 t_view_projection = a_view_projection;
