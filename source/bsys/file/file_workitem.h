@@ -119,7 +119,7 @@ namespace NBsys{namespace NFile
 
 		/** constructor
 		*/
-		File_WorkItem(LockObject& a_lockobject,const STLWString& a_filename_short,sharedptr<File_Allocator>& a_allocator,s32 a_add_allocatesize);
+		File_WorkItem(LockObject& a_lockobject,const STLWString& a_filename_short,const sharedptr<File_Allocator>& a_allocator,s32 a_add_allocatesize);
 
 		/** destructor
 		*/

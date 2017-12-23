@@ -143,7 +143,7 @@ namespace NBsys{namespace NFile
 
 		/** [メインスレッド]ロードリクエスト。
 		*/
-		const sharedptr<File_WorkItem> LoadRequest(const STLWString& a_filename_short,s32 a_cachegroup_id,sharedptr<File_Allocator>& a_allocator,s32 a_add_allocatesize);
+		const sharedptr<File_WorkItem> LoadRequest(const STLWString& a_filename_short,s32 a_cachegroup_id,const sharedptr<File_Allocator>& a_allocator,s32 a_add_allocatesize);
 
 		/** [メインスレッド]キャッシュクリア。
 		*/

@@ -573,7 +573,7 @@ namespace NBsys{namespace ND3d11
 
 		/** Render_ClearRenderTargetView
 		*/
-		void Render_ClearRenderTargetView(NBsys::NColor::Color_F& a_color);
+		void Render_ClearRenderTargetView(const NBsys::NColor::Color_F& a_color);
 
 		/** Render_ClearDepthStencilView
 		*/

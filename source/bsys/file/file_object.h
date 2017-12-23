@@ -39,7 +39,7 @@ namespace NBsys{namespace NFile
 
 		/** constructor
 		*/
-		File_Object(s32 a_device_index,const STLWString& a_filename_short,s32 a_cachegroup_id,sharedptr<File_Allocator>& a_allocator,s32 a_add_allocatesize);
+		File_Object(s32 a_device_index,const STLWString& a_filename_short,s32 a_cachegroup_id,const sharedptr<File_Allocator>& a_allocator,s32 a_add_allocatesize);
 
 		/** destructor
 		*/

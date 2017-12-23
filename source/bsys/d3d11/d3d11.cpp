@@ -195,7 +195,7 @@ namespace NBsys{namespace ND3d11
 
 	/** Render_ClearRenderTargetView
 	*/
-	void D3d11::Render_ClearRenderTargetView(NBsys::NColor::Color_F& a_color)
+	void D3d11::Render_ClearRenderTargetView(const NBsys::NColor::Color_F& a_color)
 	{
 		this->impl->Render_ClearRenderTargetView(a_color);
 	}

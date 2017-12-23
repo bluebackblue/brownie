@@ -1428,7 +1428,7 @@ namespace NBsys{namespace ND3d11
 
 	/** Render_ClearRenderTargetView
 	*/
-	void D3d11_Impl::Render_ClearRenderTargetView(NBsys::NColor::Color_F& a_color)
+	void D3d11_Impl::Render_ClearRenderTargetView(const NBsys::NColor::Color_F& a_color)
 	{
 		if(this->devicecontext){
 
