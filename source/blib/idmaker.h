@@ -29,6 +29,7 @@ namespace NBlib
 	class IDMaker
 	{
 	private:
+
 		/** free_list
 		*/
 		STLVector<s32>::Type free_list;
@@ -42,6 +43,7 @@ namespace NBlib
 		bool autocreate;
 
 	public:
+
 		/** constructor.
 		*/
 		IDMaker()
@@ -70,6 +72,7 @@ namespace NBlib
 		}
 
 	public:
+
 		/** ID追加。
 		*/
 		void Create(s32 a_max)
@@ -115,5 +118,7 @@ namespace NBlib
 		}
 
 	};
+
+
 }
 

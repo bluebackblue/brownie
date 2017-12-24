@@ -45,6 +45,7 @@ namespace NBlib
 	class SocketHandle_Impl
 	{
 	private:
+
 		/** handle
 		*/
 		#if defined(PLATFORM_VCWIN)
@@ -60,6 +61,7 @@ namespace NBlib
 		bool isopen;
 
 	public:
+
 		/** constructor
 		*/
 		SocketHandle_Impl() noexcept;
@@ -81,6 +83,7 @@ namespace NBlib
 		static bool GetHostIp(STLString& a_ip_name);
 
 	public:
+
 		/** 開く。
 		*/
 		bool OpenTcp();
@@ -140,10 +143,11 @@ namespace NBlib
 		/** GetRawHandle
 		*/
 		#if defined(PLATFORM_VCWIN)
-
 		SOCKET GetRawHandle() const;
-
 		#endif
+
 	};
+
+
 }
 

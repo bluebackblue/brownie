@@ -39,6 +39,7 @@ namespace NBlib
 	class FileHandle_Impl
 	{
 	private:
+
 		/** handle
 		*/
 		#if defined(PLATFORM_VCWIN)
@@ -56,6 +57,7 @@ namespace NBlib
 		bool readmode;
 
 	public:
+
 		/** constructor
 		*/
 		FileHandle_Impl() noexcept;
@@ -65,6 +67,7 @@ namespace NBlib
 		nonvirtual ~FileHandle_Impl() noexcept;
 
 	public:
+
 		/** ReadOpen
 		*/
 		bool ReadOpen(const STLWString& a_filename);
@@ -106,5 +109,7 @@ namespace NBlib
 		#endif
 
 	};
+
+
 }
 

@@ -48,6 +48,7 @@ namespace NBlib
 		#endif
 	}
 
+
 	/** [static]InitPerformanceCounter
 	*/
 	void PerformanceCounter::InitPerformanceCounter()
@@ -68,6 +69,7 @@ namespace NBlib
 		#endif
 	}
 
+
 	/** [static]1秒 = 1000 * 1000 マイクロ秒。
 	*/
 	u64 PerformanceCounter::GetPerformanceCounter()
@@ -85,6 +87,7 @@ namespace NBlib
 		#endif
 	}
 
+
 	/** [static]GetPerformanceSecCounter
 	*/
 	u64 PerformanceCounter::GetPerformanceSecCounter()
@@ -101,6 +104,7 @@ namespace NBlib
 		#endif
 	}
 
+
 	/** [static]GetPerformanceMicroSecCounter
 	*/
 	u64 PerformanceCounter::GetPerformanceMicroSecCounter()
@@ -116,6 +120,7 @@ namespace NBlib
 		}
 		#endif
 	}
+
 
 }
 

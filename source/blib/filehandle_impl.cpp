@@ -43,12 +43,14 @@ namespace NBlib
 	{
 	}
 
+
 	/** destructor
 	*/
 	FileHandle_Impl::~FileHandle_Impl() noexcept
 	{
 		this->Close();
 	}
+
 
 	/** ReadOpen
 	*/
@@ -71,6 +73,7 @@ namespace NBlib
 			return false;
 		}
 	}
+
 
 	/** WriteOpen
 	*/
@@ -98,6 +101,7 @@ namespace NBlib
 		}
 	}
 
+
 	/** Close
 	*/
 	void FileHandle_Impl::Close()
@@ -115,6 +119,7 @@ namespace NBlib
 			this->readmode = false;
 		}
 	}
+
 
 	/** Read
 	*/
@@ -171,6 +176,7 @@ namespace NBlib
 			return false;
 		}
 	}
+
 
 	/** Write
 	*/
@@ -234,6 +240,7 @@ namespace NBlib
 		}
 	}
 
+
 	/** GetSize
 	*/
 	s64 FileHandle_Impl::GetSize() const
@@ -251,12 +258,14 @@ namespace NBlib
 		return 0;
 	}
 
+
 	/** IsOpen
 	*/
 	bool FileHandle_Impl::IsOpen() const
 	{
 		return this->isopen;
 	}
+
 
 	/** SetEOF
 	*/
@@ -281,6 +290,7 @@ namespace NBlib
 		}
 	}
 
+
 	/** GetRawHandle
 	*/
 	#if defined(PLATFORM_VCWIN)
@@ -289,6 +299,7 @@ namespace NBlib
 		return this->rawhandle;
 	}
 	#endif
+
 
 }
 

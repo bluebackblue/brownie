@@ -30,6 +30,7 @@ namespace NBlib
 	class AutoLock
 	{
 	private:
+
 		/** アンロックのネスト用。
 		*/
 		AtomicValue<s32> nestvalue;
@@ -39,6 +40,7 @@ namespace NBlib
 		LockObject& lockobject;
 
 	public:
+
 		/** constructor
 		*/
 		explicit AutoLock(LockObject& a_lockobject)
@@ -57,6 +59,7 @@ namespace NBlib
 		}
 
 	public:
+
 		/** Lock
 		*/
 		void Lock()
@@ -82,27 +85,30 @@ namespace NBlib
 		}
 
 	private:
+
 		/** copy constructor禁止。
 		*/
 		AutoLock(const AutoLock& a_this) = delete;
 
-	private:
 		/** コピー禁止。
 		*/
 		void operator =(const AutoLock& a_this) = delete;
 
 	};
 
+
 	/** オートロック中に一時的にアンロックする。
 	*/
 	class AutoUnlock
 	{
 	private:
+
 		/** autolock
 		*/
 		AutoLock& autolock;
 
 	public:
+
 		/** constructor
 		*/
 		explicit AutoUnlock(AutoLock& a_autolock)
@@ -118,6 +124,9 @@ namespace NBlib
 		{
 			autolock.Lock();
 		}
+
 	};
+
+
 }
 

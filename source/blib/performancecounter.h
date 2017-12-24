@@ -42,5 +42,7 @@ namespace NBlib
 		static u64 GetPerformanceMicroSecCounter();
 
 	};
+
+
 }
 

@@ -34,9 +34,11 @@ namespace NBlib
 	*/
 	const char* VaString(void* a_buffer,s32 a_buffer_size,const char* a_format,...);
 
+
 	/** VaString
 	*/
 	const wchar* VaString(void* a_buffer,s32 a_buffer_size,const wchar* a_format,...);
+
 
 	/** デバッグ用のバッファ。
 	*/
@@ -44,6 +46,7 @@ namespace NBlib
 	class DebugLogBuffer
 	{
 	public:
+
 		/** GetBuffer
 		*/
 		static char* GetBuffer();
@@ -51,8 +54,10 @@ namespace NBlib
 		/** GetBufferSize
 		*/
 		static s32 GetBufferSize();
+
 	};
 	#endif
+
 
 }
 

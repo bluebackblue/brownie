@@ -40,6 +40,7 @@ namespace NBlib
 	class DirectoryHandle_Impl
 	{
 	private:
+
 		/** handle
 		*/
 		#if defined(PLATFORM_VCWIN)
@@ -61,6 +62,7 @@ namespace NBlib
 		STLWString fullpath;
 
 	public:
+
 		/** constructor
 		*/
 		DirectoryHandle_Impl() noexcept;
@@ -70,6 +72,7 @@ namespace NBlib
 		nonvirtual ~DirectoryHandle_Impl() noexcept;
 
 	public:
+
 		/** Oepn
 		*/
 		bool Open(const STLWString& a_directoryname);
@@ -91,5 +94,7 @@ namespace NBlib
 		STLWString& GetFullPath();
 
 	};
+
+
 }
 

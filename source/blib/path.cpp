@@ -29,7 +29,6 @@
 */
 namespace NBlib
 {
-
 	/** [static]パスの整形。
 
 	a_path	: パス。
@@ -158,5 +157,7 @@ namespace NBlib
 
 		return t_ret;
 	}
+
+
 }
 

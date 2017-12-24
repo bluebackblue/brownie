@@ -35,6 +35,7 @@ namespace NBlib
 	class Math
 	{
 	public:
+
 		/** PI
 		*/
 		static f32 PI;
@@ -133,5 +134,7 @@ namespace NBlib
 		static f32 tan_f_fast(f32 a_rad);
 		
 	};
+
+
 }
 

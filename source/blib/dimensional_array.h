@@ -29,6 +29,7 @@ namespace NBlib
 	template <typename T> class dimensional_array_1
 	{
 	private:
+
 		/** size
 		*/
 		s32 size;
@@ -39,6 +40,7 @@ namespace NBlib
 		T* list_cache;
 
 	public:
+
 		/** constructor
 		*/
 		dimensional_array_1()
@@ -124,13 +126,16 @@ namespace NBlib
 				this->list_cache[ii] = a_value;
 			}
 		}
+
 	};
+
 
 	/** dimensional_array_2
 	*/
 	template <typename T> class dimensional_array_2
 	{
 	private:
+
 		/** width
 		*/
 		s32 width;
@@ -142,9 +147,13 @@ namespace NBlib
 		/** list
 		*/
 		sharedptr<T> list;
+
+		/** list_cache
+		*/
 		T* list_cache;
 
 	public:
+
 		/** constructor
 		*/
 		dimensional_array_2()
@@ -244,6 +253,9 @@ namespace NBlib
 				this->list_cache[ii] = a_value;
 			}
 		}
+
 	};
+
+
 }
 

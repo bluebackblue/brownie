@@ -71,21 +71,25 @@ namespace NBlib
 
 	};
 
+
 	/** Muid
 	*/
 	class Muid
 	{
 	private:
+
 		/** id
 		*/
 		sharedptr<Muid_Impl> id;
 
 	public:
+
 		/** UniqueNameType
 		*/
 		typedef AddressType UniqueNameType;
 
 	private:
+
 		/** constructor.
 		*/
 		Muid();
@@ -129,6 +133,7 @@ namespace NBlib
 		}
 
 	public:
+
 		/** operator ==
 		*/
 		bool operator ==(const Muid& a_muid) const
@@ -156,6 +161,7 @@ namespace NBlib
 		}
 
 	public:
+
 		/** 作成。
 		*/
 		void Create()
@@ -210,5 +216,7 @@ namespace NBlib
 		}
 
 	};
+
+
 }
 

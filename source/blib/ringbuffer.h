@@ -28,11 +28,15 @@ namespace NBlib
 	*/
 	template <typename R,bool RAWCOPYMODE> class RingBufferCopy;
 
+
 	/** RingBufferCopy<RAWCOPYMODE=true>
 	*/
 	template <typename R> class RingBufferCopy<R,true>
 	{
 	public:
+
+		/** T
+		*/
 		typedef typename R::RingBufferItemType T;
 
 		/** [static]CopyToBuffer_Raw
@@ -48,6 +52,7 @@ namespace NBlib
 		{
 			Memory::Copy(&a_to_data[a_copy_fixcount],a_copycount * sizeof(T),a_from_ringbuffer.GetItemFromUseList(0),a_copycount * sizeof(T));
 		}
+
 	};
 
 	/** RingBufferCopy<RAWCOPYMODE=false>
@@ -55,6 +60,9 @@ namespace NBlib
 	template <typename R> class RingBufferCopy<R,false>
 	{
 	public:
+
+		/** T
+		*/
 		typedef typename R::RingBufferItemType T;
 
 		/** [static]CopyToBuffer_Raw
@@ -76,13 +84,16 @@ namespace NBlib
 				a_to_data[a_copy_fixcount + ii] = t_from[ii];
 			}
 		}
+
 	};
+
 
 	/** リングバッファ。ベース。
 	*/
 	template <typename T> class RingBufferBase
 	{
 	public:
+
 		/** 使用サイズ取得。
 		*/
 		virtual s32 GetUseSize() const = 0;
@@ -134,13 +145,18 @@ namespace NBlib
 		/** リングバッファからコピー。
 		*/
 		virtual void CopyFromBuffer(T* a_to_data,s32 a_to_count) = 0;
+
 	};
+
 
 	/** リングバッファ。
 	*/
 	template <typename T,s32 SIZE,bool RAWCOPYMODE> class RingBuffer : public RingBufferBase<T>
 	{
 	public:
+
+		/** RingBufferItemType
+		*/
 		typedef T RingBufferItemType;
 
 	private:
@@ -162,6 +178,7 @@ namespace NBlib
 		s32 usesize;
 
 	public:
+
 		/** constructor.
 		*/
 		RingBuffer()
@@ -353,5 +370,7 @@ namespace NBlib
 		}
 
 	};
+
+
 }
 

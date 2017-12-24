@@ -62,6 +62,7 @@ namespace NBlib
 		#endif
 
 	public:
+
 		/** constructor
 		*/
 		AtomicValue()
@@ -118,7 +119,6 @@ namespace NBlib
 			#endif
 		}
 
-
 		/** 入れ替え。
 
 		代入前の値を返す。
@@ -173,11 +173,11 @@ namespace NBlib
 		}
 
 	private:
+
 		/** copy constructor禁止。
 		*/
 		AtomicValue(const AtomicValue& a_this) = delete;
 
-	private:
 		/** コピー禁止。
 		*/
 		void operator =(const AtomicValue& a_this) = delete;
@@ -200,6 +200,7 @@ namespace NBlib
 		#endif
 
 	public:
+
 		/** constructor
 		*/
 		AtomicValue()
@@ -278,16 +279,17 @@ namespace NBlib
 		}
 
 	private:
+
 		/** copy constructor禁止。
 		*/
 		AtomicValue(const AtomicValue& a_this) = delete;
 
-	private:
 		/** コピー禁止。
 		*/
 		void operator =(const AtomicValue& a_this) = delete;
 
 	};
+
 
 }
 

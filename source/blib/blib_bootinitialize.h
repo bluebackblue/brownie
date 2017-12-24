@@ -38,11 +38,13 @@ namespace NBlib
 	class Blib
 	{
 	public:
+
 		/** call_list
 		*/
 		STLVector<std::function<void(void)>>::Type call_list;
 
 	public:
+
 		/** constructor
 		*/
 		Blib();
@@ -50,19 +52,24 @@ namespace NBlib
 		/** destructor
 		*/
 		nonvirtual ~Blib();
+
 	};
+
 
 	/** 起動時初期化。
 	*/
 	sharedptr<Blib> BootInitialize();
 
+
 	/** 初期化済みかどうか。
 	*/
 	bool IsBootInitialize();
 
+
 	/** 終了時に呼び出す。
 	*/
 	void CallOnExit(const std::function<void(void)>& a_function);
+
 
 	/** グローバル固定長アロケータ。
 	*/
@@ -71,20 +78,23 @@ namespace NBlib
 	GlobalFixedAllocator_Type& GlobalFixedAllocator_Get();
 	#endif
 
+
 	/** グローバル固定長アロケータ。ロックオブジェクト。
 	*/
 	#if(BLIB_GLOBALFIXEDALLOCATOR_ENABLE)
 	LockObject& GlobalFixedAllocator_LockObject();
 	#endif
 
+
 	/** グローバル乱数。
 	*/
 	RandomTemplate<Random_LinearCongruentialGenerators>& GlobalRand_Get();
+
 
 	/** グローバル乱数。ロックオブジェクト。
 	*/
 	LockObject& GlobalRand_LockObject();
 
-}
 
+}
 

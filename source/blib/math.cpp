@@ -42,13 +42,16 @@ namespace NBlib
 		f32 cos_val;
 	};
 
+
 	/** sincosテーブル。
 	*/
 	static SinCosSample s_sin_cos_table[BLIB_MATH_SINCOSFAST_TABLESIZE + 1] = {0};
 
+
 	/** [static]PI
 	*/
 	f32 Math::PI = (3.141592653589793f);
+
 
 	/** 初期化。
 	*/
@@ -61,12 +64,14 @@ namespace NBlib
 		}
 	}
 
+
 	/** [static]非数チェック。
 	*/
 	bool Math::is_nan(f32 a_value)
 	{
 		return std::isnan(a_value);
 	}
+
 
 	/** [static]a_x/a_yの余剰。
 	*/
@@ -87,6 +92,8 @@ namespace NBlib
 
 		#endif
 	}
+
+
 	/** [static]xのy乗。
 	*/
 	f32 Math::pow_f(f32 a_x,f32 a_y)
@@ -106,6 +113,7 @@ namespace NBlib
 
 		#endif
 	}
+
 
 	/** [static]平方根。
 	*/
@@ -127,6 +135,7 @@ namespace NBlib
 		#endif
 	}
 
+
 	/** [static]2を底とする対数。
 	*/
 	f32 Math::log2_f(f32 a_value)
@@ -146,6 +155,7 @@ namespace NBlib
 
 		#endif
 	}
+
 
 	/** [static]切り上げ。
 	*/
@@ -167,6 +177,7 @@ namespace NBlib
 		#endif
 	}
 
+
 	/** [static]絶対値。
 	*/
 	f32 Math::abs_f(f32 a_value)
@@ -186,6 +197,7 @@ namespace NBlib
 
 		#endif
 	}
+
 
 	/** [static]eのvalue乗。
 	*/
@@ -207,6 +219,7 @@ namespace NBlib
 		#endif
 	}
 
+
 	/** [static]サイン。
 	*/
 	f32 Math::sin_f(f32 a_rad)
@@ -226,6 +239,7 @@ namespace NBlib
 
 		#endif
 	}
+
 
 	/** [static]コサイン。
 	*/
@@ -247,6 +261,7 @@ namespace NBlib
 		#endif
 	}
 
+
 	/** [static]タンジェント。
 	*/
 	f32 Math::tan_f(f32 a_rad)
@@ -266,6 +281,7 @@ namespace NBlib
 
 		#endif
 	}
+
 
 	/** [static]アークサイン。
 	*/
@@ -287,6 +303,7 @@ namespace NBlib
 		#endif
 	}
 
+
 	/** [static]アークコサイン。
 	*/
 	f32 Math::acos_f(f32 a_value)
@@ -306,6 +323,7 @@ namespace NBlib
 
 		#endif
 	}
+
 
 	/** [static]アークタンジェント。
 	*/
@@ -327,6 +345,7 @@ namespace NBlib
 		#endif
 	}
 
+
 	/** [static]サイン（テーブル参照）。
 	*/
 	f32 Math::sin_f_fast(f32 a_rad)
@@ -339,6 +358,7 @@ namespace NBlib
 			return -s_sin_cos_table[t_index].sin_val;
 		}
 	}
+
 
 	/** [static]コサイン（テーブル参照）。
 	*/
@@ -353,6 +373,7 @@ namespace NBlib
 		}
 	}
 
+
 	/** [static]タンジェント（テーブル参照）。
 	*/
 	f32 Math::tan_f_fast(f32 a_rad)
@@ -366,6 +387,7 @@ namespace NBlib
 
 		return t_sin / 0.0001f;
 	}
+
 
 }
 

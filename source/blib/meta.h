@@ -39,6 +39,7 @@ namespace NBlib
 		}
 	};
 
+
 	/** 削除子。
 	*/
 	template <typename T> struct default_delete<T[]>
@@ -51,6 +52,7 @@ namespace NBlib
 			delete [] a_instance;
 		}
 	};
+
 
 	/** 削除子。なにもしない。
 	*/
@@ -75,6 +77,7 @@ namespace NBlib
 		void operator ()(void* a_instance) const noexcept = delete;
 	};
 
+
 	/** 削除子。placement_delete
 	
 	「placement new」によって確保されたクラスポインターは明示的にデストラクターを呼び出す必要があります。
@@ -91,6 +94,7 @@ namespace NBlib
 		}
 	};
 
+
 	/** 削除子。release
 	*/
 	template <class T> struct release_delete
@@ -104,15 +108,21 @@ namespace NBlib
 		}
 	};
 
+
 	/** B==trueの場合のみtypeの宣言が確定する。
 	*/
 	template <bool B,class T=void> struct enable_if
 	{
 	};
+
+
+	/** B==trueの場合のみtypeの宣言が確定する。
+	*/
 	template <class T> struct enable_if <true,T>
 	{
 		typedef T type;
 	};
+
 
 	/** 一方の型をもう一方の型に変換できるかどうかをテストします。
 	*/
@@ -144,9 +154,12 @@ namespace NBlib
 
 	public:
 
+		/** value
+		*/
 		static const bool value = sizeof(ConvertibleProc(FromTypeProc())) == sizeof(SUCCESSTYPE);
 
 	};
+
 
 	/** is_void
 	*/
@@ -154,10 +167,15 @@ namespace NBlib
 	{
 		static const bool value = false;
 	};
+
+
+	/** is_void
+	*/
 	template <> struct is_void<void>
 	{
 		static const bool value = true;
 	};
+
 
 	/** reference_type
 	*/
@@ -166,10 +184,14 @@ namespace NBlib
 		typedef T type;
 	};
 
+
+	/** reference_type
+	*/
 	template <typename T> struct reference_type<T,false>
 	{
 		typedef T& type;
 	};
+
 
 }
 

@@ -40,6 +40,7 @@ do
 
 		includedirs
 		{
+			"./project_test",
 			"../../sdk_32",
 			"../../sdk",
 		}
@@ -55,15 +56,11 @@ do
 
 		includedirs
 		{
+			"./project_test",
 			"../../sdk_64",
 			"../../sdk",
 		}
 	end
-
-	includedirs
-	{
-		"./project_test",
-	}
 
 	filter "action:vs*"
 	do

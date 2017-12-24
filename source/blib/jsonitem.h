@@ -27,13 +27,13 @@
 */
 namespace NBlib
 {
-	#if(BLIB_JSONITEM_ENABLE)
-
 	/** JsonItem
 	*/
+	#if(BLIB_JSONITEM_ENABLE)
 	class JsonItem
 	{
 	public:
+
 		/** ValueType
 		*/
 		struct ValueType
@@ -147,18 +147,39 @@ namespace NBlib
 		};
 
 	private:
+
 		/** バリアント型。
 		*/
 		class StValue
 		{
 		public:
 
+			/** 文字データ。
+			*/
 			sharedptr<STLString>										string_data;
+
+			/** 連想配列。
+			*/
 			sharedptr<STLMap<STLString,sharedptr<JsonItem>>::Type>		associative_array;
+
+			/** インデックス配列。
+			*/
 			sharedptr<STLVector<sharedptr<JsonItem>>::Type>				index_array;
+
+			/** 整数。
+			*/
 			s32															integer_number;
+
+			/** 少数。
+			*/
 			f32															float_number;
+
+			/** 真偽。
+			*/
 			bool														bool_value;
+
+			/** バイナリ―。
+			*/
 			sharedptr<STLVector<u8>::Type>								binary_data;
 
 			/** リセット。
@@ -222,6 +243,7 @@ namespace NBlib
 		}
 
 	public:
+
 		/** constructor
 		*/
 		JsonItem();
@@ -271,11 +293,13 @@ namespace NBlib
 		void SetJsonString(const STLString& a_jsonstring);
 
 	private:
+
 		/** 値化。
 		*/
 		void JsonStringToValue() const;
 
 	public:
+
 		/** [取得]GetListMax
 		*/
 		s32 GetListMax() const;
@@ -385,9 +409,8 @@ namespace NBlib
 		const STLString ConvertJsonString() const;
 
 	};
-
 	#endif
 
-}
 
+}
 

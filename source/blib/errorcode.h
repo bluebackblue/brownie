@@ -19,7 +19,6 @@
 */
 namespace NBlib
 {
-
 	/** ErrorCode
 	*/
 	struct ErrorCode
@@ -87,5 +86,7 @@ namespace NBlib
 		{
 		}
 	};
+
+
 }
 

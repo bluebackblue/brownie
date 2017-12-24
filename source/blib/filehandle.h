@@ -29,21 +29,25 @@ namespace NBlib
 	*/
 	class FileHandle_Impl;
 
+
 	/** FileHandle
 	*/
 	class FileHandle
 	{
 	private:
+
 		/** impl
 		*/
 		sharedptr<FileHandle_Impl> impl;
 
 	public:
+
 		/** GetImpl
 		*/
 		sharedptr<FileHandle_Impl>& GetImpl();
 
 	public:
+
 		/** constructor
 		*/
 		FileHandle();
@@ -87,5 +91,7 @@ namespace NBlib
 		void SetEOF(s64 a_offset);
 
 	};
+
+
 }
 

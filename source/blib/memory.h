@@ -78,6 +78,7 @@ namespace NBlib
 			}
 			return t_ret;
 		}
+
 		/** StreamCopy
 		*/
 		template <typename T> static T StreamCopy(u8*& a_current_pointer,s32 a_increment = -1)
@@ -99,6 +100,6 @@ namespace NBlib
 
 	};
 
-}
 
+}
 

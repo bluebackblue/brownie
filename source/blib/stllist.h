@@ -43,12 +43,27 @@ namespace NBlib
 	template <typename T,typename STLALLOCATOR=STLAllocator<T>> class STLList
 	{
 	public:
-		typedef std::list<T,STLALLOCATOR>									Type;
-		typedef typename std::list<T,STLALLOCATOR>::iterator				iterator;
-		typedef typename std::list<T,STLALLOCATOR>::const_iterator			const_iterator;
+
+		/** Type
+		*/
+		typedef std::list<T,STLALLOCATOR> Type;
+
+		/** iterator
+		*/
+		typedef typename std::list<T,STLALLOCATOR>::iterator iterator;
+
+		/** const_iterator
+		*/
+		typedef typename std::list<T,STLALLOCATOR>::const_iterator const_iterator;
 
 	private:
-		STLList();
+
+		/** constructor
+		*/
+		STLList() = delete;
+
+		/** destructor
+		*/
 		nonvirtual ~STLList() = delete;
 
 	public:
@@ -89,12 +104,16 @@ namespace NBlib
 			--t_it_last;
 			return t_it_last;
 		}
+
 	};
 
-	/** STLListType
+
+	/** STLList<T>::Type = STLListType
 	*/
 	#if(BLIB_STDALIASTEMPLATE_ENABLE)
 	template <typename T> using STLListType = typename STLList<T>::Type;
 	#endif
+
+
 }
 

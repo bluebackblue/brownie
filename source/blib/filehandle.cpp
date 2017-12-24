@@ -39,12 +39,14 @@ namespace NBlib
 		this->impl.reset(new FileHandle_Impl());
 	}
 
+
 	/** GetImpl
 	*/
 	sharedptr<FileHandle_Impl>& FileHandle::GetImpl()
 	{
 		return this->impl;
 	}
+
 
 	/** destructor
 	*/
@@ -53,12 +55,14 @@ namespace NBlib
 		this->impl.reset();
 	}
 	
+
 	/** 読み込みモードで開く。
 	*/
 	bool FileHandle::ReadOpen(const STLWString& a_filename)
 	{
 		return this->impl->ReadOpen(a_filename);
 	}
+
 
 	/** 書き込みモードで開く。
 	*/
@@ -67,12 +71,14 @@ namespace NBlib
 		return this->impl->WriteOpen(a_filename);
 	}
 
+
 	/** 閉じる。
 	*/
 	void FileHandle::Close()
 	{
 		return this->impl->Close();
 	}
+
 
 	/** 読み込み。
 	*/
@@ -81,12 +87,14 @@ namespace NBlib
 		return this->impl->Read(a_buffer,a_size,a_offset);
 	}
 
+
 	/** 書き込み。
 	*/
 	bool FileHandle::Write(const u8* a_buffer,s64 a_size,s64 a_offset)
 	{
 		return this->impl->Write(a_buffer,a_size,a_offset);
 	}
+
 
 	/** ファイルサイズ取得。
 	*/
@@ -95,6 +103,7 @@ namespace NBlib
 		return this->impl->GetSize();
 	}
 
+
 	/** ファイルオープンチェック。
 	*/
 	bool FileHandle::IsOpen() const
@@ -102,11 +111,14 @@ namespace NBlib
 		return this->impl->IsOpen();
 	}
 
+
 	/** ＥＯＦ設定。
 	*/
 	void FileHandle::SetEOF(s64 a_offset)
 	{
 		this->impl->SetEOF(a_offset);
 	}
+
+
 }
 

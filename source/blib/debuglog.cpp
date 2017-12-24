@@ -40,7 +40,7 @@
 */
 #if(BLIB_DEBUGLOG_CALLBACK_ENABLE)
 
-extern bool Blib_DebugLog_Callback(const NBlib::wchar* a_tag,const NBlib::wchar* a_wstring);
+bool Blib_DebugLog_Callback(const NBlib::wchar* a_tag,const NBlib::wchar* a_wstring);
 
 #endif
 
@@ -55,8 +55,6 @@ namespace NBlib
 
 	#else
 
-		/** DebugLog
-		*/
 		void DebugLog(const wchar* a_tag,const char* a_string)
 		{
 			#if defined(PLATFORM_VCWIN)
@@ -76,8 +74,6 @@ namespace NBlib
 
 	#else
 
-		/** DebugLog
-		*/
 		void DebugLog(const wchar* a_tag,const wchar* a_wstring)
 		{
 			#if(BLIB_DEBUGLOG_CALLBACK_ENABLE)

@@ -41,11 +41,13 @@ namespace NBlib
 	*/
 	static bool s_is_boot_initialize = false;
 
+
 	/** グローバル固定長アロケータ。
 	*/
 	#if(BLIB_GLOBALFIXEDALLOCATOR_ENABLE)
 	static GlobalFixedAllocator_Type s_globalfixedallocator;
 	#endif
+
 
 	/** グローバル固定長アロケータ。ロックオブジェクト。
 	*/
@@ -53,17 +55,21 @@ namespace NBlib
 	static LockObject s_globalfixedallocator_lockobject;
 	#endif
 
+
 	/** グローバル乱数。
 	*/
 	static RandomTemplate<Random_LinearCongruentialGenerators> s_globalrand;
+
 
 	/** グローバル乱数。ロックオブジェクト。
 	*/
 	static LockObject s_globalrand_lockobject;
 
+
 	/** インスｋタンス。
 	*/
 	static weakptr<Blib> s_instance;
+
 
 	/** constructor
 	*/
@@ -72,6 +78,7 @@ namespace NBlib
 		call_list()
 	{
 	}
+
 
 	/** destructor
 	*/
@@ -83,6 +90,7 @@ namespace NBlib
 		}
 		this->call_list.clear();
 	}
+
 
 	/** 起動時初期化。
 	*/
@@ -185,12 +193,14 @@ namespace NBlib
 		return t_instance;
 	}
 
+
 	/** 初期化済みかどうか。
 	*/
 	bool IsBootInitialize()
 	{
 		return s_is_boot_initialize;
 	}
+
 
 	/** 終了時に呼び出す。
 	*/
@@ -202,6 +212,7 @@ namespace NBlib
 		}
 	}
 
+
 	/** グローバル固定長アロケータ。
 	*/
 	#if(BLIB_GLOBALFIXEDALLOCATOR_ENABLE)
@@ -210,6 +221,7 @@ namespace NBlib
 		return s_globalfixedallocator;
 	}
 	#endif
+
 
 	/** グローバル固定長アロケータ。ロックオブジェクト。
 	*/
@@ -220,6 +232,7 @@ namespace NBlib
 	}
 	#endif
 
+
 	/** グローバル乱数。
 	*/
 	RandomTemplate<Random_LinearCongruentialGenerators>& GlobalRand_Get()
@@ -227,12 +240,14 @@ namespace NBlib
 		return s_globalrand;
 	}
 
+
 	/** グローバル乱数。ロックオブジェクト。
 	*/
 	LockObject& GlobalRand_LockObject()
 	{
 		return s_globalrand_lockobject;
 	}
+
 
 }
 

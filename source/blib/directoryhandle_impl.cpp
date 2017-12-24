@@ -46,12 +46,14 @@ namespace NBlib
 	{
 	}
 
+
 	/** destructor
 	*/
 	DirectoryHandle_Impl::~DirectoryHandle_Impl() noexcept
 	{
 		this->Close();
 	}
+
 
 	/** Open
 	*/
@@ -113,6 +115,7 @@ namespace NBlib
 		return false;
 	}
 
+
 	/** Close
 	*/
 	void DirectoryHandle_Impl::Close()
@@ -122,12 +125,14 @@ namespace NBlib
 		}
 	}
 
+
 	/** サイズ。
 	*/
 	s32 DirectoryHandle_Impl::GetSize()
 	{
 		return static_cast<s32>(this->list.size());
 	}
+
 
 	/** 取得。
 	*/
@@ -138,11 +143,14 @@ namespace NBlib
 		return this->list[a_index];
 	}
 
+
 	/** フルパス取得。
 	*/
 	STLWString& DirectoryHandle_Impl::GetFullPath()
 	{
 		return this->fullpath;
 	}
+
+
 }
 

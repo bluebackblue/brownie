@@ -56,10 +56,10 @@ namespace NBlib
 	{
 	}
 
+
 	/** constructor
 	*/
 	#if defined(PLATFORM_VCWIN)
-
 	SocketHandle_Impl::SocketHandle_Impl(SOCKET a_rawhandle) noexcept
 		:
 		rawhandle(a_rawhandle),
@@ -67,7 +67,6 @@ namespace NBlib
 		isopen(true)
 	{
 	}
-
 	#endif
 
 
@@ -77,6 +76,7 @@ namespace NBlib
 	{
 		this->Close();
 	}
+
 
 	/** [static]GetHostIp
 	*/
@@ -114,6 +114,7 @@ namespace NBlib
 
 		return t_ret;
 	}
+
 
 	/** 開く。
 	*/
@@ -170,6 +171,7 @@ namespace NBlib
 		}
 	}
 
+
 	/** 閉じる。
 	*/
 	void SocketHandle_Impl::Close()
@@ -194,6 +196,7 @@ namespace NBlib
 			#endif
 		}
 	}
+
 
 	/** 接続。
 	*/
@@ -238,6 +241,7 @@ namespace NBlib
 		}
 	}
 
+
 	/** 接続。
 	*/
 	bool SocketHandle_Impl::ConnectUdp(const STLString& a_ip,s32 a_port)
@@ -274,6 +278,7 @@ namespace NBlib
 		}
 	}
 
+
 	/** バインド。
 	*/
 	bool SocketHandle_Impl::Bind(s32 a_port)
@@ -307,6 +312,7 @@ namespace NBlib
 		}
 	}
 
+
 	/** Listen
 	*/
 	bool SocketHandle_Impl::Listen()
@@ -332,6 +338,7 @@ namespace NBlib
 		}
 	}
 	
+
 	/** Accept
 	*/
 	sharedptr<SocketHandle> SocketHandle_Impl::Accept()
@@ -364,6 +371,7 @@ namespace NBlib
 		}
 	}
 
+
 	/** ブロードキャスト設定。
 	*/
 	void SocketHandle_Impl::SetBroadcast(bool a_flag)
@@ -385,6 +393,7 @@ namespace NBlib
 		#endif
 	}
 
+
 	/** ノンブロック設定。
 	*/
 	void SocketHandle_Impl::SetNonblock(bool a_flag)
@@ -405,6 +414,7 @@ namespace NBlib
 		}
 		#endif
 	}
+
 
 	/** 送信。
 	*/
@@ -431,6 +441,7 @@ namespace NBlib
 
 		return true;
 	}
+
 
 	/** 送信。
 	*/
@@ -471,6 +482,7 @@ namespace NBlib
 			return false;
 		}
 	}
+
 
 	/** 受信。
 	*/
@@ -523,6 +535,7 @@ namespace NBlib
 		}
 	}
 
+
 	/** 開いているかどうか。
 	*/
 	bool SocketHandle_Impl::IsOpen() const
@@ -530,15 +543,16 @@ namespace NBlib
 		return this->isopen;
 	}
 
+
 	/** GetRawHandle
 	*/
 	#if defined(PLATFORM_VCWIN)
-
 	SOCKET SocketHandle_Impl::GetRawHandle() const
 	{
 		return this->rawhandle;
 	}
-
 	#endif
+
+
 }
 

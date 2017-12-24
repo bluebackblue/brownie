@@ -30,11 +30,13 @@ namespace NBlib
 	template <typename T> class AsyncResult
 	{
 	private:
+
 		/** instance
 		*/
 		sharedptr<T> instance;
 
 	public:
+
 		/** constructor
 		*/
 		AsyncResult()
@@ -103,6 +105,9 @@ namespace NBlib
 				return T();
 			}
 		}
+
 	};
+
+
 }
 

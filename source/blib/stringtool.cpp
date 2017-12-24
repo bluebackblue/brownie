@@ -127,45 +127,6 @@ namespace NBlib
 		ASSERT(0);
 	}
 
-	/** WcharからSjisへ変換。
-	*/
-	#if defined(PLATFORM_VCWIN)
-	void WcharToSjis(const STLWString& a_wstring,STLString& a_string)
-	{
-		//コードページ。
-		UINT t_codepage = CP_ACP;
-		//処理性能とマッピングのフラグ。
-		DWORD t_flags = 0;
-
-		//入力文字。
-		const wchar* t_wchar = a_wstring.c_str();
-		//入力文字数。「-1:自動計算」。
-		s32 t_wchar_len = static_cast<s32>(a_wstring.length() + 1);
-
-		//必要配列サイズを受け取る（バイト数ではない）。終端文字含む。
-		s32 t_use_len = ::WideCharToMultiByte(t_codepage,t_flags,t_wchar,t_wchar_len,nullptr,0,nullptr,nullptr);
-		
-		if(t_use_len>0){
-			//出力文字。
-			char* t_char = reinterpret_cast<char*>(MALLOCA(t_use_len * sizeof(char)));
-			//出力文字数。終端文字含む。
-			s32 t_char_len = t_use_len;
-
-			if(t_char != nullptr){
-				//変換。
-				t_use_len = ::WideCharToMultiByte(t_codepage,t_flags,t_wchar,t_wchar_len,t_char,t_char_len,nullptr,nullptr);
-				if(t_use_len==t_char_len){
-					a_string = t_char;
-
-					FREEA(t_char);
-					return;
-				}
-
-				FREEA(t_char);
-			}
-		}
-	}
-	#endif
 
 	/** 16進数文字列 => s32 への変換。
 	*/
@@ -278,7 +239,8 @@ namespace NBlib
 		return;
 	}
 
-	/** 前方一致。
+
+	/** a_stringの先頭文字がa_prefixと一致するかどうか。
 	*/
 	bool StartsWith(const STLString& a_string,const STLString& a_prefix)
 	{
@@ -296,6 +258,7 @@ namespace NBlib
 
 		return true;
 	}
+
 
 }
 

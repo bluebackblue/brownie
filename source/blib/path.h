@@ -38,7 +38,6 @@ namespace NBlib
 		*/
 		static STLWString Dir(const STLWString& a_path);
 
-
 		/** [static]Name
 
 		a_name	: ([パス]+名前)。
@@ -46,7 +45,6 @@ namespace NBlib
 
 		*/
 		static STLWString Name(const STLWString& a_name);
-
 
 		/** [static]DirAndName
 
@@ -57,7 +55,6 @@ namespace NBlib
 		*/
 		static STLWString DirAndName(const STLWString& a_path,const STLWString& a_name);
 
-
 		/** [static]DirAndDir
 
 		a_path_a	: パス。
@@ -66,7 +63,9 @@ namespace NBlib
 
 		*/
 		static STLWString DirAndDir(const STLWString& a_path_a,const STLWString& a_path_b);
+
 	};
+
 
 }
 

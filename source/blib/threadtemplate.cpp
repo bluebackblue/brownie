@@ -51,6 +51,7 @@ namespace NBlib
 		#endif
 	}
 
+
 	/** THREADNAME_INFO
 	*/
 	#if defined(PLATFORM_VCWIN)
@@ -77,6 +78,7 @@ namespace NBlib
 		#pragma pack(pop)
 
 	#endif
+
 
 	/** SetThreadName
 	*/
@@ -107,5 +109,7 @@ namespace NBlib
 		}
 
 	#endif
+
+
 }
 

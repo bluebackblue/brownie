@@ -5,13 +5,13 @@
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief コンフィグ。
+ * @brief d3d11
 */
 
 
 /** lib
 */
 #pragma comment(lib,"d3d11.lib")
-#pragma comment(lib,"D3DCompiler.lib")
+#pragma comment(lib,"d3dcompiler.lib")
 
 

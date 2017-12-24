@@ -41,11 +41,9 @@
 
 /** NBlib
 */
+#if(BLIB_JSONITEM_ENABLE)
 namespace NBlib
 {
-
-	#if(BLIB_JSONITEM_ENABLE)
-
 	/** [static]確保。
 	*/
 	void* JsonItem::Alloc(size_t a_size)
@@ -71,6 +69,7 @@ namespace NBlib
 		return nullptr;
 	}
 
+
 	/** [static]解放。
 	*/
 	void JsonItem::Free(void* a_pointer)
@@ -88,6 +87,7 @@ namespace NBlib
 		u8* t_pointer = reinterpret_cast<u8*>(a_pointer);
 		delete [] t_pointer;
 	}
+
 
 	/** NImpl
 	*/
@@ -148,6 +148,7 @@ namespace NBlib
 				}break;
 			}
 		}
+
 
 		/** 整数チェック。
 		*/
@@ -213,6 +214,7 @@ namespace NBlib
 			#endif
 		}
 
+
 		/** エスケープシーケンス文字を「￥＋文字」に変換。
 		*/
 		const char* CheckEscapeSequence(char a_char)
@@ -242,6 +244,7 @@ namespace NBlib
 			//通常文字。
 			return nullptr;
 		}
+
 
 		/** 「￥＋文字」をシーケンス文字に変換。
 		*/
@@ -309,6 +312,7 @@ namespace NBlib
 			return nullptr;
 		}
 
+
 		/** 文字のサイズ。
 		*/
 		s32 GetMojiSize(const STLString& a_string,s32 a_index,bool a_escape)
@@ -364,6 +368,7 @@ namespace NBlib
 			}
 		}
 
+
 		/** 文字列JSONの長さ。
 		*/
 		s32 GetLength_StringData(const STLString& a_string,s32 a_index)
@@ -406,6 +411,7 @@ namespace NBlib
 				return 0;
 			}
 		}
+
 
 		/** 数字JSONの長さ。
 		*/
@@ -458,6 +464,7 @@ namespace NBlib
 				return 0;
 			}
 		}
+
 
 		/** 連想リストJSONの長さ。
 		*/
@@ -517,6 +524,7 @@ namespace NBlib
 			}
 		}
 
+
 		/** インデックスリストJSONの長さ。
 		*/
 		s32 GetLength_IndexArray(const STLString& a_string,s32 a_index)
@@ -575,6 +583,7 @@ namespace NBlib
 			}
 		}
 
+
 		/** TRUEJSONの長さ。
 		*/
 		s32 GetLength_BoolTrue(const STLString& a_string,s32 a_index)
@@ -622,6 +631,7 @@ namespace NBlib
 			}
 		}
 
+
 		/** FALSEJSONの長さ。
 		*/
 		s32 GetLength_BoolFalse(const STLString& a_string,s32 a_index)
@@ -668,6 +678,7 @@ namespace NBlib
 				}
 			}
 		}
+
 
 		/** BinaryDataの長さ。
 		*/
@@ -737,8 +748,8 @@ namespace NBlib
 
 				return 0;
 			}
-
 		}
+
 
 		/** JSON文字からインデックスリストの作成[*,*,*]。
 		*/
@@ -849,6 +860,7 @@ namespace NBlib
 			t_indexlist.reset(new STLVector<sharedptr<JsonItem>>::Type());
 			return t_indexlist;
 		}
+
 
 		/** JSON文字から連想配列の作成。
 		*/
@@ -990,6 +1002,7 @@ namespace NBlib
 			t_associativelist.reset(new STLMap<STLString,sharedptr<JsonItem>>::Type);
 			return t_associativelist;
 		}
+
 
 		/** JSON文字からバイナリデータの作成。
 		*/
@@ -1178,6 +1191,7 @@ namespace NBlib
 		this->SetFloat(a_value.value);
 	}
 
+
 	/** constructor
 	*/
 	JsonItem::JsonItem(const Value_Bool& a_value)
@@ -1185,12 +1199,14 @@ namespace NBlib
 		this->SetBool(a_value.value);
 	}
 
+
 	/** constructor
 	*/
 	JsonItem::JsonItem(const Value_BinaryData& a_value)
 	{
 		this->SetBinaryData(a_value.value);
 	}
+
 
 	/** ディープコピー。
 	*/
@@ -1380,6 +1396,7 @@ namespace NBlib
 		return;
 	}
 
+
 	/** [取得]GetListMax
 	*/
 	s32 JsonItem::GetListMax() const
@@ -1408,6 +1425,7 @@ namespace NBlib
 		return 0;
 	}
 
+
 	/** [取得]GetStringData
 	*/
 	const sharedptr<STLString>& JsonItem::GetStringData() const
@@ -1420,6 +1438,7 @@ namespace NBlib
 
 		return this->value.string_data;
 	}
+
 
 	/** [取得]GetInteger
 	*/
@@ -1434,6 +1453,7 @@ namespace NBlib
 		return this->value.integer_number;
 	}
 
+
 	/** [取得]GetUnsignedInteger
 	*/
 	u32 JsonItem::GetUnsignedInteger() const
@@ -1446,6 +1466,7 @@ namespace NBlib
 
 		return static_cast<u32>(this->value.integer_number);
 	}
+
 
 	/** [取得]GetFloat
 	*/
@@ -1460,6 +1481,7 @@ namespace NBlib
 		return this->value.float_number;
 	}
 
+
 	/** [取得][値]GetBool
 	*/
 	bool JsonItem::GetBool() const
@@ -1472,6 +1494,7 @@ namespace NBlib
 
 		return this->value.bool_value;
 	}
+
 
 	/** [取得][値]GetBinaryData
 	*/
@@ -1486,12 +1509,14 @@ namespace NBlib
 		return this->value.binary_data;
 	}
 
+
 	/** [取得]GetValueType
 	*/
 	JsonItem::ValueType::Id JsonItem::GetValueType() const
 	{
 		return this->valuetype;
 	}
+
 
 	/** [取得]連想リストのアイテム取得。
 	*/
@@ -1515,6 +1540,7 @@ namespace NBlib
 		return sharedptr<JsonItem>::null();
 	}
 
+
 	/** [取得]連想リストのアイテム取得。
 	*/
 	const sharedptr<JsonItem>& JsonItem::GetItem(const STLString& a_itemname) const
@@ -1537,6 +1563,7 @@ namespace NBlib
 		return sharedptr<JsonItem>::null();
 	}
 
+
 	/** [取得]連想リストのアイテムチェック。
 	*/
 	bool JsonItem::IsExistItem(const STLString& a_itemname)
@@ -1557,6 +1584,7 @@ namespace NBlib
 		return false;
 	}
 
+
 	/** [取得]インデックスリストのアイテム取得。
 	*/
 	sharedptr<JsonItem>& JsonItem::GetItem(s32 a_index)
@@ -1575,6 +1603,7 @@ namespace NBlib
 
 		return sharedptr<JsonItem>::null();
 	}
+
 
 	/** [取得]インデックスリストのアイテム取得。
 	*/
@@ -1595,6 +1624,7 @@ namespace NBlib
 		return sharedptr<JsonItem>::null();
 	}
 
+
 	/** [取得]インデックスリストのアイテムチェック。
 	*/
 	bool JsonItem::IsExistItem(s32 a_index)
@@ -1611,6 +1641,7 @@ namespace NBlib
 		
 		return false;
 	}
+
 
 	/** [設定]連想リストにアイテム追加。削除。
 	*/
@@ -1633,6 +1664,7 @@ namespace NBlib
 		}
 	}
 
+
 	/** [設定]インデックスリストにアイテム追加。
 	*/
 	void JsonItem::AddItem(const sharedptr<JsonItem>& a_item,bool a_deepcopy)
@@ -1650,6 +1682,7 @@ namespace NBlib
 		}
 	}
 
+
 	/** [削除]インデックスリストからアイテム削除。
 	*/
 	void JsonItem::RemoveItem(s32 a_index)
@@ -1663,6 +1696,7 @@ namespace NBlib
 		this->value.index_array->erase(this->value.index_array->begin()+a_index);
 	}
 
+
 	/** [設定]文字データ。
 	*/
 	void JsonItem::SetStringData(const STLString& a_string)
@@ -1673,6 +1707,7 @@ namespace NBlib
 		this->valuetype = ValueType::StringData;
 		this->value.string_data.reset(new STLString(a_string));
 	}
+
 
 	/** [設定]空連想リスト。
 	*/
@@ -1685,6 +1720,7 @@ namespace NBlib
 		this->value.associative_array.reset(new STLMap<STLString,sharedptr<JsonItem>>::Type());
 	}
 
+
 	/** [設定]空インデックスリスト。
 	*/
 	void JsonItem::SetIndexArray()
@@ -1695,6 +1731,7 @@ namespace NBlib
 		this->valuetype = ValueType::IndexArray;
 		this->value.index_array.reset(new STLVector<sharedptr<JsonItem>>::Type());
 	}
+
 
 	/** [設定]整数セット。
 	*/
@@ -1707,6 +1744,7 @@ namespace NBlib
 		this->value.integer_number = a_integer;
 	}
 
+
 	/** [設定]整数セット。
 	*/
 	void JsonItem::SetUnsignedInteger(u32 a_unsignedinteger)
@@ -1717,6 +1755,7 @@ namespace NBlib
 		this->valuetype = ValueType::IntegerNumber;
 		this->value.integer_number = static_cast<s32>(a_unsignedinteger);
 	}
+
 
 	/** [設定]少数セット。
 	*/
@@ -1729,6 +1768,7 @@ namespace NBlib
 		this->value.float_number = a_float;
 	}
 
+
 	/** [設定]Boolセット。
 	*/
 	void JsonItem::SetBool(bool a_bool)
@@ -1740,6 +1780,7 @@ namespace NBlib
 		this->value.bool_value = a_bool;
 	}
 
+
 	/** [設定]バイナリ―データセット。
 	*/
 	void JsonItem::SetBinaryData(const sharedptr<STLVector<u8>::Type>& a_binarydata)
@@ -1750,6 +1791,7 @@ namespace NBlib
 		this->valuetype = ValueType::BinaryData;
 		this->value.binary_data = a_binarydata;
 	}
+
 
 	/** 連想配列キーリスト作成。
 	*/
@@ -1773,6 +1815,7 @@ namespace NBlib
 
 		return t_ret_keylist;
 	}
+
 
 	/** JsonStringへコンバート。
 	*/
@@ -1905,7 +1948,8 @@ namespace NBlib
 
 		return "";
 	}
+	
 
-	#endif
 }
+#endif
 

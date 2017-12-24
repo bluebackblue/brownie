@@ -51,7 +51,10 @@ namespace NBlib
 		template <s32 X> struct StaticAssertType{};
 
 	#endif
+
+
 }
+
 
 #if defined(ROM_MASTER)
 
@@ -62,5 +65,4 @@ namespace NBlib
 	#define STATIC_ASSERT(X) typedef NBlib::StaticAssertType<sizeof(NBlib::StaticAssertValue<static_cast<bool>(X)>)>	_static_assert_typedef_
 
 #endif
-
 

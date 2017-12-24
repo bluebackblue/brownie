@@ -27,9 +27,12 @@ namespace NBlib
 		void* pointer;
 	};
 
+
 	/** GetThreadLocal
 	*/
 	ThreadLocal& GetThreadLocal(s32 a_index);
+
+
 }
 #endif
 

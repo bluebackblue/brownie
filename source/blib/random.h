@@ -19,12 +19,12 @@
 */
 namespace NBlib
 {
-
 	/** 線形合同法。
 	*/
 	class Random_LinearCongruentialGenerators
 	{
 	private:
+
 		/** seed。
 		*/
 		u32 seed;
@@ -34,6 +34,7 @@ namespace NBlib
 		u32 value;
 
 	public:
+
 		/** constructor
 		*/
 		Random_LinearCongruentialGenerators()
@@ -50,6 +51,7 @@ namespace NBlib
 		}
 
 	public:
+
 		/** シード設定。
 		*/
 		void SetSeed(u32 a_seed)
@@ -81,20 +83,27 @@ namespace NBlib
 			u32 t_rand = this->GetRand();
 			return (t_rand & 0xFFFF) / 65536.0f;
 		}
+
 	};
+
 
 	/** 非決定論的乱数。
 	*/
 	u32 GetRandFromDevice();
+
 
 	/** 乱数。
 	*/
 	template <typename T=Random_LinearCongruentialGenerators> class RandomTemplate
 	{
 	private:
+
+		/** impl
+		*/
 		T impl;
 
 	public:
+
 		/** constructor
 		*/
 		RandomTemplate()
@@ -151,7 +160,9 @@ namespace NBlib
 
 			return this->impl.GetRand() % a_max;
 		}
+
 	};
+
 
 }
 

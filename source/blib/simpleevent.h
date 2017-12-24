@@ -37,9 +37,20 @@ namespace NBlib
 
 		#if(BLIB_STDMUTEX_ENABLE)
 
+		/** mutex
+		*/
 		std::mutex					mutex;
-		std::condition_variable		cv;
+
+		/** condition_variable
+		*/
+		std::condition_variable		condition_variable;
+
+		/** flag
+		*/
 		bool						flag;
+
+		/** manual_reset
+		*/
 		bool						manual_reset;
 
 		#endif
@@ -80,7 +91,7 @@ namespace NBlib
 				std::unique_lock<std::mutex> t_lock(this->mutex);
 
 				//排他解除=>待ち=>排他=>フラグチェック。
-				this->cv.wait(t_lock,[this]{
+				this->condition_variable.wait(t_lock,[this]{
 					return this->flag;
 				});
 
@@ -143,7 +154,7 @@ namespace NBlib
 				}
 
 				//待機しているスレッドをひとつ起床させる。
-				this->cv.notify_one();
+				this->condition_variable.notify_one();
 			}
 			#else
 			{
@@ -172,5 +183,7 @@ namespace NBlib
 		}
 
 	};
+
+
 }
 

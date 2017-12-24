@@ -55,6 +55,7 @@ namespace NBlib
 	template <typename T> class ThreadTemplate
 	{
 	private:
+
 		/** threadhandle
 		*/
 		#if(BLIB_STDTHREAD_ENABLE)
@@ -79,9 +80,13 @@ namespace NBlib
 			sharedptr<T>				implimentation;
 			ThreadTemplate*				me;
 		};
+
+		/** argument
+		*/
 		sharedptr<Argument> argument;
 
 	public:
+
 		/** constructor
 		*/
 		ThreadTemplate()
@@ -98,6 +103,7 @@ namespace NBlib
 		}
 
 	public:
+
 		/** スレッド開始。
 		*/
 		void Start(typename T::ThreadArgument& a_threadargument)
@@ -200,6 +206,7 @@ namespace NBlib
 		}
 
 	private:
+
 		/** ThreadMain
 		*/
 		#if(BLIB_STDTHREAD_ENABLE)
@@ -247,14 +254,17 @@ namespace NBlib
 		}
 
 	private:
-		/** 代入禁止。
+
+		/** copy constructor禁止。
 		*/
-		ThreadTemplate<T>& operator =(const ThreadTemplate<T>& a_instance);
+		ThreadTemplate<T>& operator =(const ThreadTemplate<T>& a_instance) = delete;
 
 		/** 代入禁止。
 		*/
-		ThreadTemplate(const ThreadTemplate<T>& a_instance);
+		ThreadTemplate(const ThreadTemplate<T>& a_instance) = delete;
 
 	};
+
+
 }
 

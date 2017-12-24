@@ -49,6 +49,7 @@ namespace NBlib
 	typedef uintptr_t				AddressType;
 }
 
+
 /** 要素数。
 */
 #if !defined(COUNTOF)
@@ -63,8 +64,8 @@ namespace NBlib
 
 	#endif
 
-
 #endif
+
 
 /** 未使用変数。
 */
@@ -74,6 +75,7 @@ namespace NBlib
 
 #endif
 
+
 /** 仮想関数でないことの明示。
 */
 #if !defined(nonvirtual)
@@ -81,6 +83,7 @@ namespace NBlib
 	#define nonvirtual			/*nonvirtual*/
 
 #endif
+
 
 /** 終端文字。
 */
@@ -90,6 +93,7 @@ namespace NBlib
 
 #endif
 
+
 /** 終端文字。
 */
 #if !defined(nullwchar)
@@ -98,6 +102,7 @@ namespace NBlib
 
 #endif
 
+
 /** ウィンドウズＡＰＩに使用するNULL。
 */
 #if defined(PLATFORM_VCWIN) || defined(PLATFORM_GNUCWIN)
@@ -105,6 +110,7 @@ namespace NBlib
 	#define WIN_NULL			NULL
 
 #endif
+
 
 /** nullptr
 */

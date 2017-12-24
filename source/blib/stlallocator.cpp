@@ -65,6 +65,7 @@ namespace NBlib
 		return nullptr;
 	}
 
+
 	/** [static]解放。
 	*/
 	void STLAllocatorBase::Free(void* a_pointer)
@@ -84,6 +85,7 @@ namespace NBlib
 		u8* t_pointer = reinterpret_cast<u8*>(a_pointer);
 		delete [] t_pointer;
 	}
+
 
 	/** [static]確保。
 	*/
@@ -110,6 +112,7 @@ namespace NBlib
 		return nullptr;
 	}
 
+
 	/** [static]解放。
 	*/
 	void STLAllocatorBase_String::Free(void* a_pointer)
@@ -129,6 +132,7 @@ namespace NBlib
 		u8* t_pointer = reinterpret_cast<u8*>(a_pointer);
 		delete [] t_pointer;
 	}
+
 
 }
 

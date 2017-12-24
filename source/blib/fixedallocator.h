@@ -30,6 +30,7 @@ namespace NBlib
 	template <s32 BLOCKSIZE,s32 BLOCKMAX> struct FixedAllocator
 	{
 	public:
+
 		/** Config
 		*/
 		struct Config
@@ -49,6 +50,7 @@ namespace NBlib
 		};
 
 	private:
+
 		/** データ配列。
 		*/
 		u8 data[Config::BlockSize * Config::BlockMax];
@@ -61,8 +63,8 @@ namespace NBlib
 		*/
 		s32 free_size;
 
-
 	public:
+
 		/** constructor
 		*/
 		FixedAllocator()
@@ -174,6 +176,9 @@ namespace NBlib
 			//管理外ポインタ。
 			return false;
 		}
+
 	};
+
+
 }
 

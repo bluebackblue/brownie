@@ -29,21 +29,25 @@ namespace NBlib
 	*/
 	class SocketHandle_Impl;
 
+
 	/** SocketHandle
 	*/
 	class SocketHandle
 	{
 	private:
+
 		/** impl
 		*/
 		sharedptr<SocketHandle_Impl> impl;
 
 	public:
+
 		/** GetImpl
 		*/
 		sharedptr<SocketHandle_Impl>& GetImpl();
 
 	public:
+
 		/** constructor
 		*/
 		SocketHandle();
@@ -119,5 +123,7 @@ namespace NBlib
 		bool IsOpen() const;
 
 	};
+
+
 }
 

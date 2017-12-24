@@ -32,17 +32,25 @@
 */
 namespace NBlib
 {
-	#if(BLIB_MEMORYCONTAINER_ENABLE)
-
 	/** MemoryContainer_Data
 	*/
+	#if(BLIB_MEMORYCONTAINER_ENABLE)
 	struct MemoryContainer_Data
 	{
 	public:
+
+		/** index
+		*/
 		s32 index;
+
+		/** containerindex_list
+		*/
 		s32 containerindex_list[BLIB_MEMORYCONTAINER_NESTMAX];
 
 	public:
+
+		/** Reset
+		*/
 		void Reset()
 		{
 			this->index = 0;
@@ -50,10 +58,14 @@ namespace NBlib
 				this->containerindex_list[ii] = 0;
 			}
 		}
+
 	};
+	#endif
+
 
 	/** GetData_ThreadLocal
 	*/
+	#if(BLIB_MEMORYCONTAINER_ENABLE)
 	static MemoryContainer_Data* GetData_ThreadLocal()
 	{
 		ThreadLocal& t_threadlocal_reference = GetThreadLocal(BLIB_MEMORYCONTAINER_THREADLOCALSLOT);
@@ -79,8 +91,8 @@ namespace NBlib
 
 		return t_data;
 	}
-
 	#endif
+
 
 	/** constructor
 	*/
@@ -99,6 +111,7 @@ namespace NBlib
 		#endif
 	}
 
+
 	/** destructor
 	*/
 	MemoryContainer::~MemoryContainer()
@@ -111,6 +124,7 @@ namespace NBlib
 		}
 		#endif
 	}
+
 
 	/** [static]GetContainerIndex
 	*/
@@ -128,5 +142,7 @@ namespace NBlib
 		}
 		#endif
 	}
+
+
 }
 

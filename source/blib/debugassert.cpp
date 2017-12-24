@@ -34,7 +34,7 @@
 */
 #if(BLIB_DEBUGASSERT_CALLBACK_ENABLE)
 
-extern bool Blib_DebugAssert_Callback(const NBlib::wchar* a_wmessage,const NBlib::wchar* a_wfilename,NBlib::s32 a_line);
+bool Blib_DebugAssert_Callback(const NBlib::wchar* a_wmessage,const NBlib::wchar* a_wfilename,NBlib::s32 a_line);
 
 #endif
 
@@ -48,12 +48,19 @@ namespace NBlib
 	#if defined(ROM_MASTER)
 	#else
 
+
 		#if defined(PLATFORM_VCWIN)
+
 		void DebugAssert(bool a_flag,const wchar* a_wmessage,const wchar* a_wfilename,s32 a_line)
+
 		#elif defined(PLATFORM_GNUCWIN)
+
 		void DebugAssert(bool a_flag,const wchar* a_wmessage,const char* a_filename,s32 a_line)
+
 		#else
+
 		#warning
+
 		#endif
 		{
 			if(a_flag == true){
@@ -102,6 +109,7 @@ namespace NBlib
 
 			}
 		}
+
 
 	#endif
 

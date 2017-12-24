@@ -33,7 +33,9 @@ namespace NBlib
 {
 	#if(BLIB_STDSHAREDPTR_ENABLE)
 
+
 	#else
+
 
 	/** [static]確保。
 	*/
@@ -60,6 +62,7 @@ namespace NBlib
 		return nullptr;
 	}
 
+
 	/** [static]解放。
 	*/
 	void sharedptrbase::Free(void* a_pointer)
@@ -78,6 +81,9 @@ namespace NBlib
 		delete [] t_pointer;
 	}
 
+
 	#endif
+
+
 }
 

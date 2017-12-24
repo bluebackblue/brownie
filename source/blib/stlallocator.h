@@ -73,6 +73,7 @@ namespace NBlib
 	template <typename T> class STLAllocator : public std::allocator<T>
 	{
 	public:
+
 		/** constructor
 		*/
 		STLAllocator()
@@ -112,6 +113,7 @@ namespace NBlib
 		{
 			typedef STLAllocator<T2> other;
 		};
+
 	};
 	#endif
 
@@ -124,6 +126,7 @@ namespace NBlib
 	template <typename T> class STLAllocator_String : public std::allocator<T>
 	{
 	public:
+
 		/** constructor
 		*/
 		STLAllocator_String()
@@ -163,6 +166,7 @@ namespace NBlib
 		{
 			typedef STLAllocator_String<T2> other;
 		};
+
 	};
 	#endif
 

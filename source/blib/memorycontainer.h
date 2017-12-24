@@ -34,8 +34,13 @@ namespace NBlib
 		nonvirtual ~MemoryContainer();
 
 	public:
+
+		/** GetContainerIndex
+		*/
 		static s32 GetContainerIndex();
 
 	};
+
+
 }
 

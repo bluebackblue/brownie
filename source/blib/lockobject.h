@@ -32,6 +32,7 @@ namespace NBlib
 	class LockObject
 	{
 	private:
+
 		/** 再帰ロック可能なミューテックス。
 		*/
 		#if(BLIB_STDMUTEX_ENABLE)
@@ -41,6 +42,7 @@ namespace NBlib
 		#endif
 
 	public:
+
 		/** constructor
 		*/
 		LockObject()
@@ -121,5 +123,7 @@ namespace NBlib
 		}
 
 	};
+
+
 }
 

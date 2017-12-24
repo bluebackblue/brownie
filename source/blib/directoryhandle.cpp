@@ -39,6 +39,7 @@ namespace NBlib
 		this->impl.reset(new DirectoryHandle_Impl());
 	}
 
+
 	/** GetImpl
 	*/
 	sharedptr<DirectoryHandle_Impl>& DirectoryHandle::GetImpl()
@@ -46,12 +47,14 @@ namespace NBlib
 		return this->impl;
 	}
 
+
 	/** destructor
 	*/
 	DirectoryHandle::~DirectoryHandle()
 	{
 		this->impl.reset();
 	}
+
 	
 	/** 開く。
 	*/
@@ -60,12 +63,14 @@ namespace NBlib
 		return this->impl->Open(a_directoryname);
 	}
 
+
 	/** 閉じる。
 	*/
 	void DirectoryHandle::Close()
 	{
 		return this->impl->Close();
 	}
+
 
 	/** サイズ。
 	*/
@@ -74,6 +79,7 @@ namespace NBlib
 		return this->impl->GetSize();
 	}
 
+
 	/** 取得。
 	*/
 	DirectoryHandle::DirectoryItem& DirectoryHandle::GetItem(s32 a_index)
@@ -81,12 +87,14 @@ namespace NBlib
 		return this->impl->GetItem(a_index);
 	}
 
+
 	/** フルパス取得。
 	*/
 	STLWString& DirectoryHandle::GetFullPath()
 	{
 		return this->impl->GetFullPath();
 	}
+
 
 }
 

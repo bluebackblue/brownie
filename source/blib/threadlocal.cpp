@@ -44,6 +44,7 @@ namespace NBlib
 
 	#endif
 
+
 	/** ThreadLocalData
 	*/
 	struct ThreadLocalData
@@ -59,6 +60,7 @@ namespace NBlib
 			}
 		}
 	};
+
 
 	/** GetThreadLocal
 	*/
@@ -98,6 +100,8 @@ namespace NBlib
 		ASSERT((0<=a_index)&&(a_index<COUNTOF(t_data->slot)));
 		return t_data->slot[a_index];
 	}
+
+
 }
 #endif
 

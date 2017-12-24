@@ -29,21 +29,25 @@ namespace NBlib
 	*/
 	class DirectoryHandle_Impl;
 
+
 	/** DirectoryHandle
 	*/
 	class DirectoryHandle
 	{
 	private:
+
 		/** impl
 		*/
 		sharedptr<DirectoryHandle_Impl> impl;
 
 	public:
+
 		/** GetImpl
 		*/
 		sharedptr<DirectoryHandle_Impl>& GetImpl();
 
 	public:
+
 		/** DirectoryItem
 		*/
 		struct DirectoryItem
@@ -58,6 +62,7 @@ namespace NBlib
 		};
 
 	public:
+
 		/** constructor
 		*/
 		DirectoryHandle();
@@ -89,5 +94,7 @@ namespace NBlib
 		STLWString& GetFullPath();
 
 	};
+
+
 }
 

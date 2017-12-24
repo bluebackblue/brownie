@@ -51,19 +51,37 @@ namespace NBlib
 	template <typename KEY,typename T,typename PR=std::less<KEY>,typename STLALLOCATOR=STLAllocator<std::pair<const KEY,T>>> class STLBtMap
 	{
 	public:
-		typedef std::map<KEY,T,PR,STLALLOCATOR>								Type;
-		typedef typename std::map<KEY,T,PR,STLALLOCATOR>::value_type		value_type;
-		typedef typename std::map<KEY,T,PR,STLALLOCATOR>::iterator			iterator;
-		typedef typename std::map<KEY,T,PR,STLALLOCATOR>::const_iterator	const_iterator;
+
+		/** Type
+		*/
+		typedef std::map<KEY,T,PR,STLALLOCATOR> Type;
+
+		/** value_type
+		*/
+		typedef typename std::map<KEY,T,PR,STLALLOCATOR>::value_type value_type;
+
+		/** iterator
+		*/
+		typedef typename std::map<KEY,T,PR,STLALLOCATOR>::iterator iterator;
+
+		/** const_iterator
+		*/
+		typedef typename std::map<KEY,T,PR,STLALLOCATOR>::const_iterator const_iterator;
 
 	private:
-		STLBtMap();
-		//nonvirtual ~STLBtMap() = delete;
+
+		/** constructor
+		*/
+		STLBtMap() = delete;
+
+		/** destructor
+		*/
+		nonvirtual ~STLBtMap() = delete;
 
 	};
 
 
-	/** STLBtMapType
+	/** STLBtMap<KEY,T,PR,STLALLOCATOR>::Type = STLBtMapType
 	*/
 	#if(BLIB_STDALIASTEMPLATE_ENABLE)
 
@@ -79,19 +97,37 @@ namespace NBlib
 		template <typename KEY,typename T,typename H=std::hash<KEY>,typename KEYEQ=std::equal_to<KEY>,class STLALLOCATOR=STLAllocator<std::pair<const KEY,T>>> class STLMap
 		{
 		public:
-			typedef std::unordered_map<KEY,T,H,KEYEQ,STLALLOCATOR>								Type;
-			typedef typename std::unordered_map<KEY,T,H,KEYEQ,STLALLOCATOR>::value_type			value_type;
-			typedef typename std::unordered_map<KEY,T,H,KEYEQ,STLALLOCATOR>::iterator			iterator;
-			typedef typename std::unordered_map<KEY,T,H,KEYEQ,STLALLOCATOR>::const_iterator		const_iterator;
+
+			/** Type
+			*/
+			typedef std::unordered_map<KEY,T,H,KEYEQ,STLALLOCATOR> Type;
+
+			/** value_type
+			*/
+			typedef typename std::unordered_map<KEY,T,H,KEYEQ,STLALLOCATOR>::value_type value_type;
+
+			/** iterator
+			*/
+			typedef typename std::unordered_map<KEY,T,H,KEYEQ,STLALLOCATOR>::iterator iterator;
+
+			/** const_iterator
+			*/
+			typedef typename std::unordered_map<KEY,T,H,KEYEQ,STLALLOCATOR>::const_iterator const_iterator;
 
 		private:
-			STLMap();
-			//nonvirtual ~STLMap() = delete;
+
+			/** constructor
+			*/
+			STLMap() = delete;
+
+			/** destructor
+			*/
+			nonvirtual ~STLMap() = delete;
 
 		};
 
 
-		/** STLMapType
+		/** STLMap<KEY,T,H,KEYEQ,STLALLOCATOR>::Type = STLMapType
 		*/
 		#if(BLIB_STDALIASTEMPLATE_ENABLE)
 

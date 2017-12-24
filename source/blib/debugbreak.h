@@ -58,7 +58,7 @@
 
 	#if(BLIB_DEBUGBREAK_CALLBACK_ENABLE)
 
-		extern bool Blib_DebugBreak_Callback();
+		bool Blib_DebugBreak_Callback();
 		#define DEBUGBREAK() do{if(Blib_DebugBreak_Callback()){DEBUGBREAK_PROC();}}while(0)
 
 	#else

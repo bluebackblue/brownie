@@ -28,22 +28,21 @@ namespace NBlib
 	*/
 	void WcharToChar(const STLWString& a_wstring,STLString& a_string);
 
+
 	/** CharからWcharへ変換。
 	*/
 	void CharToWchar(const STLString& a_string,STLWString& a_wstring);
 
-	/** WcharからSjisへ変換。
-	*/
-	#if defined(PLATFORM_VCWIN)
-	void WcharToSjis(const STLWString& a_wstring,STLString& a_string);
-	#endif
 
 	/** 16進数文字列 => s32 への変換。
 	*/
 	void HexCharToInt(const STLString& a_string,s32& a_value);
 
+
 	/** 前方一致。
 	*/
 	bool StartsWith(const STLString& a_string,const STLString& a_prefix);
+
+
 }
 

@@ -67,6 +67,7 @@ namespace NBlib
 		return reinterpret_cast<char*>(a_buffer);
 	}
 
+
 	/** VaString
 
 	a_buffer		: バッファ。
@@ -100,6 +101,7 @@ namespace NBlib
 		return reinterpret_cast<wchar*>(a_buffer);
 	}
 
+
 	#if defined(ROM_MASTER)
 
 	#else
@@ -129,6 +131,7 @@ namespace NBlib
 		#endif
 	}
 
+
 	/** [static]GetBufferSize
 	*/
 	s32 DebugLogBuffer::GetBufferSize()
@@ -137,5 +140,7 @@ namespace NBlib
 	}
 
 	#endif
+
+
 }
 
