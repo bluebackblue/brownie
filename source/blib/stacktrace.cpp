@@ -42,6 +42,7 @@
 
 			/** include
 			*/
+			//[include]
 			#pragma warning(disable:4091)
 			#include <imagehlp.h>
 

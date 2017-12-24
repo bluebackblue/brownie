@@ -23,6 +23,7 @@
 	*/
 	#if defined(PLATFORM_VCWIN)
 	
+		//[include]
 		#include <intrin.h>
 
 	#endif

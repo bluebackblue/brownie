@@ -110,6 +110,7 @@ namespace NBsys{namespace NTexture
 
 	};
 
+
 	/** Texture_Impl_GlobalMemory_Stream
 	*/
 	class Texture_Impl_GlobalMemory_Stream

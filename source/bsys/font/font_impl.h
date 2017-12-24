@@ -18,6 +18,8 @@
 */
 #if defined(PLATFORM_VCWIN)
 	#include <brownie_config/windows_include.h>
+
+	//[include]
 	#include <mbstring.h>
 #endif
 

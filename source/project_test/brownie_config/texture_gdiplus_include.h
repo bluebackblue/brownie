@@ -14,4 +14,3 @@
 #include <brownie_config/windows_include.h>
 #include <gdiplus.h>
 
-

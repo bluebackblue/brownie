@@ -25,6 +25,7 @@
 */
 #if defined(PLATFORM_VCWIN) || defined(PLATFORM_GNUCWIN)
 
+	//[include]
 	#include <stdarg.h>
 
 #endif

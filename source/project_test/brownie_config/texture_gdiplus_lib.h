@@ -13,4 +13,3 @@
 */
 #pragma	comment(lib,"gdiplus.lib")
 
-

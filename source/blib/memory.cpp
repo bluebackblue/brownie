@@ -33,7 +33,10 @@
 /** include
 */
 #if defined(PLATFORM_GNUCWIN)
-#include <memory.h>
+
+	//[include]
+	#include <memory.h>
+
 #endif
 
 

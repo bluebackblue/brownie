@@ -21,9 +21,8 @@
 
 /** include
 */
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdint>
+#include <cstddef>
 
 
 /** NBlib
@@ -46,7 +45,7 @@ namespace NBlib
 
 	typedef wchar_t					wchar;
 
-	typedef uintptr_t				AddressType;
+	typedef std::uintptr_t			AddressType;
 }
 
 

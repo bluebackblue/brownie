@@ -14,4 +14,3 @@
 #include <fovehmd/FOVE SDK 0.11.4/include/IFVRHeadset.h>
 #include <fovehmd/FOVE SDK 0.11.4/include/IFVRCompositor.h>
 
-

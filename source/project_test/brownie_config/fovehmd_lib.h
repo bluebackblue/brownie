@@ -17,4 +17,3 @@
 	#pragma comment(lib, "fovehmd/FOVE SDK 0.11.4/lib/FoveClient.lib")
 #endif
 
-
