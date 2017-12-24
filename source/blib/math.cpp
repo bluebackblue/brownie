@@ -56,8 +56,8 @@ namespace NBlib
 	{
 		for(s32 ii=0;ii<(COUNTOF(s_sin_cos_table));ii++){
 			f32 t_rad = (2.0f * Math::PI * ii) / (COUNTOF(s_sin_cos_table) - 1);
-			s_sin_cos_table[ii].sin_val = Math::sinf(t_rad);
-			s_sin_cos_table[ii].cos_val = Math::cosf(t_rad);
+			s_sin_cos_table[ii].sin_val = Math::sin_f(t_rad);
+			s_sin_cos_table[ii].cos_val = Math::cos_f(t_rad);
 		}
 	}
 
@@ -70,210 +70,266 @@ namespace NBlib
 
 	/** [static]a_x/a_yの余剰。
 	*/
-	f32 Math::modf(f32 a_x,f32 a_y)
+	f32 Math::mod_f(f32 a_x,f32 a_y)
 	{
 		#if defined(PLATFORM_VCWIN)
 		
-		return std::fmodf(a_x,a_y);
+			return std::fmodf(a_x,a_y);
 		
+		#elif defined(PLATFORM_GNUCWIN)
+
+			return ::fmodf(a_x,a_y);
+
 		#else
 
-		#warning
-		return 0.0f;
+			#warning
+			return 0.0f;
 
 		#endif
 	}
 	/** [static]xのy乗。
 	*/
-	f32 Math::powf(f32 a_x,f32 a_y)
+	f32 Math::pow_f(f32 a_x,f32 a_y)
 	{
 		#if defined(PLATFORM_VCWIN)
 
-		return std::powf(a_x,a_y);
+			return std::powf(a_x,a_y);
+
+		#elif defined(PLATFORM_GNUCWIN)
+
+			return ::powf(a_x,a_y);
 
 		#else
 
-		#warning
-		return 0.0f;
+			#warning
+			return 0.0f;
 
 		#endif
 	}
 
 	/** [static]平方根。
 	*/
-	f32 Math::sqrtf(f32 a_value)
+	f32 Math::sqrt_f(f32 a_value)
 	{
 		#if defined(PLATFORM_VCWIN)
 
-		return std::sqrtf(a_value);
+			return std::sqrtf(a_value);
+
+		#elif defined(PLATFORM_GNUCWIN)
+
+			return ::sqrtf(a_value);
 
 		#else
 
-		#warning
-		return 0.0f;
+			#warning
+			return 0.0f;
 
 		#endif
 	}
 
 	/** [static]2を底とする対数。
 	*/
-	f32 Math::log2f(f32 a_value)
+	f32 Math::log2_f(f32 a_value)
 	{
 		#if defined(PLATFORM_VCWIN)
 
-		return std::log2f(a_value);
+			return std::log2f(a_value);
+
+		#elif defined(PLATFORM_GNUCWIN)
+
+			return ::log2f(a_value);
 
 		#else
 
-		#warning
-		return 0.0f;
+			#warning
+			return 0.0f;
 
 		#endif
 	}
 
 	/** [static]切り上げ。
 	*/
-	f32 Math::ceilf(f32 a_value)
+	f32 Math::ceil_f(f32 a_value)
 	{
 		#if defined(PLATFORM_VCWIN)
-		return std::ceilf(a_value);
+
+			return std::ceilf(a_value);
+
+		#elif defined(PLATFORM_GNUCWIN)
+
+			return ::ceilf(a_value);
+
 		#else
 
-		#warning
-		return 0.0f;
+			#warning
+			return 0.0f;
 
 		#endif
 	}
 
 	/** [static]絶対値。
 	*/
-	f32 Math::absf(f32 a_value)
+	f32 Math::abs_f(f32 a_value)
 	{
 		#if defined(PLATFORM_VCWIN)
-		return std::fabsf(a_value);
+
+			return std::fabsf(a_value);
+
+		#elif defined(PLATFORM_GNUCWIN)
+
+			return ::fabsf(a_value);
+
 		#else
 
-		#warning
-		return 0.0f;
+			#warning
+			return 0.0f;
 
 		#endif
 	}
 
-	/** [static]自然対数の底のa_value乗。
+	/** [static]eのvalue乗。
 	*/
-	f32 Math::expf(f32 a_value)
+	f32 Math::exp_f(f32 a_value)
 	{
 		#if defined(PLATFORM_VCWIN)
 
-		return std::expf(a_value);
+			return std::expf(a_value);
+
+		#elif defined(PLATFORM_GNUCWIN)
+
+			return ::expf(a_value);
 
 		#else
 
-		#warning
-		return 0.0f;
+			#warning
+			return 0.0f;
 
 		#endif
 	}
 
 	/** [static]サイン。
 	*/
-	f32 Math::sinf(f32 a_rad)
+	f32 Math::sin_f(f32 a_rad)
 	{
 		#if defined(PLATFORM_VCWIN)
 
-		return std::sinf(a_rad);
+			return std::sinf(a_rad);
+
+		#elif defined(PLATFORM_GNUCWIN)
+
+			return ::sinf(a_rad);
 
 		#else
 
-		#warning
-		return 0.0f;
+			#warning
+			return 0.0f;
 
 		#endif
 	}
 
 	/** [static]コサイン。
 	*/
-	f32 Math::cosf(f32 a_rad)
+	f32 Math::cos_f(f32 a_rad)
 	{
 		#if defined(PLATFORM_VCWIN)
 
-		return std::cosf(a_rad);
+			return std::cosf(a_rad);
+
+		#elif defined(PLATFORM_GNUCWIN)
+
+			return ::cosf(a_rad);
 
 		#else
 
-		#warning
-		return 0.0f;
+			#warning
+			return 0.0f;
 
 		#endif
 	}
 
 	/** [static]タンジェント。
 	*/
-	f32 Math::tanf(f32 a_rad)
+	f32 Math::tan_f(f32 a_rad)
 	{
 		#if defined(PLATFORM_VCWIN)
 
-		return std::tanf(a_rad);
+			return std::tanf(a_rad);
+
+		#elif defined(PLATFORM_GNUCWIN)
+
+			return ::tanf(a_rad);
 
 		#else
 
-		#warning
-		return 0.0f;
+			#warning
+			return 0.0f;
 
 		#endif
 	}
 
 	/** [static]アークサイン。
 	*/
-	f32 Math::asinf(f32 a_value)
+	f32 Math::asin_f(f32 a_value)
 	{
 		#if defined(PLATFORM_VCWIN)
 
-		return std::asinf(a_value);
+			return std::asinf(a_value);
+
+		#elif defined(PLATFORM_GNUCWIN)
+
+			return ::asinf(a_value);
 
 		#else
 
-		#warning
-		return 0.0f;
+			#warning
+			return 0.0f;
 
 		#endif
 	}
 
 	/** [static]アークコサイン。
 	*/
-	f32 Math::acosf(f32 a_value)
+	f32 Math::acos_f(f32 a_value)
 	{
 		#if defined(PLATFORM_VCWIN)
 
-		return std::acosf(a_value);
+			return std::acosf(a_value);
+
+		#elif defined(PLATFORM_GNUCWIN)
+
+			return ::acosf(a_value);
 
 		#else
 
-		#warning
-		return 0.0f;
+			#warning
+			return 0.0f;
 
 		#endif
 	}
 
 	/** [static]アークタンジェント。
 	*/
-	f32 Math::atanf(f32 a_value)
+	f32 Math::atan_f(f32 a_value)
 	{
 		#if defined(PLATFORM_VCWIN)
 
-		return std::atanf(a_value);
+			return std::atanf(a_value);
+
+		#elif defined(PLATFORM_GNUCWIN)
+
+			return ::atanf(a_value);
 
 		#else
 
-		#warning
-		return 0.0f;
+			#warning
+			return 0.0f;
 
 		#endif
 	}
 
 	/** [static]サイン（テーブル参照）。
 	*/
-	f32 Math::sinf_fast(f32 a_rad)
+	f32 Math::sin_f_fast(f32 a_rad)
 	{
 		if(a_rad >= 0){
 			u32 t_index = static_cast<u32>( (a_rad * ((COUNTOF(s_sin_cos_table) - 1) / (2.0f * Math::PI)) + 0.5f)) % (COUNTOF(s_sin_cos_table) - 1);
@@ -286,7 +342,7 @@ namespace NBlib
 
 	/** [static]コサイン（テーブル参照）。
 	*/
-	f32 Math::cosf_fast(f32 a_rad)
+	f32 Math::cos_f_fast(f32 a_rad)
 	{
 		if(a_rad >= 0){
 			u32 t_index = static_cast<u32>( (a_rad * ((COUNTOF(s_sin_cos_table) - 1) / (2.0f * Math::PI)) + 0.5f)) % (COUNTOF(s_sin_cos_table) - 1);
@@ -299,10 +355,10 @@ namespace NBlib
 
 	/** [static]タンジェント（テーブル参照）。
 	*/
-	f32 Math::tanf_fast(f32 a_rad)
+	f32 Math::tan_f_fast(f32 a_rad)
 	{
-		f32 t_sin = Math::sinf_fast(a_rad);
-		f32 t_cos = Math::cosf_fast(a_rad);
+		f32 t_sin = Math::sin_f_fast(a_rad);
+		f32 t_cos = Math::cos_f_fast(a_rad);
 
 		if(t_cos != 0.0f){
 			return t_sin / t_cos;

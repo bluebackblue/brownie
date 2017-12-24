@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ‚g‚s‚s‚oB
+ * @brief ï¼¨ï¼´ï¼´ï¼°ã€‚
 */
 
 
@@ -54,19 +54,19 @@ namespace NBsys{namespace NHttp
 		*/
 		bool iserror;
 
-		/** óMƒoƒbƒtƒ@B
+		/** å—ä¿¡ãƒãƒƒãƒ•ã‚¡ã€‚
 		*/
 		sharedptr<u8> recvbuffer;
 
-		/** óMƒoƒbƒtƒ@ƒTƒCƒYB
+		/** å—ä¿¡ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚ºã€‚
 		*/
 		s32 recvbuffer_size;
 
-		/** óMƒf[ƒ^‰ğÍ—pƒoƒbƒtƒ@B
+		/** å—ä¿¡ãƒ‡ãƒ¼ã‚¿è§£æç”¨ãƒãƒƒãƒ•ã‚¡ã€‚
 		*/
 		sharedptr<RingBufferBase<u8>> ringbuffer_recv;
 
-		/** óMƒf[ƒ^ƒoƒbƒtƒ@B
+		/** å—ä¿¡ãƒ‡ãƒ¼ã‚¿ãƒãƒƒãƒ•ã‚¡ã€‚
 		*/
 		sharedptr<RingBufferBase<u8>> ringbuffer_data;
 
@@ -74,19 +74,19 @@ namespace NBsys{namespace NHttp
 		*/
 		STLVector<STLString>::Type header_line;
 
-		/** óM‚ª•K—v‚ÈƒTƒCƒYB
+		/** å—ä¿¡ãŒå¿…è¦ãªã‚µã‚¤ã‚ºã€‚
 		*/
 		s32 need_recv_size;
 
-		/** Œ»İ‚Ìƒ`ƒƒƒ“ƒN‚ÌƒRƒs[Ï‚İƒTƒCƒYB
+		/** ç¾åœ¨ã®ãƒãƒ£ãƒ³ã‚¯ã®ã‚³ãƒ”ãƒ¼æ¸ˆã¿ã‚µã‚¤ã‚ºã€‚
 		*/
 		s32 copy_chunk_size;
 
-		/** Š®—¹‚µ‚Ä‚¢‚éƒ`ƒƒƒ“ƒN‚ÌƒRƒs[Ï‚İƒTƒCƒYB
+		/** å®Œäº†ã—ã¦ã„ã‚‹ãƒãƒ£ãƒ³ã‚¯ã®ã‚³ãƒ”ãƒ¼æ¸ˆã¿ã‚µã‚¤ã‚ºã€‚
 		*/
 		s32 copyfix_chunk_size;
 
-		/** ƒRƒs[Ï‚İƒRƒ“ƒeƒ“ƒcƒTƒCƒYB
+		/** ã‚³ãƒ”ãƒ¼æ¸ˆã¿ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ã‚µã‚¤ã‚ºã€‚
 		*/
 		s32 copy_content_size;
 
@@ -126,15 +126,15 @@ namespace NBsys{namespace NHttp
 
 	public:
 
-		/** óM‚ğŠJnB
+		/** å—ä¿¡ã‚’é–‹å§‹ã€‚
 		*/
 		void StartRecv();
 
-		/** ƒGƒ‰[B
+		/** ã‚¨ãƒ©ãƒ¼ã€‚
 		*/
 		bool IsError();
 
-		/** óMƒf[ƒ^‰ğÍ—pƒoƒbƒtƒ@‚Ìg—pƒTƒCƒYB
+		/** å—ä¿¡ãƒ‡ãƒ¼ã‚¿è§£æç”¨ãƒãƒƒãƒ•ã‚¡ã®ä½¿ç”¨ã‚µã‚¤ã‚ºã€‚
 		*/
 		s32 GetRecvRingBufferUseSize();
 
@@ -154,7 +154,7 @@ namespace NBsys{namespace NHttp
 		*/
 		s32 GetContentLength();
 
-		/** XVB
+		/** æ›´æ–°ã€‚
 		*/
 		bool Update();
 

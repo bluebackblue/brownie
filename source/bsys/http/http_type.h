@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ‚g‚s‚s‚oB
+ * @brief ï¼¨ï¼´ï¼´ï¼°ã€‚
 */
 
 
@@ -25,10 +25,10 @@ namespace NBsys{namespace NHttp
 	{
 		enum Id
 		{
-			//ƒ|ƒXƒgB
+			//ãƒã‚¹ãƒˆã€‚
 			Post,
 
-			//ƒQƒbƒgB
+			//ã‚²ãƒƒãƒˆã€‚
 			Get,
 		};
 	};

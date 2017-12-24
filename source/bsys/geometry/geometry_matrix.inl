@@ -34,7 +34,7 @@ namespace NBsys{namespace NGeometry
 		inline f32 sinf(f32 a_rad)
 		{
 			#if(BSYS_GEOMETRY_MATRIX_SINCOSFAST_ENABLE)
-			return Math::sinf_fast(a_rad);
+			return Math::sin_f_fast(a_rad);
 			#else
 			return Math::sinf(a_rad);
 			#endif
@@ -46,7 +46,7 @@ namespace NBsys{namespace NGeometry
 		inline f32 cosf(f32 a_rad)
 		{
 			#if(BSYS_GEOMETRY_MATRIX_SINCOSFAST_ENABLE)
-			return Math::cosf_fast(a_rad);
+			return Math::cos_f_fast(a_rad);
 			#else
 			return Math::cosf(a_rad);
 			#endif
@@ -393,9 +393,9 @@ namespace NBsys{namespace NGeometry
 			ASSERT(t_ay_value != 0.0f);
 			ASSERT(t_az_value != 0.0f);
 
-			t_ax_value = Math::sqrtf(t_ax_value);
-			t_ay_value = Math::sqrtf(t_ay_value);
-			t_az_value = Math::sqrtf(t_az_value);
+			t_ax_value = Math::sqrt_f(t_ax_value);
+			t_ay_value = Math::sqrt_f(t_ay_value);
+			t_az_value = Math::sqrt_f(t_az_value);
 
 			ASSERT(t_ax_value != 0.0f);
 			ASSERT(t_ay_value != 0.0f);
@@ -881,7 +881,7 @@ namespace NBsys{namespace NGeometry
 			f32 t_tr = this->ax_x + this->ay_y + this->az_z;
 			if(t_tr > 0.0f){
 
-				f32 t_s = Math::sqrtf(t_tr + 1.0f);
+				f32 t_s = Math::sqrt_f(t_tr + 1.0f);
 				t_temp_quaternion.w = t_s * 0.5f;
 				t_s = 0.5f / t_s;
 
@@ -905,7 +905,7 @@ namespace NBsys{namespace NGeometry
 				s32 jj = t_next[ii];
 				s32 kk = t_next[jj];
 
-				f32 t_s = Math::sqrtf((this->m[ii][ii] - (this->m[jj][jj] + this->m[kk][kk])) + 1.0f);
+				f32 t_s = Math::sqrt_f((this->m[ii][ii] - (this->m[jj][jj] + this->m[kk][kk])) + 1.0f);
 
 				f32 t_temp[3];
 				t_temp[ii] = t_s * 0.5f;
@@ -982,7 +982,7 @@ namespace NBsys{namespace NGeometry
 	{
 		f32 t_aspect = a_width / a_height;
 		f32 t_fov_radian =  BLIB_MATH_DEG_TO_RAD(a_fov_deg);
-		f32 t_scale = 1.0f / Math::tanf(t_fov_radian / 2);
+		f32 t_scale = 1.0f / Math::tan_f(t_fov_radian / 2);
 		f32 t_w = t_scale/t_aspect;
 		f32 t_h = t_scale;
 

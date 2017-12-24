@@ -47,7 +47,7 @@ static void AddDebugLog(const wchar* a_wstring,const NBsys::NColor::Color_F& a_c
 			return;
 		}
 
-		Memory::memcpy(&t_logitem.buffer[0],sizeof(t_logitem.buffer),a_wstring,t_length * sizeof(wchar));
+		Memory::Copy(&t_logitem.buffer[0],sizeof(t_logitem.buffer),a_wstring,t_length * sizeof(wchar));
 		t_logitem.buffer[t_length] = 0;
 	}
 

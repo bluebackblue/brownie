@@ -376,7 +376,7 @@ namespace NBsys{namespace NGeometry
 		f32 t_value = this->SquareLength();
 		ASSERT(t_value != 0.0f);
 
-		t_value = Math::sqrtf(t_value);
+		t_value = Math::sqrt_f(t_value);
 		ASSERT(t_value != 0.0f);
 
 		t_value = 1.0f / t_value;
@@ -399,7 +399,7 @@ namespace NBsys{namespace NGeometry
 			return *this;
 		}
 
-		t_value = Math::sqrtf(t_value);
+		t_value = Math::sqrt_f(t_value);
 		if(t_value == 0.0f){
 			*this = a_vector_safe;
 			return *this;
@@ -424,7 +424,7 @@ namespace NBsys{namespace NGeometry
 			return 0.0f;
 		}
 
-		t_value = Math::sqrtf(t_value);
+		t_value = Math::sqrt_f(t_value);
 		if(t_value == 0.0f){
 			return 0.0f;
 		}
@@ -450,7 +450,7 @@ namespace NBsys{namespace NGeometry
 			f32 t_value = this->SquareLength();
 			ASSERT(t_value != 0.0f);
 
-			t_value = Math::sqrtf(t_value);
+			t_value = Math::sqrt_f(t_value);
 			ASSERT(t_value != 0.0f);
 
 			t_value = 1.0f / t_value;
@@ -474,7 +474,7 @@ namespace NBsys{namespace NGeometry
 				return a_vector_safe;
 			}
 
-			t_value = Math::sqrtf(t_value);
+			t_value = Math::sqrt_f(t_value);
 			if(t_value == 0.0f){
 				return a_vector_safe;
 			}
@@ -662,7 +662,7 @@ namespace NBsys{namespace NGeometry
 	{
 		f32 t_value = this->SquareLength();
 
-		t_value = Math::sqrtf(t_value);
+		t_value = Math::sqrt_f(t_value);
 
 		return t_value;
 	}

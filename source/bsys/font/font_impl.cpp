@@ -145,7 +145,7 @@ namespace NBsys{namespace NFont
 			//ピクセル。
 			{
 				u8* t_dest_data = &a_dest_data.get()[a_offset];
-				Memory::memset(t_dest_data,0x00,a_dest_width * a_dest_height * 4);
+				Memory::Set(t_dest_data,0x00,a_dest_width * a_dest_height * 4);
 
 				s32 t_buffer_alignment = static_cast<u16>(t_font_state.black_box_x + 3) & 0xFFFC;
 

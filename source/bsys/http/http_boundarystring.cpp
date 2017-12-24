@@ -1,11 +1,11 @@
-#pragma once
+ï»¿
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ‚g‚s‚s‚oB
+ * @brief ï¼¨ï¼´ï¼´ï¼°ã€‚
 */
 
 
@@ -31,8 +31,8 @@ namespace NBsys{namespace NHttp
 			'1','2','3','4','5','6','7','8','9','0',
 		};
 
-		//‚P•¶šˆÈãA‚V‚O•¶šˆÈ‰ºB
-		//ÅŒã‚ÍuƒXƒy[ƒXvˆÈŠOB
+		//ï¼‘æ–‡å­—ä»¥ä¸Šã€ï¼—ï¼æ–‡å­—ä»¥ä¸‹ã€‚
+		//æœ€å¾Œã¯ã€Œã‚¹ãƒšãƒ¼ã‚¹ã€ä»¥å¤–ã€‚
 		for(s32 ii=0;ii<60;ii++){
 			t_boundary += s_charlist[NBlib::GlobalRand_Get().Get() % COUNTOF(s_charlist)];
 		}

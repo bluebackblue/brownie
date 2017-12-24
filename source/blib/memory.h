@@ -25,41 +25,48 @@ namespace NBlib
 	{
 	public:
 
-		/** [static]memset
+		/** [static]Set
 		*/
-		static void memset(void* a_data,s32 a_value,s32 a_size);
+		static void Set(void* a_data,s32 a_value,s32 a_size);
 
-		/** [static]memcpy
+		/** [static]Copy
 		*/
-		static void memcpy(void* a_dest,s32 a_check_dest_size,const void* a_src,s32 a_src_size);
+		static void Copy(void* a_dest,s32 a_check_dest_size,const void* a_src,s32 a_src_size);
 
-		/** [static]memcmp
+		/** [static]Compare
 		*/
-		static s32 memcmp(const void* a_data_1,const void* a_data_2,s32 a_size);
+		static s32 Compare(const void* a_data_1,const void* a_data_2,s32 a_size);
 
-		/** [static]strlen
+		/** [static]StringLength
 		*/
-		static s32 strlen(const char* a_string,s32 a_max);
+		static s32 StringLength(const char* a_string,s32 a_max);
 
-		/** [static]wstrlen
+		/** [static]StringLengthW
 		*/
-		static s32 wstrlen(const wchar* a_wstring,s32 a_max);
+		static s32 StringLengthW(const wchar* a_wstring,s32 a_max);
 
-		/** [static]strcmp
+		/** [static]StringCompare
 		*/
-		static s32 strcmp(const char* a_string_1,const char* a_string_2);
+		static s32 StringCompare(const char* a_string_1,const char* a_string_2);
 
-		/** [static]wcscmp
+		/** [static]StringCompareW
 		*/
-		static s32 wcscmp(const wchar* a_string_1,const wchar* a_string_2);
+		static s32 StringCompareW(const wchar* a_string_1,const wchar* a_string_2);
 
-		/** Copy
+		/** [static]ゼロクリア。
 		*/
-		template <typename T> static T Copy(const u8*& a_current_pointer,s32 a_increment = -1)
+		template <typename T> static void ZeroClear(T& a_instance)
+		{
+			Memory::Set(&a_instance,0,sizeof(T));
+		}
+
+		/** StreamCopy
+		*/
+		template <typename T> static T StreamCopy(const u8*& a_current_pointer,s32 a_increment = -1)
 		{
 			T t_ret;
 			{
-				Memory::memcpy(&t_ret,static_cast<s32>(sizeof(T)),a_current_pointer,static_cast<s32>(sizeof(T)));
+				Memory::Copy(&t_ret,static_cast<s32>(sizeof(T)),a_current_pointer,static_cast<s32>(sizeof(T)));
 
 				if(a_increment < 0){
 					//自動インクリメント。
@@ -71,13 +78,13 @@ namespace NBlib
 			}
 			return t_ret;
 		}
-		/** Copy
+		/** StreamCopy
 		*/
-		template <typename T> static T Copy(u8*& a_current_pointer,s32 a_increment = -1)
+		template <typename T> static T StreamCopy(u8*& a_current_pointer,s32 a_increment = -1)
 		{
 			T t_ret;
 			{
-				Memory::memcpy(&t_ret,static_cast<s32>(sizeof(T)),a_current_pointer,static_cast<s32>(sizeof(T)));
+				Memory::Copy(&t_ret,static_cast<s32>(sizeof(T)),a_current_pointer,static_cast<s32>(sizeof(T)));
 
 				if(a_increment < 0){
 					//自動インクリメント。
@@ -93,6 +100,5 @@ namespace NBlib
 	};
 
 }
-
 
 

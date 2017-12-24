@@ -90,7 +90,6 @@ namespace NBlib
 			if(::gethostname(t_hostname,sizeof(t_hostname)) == 0){
 				addrinfo t_addrinfo_hints = {0};
 				{
-					Memory::memset(&t_addrinfo_hints,0,sizeof(t_addrinfo_hints));
 					t_addrinfo_hints.ai_family = PF_INET;
 					t_addrinfo_hints.ai_flags = AI_CANONNAME;
 				}
@@ -207,7 +206,6 @@ namespace NBlib
 				{
 					addrinfo t_addrinfo_hints = {0};
 					{
-						Memory::memset(&t_addrinfo_hints,0,sizeof(t_addrinfo_hints));
 						t_addrinfo_hints.ai_socktype = SOCK_STREAM;
 						t_addrinfo_hints.ai_family = AF_INET;
 					}
@@ -253,7 +251,6 @@ namespace NBlib
 
 				addrinfo t_addrinfo_hints = {0};
 				{
-					Memory::memset(&t_addrinfo_hints,0,sizeof(t_addrinfo_hints));
 					t_addrinfo_hints.ai_family = AF_INET;
 					t_addrinfo_hints.ai_socktype = SOCK_DGRAM;
 				}
@@ -285,9 +282,8 @@ namespace NBlib
 
 			#if defined(PLATFORM_VCWIN)
 			{
-				sockaddr_in t_sockaddr_in;
+				sockaddr_in t_sockaddr_in = {0};
 				{
-					Memory::memset(&t_sockaddr_in,0,sizeof(t_sockaddr_in));
 					t_sockaddr_in.sin_family = AF_INET;
 					t_sockaddr_in.sin_port = ::htons(a_port);
 					t_sockaddr_in.sin_addr.S_un.S_addr = INADDR_ANY;

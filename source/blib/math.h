@@ -45,21 +45,21 @@ namespace NBlib
 
 		/** Min
 		*/
-		template <typename T> static inline T Min(T a_1,T a_2)
+		template <typename T> static inline T GetMin(T a_1,T a_2)
 		{
 			return ((a_1)<=(a_2))?(a_1):(a_2);
 		}
 
 		/** Max
 		*/
-		template <typename T> static inline T Max(T a_1,T a_2)
+		template <typename T> static inline T GetMax(T a_1,T a_2)
 		{
 			return ((a_1)>=(a_2))?(a_1):(a_2);
 		}
 
-		/** Clamp
+		/** Tの値をa_min以上a_max以下にする。
 		*/
-		template <typename T> static inline T Clamp(T a_value,T a_min,T a_max)
+		template <typename T> static inline T GetClamp(T a_value,T a_min,T a_max)
 		{
 			return ((a_value)>=(a_max))?(a_max):(((a_value)<=(a_min))?(a_min):(a_value));
 		}
@@ -70,67 +70,67 @@ namespace NBlib
 
 		/** [static]a_x/a_yの余剰。
 		*/
-		static f32 modf(f32 a_x,f32 a_y);
+		static f32 mod_f(f32 a_x,f32 a_y);
 
 		/** [static]xのy乗。
 		*/
-		static f32 powf(f32 a_x,f32 a_y);
+		static f32 pow_f(f32 a_x,f32 a_y);
 
 		/** [static]平方根。
 		*/
-		static f32 sqrtf(f32 a_value);
+		static f32 sqrt_f(f32 a_value);
 
 		/** [static]2を底とする対数。
 		*/
-		static f32 log2f(f32 a_value);
+		static f32 log2_f(f32 a_value);
 
 		/** [static]切り上げ。
 		*/
-		static f32 ceilf(f32 a_value);
+		static f32 ceil_f(f32 a_value);
 
 		/** [static]絶対値。
 		*/
-		static f32 absf(f32 a_value);
+		static f32 abs_f(f32 a_value);
 
-		/** [static]自然対数の底e(ネイピア数)のvalue乗。
+		/** [static]eのvalue乗。
 		*/
-		static f32 expf(f32 a_value);
+		static f32 exp_f(f32 a_value);
 
-		/** [static]sinf.
+		/** [static]サイン。
 		*/
-		static f32 sinf(f32 a_rad);
+		static f32 sin_f(f32 a_rad);
 
-		/** [static]cosf.
+		/** [static]コサイン。
 		*/
-		static f32 cosf(f32 a_rad);
+		static f32 cos_f(f32 a_rad);
 
-		/** [static]tanf.
+		/** [static]タンジェント。
 		*/
-		static f32 tanf(f32 a_rad);
+		static f32 tan_f(f32 a_rad);
 
-		/** [static]asinf.
+		/** [static]アークサイン。
 		*/
-		static f32 asinf(f32 a_x);
+		static f32 asin_f(f32 a_x);
 
-		/** [static]acosf.
+		/** [static]アークコサイン。
 		*/
-		static f32 acosf(f32 a_x);
+		static f32 acos_f(f32 a_x);
 
-		/** [static]atanf.
+		/** [static]アークタンジェント。
 		*/
-		static f32 atanf(f32 a_x);
+		static f32 atan_f(f32 a_x);
 
-		/** [static]sinf_fast
+		/** [static]サイン（テーブル参照）。
 		*/
-		static f32 sinf_fast(f32 a_rad);
+		static f32 sin_f_fast(f32 a_rad);
 
-		/** [static]cosf_fast
+		/** [static]コサイン（テーブル参照）。
 		*/
-		static f32 cosf_fast(f32 a_rad);
+		static f32 cos_f_fast(f32 a_rad);
 
-		/** [static]tanf_fast
+		/** [static]タンジェント（テーブル参照）。
 		*/
-		static f32 tanf_fast(f32 a_rad);
+		static f32 tan_f_fast(f32 a_rad);
 		
 	};
 }

@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ‚g‚s‚s‚oB
+ * @brief ï¼¨ï¼´ï¼´ï¼°ã€‚
 */
 
 
@@ -49,7 +49,7 @@ namespace NBsys{namespace NHttp
 	}
 
 
-	/** ‘—Mƒoƒbƒtƒ@‚Éƒf[ƒ^‚ğƒRƒs[B
+	/** é€ä¿¡ãƒãƒƒãƒ•ã‚¡ã«ãƒ‡ãƒ¼ã‚¿ã‚’ã‚³ãƒ”ãƒ¼ã€‚
 	*/
 	void Http_Send::Send(const sharedptr<SocketHandle>& a_socket,const sharedptr<u8>& a_buffer,s32 a_size)
 	{
@@ -61,7 +61,7 @@ namespace NBsys{namespace NHttp
 	}
 
 
-	/** ‘—M‚ªŠ®—¹‚µ‚½‚©‚Ç‚¤‚©B
+	/** é€ä¿¡ãŒå®Œäº†ã—ãŸã‹ã©ã†ã‹ã€‚
 	*/
 	bool Http_Send::IsBusy()
 	{
@@ -72,7 +72,7 @@ namespace NBsys{namespace NHttp
 	}
 
 
-	/** ƒGƒ‰[B
+	/** ã‚¨ãƒ©ãƒ¼ã€‚
 	*/
 	bool Http_Send::IsError()
 	{
@@ -80,7 +80,7 @@ namespace NBsys{namespace NHttp
 	}
 
 
-	/** XVB
+	/** æ›´æ–°ã€‚
 	*/
 	bool Http_Send::Update()
 	{
@@ -91,14 +91,14 @@ namespace NBsys{namespace NHttp
 					if(this->socket->Send(this->buffer.get(),this->buffer_offset + t_send_size,this->buffer_offset) == true){
 						this->buffer_offset += t_send_size;
 					}else{
-						//ƒGƒ‰[B
+						//ã‚¨ãƒ©ãƒ¼ã€‚
 						this->iserror = true;
 					}
 				}
 			}
 		}
 
-		//ƒ‹[ƒvƒŠƒNƒGƒXƒgB‚È‚µB
+		//ãƒ«ãƒ¼ãƒ—ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚ãªã—ã€‚
 		return false;
 	}
 

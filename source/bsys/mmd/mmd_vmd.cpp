@@ -34,8 +34,8 @@ namespace NBsys{namespace NMmd
 	bool Mmd_Vmd::Load_Header(u8*& a_raw)
 	{
 		//Mmd_Vmd_Header
-		this->header_a = Memory::Copy<Mmd_Vmd_Header_A>(a_raw,COUNTOF(Mmd_Vmd_Header_A::string) * sizeof(char));
-		this->header_b = Memory::Copy<Mmd_Vmd_Header_B>(a_raw,COUNTOF(Mmd_Vmd_Header_B::string) * sizeof(char));
+		this->header_a = Memory::StreamCopy<Mmd_Vmd_Header_A>(a_raw,COUNTOF(Mmd_Vmd_Header_A::string) * sizeof(char));
+		this->header_b = Memory::StreamCopy<Mmd_Vmd_Header_B>(a_raw,COUNTOF(Mmd_Vmd_Header_B::string) * sizeof(char));
 
 		STLWString t_w_string;
 		STLString t_string = this->header_b.string;

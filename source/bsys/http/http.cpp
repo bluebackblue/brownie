@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ‚g‚s‚s‚oB
+ * @brief ï¼¨ï¼´ï¼´ï¼°ã€‚
 */
 
 
@@ -106,17 +106,17 @@ namespace NBsys{namespace NHttp
 	}
 
 
-	/** ƒRƒ“ƒeƒ“ƒc’Ç‰ÁB
+	/** ã‚³ãƒ³ãƒ†ãƒ³ãƒ„è¿½åŠ ã€‚
 	*/
 	void Http::AddPostContent(const STLString& a_name,const STLString& a_filename,sharedptr< u8 >& a_data,s32 a_size)
 	{
-		//ƒwƒbƒ_[B
+		//ãƒ˜ãƒƒãƒ€ãƒ¼ã€‚
 		STLString t_body_header = NHttp::MakeBodyString_BinaryHeader(this->boundary_string,a_name,a_filename);
 		
-		//ƒtƒbƒ^[B
+		//ãƒ•ãƒƒã‚¿ãƒ¼ã€‚
 		STLString t_body_footer = NHttp::MakeBodyString_BinarFooter();
 
-		//ƒoƒbƒtƒ@B
+		//ãƒãƒƒãƒ•ã‚¡ã€‚
 		s32 t_buffer_size = a_size + t_body_header.length() + t_body_footer.length();
 		sharedptr<Http_BinaryItem> t_binary_item(new Http_BinaryItem());
 		t_binary_item->data.reset(new u8[t_buffer_size + 1],default_delete<u8>());
@@ -124,17 +124,17 @@ namespace NBsys{namespace NHttp
 		u8* t_buffer_data = t_binary_item->data.get();
 		t_binary_item->size = t_buffer_size;
 
-		//ƒRƒs[B
+		//ã‚³ãƒ”ãƒ¼ã€‚
 		{
 			s32 t_offset = 0;
 
-			Memory::memcpy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_body_header.c_str(),static_cast<s32>(t_body_header.length()));
+			Memory::Copy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_body_header.c_str(),static_cast<s32>(t_body_header.length()));
 			t_offset += static_cast<s32>(t_body_header.length());
 
-			Memory::memcpy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),a_data.get(),a_size);
+			Memory::Copy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),a_data.get(),a_size);
 			t_offset += static_cast<s32>(a_size);
 
-			Memory::memcpy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_body_footer.c_str(),static_cast<s32>(t_body_footer.length()));
+			Memory::Copy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_body_footer.c_str(),static_cast<s32>(t_body_footer.length()));
 			t_offset += static_cast<s32>(t_body_footer.length());
 
 			ASSERT(t_offset == t_buffer_size);
@@ -144,17 +144,17 @@ namespace NBsys{namespace NHttp
 	}
 
 
-	/** ƒRƒ“ƒeƒ“ƒc’Ç‰ÁB
+	/** ã‚³ãƒ³ãƒ†ãƒ³ãƒ„è¿½åŠ ã€‚
 	*/
 	void Http::AddPostContent(const STLString& a_name,const STLString& a_value)
 	{
-		//ƒwƒbƒ_[B
+		//ãƒ˜ãƒƒãƒ€ãƒ¼ã€‚
 		STLString t_body_header = NHttp::MakeBodyString_TextHeader(this->boundary_string,a_name);
 		
-		//ƒtƒbƒ^[B
+		//ãƒ•ãƒƒã‚¿ãƒ¼ã€‚
 		STLString t_body_footer = NHttp::MakeBodyString_TextFooter();
 
-		//ƒoƒbƒtƒ@B
+		//ãƒãƒƒãƒ•ã‚¡ã€‚
 		s32 t_buffer_size = a_value.length() + t_body_header.length() + t_body_footer.length();
 		sharedptr<Http_BinaryItem> t_binary_item(new Http_BinaryItem());
 		t_binary_item->data.reset(new u8[t_buffer_size + 1],default_delete<u8>());
@@ -162,17 +162,17 @@ namespace NBsys{namespace NHttp
 		u8* t_buffer_data = t_binary_item->data.get();
 		t_binary_item->size = t_buffer_size;
 
-		//ƒRƒs[B
+		//ã‚³ãƒ”ãƒ¼ã€‚
 		{
 			s32 t_offset = 0;
 
-			Memory::memcpy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_body_header.c_str(),static_cast<s32>(t_body_header.length()));
+			Memory::Copy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_body_header.c_str(),static_cast<s32>(t_body_header.length()));
 			t_offset += static_cast<s32>(t_body_header.length());
 
-			Memory::memcpy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),a_value.c_str(),a_value.length());
+			Memory::Copy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),a_value.c_str(),a_value.length());
 			t_offset += static_cast<s32>(a_value.length());
 
-			Memory::memcpy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_body_footer.c_str(),static_cast<s32>(t_body_footer.length()));
+			Memory::Copy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_body_footer.c_str(),static_cast<s32>(t_body_footer.length()));
 			t_offset += static_cast<s32>(t_body_footer.length());
 
 			ASSERT(t_offset == t_buffer_size);
@@ -218,7 +218,7 @@ namespace NBsys{namespace NHttp
 	}
 
 
-	/** ŠJnB
+	/** é–‹å§‹ã€‚
 	*/
 	void Http::ConnectStart(sharedptr<RingBufferBase<u8>>& a_recv_buffer)
 	{
@@ -226,18 +226,18 @@ namespace NBsys{namespace NHttp
 		this->step = Step::Start;
 		this->iserror = false;
 
-		//ƒ\ƒPƒbƒgì¬B
+		//ã‚½ã‚±ãƒƒãƒˆä½œæˆã€‚
 		this->socket.reset(new SocketHandle());
 
-		//óMİ’èB
+		//å—ä¿¡è¨­å®šã€‚
 		this->recv.reset(new Http_Recv(this->socket,this->recv_buffer));
 	
-		//‘—Mİ’èB
+		//é€ä¿¡è¨­å®šã€‚
 		this->send.reset(new Http_Send());
 	}
 
 
-	/** I—¹B
+	/** çµ‚äº†ã€‚
 	*/
 	void Http::ConnectEnd()
 	{
@@ -251,12 +251,12 @@ namespace NBsys{namespace NHttp
 	}
 
 
-	/** XVB
+	/** æ›´æ–°ã€‚
 	*/
 	bool Http::ConnectUpdate()
 	{
 		if(this->iserror == true){
-			//’†’fB
+			//ä¸­æ–­ã€‚
 			return false;
 		}
 
@@ -266,14 +266,14 @@ namespace NBsys{namespace NHttp
 
 			if(this->send){
 				if(this->send->Update() == true){
-					//ƒ‹[ƒvƒŠƒNƒGƒXƒgB
+					//ãƒ«ãƒ¼ãƒ—ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚
 					t_loop = true;
 				}
 				this->iserror = this->send->IsError();
 			}
 			if(this->recv){
 				if(this->recv->Update() == true){
-					//ƒ‹[ƒvƒŠƒNƒGƒXƒgB
+					//ãƒ«ãƒ¼ãƒ—ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚
 					t_loop = true;
 				}
 			}
@@ -284,7 +284,7 @@ namespace NBsys{namespace NHttp
 					{
 						s32 t_binary_size = 0;
 
-						//ƒoƒCƒiƒŠ‘ƒTƒCƒYB
+						//ãƒã‚¤ãƒŠãƒªç·ã‚µã‚¤ã‚ºã€‚
 						if(this->mode == Http_Mode::Post){
 							for(STLMap<STLString,sharedptr<Http_BinaryItem>>::iterator t_it = this->binary_list.begin();t_it!=this->binary_list.end();t_it++){
 								if(t_it->second != nullptr){
@@ -293,49 +293,49 @@ namespace NBsys{namespace NHttp
 							}
 						}
 
-						//ƒoƒCƒiƒŠI’[•¶š—ñB
+						//ãƒã‚¤ãƒŠãƒªçµ‚ç«¯æ–‡å­—åˆ—ã€‚
 						STLString t_binary_footer = "";
 						if(this->mode == Http_Mode::Post){
 							NHttp::MakeBodyString_PostBinarFooter(this->boundary_string);
 							t_binary_size += static_cast<s32>(t_binary_footer.length());
 						}
 
-						//ƒ{ƒfƒBì¬B				
+						//ãƒœãƒ‡ã‚£ä½œæˆã€‚				
 						STLString t_send_body = NHttp::MakeBodyString_Header(this->boundary_string,this->mode,this->url,this->host,t_binary_size);
 
-						//ƒoƒbƒtƒ@B
+						//ãƒãƒƒãƒ•ã‚¡ã€‚
 						s32 t_buffer_size = t_send_body.length() + t_binary_size;
 						this->send_buffer.reset(new u8[t_buffer_size + 1],default_delete<u8>());
 						this->send_buffer.get()[t_buffer_size] = 0x00;
 						u8* t_buffer_data = this->send_buffer.get();
 
-						//‘—Mƒoƒbƒtƒ@‚Ìì¬B
+						//é€ä¿¡ãƒãƒƒãƒ•ã‚¡ã®ä½œæˆã€‚
 						{
 							s32 t_offset = 0;
 
-							//ƒ{ƒfƒB[B
-							Memory::memcpy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_send_body.c_str(),static_cast<s32>(t_send_body.length()));
+							//ãƒœãƒ‡ã‚£ãƒ¼ã€‚
+							Memory::Copy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_send_body.c_str(),static_cast<s32>(t_send_body.length()));
 							t_offset += static_cast<s32>(t_send_body.length());
 
 							if(this->mode == Http_Mode::Post){
 
-								//ƒoƒCƒiƒŠB
+								//ãƒã‚¤ãƒŠãƒªã€‚
 								for(STLMap<STLString,sharedptr<Http_BinaryItem>>::iterator t_it = this->binary_list.begin();t_it!=this->binary_list.end();t_it++){
 									if(t_it->second != nullptr){
-										Memory::memcpy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_it->second->data.get(),t_it->second->size);
+										Memory::Copy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_it->second->data.get(),t_it->second->size);
 										t_offset += t_it->second->size;
 									}
 								}
 
-								//ƒoƒCƒiƒŠI’[B
-								Memory::memcpy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_binary_footer.c_str(),static_cast<s32>(t_binary_footer.length()));
+								//ãƒã‚¤ãƒŠãƒªçµ‚ç«¯ã€‚
+								Memory::Copy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_binary_footer.c_str(),static_cast<s32>(t_binary_footer.length()));
 								t_offset += static_cast<s32>(t_binary_footer.length());
 							}
 
 							ASSERT(t_offset == t_buffer_size);
 						}
 
-						//‘—Mƒoƒbƒtƒ@İ’èB
+						//é€ä¿¡ãƒãƒƒãƒ•ã‚¡è¨­å®šã€‚
 						this->send->Send(this->socket,this->send_buffer,t_buffer_size);
 					}
 
@@ -345,32 +345,32 @@ namespace NBsys{namespace NHttp
 				}break;
 			case Step::Connect:
 				{
-					//Ú‘±B
+					//æ¥ç¶šã€‚
 
 					if(this->socket->OpenTcp()){
 						if(this->socket->ConnectTcp(this->host.c_str(),this->port) == true){
 							this->step = Step::SendWait_StartData;
 							t_loop = true;
 						}else{
-							//ƒGƒ‰[B
+							//ã‚¨ãƒ©ãƒ¼ã€‚
 							this->iserror = true;
 						}
 					}else{
-						//ƒGƒ‰[B
+						//ã‚¨ãƒ©ãƒ¼ã€‚
 						this->iserror = true;
 					}
 				}break;
 			case Step::SendWait_StartData:
 				{
 					if(this->send->IsBusy() == false){
-						//óMŠJnB
+						//å—ä¿¡é–‹å§‹ã€‚
 						this->recv->StartRecv();
 						this->step = Step::RecvHeader;
 					}
 				}break;
 			case Step::RecvHeader:
 				{
-					//ƒwƒbƒ_[óMŠ®—¹ƒ`ƒFƒbƒNB
+					//ãƒ˜ãƒƒãƒ€ãƒ¼å—ä¿¡å®Œäº†ãƒã‚§ãƒƒã‚¯ã€‚
 					if(this->recv->IsRecvHeader()){
 						this->step = Step::Recv;
 					}
@@ -379,7 +379,7 @@ namespace NBsys{namespace NHttp
 				{
 					bool t_close = false;
 					if(this->recv->IsCopyContent()){
-						//ƒRƒ“ƒeƒ“ƒc‚ÌŠO•”ƒoƒbƒtƒ@‚Ö‚ÌƒRƒs[Š®—¹B
+						//ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ã®å¤–éƒ¨ãƒãƒƒãƒ•ã‚¡ã¸ã®ã‚³ãƒ”ãƒ¼å®Œäº†ã€‚
 						t_close = true;
 					}
 
@@ -398,14 +398,14 @@ namespace NBsys{namespace NHttp
 							}
 						}
 
-						//³íI—¹ or ’†’fI—¹B
+						//æ­£å¸¸çµ‚äº† or ä¸­æ–­çµ‚äº†ã€‚
 						return false;
 					}
 				}break;
 			}
 		}
 
-		//Œp‘±B
+		//ç¶™ç¶šã€‚
 		return true;
 	}
 

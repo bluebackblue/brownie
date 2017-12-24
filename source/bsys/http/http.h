@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ‚g‚s‚s‚oB
+ * @brief ï¼¨ï¼´ï¼´ï¼°ã€‚
 */
 
 
@@ -40,22 +40,22 @@ namespace NBsys{namespace NHttp
 		{
 			enum Id
 			{
-				//‘Ò‚¿B
+				//å¾…ã¡ã€‚
 				None = 0,
 
-				//ŠJnB
+				//é–‹å§‹ã€‚
 				Start,
 
-				//Ú‘±B
+				//æ¥ç¶šã€‚
 				Connect,
 
-				//‘—M‘Ò‚¿B‰‰ñƒf[ƒ^B
+				//é€ä¿¡å¾…ã¡ã€‚åˆå›ãƒ‡ãƒ¼ã‚¿ã€‚
 				SendWait_StartData,
 
-				//óM‘Ò‚¿B
+				//å—ä¿¡å¾…ã¡ã€‚
 				RecvHeader,
 
-				//óM‘Ò‚¿B
+				//å—ä¿¡å¾…ã¡ã€‚
 				Recv,
 			};
 		};
@@ -150,11 +150,11 @@ namespace NBsys{namespace NHttp
 
 	public:
 
-		/** ƒRƒ“ƒeƒ“ƒc’Ç‰ÁB
+		/** ã‚³ãƒ³ãƒ†ãƒ³ãƒ„è¿½åŠ ã€‚
 		*/
 		void AddPostContent(const STLString& a_name,const STLString& a_filename,sharedptr< u8 >& a_data,s32 a_size);
 
-		/** ƒRƒ“ƒeƒ“ƒc’Ç‰ÁB
+		/** ã‚³ãƒ³ãƒ†ãƒ³ãƒ„è¿½åŠ ã€‚
 		*/
 		void AddPostContent(const STLString& a_name,const STLString& a_value);
 
@@ -174,19 +174,19 @@ namespace NBsys{namespace NHttp
 
 	public:
 
-		/** ŠJnB
+		/** é–‹å§‹ã€‚
 		*/
 		void ConnectStart(sharedptr<RingBufferBase<u8>>& a_recv_buffer);
 
-		/** I—¹B
+		/** çµ‚äº†ã€‚
 		*/
 		void ConnectEnd();
 
-		/** XVB
+		/** æ›´æ–°ã€‚
 
-			–ß‚è’l
-				true	: Œp‘±
-				false	: I—¹
+			æˆ»ã‚Šå€¤
+				true	: ç¶™ç¶š
+				false	: çµ‚äº†
 
 		*/
 		bool ConnectUpdate();

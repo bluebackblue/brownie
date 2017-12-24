@@ -1,4 +1,4 @@
-﻿#pragma once
+﻿
 
 /**
  * Copyright (c) 2016 blueback

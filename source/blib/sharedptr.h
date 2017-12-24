@@ -132,7 +132,16 @@ namespace NBlib
 
 				#if defined(PLATFORM_VCWIN)
 				{
+					//戻り値は、デクリメントして生成された値です。
 					s32 t_ret = _InterlockedDecrement(reinterpret_cast<volatile long*>(&(this->use)));
+					if(t_ret <= 0){
+						t_delete = true;
+					}
+				}
+				#elif defined(PLATFORM_GNUCWIN)
+				{
+					//戻り値は、デクリメントして生成された値です。
+					s32 t_ret = __sync_add_and_fetch(reinterpret_cast<volatile long*>(&(this->use)),-1);
 					if(t_ret <= 0){
 						t_delete = true;
 					}
@@ -171,6 +180,25 @@ namespace NBlib
 						}
 					}
 				}
+				#elif defined(PLATFORM_GNUCWIN)
+				{
+					for(;;){
+						//最新の状態を取得。
+						s32 t_count = static_cast<volatile s32&>(this->use);
+						if(t_count == 0){
+							//すでに死んでいる。
+							return false;
+						}else{
+							//カウントが「t_count」の場合は「t_count+1」にする。
+							if(static_cast<s32>(__sync_val_compare_and_swap(reinterpret_cast<volatile long*>(&(this->use)),t_count,t_count+1) == t_count)){
+								//延命に成功。
+								return true;
+							}else{
+								//「this->use」の初期値が「t_count」以外だった。
+							}
+						}
+					}
+				}
 				#else
 				{
 					#warning
@@ -187,6 +215,11 @@ namespace NBlib
 					_InterlockedIncrement(reinterpret_cast<volatile long*>(&(this->use)));
 					_InterlockedIncrement(reinterpret_cast<volatile long*>(&(this->weak)));
 				}
+				#elif defined(PLATFORM_GNUCWIN)
+				{
+					__sync_add_and_fetch(reinterpret_cast<volatile long*>(&(this->use)),1);
+					__sync_add_and_fetch(reinterpret_cast<volatile long*>(&(this->weak)),1);
+				}
 				#else
 				{
 					#warning
@@ -201,6 +234,15 @@ namespace NBlib
 				#if defined(PLATFORM_VCWIN)
 				{
 					s32 t_ret = _InterlockedDecrement(reinterpret_cast<volatile long*>(&(this->weak)));
+					if(t_ret <= 0){
+						//※誰も使用していない、誰も参照していない。
+						return true;
+					}
+				}
+				#elif defined(PLATFORM_GNUCWIN)
+				{
+					//戻り値は、デクリメントして生成された値です。
+					s32 t_ret = __sync_add_and_fetch(reinterpret_cast<volatile long*>(&(this->weak)),-1);
 					if(t_ret <= 0){
 						//※誰も使用していない、誰も参照していない。
 						return true;
@@ -222,6 +264,10 @@ namespace NBlib
 				#if defined(PLATFORM_VCWIN)
 				{
 					_InterlockedIncrement(reinterpret_cast<volatile long*>(&(this->weak)));
+				}
+				#elif defined(PLATFORM_GNUCWIN)
+				{
+					__sync_add_and_fetch(reinterpret_cast<volatile long*>(&(this->weak)),1);
 				}
 				#else
 				{

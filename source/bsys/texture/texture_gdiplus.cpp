@@ -195,7 +195,7 @@ namespace NBsys{namespace NTexture
 									if(t_global_buffer){
 
 										t_jpg_data.reset(new u8[t_write_size]);
-										Memory::memcpy(t_jpg_data.get(),t_write_size,t_global_buffer,t_write_size);
+										Memory::Copy(t_jpg_data.get(),t_write_size,t_global_buffer,t_write_size);
 										t_jpg_size = t_write_size;
 
 										::GlobalUnlock(t_global_handle);

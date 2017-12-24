@@ -1,11 +1,11 @@
-#pragma once
+ï»¿
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ‚g‚s‚s‚oB
+ * @brief ï¼¨ï¼´ï¼´ï¼°ã€‚
 */
 
 
@@ -30,7 +30,7 @@ namespace NBsys{namespace NHttp
 	{
 		STLString t_body_binaryheader;
 
-		//ƒoƒEƒ“ƒ_ƒŠ•¶š—ñB
+		//ãƒã‚¦ãƒ³ãƒ€ãƒªæ–‡å­—åˆ—ã€‚
 		{
 			//------****<0D 0A>
 			t_body_binaryheader += "--";
@@ -82,7 +82,7 @@ namespace NBsys{namespace NHttp
 	{
 		STLString t_body_textheader;
 
-		//ƒoƒEƒ“ƒ_ƒŠ•¶š—ñB
+		//ãƒã‚¦ãƒ³ãƒ€ãƒªæ–‡å­—åˆ—ã€‚
 		{
 			//------****<0D 0A>
 			t_body_textheader += "--";
@@ -126,7 +126,7 @@ namespace NBsys{namespace NHttp
 	{
 		STLString t_body;
 	
-		//POST ƒŠƒNƒGƒXƒgB
+		//POST ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚
 		{
 			if(a_mode == Http_Mode::Post){
 				t_body += "POST ";
@@ -138,14 +138,14 @@ namespace NBsys{namespace NHttp
 			t_body += "\r\n";
 		}
 
-		//Host: ‰¼‘zƒT[ƒoİ’èB
+		//Host: ä»®æƒ³ã‚µãƒ¼ãƒè¨­å®šã€‚
 		{
 			t_body += "Host: ";
 			t_body += a_host;
 			t_body += "\r\n";
 		}
 
-		//Connection: ‘±Ú‘±İ’èB
+		//Connection: æŒç¶šæ¥ç¶šè¨­å®šã€‚
 		{
 			#if(0)
 			t_body += "Connection: keep-alive";
@@ -156,7 +156,7 @@ namespace NBsys{namespace NHttp
 			t_body += "\r\n";
 		}
 
-		//Content-Length: ƒRƒ“ƒeƒ“ƒcƒTƒCƒYB
+		//Content-Length: ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ã‚µã‚¤ã‚ºã€‚
 		if(a_mode == Http_Mode::Post){
 			char t_temp[32];
 			t_body += "Content-Length: ";
@@ -164,35 +164,35 @@ namespace NBsys{namespace NHttp
 			t_body += "\r\n";
 		}
 
-		//Cache-Control: ƒLƒƒƒbƒVƒ…İ’èB
+		//Cache-Control: ã‚­ãƒ£ãƒƒã‚·ãƒ¥è¨­å®šã€‚
 		t_body += "Cache-Control: no-cache";
 		t_body += "\r\n";
 
-		//Accept: óM‰Â”\MIMEB
+		//Accept: å—ä¿¡å¯èƒ½MIMEã€‚
 		t_body += "Accept: */*";
 		t_body += "\r\n";
 
-		//User-Agent: ƒuƒ‰ƒEƒUƒo[ƒWƒ‡ƒ“B
+		//User-Agent: ãƒ–ãƒ©ã‚¦ã‚¶ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã€‚
 		t_body += "User-Agent: ";
 		t_body += BSYS_HTTP_USERAGENT;
 		t_body += "\r\n";
 
-		//Content-Type: ƒ}ƒ‹ƒ`ƒp[ƒgƒf[ƒ^B
+		//Content-Type: ãƒãƒ«ãƒãƒ‘ãƒ¼ãƒˆãƒ‡ãƒ¼ã‚¿ã€‚
 		if(a_mode == Http_Mode::Post){
 			t_body += "Content-Type: multipart/form-data; boundary=";
 			t_body += "----" + a_boundarystring;
 			t_body += "\r\n";
 		}
 
-		//Accept-Encoding: –¢ˆ³kB
+		//Accept-Encoding: æœªåœ§ç¸®ã€‚
 		t_body += "Accept-Encoding: identity";
 		t_body += "\r\n";
 
-		//Accept-Language: ‰pŒêB
+		//Accept-Language: è‹±èªã€‚
 		t_body += "Accept-Language: en";
 		t_body += "\r\n";
 
-		//I’[B
+		//çµ‚ç«¯ã€‚
 		t_body += "\r\n";
 
 		return t_body;
@@ -205,12 +205,12 @@ namespace NBsys{namespace NHttp
 	{
 		STLString t_postbinary_footer;
 
-		//ƒoƒEƒ“ƒ_ƒŠ•¶š—ñB
+		//ãƒã‚¦ãƒ³ãƒ€ãƒªæ–‡å­—åˆ—ã€‚
 		t_postbinary_footer += "--";
 		t_postbinary_footer += "----" + a_boundarystring;
 		t_postbinary_footer += "--";
 
-		//I’[B
+		//çµ‚ç«¯ã€‚
 		t_postbinary_footer += "\r\n";
 
 		return t_postbinary_footer;

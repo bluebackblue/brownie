@@ -27,14 +27,14 @@ namespace NBsys{namespace NGeometry
 		*/
 		inline f32 sinf(f32 a_rad)
 		{
-			return Math::sinf(a_rad);
+			return Math::sin_f(a_rad);
 		}
 
 		/** cosf
 		*/
 		inline f32 cosf(f32 a_rad)
 		{
-			return Math::cosf(a_rad);
+			return Math::cos_f(a_rad);
 		}
 	}
 
@@ -118,43 +118,43 @@ namespace NBsys{namespace NGeometry
 
 			//0 - t_speed_inverse
 			t_rand_value = (t_rand.Get() % 1000) + 1;
-			this->value_1  = (1 + Math::sinf_fast(t_rand_value * a_k2  * (Math::PI - 0.001f))) * 0.5f * this->speed_inverse_range;
+			this->value_1  = (1 + Math::sin_f_fast(t_rand_value * a_k2  * (Math::PI - 0.001f))) * 0.5f * this->speed_inverse_range;
 
 			t_rand_value = (t_rand.Get() % 1000) + 1;
-			this->value_2  = (1 + Math::sinf_fast(t_rand_value * a_k3  * (Math::PI - 0.001f))) * 0.5f * this->speed_inverse_range;
+			this->value_2  = (1 + Math::sin_f_fast(t_rand_value * a_k3  * (Math::PI - 0.001f))) * 0.5f * this->speed_inverse_range;
 
 			t_rand_value = (t_rand.Get() % 1000) + 1;
-			this->value_3  = (1 + Math::sinf_fast(t_rand_value * a_k4  * (Math::PI - 0.001f))) * 0.5f * this->speed_inverse_range;
+			this->value_3  = (1 + Math::sin_f_fast(t_rand_value * a_k4  * (Math::PI - 0.001f))) * 0.5f * this->speed_inverse_range;
 
 			t_rand_value = (t_rand.Get() % 1000) + 1;
-			this->value_4  = (1 + Math::sinf_fast(t_rand_value * a_k5  * (Math::PI - 0.001f))) * 0.5f * this->speed_inverse_range;
+			this->value_4  = (1 + Math::sin_f_fast(t_rand_value * a_k5  * (Math::PI - 0.001f))) * 0.5f * this->speed_inverse_range;
 
 			t_rand_value = (t_rand.Get() % 1000) + 1;
-			this->value_5  = (1 + Math::sinf_fast(t_rand_value * a_k6  * (Math::PI - 0.001f))) * 0.5f * this->speed_inverse_range;
+			this->value_5  = (1 + Math::sin_f_fast(t_rand_value * a_k6  * (Math::PI - 0.001f))) * 0.5f * this->speed_inverse_range;
 
 			t_rand_value = (t_rand.Get() % 1000) + 1;
-			this->value_6  = (1 + Math::sinf_fast(t_rand_value * a_k6  * (Math::PI - 0.001f))) * 0.5f * this->speed_inverse_range;
+			this->value_6  = (1 + Math::sin_f_fast(t_rand_value * a_k6  * (Math::PI - 0.001f))) * 0.5f * this->speed_inverse_range;
 
 			t_rand_value = (t_rand.Get() % 1000) + 1;
-			this->value_11 = (1 + Math::sinf_fast(t_rand_value * a_k7  * (Math::PI - 0.001f))) * 0.5f * this->speed_inverse_range;
+			this->value_11 = (1 + Math::sin_f_fast(t_rand_value * a_k7  * (Math::PI - 0.001f))) * 0.5f * this->speed_inverse_range;
 
 			t_rand_value = (t_rand.Get() % 1000) + 1;
-			this->value_12 = (1 + Math::sinf_fast(t_rand_value * a_k8  * (Math::PI - 0.001f))) * 0.5f * this->speed_inverse_range;
+			this->value_12 = (1 + Math::sin_f_fast(t_rand_value * a_k8  * (Math::PI - 0.001f))) * 0.5f * this->speed_inverse_range;
 
 			t_rand_value = (t_rand.Get() % 1000) + 1;
-			this->value_13 = (1 + Math::sinf_fast(t_rand_value * a_k9  * (Math::PI - 0.001f))) * 0.5f * this->speed_inverse_range;
+			this->value_13 = (1 + Math::sin_f_fast(t_rand_value * a_k9  * (Math::PI - 0.001f))) * 0.5f * this->speed_inverse_range;
 
 			t_rand_value = (t_rand.Get() % 1000) + 1;
-			this->value_14 = (1 + Math::sinf_fast(t_rand_value * a_k10 * (Math::PI - 0.001f))) * 0.5f * this->speed_inverse_range;
+			this->value_14 = (1 + Math::sin_f_fast(t_rand_value * a_k10 * (Math::PI - 0.001f))) * 0.5f * this->speed_inverse_range;
 
 			t_rand_value = (t_rand.Get() % 1000) + 1;
-			this->value_15 = (1 + Math::sinf_fast(t_rand_value * a_k11 * (Math::PI - 0.001f))) * 0.5f * this->speed_inverse_range;
+			this->value_15 = (1 + Math::sin_f_fast(t_rand_value * a_k11 * (Math::PI - 0.001f))) * 0.5f * this->speed_inverse_range;
 
 			t_rand_value = (t_rand.Get() % 1000) + 1;
-			this->value_16 = (1 + Math::sinf_fast(t_rand_value * a_k12 * (Math::PI - 0.001f))) * 0.5f * this->speed_inverse_range;
+			this->value_16 = (1 + Math::sin_f_fast(t_rand_value * a_k12 * (Math::PI - 0.001f))) * 0.5f * this->speed_inverse_range;
 
 			t_rand_value = (t_rand.Get() % 1000) + 1;
-			this->value_17 = (1 + Math::sinf_fast(t_rand_value * a_k13 * (Math::PI - 0.001f))) * 0.5f * this->speed_inverse_range;
+			this->value_17 = (1 + Math::sin_f_fast(t_rand_value * a_k13 * (Math::PI - 0.001f))) * 0.5f * this->speed_inverse_range;
 		}
 
 		/** 取得。

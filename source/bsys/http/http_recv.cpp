@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ‚g‚s‚s‚oB
+ * @brief ï¼¨ï¼´ï¼´ï¼°ã€‚
 */
 
 
@@ -67,7 +67,7 @@ namespace NBsys{namespace NHttp
 	}
 
 
-	/** óM‚ğŠJnB
+	/** å—ä¿¡ã‚’é–‹å§‹ã€‚
 	*/
 	void Http_Recv::StartRecv()
 	{
@@ -79,7 +79,7 @@ namespace NBsys{namespace NHttp
 	}
 
 
-	/** ƒGƒ‰[B
+	/** ã‚¨ãƒ©ãƒ¼ã€‚
 	*/
 	bool Http_Recv::IsError()
 	{
@@ -87,7 +87,7 @@ namespace NBsys{namespace NHttp
 	}
 
 
-	/** óMÏ‚İ‚Å–¢‰ğÍƒf[ƒ^‚ÌƒTƒCƒYB
+	/** å—ä¿¡æ¸ˆã¿ã§æœªè§£æãƒ‡ãƒ¼ã‚¿ã®ã‚µã‚¤ã‚ºã€‚
 	*/
 	s32 Http_Recv::GetRecvRingBufferUseSize()
 	{
@@ -135,7 +135,7 @@ namespace NBsys{namespace NHttp
 	}
 
 
-	/** XVB
+	/** æ›´æ–°ã€‚
 	*/
 	bool Http_Recv::Update()
 	{
@@ -144,22 +144,22 @@ namespace NBsys{namespace NHttp
 		s32 t_need_recv_size = 0;
 
 		if(this->need_recv_size < 0){
-			//óM‚ª•K—vBƒTƒCƒY‚Í©“®B
+			//å—ä¿¡ãŒå¿…è¦ã€‚ã‚µã‚¤ã‚ºã¯è‡ªå‹•ã€‚
 			t_need_recv_size = this->recvbuffer_size;
 		}else if(this->need_recv_size > 0){
-			//w’èƒTƒCƒY•ª‚ÌóM‚ª•K—vB
+			//æŒ‡å®šã‚µã‚¤ã‚ºåˆ†ã®å—ä¿¡ãŒå¿…è¦ã€‚
 			t_need_recv_size = this->need_recv_size;
 		}
 
 		if(this->socket){
 			if(this->socket->IsOpen()){
 
-				//óMƒoƒbƒtƒ@ˆÈã‚ÌóM‚Í‚Å‚«‚È‚¢B
+				//å—ä¿¡ãƒãƒƒãƒ•ã‚¡ä»¥ä¸Šã®å—ä¿¡ã¯ã§ããªã„ã€‚
 				if(t_need_recv_size > this->recvbuffer_size){
 					t_need_recv_size = this->recvbuffer_size;
 				}
 
-				//‹ó‚«—e—ÊˆÈã‚ÌóM‚Í‚Å‚«‚È‚¢B
+				//ç©ºãå®¹é‡ä»¥ä¸Šã®å—ä¿¡ã¯ã§ããªã„ã€‚
 				if(this->ringbuffer_recv->GetFreeSize() < t_need_recv_size){
 					t_need_recv_size = this->ringbuffer_recv->GetFreeSize();
 				}
@@ -181,18 +181,18 @@ namespace NBsys{namespace NHttp
 		}
 
 		if(this->ringbuffer_recv == nullptr){
-			//ƒGƒ‰[B
+			//ã‚¨ãƒ©ãƒ¼ã€‚
 			this->iserror = true;
 
-			//ƒ‹[ƒvƒŠƒNƒGƒXƒgB‚È‚µB
+			//ãƒ«ãƒ¼ãƒ—ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚ãªã—ã€‚
 			return false;
 		}
 
-		//óMƒoƒbƒtƒ@‰ğÍB
+		//å—ä¿¡ãƒãƒƒãƒ•ã‚¡è§£æã€‚
 		switch(this->step){
 		case Step::StateCode:
 			{
-				//ƒXƒe[ƒ^ƒXB
+				//ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã€‚
 
 				s32 t_end_offset = NHttp::FindFromRingBuffer(*this->ringbuffer_recv.get(),'\r','\n');
 				if(t_end_offset >= 0){
@@ -214,23 +214,23 @@ namespace NBsys{namespace NHttp
 
 						this->step = Step::Header;
 
-						//ƒ‹[ƒvƒŠƒNƒGƒXƒgB˜A‘±ˆ—B 
+						//ãƒ«ãƒ¼ãƒ—ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚é€£ç¶šå‡¦ç†ã€‚ 
 						return true;
 					}else{
-						//‰ğÍƒGƒ‰[B
+						//è§£æã‚¨ãƒ©ãƒ¼ã€‚
 						this->iserror = true;
 
-						//óMƒf[ƒ^‰ğÍ—pƒoƒbƒtƒ@B”jŠüB
+						//å—ä¿¡ãƒ‡ãƒ¼ã‚¿è§£æç”¨ãƒãƒƒãƒ•ã‚¡ã€‚ç ´æ£„ã€‚
 						this->ringbuffer_recv.reset();
 					}
 				}else{
-					//óM’†B
+					//å—ä¿¡ä¸­ã€‚
 					this->need_recv_size = -1;
 				}
 			}break;
 		case Step::Header:
 			{
-				//ƒwƒbƒ_[B
+				//ãƒ˜ãƒƒãƒ€ãƒ¼ã€‚
 
 				s32 t_end_offset = NHttp::FindFromRingBuffer(*this->ringbuffer_recv.get(),'\r','\n');
 				if(t_end_offset >= 0){
@@ -245,7 +245,7 @@ namespace NBsys{namespace NHttp
 						STLString t_line = reinterpret_cast<const char*>(&t_tempbuffer[0]);
 
 						if(t_line == ""){
-							//ƒwƒbƒ_[I’[B
+							//ãƒ˜ãƒƒãƒ€ãƒ¼çµ‚ç«¯ã€‚
 
 							if(this->header_is_transfer_encodeing_chunked == true){
 								this->step = Step::Data_ChunkSize;
@@ -259,10 +259,10 @@ namespace NBsys{namespace NHttp
 
 							this->header_is_recv = true;
 
-							//ƒ‹[ƒvƒŠƒNƒGƒXƒgB˜A‘±ˆ—B
+							//ãƒ«ãƒ¼ãƒ—ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚é€£ç¶šå‡¦ç†ã€‚
 							return true;
 						}else{
-							//sB
+							//è¡Œã€‚
 
 							TAGLOG(L"Http_Recv","%s",t_line.c_str());
 
@@ -277,69 +277,69 @@ namespace NBsys{namespace NHttp
 								this->header_content_length = t_content_length;
 							}
 
-							//ƒ‹[ƒvƒŠƒNƒGƒXƒgB˜A‘±ˆ—B
+							//ãƒ«ãƒ¼ãƒ—ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚é€£ç¶šå‡¦ç†ã€‚
 							return true;
 						}
 					}else{
-						//‰ğÍƒGƒ‰[B
+						//è§£æã‚¨ãƒ©ãƒ¼ã€‚
 						this->iserror = true;
 
-						//óMƒf[ƒ^‰ğÍ—pƒoƒbƒtƒ@B”jŠüB
+						//å—ä¿¡ãƒ‡ãƒ¼ã‚¿è§£æç”¨ãƒãƒƒãƒ•ã‚¡ã€‚ç ´æ£„ã€‚
 						this->ringbuffer_recv.reset();
 					}
 				}else{
-					//óM’†B
+					//å—ä¿¡ä¸­ã€‚
 					this->need_recv_size = -1;
 				}
 			}break;
 		case Step::Data_OneChunkData:
 			{
-				//ƒf[ƒ^B
+				//ãƒ‡ãƒ¼ã‚¿ã€‚
 
-				//óMƒf[ƒ^‰ğÍ—pƒŠƒ“ƒOƒoƒbƒtƒ@‚©‚çóMƒf[ƒ^ƒŠƒ“ƒOƒoƒbƒtƒ@‚Éƒf[ƒ^‚ğˆÚ“®B
+				//å—ä¿¡ãƒ‡ãƒ¼ã‚¿è§£æç”¨ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã‹ã‚‰å—ä¿¡ãƒ‡ãƒ¼ã‚¿ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã«ãƒ‡ãƒ¼ã‚¿ã‚’ç§»å‹•ã€‚
 				s32 t_size_from_continuous = this->ringbuffer_recv->GetContinuousUseSize();
 				s32 t_size_to_freesize = this->ringbuffer_data->GetFreeSize();
 
-				//‹ó‚«—e—ÊˆÈã‚ÌƒRƒs[‚Í‚Å‚«‚È‚¢B
+				//ç©ºãå®¹é‡ä»¥ä¸Šã®ã‚³ãƒ”ãƒ¼ã¯ã§ããªã„ã€‚
 				if(t_size_from_continuous > t_size_to_freesize){
 					t_size_from_continuous = t_size_to_freesize;
 				}
 
-				//c‚è‚ÌƒRƒs[‚ª•K—v‚ÈƒTƒCƒYB
+				//æ®‹ã‚Šã®ã‚³ãƒ”ãƒ¼ãŒå¿…è¦ãªã‚µã‚¤ã‚ºã€‚
 				if(t_size_from_continuous >= this->header_content_length - this->copy_chunk_size){
 					t_size_from_continuous = this->header_content_length - this->copy_chunk_size;
 				}
 
-				//ƒRƒs[B
+				//ã‚³ãƒ”ãƒ¼ã€‚
 				if(t_size_from_continuous){
 					this->ringbuffer_data->CopyToBuffer(this->ringbuffer_recv->GetItemFromUseList(0),t_size_from_continuous);
 					this->ringbuffer_recv->AddFree(t_size_from_continuous);
 					this->copy_chunk_size += t_size_from_continuous;
 				}
 
-				//ƒRƒs[Ï‚İ‚ÌƒRƒ“ƒeƒ“ƒc‘ƒTƒCƒYB
+				//ã‚³ãƒ”ãƒ¼æ¸ˆã¿ã®ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ç·ã‚µã‚¤ã‚ºã€‚
 				this->copy_content_size = this->copy_chunk_size;
 
-				//óM‚ª•K—v‚ÈƒTƒCƒYB
+				//å—ä¿¡ãŒå¿…è¦ãªã‚µã‚¤ã‚ºã€‚
 				this->need_recv_size = this->header_content_length - (this->copy_chunk_size + this->ringbuffer_recv->GetUseSize());
 				if(this->need_recv_size < 0){
 					this->need_recv_size = 0;
 				}
 
 				if(this->copy_chunk_size >= this->header_content_length){
-					//ƒ`ƒƒƒ“ƒN‚ÌƒRƒs[Š®—¹B
+					//ãƒãƒ£ãƒ³ã‚¯ã®ã‚³ãƒ”ãƒ¼å®Œäº†ã€‚
 					this->step = Step::Data_ChunkEnd;
 
-					//ƒ‹[ƒvƒŠƒNƒGƒXƒgB˜A‘±ˆ—B
+					//ãƒ«ãƒ¼ãƒ—ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚é€£ç¶šå‡¦ç†ã€‚
 					return true;
 				}
 
-				//ƒ‹[ƒvƒŠƒNƒGƒXƒgB‚È‚µB
+				//ãƒ«ãƒ¼ãƒ—ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚ãªã—ã€‚
 				return false;
 			}break;
 		case Step::Data_ChunkSize:
 			{
-				//ƒ`ƒƒƒ“ƒNƒTƒCƒYB
+				//ãƒãƒ£ãƒ³ã‚¯ã‚µã‚¤ã‚ºã€‚
 
 				s32 t_end_offset = NHttp::FindFromRingBuffer(*this->ringbuffer_recv.get(),'\r','\n');
 				if(t_end_offset >= 0){
@@ -359,74 +359,74 @@ namespace NBsys{namespace NHttp
 						TAGLOG(L"Http_Recv","ChunkSize = %d",this->header_chunk_length);
 
 						if(this->header_chunk_length == 0){
-							//ƒRƒ“ƒeƒ“ƒc‚ÌI’[B
+							//ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ã®çµ‚ç«¯ã€‚
 							this->header_content_length = this->copy_content_size;
 						}
 						
 						this->step = Step::Data_ChunkData;
 
-						//ƒ‹[ƒvƒŠƒNƒGƒXƒgB˜A‘±ˆ—B
+						//ãƒ«ãƒ¼ãƒ—ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚é€£ç¶šå‡¦ç†ã€‚
 						return true;
 					}else{
-						//‰ğÍƒGƒ‰[B
+						//è§£æã‚¨ãƒ©ãƒ¼ã€‚
 						this->iserror = true;
 
-						//óMƒf[ƒ^‰ğÍ—pƒoƒbƒtƒ@B”jŠüB
+						//å—ä¿¡ãƒ‡ãƒ¼ã‚¿è§£æç”¨ãƒãƒƒãƒ•ã‚¡ã€‚ç ´æ£„ã€‚
 						this->ringbuffer_recv.reset();
 					}
 				}else{
-					//óM’†B
+					//å—ä¿¡ä¸­ã€‚
 					this->need_recv_size = -1;
 				}
 			}break;
 		case Step::Data_ChunkData:
 			{
-				//ƒ`ƒƒƒ“ƒNƒf[ƒ^B
+				//ãƒãƒ£ãƒ³ã‚¯ãƒ‡ãƒ¼ã‚¿ã€‚
 				
-				//óMƒf[ƒ^‰ğÍ—pƒŠƒ“ƒOƒoƒbƒtƒ@‚©‚çóMƒf[ƒ^ƒŠƒ“ƒOƒoƒbƒtƒ@‚Éƒf[ƒ^‚ğˆÚ“®B
+				//å—ä¿¡ãƒ‡ãƒ¼ã‚¿è§£æç”¨ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã‹ã‚‰å—ä¿¡ãƒ‡ãƒ¼ã‚¿ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã«ãƒ‡ãƒ¼ã‚¿ã‚’ç§»å‹•ã€‚
 				s32 t_size_from_continuous = this->ringbuffer_recv->GetContinuousUseSize();
 				s32 t_size_to_freesize = this->ringbuffer_data->GetFreeSize();
 
-				//‹ó‚«—e—ÊˆÈã‚ÌƒRƒs[‚Í‚Å‚«‚È‚¢B
+				//ç©ºãå®¹é‡ä»¥ä¸Šã®ã‚³ãƒ”ãƒ¼ã¯ã§ããªã„ã€‚
 				if(t_size_from_continuous > t_size_to_freesize){
 					t_size_from_continuous = t_size_to_freesize;
 				}
 
-				//c‚è‚ÌƒRƒs[‚ª•K—v‚ÈƒTƒCƒYB
+				//æ®‹ã‚Šã®ã‚³ãƒ”ãƒ¼ãŒå¿…è¦ãªã‚µã‚¤ã‚ºã€‚
 				if(t_size_from_continuous >= this->header_chunk_length - this->copy_chunk_size){
 					t_size_from_continuous = this->header_chunk_length - this->copy_chunk_size;
 				}
 
-				//ƒRƒs[B
+				//ã‚³ãƒ”ãƒ¼ã€‚
 				if(t_size_from_continuous > 0){
 					this->ringbuffer_data->CopyToBuffer(this->ringbuffer_recv->GetItemFromUseList(0),t_size_from_continuous);
 					this->ringbuffer_recv->AddFree(t_size_from_continuous);
 					this->copy_chunk_size += t_size_from_continuous;
 				}
 
-				//ƒRƒs[Ï‚İ‚ÌƒRƒ“ƒeƒ“ƒc‘ƒTƒCƒYB
+				//ã‚³ãƒ”ãƒ¼æ¸ˆã¿ã®ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ç·ã‚µã‚¤ã‚ºã€‚
 				this->copy_content_size = this->copyfix_chunk_size + this->copy_chunk_size;
 
-				//óM‚ª•K—v‚ÈƒTƒCƒYB
+				//å—ä¿¡ãŒå¿…è¦ãªã‚µã‚¤ã‚ºã€‚
 				this->need_recv_size = this->header_chunk_length - (this->copy_chunk_size + this->ringbuffer_recv->GetUseSize());
 				if(this->need_recv_size < 0){
 					this->need_recv_size = 0;
 				}
 
 				if(this->copy_chunk_size >= this->header_chunk_length){
-					//ƒ`ƒƒƒ“ƒN‚ÌƒRƒs[Š®—¹B
+					//ãƒãƒ£ãƒ³ã‚¯ã®ã‚³ãƒ”ãƒ¼å®Œäº†ã€‚
 					this->step = Step::Data_ChunkEnd;
 
-					//ƒ‹[ƒvƒŠƒNƒGƒXƒgB˜A‘±ˆ—B
+					//ãƒ«ãƒ¼ãƒ—ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚é€£ç¶šå‡¦ç†ã€‚
 					return true;
 				}
 
-				//ƒ‹[ƒvƒŠƒNƒGƒXƒgB‚È‚µB
+				//ãƒ«ãƒ¼ãƒ—ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚ãªã—ã€‚
 				return false;
 			}break;
 		case Step::Data_ChunkEnd:
 			{
-				//ƒ`ƒƒƒ“ƒNƒGƒ“ƒhB
+				//ãƒãƒ£ãƒ³ã‚¯ã‚¨ãƒ³ãƒ‰ã€‚
 
 				s32 t_end_offset = NHttp::FindFromRingBuffer(*this->ringbuffer_recv.get(),'\r','\n');
 				if(t_end_offset >= 0){
@@ -440,23 +440,23 @@ namespace NBsys{namespace NHttp
 
 						this->step = Step::Data_ChunkSize;
 
-						//ƒ‹[ƒvƒŠƒNƒGƒXƒgB˜A‘±ˆ—B
+						//ãƒ«ãƒ¼ãƒ—ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚é€£ç¶šå‡¦ç†ã€‚
 						return true;
 					}else{
-						//‰ğÍƒGƒ‰[B
+						//è§£æã‚¨ãƒ©ãƒ¼ã€‚
 						this->iserror = true;
 
-						//óMƒf[ƒ^‰ğÍ—pƒoƒbƒtƒ@B”jŠüB
+						//å—ä¿¡ãƒ‡ãƒ¼ã‚¿è§£æç”¨ãƒãƒƒãƒ•ã‚¡ã€‚ç ´æ£„ã€‚
 						this->ringbuffer_recv.reset();
 					}
 				}else{
-					//óM’†B
+					//å—ä¿¡ä¸­ã€‚
 					this->need_recv_size = -1;
 				}
 			}break;
 		}
 
-		//ƒ‹[ƒvƒŠƒNƒGƒXƒgB‚È‚µB
+		//ãƒ«ãƒ¼ãƒ—ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚ãªã—ã€‚
 		return false;
 	}
 

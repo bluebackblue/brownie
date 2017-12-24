@@ -1,11 +1,11 @@
-
+Ôªø
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ÉeÉXÉgÅB
+ * @brief „ÉÜ„Çπ„Éà„ÄÇ
 */
 
 
@@ -40,23 +40,23 @@ static void AddDebugLog(const wchar* a_wstring,const NBsys::NColor::Color_F& a_c
 {
 	LogItem& t_logitem = s_loglist[s_loglist_index];
 
-	//ï∂éöÅB
+	//ÊñáÂ≠ó„ÄÇ
 	{
 		s32 t_length = Memory::wstrlen(a_wstring,COUNTOF(LogItem::buffer) - 1);
 		if(t_length <= 0){
 			return;
 		}
 
-		Memory::memcpy(&t_logitem.buffer[0],sizeof(t_logitem.buffer),a_wstring,t_length * sizeof(wchar));
+		Memory::Copy(&t_logitem.buffer[0],sizeof(t_logitem.buffer),a_wstring,t_length * sizeof(wchar));
 		t_logitem.buffer[t_length] = 0;
 	}
 
-	//êFÅB
+	//Ëâ≤„ÄÇ
 	{
 		t_logitem.color = a_color;
 	}
 
-	//ÉCÉìÉNÉäÉÅÉìÉgÅB
+	//„Ç§„É≥„ÇØ„É™„É°„É≥„Éà„ÄÇ
 	{
 		s_loglist_index = (s_loglist_index + 1) % COUNTOF(s_loglist);
 		s_loglist_max++;
@@ -153,7 +153,7 @@ bool Blib_DebugLog_Callback(const NBlib::wchar* a_tag,const NBlib::wchar* a_wstr
 #undef new
 #endif
 
-/** íPèÉÇ»ãLâØàÊÇÃämï€ÅBämï€Ç…é∏îsÇµÇΩèÍçábad_allocó·äOÇÉXÉçÅ[Ç∑ÇÈÅB
+/** ÂçòÁ¥î„Å™Ë®òÊÜ∂Âüü„ÅÆÁ¢∫‰øù„ÄÇÁ¢∫‰øù„Å´Â§±Êïó„Åó„ÅüÂ†¥Âêàbad_alloc‰æãÂ§ñ„Çí„Çπ„É≠„Éº„Åô„Çã„ÄÇ
 */
 void* operator new(std::size_t a_size)
 {
@@ -166,14 +166,14 @@ void* operator new(std::size_t a_size)
 	return t_pointer;
 }
 
-/** íPèÉÇ»ãLâØàÊÇÃämï€ÅBó·äOÇÉXÉçÅ[ÇµÇ»Ç¢ÅB
+/** ÂçòÁ¥î„Å™Ë®òÊÜ∂Âüü„ÅÆÁ¢∫‰øù„ÄÇ‰æãÂ§ñ„Çí„Çπ„É≠„Éº„Åó„Å™„ÅÑ„ÄÇ
 */
 void* operator new(std::size_t a_size,const std::nothrow_t& /*_*/) noexcept
 {
 	return std::malloc(a_size);
 }
 
-/** îzíunewÇ…ÇÊÇÈãLâØàÊÇÃämï€ÅB
+/** ÈÖçÁΩÆnew„Å´„Çà„ÇãË®òÊÜ∂Âüü„ÅÆÁ¢∫‰øù„ÄÇ
 */
 #if(0)
 void* operator new(std::size_t a_size,void* a_pointer) noexcept
@@ -181,21 +181,21 @@ void* operator new(std::size_t a_size,void* a_pointer) noexcept
 }
 #endif
 
-/** íPèÉÇ»ãLâØàÊÇÃâï˙ÅB
+/** ÂçòÁ¥î„Å™Ë®òÊÜ∂Âüü„ÅÆËß£Êîæ„ÄÇ
 */
 void operator delete(void* a_pointer,std::size_t a_size) noexcept
 {
 	operator delete(a_pointer,std::nothrow_t());
 }
 
-/** íPèÉÇ»ãLâØàÊÇÃâï˙ÅBó·äOÇÉXÉçÅ[ÇµÇ»Ç¢ÅB
+/** ÂçòÁ¥î„Å™Ë®òÊÜ∂Âüü„ÅÆËß£Êîæ„ÄÇ‰æãÂ§ñ„Çí„Çπ„É≠„Éº„Åó„Å™„ÅÑ„ÄÇ
 */
 void operator delete(void* a_pointer,const std::nothrow_t& /**/) noexcept
 {
 	std::free(a_pointer);
 }
 
-/** replacement-newÇ…ëŒâûÇ∑ÇÈãLâØàÊÇÃâï˙ÅB
+/** replacement-new„Å´ÂØæÂøú„Åô„ÇãË®òÊÜ∂Âüü„ÅÆËß£Êîæ„ÄÇ
 */
 #if(0)
 void operator delete(void* a_pointer,void* /**/) noexcept
@@ -203,21 +203,21 @@ void operator delete(void* a_pointer,void* /**/) noexcept
 }
 #endif
 
-/** íPèÉÇ»îzóÒÇÃãLâØàÊÇÃämï€ÅB
+/** ÂçòÁ¥î„Å™ÈÖçÂàó„ÅÆË®òÊÜ∂Âüü„ÅÆÁ¢∫‰øù„ÄÇ
 */
 void* operator new[](std::size_t a_size)
 {
 	return operator new(a_size);
 }
 
-/** íPèÉÇ»îzóÒÇÃãLâØàÊÇÃämï€ÅBó·äOÇÉXÉçÅ[ÇµÇ»Ç¢ÅB
+/** ÂçòÁ¥î„Å™ÈÖçÂàó„ÅÆË®òÊÜ∂Âüü„ÅÆÁ¢∫‰øù„ÄÇ‰æãÂ§ñ„Çí„Çπ„É≠„Éº„Åó„Å™„ÅÑ„ÄÇ
 */
 void* operator new[](std::size_t a_size,const std::nothrow_t& /*_*/) noexcept
 {
 	return operator new(a_size,std::nothrow_t());
 }
 
-/** îzíunewÇ…ÇÊÇÈîzóÒÇÃãLâØàÊÇÃämï€ÅB
+/** ÈÖçÁΩÆnew„Å´„Çà„ÇãÈÖçÂàó„ÅÆË®òÊÜ∂Âüü„ÅÆÁ¢∫‰øù„ÄÇ
 */
 #if(0)
 void* operator new[](std::size_t a_size,void* a_pointer) noexcept
@@ -225,21 +225,21 @@ void* operator new[](std::size_t a_size,void* a_pointer) noexcept
 }
 #endif
 
-/** íPèÉÇ»îzóÒÇÃãLâØàÊÇÃâï˙ÅB
+/** ÂçòÁ¥î„Å™ÈÖçÂàó„ÅÆË®òÊÜ∂Âüü„ÅÆËß£Êîæ„ÄÇ
 */
 void operator delete[](void* a_pointer,std::size_t a_size) noexcept
 {
 	operator delete(a_pointer);
 }
 
-/** íPèÉÇ»îzóÒÇÃãLâØàÊÇÃâï˙ÅBó·äOÇÉXÉçÅ[ÇµÇ»Ç¢ÅB
+/** ÂçòÁ¥î„Å™ÈÖçÂàó„ÅÆË®òÊÜ∂Âüü„ÅÆËß£Êîæ„ÄÇ‰æãÂ§ñ„Çí„Çπ„É≠„Éº„Åó„Å™„ÅÑ„ÄÇ
 */
 void operator delete[](void* a_pointer,const std::nothrow_t& /*_*/) noexcept
 {
 	operator delete(a_pointer,std::nothrow_t());
 }
 
-/** replacement-newÇ…ÇÊÇÈîzóÒÇÃãLâØàÊÇÃämï€ÅB
+/** replacement-new„Å´„Çà„ÇãÈÖçÂàó„ÅÆË®òÊÜ∂Âüü„ÅÆÁ¢∫‰øù„ÄÇ
 */
 #if(0)
 void operator delete[](void* a_pointer,void* /*_*/) noexcept

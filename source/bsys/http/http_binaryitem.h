@@ -1,11 +1,11 @@
-#pragma once
+Ôªø#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ÇgÇsÇsÇoÅB
+ * @brief Ôº®Ôº¥Ôº¥Ôº∞„ÄÇ
 */
 
 
@@ -23,11 +23,11 @@ namespace NBsys{namespace NHttp
 	*/
 	struct Http_BinaryItem
 	{
-		/** ÉTÉCÉYÅB
+		/** „Çµ„Ç§„Ç∫„ÄÇ
 		*/
 		s32 size;
 
-		/** ÉfÅ[É^ÅB
+		/** „Éá„Éº„Çø„ÄÇ
 		*/
 		sharedptr<u8> data;
 	};

@@ -150,10 +150,8 @@ namespace NBsys{namespace ND3d11
 		HWND t_hwnd = a_window->GetImpl()->GetHandle();
 		if(t_hwnd != INVALID_HANDLE_VALUE){
 
-			DXGI_SWAP_CHAIN_DESC t_swapchain_desc;
+			DXGI_SWAP_CHAIN_DESC t_swapchain_desc = {0};
 			{
-				Memory::memset(&t_swapchain_desc,0,sizeof(t_swapchain_desc));
-
 				//スワップ チェーンのバッファー数を表す値です。フロント バッファーを含みます。
 				t_swapchain_desc.BufferCount = 3;
 
@@ -277,9 +275,8 @@ namespace NBsys{namespace ND3d11
 			DXGI_FORMAT t_format_depthstencil_resource = DXGI_FORMAT_R24_UNORM_X8_TYPELESS;
 		
 			if(this->device){
-				D3D11_TEXTURE2D_DESC t_desc;
+				D3D11_TEXTURE2D_DESC t_desc = {0};
 				{
-					Memory::memset(&t_desc,0,sizeof(t_desc));
 					t_desc.Width = static_cast<UINT>(this->width);
 					t_desc.Height = static_cast<UINT>(this->height);
 					t_desc.MipLevels = 1;
@@ -306,7 +303,7 @@ namespace NBsys{namespace ND3d11
 			if(this->device){
 				D3D11_DEPTH_STENCIL_VIEW_DESC t_desc;
 				{
-					Memory::memset(&t_desc,0,sizeof(t_desc));
+					Memory::ZeroClear(t_desc);
 					t_desc.Format = t_format_depthstencil;
 					t_desc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
 					t_desc.Texture2D.MipSlice = 0;
@@ -325,7 +322,7 @@ namespace NBsys{namespace ND3d11
 			if(this->device){
 				D3D11_SHADER_RESOURCE_VIEW_DESC t_desc;
 				{
-					Memory::memset(&t_desc,0,sizeof(t_desc));
+					Memory::ZeroClear(t_desc);
 					t_desc.Format = t_format_depthstencil_resource;
 					t_desc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 					t_desc.Texture2D.MipLevels = 1;
@@ -344,9 +341,8 @@ namespace NBsys{namespace ND3d11
 			}
 
 			if(this->device){
-				D3D11_DEPTH_STENCIL_DESC t_desc;
+				D3D11_DEPTH_STENCIL_DESC t_desc = {0};
 				{
-					Memory::memset(&t_desc,0,sizeof(t_desc));
 					t_desc.DepthEnable = TRUE;
 					t_desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
 					t_desc.DepthFunc = D3D11_COMPARISON_LESS;
@@ -1001,9 +997,8 @@ namespace NBsys{namespace ND3d11
 	*/
 	void D3d11_Impl::Render_CreateVertexBuffer(sharedptr<D3d11_Impl_VertexBuffer>& a_vertexbuffer)
 	{
-		D3D11_BUFFER_DESC t_desc;
+		D3D11_BUFFER_DESC t_desc = {0};
 		{
-			Memory::memset(&t_desc,0,sizeof(t_desc));
 			t_desc.Usage = D3D11_USAGE_DEFAULT;
 			t_desc.ByteWidth = a_vertexbuffer->countofvertex * a_vertexbuffer->stridebyte;
 			t_desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
@@ -1015,9 +1010,8 @@ namespace NBsys{namespace ND3d11
 			}
 		}
 
-		D3D11_SUBRESOURCE_DATA t_subresource_data;
+		D3D11_SUBRESOURCE_DATA t_subresource_data = {0};
 		{
-			Memory::memset(&t_subresource_data,0,sizeof(t_subresource_data));
 			t_subresource_data.pSysMem = a_vertexbuffer->data;
 		}
 
@@ -1036,9 +1030,8 @@ namespace NBsys{namespace ND3d11
 	*/
 	void D3d11_Impl::Render_CreateConstantBuffer(sharedptr<D3d11_Impl_ConstantBuffer>& a_constantbuffer)
 	{
-		D3D11_BUFFER_DESC t_desc;
+		D3D11_BUFFER_DESC t_desc = {0};
 		{
-			Memory::memset(&t_desc,0,sizeof(t_desc));
 			t_desc.Usage = D3D11_USAGE_DEFAULT;
 			t_desc.ByteWidth = a_constantbuffer->size;
 			t_desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
@@ -1061,9 +1054,8 @@ namespace NBsys{namespace ND3d11
 	void D3d11_Impl::Render_CreateTexture(sharedptr<D3d11_Impl_Texture>& a_texture,bool a_write_flag)
 	{
 		{
-			D3D11_TEXTURE2D_DESC t_desc;
+			D3D11_TEXTURE2D_DESC t_desc = {0};
 			{
-				Memory::memset(&t_desc,0,sizeof(t_desc));
 				t_desc.Width = a_texture->texture->GetWidth();
 				t_desc.Height = a_texture->texture->GetHeight();
 				t_desc.MipLevels = 1;
@@ -1087,9 +1079,8 @@ namespace NBsys{namespace ND3d11
 				t_desc.MiscFlags = 0;
 			}
 
-			D3D11_SUBRESOURCE_DATA t_data;
+			D3D11_SUBRESOURCE_DATA t_data = {0};
 			{
-				Memory::memset(&t_data,0,sizeof(t_data));
 				t_data.pSysMem = a_texture->texture->GetPixel().get();
 				t_data.SysMemPitch = a_texture->texture->GetPitch();
 				t_data.SysMemSlicePitch = 0;
@@ -1108,7 +1099,7 @@ namespace NBsys{namespace ND3d11
 		{
 			D3D11_SHADER_RESOURCE_VIEW_DESC t_desc;
 			{
-				Memory::memset(&t_desc,0,sizeof(t_desc));
+				Memory::ZeroClear(t_desc);
 				t_desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 				t_desc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 				t_desc.Texture2D.MipLevels = 1;
@@ -1130,10 +1121,8 @@ namespace NBsys{namespace ND3d11
 	*/
 	void D3d11_Impl::Render_CreateBlendState(sharedptr<D3d11_Impl_BlendState>& a_blendstate)
 	{
-		D3D11_BLEND_DESC t_desc;
+		D3D11_BLEND_DESC t_desc = {0};
 		{
-			Memory::memset(&t_desc,0,sizeof(t_desc));
-
 			if(a_blendstate->alpha_blend == true){
 				//アルファブレンド。
 				t_desc.AlphaToCoverageEnable = FALSE;
@@ -1181,8 +1170,7 @@ namespace NBsys{namespace ND3d11
 	{
 		D3D11_RASTERIZER_DESC t_desc;
 		{
-			Memory::memset(&t_desc,0,sizeof(t_desc));
-
+			Memory::ZeroClear(t_desc);
 			t_desc.FillMode = D3D11_FILL_SOLID;
 			t_desc.DepthClipEnable = FALSE;
 			t_desc.MultisampleEnable = FALSE;
@@ -1211,10 +1199,8 @@ namespace NBsys{namespace ND3d11
 	*/
 	void D3d11_Impl::Render_CreateDepthStencilState(sharedptr<D3d11_Impl_DepthStencilState>& a_depthstencilstate)
 	{
-		D3D11_DEPTH_STENCIL_DESC t_desc;
+		D3D11_DEPTH_STENCIL_DESC t_desc = {0};
 		{
-			Memory::memset(&t_desc,0,sizeof(t_desc));
-
 			if(a_depthstencilstate->depthtest_flag){
 				//深度テストを使用する。
 				t_desc.DepthEnable = TRUE;
@@ -1230,7 +1216,6 @@ namespace NBsys{namespace ND3d11
 				//深度ステンシル バッファーへの書き込みをオフにします。
 				t_desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
 			}
-
 
 			//ソース データが対象データよりも小さい場合、比較に合格します。
 			t_desc.DepthFunc = D3D11_COMPARISON_LESS;
@@ -1253,8 +1238,7 @@ namespace NBsys{namespace ND3d11
 	{
 		D3D11_SAMPLER_DESC t_desc;
 		{
-			Memory::memset(&t_desc,0,sizeof(t_desc));
-
+			Memory::ZeroClear(t_desc);
 			t_desc.ComparisonFunc = D3D11_COMPARISON_NEVER;
 			t_desc.MinLOD = 0;
 			t_desc.MaxLOD = D3D11_FLOAT32_MAX;
@@ -1464,7 +1448,7 @@ namespace NBsys{namespace ND3d11
 					)
 				);
 
-				Memory::memcpy(t_screenshot->GetPixel().get(),t_size,t_mapped_resource.pData,t_size);
+				Memory::Copy(t_screenshot->GetPixel().get(),t_size,t_mapped_resource.pData,t_size);
 				this->devicecontext.get()->Unmap(t_texture.get(),0);
 			}
 		}
@@ -1744,7 +1728,7 @@ namespace NBsys{namespace ND3d11
 					if(SUCCEEDED(t_result)){
 
 						s32 t_size = t_vertexbuffer->stridebyte * t_vertexbuffer->countofvertex;
-						Memory::memcpy(t_mapped_resource.pData,t_size,a_data,a_size);
+						Memory::Copy(t_mapped_resource.pData,t_size,a_data,a_size);
 						this->devicecontext->Unmap(t_vertexbuffer->buffer.get(),0);
 
 					}

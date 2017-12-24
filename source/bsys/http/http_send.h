@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ‚g‚s‚s‚oB
+ * @brief ï¼¨ï¼´ï¼´ï¼°ã€‚
 */
 
 
@@ -57,19 +57,19 @@ namespace NBsys{namespace NHttp
 
 	public:
 
-		/** ‘—MB
+		/** é€ä¿¡ã€‚
 		*/
 		void Send(const sharedptr<SocketHandle>& a_socket,const sharedptr<u8>& a_buffer,s32 a_size);
 
-		/** ‘—M‚ªŠ®—¹‚µ‚½‚©‚Ç‚¤‚©B
+		/** é€ä¿¡ãŒå®Œäº†ã—ãŸã‹ã©ã†ã‹ã€‚
 		*/
 		bool IsBusy();
 
-		/** ƒGƒ‰[B
+		/** ã‚¨ãƒ©ãƒ¼ã€‚
 		*/
 		bool IsError();
 
-		/** XVB
+		/** æ›´æ–°ã€‚
 		*/
 		bool Update();
 
