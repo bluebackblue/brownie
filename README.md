@@ -44,9 +44,17 @@ mid-level library
 * sdk [blib/bsys内で使用するミドルウェアの設置場所(このリポジトリには含まれていません)]
 
 ## include path
-以下のインクルードパスを前提にしています。
+インクルードパス
 * ./brownie/source/project_test
 * ./sdk
+* ./sdk_32
+* ./sdk_64
+
+## link path
+リンクパス
+* ./sdk
+* ./sdk_32
+* ./sdk_64
 
 ## test project
 テストプロジェクト起動までの手順。
