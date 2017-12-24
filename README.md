@@ -11,6 +11,9 @@ https://github.com/bluebackblue/brownie/blob/master/LICENSE
        src="https://scan.coverity.com/projects/14637/badge.svg"/>
 </a>
 
+## auto test
+http://bbbproject.sakura.ne.jp/www/project_autotest/
+
 ## blib
 low-level library
 * https://github.com/bluebackblue/brownie/wiki/blib
