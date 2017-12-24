@@ -187,32 +187,45 @@ namespace NBsys{namespace NTexture
 			return std::tuple<sharedptr<u8>,s32>(nullptr,0);
 		}
 
+		sharedptr<u8> t_jpg_data;
+		s32 t_jpg_size = 0;
 		{
-			sharedptr<u8> t_jpg_data;
-			s32 t_jpg_size = 0;
-
 			//シークを最初に設定。
 			t_stream->SetSeekStart();
 
 			//サイズをゼロに設定。
 			t_stream->SetSizeZero();
 
-			//[busy]ストリームを使用してエンコード書き込み。
+			s32 t_width = a_texture->GetWidth();
+			s32 t_height = a_texture->GetHeight();
+			Gdiplus::Bitmap t_bitmap(t_width,t_height);
+
 			{
-				Gdiplus::Bitmap t_bitmap(a_texture->GetWidth(),a_texture->GetHeight());
-				{
-					for(s32 yy=0;yy<a_texture->GetHeight();yy++){
-						const u8* t_pix = &(a_texture->GetPixel().get()[yy * a_texture->GetPitch()]);
-						for(s32 xx=0;xx<a_texture->GetWidth();xx++){
-							t_bitmap.SetPixel(xx,yy,Gdiplus::Color(t_pix[3],t_pix[0],t_pix[1],t_pix[2]));
-							t_pix += 4;
+				Gdiplus::Rect t_rect(0,0,t_width,t_height);
+				Gdiplus::BitmapData t_bitmap_data;
+				Gdiplus::Status t_status = t_bitmap.LockBits(&t_rect,Gdiplus::ImageLockModeRead,PixelFormat32bppARGB,&t_bitmap_data);
+				if(t_status == Gdiplus::Status::Ok){
+
+					for(s32 yy=0;yy<t_height;yy++){
+						u8* t_to = reinterpret_cast<u8*>(t_bitmap_data.Scan0) + yy * t_bitmap_data.Stride;
+						const u8* t_from = a_texture->GetPixel().get() + yy * a_texture->GetPitch();
+						for(s32 xx=0;xx<t_width;xx++){
+							t_to[2] = t_from[0];	//R
+							t_to[1] = t_from[1];	//G
+							t_to[0] = t_from[2];	//B
+							t_to[3] = t_from[3];	//A
+
+							t_from += 4;
+							t_to += 4; 
 						}
 					}
+
+					t_bitmap.UnlockBits(&t_bitmap_data);
 				}
-				t_bitmap.Save(t_stream->GetHandle(),&t_clsid);
 			}
 
 			//ステース更新。
+			t_bitmap.Save(t_stream->GetHandle(),&t_clsid);
 			t_stream->UpdateStatus();
 
 			s32 t_write_size = t_stream->GetStatus_Size();
@@ -226,10 +239,11 @@ namespace NBsys{namespace NTexture
 
 				t_globalmemory->Unmap();
 			}
-
-			return std::tuple<sharedptr<u8>,s32>(t_jpg_data,t_jpg_size);
 		}
 
+		t_gdiplus.reset();
+
+		return std::tuple<sharedptr<u8>,s32>(t_jpg_data,t_jpg_size);
 	}
 	#endif
 
