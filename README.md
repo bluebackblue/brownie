@@ -48,7 +48,7 @@ mid-level library
 テストプロジェクト起動までの手順。
 * step 1: RUN  ./brownie/source/premake.bat
 * step 2: OPEN ./brownie/source/brownie.sln
-* step 3: EDIT ./brownie/source/project_test/brownie_config/user_customize.h
+* step 3: EDIT ./brownie/source/project_test/brownie_config/test.h
 
 ## brownie_config.h
 テストプロジェクト用の定義デフォルト値と説明
