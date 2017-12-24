@@ -1,7 +1,7 @@
 # brownie library
 C++ library
 
-## License
+## license
 MIT License
 https://github.com/bluebackblue/brownie/blob/master/LICENSE
 
@@ -13,38 +13,31 @@ https://github.com/bluebackblue/brownie/blob/master/LICENSE
 
 ## blib
 low-level library
+* https://github.com/bluebackblue/brownie/wiki/blib
 
 ## bsys
 mid-level library
+* https://github.com/bluebackblue/brownie/wiki/bsys
 
 ## folder structure
 フォルダ構造
 * brownie
+* _ licence [使用ライセンス関連ファイル]
+* _ premake [ビルドツール]
 * _ source
 * ___ blib [低レベルライブラリ]
 * ___ bsys [中レベルライブラリ]
 * ___ premake.bat
 * ___ project_test [テストプロジェクト]
 * _____ brownie_config
-* _______ brownie_config.h
-* _______ user_customize.h
-* _ premake [ビルドツール]
-* _ licence [使用ライセンス関連ファイル]
-* ___ fovehmd
-* ___ glew
-* ___ glfw
-* ___ libpng
-* ___ mmd
-* ___ saba
-* ___ zlib
-* sdk [blib/bsys内で使用する外部ミドルウェアの設置場所(このリポジトリには含まれていません)]
-* _ gl
-* ___ glew-2.0.0
-* ___ glfw-3.2.1
-* _ fovehmd
-* ___ FOVE SDK 0.11.4
-* _ png
-* ___ lpng1628
+* _______ brownie_config.h 「テストプロジェクト用の定義デフォルト値と説明」
+* _______ user_customize.h 「テストプロジェクト用の定義カスタマイズ」
+* _______ test.h 「自動テスト制御用定義」
+* ___ configuration.txt 「自動テスト制御ファイル」
+* ___ platform.txt 「自動テスト制御ファイル」
+* ___ testdefine.txt 「自動テスト制御ファイル」
+* ___ auto_test.bat 「自動テスト開始バッチ」
+* sdk [blib/bsys内で使用するミドルウェアの設置場所(このリポジトリには含まれていません)]
 
 ## include path
 以下のインクルードパスを前提にしています。
@@ -57,12 +50,18 @@ mid-level library
 * step 2: OPEN ./brownie/source/brownie.sln
 * step 3: EDIT ./brownie/source/project_test/brownie_config/user_customize.h
 
-## user_customize.h
-テストデファインの各種説明
-* DEF_TEST0: デバッグログ、デバッグブレイク、アサート。
-* DEF_TEST1: 型、リスト。
-* DEF_TEST2: ファイル、ＪＳＯＮ。
-
 ## brownie_config.h
-制御デファインの各種説明、デフォルト値の記述
+テストプロジェクト用の定義デフォルト値と説明
+* https://github.com/bluebackblue/brownie/blob/master/source/project_test/brownie_config/brownie_config.h
+
+## user_customize.h
+テストプロジェクト用の定義カスタマイズ
+* https://github.com/bluebackblue/brownie/blob/master/source/project_test/brownie_config/user_customize.h
+
+## test.h
+自動テスト制御用定義
+* https://github.com/bluebackblue/brownie/blob/master/source/project_test/brownie_config/test.h
+* DEF_TEST_AUTO (1) 自動テストを実行します。
+* DEF_TEST_INDEX (0) テスト番号を設定します。
+
 
