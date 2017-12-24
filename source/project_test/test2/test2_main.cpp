@@ -40,9 +40,9 @@ void Test_Main()
 		NBsys::NFile::File_ConvertLock_ReturnType::Id t_ret = t_fileobject->ConvertLock();
 		if(t_ret == NBsys::NFile::File_ConvertLock_ReturnType::Locked){
 			//未コンバート => コンバート中。
-			t_fileobject->GetLoadData().get()[static_cast<s32>(t_fileobject->GetLoadSize())] = 0x00;
 
 			//コンバート中 => コンバート済み。
+			t_fileobject->GetLoadData().get()[static_cast<s32>(t_fileobject->GetLoadSize())] = 0x00;
 			t_fileobject->ConvertUnlock();
 			
 			break;

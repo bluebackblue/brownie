@@ -1,7 +1,7 @@
 ﻿
 
 /**
- * Copyright (c) 2016 blueback
+ * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -28,7 +28,6 @@ void Test_Main()
 	t_window->Create(L"TEST " DEF_TEST_STRING,100,100);
 
 	while(true){
-
 		//s_window
 		t_window->Update();
 		if(t_window->IsEnd() == true){
