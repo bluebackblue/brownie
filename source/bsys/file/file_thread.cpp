@@ -67,15 +67,15 @@ namespace NBsys{namespace NFile
 
 		while(1){
 
-			{
-				//リクエスト待ち。
-				if(t_request == false){
-					this->request_event.Wait();
-				}
-
-				//リクエスト受付開始。
-				this->request_event.Clear();
+			//リクエスト待ち。
+			if(t_request == false){
+				this->request_event.Wait();
+			}else{
+				t_request = false;
 			}
+
+			//リクエスト受付開始。
+			this->request_event.Clear();
 
 			//パック。
 			#if(BSYS_FILE_PACK_ENABLE)
@@ -86,7 +86,6 @@ namespace NBsys{namespace NFile
 					//■排他。
 					AutoLock t_autolock(this->lockobject);
 
-					t_request = false;
 					for(s32 ii=0;ii<COUNTOF(this->worklist_pack);ii++){
 						if(this->worklist_pack[ii] != nullptr){
 							t_request = true;
@@ -126,7 +125,6 @@ namespace NBsys{namespace NFile
 					//■排他。
 					AutoLock t_autolock(this->lockobject);
 
-					t_request = false;
 					for(s32 ii=0;ii<COUNTOF(this->worklist);ii++){
 						if(this->worklist[ii] != nullptr){
 							t_request = true;

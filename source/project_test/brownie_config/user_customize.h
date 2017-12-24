@@ -11,12 +11,10 @@
 
 /** include
 
-	「test.h」は「build_project_test.bat」から自動生成され上書きされます。
+	test.h
 
-	DEF_TEST_AUTO	: 自動チェック用デファインです。
-	DEF_TEST_INDEX	: テストの切り替え用デファインです。説明は以下です。
-
-	定義しているデファインの説明、デフォルト値は「brownie_config.h」に記述しています。
+	DEF_TEST_AUTO	: 自動テストを実行します。
+	DEF_TEST_INDEX	: テスト番号を設定します。
 
 */
 #include "./test.h"
