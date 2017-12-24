@@ -136,11 +136,11 @@ namespace NBsys{namespace NTexture
 		{
 			Gdiplus::Bitmap t_bitmap(a_texture->GetWidth(),a_texture->GetHeight());
 
-			//TODO:遅い。
 			for(s32 yy=0;yy<a_texture->GetHeight();yy++){
+				const u8* t_pix = &(a_texture->GetPixel().get()[yy * a_texture->GetPitch()]);
 				for(s32 xx=0;xx<a_texture->GetWidth();xx++){
-					const u8* t_pix = &(a_texture->GetPixel().get()[xx * 4 + yy * a_texture->GetPitch()]);
 					t_bitmap.SetPixel(xx,yy,Gdiplus::Color(t_pix[3],t_pix[0],t_pix[1],t_pix[2]));
+					t_pix += 4;
 				}
 			}
 

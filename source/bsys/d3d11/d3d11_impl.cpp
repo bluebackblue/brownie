@@ -1378,85 +1378,87 @@ namespace NBsys{namespace ND3d11
 	sharedptr<NBsys::NTexture::Texture> D3d11_Impl::Render_ScreenShot()
 	{
 		sharedptr<NBsys::NTexture::Texture> t_screenshot;
-
-		D3D11_TEXTURE2D_DESC t_backbuffer_desc;
-		{
-			this->backbuffer->GetDesc(&t_backbuffer_desc);
-		}
-
-		D3D11_TEXTURE2D_DESC t_dest_desc;
-		{
-			t_dest_desc.ArraySize = 1;
-			t_dest_desc.BindFlags = 0;
-			t_dest_desc.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
-			t_dest_desc.Format = t_backbuffer_desc.Format;
-			t_dest_desc.Height = t_backbuffer_desc.Height;
-			t_dest_desc.Width = t_backbuffer_desc.Width;
-			t_dest_desc.MipLevels = 1;
-			t_dest_desc.MiscFlags = 0;
-			t_dest_desc.SampleDesc.Count = 1;
-			t_dest_desc.SampleDesc.Quality = 0;
-			t_dest_desc.Usage = D3D11_USAGE_STAGING;
-		}
-
-		sharedptr<ID3D11Texture2D> t_texture;
-		sharedptr<ID3D11Resource> t_backbuffer_resource;
-
-		//テクスチャー作成。
-		{
-			ID3D11Texture2D* t_texture_raw = nullptr;
-			HRESULT t_result = this->device.get()->CreateTexture2D(&t_dest_desc,0,&t_texture_raw);
-			if(t_texture_raw != nullptr){
-				t_texture.reset(t_texture_raw,release_delete<ID3D11Texture2D>());
+		if(this->backbuffer){
+			D3D11_TEXTURE2D_DESC t_desc_backbuffer = {0};
+			{
+				this->backbuffer->GetDesc(&t_desc_backbuffer);
 			}
-			if(FAILED(t_result)){
-				t_texture.reset();
+
+			D3D11_TEXTURE2D_DESC t_desc_dest = {0};
+			{
+				t_desc_dest.ArraySize = 1;
+				t_desc_dest.BindFlags = 0;
+				t_desc_dest.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
+				t_desc_dest.Format = t_desc_backbuffer.Format;
+				t_desc_dest.Height = t_desc_backbuffer.Height;
+				t_desc_dest.Width = t_desc_backbuffer.Width;
+				t_desc_dest.MipLevels = 1;
+				t_desc_dest.MiscFlags = 0;
+				t_desc_dest.SampleDesc.Count = 1;
+				t_desc_dest.SampleDesc.Quality = 0;
+				t_desc_dest.Usage = D3D11_USAGE_STAGING;
 			}
-		}
 
-		//リソース取得。
-		{
-			ID3D11Resource* t_backbuffer_resource_raw = nullptr;
-			this->backbuffer_rendertargetview.get()->GetResource(&t_backbuffer_resource_raw);
-			if(t_backbuffer_resource_raw != nullptr){
-				t_backbuffer_resource.reset(t_backbuffer_resource_raw,release_delete<ID3D11Resource>());
+			sharedptr<ID3D11Texture2D> t_texture;
+			sharedptr<ID3D11Resource> t_backbuffer_resource;
+
+			//テクスチャー作成。
+			if(this->device){
+				ID3D11Texture2D* t_texture_raw = nullptr;
+				HRESULT t_result = this->device.get()->CreateTexture2D(&t_desc_dest,0,&t_texture_raw);
+				if(t_texture_raw != nullptr){
+					t_texture.reset(t_texture_raw,release_delete<ID3D11Texture2D>());
+				}
+				if(FAILED(t_result)){
+					t_texture.reset();
+				}
 			}
-		}
 
-		//コピー。
-		{
-			this->devicecontext.get()->CopyResource(t_texture.get(),t_backbuffer_resource.get());
-			t_backbuffer_resource.reset();
-		}
+			if(t_texture){
+				//リソース取得。
+				if(this->backbuffer_rendertargetview){
+					ID3D11Resource* t_backbuffer_resource_raw = nullptr;
+					this->backbuffer_rendertargetview.get()->GetResource(&t_backbuffer_resource_raw);
+					if(t_backbuffer_resource_raw != nullptr){
+						t_backbuffer_resource.reset(t_backbuffer_resource_raw,release_delete<ID3D11Resource>());
+					}
+				}
 
+				//コピー。
+				if(t_backbuffer_resource){
+					if(this->devicecontext){
+						this->devicecontext.get()->CopyResource(t_texture.get(),t_backbuffer_resource.get());
+					}
+					t_backbuffer_resource.reset();
+				}
 
-		D3D11_MAPPED_SUBRESOURCE t_mapped_resource;
-		{
-			HRESULT t_result = this->devicecontext.get()->Map(t_texture.get(),0,D3D11_MAP_READ,0,&t_mapped_resource);
-			if(SUCCEEDED(t_result)){
-
-				s32 t_size = t_mapped_resource.RowPitch * t_backbuffer_desc.Height;
+				//コピー。
+				D3D11_MAPPED_SUBRESOURCE t_mapped_resource;
+				if(this->devicecontext){
+					HRESULT t_result = this->devicecontext.get()->Map(t_texture.get(),0,D3D11_MAP_READ,0,&t_mapped_resource);
+					if(SUCCEEDED(t_result)){
+						s32 t_size = t_mapped_resource.RowPitch * t_desc_backbuffer.Height;
 			
-				t_screenshot.reset(
-					new NBsys::NTexture::Texture(
-						new u8[t_size],
-						t_backbuffer_desc.Width,
-						t_backbuffer_desc.Height,
-						t_mapped_resource.RowPitch,
-						NBsys::NTexture::TextureType::R8G8B8A8,
-						L"screenshot"
-					)
-				);
+						t_screenshot.reset(
+							new NBsys::NTexture::Texture(
+								new u8[t_size],
+								t_desc_backbuffer.Width,
+								t_desc_backbuffer.Height,
+								t_mapped_resource.RowPitch,
+								NBsys::NTexture::TextureType::R8G8B8A8,
+								L"screenshot"
+							)
+						);
 
-				Memory::Copy(t_screenshot->GetPixel().get(),t_size,t_mapped_resource.pData,t_size);
-				this->devicecontext.get()->Unmap(t_texture.get(),0);
+						Memory::Copy(t_screenshot->GetPixel().get(),t_size,t_mapped_resource.pData,t_size);
+						this->devicecontext.get()->Unmap(t_texture.get(),0);
+					}
+				}
 			}
 		}
-
-		
-    
 		return t_screenshot;
 	}
+
 
 	/** リクエスト登録。
 	*/
