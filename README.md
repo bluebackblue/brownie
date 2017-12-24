@@ -12,7 +12,8 @@ https://github.com/bluebackblue/brownie/blob/master/LICENSE
 </a>
 
 ## auto test
-http://bbbproject.sakura.ne.jp/www/project_autotest/
+自動テスト
+* http://bbbproject.sakura.ne.jp/www/project_autotest/
 
 ## blib
 low-level library
