@@ -19,11 +19,6 @@
 #if(DEF_TEST_INDEX == 22)
 
 
-/** include
-*/
-#include "./test22_main.h"
-
-
 /** USE_FOVE
 */
 #define USE_FOVE (0)

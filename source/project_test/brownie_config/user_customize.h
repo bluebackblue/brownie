@@ -45,6 +45,12 @@
 
 	#define DEF_TEST_STRING									L"2"
 
+#elif(DEF_TEST_INDEX == 3)
+
+	#define DEF_TEST_STRING									L"2"
+
+	#define BSYS_WINDOW_ENABLE								(1)
+
 #elif(DEF_TEST_INDEX == 10)
 
 	#define DEF_TEST_STRING									L"10"

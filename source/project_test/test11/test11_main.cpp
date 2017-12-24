@@ -21,11 +21,6 @@
 
 /** include
 */
-#include "./test11_main.h"
-
-
-/** include
-*/
 #include "../common/common_drawline.h"
 
 

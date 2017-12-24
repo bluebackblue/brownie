@@ -19,11 +19,6 @@
 #if(DEF_TEST_INDEX == 1)
 
 
-/** include
-*/
-#include "./test1_main.h"
-
-
 /** Test_Main
 */
 void Test_Main()
