@@ -41,27 +41,29 @@
 
 #else
 
-	#if(BLIB_DEBUGBREAK_CALLBACK_ENABLE)
+	#if defined(PLATFORM_VCWIN)
 
-		extern bool Blib_DebugBreak_Callback();
+		#define DEBUGBREAK_PROC() __debugbreak()
 
-		#if defined(PLATFORM_VCWIN)
+	#elif defined(PLATFORM_GNUCWIN)
 
-			#define DEBUGBREAK() do{if(Blib_DebugBreak_Callback()){__debugbreak();}}while(0)
-
-		#endif
+		#define DEBUGBREAK_PROC() __asm__("int3")
 
 	#else
 
-		#if defined(PLATFORM_VCWIN)
+		#define DEBUGBREAK_PROC()
+		#warning
 
-			#define DEBUGBREAK() __debugbreak()
+	#endif
 
-		#elif defined(PLATFORM_GNUCWIN)
+	#if(BLIB_DEBUGBREAK_CALLBACK_ENABLE)
 
-			#define DEBUGBREAK() __asm__("int3");
+		extern bool Blib_DebugBreak_Callback();
+		#define DEBUGBREAK() do{if(Blib_DebugBreak_Callback()){DEBUGBREAK_PROC();}}while(0)
 
-		#endif
+	#else
+
+		#define DEBUGBREAK() DEBUGBREAK_PROC()
 
 	#endif
 

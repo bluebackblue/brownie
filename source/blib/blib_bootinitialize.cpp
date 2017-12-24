@@ -110,9 +110,13 @@ namespace NBlib
 			{
 				TAGLOG(L"blib",L"platform = PLATFORM_VCWIN");
 			}
+			#elif defined(PLATFORM_GNUCWIN)
+			{
+				TAGLOG(L"blib",L"platform = PLATFORM_GNUCWIN");			
+			}
 			#else
 			{
-				TAGLOG(L"blib",L"platform = PLATFORM_XX");
+				#warning
 			}
 			#endif
 		}
@@ -136,7 +140,7 @@ namespace NBlib
 			}
 			#else
 			{
-				TAGLOG(L"blib",L"rom = ROM_XX");
+				#warning
 			}
 			#endif
 		}
@@ -152,7 +156,7 @@ namespace NBlib
 			}
 			#else
 			{
-				TAGLOG(L"blib",L"ROM_XXBIT");
+				#warning
 			}
 			#endif
 		}

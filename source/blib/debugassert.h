@@ -27,8 +27,10 @@ namespace NBlib
 
 		#if defined(PLATFORM_VCWIN)
 			void DebugAssert(bool a_flag,const wchar* a_message,const wchar* a_filename,s32 a_line);
-		#else
+		#elif defined(PLATFORM_GNUCWIN)
 			void DebugAssert(bool a_flag,const wchar* a_message,const char* a_filename,s32 a_line);
+		#else
+			#warning
 		#endif
 
 	#endif
@@ -45,8 +47,10 @@ namespace NBlib
 
 	#if defined(PLATFORM_VCWIN)
 		#define ASSERT_MSG(X,MSG)					NBlib::DebugAssert((X),MSG,__FILEW__,__LINE__)
-	#else
+	#elif defined(PLATFORM_GNUCWIN)
 		#define ASSERT_MSG(X,MSG)					NBlib::DebugAssert((X),MSG,__FILE__,__LINE__)
+	#else
+		#warning
 	#endif
 
 

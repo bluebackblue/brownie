@@ -101,6 +101,18 @@ namespace NBlib
 					::OutputDebugStringW(a_wstring);
 				}
 			}
+			#elif defined(PLATFORM_GNUCWIN)
+			{
+				if(a_tag != nullptr){
+					::printf("[%ls]%ls\n",a_tag,a_wstring);
+				}else{
+					::printf("%ls",a_wstring);
+				}
+			}
+			#else
+			{
+				#warning
+			}
 			#endif
 		}
 

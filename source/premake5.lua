@@ -30,15 +30,39 @@ do
 		"**.cpp"
 	}
 
+	filter "platforms:Win32"
+	do
+		libdirs
+		{
+			"../../sdk_32",
+			"../../sdk",
+		}
+
+		includedirs
+		{
+			"../../sdk_32",
+			"../../sdk",
+		}
+	end
+
+	filter "platforms:x64"
+	do
+		libdirs
+		{
+			"../../sdk_64",
+			"../../sdk",
+		}
+
+		includedirs
+		{
+			"../../sdk_64",
+			"../../sdk",
+		}
+	end
+
 	includedirs
 	{
 		"./project_test",
-		"../../sdk"
-	}
-
-	libdirs
-	{
-		"../../sdk"
 	}
 
 	filter "action:vs*"

@@ -26,9 +26,7 @@
 
 /** VK
 */
-#if defined(PLATFORM_WIN)
-	#include <Windows.h>
-
+#if defined(PLATFORM_VCWIN)
 	#define VK_A	0x41
 	#define VK_B	0x42
 	#define VK_C	0x43
@@ -55,7 +53,6 @@
 	#define VK_X	0x58
 	#define VK_Y	0x59
 	#define VK_Z	0x50
-
 #endif
 
 
