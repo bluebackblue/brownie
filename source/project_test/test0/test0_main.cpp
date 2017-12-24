@@ -58,9 +58,6 @@ bool Blib_DebugLog_Callback(const NBlib::wchar* a_tag,const NBlib::wchar* a_wstr
 */
 void Test_Main()
 {
-	std::unordered_map<Key,s32> list;
-
-
 	STATIC_ASSERT(sizeof(s32) == 4);
 
 	TAGLOG(L"main",u8"テスト");
