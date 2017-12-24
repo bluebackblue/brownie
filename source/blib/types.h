@@ -100,7 +100,7 @@ namespace NBlib
 
 /** ウィンドウズＡＰＩに使用するNULL。
 */
-#if defined(PLATFORM_VCWIN)
+#if defined(PLATFORM_VCWIN) || defined(PLATFORM_GNUCWIN)
 
 	#define WIN_NULL			NULL
 

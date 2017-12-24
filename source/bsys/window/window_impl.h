@@ -16,7 +16,7 @@
 
 /** include
 */
-#if defined(PLATFORM_VCWIN)
+#if defined(PLATFORM_VCWIN) || defined(PLATFORM_GNUCWIN)
 	#include <brownie_config/windows_include.h>
 #endif
 
@@ -34,7 +34,7 @@ namespace NBsys{namespace NWindow
 
 		/** handle
 		*/
-		#if defined(PLATFORM_VCWIN)
+		#if defined(PLATFORM_VCWIN) || defined(PLATFORM_GNUCWIN)
 		HWND handle;
 		#endif
 
@@ -119,19 +119,19 @@ namespace NBsys{namespace NWindow
 
 		/** CallBackProc
 		*/
-		#if defined(PLATFORM_VCWIN)
+		#if defined(PLATFORM_VCWIN) || defined(PLATFORM_GNUCWIN)
 		LRESULT CallBackProc(HWND a_hwnd,UINT a_msg,WPARAM a_wparam,LPARAM a_lparam);
 		#endif
 
 		/** GetHandle
 		*/
-		#if defined(PLATFORM_VCWIN)
+		#if defined(PLATFORM_VCWIN) || defined(PLATFORM_GNUCWIN)
 		HWND GetHandle();
 		#endif
 
 		/** StaticCallBackProc
 		*/
-		#if defined(PLATFORM_VCWIN)
+		#if defined(PLATFORM_VCWIN) || defined(PLATFORM_GNUCWIN)
 		static LRESULT CALLBACK StaticCallBackProc(HWND a_hwnd,UINT a_msg,WPARAM a_wparam,LPARAM a_lparam);
 		#endif
 

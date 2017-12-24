@@ -83,11 +83,19 @@ int main(int a_argc,char** a_argv)
 		t_blib = NBlib::BootInitialize();
 	}
 
-	//try{
+	#if(DEF_TEST_AUTO)
+	{
+		try{
+			Test_Main();
+		}catch(...){
+			//DEBUGBREAK();
+		}
+	}
+	#else
+	{
 		Test_Main();
-	//}catch(...){
-	//	DEBUGBREAK();
-	//}
+	}
+	#endif
 
 	#if defined(PLATFORM_GNUCWIN)
 	return 0;

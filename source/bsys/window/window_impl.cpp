@@ -33,7 +33,7 @@ namespace NBsys{namespace NWindow
 	*/
 	Window_Impl::Window_Impl()
 		:
-		#if defined(PLATFORM_VCWIN)
+		#if defined(PLATFORM_VCWIN) || defined(PLATFORM_GNUCWIN)
 		handle(WIN_NULL),
 		#endif
 		mouse_x(0),
@@ -105,7 +105,7 @@ namespace NBsys{namespace NWindow
 	*/
 	void Window_Impl::Create(const STLWString& a_title,s32 a_width,s32 a_height)
 	{
-		#if defined(PLATFORM_VCWIN)
+		#if defined(PLATFORM_VCWIN) || defined(PLATFORM_GNUCWIN)
 
 		HINSTANCE t_instance = ::GetModuleHandle(WIN_NULL);
 
@@ -168,7 +168,7 @@ namespace NBsys{namespace NWindow
 	*/
 	void Window_Impl::Delete()
 	{
-		#if defined(PLATFORM_VCWIN)
+		#if defined(PLATFORM_VCWIN) || defined(PLATFORM_GNUCWIN)
 		{
 			if(this->handle != WIN_NULL){
 				SendMessage(this->handle,WM_CLOSE,0,0);
@@ -188,7 +188,7 @@ namespace NBsys{namespace NWindow
 	*/
 	void Window_Impl::Update()
 	{
-		#if defined(PLATFORM_VCWIN)
+		#if defined(PLATFORM_VCWIN) || defined(PLATFORM_GNUCWIN)
 		{
 			MSG t_msg;
 			if(::PeekMessage(&t_msg,0,0,0,PM_REMOVE)){
@@ -229,7 +229,7 @@ namespace NBsys{namespace NWindow
 
 	/** GetHandle
 	*/
-	#if defined(PLATFORM_VCWIN)
+	#if defined(PLATFORM_VCWIN) || defined(PLATFORM_GNUCWIN)
 	HWND Window_Impl::GetHandle()
 	{
 		return this->handle;
@@ -239,7 +239,7 @@ namespace NBsys{namespace NWindow
 	
 	/** CallBackProc
 	*/
-	#if defined(PLATFORM_VCWIN)
+	#if defined(PLATFORM_VCWIN) || defined(PLATFORM_GNUCWIN)
 	LRESULT Window_Impl::CallBackProc(HWND a_hwnd,UINT a_msg,WPARAM a_wparam,LPARAM a_lparam)
 	{
 		switch(a_msg){
@@ -247,9 +247,11 @@ namespace NBsys{namespace NWindow
 			{
 				if(this->handle != WIN_NULL){
 					#if defined(ROM_64BIT)
-					::SetWindowLongPtr(this->handle,GWLP_USERDATA,WIN_NULL);
+					LONG_PTR t_value = reinterpret_cast<AddressType>(nullptr);
+					::SetWindowLongPtr(this->handle,GWLP_USERDATA,t_value);
 					#else
-					::SetWindowLongPtr(this->handle,GWL_USERDATA,WIN_NULL);
+					LONG t_value = reinterpret_cast<AddressType>(nullptr);
+					::SetWindowLongPtr(this->handle,GWL_USERDATA,t_value);
 					#endif
 				}
 
@@ -311,7 +313,7 @@ namespace NBsys{namespace NWindow
 
 	/** StaticCallBackProc
 	*/
-	#if defined(PLATFORM_VCWIN)
+	#if defined(PLATFORM_VCWIN) || defined(PLATFORM_GNUCWIN)
 	LRESULT CALLBACK Window_Impl::StaticCallBackProc(HWND a_hwnd,UINT a_msg,WPARAM a_wparam,LPARAM a_lparam)
 	{
 		#if defined(ROM_64BIT)
