@@ -158,7 +158,7 @@ namespace NBsys{namespace NTexture
 
 					s32 t_index = -1;
 					for(s32 ii=0;ii<static_cast<s32>(t_encoder_count);ii++){
-						if(Memory::wcscmp(t_imagecodecinfo.get()[ii].MimeType,L"image/jpeg") == 0){
+						if(Memory::StringCompareW(L"image/jpeg",t_imagecodecinfo.get()[ii].MimeType) == 0){
 							t_index = ii;
 							break;
 						}

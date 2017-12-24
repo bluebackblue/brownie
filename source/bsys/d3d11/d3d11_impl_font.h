@@ -116,7 +116,7 @@ namespace NBsys{namespace ND3d11
 			list(),
 			maplist()
 		{
-			this->texturewidth = static_cast<s32>(NBlib::Math::powf(2,NBlib::Math::ceilf(NBlib::Math::log2f(static_cast<f32>(a_texture_width)))));
+			this->texturewidth = static_cast<s32>(NBlib::Math::pow_f(2,NBlib::Math::ceil_f(NBlib::Math::log2_f(static_cast<f32>(a_texture_width)))));
 
 			s32 t_drawtypemax = 0;
 
@@ -143,7 +143,7 @@ namespace NBsys{namespace ND3d11
 				}break;
 			}
 
-			this->textureheight = static_cast<s32>(NBlib::Math::powf(2,NBlib::Math::ceilf(NBlib::Math::log2f(static_cast<f32>(this->texturewidth * t_drawtypemax)))));
+			this->textureheight = static_cast<s32>(NBlib::Math::pow_f(2,NBlib::Math::ceil_f(NBlib::Math::log2_f(static_cast<f32>(this->texturewidth * t_drawtypemax)))));
 
 			sharedptr<u8> t_pixel(new u8[this->texturewidth * this->textureheight * 4]);
 

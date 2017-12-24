@@ -42,7 +42,7 @@ static void AddDebugLog(const wchar* a_wstring,const NBsys::NColor::Color_F& a_c
 
 	//文字。
 	{
-		s32 t_length = Memory::wstrlen(a_wstring,COUNTOF(LogItem::buffer) - 1);
+		s32 t_length = Memory::StringLengthW(a_wstring,COUNTOF(LogItem::buffer) - 1);
 		if(t_length <= 0){
 			return;
 		}
