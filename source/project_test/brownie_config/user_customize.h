@@ -55,12 +55,22 @@
 
 	#define DEF_TEST_STRING									L"10"
 
+	#define BSYS_HTTP_ENABLE								(1)
+	#define BSYS_WINSOCK_ENABLE								(1)
+	#define BSYS_TEXTURE_GDIPLUS_ENABLE						(1)
+
+
 	#define BSYS_WINDOW_ENABLE								(1)
 	#define BSYS_D3D11_ENABLE								(1)
 
 #elif(DEF_TEST_INDEX == 11)
 
 	#define DEF_TEST_STRING									L"11"
+
+	#define BSYS_HTTP_ENABLE								(1)
+	#define BSYS_WINSOCK_ENABLE								(1)
+	#define BSYS_TEXTURE_GDIPLUS_ENABLE						(1)
+
 
 	#define BSYS_WINDOW_ENABLE								(1)
 	#define BSYS_D3D11_ENABLE								(1)
@@ -69,6 +79,11 @@
 #elif(DEF_TEST_INDEX == 12)
 
 	#define DEF_TEST_STRING									L"12"
+
+	#define BSYS_HTTP_ENABLE								(1)
+	#define BSYS_WINSOCK_ENABLE								(1)
+	#define BSYS_TEXTURE_GDIPLUS_ENABLE						(1)
+
 
 	#define BSYS_WINDOW_ENABLE								(1)
 	#define BSYS_D3D11_ENABLE								(1)
@@ -88,6 +103,11 @@
 
 	#define DEF_TEST_STRING									L"13"
 
+	#define BSYS_HTTP_ENABLE								(1)
+	#define BSYS_WINSOCK_ENABLE								(1)
+	#define BSYS_TEXTURE_GDIPLUS_ENABLE						(1)
+
+
 	#define BSYS_WINDOW_ENABLE								(1)
 	#define BSYS_D3D11_ENABLE								(1)
 	#define BSYS_FONT_ENABLE								(1)
@@ -97,13 +117,17 @@
 	#define BLIB_DEBUGBREAK_CALLBACK_ENABLE					(1)
 	#define BLIB_DEBUGLOG_CALLBACK_ENABLE					(1)
 
-	#define BSYS_HTTP_ENABLE								(1)
 	#define BSYS_WINSOCK_ENABLE								(1)
 	#define BSYS_TEXTURE_GDIPLUS_ENABLE						(1)
 
 #elif(DEF_TEST_INDEX == 22)
 
 	#define DEF_TEST_STRING									L"22"
+
+	#define BSYS_HTTP_ENABLE								(1)
+	#define BSYS_WINSOCK_ENABLE								(1)
+	#define BSYS_TEXTURE_GDIPLUS_ENABLE						(1)
+
 
 	#define BSYS_MMD_PMX_ENABLE								(1)
 	#define BSYS_MMD_VMD_ENABLE								(1)

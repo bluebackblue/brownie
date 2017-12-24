@@ -23,6 +23,11 @@
 #include "../common/common_drawline.h"
 
 
+/** include
+*/
+#include "../autotest/autotest.h"
+
+
 /** NCommon
 */
 #if(BSYS_D3D11_ENABLE)
@@ -41,6 +46,12 @@ namespace NCommon
 		/** d3d11
 		*/
 		sharedptr<NBsys::ND3d11::D3d11> d3d11;
+
+		/** autotest
+		*/
+		#if(DEF_TEST_AUTO)
+		sharedptr<AutoTest> autotest;
+		#endif
 
 		/** width
 		*/
@@ -76,6 +87,7 @@ namespace NCommon
 			:
 			window(),
 			d3d11(),
+			autotest(),
 			width(800),
 			height(600),
 			drawline_manager(),
@@ -108,6 +120,24 @@ namespace NCommon
 		{
 			NBsys::NFile::EndSystemRequest();
 			NBsys::NFile::EndWaitSystem();
+		}
+
+		/** 初期化。通信。
+		*/
+		virtual void Initialize_Winsock()
+		{
+			#if defined(BSYS_HTTP_ENABLE) || defined(BSYS_WINSOCK_ENABLE)
+			NBsys::NWinsock::StartSystem();
+			#endif
+		}
+
+		/** 削除。通信。
+		*/
+		virtual void Delete_Winsock()
+		{
+			#if defined(BSYS_HTTP_ENABLE) || defined(BSYS_WINSOCK_ENABLE)
+			NBsys::NWinsock::EndSystem();
+			#endif
 		}
 
 		/** 初期化。ウィンドウ。
@@ -164,11 +194,21 @@ namespace NCommon
 		*/
 		void Initialize()
 		{
+			#if(DEF_TEST_AUTO)
+			this->autotest.reset(new AutoTest());
+			#endif
+
+			this->Initialize_Winsock();
+
 			this->Initialize_File();
 			this->Initialize_Window();
 			this->Initialize_D3d11();
 
 			this->Initialize_DrawLineManager();
+
+			#if(DEF_TEST_AUTO)
+			this->autotest->d3d11 = this->d3d11;
+			#endif
 
 			this->initialize_step = 0;
 		}
@@ -200,6 +240,8 @@ namespace NCommon
 			this->Delete_D3d11();
 			this->Delete_Window();
 			this->Delete_File();
+
+			this->Delete_Winsock();
 		}
 
 		void Main()
@@ -209,6 +251,7 @@ namespace NCommon
 
 			#if(DEF_TEST_AUTO)
 			f32 t_autotime = 0.0f;
+			bool t_auto_send = false;
 			#endif
 
 			while(true){
@@ -228,12 +271,6 @@ namespace NCommon
 						continue;
 					}
 					t_pcounter = t_pcounter_now;
-					#if(DEF_TEST_AUTO)
-					t_autotime += t_delta;
-					if(t_autotime >= 3.0f){
-						break;
-					}
-					#endif
 				}
 
 				bool t_initialize_update = true;
@@ -272,6 +309,21 @@ namespace NCommon
 					this->Initialize_Update();
 				}else{
 					this->Update(t_delta);
+
+					//キャプチャー開始。
+					#if(DEF_TEST_AUTO)
+					t_autotime += t_delta;
+					if(t_autotime >= 3.0f){
+						if(t_auto_send == false){
+							t_auto_send = true;
+							this->autotest->capture_step = 0;
+						}
+					}
+
+					if(this->autotest->send_end == true){
+						break;
+					}
+					#endif
 				}
 				
 				//描画命令呼び出し。
@@ -294,6 +346,10 @@ namespace NCommon
 						this->Render();
 					}
 				}
+
+				#if(DEF_TEST_AUTO)
+				this->autotest->Update();
+				#endif
 
 				this->d3d11->Render_Present();
 
