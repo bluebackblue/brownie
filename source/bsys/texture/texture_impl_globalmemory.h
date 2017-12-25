@@ -24,7 +24,7 @@
 
 /** NBsys::NTexture
 */
-#if(PLATFORM_VCWIN)
+#if(BSYS_TEXTURE_ENABLE)
 namespace NBsys{namespace NTexture
 {
 	/** Texture_Impl_GlobalMemory
@@ -35,7 +35,9 @@ namespace NBsys{namespace NTexture
 
 		/** handle
 		*/
+		#if(PLATFORM_VCWIN)
 		HGLOBAL handle;
+		#endif
 
 		/** pointer
 		*/
@@ -47,7 +49,9 @@ namespace NBsys{namespace NTexture
 		*/
 		Texture_Impl_GlobalMemory(s32 a_size)
 			:
+			#if(PLATFORM_VCWIN)
 			handle(WIN_NULL),
+			#endif
 			pointer(nullptr)
 		{
 			this->handle = ::GlobalAlloc(GMEM_MOVEABLE,a_size);
@@ -59,39 +63,48 @@ namespace NBsys{namespace NTexture
 		{
 			this->Unmap();
 
+			#if(PLATFORM_VCWIN)
 			if(this->handle){
 				::GlobalFree(this->handle);
 				this->handle = WIN_NULL;
 			}
+			#endif
 		}
 
 		/** IsEnable
 		*/
 		bool IsEnable()
 		{
+			#if(PLATFORM_VCWIN)
 			if(this->handle != WIN_NULL){
 				return true;
 			}
+			#endif
+
 			return false;
 		}
 
 		/** GetHandle
 		*/
+		#if(PLATFORM_VCWIN)
 		HGLOBAL GetHandle() const
 		{
 			return this->handle;
 		}
+		#endif
 
 		/** Map
 		*/
 		void* Map()
 		{
+			#if(PLATFORM_VCWIN)
 			if(this->pointer == nullptr){
 				if(this->handle){
 					this->pointer = ::GlobalLock(this->handle);
 					return this->pointer;
 				}
 			}
+			#endif
 
 			return this->pointer;
 		}
@@ -100,12 +113,14 @@ namespace NBsys{namespace NTexture
 		*/
 		void Unmap()
 		{
+			#if(PLATFORM_VCWIN)
 			if(this->handle){
 				if(this->pointer){
 					::GlobalUnlock(this->handle);
 					this->pointer = nullptr;
 				}
 			}
+			#endif
 		}
 
 	};
@@ -119,7 +134,9 @@ namespace NBsys{namespace NTexture
 
 		/** handle
 		*/
+		#if(PLATFORM_VCWIN)
 		IStream* stream;
+		#endif
 
 		/** globalmemory
 		*/
@@ -135,9 +152,13 @@ namespace NBsys{namespace NTexture
 		*/
 		Texture_Impl_GlobalMemory_Stream(const sharedptr<Texture_Impl_GlobalMemory>& a_globalmemory)
 			:
+			#if(PLATFORM_VCWIN)
 			stream(nullptr),
+			#endif
 			globalmemory(a_globalmemory)
 		{
+			#if(PLATFORM_VCWIN)
+
 			HGLOBAL t_handle = this->globalmemory->GetHandle();
 			if(t_handle){
 				if(::CreateStreamOnHGlobal(t_handle,FALSE,&this->stream) == S_OK){
@@ -145,32 +166,41 @@ namespace NBsys{namespace NTexture
 					this->stream = nullptr;
 				}
 			}
+
+			#endif
 		}
 
 		/** destructor
 		*/
 		~Texture_Impl_GlobalMemory_Stream()
 		{
+			#if(PLATFORM_VCWIN)
 			if(this->stream){
 				this->stream->Release();
 				this->stream = nullptr;
 			}
+			#endif
 		}
 
 		/** GetHandle
 		*/
+		#if(PLATFORM_VCWIN)
 		IStream* GetHandle() const
 		{
 			return this->stream;
 		}
+		#endif
 
 		/** IsEnable
 		*/
 		bool IsEnable()
 		{
+			#if(PLATFORM_VCWIN)
 			if(this->stream != nullptr){
 				return true;
 			}
+			#endif
+
 			return false;
 		}
 
@@ -178,29 +208,35 @@ namespace NBsys{namespace NTexture
 		*/
 		void SetSeekStart()
 		{
+			#if(PLATFORM_VCWIN)
 			if(this->stream != nullptr){
 				LARGE_INTEGER t_pos = {0};
 				this->stream->Seek(t_pos,STREAM_SEEK_SET,nullptr);
 			}
+			#endif
 		}
 
 		/** サイズをゼロに設定。
 		*/
 		void SetSizeZero()
 		{
+			#if(PLATFORM_VCWIN)
 			if(this->stream != nullptr){
 				ULARGE_INTEGER t_size = {0};
 				this->stream->SetSize(t_size);
 			}
+			#endif
 		}
 
 		/** ステース更新。
 		*/
 		void UpdateStatus()
 		{
+			#if(PLATFORM_VCWIN)
 			if(this->stream){
 				this->stream->Stat(&this->statstg,STATFLAG_DEFAULT);
 			}
+			#endif
 		}
 
 		/** サイズ取得。

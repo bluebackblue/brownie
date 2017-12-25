@@ -21,6 +21,7 @@
 
 /** NBsys::NTexture
 */
+#if(BSYS_TEXTURE_ENABLE)
 namespace NBsys{namespace NTexture
 {
 	/** CreateTexture_GdiPlus
@@ -38,4 +39,5 @@ namespace NBsys{namespace NTexture
 
 
 }}
+#endif
 

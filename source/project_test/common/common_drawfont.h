@@ -19,11 +19,10 @@
 #include "./common_render2d.h"
 
 
-/** NCommon
+/** NTest::NCommon
 */
-#if(BSYS_D3D11_ENABLE)
-#if(BSYS_FONT_ENABLE)
-namespace NCommon
+#if((BSYS_D3D11_ENABLE)&&(BSYS_FONT_ENABLE))
+namespace NTest{namespace NCommon
 {
 	/** DrawFont_VS_ConstantBuffer_B0
 	*/
@@ -41,6 +40,7 @@ namespace NCommon
 		{
 		}
 	};
+
 	
 	/** DrawFont_PS_ConstantBuffer_B0
 	*/
@@ -99,6 +99,7 @@ namespace NCommon
 		}
 	};
 
+
 	/** DrawFont_Material
 	*/
 	class DrawFont_Material : public Render2D_Material_Base
@@ -154,6 +155,7 @@ namespace NCommon
 			font16(),
 			font32(),
 			font64(),
+
 			asyncresult_vertexshader(),
 			asyncresult_pixelshader(),
 			vertexshader_id(-1),
@@ -480,7 +482,8 @@ namespace NCommon
 			}
 		}
 	};
-}
-#endif
+
+
+}}
 #endif
 

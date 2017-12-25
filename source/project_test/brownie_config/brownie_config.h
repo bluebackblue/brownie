@@ -856,24 +856,14 @@
 	-------------------
 
 	-------------------
-	BSYS_MMD_PMX_ENABLE
-
-		0 : オフ
-		1 : オン
-	-------------------
-
-	-------------------
-	BSYS_MMD_VMD_ENABLE
+	BSYS_MMD_ENABLE
 
 		0 : オフ
 		1 : オン
 	-------------------
 */
-#if !defined(BSYS_MMD_PMX_ENABLE)
-	#define BSYS_MMD_PMX_ENABLE								(0)
-#endif
-#if !defined(BSYS_MMD_VMD_ENABLE)
-	#define BSYS_MMD_VMD_ENABLE								(0)
+#if !defined(BSYS_MMD_ENABLE)
+	#define BSYS_MMD_ENABLE									(0)
 #endif
 
 

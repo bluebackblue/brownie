@@ -16,6 +16,7 @@
 
 /** NBsys::NPad
 */
+#if(BSYS_PAD_ENABLE)
 namespace NBsys{namespace NPad
 {
 	/** TouchValue
@@ -66,4 +67,5 @@ namespace NBsys{namespace NPad
 
 
 }}
+#endif
 

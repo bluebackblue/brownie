@@ -14,69 +14,84 @@
 #include "../include.h"
 
 
-/** AutoTest
+/** NTest
 */
 #if(DEF_TEST_AUTO)
-struct AutoTest
+namespace NTest
 {
-public:
-
-	/** d3d11
+	/** AutoTest
 	*/
-	sharedptr<NBsys::ND3d11::D3d11> d3d11; 
+	struct AutoTest
+	{
+	public:
 
-	/** capture_step
-	*/
-	s32 capture_step;
+		/** action_start
+		*/
+		bool action_start;
 
-	/** capture_texture
-	*/
-	sharedptr<NBsys::NTexture::Texture> capture_texture;
+		/** action_end
+		*/
+		bool action_end;
 
-	/** capture_jpg
-	*/
-	sharedptr<u8> capture_jpg;
+		/** d3d11
+		*/
+		#if(BSYS_D3D11_ENABLE)
+		sharedptr<NBsys::ND3d11::D3d11> d3d11; 
+		#endif
 
-	/** capture_jpg_size
-	*/
-	s32 capture_jpg_size;
+	public:
 
-	/** send_step
-	*/
-	#if(BSYS_HTTP_ENABLE)
-	s32 send_step;
-	#endif
+		/** capture_step
+		*/
+		s32 capture_step;
 
-	/** send_http
-	*/
-	#if(BSYS_HTTP_ENABLE)
-	sharedptr<NBsys::NHttp::Http> send_http;
-	#endif
+		/** capture_texture
+		*/
+		#if(BSYS_TEXTURE_ENABLE)
+		sharedptr<NBsys::NTexture::Texture> capture_texture;
+		#endif
 
-	#if(BSYS_HTTP_ENABLE)
-	sharedptr<RingBufferBase<u8>> send_recvbuffer;
-	#endif
+		/** capture_jpg
+		*/
+		sharedptr<u8> capture_jpg;
 
-	/** send_end
-	*/
-	#if(BSYS_HTTP_ENABLE)
-	bool send_end;
-	#endif
+		/** capture_jpg_size
+		*/
+		s32 capture_jpg_size;
 
-public:
-	/** constructor
-	*/
-	AutoTest();
+		/** send_step
+		*/
+		s32 send_step;
 
-	/** destructor
-	*/
-	nonvirtual ~AutoTest();
+		/** send_http
+		*/
+		#if(BSYS_HTTP_ENABLE)
+		sharedptr<NBsys::NHttp::Http> send_http;
+		#endif
 
-public:
-	/** 更新。
-	*/
-	void Update();
+		/** send_recvbuffer
+		*/
+		sharedptr<RingBufferBase<u8>> send_recvbuffer;
 
-};
+	public:
+
+		/** constructor
+		*/
+		AutoTest();
+
+		/** destructor
+		*/
+		nonvirtual ~AutoTest();
+
+	public:
+
+		/** 更新。
+		*/
+		void Update();
+
+	};
+
+
+}
 #endif
 

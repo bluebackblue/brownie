@@ -19,10 +19,10 @@
 #include "./common_windowmenu_callback.h"
 
 
-/** NCommon
+/** NTest::NCommon
 */
 #if(BSYS_WINDOWMENU_ENABLE)
-namespace NCommon
+namespace NTest{namespace NCommon
 {
 	/** DrawFontProcType
 	*/
@@ -95,6 +95,6 @@ namespace NCommon
 		a_r_up = t_pad_virtual_ptr->IsButtonUp(NBsys::NPad::Pad_Virtual::ButtonType::MOUSER);
 	}
 
-}
+}}
 #endif
 

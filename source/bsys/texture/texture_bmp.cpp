@@ -27,6 +27,7 @@
 
 /** NBsys::NTexture
 */
+#if(BSYS_TEXTURE_ENABLE)
 namespace NBsys{namespace NTexture
 {
 	/** CreateTexture_Bmp
@@ -108,4 +109,5 @@ namespace NBsys{namespace NTexture
 
 
 }}
+#endif
 

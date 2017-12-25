@@ -58,6 +58,7 @@
 	#define BSYS_HTTP_ENABLE								(1)
 	#define BSYS_WINSOCK_ENABLE								(1)
 	#define BSYS_TEXTURE_GDIPLUS_ENABLE						(1)
+	#define BSYS_TEXTURE_ENABLE								(1)
 
 
 	#define BSYS_WINDOW_ENABLE								(1)
@@ -70,6 +71,7 @@
 	#define BSYS_HTTP_ENABLE								(1)
 	#define BSYS_WINSOCK_ENABLE								(1)
 	#define BSYS_TEXTURE_GDIPLUS_ENABLE						(1)
+	#define BSYS_TEXTURE_ENABLE								(1)
 
 
 	#define BSYS_WINDOW_ENABLE								(1)
@@ -83,6 +85,7 @@
 	#define BSYS_HTTP_ENABLE								(1)
 	#define BSYS_WINSOCK_ENABLE								(1)
 	#define BSYS_TEXTURE_GDIPLUS_ENABLE						(1)
+	#define BSYS_TEXTURE_ENABLE								(1)
 
 
 	#define BSYS_WINDOW_ENABLE								(1)
@@ -106,6 +109,7 @@
 	#define BSYS_HTTP_ENABLE								(1)
 	#define BSYS_WINSOCK_ENABLE								(1)
 	#define BSYS_TEXTURE_GDIPLUS_ENABLE						(1)
+	#define BSYS_TEXTURE_ENABLE								(1)
 
 
 	#define BSYS_WINDOW_ENABLE								(1)
@@ -127,10 +131,10 @@
 	#define BSYS_HTTP_ENABLE								(1)
 	#define BSYS_WINSOCK_ENABLE								(1)
 	#define BSYS_TEXTURE_GDIPLUS_ENABLE						(1)
+	#define BSYS_TEXTURE_ENABLE								(1)
 
 
-	#define BSYS_MMD_PMX_ENABLE								(1)
-	#define BSYS_MMD_VMD_ENABLE								(1)
+	#define BSYS_MMD_ENABLE									(1)
 	#define BSYS_WINDOW_ENABLE								(1)
 	#define BSYS_D3D11_ENABLE								(1)
 	//#define BSYS_FOVEHMD_ENABLE							(1)

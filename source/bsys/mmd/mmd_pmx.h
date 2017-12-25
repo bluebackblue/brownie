@@ -28,7 +28,7 @@
 
 /** NBsys::NMmd
 */
-#if(BSYS_MMD_PMX_ENABLE)
+#if(BSYS_MMD_ENABLE)
 namespace NBsys{namespace NMmd
 {
 	/** Mmd_Pmx

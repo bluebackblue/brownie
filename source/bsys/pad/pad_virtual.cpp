@@ -26,6 +26,7 @@
 
 /** NBsys::NPad
 */
+#if(BSYS_PAD_ENABLE)
 namespace NBsys{namespace NPad
 {
 	/** constructor
@@ -385,4 +386,5 @@ namespace NBsys{namespace NPad
 
 
 }}
+#endif
 

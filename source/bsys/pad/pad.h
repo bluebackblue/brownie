@@ -23,6 +23,7 @@
 
 /** NBsys::NPad
 */
+#if(BSYS_PAD_ENABLE)
 namespace NBsys{namespace NPad
 {
 	/** システムの開始。
@@ -56,4 +57,5 @@ namespace NBsys{namespace NPad
 
 
 }}
+#endif
 

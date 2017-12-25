@@ -28,7 +28,7 @@
 
 /** NBsys::NFile
 */
-#if(BSYS_FILE_PACK_ENABLE)
+#if((BSYS_FILE_ENABLE)&&(BSYS_FILE_PACK_ENABLE))
 namespace NBsys{namespace NFile
 {
 	/** constructor

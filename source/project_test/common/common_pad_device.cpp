@@ -56,10 +56,10 @@
 #endif
 
 
-/** NCommon
+/** NTest::NCommon
 */
 #if(BSYS_PAD_ENABLE)
-namespace NCommon
+namespace NTest{namespace NCommon
 {
 	/** constructor
 	*/
@@ -150,6 +150,6 @@ namespace NCommon
 
 		return NBsys::NPad::TouchValue::Zero();
 	}
-}
+}}
 #endif
 

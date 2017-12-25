@@ -21,31 +21,19 @@
 #endif
 
 
-/** Test_Main
+/** NTest
 */
-void Test_Main();
+namespace NTest
+{
+	/** Test_Main
+	*/
+	void Test_Main();
+}
 
 
 /** include
 */
 #include "./entry.h"
-
-
-/** FileAllocator
-*/
-class FileAllocator : public NBsys::NFile::File_Allocator
-{
-public:
-	virtual void* Alloc(u32 a_size)
-	{
-		return new u8[a_size];
-	}
-	virtual void Free(void* a_pointer)
-	{
-		u8* t_pointer = reinterpret_cast<u8*>(a_pointer);
-		delete [] t_pointer;
-	}
-};
 
 
 /** GetEntryParamReference
@@ -56,8 +44,11 @@ EntryParam& GetEntryParamReference()
 	return s_entryparam;
 }
 
+
+/** s_leakcheck
+*/
 #if defined(ROM_DEVELOP) || defined(ROM_DEEPDEBUG) || defined(ROM_FULLDEBUG)
-bool s_leakcheck = false;
+static bool s_leakcheck = false;
 #endif
 
 
@@ -86,14 +77,14 @@ int main(int a_argc,char** a_argv)
 	#if(DEF_TEST_AUTO)
 	{
 		try{
-			Test_Main();
+			NTest::Test_Main();
 		}catch(...){
 			//DEBUGBREAK();
 		}
 	}
 	#else
 	{
-		Test_Main();
+		NTest::Test_Main();
 	}
 	#endif
 

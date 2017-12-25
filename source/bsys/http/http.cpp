@@ -28,11 +28,6 @@
 #include "./http_binaryitem.h"
 
 
-/** include
-*/
-//#include "../ssl/ssl.h"
-
-
 /** NBsys::NHttp
 */
 #if(BSYS_HTTP_ENABLE)

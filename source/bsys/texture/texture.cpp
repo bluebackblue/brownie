@@ -26,6 +26,7 @@
 
 /** NBsys::NTexture
 */
+#if(BSYS_TEXTURE_ENABLE)
 namespace NBsys{namespace NTexture
 {
 	/** コンストラクタ。
@@ -145,4 +146,5 @@ namespace NBsys{namespace NTexture
 
 	
 }}
+#endif
 

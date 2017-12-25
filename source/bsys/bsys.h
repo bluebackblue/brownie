@@ -74,7 +74,7 @@
 
 /** include
 */
-#if(BSYS_MMD_PMX_ENABLE)
+#if(BSYS_MMD_ENABLE)
 #include "./mmd/mmd.h"
 #endif
 

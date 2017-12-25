@@ -21,6 +21,7 @@
 
 /** NBsys::NTexture
 */
+#if(BSYS_TEXTURE_ENABLE)
 namespace NBsys{namespace NTexture
 {
 	/** CreateTexture_Tga
@@ -29,4 +30,5 @@ namespace NBsys{namespace NTexture
 
 
 }}
+#endif
 

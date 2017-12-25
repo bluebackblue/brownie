@@ -23,6 +23,7 @@
 
 /** NBsys::NTexture
 */
+#if(BSYS_TEXTURE_ENABLE)
 namespace NBsys{namespace NTexture
 {
 	/** TextureType
@@ -117,4 +118,5 @@ namespace NBsys{namespace NTexture
 
 
 }}
+#endif
 

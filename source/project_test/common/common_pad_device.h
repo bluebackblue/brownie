@@ -14,16 +14,17 @@
 #include "../include.h"
 
 
-/** NCommon
+/** NTest::NCommon
 */
 #if(BSYS_PAD_ENABLE)
-namespace NCommon
+namespace NTest{namespace NCommon
 {
 	/** Pad_Device
 	*/
 	class Pad_Device : public NBsys::NPad::Pad_Device_Base
 	{
 	public:
+
 		/** Type
 		*/
 		struct Type
@@ -37,6 +38,7 @@ namespace NCommon
 		};
 
 	private:
+
 		/** window
 		*/
 		sharedptr<NBsys::NWindow::Window> window;
@@ -62,6 +64,7 @@ namespace NCommon
 		bool mouse_r;
 
 	public:
+
 		/** constructor
 		*/
 		Pad_Device(sharedptr<NBsys::NWindow::Window>& a_window,sharedptr<NBsys::ND3d11::D3d11>& a_d3d11);
@@ -71,6 +74,7 @@ namespace NCommon
 		virtual ~Pad_Device();
 
 	public:
+
 		/** デバイスの更新。
 		*/
 		virtual void DeviceUpdate();
@@ -86,7 +90,10 @@ namespace NCommon
 		/** タッチ取得。
 		*/
 		virtual NBsys::NPad::TouchValue GetTouch(s32 a_virtualpad_index,NBsys::NPad::Pad_Device_Base::TouchType::Id a_device_touch);
+
 	};
-}
+
+
+}}
 #endif
 

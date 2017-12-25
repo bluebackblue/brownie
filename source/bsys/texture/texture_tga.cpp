@@ -27,6 +27,7 @@
 
 /** NBsys::NTexture
 */
+#if(BSYS_TEXTURE_ENABLE)
 namespace NBsys{namespace NTexture
 {
 	/** HEADER_TGA
@@ -188,4 +189,5 @@ namespace NBsys{namespace NTexture
 
 
 }}
+#endif
 

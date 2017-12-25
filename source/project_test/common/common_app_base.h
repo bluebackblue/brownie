@@ -17,21 +17,21 @@
 /** include
 */
 #include "./common_render2d.h"
-
-/** include
-*/
-#include "../common/common_drawline.h"
-
-
-/** include
-*/
+#include "./common_drawline.h"
+#include "./common_drawrect.h"
+#include "./common_drawfont.h"
+#include "./common_pad_device.h"
+#include "./common_debug_callback.h"
+#include "./common_windowmenu_texture.h"
+#include "./common_windowmenu_log.h"
+#include "./common_windowmenu_callback.h"
 #include "../autotest/autotest.h"
 
 
-/** NCommon
+/** NTest::NCommon
 */
 #if(BSYS_D3D11_ENABLE)
-namespace NCommon
+namespace NTest{namespace NCommon
 {
 	/** App_Base
 	*/
@@ -47,6 +47,12 @@ namespace NCommon
 		*/
 		sharedptr<NBsys::ND3d11::D3d11> d3d11;
 
+		/** pad_device
+		*/
+		#if(BSYS_PAD_ENABLE)
+		sharedptr<NBsys::NPad::Pad_Device_Base> pad_device;
+		#endif
+
 		/** autotest
 		*/
 		#if(DEF_TEST_AUTO)
@@ -61,9 +67,35 @@ namespace NCommon
 		*/
 		s32 height;
 
-		/** drawline_manager
+		/** drawline
 		*/
-		sharedptr<NCommon::DrawLine_Manager> drawline_manager;
+		sharedptr<NCommon::DrawLine_Manager> drawline;
+
+		/** render2d
+		*/
+		sharedptr<NCommon::Render2D> render2d;
+
+		/** material_drawrect
+		*/
+		sharedptr<NCommon::DrawRect_Material> material_drawrect;
+
+		/** material_drawfont
+		*/
+		#if(BSYS_FONT_ENABLE)
+		sharedptr<NCommon::DrawFont_Material> material_drawfont;
+		#endif
+
+		/** windowmenu_texture
+		*/
+		#if(BSYS_WINDOWMENU_ENABLE)
+		sharedptr<NCommon::Common_WindowMenu_Texture> windowmenu_texture;
+		#endif
+
+		/** windowmenu_log
+		*/
+		#if(BSYS_WINDOWMENU_ENABLE)
+		sharedptr<NCommon::Common_WindowMenu_Log> windowmenu_log;
+		#endif
 
 		/** 初期化ステップ。
 		*/
@@ -79,6 +111,11 @@ namespace NCommon
 		s32 blendstate_on_id;
 		s32 blendstate_off_id;
 
+		/** デプスステンシル。ステート。
+		*/
+		s32 depthstencilstate_check_on_write_on_id;
+		s32 depthstencilstate_check_off_write_off_id;
+
 	public:
 
 		/** constructor
@@ -87,15 +124,31 @@ namespace NCommon
 			:
 			window(),
 			d3d11(),
+			#if(DEF_TEST_AUTO)
 			autotest(),
+			#endif
 			width(800),
 			height(600),
-			drawline_manager(),
+			drawline(),
+			render2d(),
+			material_drawrect(),
+
+			#if(BSYS_FONT_ENABLE)
+			material_drawfont(),
+			#endif
+
+			#if(BSYS_WINDOWMENU_ENABLE)
+			windowmenu_texture(),
+			windowmenu_log(),
+			#endif
+
 			initialize_step(0),
 			rasterizerstate_cull_back_id(-1),
 			rasterizerstate_cull_none_id(-1),
 			blendstate_on_id(-1),
-			blendstate_off_id(-1)
+			blendstate_off_id(-1),
+			depthstencilstate_check_on_write_on_id(-1),
+			depthstencilstate_check_off_write_off_id(-1)
 		{
 		}
 
@@ -122,12 +175,68 @@ namespace NCommon
 			NBsys::NFile::EndWaitSystem();
 		}
 
+		/** 初期化。パッド。
+		*/
+		virtual void Initialize_Pad()
+		{
+			#if(BSYS_PAD_ENABLE)
+			{
+				NBsys::NPad::StartSystem(1);
+
+				this->pad_device.reset(new NCommon::Pad_Device(this->window,this->d3d11));
+				NBsys::NPad::AddDevice(this->pad_device);
+
+				NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->AddButton(NBsys::NPad::Pad_Virtual::ButtonType::MOUSEL,NBsys::NPad::Pad_Device_Base::ButtonType::DeviceButton_14,this->pad_device);
+				NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->AddButton(NBsys::NPad::Pad_Virtual::ButtonType::MOUSER,NBsys::NPad::Pad_Device_Base::ButtonType::DeviceButton_15,this->pad_device);
+				NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->AddTouch(NBsys::NPad::Pad_Virtual::TouchType::MOUSEL,NBsys::NPad::Pad_Device_Base::TouchType::DeviceTouch_1,this->pad_device);
+				NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->AddTouch(NBsys::NPad::Pad_Virtual::TouchType::MOUSER,NBsys::NPad::Pad_Device_Base::TouchType::DeviceTouch_2,this->pad_device);
+				NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->SetEnable(true);
+			}
+			#endif
+		}
+
+		/** 削除。パッド。
+		*/
+		virtual void Delete_Pad()
+		{
+			#if(BSYS_PAD_ENABLE)
+			{
+				NBsys::NPad::EndSystem();
+			}
+			#endif
+		}
+
+		/** 初期化。ウィンドウメニュー。
+		*/
+		virtual void Initialize_WindowMenu()
+		{
+			#if(BSYS_WINDOWMENU_ENABLE)
+			{
+				NBsys::NWindowMenu::StartSystem(new NCommon::WindowMenu_Callback(this->render2d));
+			}
+			#endif
+		}
+
+		/** 削除。
+		*/
+		virtual void Delete_WindowMenu()
+		{
+			#if(BSYS_WINDOWMENU_ENABLE)
+			{
+				NBsys::NWindowMenu::EndSystem();
+			}
+			#endif
+		}
+
+
 		/** 初期化。通信。
 		*/
 		virtual void Initialize_Winsock()
 		{
-			#if defined(BSYS_HTTP_ENABLE) || defined(BSYS_WINSOCK_ENABLE)
-			NBsys::NWinsock::StartSystem();
+			#if(BSYS_WINSOCK_ENABLE)
+			{
+				NBsys::NWinsock::StartSystem();
+			}
 			#endif
 		}
 
@@ -135,7 +244,7 @@ namespace NCommon
 		*/
 		virtual void Delete_Winsock()
 		{
-			#if defined(BSYS_HTTP_ENABLE) || defined(BSYS_WINSOCK_ENABLE)
+			#if(BSYS_WINSOCK_ENABLE)
 			NBsys::NWinsock::EndSystem();
 			#endif
 		}
@@ -178,16 +287,62 @@ namespace NCommon
 
 		/** 初期化。ライン描画。
 		*/
-		virtual void Initialize_DrawLineManager()
+		virtual void Initialize_DrawLine()
 		{
-			this->drawline_manager.reset(new NCommon::DrawLine_Manager(this->d3d11));
+			this->drawline.reset(new NCommon::DrawLine_Manager(this->d3d11));
 		}
 
 		/** 削除。ライン描画。
 		*/
-		virtual void Delete_DrawLineManager()
+		virtual void Delete_DrawLine()
 		{
-			this->drawline_manager.reset();
+			this->drawline.reset();
+		}
+
+		/** 初期化。２Ｄ描画。
+		*/
+		virtual void Initialize_Render2D()
+		{
+			this->render2d.reset(new NCommon::Render2D());
+		}
+
+		/** 削除。２Ｄ描画。
+		*/
+		virtual void Delete_Render2D()
+		{
+			this->render2d.reset();
+		}
+
+		/** 初期化。マテリアル。レクト描画。
+		*/
+		virtual void Initialize_Material_DrawRect()
+		{
+			this->material_drawrect.reset(new NCommon::DrawRect_Material(this->d3d11));
+		}
+
+		/** 削除。マテリアル。レクト描画。
+		*/
+		virtual void Delete_Material_DrawRect()
+		{
+			this->material_drawrect.reset();
+		}
+
+		/** 初期化。マテリアル。フォント描画。
+		*/
+		virtual void Initialize_Material_DrawFont()
+		{
+			#if(BSYS_FONT_ENABLE)
+			this->material_drawfont.reset(new NCommon::DrawFont_Material(this->d3d11));
+			#endif
+		}
+
+		/** 削除。マテリアル。フォント描画。
+		*/
+		virtual void Delete_Material_DrawFont()
+		{
+			#if(BSYS_FONT_ENABLE)
+			this->material_drawfont.reset();
+			#endif
 		}
 
 		/** 初期化、
@@ -199,18 +354,43 @@ namespace NCommon
 			#endif
 
 			this->Initialize_Winsock();
-
 			this->Initialize_File();
 			this->Initialize_Window();
 			this->Initialize_D3d11();
+			this->Initialize_Pad();
 
-			this->Initialize_DrawLineManager();
+			this->Initialize_DrawLine();
+
+			this->Initialize_Render2D();
+			this->Initialize_Material_DrawRect();
+			this->Initialize_Material_DrawFont();
+
+			this->Initialize_WindowMenu();
 
 			#if(DEF_TEST_AUTO)
 			this->autotest->d3d11 = this->d3d11;
 			#endif
 
 			this->initialize_step = 0;
+		}
+
+		/** 削除。
+		*/
+		void Delete()
+		{
+			this->Delete_WindowMenu();
+
+			this->Delete_Material_DrawFont();
+			this->Delete_Material_DrawRect();
+			this->Delete_Render2D();
+
+			this->Delete_DrawLine();
+
+			this->Delete_Pad();
+			this->Delete_D3d11();
+			this->Delete_Window();
+			this->Delete_File();
+			this->Delete_Winsock();
 		}
 
 		/** 更新。初期化時。
@@ -231,19 +411,8 @@ namespace NCommon
 		{
 		}
 
-		/** 削除。
+		/** メイン。
 		*/
-		void Delete()
-		{
-			this->Delete_DrawLineManager();
-
-			this->Delete_D3d11();
-			this->Delete_Window();
-			this->Delete_File();
-
-			this->Delete_Winsock();
-		}
-
 		void Main()
 		{
 			//パフォーマンスカウンター。
@@ -251,7 +420,6 @@ namespace NCommon
 
 			#if(DEF_TEST_AUTO)
 			f32 t_autotime = 0.0f;
-			bool t_auto_send = false;
 			#endif
 
 			while(true){
@@ -278,14 +446,37 @@ namespace NCommon
 				if(this->initialize_step == 0){
 					bool t_next = true;
 
-					if(this->drawline_manager){
-						this->drawline_manager->Initialize_Update();
-						if(this->drawline_manager->IsInitialized() == false){
+					if(this->drawline){
+						this->drawline->Initialize_Update();
+						if(this->drawline->IsInitialized() == false){
+							t_next = false;
+						}
+					}
+
+					#if(BSYS_FONT_ENABLE)
+					if(this->material_drawfont){
+						this->material_drawfont->Initialize_Update();
+						if(this->material_drawfont->IsInitialized() == false){
+							t_next = false;
+						}
+					}
+					#endif
+
+					if(this->material_drawrect){
+						this->material_drawrect->Initialize_Update();
+						if(this->material_drawrect->IsInitialized() == false){
 							t_next = false;
 						}
 					}
 
 					if(t_next == true){
+
+						this->render2d->SetMaterial(NCommon::Render2D_ItemType::Rect,this->material_drawrect);
+
+						#if(BSYS_FONT_ENABLE)
+						this->render2d->SetMaterial(NCommon::Render2D_ItemType::Font,this->material_drawfont);
+						#endif
+
 						this->initialize_step++;
 					}
 				}else if(this->initialize_step == 1){
@@ -298,6 +489,10 @@ namespace NCommon
 					this->blendstate_on_id = this->d3d11->CreateBlendState(true);
 					this->blendstate_off_id = this->d3d11->CreateBlendState(false);
 
+					//デプスステンシル。ステート。
+					this->depthstencilstate_check_on_write_on_id = this->d3d11->CreateDepthStencilState(true,true);
+					this->depthstencilstate_check_off_write_off_id = this->d3d11->CreateDepthStencilState(false,false);
+
 					this->initialize_step++;
 				}else{
 					//初期化完了。
@@ -308,19 +503,31 @@ namespace NCommon
 				if(t_initialize_update){
 					this->Initialize_Update();
 				}else{
+
+					//パッド。
+					#if(BSYS_PAD_ENABLE)
+					NBsys::NPad::Update(true);
+					#endif
+
+					//ウィンドウメニュー。
+					#if(BSYS_WINDOWMENU_ENABLE)
+					NBsys::NWindowMenu::GetSystemInstance()->Update();
+					#endif
+
 					this->Update(t_delta);
 
 					//キャプチャー開始。
 					#if(DEF_TEST_AUTO)
 					t_autotime += t_delta;
 					if(t_autotime >= 3.0f){
-						if(t_auto_send == false){
-							t_auto_send = true;
+						if(this->autotest->action_start == false){
+							this->autotest->action_start = true;
 							this->autotest->capture_step = 0;
 						}
 					}
 
-					if(this->autotest->send_end == true){
+					if(this->autotest->action_end == true){
+						//終了。
 						break;
 					}
 					#endif
@@ -356,6 +563,7 @@ namespace NCommon
 			}
 		}
 	};
-}
+
+}}
 #endif
 

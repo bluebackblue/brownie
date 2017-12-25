@@ -27,6 +27,7 @@
 
 /** NBsys::NPad
 */
+#if(BSYS_PAD_ENABLE)
 namespace NBsys{namespace NPad
 {
 	/** s_thread
@@ -100,4 +101,5 @@ namespace NBsys{namespace NPad
 
 
 }}
+#endif
 

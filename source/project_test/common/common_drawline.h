@@ -14,10 +14,10 @@
 #include "../include.h"
 
 
-/** NCommon
+/** NTest::NCommon
 */
 #if(BSYS_D3D11_ENABLE)
-namespace NCommon
+namespace NTest{namespace NCommon
 {
 	/** DrawLine_VS_ConstantBuffer_B0
 	*/
@@ -35,6 +35,7 @@ namespace NCommon
 		{
 		}
 	};
+
 	
 	/** DrawLine_PS_ConstantBuffer_B0
 	*/
@@ -81,6 +82,7 @@ namespace NCommon
 		{
 		}
 	};
+
 
 	/** DrawLine_Manager
 	*/
@@ -296,6 +298,8 @@ namespace NCommon
 		}
 
 	};
-}
+
+
+}}
 #endif
 

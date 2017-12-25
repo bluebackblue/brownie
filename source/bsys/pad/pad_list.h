@@ -22,6 +22,7 @@
 
 /** NBsys::NPad
 */
+#if(BSYS_PAD_ENABLE)
 namespace NBsys{namespace NPad
 {
 	/** Pad_List
@@ -68,4 +69,5 @@ namespace NBsys{namespace NPad
 
 
 }}
+#endif
 

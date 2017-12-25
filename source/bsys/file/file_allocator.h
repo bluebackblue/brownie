@@ -50,7 +50,6 @@ namespace NBsys{namespace NFile
 	*/
 	struct File_Alloc_Deleter
 	{
-
 		/** 削除に使用するアロケータ。
 		*/
 		sharedptr<File_Allocator> allocator;
@@ -78,3 +77,4 @@ namespace NBsys{namespace NFile
 
 }}
 #endif
+

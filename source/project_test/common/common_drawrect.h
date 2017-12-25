@@ -19,10 +19,10 @@
 #include "./common_render2d.h"
 
 
-/** NCommon
+/** NTest::NCommon
 */
 #if(BSYS_D3D11_ENABLE)
-namespace NCommon
+namespace NTest{namespace NCommon
 {
 	/** DrawRect_VS_ConstantBuffer_B0
 	*/
@@ -93,6 +93,7 @@ namespace NCommon
 		{
 		}
 	};
+
 
 	/** DrawRect_Material
 	*/
@@ -438,6 +439,8 @@ namespace NCommon
 		}
 
 	};
-}
+
+
+}}
 #endif
 

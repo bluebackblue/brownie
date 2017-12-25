@@ -5,7 +5,7 @@
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief コモン。フォント描画。
+ * @brief コモン。２Ｄ描画。
 */
 
 
@@ -14,10 +14,10 @@
 #include "../include.h"
 
 
-/** NCommon
+/** NTest::NCommon
 */
 #if(BSYS_D3D11_ENABLE)
-namespace NCommon
+namespace NTest{namespace NCommon
 {
 	/** Render2D_ItemType
 	*/
@@ -36,6 +36,7 @@ namespace NCommon
 			Max,
 		};
 	};
+
 
 	/** Render2D_Item_Base
 	*/
@@ -66,6 +67,7 @@ namespace NCommon
 		{
 		}
 	};
+
 
 	/** Render2D_Item_Rect
 	*/
@@ -101,6 +103,7 @@ namespace NCommon
 		{
 		}
 	};
+
 
 	/** Render2D_Item_Font
 	*/
@@ -154,6 +157,7 @@ namespace NCommon
 	};
 	#endif
 
+
 	/** Render2D_Material_Base
 	*/
 	class Render2D_Material_Base
@@ -182,6 +186,7 @@ namespace NCommon
 		*/
 		virtual void Render(STLList<sharedptr<Render2D_Item_Base>>::const_iterator a_it_start,STLList<sharedptr<Render2D_Item_Base>>::const_iterator a_it_end) = 0;
 	};
+
 
 	class Render2D
 	{
@@ -271,6 +276,7 @@ namespace NCommon
 
 	};
 
-}
+
+}}
 #endif
 
