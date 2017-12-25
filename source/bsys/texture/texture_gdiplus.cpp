@@ -55,6 +55,11 @@ namespace NBsys{namespace NTexture
 	#if(BSYS_TEXTURE_GDIPLUS_ENABLE)
 	sharedptr<Texture> CreateTexture_GdiPlus(const sharedptr<u8>& a_data,s32 a_size,const STLWString& a_name)
 	{
+		//サイズチェック。
+		if(a_size <= 0){
+			return nullptr;
+		}
+
 		//GdiPlus開始。
 		sharedptr<Texture_Impl_GdiPlus> t_gdiplus(new Texture_Impl_GdiPlus());
 		if(t_gdiplus->IsEnable() == false){

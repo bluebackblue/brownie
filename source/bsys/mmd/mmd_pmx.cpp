@@ -667,6 +667,8 @@ namespace NBsys{namespace NMmd
 			if(this->Load_Bone(t_raw) == false){
 				return false;
 			}
+		}else{
+			return false;
 		}
 
 		return true;

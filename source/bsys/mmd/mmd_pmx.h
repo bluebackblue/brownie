@@ -85,6 +85,12 @@ namespace NBsys{namespace NMmd
 		/** constructor
 		*/
 		Mmd_Pmx()
+			:
+			vertex_list_size(0),
+			index_list_size(0),
+			texturename_list_size(0),
+			parts_list_size(0),
+			bone_list_size(0)
 		{
 		}
 

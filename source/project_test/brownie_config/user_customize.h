@@ -92,6 +92,7 @@
 	#define BSYS_D3D11_ENABLE								(1)
 	#define BSYS_FONT_ENABLE								(1)
 	#define BSYS_PAD_ENABLE									(1)
+	#define BSYS_MMD_ENABLE									(1)
 	#define BSYS_WINDOWMENU_ENABLE							(1)
 	#define BLIB_DEBUGASSERT_CALLBACK_ENABLE				(1)
 	#define BLIB_DEBUGBREAK_CALLBACK_ENABLE					(1)

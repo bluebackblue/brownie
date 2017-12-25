@@ -60,6 +60,8 @@ namespace NBsys{namespace NMmd
 			if(this->Load_Header(t_raw) == false){
 				return false;
 			}
+		}else{
+			return false;
 		}
 
 		return true;

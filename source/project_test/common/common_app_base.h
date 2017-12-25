@@ -116,6 +116,10 @@ namespace NTest{namespace NCommon
 		s32 depthstencilstate_check_on_write_on_id;
 		s32 depthstencilstate_check_off_write_off_id;
 
+		/** サンプラ。ステート。
+		*/
+		s32 samplerstate_point_id;
+
 	public:
 
 		/** constructor
@@ -148,7 +152,8 @@ namespace NTest{namespace NCommon
 			blendstate_on_id(-1),
 			blendstate_off_id(-1),
 			depthstencilstate_check_on_write_on_id(-1),
-			depthstencilstate_check_off_write_off_id(-1)
+			depthstencilstate_check_off_write_off_id(-1),
+			samplerstate_point_id(-1)
 		{
 		}
 
@@ -162,9 +167,10 @@ namespace NTest{namespace NCommon
 		*/
 		virtual void Initialize_File()
 		{
-			NBsys::NFile::StartSystem(2);
+			NBsys::NFile::StartSystem(3);
 			NBsys::NFile::SetRoot(0,L"./project_test/test" DEF_TEST_STRING);
 			NBsys::NFile::SetRoot(1,L"./project_test/common");
+			NBsys::NFile::SetRoot(2,L"../../sdk");
 		}
 
 		/** 削除。ファイル。
@@ -393,10 +399,14 @@ namespace NTest{namespace NCommon
 			this->Delete_Winsock();
 		}
 
-		/** 更新。初期化時。
+		/** 初期化更新。
+			true	: 完了
+			false	: 継続
+
 		*/
-		virtual void Initialize_Update()
+		virtual bool Initialize_Update()
 		{
+			return true;
 		}
 
 		/** 更新。
@@ -469,6 +479,10 @@ namespace NTest{namespace NCommon
 						}
 					}
 
+					if(this->Initialize_Update() == false){
+						t_next = false;
+					}
+
 					if(t_next == true){
 
 						this->render2d->SetMaterial(NCommon::Render2D_ItemType::Rect,this->material_drawrect);
@@ -493,6 +507,18 @@ namespace NTest{namespace NCommon
 					this->depthstencilstate_check_on_write_on_id = this->d3d11->CreateDepthStencilState(true,true);
 					this->depthstencilstate_check_off_write_off_id = this->d3d11->CreateDepthStencilState(false,false);
 
+					//サンプラ。ステート。
+					{
+						NBsys::ND3d11::D3d11_Sampler t_sampler;
+						{
+							t_sampler.textureaddrestype_u = NBsys::ND3d11::D3d11_TextureAddressType::Clamp;
+							t_sampler.textureaddrestype_v = NBsys::ND3d11::D3d11_TextureAddressType::Clamp;
+							t_sampler.textureaddrestype_w = NBsys::ND3d11::D3d11_TextureAddressType::Clamp;
+							t_sampler.filtertype = NBsys::ND3d11::D3d11_FilterType::MIN_MAG_MIP_POINT;
+						}
+						this->samplerstate_point_id = this->d3d11->CreateSamplerState(t_sampler);
+					}
+
 					this->initialize_step++;
 				}else{
 					//初期化完了。
@@ -501,7 +527,6 @@ namespace NTest{namespace NCommon
 
 				//更新。
 				if(t_initialize_update){
-					this->Initialize_Update();
 				}else{
 
 					//パッド。
@@ -514,7 +539,32 @@ namespace NTest{namespace NCommon
 					NBsys::NWindowMenu::GetSystemInstance()->Update();
 					#endif
 
-					this->Update(t_delta);
+					{
+						//FPS。
+						if(this->render2d){
+							char t_buffer[32];
+							STLWString t_string = VASTRING(t_buffer,sizeof(t_buffer),L"%d",static_cast<s32>(1.0f / t_delta));
+
+							{
+								sharedptr<NCommon::Render2D_Item_Font> t_font(new NCommon::Render2D_Item_Font(99999));
+								t_font->x = 0.0f;
+								t_font->y = 0.0f;
+								t_font->w = 0.0f;
+								t_font->h = 0.0f;
+								t_font->clip = false;
+								t_font->size = 16.0f;
+								t_font->fonttexture_type = NBsys::ND3d11::D3d11_FontTextureType::SFont;
+								t_font->color = NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f);
+								t_font->alignment_x = -1;
+								t_font->alignment_y = -1;
+								t_font->string = t_string;
+
+								this->render2d->Draw(t_font);
+							}
+						}
+
+						this->Update(t_delta);
+					}
 
 					//キャプチャー開始。
 					#if(DEF_TEST_AUTO)

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #pragma once
 
 /**
@@ -6,7 +6,7 @@
 * Released under the MIT License
 * https://github.com/bluebackblue/brownie/blob/master/LICENSE
 * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
-* @brief ƒeƒNƒXƒ`ƒƒ[B
+* @brief ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ã€‚
 */
 
 
@@ -54,6 +54,8 @@ namespace NBsys{namespace NTexture
 			#endif
 			pointer(nullptr)
 		{
+			ASSERT(a_size > 0);
+
 			#if(PLATFORM_VCWIN)
 			this->handle = ::GlobalAlloc(GMEM_MOVEABLE,a_size);
 			#endif
@@ -103,6 +105,7 @@ namespace NBsys{namespace NTexture
 			if(this->pointer == nullptr){
 				if(this->handle){
 					this->pointer = ::GlobalLock(this->handle);
+					ASSERT(this->pointer != nullptr);
 					return this->pointer;
 				}
 			}
@@ -164,7 +167,9 @@ namespace NBsys{namespace NTexture
 			HGLOBAL t_handle = this->globalmemory->GetHandle();
 			if(t_handle){
 				if(::CreateStreamOnHGlobal(t_handle,FALSE,&this->stream) == S_OK){
+					ASSERT(this->stream != nullptr);
 				}else{
+					ASSERT(0);
 					this->stream = nullptr;
 				}
 			}
@@ -206,7 +211,7 @@ namespace NBsys{namespace NTexture
 			return false;
 		}
 
-		/** ƒV[ƒN‚ğÅ‰‚Éİ’èB
+		/** ã‚·ãƒ¼ã‚¯ã‚’æœ€åˆã«è¨­å®šã€‚
 		*/
 		void SetSeekStart()
 		{
@@ -218,7 +223,7 @@ namespace NBsys{namespace NTexture
 			#endif
 		}
 
-		/** ƒTƒCƒY‚ğƒ[ƒ‚Éİ’èB
+		/** ã‚µã‚¤ã‚ºã‚’ã‚¼ãƒ­ã«è¨­å®šã€‚
 		*/
 		void SetSizeZero()
 		{
@@ -230,7 +235,7 @@ namespace NBsys{namespace NTexture
 			#endif
 		}
 
-		/** ƒXƒe[ƒXXVB
+		/** ã‚¹ãƒ†ãƒ¼ã‚¹æ›´æ–°ã€‚
 		*/
 		void UpdateStatus()
 		{
@@ -241,7 +246,7 @@ namespace NBsys{namespace NTexture
 			#endif
 		}
 
-		/** ƒTƒCƒYæ“¾B
+		/** ã‚µã‚¤ã‚ºå–å¾—ã€‚
 		*/
 		s32 GetStatus_Size()
 		{
