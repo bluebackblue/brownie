@@ -54,49 +54,57 @@ namespace NTest
 		*/
 		sharedptr<NCommon::WindowMenu_Texture> windowmenu_texture;
 
-		/**
+		/** Mmd_ModelParts
 		*/
-		struct ModelParts //todo
+		struct Mmd_ModelParts
 		{
+			/** member
+			*/
 			STLWString patrs_name;
-
 			s32 texture_index;
 			STLWString texture_filepath;
 			sharedptr<NBsys::NFile::File_Object> texture_file;
 			sharedptr<NBsys::NTexture::Texture> texture;
-
 			s32 texture_id;
-
 			bool cullfull;
 
-			ModelParts()
+			/** constructor
+			*/
+			Mmd_ModelParts()
 				:
 				texture_index(0),
 				texture_id(-1),
 				cullfull(true)
 			{
 			}
+
+			/** destructor
+			*/
+			nonvirtual ~Mmd_ModelParts()
+			{
+			}
 		};
+
 		/** バーテックスシェーダ。定数。
 		*/
-		struct VS_ConstantBuffer_B0
+		struct Mmd_VS_ConstantBuffer_B0
 		{
 			NBsys::NGeometry::Geometry_Matrix_44 view_projection;
 
-			VS_ConstantBuffer_B0()
+			Mmd_VS_ConstantBuffer_B0()
 				:
 				view_projection(NBsys::NGeometry::Geometry_Identity())
 			{
 			}
 
-			~VS_ConstantBuffer_B0()
+			~Mmd_VS_ConstantBuffer_B0()
 			{
 			}
 		};
 
 		/** ピクセルシェーダ。定数。
 		*/
-		struct PS_ConstantBuffer_B1
+		struct Mmd_PS_ConstantBuffer_B1
 		{
 			/**
 
@@ -115,7 +123,7 @@ namespace NTest
 			u32 flag3;
 			u32 flag4;
 
-			PS_ConstantBuffer_B1()
+			Mmd_PS_ConstantBuffer_B1()
 				:
 				flag1(0),
 				flag2(0),
@@ -124,12 +132,11 @@ namespace NTest
 			{
 			}
 		};
-
 		
 		/** mmd
 		*/
 		s32 mmd_step;
-		sharedptr<STLVector<ModelParts>::Type> mmd_model;
+		sharedptr<STLVector<Mmd_ModelParts>::Type> mmd_model;
 		sharedptr<NBsys::NMmd::Mmd_Pmx> mmd_pmx;
 		sharedptr<NBsys::NMmd::Mmd_Vmd> mmd_vmd;
 		sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4>> mmd_vertex;
@@ -213,8 +220,8 @@ namespace NTest
 
 			this->mmd_vertexshader_id = this->d3d11->CreateVertexShader(this->mmd_asyncresult_vertexshader,t_simple_vertex_fx,t_layout);
 			this->mmd_pixelshader_id = this->d3d11->CreatePixelShader(this->mmd_asyncresult_pixelshader,t_simple_pixel_fx);
-			this->mmd_vs_constantbuffer_b0_id = this->d3d11->CreateConstantBuffer(0,sizeof(VS_ConstantBuffer_B0));
-			this->mmd_ps_constantbuffer_b1_id = this->d3d11->CreateConstantBuffer(1,sizeof(PS_ConstantBuffer_B1));
+			this->mmd_vs_constantbuffer_b0_id = this->d3d11->CreateConstantBuffer(0,sizeof(Mmd_VS_ConstantBuffer_B0));
+			this->mmd_ps_constantbuffer_b1_id = this->d3d11->CreateConstantBuffer(1,sizeof(Mmd_PS_ConstantBuffer_B1));
 			this->mmd_vertexbuffer_id = this->d3d11->CreateVertexBuffer(this->mmd_vertex->GetVertexPointer(),this->mmd_vertex->GetVertexStrideByte(),0,this->mmd_vertex->GetVertexAllCountOf(),false);
 		}
 
@@ -249,14 +256,14 @@ namespace NTest
 			}
 
 			this->mmd_vertex = new NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4>();
-			this->mmd_model = new STLVector<ModelParts>::Type();
+			this->mmd_model = new STLVector<Mmd_ModelParts>::Type();
 
 			for(u32 ii=0;ii<this->mmd_pmx->parts_list_size;ii++){
 				NBsys::NMmd::Mmd_Pmx_Parts& t_mmd_pmx_parts = this->mmd_pmx->parts_list[ii];
-				this->mmd_model->push_back(ModelParts());
+				this->mmd_model->push_back(Mmd_ModelParts());
 
 				//モデルパーツ。
-				ModelParts& t_model_patrs = this->mmd_model->at(ii);
+				Mmd_ModelParts& t_model_patrs = this->mmd_model->at(ii);
 
 				//パーツ名。
 				t_model_patrs.patrs_name = t_mmd_pmx_parts.parts_name_jp;
@@ -302,7 +309,7 @@ namespace NTest
 			for(u32 ii=0;ii<this->mmd_model->size();ii++){
 
 				//モデルパーツ。
-				ModelParts& t_model_patrs = this->mmd_model->at(ii);
+				Mmd_ModelParts& t_model_patrs = this->mmd_model->at(ii);
 
 				if(t_model_patrs.texture_file != nullptr){
 
@@ -341,8 +348,8 @@ namespace NTest
 			this->d3d11->Render_SetVertexBuffer(this->mmd_vertexbuffer_id);
 
 			for(s32 ii=0;ii<static_cast<s32>(this->mmd_model->size());ii++){
-				VS_ConstantBuffer_B0 t_vs_constantbuffer_b0;
-				PS_ConstantBuffer_B1 t_ps_constantbuffer_b1;
+				Mmd_VS_ConstantBuffer_B0 t_vs_constantbuffer_b0;
+				Mmd_PS_ConstantBuffer_B1 t_ps_constantbuffer_b1;
 
 				if(this->mmd_model->at(ii).cullfull){
 					//両面描画。
