@@ -93,8 +93,13 @@ namespace NBsys{namespace NHttp
 	*/
 	s32 FindContentsLength(const STLString& a_string)
 	{
+		#if defined(PLATFORM_GNUCWIN)
+		std::cmatch t_result;
+		if(std::regex_match(a_string.c_str(),t_result,std::regex("Content-Length: ([-]?[0-9]+)"))){
+		#else
 		std::smatch t_result;
 		if(std::regex_match(a_string,t_result,std::regex("Content-Length: ([-]?[0-9]+)"))){
+		#endif
 			s32 t_value = std::atoi(t_result[1].str().c_str());
 			return t_value;
 		}
@@ -107,8 +112,13 @@ namespace NBsys{namespace NHttp
 	*/
 	s32 FindStatusCode(const STLString& a_string)
 	{
+		#if defined(PLATFORM_GNUCWIN)
+		std::cmatch t_result;
+		if(std::regex_match(a_string.c_str(),t_result,std::regex("HTTP/1.1 ([-]?[0-9]+) .*"))){
+		#else
 		std::smatch t_result;
 		if(std::regex_match(a_string,t_result,std::regex("HTTP/1.1 ([-]?[0-9]+) .*"))){
+		#endif
 			s32 t_value = std::atoi(t_result[1].str().c_str());
 			return t_value;
 		}

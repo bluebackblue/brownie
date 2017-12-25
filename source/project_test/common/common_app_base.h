@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒRƒ‚ƒ“BƒtƒHƒ“ƒg•`‰æB
+ * @brief ã‚³ãƒ¢ãƒ³ã€‚ãƒ•ã‚©ãƒ³ãƒˆæç”»ã€‚
 */
 
 
@@ -97,21 +97,21 @@ namespace NTest{namespace NCommon
 		sharedptr<NCommon::Common_WindowMenu_Log> windowmenu_log;
 		#endif
 
-		/** ‰Šú‰»ƒXƒeƒbƒvB
+		/** åˆæœŸåŒ–ã‚¹ãƒ†ãƒƒãƒ—ã€‚
 		*/
 		s32 initialize_step;
 
-		/** ƒ‰ƒXƒ^ƒ‰ƒCƒUBƒXƒe[ƒgB
+		/** ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã€‚ã‚¹ãƒ†ãƒ¼ãƒˆã€‚
 		*/
 		s32 rasterizerstate_cull_back_id;
 		s32 rasterizerstate_cull_none_id;
 
-		/** ƒuƒŒƒ“ƒhBƒXƒe[ƒgB
+		/** ãƒ–ãƒ¬ãƒ³ãƒ‰ã€‚ã‚¹ãƒ†ãƒ¼ãƒˆã€‚
 		*/
 		s32 blendstate_on_id;
 		s32 blendstate_off_id;
 
-		/** ƒfƒvƒXƒXƒeƒ“ƒVƒ‹BƒXƒe[ƒgB
+		/** ãƒ‡ãƒ—ã‚¹ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ã€‚ã‚¹ãƒ†ãƒ¼ãƒˆã€‚
 		*/
 		s32 depthstencilstate_check_on_write_on_id;
 		s32 depthstencilstate_check_off_write_off_id;
@@ -158,7 +158,7 @@ namespace NTest{namespace NCommon
 		{
 		}
 
-		/** ‰Šú‰»Bƒtƒ@ƒCƒ‹B
+		/** åˆæœŸåŒ–ã€‚ãƒ•ã‚¡ã‚¤ãƒ«ã€‚
 		*/
 		virtual void Initialize_File()
 		{
@@ -167,7 +167,7 @@ namespace NTest{namespace NCommon
 			NBsys::NFile::SetRoot(1,L"./project_test/common");
 		}
 
-		/** íœBƒtƒ@ƒCƒ‹B
+		/** å‰Šé™¤ã€‚ãƒ•ã‚¡ã‚¤ãƒ«ã€‚
 		*/
 		virtual void Delete_File()
 		{
@@ -175,7 +175,7 @@ namespace NTest{namespace NCommon
 			NBsys::NFile::EndWaitSystem();
 		}
 
-		/** ‰Šú‰»BƒpƒbƒhB
+		/** åˆæœŸåŒ–ã€‚ãƒ‘ãƒƒãƒ‰ã€‚
 		*/
 		virtual void Initialize_Pad()
 		{
@@ -195,7 +195,7 @@ namespace NTest{namespace NCommon
 			#endif
 		}
 
-		/** íœBƒpƒbƒhB
+		/** å‰Šé™¤ã€‚ãƒ‘ãƒƒãƒ‰ã€‚
 		*/
 		virtual void Delete_Pad()
 		{
@@ -206,7 +206,7 @@ namespace NTest{namespace NCommon
 			#endif
 		}
 
-		/** ‰Šú‰»BƒEƒBƒ“ƒhƒEƒƒjƒ…[B
+		/** åˆæœŸåŒ–ã€‚ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã€‚
 		*/
 		virtual void Initialize_WindowMenu()
 		{
@@ -217,7 +217,7 @@ namespace NTest{namespace NCommon
 			#endif
 		}
 
-		/** íœB
+		/** å‰Šé™¤ã€‚
 		*/
 		virtual void Delete_WindowMenu()
 		{
@@ -229,7 +229,7 @@ namespace NTest{namespace NCommon
 		}
 
 
-		/** ‰Šú‰»B’ÊMB
+		/** åˆæœŸåŒ–ã€‚é€šä¿¡ã€‚
 		*/
 		virtual void Initialize_Winsock()
 		{
@@ -240,7 +240,7 @@ namespace NTest{namespace NCommon
 			#endif
 		}
 
-		/** íœB’ÊMB
+		/** å‰Šé™¤ã€‚é€šä¿¡ã€‚
 		*/
 		virtual void Delete_Winsock()
 		{
@@ -249,7 +249,7 @@ namespace NTest{namespace NCommon
 			#endif
 		}
 
-		/** ‰Šú‰»BƒEƒBƒ“ƒhƒEB
+		/** åˆæœŸåŒ–ã€‚ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã€‚
 		*/
 		virtual void Initialize_Window()
 		{
@@ -261,7 +261,7 @@ namespace NTest{namespace NCommon
 			this->window->Create(L"TEST " DEF_TEST_STRING,this->width,this->height);
 		}
 
-		/** íœBƒEƒBƒ“ƒhƒEB
+		/** å‰Šé™¤ã€‚ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã€‚
 		*/
 		virtual void Delete_Window()
 		{
@@ -269,7 +269,7 @@ namespace NTest{namespace NCommon
 			this->window.reset();
 		}
 
-		/** ‰Šú‰»Bd3d11B
+		/** åˆæœŸåŒ–ã€‚d3d11ã€‚
 		*/
 		virtual void Initialize_D3d11()
 		{
@@ -277,7 +277,7 @@ namespace NTest{namespace NCommon
 			this->d3d11->Render_Create(this->window,this->width,this->height);
 		}
 
-		/** íœBd3d11
+		/** å‰Šé™¤ã€‚d3d11
 		*/
 		virtual void Delete_D3d11()
 		{
@@ -285,49 +285,49 @@ namespace NTest{namespace NCommon
 			this->d3d11.reset();
 		}
 
-		/** ‰Šú‰»Bƒ‰ƒCƒ“•`‰æB
+		/** åˆæœŸåŒ–ã€‚ãƒ©ã‚¤ãƒ³æç”»ã€‚
 		*/
 		virtual void Initialize_DrawLine()
 		{
 			this->drawline.reset(new NCommon::DrawLine_Manager(this->d3d11));
 		}
 
-		/** íœBƒ‰ƒCƒ“•`‰æB
+		/** å‰Šé™¤ã€‚ãƒ©ã‚¤ãƒ³æç”»ã€‚
 		*/
 		virtual void Delete_DrawLine()
 		{
 			this->drawline.reset();
 		}
 
-		/** ‰Šú‰»B‚Q‚c•`‰æB
+		/** åˆæœŸåŒ–ã€‚ï¼’ï¼¤æç”»ã€‚
 		*/
 		virtual void Initialize_Render2D()
 		{
 			this->render2d.reset(new NCommon::Render2D());
 		}
 
-		/** íœB‚Q‚c•`‰æB
+		/** å‰Šé™¤ã€‚ï¼’ï¼¤æç”»ã€‚
 		*/
 		virtual void Delete_Render2D()
 		{
 			this->render2d.reset();
 		}
 
-		/** ‰Šú‰»Bƒ}ƒeƒŠƒAƒ‹BƒŒƒNƒg•`‰æB
+		/** åˆæœŸåŒ–ã€‚ãƒãƒ†ãƒªã‚¢ãƒ«ã€‚ãƒ¬ã‚¯ãƒˆæç”»ã€‚
 		*/
 		virtual void Initialize_Material_DrawRect()
 		{
 			this->material_drawrect.reset(new NCommon::DrawRect_Material(this->d3d11));
 		}
 
-		/** íœBƒ}ƒeƒŠƒAƒ‹BƒŒƒNƒg•`‰æB
+		/** å‰Šé™¤ã€‚ãƒãƒ†ãƒªã‚¢ãƒ«ã€‚ãƒ¬ã‚¯ãƒˆæç”»ã€‚
 		*/
 		virtual void Delete_Material_DrawRect()
 		{
 			this->material_drawrect.reset();
 		}
 
-		/** ‰Šú‰»Bƒ}ƒeƒŠƒAƒ‹BƒtƒHƒ“ƒg•`‰æB
+		/** åˆæœŸåŒ–ã€‚ãƒãƒ†ãƒªã‚¢ãƒ«ã€‚ãƒ•ã‚©ãƒ³ãƒˆæç”»ã€‚
 		*/
 		virtual void Initialize_Material_DrawFont()
 		{
@@ -336,7 +336,7 @@ namespace NTest{namespace NCommon
 			#endif
 		}
 
-		/** íœBƒ}ƒeƒŠƒAƒ‹BƒtƒHƒ“ƒg•`‰æB
+		/** å‰Šé™¤ã€‚ãƒãƒ†ãƒªã‚¢ãƒ«ã€‚ãƒ•ã‚©ãƒ³ãƒˆæç”»ã€‚
 		*/
 		virtual void Delete_Material_DrawFont()
 		{
@@ -345,7 +345,7 @@ namespace NTest{namespace NCommon
 			#endif
 		}
 
-		/** ‰Šú‰»A
+		/** åˆæœŸåŒ–ã€
 		*/
 		void Initialize()
 		{
@@ -374,7 +374,7 @@ namespace NTest{namespace NCommon
 			this->initialize_step = 0;
 		}
 
-		/** íœB
+		/** å‰Šé™¤ã€‚
 		*/
 		void Delete()
 		{
@@ -393,29 +393,29 @@ namespace NTest{namespace NCommon
 			this->Delete_Winsock();
 		}
 
-		/** XVB‰Šú‰»B
+		/** æ›´æ–°ã€‚åˆæœŸåŒ–æ™‚ã€‚
 		*/
 		virtual void Initialize_Update()
 		{
 		}
 
-		/** XVB
+		/** æ›´æ–°ã€‚
 		*/
 		virtual void Update(f32 a_delta)
 		{
 		}
 
-		/** •`‰æ–½—ßŒÄ‚Ño‚µB
+		/** æç”»å‘½ä»¤å‘¼ã³å‡ºã—ã€‚
 		*/
 		virtual void Render()
 		{
 		}
 
-		/** ƒƒCƒ“B
+		/** ãƒ¡ã‚¤ãƒ³ã€‚
 		*/
 		void Main()
 		{
-			//ƒpƒtƒH[ƒ}ƒ“ƒXƒJƒEƒ“ƒ^[B
+			//ãƒ‘ãƒ•ã‚©ãƒ¼ãƒãƒ³ã‚¹ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã€‚
 			u64 t_pcounter = PerformanceCounter::GetPerformanceCounter();
 
 			#if(DEF_TEST_AUTO)
@@ -429,7 +429,7 @@ namespace NTest{namespace NCommon
 					break;
 				}
 
-				//ƒpƒtƒH[ƒ}ƒ“ƒXƒJƒEƒ“ƒ^[B
+				//ãƒ‘ãƒ•ã‚©ãƒ¼ãƒãƒ³ã‚¹ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã€‚
 				float t_delta = 0.0f;
 				{
 					u64 t_pcounter_now = PerformanceCounter::GetPerformanceCounter();
@@ -481,42 +481,42 @@ namespace NTest{namespace NCommon
 					}
 				}else if(this->initialize_step == 1){
 
-					//ƒ‰ƒXƒ^ƒ‰ƒCƒUBƒXƒe[ƒgB
+					//ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã€‚ã‚¹ãƒ†ãƒ¼ãƒˆã€‚
 					this->rasterizerstate_cull_back_id = this->d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::Back);
 					this->rasterizerstate_cull_none_id = this->d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::None);
 
-					//ƒuƒŒƒ“ƒhBƒXƒe[ƒgB
+					//ãƒ–ãƒ¬ãƒ³ãƒ‰ã€‚ã‚¹ãƒ†ãƒ¼ãƒˆã€‚
 					this->blendstate_on_id = this->d3d11->CreateBlendState(true);
 					this->blendstate_off_id = this->d3d11->CreateBlendState(false);
 
-					//ƒfƒvƒXƒXƒeƒ“ƒVƒ‹BƒXƒe[ƒgB
+					//ãƒ‡ãƒ—ã‚¹ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ã€‚ã‚¹ãƒ†ãƒ¼ãƒˆã€‚
 					this->depthstencilstate_check_on_write_on_id = this->d3d11->CreateDepthStencilState(true,true);
 					this->depthstencilstate_check_off_write_off_id = this->d3d11->CreateDepthStencilState(false,false);
 
 					this->initialize_step++;
 				}else{
-					//‰Šú‰»Š®—¹B
+					//åˆæœŸåŒ–å®Œäº†ã€‚
 					t_initialize_update = false;
 				}
 
-				//XVB
+				//æ›´æ–°ã€‚
 				if(t_initialize_update){
 					this->Initialize_Update();
 				}else{
 
-					//ƒpƒbƒhB
+					//ãƒ‘ãƒƒãƒ‰ã€‚
 					#if(BSYS_PAD_ENABLE)
 					NBsys::NPad::Update(true);
 					#endif
 
-					//ƒEƒBƒ“ƒhƒEƒƒjƒ…[B
+					//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã€‚
 					#if(BSYS_WINDOWMENU_ENABLE)
 					NBsys::NWindowMenu::GetSystemInstance()->Update();
 					#endif
 
 					this->Update(t_delta);
 
-					//ƒLƒƒƒvƒ`ƒƒ[ŠJnB
+					//ã‚­ãƒ£ãƒ—ãƒãƒ£ãƒ¼é–‹å§‹ã€‚
 					#if(DEF_TEST_AUTO)
 					t_autotime += t_delta;
 					if(t_autotime >= 3.0f){
@@ -527,27 +527,27 @@ namespace NTest{namespace NCommon
 					}
 
 					if(this->autotest->action_end == true){
-						//I—¹B
+						//çµ‚äº†ã€‚
 						break;
 					}
 					#endif
 				}
 				
-				//•`‰æ–½—ßŒÄ‚Ño‚µB
+				//æç”»å‘½ä»¤å‘¼ã³å‡ºã—ã€‚
 				{
-					//ƒŠƒNƒGƒXƒgˆ—B
+					//ãƒªã‚¯ã‚¨ã‚¹ãƒˆå‡¦ç†ã€‚
 					this->d3d11->Render_Main();
 
-					//ƒrƒ…[ƒ|[ƒgB
+					//ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆã€‚
 					this->d3d11->Render_ViewPort(0.0f,0.0f,static_cast<f32>(this->width),static_cast<f32>(this->height));
 
-					//[“xƒXƒeƒ“ƒVƒ‹ƒNƒŠƒAB
+					//æ·±åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ã‚¯ãƒªã‚¢ã€‚
 					this->d3d11->Render_ClearDepthStencilView();
 
-					//ƒNƒŠƒAB
+					//ã‚¯ãƒªã‚¢ã€‚
 					this->d3d11->Render_ClearRenderTargetView(NBsys::NColor::Color_F(0.3f,0.3f,0.8f,1.0f));
 
-					//•`‰æ–½—ßŒÄ‚Ño‚µB
+					//æç”»å‘½ä»¤å‘¼ã³å‡ºã—ã€‚
 					if(t_initialize_update){
 					}else{
 						this->Render();

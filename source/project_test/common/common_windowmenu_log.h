@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒeƒXƒgB
+ * @brief ãƒ†ã‚¹ãƒˆã€‚
 */
 
 
@@ -49,15 +49,15 @@ namespace NTest{namespace NCommon
 
 	public:
 
-		/** íœƒŠƒNƒGƒXƒgBæ“¾B
+		/** å‰Šé™¤ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚å–å¾—ã€‚
 		*/
 		virtual bool CallBack_GetDeleteRequest();
 
-		/** íœƒŠƒNƒGƒXƒgBİ’èB
+		/** å‰Šé™¤ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚è¨­å®šã€‚
 		*/
 		virtual void CallBack_SetDeleteRequest();
 
-		/** XVˆ—B
+		/** æ›´æ–°å‡¦ç†ã€‚
 		*/
 		virtual void CallBack_Update();
 

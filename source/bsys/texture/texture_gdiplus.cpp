@@ -81,7 +81,10 @@ namespace NBsys{namespace NTexture
 		}
 
 		//[busy]ストリームを使用してでコード読み込み。グローバルメモリとビットマップをバインド。
-		sharedptr<Gdiplus::Bitmap> t_bitmap(Gdiplus::Bitmap::FromStream(t_stream->GetHandle()),default_delete<Gdiplus::Bitmap>());
+		sharedptr<Gdiplus::Bitmap> t_bitmap;
+		#if(PLATFORM_VCWIN)
+		t_bitmap.reset(Gdiplus::Bitmap::FromStream(t_stream->GetHandle()),default_delete<Gdiplus::Bitmap>());
+		#endif
 		t_stream.reset();
 
 		sharedptr<Texture> t_to_texture;
@@ -226,7 +229,9 @@ namespace NBsys{namespace NTexture
 			}
 
 			//ステース更新。
+			#if(PLATFORM_VCWIN)
 			t_bitmap.Save(t_stream->GetHandle(),&t_clsid);
+			#endif
 			t_stream->UpdateStatus();
 
 			s32 t_write_size = t_stream->GetStatus_Size();

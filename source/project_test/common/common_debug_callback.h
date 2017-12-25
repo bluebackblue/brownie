@@ -1,11 +1,11 @@
-#pragma once
+Ôªø#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ÉeÉXÉgÅB
+ * @brief „ÉÜ„Çπ„Éà„ÄÇ
 */
 
 
@@ -16,7 +16,6 @@
 
 /** NTest::NCommon
 */
-#if(DEF_TEST_INDEX == 12)
 namespace NTest{namespace NCommon
 {
 	/** GetDebugLogString
@@ -35,5 +34,4 @@ namespace NTest{namespace NCommon
 
 
 }}
-#endif
 

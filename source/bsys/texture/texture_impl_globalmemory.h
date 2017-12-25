@@ -54,7 +54,9 @@ namespace NBsys{namespace NTexture
 			#endif
 			pointer(nullptr)
 		{
+			#if(PLATFORM_VCWIN)
 			this->handle = ::GlobalAlloc(GMEM_MOVEABLE,a_size);
+			#endif
 		}
 
 		/** destructor

@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒeƒXƒgB
+ * @brief ãƒ†ã‚¹ãƒˆã€‚
 */
 
 
@@ -43,7 +43,7 @@ namespace NTest{namespace NCommon
 		//window_logtext
 		debuglog_counter(-1)
 	{
-		//©•ªB
+		//è‡ªåˆ†ã€‚
 		{
 			WindowMenu_Window_Base::InitItem t_inititem;
 			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Free;
@@ -55,28 +55,28 @@ namespace NTest{namespace NCommon
 			}
 		}
 
-		/** ƒEƒBƒ“ƒhƒEB
+		/** ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã€‚
 		*/
 		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Window> t_window = this->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Window>("window");
 
-		//ƒEƒBƒ“ƒhƒE -> ƒ{ƒfƒB[”wŒiB
+		//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ -> ãƒœãƒ‡ã‚£ãƒ¼èƒŒæ™¯ã€‚
 		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Plate> t_bodybg = t_window->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Plate>("");
 
-		//ƒEƒBƒ“ƒhƒE -> ƒ{ƒfƒB[”wŒi@-> ƒƒOƒeƒLƒXƒgB
+		//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ -> ãƒœãƒ‡ã‚£ãƒ¼èƒŒæ™¯ã€€-> ãƒ­ã‚°ãƒ†ã‚­ã‚¹ãƒˆã€‚
 		for(s32 ii=0;ii<COUNTOF(this->window_logtext);ii++){
 			this->window_logtext[ii] = t_bodybg->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Text>("");
 		}
 
-		//ƒEƒBƒ“ƒhƒEB
+		//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã€‚
 		{
 			NBsys::NWindowMenu::WindowMenu_Window_Window::InitItem t_inititem;
-			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Vertical;	//cÏ‚İB
+			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Vertical;	//ç¸¦ç©ã¿ã€‚
 			t_inititem.offset.Set(a_offset_x,a_offset_y);
 			t_inititem.size.SetW(300.0f);
 			t_inititem.size.SetH_StretchChild();
 			t_window->Initialize(t_inititem);
 			{
-				t_window->window_title_text->string = L"ƒƒO";
+				t_window->window_title_text->string = L"ãƒ­ã‚°";
 
 				t_window->window_title_bg->color = t_window->color_title_bg_normal;
 				t_window->window_title_closebutton->color_normal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
@@ -89,10 +89,10 @@ namespace NTest{namespace NCommon
 			}
 		}
 
-		//ƒEƒBƒ“ƒhƒE -> ƒ{ƒfƒB[”wŒiB
+		//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ -> ãƒœãƒ‡ã‚£ãƒ¼èƒŒæ™¯ã€‚
 		{
 			NBsys::NWindowMenu::WindowMenu_Window_Plate::InitItem t_inititem;
-			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Vertical;	//cÏ‚İB
+			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Vertical;	//ç¸¦ç©ã¿ã€‚
 			t_inititem.size.SetH_StretchChild();
 
 			t_bodybg->Initialize(t_inititem);
@@ -103,10 +103,10 @@ namespace NTest{namespace NCommon
 			}
 		}
 
-		//ƒEƒBƒ“ƒhƒE -> ƒ{ƒfƒB[”wŒi@-> ƒƒOƒeƒLƒXƒgB
+		//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ -> ãƒœãƒ‡ã‚£ãƒ¼èƒŒæ™¯ã€€-> ãƒ­ã‚°ãƒ†ã‚­ã‚¹ãƒˆã€‚
 		for(s32 ii=0;ii<COUNTOF(this->window_logtext);ii++){
 			NBsys::NWindowMenu::WindowMenu_Window_Text::InitItem t_inititem;
-			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//‰¡Ï‚İB
+			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//æ¨ªç©ã¿ã€‚
 			t_inititem.size.SetH(16);
 			this->window_logtext[ii]->Initialize(t_inititem);
 		}
@@ -120,7 +120,7 @@ namespace NTest{namespace NCommon
 	}
 
 
-	/** íœƒŠƒNƒGƒXƒgBæ“¾B
+	/** å‰Šé™¤ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚å–å¾—ã€‚
 	*/
 	bool Common_WindowMenu_Log::CallBack_GetDeleteRequest()
 	{
@@ -128,7 +128,7 @@ namespace NTest{namespace NCommon
 	}
 
 
-	/** íœƒŠƒNƒGƒXƒgBİ’èB
+	/** å‰Šé™¤ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚è¨­å®šã€‚
 	*/
 	void Common_WindowMenu_Log::CallBack_SetDeleteRequest()
 	{
@@ -136,7 +136,7 @@ namespace NTest{namespace NCommon
 	}
 
 
-	/** XVˆ—B
+	/** æ›´æ–°å‡¦ç†ã€‚
 	*/
 	void Common_WindowMenu_Log::CallBack_Update()
 	{

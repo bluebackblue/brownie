@@ -156,7 +156,11 @@ namespace NBlib
 		{
 			#if(BLIB_STDREGEX_ENABLE)
 			{
+				#if defined(PLATFORM_GNUCWIN)
 				return std::regex_match(a_string.c_str(),std::regex("^[-]?[0-9]+"));
+				#else
+				return std::regex_match(a_string,std::regex("^[-]?[0-9]+"));
+				#endif
 			}
 			#else
 			{

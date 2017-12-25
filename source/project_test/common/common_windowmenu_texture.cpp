@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒeƒXƒgB
+ * @brief ãƒ†ã‚¹ãƒˆã€‚
 */
 
 
@@ -33,7 +33,7 @@ namespace NTest{namespace NCommon
 		window_texture(),
 		d3d11(a_d3d11)
 	{
-		//©•ªB
+		//è‡ªåˆ†ã€‚
 		{
 			WindowMenu_Window_Base::InitItem t_inititem;
 			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Free;
@@ -45,38 +45,38 @@ namespace NTest{namespace NCommon
 			}
 		}
 
-		/** ƒEƒBƒ“ƒhƒEB
+		/** ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã€‚
 		*/
 		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Window> t_window = this->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Window>("window");
 
-		//ƒEƒBƒ“ƒhƒE -> ƒ{ƒfƒB[”wŒiB
+		//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ -> ãƒœãƒ‡ã‚£ãƒ¼èƒŒæ™¯ã€‚
 		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Plate> t_bodybg = t_window->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Plate>("bodybg");
 
-		//ƒEƒBƒ“ƒhƒE -> ƒ{ƒfƒB[”wŒi -> ƒRƒ“ƒgƒ[ƒ‹B
+		//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ -> ãƒœãƒ‡ã‚£ãƒ¼èƒŒæ™¯ -> ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã€‚
 		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Area> t_control = t_bodybg->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Area>("control");
 
-		//ƒEƒBƒ“ƒhƒE -> ƒ{ƒfƒB[”wŒi -> ƒRƒ“ƒgƒ[ƒ‹ -> ƒ{ƒ^ƒ“ƒGƒŠƒAB
+		//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ -> ãƒœãƒ‡ã‚£ãƒ¼èƒŒæ™¯ -> ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ« -> ãƒœã‚¿ãƒ³ã‚¨ãƒªã‚¢ã€‚
 		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Area> t_buttonarea = t_control->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Area>("buttonarea");
 
-		//ƒEƒBƒ“ƒhƒE -> ƒ{ƒfƒB[”wŒi -> ƒRƒ“ƒgƒ[ƒ‹ -> ƒ{ƒ^ƒ“ƒGƒŠƒA -> ¶ƒ{ƒ^ƒ“B
+		//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ -> ãƒœãƒ‡ã‚£ãƒ¼èƒŒæ™¯ -> ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ« -> ãƒœã‚¿ãƒ³ã‚¨ãƒªã‚¢ -> å·¦ãƒœã‚¿ãƒ³ã€‚
 		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Button> t_lbutton = t_buttonarea->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Button>("lbutton");
 
-		//ƒEƒBƒ“ƒhƒE -> ƒ{ƒfƒB[”wŒi -> ƒRƒ“ƒgƒ[ƒ‹ -> ƒ{ƒ^ƒ“ƒGƒŠƒA -> ‰Eƒ{ƒ^ƒ“B
+		//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ -> ãƒœãƒ‡ã‚£ãƒ¼èƒŒæ™¯ -> ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ« -> ãƒœã‚¿ãƒ³ã‚¨ãƒªã‚¢ -> å³ãƒœã‚¿ãƒ³ã€‚
 		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Button> t_rbutton = t_buttonarea->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Button>("rbutton");
 
-		//ƒEƒBƒ“ƒhƒE -> ƒ{ƒfƒB[”wŒi -> ƒeƒNƒXƒ`ƒƒ[B
+		//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ -> ãƒœãƒ‡ã‚£ãƒ¼èƒŒæ™¯ -> ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ã€‚
 		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Plate> t_texture = t_bodybg->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Plate>("texture");
 
-		//ƒEƒBƒ“ƒhƒEB
+		//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã€‚
 		{
 			NBsys::NWindowMenu::WindowMenu_Window_Window::InitItem t_inititem;
-			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Vertical;	//cÏ‚İB
+			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Vertical;	//ç¸¦ç©ã¿ã€‚
 			t_inititem.offset.Set(a_offset_x,a_offset_y);
 			t_inititem.size.SetW(400.0f);
 			t_inititem.size.SetH_StretchChild();
 			t_window->Initialize(t_inititem);
 			{
-				t_window->window_title_text->string = L"ƒeƒNƒXƒ`ƒƒ[";
+				t_window->window_title_text->string = L"ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼";
 
 				t_window->window_title_bg->color = t_window->color_title_bg_normal;
 				t_window->window_title_closebutton->color_normal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
@@ -89,10 +89,10 @@ namespace NTest{namespace NCommon
 			}
 		}
 
-		//ƒEƒBƒ“ƒhƒE -> ƒ{ƒfƒB[”wŒiB
+		//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ -> ãƒœãƒ‡ã‚£ãƒ¼èƒŒæ™¯ã€‚
 		{
 			NBsys::NWindowMenu::WindowMenu_Window_Plate::InitItem t_inititem;
-			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Vertical;	//cÏ‚İB
+			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Vertical;	//ç¸¦ç©ã¿ã€‚
 			t_inititem.size.SetH_StretchChild();
 			t_bodybg->Initialize(t_inititem);
 			{
@@ -102,25 +102,25 @@ namespace NTest{namespace NCommon
 			}
 		}
 
-		//ƒEƒBƒ“ƒhƒE -> ƒ{ƒfƒB[”wŒi -> ƒRƒ“ƒgƒ[ƒ‹B
+		//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ -> ãƒœãƒ‡ã‚£ãƒ¼èƒŒæ™¯ -> ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã€‚
 		{
 			NBsys::NWindowMenu::WindowMenu_Window_Area::InitItem t_inititem;
-			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Vertical;	//cÏ‚İB
+			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Vertical;	//ç¸¦ç©ã¿ã€‚
 			t_inititem.size.SetH(32.0f);
 			t_control->Initialize(t_inititem);
 		}
 
-		//ƒEƒBƒ“ƒhƒE -> ƒ{ƒfƒB[”wŒi -> ƒRƒ“ƒgƒ[ƒ‹ -> ƒ{ƒ^ƒ“ƒGƒŠƒAB
+		//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ -> ãƒœãƒ‡ã‚£ãƒ¼èƒŒæ™¯ -> ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ« -> ãƒœã‚¿ãƒ³ã‚¨ãƒªã‚¢ã€‚
 		{
 			NBsys::NWindowMenu::WindowMenu_Window_Area::InitItem t_inititem;
-			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//‰¡Ï‚İB
+			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//æ¨ªç©ã¿ã€‚
 			t_buttonarea->Initialize(t_inititem);
 		}
 
-		//ƒEƒBƒ“ƒhƒE -> ƒ{ƒfƒB[”wŒi -> ƒRƒ“ƒgƒ[ƒ‹ -> ƒ{ƒ^ƒ“ƒGƒŠƒA -> ¶ƒ{ƒ^ƒ“B
+		//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ -> ãƒœãƒ‡ã‚£ãƒ¼èƒŒæ™¯ -> ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ« -> ãƒœã‚¿ãƒ³ã‚¨ãƒªã‚¢ -> å·¦ãƒœã‚¿ãƒ³ã€‚
 		{
 			NBsys::NWindowMenu::WindowMenu_Window_Button::InitItem t_inititem;
-			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//‰¡Ï‚İB
+			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//æ¨ªç©ã¿ã€‚
 			t_lbutton->Initialize(t_inititem);
 			{
 				t_lbutton->color_normal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
@@ -131,10 +131,10 @@ namespace NTest{namespace NCommon
 			}
 		}
 
-		//ƒEƒBƒ“ƒhƒE -> ƒ{ƒfƒB[”wŒi -> ƒRƒ“ƒgƒ[ƒ‹ -> ƒ{ƒ^ƒ“ƒGƒŠƒA -> ‰Eƒ{ƒ^ƒ“B
+		//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ -> ãƒœãƒ‡ã‚£ãƒ¼èƒŒæ™¯ -> ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ« -> ãƒœã‚¿ãƒ³ã‚¨ãƒªã‚¢ -> å³ãƒœã‚¿ãƒ³ã€‚
 		{
 			NBsys::NWindowMenu::WindowMenu_Window_Button::InitItem t_inititem;
-			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//‰¡Ï‚İB
+			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//æ¨ªç©ã¿ã€‚
 			t_rbutton->Initialize(t_inititem);
 			{
 				t_rbutton->color_normal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);
@@ -145,10 +145,10 @@ namespace NTest{namespace NCommon
 			}
 		}
 
-		//ƒEƒBƒ“ƒhƒE -> ƒ{ƒfƒB[”wŒi -> ƒeƒNƒXƒ`ƒƒ[B
+		//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ -> ãƒœãƒ‡ã‚£ãƒ¼èƒŒæ™¯ -> ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ã€‚
 		{
 			NBsys::NWindowMenu::WindowMenu_Window_Plate::InitItem t_inititem;
-			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//‰¡Ï‚İB
+			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//æ¨ªç©ã¿ã€‚
 			t_inititem.size.SetH(400);
 			t_texture->Initialize(t_inititem);
 			{
@@ -168,7 +168,7 @@ namespace NTest{namespace NCommon
 	}
 
 
-	/** íœƒŠƒNƒGƒXƒgBæ“¾B
+	/** å‰Šé™¤ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚å–å¾—ã€‚
 	*/
 	bool Common_WindowMenu_Texture::CallBack_GetDeleteRequest()
 	{
@@ -176,7 +176,7 @@ namespace NTest{namespace NCommon
 	}
 
 
-	/** íœƒŠƒNƒGƒXƒgBİ’èB
+	/** å‰Šé™¤ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚è¨­å®šã€‚
 	*/
 	void Common_WindowMenu_Texture::CallBack_SetDeleteRequest()
 	{
@@ -184,7 +184,7 @@ namespace NTest{namespace NCommon
 	}
 
 
-	/** ¶ƒ{ƒ^ƒ“B
+	/** å·¦ãƒœã‚¿ãƒ³ã€‚
 	*/
 	void Common_WindowMenu_Texture::PushLeftButton()
 	{
@@ -216,7 +216,7 @@ namespace NTest{namespace NCommon
 	}
 
 
-	/** ‰Eƒ{ƒ^ƒ“B
+	/** å³ãƒœã‚¿ãƒ³ã€‚
 	*/
 	void Common_WindowMenu_Texture::PushRightButton()
 	{

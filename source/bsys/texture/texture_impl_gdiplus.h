@@ -47,12 +47,11 @@ namespace NBsys{namespace NTexture
 		*/
 		Texture_Impl_GdiPlus()
 			:
-			token(WIN_NULL),
-			startinput()
+			token(0)
 		{
 			Gdiplus::Status t_status = Gdiplus::GdiplusStartup(&this->token,&this->startinput,nullptr);
 			if(t_status != Gdiplus::Ok){
-				this->token = WIN_NULL;
+				this->token = 0;
 			}
 		}
 
@@ -69,7 +68,7 @@ namespace NBsys{namespace NTexture
 		*/
 		bool IsEnable()
 		{
-			if(this->token != WIN_NULL){
+			if(this->token != 0){
 				return true;
 			}
 			return false;

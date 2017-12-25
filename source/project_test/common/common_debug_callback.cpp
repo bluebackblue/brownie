@@ -1,11 +1,11 @@
-
+Ôªø
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ÉeÉXÉgÅB
+ * @brief „ÉÜ„Çπ„Éà„ÄÇ
 */
 
 
@@ -16,7 +16,6 @@
 
 /** NTest::NCommon
 */
-#if(DEF_TEST_INDEX == 12)
 namespace NTest{namespace NCommon
 {
 	/** LogItem
@@ -42,7 +41,7 @@ namespace NTest{namespace NCommon
 	{
 		LogItem& t_logitem = s_loglist[s_loglist_index];
 
-		//ï∂éöÅB
+		//ÊñáÂ≠ó„ÄÇ
 		{
 			s32 t_length = Memory::StringLengthW(a_wstring,COUNTOF(LogItem::buffer) - 1);
 			if(t_length <= 0){
@@ -53,12 +52,12 @@ namespace NTest{namespace NCommon
 			t_logitem.buffer[t_length] = 0;
 		}
 
-		//êFÅB
+		//Ëâ≤„ÄÇ
 		{
 			t_logitem.color = a_color;
 		}
 
-		//ÉCÉìÉNÉäÉÅÉìÉgÅB
+		//„Ç§„É≥„ÇØ„É™„É°„É≥„Éà„ÄÇ
 		{
 			s_loglist_index = (s_loglist_index + 1) % COUNTOF(s_loglist);
 			s_loglist_max++;
@@ -108,7 +107,6 @@ namespace NTest{namespace NCommon
 
 
 }}
-#endif
 
 
 /** Blib_DebugAssert_Callback
@@ -167,7 +165,7 @@ bool Blib_DebugLog_Callback(const NBlib::wchar* a_tag,const NBlib::wchar* a_wstr
 #endif
 
 
-/** íPèÉÇ»ãLâØàÊÇÃämï€ÅBämï€Ç…é∏îsÇµÇΩèÍçábad_allocó·äOÇÉXÉçÅ[Ç∑ÇÈÅB
+/** ÂçòÁ¥î„Å™Ë®òÊÜ∂Âüü„ÅÆÁ¢∫‰øù„ÄÇÁ¢∫‰øù„Å´Â§±Êïó„Åó„ÅüÂ†¥Âêàbad_alloc‰æãÂ§ñ„Çí„Çπ„É≠„Éº„Åô„Çã„ÄÇ
 */
 void* operator new(std::size_t a_size)
 {
@@ -181,7 +179,7 @@ void* operator new(std::size_t a_size)
 }
 
 
-/** íPèÉÇ»ãLâØàÊÇÃämï€ÅBó·äOÇÉXÉçÅ[ÇµÇ»Ç¢ÅB
+/** ÂçòÁ¥î„Å™Ë®òÊÜ∂Âüü„ÅÆÁ¢∫‰øù„ÄÇ‰æãÂ§ñ„Çí„Çπ„É≠„Éº„Åó„Å™„ÅÑ„ÄÇ
 */
 void* operator new(std::size_t a_size,const std::nothrow_t& /*_*/) noexcept
 {
@@ -189,7 +187,7 @@ void* operator new(std::size_t a_size,const std::nothrow_t& /*_*/) noexcept
 }
 
 
-/** îzíunewÇ…ÇÊÇÈãLâØàÊÇÃämï€ÅB
+/** ÈÖçÁΩÆnew„Å´„Çà„ÇãË®òÊÜ∂Âüü„ÅÆÁ¢∫‰øù„ÄÇ
 */
 #if(0)
 void* operator new(std::size_t a_size,void* a_pointer) noexcept
@@ -198,7 +196,7 @@ void* operator new(std::size_t a_size,void* a_pointer) noexcept
 #endif
 
 
-/** íPèÉÇ»ãLâØàÊÇÃâï˙ÅB
+/** ÂçòÁ¥î„Å™Ë®òÊÜ∂Âüü„ÅÆËß£Êîæ„ÄÇ
 */
 void operator delete(void* a_pointer,std::size_t a_size) noexcept
 {
@@ -206,7 +204,7 @@ void operator delete(void* a_pointer,std::size_t a_size) noexcept
 }
 
 
-/** íPèÉÇ»ãLâØàÊÇÃâï˙ÅBó·äOÇÉXÉçÅ[ÇµÇ»Ç¢ÅB
+/** ÂçòÁ¥î„Å™Ë®òÊÜ∂Âüü„ÅÆËß£Êîæ„ÄÇ‰æãÂ§ñ„Çí„Çπ„É≠„Éº„Åó„Å™„ÅÑ„ÄÇ
 */
 void operator delete(void* a_pointer,const std::nothrow_t& /**/) noexcept
 {
@@ -214,7 +212,7 @@ void operator delete(void* a_pointer,const std::nothrow_t& /**/) noexcept
 }
 
 
-/** replacement-newÇ…ëŒâûÇ∑ÇÈãLâØàÊÇÃâï˙ÅB
+/** replacement-new„Å´ÂØæÂøú„Åô„ÇãË®òÊÜ∂Âüü„ÅÆËß£Êîæ„ÄÇ
 */
 #if(0)
 void operator delete(void* a_pointer,void* /**/) noexcept
@@ -223,7 +221,7 @@ void operator delete(void* a_pointer,void* /**/) noexcept
 #endif
 
 
-/** íPèÉÇ»îzóÒÇÃãLâØàÊÇÃämï€ÅB
+/** ÂçòÁ¥î„Å™ÈÖçÂàó„ÅÆË®òÊÜ∂Âüü„ÅÆÁ¢∫‰øù„ÄÇ
 */
 void* operator new[](std::size_t a_size)
 {
@@ -231,7 +229,7 @@ void* operator new[](std::size_t a_size)
 }
 
 
-/** íPèÉÇ»îzóÒÇÃãLâØàÊÇÃämï€ÅBó·äOÇÉXÉçÅ[ÇµÇ»Ç¢ÅB
+/** ÂçòÁ¥î„Å™ÈÖçÂàó„ÅÆË®òÊÜ∂Âüü„ÅÆÁ¢∫‰øù„ÄÇ‰æãÂ§ñ„Çí„Çπ„É≠„Éº„Åó„Å™„ÅÑ„ÄÇ
 */
 void* operator new[](std::size_t a_size,const std::nothrow_t& /*_*/) noexcept
 {
@@ -239,7 +237,7 @@ void* operator new[](std::size_t a_size,const std::nothrow_t& /*_*/) noexcept
 }
 
 
-/** îzíunewÇ…ÇÊÇÈîzóÒÇÃãLâØàÊÇÃämï€ÅB
+/** ÈÖçÁΩÆnew„Å´„Çà„ÇãÈÖçÂàó„ÅÆË®òÊÜ∂Âüü„ÅÆÁ¢∫‰øù„ÄÇ
 */
 #if(0)
 void* operator new[](std::size_t a_size,void* a_pointer) noexcept
@@ -248,7 +246,7 @@ void* operator new[](std::size_t a_size,void* a_pointer) noexcept
 #endif
 
 
-/** íPèÉÇ»îzóÒÇÃãLâØàÊÇÃâï˙ÅB
+/** ÂçòÁ¥î„Å™ÈÖçÂàó„ÅÆË®òÊÜ∂Âüü„ÅÆËß£Êîæ„ÄÇ
 */
 void operator delete[](void* a_pointer,std::size_t a_size) noexcept
 {
@@ -256,7 +254,7 @@ void operator delete[](void* a_pointer,std::size_t a_size) noexcept
 }
 
 
-/** íPèÉÇ»îzóÒÇÃãLâØàÊÇÃâï˙ÅBó·äOÇÉXÉçÅ[ÇµÇ»Ç¢ÅB
+/** ÂçòÁ¥î„Å™ÈÖçÂàó„ÅÆË®òÊÜ∂Âüü„ÅÆËß£Êîæ„ÄÇ‰æãÂ§ñ„Çí„Çπ„É≠„Éº„Åó„Å™„ÅÑ„ÄÇ
 */
 void operator delete[](void* a_pointer,const std::nothrow_t& /*_*/) noexcept
 {
@@ -264,7 +262,7 @@ void operator delete[](void* a_pointer,const std::nothrow_t& /*_*/) noexcept
 }
 
 
-/** replacement-newÇ…ÇÊÇÈîzóÒÇÃãLâØàÊÇÃämï€ÅB
+/** replacement-new„Å´„Çà„ÇãÈÖçÂàó„ÅÆË®òÊÜ∂Âüü„ÅÆÁ¢∫‰øù„ÄÇ
 */
 #if(0)
 void operator delete[](void* a_pointer,void* /*_*/) noexcept
