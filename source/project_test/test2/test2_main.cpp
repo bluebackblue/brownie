@@ -72,51 +72,58 @@ namespace NTest
 			ThreadSleep(10);
 		}
 
-		//コンバート。
-		for(;;){
-			NBsys::NFile::File_ConvertLock_ReturnType::Id t_ret = t_fileobject->ConvertLock();
-			if(t_ret == NBsys::NFile::File_ConvertLock_ReturnType::Locked){
-				//未コンバート => コンバート中。
+		if(t_fileobject->GetErrorCode() != ErrorCode::Success){
+			t_fileobject.reset();
+		}
 
-				//コンバート中 => コンバート済み。
-				t_fileobject->GetLoadData().get()[static_cast<s32>(t_fileobject->GetLoadSize())] = 0x00;
-				t_fileobject->ConvertUnlock();
+		if(t_fileobject){
+
+			//コンバート。
+			for(;;){
+				NBsys::NFile::File_ConvertLock_ReturnType::Id t_ret = t_fileobject->ConvertLock();
+				if(t_ret == NBsys::NFile::File_ConvertLock_ReturnType::Locked){
+					//未コンバート => コンバート中。
+
+					//コンバート中 => コンバート済み。
+					t_fileobject->GetLoadData().get()[static_cast<s32>(t_fileobject->GetLoadSize())] = 0x00;
+					t_fileobject->ConvertUnlock();
 			
-				break;
-			}else if(t_ret == NBsys::NFile::File_ConvertLock_ReturnType::ConvertNow){
-				//コンバート中。
+					break;
+				}else if(t_ret == NBsys::NFile::File_ConvertLock_ReturnType::ConvertNow){
+					//コンバート中。
 
-				//ロックに成功していないのでアンロック不要。
-			}else{
-				//コンバート済み。
+					//ロックに成功していないのでアンロック不要。
+				}else{
+					//コンバート済み。
 
-				//ロックに成功していないのでアンロック不要。
-				break;
+					//ロックに成功していないのでアンロック不要。
+					break;
+				}
 			}
-		}
 
-		//ＪＳＯＮ解析。
-		sharedptr<JsonItem> t_json(new JsonItem(reinterpret_cast<char*>(t_fileobject->GetLoadData().get())));
+			//ＪＳＯＮ解析。
+			sharedptr<JsonItem> t_json(new JsonItem(reinterpret_cast<char*>(t_fileobject->GetLoadData().get())));
 
-		//ＪＳＯＮ取得。
-		if(t_json->GetValueType() == JsonItem::ValueType::AssociativeArray){
-			if(t_json->IsExistItem("name") == true){
-				STLString t_name = *t_json->GetItem("name")->GetStringData();
-				DEBUGLOG("name = %s\n",t_name.c_str());
+			//ＪＳＯＮ取得。
+			if(t_json->GetValueType() == JsonItem::ValueType::AssociativeArray){
+				if(t_json->IsExistItem("name") == true){
+					STLString t_name = *t_json->GetItem("name")->GetStringData();
+					DEBUGLOG("name = %s\n",t_name.c_str());
+				}
+				if(t_json->IsExistItem("value") == true){
+					s32 t_value = t_json->GetItem("value")->GetInteger();
+					DEBUGLOG("value = %d\n",t_value);
+				}
 			}
-			if(t_json->IsExistItem("value") == true){
-				s32 t_value = t_json->GetItem("value")->GetInteger();
-				DEBUGLOG("value = %d\n",t_value);
-			}
-		}
 
-		//ＪＳＯＮ出力。
-		{
-			FileHandle t_filehandle;
-			t_filehandle.WriteOpen(L"./project_test/test2/out.json");
-			STLString t_jsonstring = t_json->ConvertJsonString();
-			t_filehandle.Write(reinterpret_cast<const u8*>(t_jsonstring.c_str()),t_jsonstring.size(),0);
-			t_filehandle.Close();
+			//ＪＳＯＮ出力。
+			{
+				FileHandle t_filehandle;
+				t_filehandle.WriteOpen(L"./project_test/test2/out.json");
+				STLString t_jsonstring = t_json->ConvertJsonString();
+				t_filehandle.Write(reinterpret_cast<const u8*>(t_jsonstring.c_str()),t_jsonstring.size(),0);
+				t_filehandle.Close();
+			}
 		}
 
 		//ファイル終了。

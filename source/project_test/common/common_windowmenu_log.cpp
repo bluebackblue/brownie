@@ -143,10 +143,16 @@ namespace NTest{namespace NCommon
 		if(this->debuglog_counter != NCommon::GetDebugLogCounter()){
 			this->debuglog_counter = NCommon::GetDebugLogCounter();
 
+			s32 t_offset_index = NCommon::GetDegubLogMax() - COUNTOF(this->window_logtext) + 1;
+			if(t_offset_index <= 0){
+				t_offset_index = 0;
+			}
+
 			for(s32 ii=0;ii<COUNTOF(this->window_logtext);ii++){
-				this->window_logtext[ii]->string = NCommon::GetDebugLogString(ii);
-				this->window_logtext[ii]->string = std::regex_replace(this->window_logtext[ii]->string,std::wregex(L"\n"),L" ");
-				this->window_logtext[ii]->color = NCommon::GetDebugLogColor(ii);
+				s32 t_read_index = t_offset_index + ii;
+
+				this->window_logtext[ii]->string = NCommon::GetDebugLogString(t_read_index);
+				this->window_logtext[ii]->color = NCommon::GetDebugLogColor(t_read_index);
 			}
 		}
 	}

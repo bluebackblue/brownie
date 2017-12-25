@@ -29,8 +29,9 @@ namespace NTest{namespace NCommon
 
 	/** s_loglist
 	*/
-	static LogItem s_loglist[16];
+	static LogItem s_loglist[32] = {0};
 	static s32 s_loglist_index = 0;
+	static s32 s_loglist_write_cur = 0;
 	static s32 s_loglist_max = 0;
 	static s32 s_loglist_counter = 0;
 
@@ -39,48 +40,79 @@ namespace NTest{namespace NCommon
 	*/
 	static void AddDebugLog(const wchar* a_wstring,const NBsys::NColor::Color_F& a_color)
 	{
-		LogItem& t_logitem = s_loglist[s_loglist_index];
+		s32 t_length = Memory::StringLengthW(a_wstring,COUNTOF(LogItem::buffer) - 1);
 
-		//文字。
-		{
-			s32 t_length = Memory::StringLengthW(a_wstring,COUNTOF(LogItem::buffer) - 1);
-			if(t_length <= 0){
-				return;
+		//ログ総数更新。
+		s_loglist_counter++;
+
+		s32 t_read_cur = 0;
+		for(;;){
+			if((a_wstring[t_read_cur] == L'\n')||(a_wstring[t_read_cur] == 0x0000)){
+				s_loglist[s_loglist_index].buffer[s_loglist_write_cur] = 0x0000;
+
+				//改行、終端のある文字の色を採用。
+				s_loglist[s_loglist_index].color = a_color;
+
+				//改行。
+				if(a_wstring[t_read_cur] == L'\n'){
+					s_loglist_index = (s_loglist_index + 1) % COUNTOF(s_loglist);
+
+					//ログ最大数更新。
+					s_loglist_max++;
+					if(s_loglist_max >= COUNTOF(s_loglist) - 1){
+						s_loglist_max = COUNTOF(s_loglist) - 1;
+					}
+
+					//書き込みカーソルを一番左に。
+					s_loglist_write_cur = 0;
+
+					//次のカレントを初期化。
+					s_loglist[s_loglist_index].buffer[s_loglist_write_cur] = 0x0000;
+					s_loglist[s_loglist_index].color = a_color;
+				}
+
+				if(a_wstring[t_read_cur] == 0x0000){
+					break;
+				}
+			}else{
+				
+				if(s_loglist_write_cur < COUNTOF(LogItem::buffer)){
+					s_loglist[s_loglist_index].buffer[s_loglist_write_cur] = a_wstring[t_read_cur];
+				}else{
+					s_loglist[s_loglist_index].buffer[COUNTOF(LogItem::buffer) - 1] = 0x0000;
+				}
+
+				s_loglist_write_cur++;
 			}
 
-			Memory::Copy(&t_logitem.buffer[0],sizeof(t_logitem.buffer),a_wstring,t_length * sizeof(wchar));
-			t_logitem.buffer[t_length] = 0;
-		}
-
-		//色。
-		{
-			t_logitem.color = a_color;
-		}
-
-		//インクリメント。
-		{
-			s_loglist_index = (s_loglist_index + 1) % COUNTOF(s_loglist);
-			s_loglist_max++;
-			if(s_loglist_max >= COUNTOF(s_loglist)){
-				s_loglist_max = COUNTOF(s_loglist);
-			}
-
-			s_loglist_counter++;
+			t_read_cur++;
 		}
 	}
 
 
 	/** GetDebugLogString
+
+		0				: 一番古いログ。
+		s_loglist_max	: 現在カレントのログ。
+
 	*/
 	const wchar* GetDebugLogString(s32 a_index)
 	{
 		s32 t_index = a_index;
 
-		if(s_loglist_max >= COUNTOF(s_loglist)){
-			t_index = (COUNTOF(s_loglist) + a_index + s_loglist_index) % COUNTOF(s_loglist);
+		if(s_loglist_max >= (COUNTOF(s_loglist) - 1)){
+			t_index = (COUNTOF(s_loglist) + s_loglist_index + a_index + 1) % COUNTOF(s_loglist);
 		}
 
 		return s_loglist[t_index].buffer;
+	}
+
+	
+	/** GetDegubLogMax
+	*/
+	s32 GetDegubLogMax()
+	{
+		return s_loglist_max;
 	}
 
 
@@ -145,7 +177,7 @@ bool Blib_DebugLog_Callback(const NBlib::wchar* a_tag,const NBlib::wchar* a_wstr
 	s32 t_buffer_offset = 0;
 
 	if(a_tag){
-		VASTRING(t_buffer,COUNTOF(t_buffer),L"[%s]%s",a_tag,a_wstring);
+		VASTRING(t_buffer,COUNTOF(t_buffer),L"[%s]%s\n",a_tag,a_wstring);
 	}else{
 		VASTRING(t_buffer,COUNTOF(t_buffer),L"%s",a_wstring);
 	}

@@ -23,6 +23,11 @@ namespace NTest{namespace NCommon
 	const wchar* GetDebugLogString(s32 a_index);
 
 
+	/** GetDegubLogMax
+	*/
+	s32 GetDegubLogMax();
+
+
 	/** GetDebugLogColor
 	*/
 	NBsys::NColor::Color_F& GetDebugLogColor(s32 a_index);

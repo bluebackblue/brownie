@@ -807,6 +807,15 @@
 	-------------------
 
 	-------------------
+	BSYS_D3D11_DEBUG
+
+		0 : オフ
+		1 : オン
+
+		デバッグ機能を制御します。
+	-------------------
+
+	-------------------
 	BSYS_D3D11_FONT_DRAWTYPEMAX_S
 
 		小フォントテクスチャーに格納可能な文字数を設定します。
@@ -833,6 +842,9 @@
 */
 #if !defined(BSYS_D3D11_ENABLE)
 	#define BSYS_D3D11_ENABLE								(0)
+#endif
+#if !defined(BSYS_D3D11_DEBUG)
+	#define BSYS_D3D11_DEBUG								(1)
 #endif
 #if !defined(BSYS_D3D11_FONT_DRAWTYPEMAX_S)
 	#define BSYS_D3D11_FONT_DRAWTYPEMAX_S					(128)

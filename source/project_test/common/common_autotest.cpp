@@ -17,6 +17,7 @@
 /** include
 */
 #include "./common_autotest.h"
+#include "./common_debug_callback.h"
 
 
 /** NTest
@@ -98,26 +99,36 @@ namespace NTest{namespace NCommon
 			this->send_http->SetUrl("/www/project_autotest/index.php?mode=upload");
 			this->send_http->AddPostContent("upfile","filename",this->capture_jpg,this->capture_jpg_size);
 
+			//テスト番号。
 			{
 				char t_buffer[16];
 				STLString t_index_string = VASTRING(t_buffer,sizeof(t_buffer),"%d",DEF_TEST_INDEX);
 				this->send_http->AddPostContent("index",t_index_string);
 			}
 
-			{
-				STLWString t_log;
-				t_log += L"---";
-				STLString t_log_utf8;
-				WcharToChar(t_log,t_log_utf8);
-				this->send_http->AddPostContent("log",t_log_utf8);
-			}
-
+			//タイトル名。
 			{
 				STLWString t_title = DEF_TEST_STRING;
 				STLString t_title_utf8;
 				WcharToChar(t_title,t_title_utf8);
 				this->send_http->AddPostContent("title",t_title_utf8);
 			}
+
+			//ログ。
+			{
+				STLWString t_log;
+
+				for(s32 ii=0;ii<=NCommon::GetDegubLogMax();ii++){
+					t_log += NCommon::GetDebugLogString(ii);
+					t_log += L"\n";
+				}
+
+				STLString t_log_utf8;
+				WcharToChar(t_log,t_log_utf8);
+				this->send_http->AddPostContent("log",t_log_utf8);
+			}
+
+
 
 			this->send_recvbuffer.reset(new RingBuffer<u8,1*1024*1024,true>());
 			this->send_http->ConnectStart(this->send_recvbuffer);

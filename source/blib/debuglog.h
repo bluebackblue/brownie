@@ -43,10 +43,38 @@ namespace NBlib
 	#define TAGLOG(TAG,...)	
 	#define DEBUGLOG(...)
 
+	#define DEEPDEBUG_TAGLOG(ENABLE,TAG,...)	
+	#define DEEPDEBUG_DEBUGLOG(ENABLE,...)
+
+	#define FULLDEBUG_TAGLOG(ENABLE,TAG,...)	
+	#define FULLDEBUG_DEBUGLOG(ENABLE,...)
+
 #else
 
-	#define TAGLOG(TAG,...)				NBlib::DebugLog(TAG,VASTRING_DEBUG(__VA_ARGS__))
-	#define DEBUGLOG(...)				NBlib::DebugLog(nullptr,VASTRING_DEBUG(__VA_ARGS__))
+	/** !ROM_MASTER
+	*/
+	#define TAGLOG(TAG,...)										NBlib::DebugLog(TAG,VASTRING_DEBUG(__VA_ARGS__))
+	#define DEBUGLOG(...)										NBlib::DebugLog(nullptr,VASTRING_DEBUG(__VA_ARGS__))
+
+	/** ROM_DEEPDEBUG or ROM_FULLDEBUG
+	*/
+	#if defined(ROM_DEEPDEBUG) || defined(ROM_FULLDEBUG)
+		#define DEEPDEBUG_TAGLOG(ENABLE,TAG,...)				do{if(ENABLE){TAGLOG(TAG,__VA_ARGS__);}}while(0)
+		#define DEEPDEBUG_DEBUGLOG(ENABLE,...)					do{if(ENABLE){DEBUGLOG(__VA_ARGS__);}}while(0)
+	#else
+		#define DEEPDEBUG_TAGLOG(ENABLE,TAG,...)
+		#define DEEPDEBUG_DEBUGLOG(ENABLE,...)
+	#endif
+
+	/** ROM_FULLDEBUG
+	*/
+	#if defined(ROM_FULLDEBUG)
+		#define FULLDEBUG_TAGLOG(ENABLE,TAG,...)				do{if(ENABLE){TAGLOG(TAG,__VA_ARGS__);}}while(0)
+		#define FULLDEBUG_DEBUGLOG(ENABLE,...)					do{if(ENABLE){DEBUGLOG(__VA_ARGS__);}}while(0)
+	#else
+		#define FULLDEBUG_TAGLOG(ENABLE,TAG,...)
+		#define FULLDEBUG_DEBUGLOG(ENABLE,...)
+	#endif
 
 #endif
 

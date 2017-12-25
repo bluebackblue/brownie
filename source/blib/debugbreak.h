@@ -39,6 +39,8 @@
 #if defined(ROM_MASTER)
 
 	#define DEBUGBREAK()
+	#define FULLDEBUG_DEBUGBREAK(ENABLE)
+	#define DEEPDEBUG_DEBUGBREAK(ENABLE)
 
 #else
 
@@ -57,6 +59,8 @@
 
 	#endif
 
+	/** !ROM_MASTER
+	*/
 	#if(BLIB_DEBUGBREAK_CALLBACK_ENABLE)
 
 		bool Blib_DebugBreak_Callback();
@@ -66,6 +70,22 @@
 
 		#define DEBUGBREAK() DEBUGBREAK_PROC()
 
+	#endif
+
+	/** ROM_DEEPDEBUG or ROM_FULLDEBUG
+	*/
+	#if defined(ROM_DEEPDEBUG) || defined(ROM_FULLDEBUG)
+		#define DEEPDEBUG_DEBUGBREAK(ENABLE)					do{if(ENABLE){DEBUGBREAK();}}while(0)
+	#else
+		#define DEEPDEBUG_DEBUGBREAK(ENABLE)
+	#endif
+
+	/** ROM_FULLDEBUG
+	*/
+	#if defined(ROM_FULLDEBUG)
+		#define FULLDEBUG_DEBUGBREAK(ENABLE)					do{if(ENABLE){DEBUGBREAK();}}while(0)
+	#else
+		#define FULLDEBUG_DEBUGBREAK(ENABLE)
 	#endif
 
 #endif
