@@ -26,7 +26,7 @@ namespace NTest{namespace NCommon
 {
 	/** constructor
 	*/
-	Common_WindowMenu_Texture::Common_WindowMenu_Texture(const STLWString& a_string,f32 a_offset_x,f32 a_offset_y,sharedptr<NBsys::ND3d11::D3d11>& a_d3d11)
+	Common_WindowMenu_Texture::Common_WindowMenu_Texture(f32 a_offset_x,f32 a_offset_y,sharedptr<NBsys::ND3d11::D3d11>& a_d3d11)
 		:
 		NBsys::NWindowMenu::WindowMenu_Window_Base("Common_WindowMenu_Texture"),
 		endrequest(false),
@@ -152,7 +152,7 @@ namespace NTest{namespace NCommon
 			t_inititem.size.SetH(400);
 			t_texture->Initialize(t_inititem);
 			{
-				t_texture->color = NBsys::NColor::Color_F(1.0f,0.0f,0.0f,1.0f);
+				t_texture->color = NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f);
 				t_texture->texture_id = -1;
 				t_texture->mouseblock = true;
 			}

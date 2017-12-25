@@ -409,7 +409,7 @@ namespace NTest
 
 			if(this->step == 0){
 				//テクスチャ。
-				this->windowmenu_texture.reset(new NCommon::Common_WindowMenu_Texture(L"テクスチャー",150.0f,150.0f,this->d3d11));
+				this->windowmenu_texture.reset(new NCommon::Common_WindowMenu_Texture(150.0f,150.0f,this->d3d11));
 				NBsys::NWindowMenu::GetSystemInstance()->Add(this->windowmenu_texture);
 
 				//ログ。
@@ -466,7 +466,7 @@ namespace NTest
 				//文字描画。
 				{
 					//描画。
-					this->render2d->Render(/*t_view * t_projection*/);
+					this->render2d->Render();
 				}
 
 				//ウィンドウメニュー。
@@ -474,7 +474,7 @@ namespace NTest
 					NBsys::NWindowMenu::GetSystemInstance()->Draw();
 
 					//描画。
-					this->render2d->Render(/*t_view * t_projection*/);
+					this->render2d->Render();
 				}
 			}
 		}

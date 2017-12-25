@@ -41,7 +41,7 @@ namespace NTest{namespace NCommon
 
 		/** constructor
 		*/
-		Common_WindowMenu_Texture(const STLWString& a_string,f32 a_offset_x,f32 a_offset_y,sharedptr<NBsys::ND3d11::D3d11>& a_d3d11);
+		Common_WindowMenu_Texture(f32 a_offset_x,f32 a_offset_y,sharedptr<NBsys::ND3d11::D3d11>& a_d3d11);
 
 		/** destructor
 		*/
