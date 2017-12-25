@@ -19,9 +19,9 @@
 #if(BSYS_WINDOWMENU_ENABLE)
 namespace NTest{namespace NCommon
 {
-	/** Common_WindowMenu_Log
+	/** WindowMenu_Log
 	*/
-	class Common_WindowMenu_Log : public NBsys::NWindowMenu::WindowMenu_Window_Base
+	class WindowMenu_Log : public NBsys::NWindowMenu::WindowMenu_Window_Base
 	{
 	private:
 
@@ -41,11 +41,11 @@ namespace NTest{namespace NCommon
 
 		/** constructor
 		*/
-		Common_WindowMenu_Log(f32 a_offset_x,f32 a_offset_y);
+		WindowMenu_Log(f32 a_offset_x,f32 a_offset_y);
 
 		/** destructor
 		*/
-		virtual ~Common_WindowMenu_Log();
+		virtual ~WindowMenu_Log();
 
 	public:
 

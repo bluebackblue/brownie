@@ -26,9 +26,9 @@ namespace NTest{namespace NCommon
 {
 	/** constructor
 	*/
-	Common_WindowMenu_Texture::Common_WindowMenu_Texture(f32 a_offset_x,f32 a_offset_y,sharedptr<NBsys::ND3d11::D3d11>& a_d3d11)
+	WindowMenu_Texture::WindowMenu_Texture(f32 a_offset_x,f32 a_offset_y,sharedptr<NBsys::ND3d11::D3d11>& a_d3d11)
 		:
-		NBsys::NWindowMenu::WindowMenu_Window_Base("Common_WindowMenu_Texture"),
+		NBsys::NWindowMenu::WindowMenu_Window_Base("WindowMenu_Texture"),
 		endrequest(false),
 		window_texture(),
 		d3d11(a_d3d11)
@@ -127,7 +127,7 @@ namespace NTest{namespace NCommon
 				t_lbutton->color_on = NBsys::NColor::Color_F(0.4f,0.4f,0.4f,1.0f);
 				t_lbutton->color_ondown = NBsys::NColor::Color_F(0.3f,0.3f,1.0f,1.0f);
 				t_lbutton->string = L"<<<<<<<<<";
-				t_lbutton->action = std::bind(&Common_WindowMenu_Texture::PushLeftButton,this);
+				t_lbutton->action = std::bind(&WindowMenu_Texture::PushLeftButton,this);
 			}
 		}
 
@@ -141,7 +141,7 @@ namespace NTest{namespace NCommon
 				t_rbutton->color_on = NBsys::NColor::Color_F(0.4f,0.4f,0.4f,1.0f);
 				t_rbutton->color_ondown = NBsys::NColor::Color_F(0.3f,0.3f,1.0f,1.0f);
 				t_rbutton->string = L">>>>>>>>>";
-				t_rbutton->action = std::bind(&Common_WindowMenu_Texture::PushRightButton,this);
+				t_rbutton->action = std::bind(&WindowMenu_Texture::PushRightButton,this);
 			}
 		}
 
@@ -163,14 +163,14 @@ namespace NTest{namespace NCommon
 
 	/** destructor
 	*/
-	Common_WindowMenu_Texture::~Common_WindowMenu_Texture()
+	WindowMenu_Texture::~WindowMenu_Texture()
 	{
 	}
 
 
 	/** 削除リクエスト。取得。
 	*/
-	bool Common_WindowMenu_Texture::CallBack_GetDeleteRequest()
+	bool WindowMenu_Texture::CallBack_GetDeleteRequest()
 	{
 		return this->endrequest;
 	}
@@ -178,7 +178,7 @@ namespace NTest{namespace NCommon
 
 	/** 削除リクエスト。設定。
 	*/
-	void Common_WindowMenu_Texture::CallBack_SetDeleteRequest()
+	void WindowMenu_Texture::CallBack_SetDeleteRequest()
 	{
 		this->endrequest = true;
 	}
@@ -186,7 +186,7 @@ namespace NTest{namespace NCommon
 
 	/** 左ボタン。
 	*/
-	void Common_WindowMenu_Texture::PushLeftButton()
+	void WindowMenu_Texture::PushLeftButton()
 	{
 		STLVector<s32>::Type t_list;
 		this->d3d11->CreateTextureIdList(t_list);
@@ -218,7 +218,7 @@ namespace NTest{namespace NCommon
 
 	/** 右ボタン。
 	*/
-	void Common_WindowMenu_Texture::PushRightButton()
+	void WindowMenu_Texture::PushRightButton()
 	{
 		STLVector<s32>::Type t_list;
 		this->d3d11->CreateTextureIdList(t_list);

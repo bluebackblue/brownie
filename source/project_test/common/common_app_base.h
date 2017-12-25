@@ -25,7 +25,7 @@
 #include "./common_windowmenu_texture.h"
 #include "./common_windowmenu_log.h"
 #include "./common_windowmenu_callback.h"
-#include "../autotest/autotest.h"
+#include "./common_autotest.h"
 
 
 /** NTest::NCommon
@@ -88,13 +88,13 @@ namespace NTest{namespace NCommon
 		/** windowmenu_texture
 		*/
 		#if(BSYS_WINDOWMENU_ENABLE)
-		sharedptr<NCommon::Common_WindowMenu_Texture> windowmenu_texture;
+		sharedptr<NCommon::WindowMenu_Texture> windowmenu_texture;
 		#endif
 
 		/** windowmenu_log
 		*/
 		#if(BSYS_WINDOWMENU_ENABLE)
-		sharedptr<NCommon::Common_WindowMenu_Log> windowmenu_log;
+		sharedptr<NCommon::WindowMenu_Log> windowmenu_log;
 		#endif
 
 		/** 初期化ステップ。

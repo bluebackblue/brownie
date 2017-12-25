@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ©“®ƒeƒXƒgB
+ * @brief è‡ªå‹•ãƒ†ã‚¹ãƒˆã€‚
 */
 
 
@@ -17,7 +17,7 @@
 /** NTest
 */
 #if(DEF_TEST_AUTO)
-namespace NTest
+namespace NTest{namespace NCommon
 {
 	/** AutoTest
 	*/
@@ -85,13 +85,13 @@ namespace NTest
 
 	public:
 
-		/** XVB
+		/** æ›´æ–°ã€‚
 		*/
 		void Update();
 
 	};
 
 
-}
+}}
 #endif
 

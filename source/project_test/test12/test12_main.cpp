@@ -52,7 +52,7 @@ namespace NTest
 
 		/** windowmenu_texture
 		*/
-		sharedptr<NCommon::Common_WindowMenu_Texture> windowmenu_texture;
+		sharedptr<NCommon::WindowMenu_Texture> windowmenu_texture;
 
 		/**
 		*/
@@ -409,11 +409,11 @@ namespace NTest
 
 			if(this->step == 0){
 				//テクスチャ。
-				this->windowmenu_texture.reset(new NCommon::Common_WindowMenu_Texture(150.0f,150.0f,this->d3d11));
+				this->windowmenu_texture.reset(new NCommon::WindowMenu_Texture(150.0f,150.0f,this->d3d11));
 				NBsys::NWindowMenu::GetSystemInstance()->Add(this->windowmenu_texture);
 
 				//ログ。
-				this->windowmenu_log.reset(new NCommon::Common_WindowMenu_Log(200.0f,200.0f));
+				this->windowmenu_log.reset(new NCommon::WindowMenu_Log(200.0f,200.0f));
 				NBsys::NWindowMenu::GetSystemInstance()->Add(this->windowmenu_log);
 
 				this->step++;

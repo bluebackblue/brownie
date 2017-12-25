@@ -36,9 +36,9 @@ namespace NTest{namespace NCommon
 {
 	/** constructor
 	*/
-	Common_WindowMenu_Log::Common_WindowMenu_Log(f32 a_offset_x,f32 a_offset_y)
+	WindowMenu_Log::WindowMenu_Log(f32 a_offset_x,f32 a_offset_y)
 		:
-		NBsys::NWindowMenu::WindowMenu_Window_Base(),
+		NBsys::NWindowMenu::WindowMenu_Window_Base("WindowMenu_Log"),
 		endrequest(false),
 		//window_logtext
 		debuglog_counter(-1)
@@ -115,14 +115,14 @@ namespace NTest{namespace NCommon
 
 	/** destructor
 	*/
-	Common_WindowMenu_Log::~Common_WindowMenu_Log()
+	WindowMenu_Log::~WindowMenu_Log()
 	{
 	}
 
 
 	/** 削除リクエスト。取得。
 	*/
-	bool Common_WindowMenu_Log::CallBack_GetDeleteRequest()
+	bool WindowMenu_Log::CallBack_GetDeleteRequest()
 	{
 		return this->endrequest;
 	}
@@ -130,7 +130,7 @@ namespace NTest{namespace NCommon
 
 	/** 削除リクエスト。設定。
 	*/
-	void Common_WindowMenu_Log::CallBack_SetDeleteRequest()
+	void WindowMenu_Log::CallBack_SetDeleteRequest()
 	{
 		this->endrequest = true;
 	}
@@ -138,7 +138,7 @@ namespace NTest{namespace NCommon
 
 	/** 更新処理。
 	*/
-	void Common_WindowMenu_Log::CallBack_Update()
+	void WindowMenu_Log::CallBack_Update()
 	{
 		if(this->debuglog_counter != NCommon::GetDebugLogCounter()){
 			this->debuglog_counter = NCommon::GetDebugLogCounter();

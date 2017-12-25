@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2016 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ©“®ƒeƒXƒgB
+ * @brief è‡ªå‹•ãƒ†ã‚¹ãƒˆã€‚
 */
 
 
@@ -16,13 +16,13 @@
 
 /** include
 */
-#include "./autotest.h"
+#include "./common_autotest.h"
 
 
 /** NTest
 */
 #if(DEF_TEST_AUTO)
-namespace NTest
+namespace NTest{namespace NCommon
 {
 	/** constructor
 	*/
@@ -56,12 +56,12 @@ namespace NTest
 	}
 
 
-	/** XVB
+	/** æ›´æ–°ã€‚
 	*/
 	void AutoTest::Update()
 	{
 		if(this->capture_step == 0){
-			//ƒXƒNƒŠ[ƒ“ƒVƒ‡ƒbƒgB
+			//ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã‚·ãƒ§ãƒƒãƒˆã€‚
 
 			#if(BSYS_TEXTURE_ENABLE)
 			this->capture_texture = this->d3d11->Render_ScreenShot();
@@ -69,7 +69,7 @@ namespace NTest
 
 			this->capture_step++;
 		}else if(this->capture_step == 1){
-			//‚i‚o‚fƒGƒ“ƒR[ƒhB
+			//ï¼ªï¼°ï¼§ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã€‚
 
 			std::tuple<sharedptr<u8>,s32> t_jpg_data;
 			#if(BSYS_TEXTURE_ENABLE)
@@ -80,14 +80,14 @@ namespace NTest
 
 			this->capture_step++;
 		}else if(this->capture_step == 2){
-			//‘—MƒŠƒNƒGƒXƒgB
+			//é€ä¿¡ãƒªã‚¯ã‚¨ã‚¹ãƒˆã€‚
 
 			this->capture_step = -1;
 			this->send_step = 0;
 		}
 
 		if(this->send_step == 0){
-			//’ÊMŠJnB
+			//é€šä¿¡é–‹å§‹ã€‚
 
 			#if(BSYS_HTTP_ENABLE)
 			this->send_http.reset(new NBsys::NHttp::Http());
@@ -125,7 +125,7 @@ namespace NTest
 
 			this->send_step++;
 		}else if(this->send_step == 1){
-			//’ÊM’†B
+			//é€šä¿¡ä¸­ã€‚
 
 			#if(BSYS_HTTP_ENABLE)
 			 bool t_ret = this->send_http->ConnectUpdate();
@@ -135,9 +135,9 @@ namespace NTest
 				s32 t_recv_size = this->send_recvbuffer->GetUseSize();
 
 				if(this->send_http->IsRecvHeader()){
-					//ƒwƒbƒ_[“Ç‚İ‚İÏ‚İB
+					//ãƒ˜ãƒƒãƒ€ãƒ¼èª­ã¿è¾¼ã¿æ¸ˆã¿ã€‚
 
-					//ƒŠƒ“ƒOƒoƒbƒtƒ@‚©‚çƒf[ƒ^‚ğæ“¾‚µ‚½‚±‚Æ‚É‚·‚éB
+					//ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã‹ã‚‰ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã—ãŸã“ã¨ã«ã™ã‚‹ã€‚
 					this->send_recvbuffer->AddFree(this->send_recvbuffer->GetUseSize());
 				}
 			}else{
@@ -152,7 +152,7 @@ namespace NTest
 			#endif
 
 		}else if(this->send_step == 2){
-			//I—¹B
+			//çµ‚äº†ã€‚
 
 			this->action_end = true;
 			this->send_step = -1;
@@ -160,6 +160,6 @@ namespace NTest
 	}
 
 
-}
+}}
 #endif
 

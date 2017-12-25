@@ -19,9 +19,9 @@
 #if(BSYS_WINDOWMENU_ENABLE)
 namespace NTest{namespace NCommon
 {
-	/** Common_WindowMenu_Texture
+	/** WindowMenu_Texture
 	*/
-	class Common_WindowMenu_Texture : public NBsys::NWindowMenu::WindowMenu_Window_Base
+	class WindowMenu_Texture : public NBsys::NWindowMenu::WindowMenu_Window_Base
 	{
 	private:
 
@@ -41,11 +41,11 @@ namespace NTest{namespace NCommon
 
 		/** constructor
 		*/
-		Common_WindowMenu_Texture(f32 a_offset_x,f32 a_offset_y,sharedptr<NBsys::ND3d11::D3d11>& a_d3d11);
+		WindowMenu_Texture(f32 a_offset_x,f32 a_offset_y,sharedptr<NBsys::ND3d11::D3d11>& a_d3d11);
 
 		/** destructor
 		*/
-		virtual ~Common_WindowMenu_Texture();
+		virtual ~WindowMenu_Texture();
 
 	public:
 

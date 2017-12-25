@@ -157,9 +157,6 @@ bool Blib_DebugLog_Callback(const NBlib::wchar* a_tag,const NBlib::wchar* a_wstr
 #endif
 
 
-
-
-
 #if defined(new)
 #undef new
 #endif
