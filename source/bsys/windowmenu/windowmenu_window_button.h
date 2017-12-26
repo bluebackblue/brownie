@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
- * https://github.com/bluebackblue/brownie/blob/master/LICENSE
+ * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒfƒoƒbƒOƒƒjƒ…[B
+ * @brief ãƒ‡ãƒãƒƒã‚°ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã€‚
 */
 
 
@@ -25,7 +25,7 @@
 #if(BSYS_WINDOWMENU_ENABLE)
 namespace NBsys{namespace NWindowMenu
 {
-	/** ƒ{ƒ^ƒ“B
+	/** ãƒœã‚¿ãƒ³ã€‚
 	*/
 	class WindowMenu_Window_Button : public WindowMenu_Window_Base
 	{
@@ -67,15 +67,15 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		void Initialize(const WindowMenu_Window_Base::InitItem& a_inititem);
 
-		/** ƒ}ƒEƒXˆ—B
+		/** ãƒã‚¦ã‚¹å‡¦ç†ã€‚
 		*/
 		virtual bool CallBack_InRangeMouseUpdate(WindowMenu_Mouse& a_mouse);
 
-		/** XVˆ—B
+		/** æ›´æ–°å‡¦ç†ã€‚
 		*/
 		virtual void CallBack_Update();
 
-		/** •`‰æˆ—B
+		/** æç”»å‡¦ç†ã€‚
 		*/
 		virtual bool CallBack_Draw(s32 a_z_sort);
 

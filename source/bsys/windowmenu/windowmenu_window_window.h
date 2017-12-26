@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
- * https://github.com/bluebackblue/brownie/blob/master/LICENSE
+ * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒfƒoƒbƒOƒƒjƒ…[B
+ * @brief ãƒ‡ãƒãƒƒã‚°ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã€‚
 */
 
 
@@ -25,7 +25,7 @@
 #if(BSYS_WINDOWMENU_ENABLE)
 namespace NBsys{namespace NWindowMenu
 {
-	/** ƒEƒBƒ“ƒhƒEB
+	/** ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã€‚
 	*/
 	class WindowMenu_Window_Window : public WindowMenu_Window_Base
 	{
@@ -40,23 +40,23 @@ namespace NBsys{namespace NWindowMenu
 		NBsys::NColor::Color_F color_title_bg_normal;
 		NBsys::NColor::Color_F color_title_bg_active;
 
-		/** ƒ^ƒCƒgƒ‹ƒhƒ‰ƒbƒOB
+		/** ã‚¿ã‚¤ãƒˆãƒ«ãƒ‰ãƒ©ãƒƒã‚°ã€‚
 		*/
 		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Drag> window_title_drag;
 
-		/** ƒ^ƒCƒgƒ‹ƒhƒ‰ƒbƒO -> ƒ^ƒCƒgƒ‹”wŒiB
+		/** ã‚¿ã‚¤ãƒˆãƒ«ãƒ‰ãƒ©ãƒƒã‚° -> ã‚¿ã‚¤ãƒˆãƒ«èƒŒæ™¯ã€‚
 		*/
 		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Plate> window_title_bg;
 
-		/** ƒ^ƒCƒgƒ‹ƒhƒ‰ƒbƒO -> ƒ^ƒCƒgƒ‹”wŒi -> ƒ^ƒCƒgƒ‹ƒGƒŠƒAB
+		/** ã‚¿ã‚¤ãƒˆãƒ«ãƒ‰ãƒ©ãƒƒã‚° -> ã‚¿ã‚¤ãƒˆãƒ«èƒŒæ™¯ -> ã‚¿ã‚¤ãƒˆãƒ«ã‚¨ãƒªã‚¢ã€‚
 		*/
 		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Area> window_title_area;
 
-		/** ƒ^ƒCƒgƒ‹ƒhƒ‰ƒbƒO -> ƒ^ƒCƒgƒ‹”wŒi -> ƒ^ƒCƒgƒ‹ƒGƒŠƒA -> ƒ^ƒCƒgƒ‹ƒeƒLƒXƒgB
+		/** ã‚¿ã‚¤ãƒˆãƒ«ãƒ‰ãƒ©ãƒƒã‚° -> ã‚¿ã‚¤ãƒˆãƒ«èƒŒæ™¯ -> ã‚¿ã‚¤ãƒˆãƒ«ã‚¨ãƒªã‚¢ -> ã‚¿ã‚¤ãƒˆãƒ«ãƒ†ã‚­ã‚¹ãƒˆã€‚
 		*/
 		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Text> window_title_text;
 
-		/** ƒ^ƒCƒgƒ‹ƒhƒ‰ƒbƒO -> ƒ^ƒCƒgƒ‹”wŒi -> ƒ^ƒCƒgƒ‹ƒGƒŠƒA -> ƒ^ƒCƒgƒ‹•Â‚¶‚éƒ{ƒ^ƒ“B
+		/** ã‚¿ã‚¤ãƒˆãƒ«ãƒ‰ãƒ©ãƒƒã‚° -> ã‚¿ã‚¤ãƒˆãƒ«èƒŒæ™¯ -> ã‚¿ã‚¤ãƒˆãƒ«ã‚¨ãƒªã‚¢ -> ã‚¿ã‚¤ãƒˆãƒ«é–‰ã˜ã‚‹ãƒœã‚¿ãƒ³ã€‚
 		*/
 		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_CloseButton> window_title_closebutton;
 
@@ -74,15 +74,15 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		void Initialize(const WindowMenu_Window_Base::InitItem& a_inititem);
 
-		/** ƒAƒNƒeƒBƒu•ÏXB
+		/** ã‚¢ã‚¯ãƒ†ã‚£ãƒ–å¤‰æ›´ã€‚
 		*/
 		virtual void CallBack_ChangeActive(bool a_active);
 
-		/** ƒ^ƒCƒgƒ‹‚Ì‚‚³İ’èB
+		/** ã‚¿ã‚¤ãƒˆãƒ«ã®é«˜ã•è¨­å®šã€‚
 		*/
 		void SetTitleHeight(f32 a_h);
 
-		/** ƒ^ƒCƒgƒ‹”wŒi‚ÌFİ’èB
+		/** ã‚¿ã‚¤ãƒˆãƒ«èƒŒæ™¯ã®è‰²è¨­å®šã€‚
 		*/
 		void SetTitleBgColor(const NBsys::NColor::Color_F& a_color_normal,const NBsys::NColor::Color_F& a_active);
 

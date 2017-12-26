@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
 * Copyright (c) 2017 blueback
 * Released under the MIT License
-* https://github.com/bluebackblue/brownie/blob/master/LICENSE
+* https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
 * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
-* @brief ƒEƒBƒ“ƒhƒEB
+* @brief ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã€‚
 */
 
 
@@ -38,7 +38,7 @@ namespace NBsys{namespace NWinsock
 	*/
 	sharedptr<Winsock_Impl> s_instance;
 
-	/** ƒVƒXƒeƒ€‚ÌŠJnB
+	/** ã‚·ã‚¹ãƒ†ãƒ ã®é–‹å§‹ã€‚
 	*/
 	void StartSystem()
 	{
@@ -49,7 +49,7 @@ namespace NBsys{namespace NWinsock
 		}
 	}
 
-	/** ƒVƒXƒeƒ€‚ÌI—¹B
+	/** ã‚·ã‚¹ãƒ†ãƒ ã®çµ‚äº†ã€‚
 	*/
 	void EndSystem()
 	{

@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
- * https://github.com/bluebackblue/brownie/blob/master/LICENSE
+ * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒfƒoƒbƒOƒƒjƒ…[B
+ * @brief ãƒ‡ãƒãƒƒã‚°ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã€‚
 */
 
 
@@ -30,28 +30,28 @@ namespace NBsys{namespace NWindowMenu
 	{
 		enum Id
 		{
-			//ƒJƒXƒ^ƒ€B
+			//ã‚«ã‚¹ã‚¿ãƒ ã€‚
 			Custom,
 
-			//ƒGƒŠƒAB
+			//ã‚¨ãƒªã‚¢ã€‚
 			Area,
 
-			//ƒ{ƒ^ƒ“B
+			//ãƒœã‚¿ãƒ³ã€‚
 			Button,
 
-			//•Â‚¶‚éƒ{ƒ^ƒ“B
+			//é–‰ã˜ã‚‹ãƒœã‚¿ãƒ³ã€‚
 			CloseButton,
 
-			//ƒhƒ‰ƒbƒOB
+			//ãƒ‰ãƒ©ãƒƒã‚°ã€‚
 			Drag,
 
-			//ƒvƒŒ[ƒgB
+			//ãƒ—ãƒ¬ãƒ¼ãƒˆã€‚
 			Plate,
 
-			//ƒeƒLƒXƒgB
+			//ãƒ†ã‚­ã‚¹ãƒˆã€‚
 			Text,
 
-			//ƒEƒBƒ“ƒhƒEB
+			//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã€‚
 			Window,
 		};
 	};
@@ -63,13 +63,13 @@ namespace NBsys{namespace NWindowMenu
 	{
 		enum Id
 		{
-			//©—R”z’uB
+			//è‡ªç”±é…ç½®ã€‚
 			Free,
 
-			//cB
+			//ç¸¦ã€‚
 			Vertical,
 
-			//‰¡B
+			//æ¨ªã€‚
 			Horizontal,
 		};
 	};
@@ -81,19 +81,19 @@ namespace NBsys{namespace NWindowMenu
 	{
 		enum Id
 		{
-			//ŒÅ’èƒTƒCƒYB
+			//å›ºå®šã‚µã‚¤ã‚ºã€‚
 			Fix,
 
-			//e‚ÌƒTƒCƒY‚É‡‚í‚¹‚éB
+			//è¦ªã®ã‚µã‚¤ã‚ºã«åˆã‚ã›ã‚‹ã€‚
 			StretchParent,
 
-			//q‚ÌƒTƒCƒY‚É‡‚í‚¹‚éB
+			//å­ã®ã‚µã‚¤ã‚ºã«åˆã‚ã›ã‚‹ã€‚
 			StretchChild
 		};
 	};
 
 
-	/** ƒIƒtƒZƒbƒgB
+	/** ã‚ªãƒ•ã‚»ãƒƒãƒˆã€‚
 	*/
 	struct WindowMenu_Offset
 	{
@@ -139,7 +139,7 @@ namespace NBsys{namespace NWindowMenu
 	};
 
 
-	/** ƒTƒCƒYB
+	/** ã‚µã‚¤ã‚ºã€‚
 	*/
 	struct WindowMenu_Size
 	{

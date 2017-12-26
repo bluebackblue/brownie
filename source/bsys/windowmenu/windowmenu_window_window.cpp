@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
- * https://github.com/bluebackblue/brownie/blob/master/LICENSE
+ * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒfƒoƒbƒOƒƒjƒ…[B
+ * @brief ãƒ‡ãƒãƒƒã‚°ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã€‚
 */
 
 
@@ -44,19 +44,19 @@ namespace NBsys{namespace NWindowMenu
 		color_title_bg_normal(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f)),
 		color_title_bg_active(NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f))
 	{
-		//ƒ^ƒCƒgƒ‹ƒhƒ‰ƒbƒOB
+		//ã‚¿ã‚¤ãƒˆãƒ«ãƒ‰ãƒ©ãƒƒã‚°ã€‚
 		this->window_title_drag = this->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Drag>("title_drag");
 
-		//ƒ^ƒCƒgƒ‹ƒhƒ‰ƒbƒO -> ƒ^ƒCƒgƒ‹”wŒiB
+		//ã‚¿ã‚¤ãƒˆãƒ«ãƒ‰ãƒ©ãƒƒã‚° -> ã‚¿ã‚¤ãƒˆãƒ«èƒŒæ™¯ã€‚
 		this->window_title_bg = this->window_title_drag->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Plate>("title_bg");
 
-		//ƒ^ƒCƒgƒ‹ƒhƒ‰ƒbƒO -> ƒ^ƒCƒgƒ‹”wŒi -> ƒ^ƒCƒgƒ‹ƒGƒŠƒAB
+		//ã‚¿ã‚¤ãƒˆãƒ«ãƒ‰ãƒ©ãƒƒã‚° -> ã‚¿ã‚¤ãƒˆãƒ«èƒŒæ™¯ -> ã‚¿ã‚¤ãƒˆãƒ«ã‚¨ãƒªã‚¢ã€‚
 		this->window_title_area = this->window_title_bg->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Area>("title_area");
 
-		//ƒ^ƒCƒgƒ‹ƒhƒ‰ƒbƒO -> ƒ^ƒCƒgƒ‹”wŒi -> ƒ^ƒCƒgƒ‹ƒGƒŠƒA -> ƒ^ƒCƒgƒ‹ƒeƒLƒXƒgB
+		//ã‚¿ã‚¤ãƒˆãƒ«ãƒ‰ãƒ©ãƒƒã‚° -> ã‚¿ã‚¤ãƒˆãƒ«èƒŒæ™¯ -> ã‚¿ã‚¤ãƒˆãƒ«ã‚¨ãƒªã‚¢ -> ã‚¿ã‚¤ãƒˆãƒ«ãƒ†ã‚­ã‚¹ãƒˆã€‚
 		this->window_title_text = this->window_title_area->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Text>("title_text");
 
-		//ƒ^ƒCƒgƒ‹ƒhƒ‰ƒbƒO -> ƒ^ƒCƒgƒ‹”wŒi -> ƒ^ƒCƒgƒ‹ƒGƒŠƒA -> ƒ^ƒCƒgƒ‹•Â‚¶‚éƒ{ƒ^ƒ“B
+		//ã‚¿ã‚¤ãƒˆãƒ«ãƒ‰ãƒ©ãƒƒã‚° -> ã‚¿ã‚¤ãƒˆãƒ«èƒŒæ™¯ -> ã‚¿ã‚¤ãƒˆãƒ«ã‚¨ãƒªã‚¢ -> ã‚¿ã‚¤ãƒˆãƒ«é–‰ã˜ã‚‹ãƒœã‚¿ãƒ³ã€‚
 		this->window_title_closebutton = this->window_title_area->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_CloseButton>("title_closebutton");
 	}
 
@@ -79,19 +79,19 @@ namespace NBsys{namespace NWindowMenu
 			this->color_title_bg_normal = NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f);
 			this->color_title_bg_active = NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f);
 
-			//ƒ^ƒCƒgƒ‹ƒhƒ‰ƒbƒOB
+			//ã‚¿ã‚¤ãƒˆãƒ«ãƒ‰ãƒ©ãƒƒã‚°ã€‚
 			{
 				NBsys::NWindowMenu::WindowMenu_Window_Drag::InitItem t_inititem;
-				t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//‰¡Ï‚İB
+				t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//æ¨ªç©ã¿ã€‚
 				t_inititem.size.SetW_StretchParent();
 				t_inititem.size.SetH(0.0f);
 				this->window_title_drag->Initialize(t_inititem);
 			}
 
-			//ƒ^ƒCƒgƒ‹ƒhƒ‰ƒbƒO -> ƒ^ƒCƒgƒ‹”wŒiB
+			//ã‚¿ã‚¤ãƒˆãƒ«ãƒ‰ãƒ©ãƒƒã‚° -> ã‚¿ã‚¤ãƒˆãƒ«èƒŒæ™¯ã€‚
 			{
 				NBsys::NWindowMenu::WindowMenu_Window_Plate::InitItem t_inititem;
-				t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//‰¡Ï‚İB
+				t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//æ¨ªç©ã¿ã€‚
 				{
 				}
 				this->window_title_bg->Initialize(t_inititem);
@@ -102,27 +102,27 @@ namespace NBsys{namespace NWindowMenu
 				}
 			}
 
-			//ƒ^ƒCƒgƒ‹ƒhƒ‰ƒbƒO -> ƒ^ƒCƒgƒ‹”wŒi -> ƒ^ƒCƒgƒ‹ƒGƒŠƒAB
+			//ã‚¿ã‚¤ãƒˆãƒ«ãƒ‰ãƒ©ãƒƒã‚° -> ã‚¿ã‚¤ãƒˆãƒ«èƒŒæ™¯ -> ã‚¿ã‚¤ãƒˆãƒ«ã‚¨ãƒªã‚¢ã€‚
 			{
 				NBsys::NWindowMenu::WindowMenu_Window_Area::InitItem t_inititem;
-				t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//‰¡Ï‚İB
+				t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//æ¨ªç©ã¿ã€‚
 				this->window_title_area->Initialize(t_inititem);
 			}
 
-			//ƒ^ƒCƒgƒ‹ƒhƒ‰ƒbƒO -> ƒ^ƒCƒgƒ‹”wŒi -> ƒ^ƒCƒgƒ‹ƒGƒŠƒA -> ƒ^ƒCƒgƒ‹ƒeƒLƒXƒgB
+			//ã‚¿ã‚¤ãƒˆãƒ«ãƒ‰ãƒ©ãƒƒã‚° -> ã‚¿ã‚¤ãƒˆãƒ«èƒŒæ™¯ -> ã‚¿ã‚¤ãƒˆãƒ«ã‚¨ãƒªã‚¢ -> ã‚¿ã‚¤ãƒˆãƒ«ãƒ†ã‚­ã‚¹ãƒˆã€‚
 			{
 				NBsys::NWindowMenu::WindowMenu_Window_Text::InitItem t_inititem;
-				t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//‰¡Ï‚İB
+				t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//æ¨ªç©ã¿ã€‚
 				this->window_title_text->Initialize(t_inititem);
 				{
 					this->window_title_text->string = L"";
 				}
 			}
 
-			//ƒ^ƒCƒgƒ‹ƒhƒ‰ƒbƒO -> ƒ^ƒCƒgƒ‹”wŒi -> ƒ^ƒCƒgƒ‹ƒGƒŠƒA -> ƒ^ƒCƒgƒ‹•Â‚¶‚éƒ{ƒ^ƒ“B
+			//ã‚¿ã‚¤ãƒˆãƒ«ãƒ‰ãƒ©ãƒƒã‚° -> ã‚¿ã‚¤ãƒˆãƒ«èƒŒæ™¯ -> ã‚¿ã‚¤ãƒˆãƒ«ã‚¨ãƒªã‚¢ -> ã‚¿ã‚¤ãƒˆãƒ«é–‰ã˜ã‚‹ãƒœã‚¿ãƒ³ã€‚
 			{
 				NBsys::NWindowMenu::WindowMenu_Window_CloseButton::InitItem t_inititem;
-				t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//‰¡Ï‚İB
+				t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//æ¨ªç©ã¿ã€‚
 				t_inititem.size.SetW(0.0f);
 				t_inititem.size.SetH(0.0f);
 				this->window_title_closebutton->Initialize(t_inititem);
@@ -131,7 +131,7 @@ namespace NBsys{namespace NWindowMenu
 	}
 
 
-	/** ƒAƒNƒeƒBƒu•ÏXB
+	/** ã‚¢ã‚¯ãƒ†ã‚£ãƒ–å¤‰æ›´ã€‚
 	*/
 	void WindowMenu_Window_Window::CallBack_ChangeActive(bool a_active)
 	{
@@ -144,7 +144,7 @@ namespace NBsys{namespace NWindowMenu
 	}
 
 
-	/** ƒ^ƒCƒgƒ‹‚Ì‚‚³İ’èB
+	/** ã‚¿ã‚¤ãƒˆãƒ«ã®é«˜ã•è¨­å®šã€‚
 	*/
 	void WindowMenu_Window_Window::SetTitleHeight(f32 a_h)
 	{
@@ -155,7 +155,7 @@ namespace NBsys{namespace NWindowMenu
 	}
 
 
-	/** ƒ^ƒCƒgƒ‹”wŒi‚ÌFİ’èB
+	/** ã‚¿ã‚¤ãƒˆãƒ«èƒŒæ™¯ã®è‰²è¨­å®šã€‚
 	*/
 	void WindowMenu_Window_Window::SetTitleBgColor(const NBsys::NColor::Color_F& a_color_normal,const NBsys::NColor::Color_F& a_active)
 	{

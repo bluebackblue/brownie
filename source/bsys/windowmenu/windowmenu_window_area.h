@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
- * https://github.com/bluebackblue/brownie/blob/master/LICENSE
+ * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒfƒoƒbƒOƒƒjƒ…[B
+ * @brief ãƒ‡ãƒãƒƒã‚°ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã€‚
 */
 
 
@@ -25,7 +25,7 @@
 #if(BSYS_WINDOWMENU_ENABLE)
 namespace NBsys{namespace NWindowMenu
 {
-	/** ƒvƒŒ[ƒgB
+	/** ãƒ—ãƒ¬ãƒ¼ãƒˆã€‚
 	*/
 	class WindowMenu_Window_Area : public WindowMenu_Window_Base
 	{

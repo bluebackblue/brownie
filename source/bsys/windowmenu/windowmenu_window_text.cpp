@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
- * https://github.com/bluebackblue/brownie/blob/master/LICENSE
+ * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒfƒoƒbƒOƒƒjƒ…[B
+ * @brief ãƒ‡ãƒãƒƒã‚°ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã€‚
 */
 
 
@@ -73,7 +73,7 @@ namespace NBsys{namespace NWindowMenu
 	}
 
 
-	/** •`‰æˆ—B
+	/** æç”»å‡¦ç†ã€‚
 	*/
 	bool WindowMenu_Window_Text::CallBack_Draw(s32 a_z_sort)
 	{
@@ -101,7 +101,7 @@ namespace NBsys{namespace NWindowMenu
 			}
 		}
 
-		//q‚Ì•`‰æ‚ğs‚¤B
+		//å­ã®æç”»ã‚’è¡Œã†ã€‚
 		return true;
 	}
 

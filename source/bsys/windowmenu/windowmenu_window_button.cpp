@@ -1,11 +1,11 @@
-
+ï»¿
 
 /**
  * Copyright (c) 2017 blueback
  * Released under the MIT License
- * https://github.com/bluebackblue/brownie/blob/master/LICENSE
+ * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
- * @brief ƒfƒoƒbƒOƒƒjƒ…[B
+ * @brief ãƒ‡ãƒãƒƒã‚°ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã€‚
 */
 
 
@@ -84,24 +84,24 @@ namespace NBsys{namespace NWindowMenu
 	}
 
 
-	/** ƒ}ƒEƒXˆ—B
+	/** ãƒã‚¦ã‚¹å‡¦ç†ã€‚
 	*/
 	bool WindowMenu_Window_Button::CallBack_InRangeMouseUpdate(WindowMenu_Mouse& a_mouse)
 	{
 		if(a_mouse.down_l){
-			//ƒvƒbƒVƒ…ŠJnB
+			//ãƒ—ãƒƒã‚·ãƒ¥é–‹å§‹ã€‚
 			this->push_flag = true;
 		}
 
-		//ƒ}ƒEƒX‚ªƒ{ƒ^ƒ“‚ÌãB
+		//ãƒã‚¦ã‚¹ãŒãƒœã‚¿ãƒ³ã®ä¸Šã€‚
 		this->on_flag = true;
 
-		//ƒ}ƒEƒX‘€ì‚ğe‚É“`‚¦‚È‚¢B
+		//ãƒã‚¦ã‚¹æ“ä½œã‚’è¦ªã«ä¼ãˆãªã„ã€‚
 		return true;
 	}
 
 
-	/** XVˆ—B
+	/** æ›´æ–°å‡¦ç†ã€‚
 	*/
 	void WindowMenu_Window_Button::CallBack_Update()
 	{
@@ -110,12 +110,12 @@ namespace NBsys{namespace NWindowMenu
 			if(t_mouse.up_l){
 				this->push_flag = false;
 				if(this->IsRange(t_mouse.x,t_mouse.y)){
-					//ƒvƒbƒVƒ…Šm’èB
+					//ãƒ—ãƒƒã‚·ãƒ¥ç¢ºå®šã€‚
 					if(this->action){
 						this->action();
 					}
 				}else{
-					//ƒvƒbƒVƒ…ƒLƒƒƒ“ƒZƒ‹B
+					//ãƒ—ãƒƒã‚·ãƒ¥ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã€‚
 				}
 			}
 		}
@@ -123,13 +123,13 @@ namespace NBsys{namespace NWindowMenu
 		if(this->on_flag == true){
 			WindowMenu_Mouse& t_mouse = GetSystemInstance()->GetMouse();
 
-			//ƒ}ƒEƒX‚ªƒ{ƒ^ƒ“‚ÌãB
+			//ãƒã‚¦ã‚¹ãŒãƒœã‚¿ãƒ³ã®ä¸Šã€‚
 			this->on_flag = this->IsRange(t_mouse.x,t_mouse.y);
 		}
 	}
 
 
-	/** •`‰æˆ—B
+	/** æç”»å‡¦ç†ã€‚
 	*/
 	bool WindowMenu_Window_Button::CallBack_Draw(s32 a_z_sort)
 	{
