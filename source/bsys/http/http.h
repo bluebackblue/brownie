@@ -160,6 +160,10 @@ namespace NBsys{namespace NHttp
 
 	public:
 
+		/** IsError
+		*/
+		bool IsError();
+
 		/** IsRecvHeader
 		*/
 		bool IsRecvHeader();

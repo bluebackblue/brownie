@@ -177,6 +177,14 @@ namespace NBsys{namespace NHttp
 	}
 
 
+	/** IsError
+	*/
+	bool Http::IsError()
+	{
+		return this->iserror;
+	}
+
+
 	/** IsRecvHeader
 	*/
 	bool Http::IsRecvHeader()
@@ -271,6 +279,7 @@ namespace NBsys{namespace NHttp
 					//ループリクエスト。
 					t_loop = true;
 				}
+				this->iserror = this->recv->IsError();
 			}
 
 			switch(this->step){
