@@ -11,6 +11,11 @@
 
 /** include
 */
+#include "./version.h"
+
+
+/** include
+*/
 #include <brownie_config/brownie_config.h>
 
 

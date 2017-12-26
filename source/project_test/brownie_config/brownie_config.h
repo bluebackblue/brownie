@@ -16,18 +16,6 @@
 
 /*
 	-------------------
-	version
-	
-		バージョンを制御します。
-	-------------------
-*/
-#define BROWNIE_VERSION_A								(1)
-#define BROWNIE_VERSION_B								(0)
-#define BROWNIE_VERSION_C								(1)
-#define BROWNIE_VERSION_STRING							"Brownie 1.0.1"
-
-/*
-	-------------------
 	std atomic
 
 		std::atomicを制御します。
@@ -542,7 +530,7 @@
 	-------------------
 */
 #if !defined(BSYS_ACTIONBATCHING_ENABLE)
-	#define BSYS_ACTIONBATCHING_ENABLE						(1)
+	#define BSYS_ACTIONBATCHING_ENABLE						(0)
 #endif
 
 
@@ -561,7 +549,7 @@
 	-------------------
 */
 #if !defined(BSYS_COLOR_ENABLE)
-	#define BSYS_COLOR_ENABLE								(1)
+	#define BSYS_COLOR_ENABLE								(0)
 #endif
 
 
@@ -602,7 +590,7 @@
 
 */
 #if !defined(BSYS_FILE_ENABLE)
-	#define BSYS_FILE_ENABLE								(1)
+	#define BSYS_FILE_ENABLE								(0)
 #endif
 #if !defined(BSYS_FILE_PACK_ENABLE)
 	#define BSYS_FILE_PACK_ENABLE							(1)
@@ -630,7 +618,7 @@
 	-------------------
 */
 #if !defined(BSYS_VERTEX_ENABLE)
-	#define BSYS_VERTEX_ENABLE								(1)
+	#define BSYS_VERTEX_ENABLE								(0)
 #endif
 
 
@@ -740,7 +728,7 @@
 	-------------------
 */
 #if !defined(BSYS_GEOMETRY_ENABLE)
-	#define BSYS_GEOMETRY_ENABLE							(1)
+	#define BSYS_GEOMETRY_ENABLE							(0)
 #endif
 #if !defined(BSYS_GEOMETRY_MATRIX_SINCOSFAST_ENABLE)
 	#define BSYS_GEOMETRY_MATRIX_SINCOSFAST_ENABLE			(1)
@@ -844,7 +832,7 @@
 	#define BSYS_D3D11_ENABLE								(0)
 #endif
 #if !defined(BSYS_D3D11_DEBUG)
-	#define BSYS_D3D11_DEBUG								(1)
+	#define BSYS_D3D11_DEBUG								(0)
 #endif
 #if !defined(BSYS_D3D11_FONT_DRAWTYPEMAX_S)
 	#define BSYS_D3D11_FONT_DRAWTYPEMAX_S					(128)

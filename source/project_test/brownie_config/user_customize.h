@@ -55,92 +55,144 @@
 
 	#define DEF_TEST_STRING									L"10"
 
-	#define BSYS_HTTP_ENABLE								(1)
-	#define BSYS_WINSOCK_ENABLE								(1)
-	#define BSYS_TEXTURE_GDIPLUS_ENABLE						(1)
-	#define BSYS_TEXTURE_ENABLE								(1)
-
-
-	#define BSYS_WINDOW_ENABLE								(1)
 	#define BSYS_D3D11_ENABLE								(1)
+
+	#define BSYS_WINDOWMENU_ENABLE							(1)
 
 #elif(DEF_TEST_INDEX == 11)
 
 	#define DEF_TEST_STRING									L"11"
 
-	#define BSYS_HTTP_ENABLE								(1)
-	#define BSYS_WINSOCK_ENABLE								(1)
-	#define BSYS_TEXTURE_GDIPLUS_ENABLE						(1)
-	#define BSYS_TEXTURE_ENABLE								(1)
-
-
-	#define BSYS_WINDOW_ENABLE								(1)
 	#define BSYS_D3D11_ENABLE								(1)
-	#define BSYS_ROOTSEARCH_ENABLE							(1)
+
+	#define BSYS_WINDOWMENU_ENABLE							(1)
 
 #elif(DEF_TEST_INDEX == 12)
 
 	#define DEF_TEST_STRING									L"12"
 
-	#define BSYS_HTTP_ENABLE								(1)
-	#define BSYS_WINSOCK_ENABLE								(1)
-	#define BSYS_TEXTURE_GDIPLUS_ENABLE						(1)
-	#define BSYS_TEXTURE_ENABLE								(1)
-
-
-	#define BSYS_WINDOW_ENABLE								(1)
 	#define BSYS_D3D11_ENABLE								(1)
-	#define BSYS_FONT_ENABLE								(1)
-	#define BSYS_PAD_ENABLE									(1)
+	
+	#define BSYS_WINDOWMENU_ENABLE							(1)
+
 	#define BSYS_MMD_ENABLE									(1)
-	#define BSYS_WINDOWMENU_ENABLE							(1)
-	#define BLIB_DEBUGASSERT_CALLBACK_ENABLE				(1)
-	#define BLIB_DEBUGBREAK_CALLBACK_ENABLE					(1)
-	#define BLIB_DEBUGLOG_CALLBACK_ENABLE					(1)
-
-	#define BSYS_D3D11_FONT_DRAWTYPEMAX_S					(128)
-	#define BSYS_D3D11_FONT_DRAWTYPEMAX_M					(128)
-	#define BSYS_D3D11_FONT_DRAWTYPEMAX_L					(32)
-	#define BSYS_D3D11_FONT_DRAWTYPEMAX_EX					(16)
-
-#elif(DEF_TEST_INDEX == 13)
-
-	#define DEF_TEST_STRING									L"13"
-
-	#define BSYS_HTTP_ENABLE								(1)
-	#define BSYS_WINSOCK_ENABLE								(1)
-	#define BSYS_TEXTURE_GDIPLUS_ENABLE						(1)
-	#define BSYS_TEXTURE_ENABLE								(1)
-
-
-	#define BSYS_WINDOW_ENABLE								(1)
-	#define BSYS_D3D11_ENABLE								(1)
-	#define BSYS_FONT_ENABLE								(1)
-	#define BSYS_PAD_ENABLE									(1)
-	#define BSYS_WINDOWMENU_ENABLE							(1)
-	#define BLIB_DEBUGASSERT_CALLBACK_ENABLE				(1)
-	#define BLIB_DEBUGBREAK_CALLBACK_ENABLE					(1)
-	#define BLIB_DEBUGLOG_CALLBACK_ENABLE					(1)
-
-	#define BSYS_WINSOCK_ENABLE								(1)
-	#define BSYS_TEXTURE_GDIPLUS_ENABLE						(1)
 
 #elif(DEF_TEST_INDEX == 22)
 
 	#define DEF_TEST_STRING									L"22"
 
-	#define BSYS_HTTP_ENABLE								(1)
-	#define BSYS_WINSOCK_ENABLE								(1)
-	#define BSYS_TEXTURE_GDIPLUS_ENABLE						(1)
-	#define BSYS_TEXTURE_ENABLE								(1)
+	#define BSYS_D3D11_ENABLE								(1)
 
+	#define BSYS_WINDOWMENU_ENABLE							(1)
 
 	#define BSYS_MMD_ENABLE									(1)
-	#define BSYS_WINDOW_ENABLE								(1)
-	#define BSYS_D3D11_ENABLE								(1)
-	//#define BSYS_FOVEHMD_ENABLE							(1)
-	#define BSYS_TEXTURE_ENABLE								(1)
+
+#endif
+
+
+/** BSYS_WINDOWMENU_ENABLE
+*/
+#if(BSYS_WINDOWMENU_ENABLE)
+
+	#if !defined(BLIB_DEBUGASSERT_CALLBACK_ENABLE)
+	#define BLIB_DEBUGASSERT_CALLBACK_ENABLE				(1)
+	#endif
+
+	#if !defined(BLIB_DEBUGBREAK_CALLBACK_ENABLE)
+	#define BLIB_DEBUGBREAK_CALLBACK_ENABLE					(1)
+	#endif
+
+	#if !defined(BLIB_DEBUGLOG_CALLBACK_ENABLE)
+	#define BLIB_DEBUGLOG_CALLBACK_ENABLE					(1)
+	#endif
+
+	#if !defined(BSYS_PAD_ENABLE)
+	#define BSYS_PAD_ENABLE									(1)
+	#endif
+
+#endif
+
+/** BSYS_MMD_ENABLE
+*/
+#if(BSYS_MMD_ENABLE)
+
+	#if !defined(BSYS_TEXTURE_GDIPLUS_ENABLE)
+		#define BSYS_TEXTURE_GDIPLUS_ENABLE					(1)
+	#endif
+
+#endif
+
+
+/** DEF_TEST_AUTO
+*/
+#if(DEF_TEST_AUTO)
+
+	#if !defined(BSYS_HTTP_ENABLE)
+	#define BSYS_HTTP_ENABLE								(1)
+	#endif
+
+	#if !defined(BSYS_WINSOCK_ENABLE)
+	#define BSYS_WINSOCK_ENABLE								(1)
+	#endif
+
+	#if !defined(BSYS_TEXTURE_GDIPLUS_ENABLE)
 	#define BSYS_TEXTURE_GDIPLUS_ENABLE						(1)
+	#endif
+
+	#if !defined(BSYS_TEXTURE_ENABLE)
+	#define BSYS_TEXTURE_ENABLE								(1)
+	#endif
+
+	#if !defined(BLIB_DEBUGASSERT_CALLBACK_ENABLE)
+	#define BLIB_DEBUGASSERT_CALLBACK_ENABLE				(1)
+	#endif
+
+	#if !defined(BLIB_DEBUGBREAK_CALLBACK_ENABLE)
+	#define BLIB_DEBUGBREAK_CALLBACK_ENABLE					(1)
+	#endif
+
+	#if !defined(BLIB_DEBUGLOG_CALLBACK_ENABLE)
+	#define BLIB_DEBUGLOG_CALLBACK_ENABLE					(1)
+	#endif
+
+#endif
+
+
+/** BSYS_D3D11_ENABLE
+*/
+#if(BSYS_D3D11_ENABLE)
+
+	#if !defined(BSYS_GEOMETRY_ENABLE)
+	#define BSYS_GEOMETRY_ENABLE							(1)
+	#endif
+
+	#if !defined(BSYS_VERTEX_ENABLE)
+	#define BSYS_VERTEX_ENABLE								(1)
+	#endif
+
+	#if !defined(BSYS_COLOR_ENABLE)
+	#define BSYS_COLOR_ENABLE								(1)
+	#endif
+
+	#if !defined(BSYS_ACTIONBATCHING_ENABLE)
+	#define BSYS_ACTIONBATCHING_ENABLE						(1)
+	#endif
+
+	#if !defined(BSYS_FILE_ENABLE)
+	#define BSYS_FILE_ENABLE								(1)
+	#endif
+
+	#if !defined(BSYS_WINDOW_ENABLE)
+	#define BSYS_WINDOW_ENABLE								(1)
+	#endif
+
+	#if !defined(BSYS_TEXTURE_ENABLE)
+	#define BSYS_TEXTURE_ENABLE								(1)
+	#endif
+
+	#if !defined(BSYS_FONT_ENABLE)
+	#define BSYS_FONT_ENABLE								(1)
+	#endif
 
 #endif
 
