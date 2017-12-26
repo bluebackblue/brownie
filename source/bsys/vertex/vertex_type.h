@@ -238,7 +238,7 @@ namespace NBsys{namespace NVertex
 		template <typename T,bool EXIST> struct Vertex_SetPos_WW
 		{
 			static s32 GetOffset(){return 0;}
-			static void Set(T& a_vertex,f32 a_pos_ww){}
+			static void Set(T& /*a_vertex*/,f32 /*a_pos_ww*/){}
 		};
 
 
