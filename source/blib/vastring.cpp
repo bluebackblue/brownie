@@ -128,6 +128,7 @@ namespace NBlib
 		#else
 		{
 			ASSERT(0);
+			return nullptr;
 		}
 		#endif
 	}
