@@ -290,7 +290,7 @@ namespace NBlib
 				sockaddr_in t_sockaddr_in = {0};
 				{
 					t_sockaddr_in.sin_family = AF_INET;
-					t_sockaddr_in.sin_port = ::htons(a_port);
+					t_sockaddr_in.sin_port = ::htons(static_cast<USHORT>(a_port));
 					t_sockaddr_in.sin_addr.S_un.S_addr = INADDR_ANY;
 				}
 

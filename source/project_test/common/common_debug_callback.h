@@ -30,7 +30,9 @@ namespace NTest{namespace NCommon
 
 	/** GetDebugLogColor
 	*/
+	#if(BSYS_COLOR_ENABLE)
 	NBsys::NColor::Color_F& GetDebugLogColor(s32 a_index);
+	#endif
 
 
 	/** GetDebugLogCounter

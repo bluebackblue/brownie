@@ -252,6 +252,8 @@ namespace NBlib
 
 		/** 「￥＋文字」をシーケンス文字に変換。
 		*/
+		#pragma warning(push,4)
+		#pragma warning(disable:4702)
 		const char* ToSequenceString(const STLString& a_string,s32 a_index)
 		{
 			if((0 <= a_index) && (a_index < static_cast<s32>(a_string.length()))){
@@ -315,6 +317,7 @@ namespace NBlib
 
 			return nullptr;
 		}
+		#pragma warning(pop)
 
 
 		/** 文字のサイズ。
@@ -1823,6 +1826,8 @@ namespace NBlib
 
 	/** JsonStringへコンバート。
 	*/
+	#pragma warning(push)
+	#pragma warning(disable:4702)
 	const STLString JsonItem::ConvertJsonString() const
 	{
 		if(this->jsonstring != nullptr){
@@ -1952,7 +1957,7 @@ namespace NBlib
 
 		return "";
 	}
-	
+	#pragma warning(pop) 
 
 }
 #endif

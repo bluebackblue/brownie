@@ -66,7 +66,7 @@ namespace NBsys{namespace ND3d11
 
 		/** アクション中。
 		*/
-		virtual s32 Do(f32& a_delta,bool a_endrequest)
+		virtual s32 Do(f32& /*a_delta*/,bool a_endrequest)
 		{
 			if(a_endrequest == true){
 				//中断。

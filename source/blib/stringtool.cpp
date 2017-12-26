@@ -65,7 +65,7 @@ namespace NBlib
 				if(t_wchar != nullptr){
 					//変換。
 					t_wchar_use_len = ::MultiByteToWideChar(t_codepage,t_flags,t_char,t_char_len,t_wchar,t_alloca_size / sizeof(wchar));
-					if((t_wchar_use_len * sizeof(wchar)) == t_alloca_size){
+					if(static_cast<s32>(t_wchar_use_len * sizeof(wchar)) == t_alloca_size){
 						a_wstring = t_wchar;
 
 						FREEA(t_wchar);
@@ -110,7 +110,7 @@ namespace NBlib
 				if(t_char != nullptr){
 					//変換。
 					t_char_use_len = ::WideCharToMultiByte(t_codepage,t_flags,t_wchar,t_wchar_len,t_char,t_alloca_size,nullptr,nullptr);
-					if((t_char_use_len * sizeof(char)) == t_alloca_size){
+					if(static_cast<s32>(t_char_use_len * sizeof(char)) == t_alloca_size){
 						a_string = t_char;
 
 						FREEA(t_char);

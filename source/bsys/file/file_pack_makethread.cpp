@@ -49,8 +49,6 @@ namespace NBsys{namespace NFile
 	*/
 	void File_Pack_MakeThread::ThreadMain(ThreadArgument& a_threadargument)
 	{
-		bool t_request = false;
-
 		MemoryContainer t_memorycontainer(BSYS_FILE_MEMORYCONTAINER);
 
 		{

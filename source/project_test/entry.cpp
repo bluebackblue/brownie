@@ -74,6 +74,10 @@ int main(int a_argc,char** a_argv)
 		t_blib = NBlib::BootInitialize();
 	}
 
+	#if(BSYS_COMMANDLINE_ENABLE)
+	GetEntryParamReference().argument = NBsys::NCommandLine::ConvertToJsonItem(a_argc,a_argv);
+	#endif
+
 	#if(DEF_TEST_AUTO)
 	{
 		try{
@@ -111,9 +115,9 @@ int WINAPI WinMain(_In_ HINSTANCE a_hinstance,_In_opt_ HINSTANCE /*a_prev_hinsta
 		t_blib = NBlib::BootInitialize();
 	}
 
-	GetEntryParamReference().hinstance = a_hinstance;
-
 	main(__argc,__argv);
+
+	GetEntryParamReference().Reset();
 
 	return 0;
 }

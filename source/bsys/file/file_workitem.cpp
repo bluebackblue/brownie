@@ -238,7 +238,7 @@ namespace NBsys{namespace NFile
 						#if(BSYS_FILE_PACK_ENABLE)
 						this->data_size = this->pack_filehandle->GetSize();
 						#endif
-					}else if(Mode::Normal){
+					}else if(this->mode == Mode::Normal){
 						this->data_size = this->normal_filehandle.GetSize();
 					}
 

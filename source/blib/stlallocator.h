@@ -82,13 +82,13 @@ namespace NBlib
 
 		/** constructor
 		*/
-		STLAllocator(const STLAllocator& a_allocator)
+		STLAllocator(const STLAllocator& /*a_allocator*/)
 		{
 		}
 
 		/** constructor
 		*/
-		template<class T2> STLAllocator(const STLAllocator<T2>& a_allocator)
+		template<class T2> STLAllocator(const STLAllocator<T2>& /*a_allocator*/)
 		{
 		}
 
@@ -101,9 +101,8 @@ namespace NBlib
 
 		/** deallocate
 		*/
-		void deallocate(T* a_pointer,size_t a_count)
+		void deallocate(T* a_pointer,size_t /*a_count*/)
 		{
-			UNUSED(a_count);
 			STLAllocatorBase::Free(a_pointer);
 		}
 
@@ -135,13 +134,13 @@ namespace NBlib
 
 		/** constructor
 		*/
-		STLAllocator_String(const STLAllocator_String& a_allocator)
+		STLAllocator_String(const STLAllocator_String& /*a_allocator*/)
 		{
 		}
 
 		/** constructor
 		*/
-		template <class T2> STLAllocator_String(const STLAllocator_String<T2>& a_allocator)
+		template <class T2> STLAllocator_String(const STLAllocator_String<T2>& /*a_allocator*/)
 		{
 		}
 

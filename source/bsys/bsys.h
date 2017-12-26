@@ -127,3 +127,10 @@
 #include "./winsock/winsock.h"
 #endif
 
+
+/** include
+*/
+#if(BSYS_COMMANDLINE_ENABLE)
+#include "./commandline/commandline.h"
+#endif
+

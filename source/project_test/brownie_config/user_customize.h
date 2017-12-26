@@ -37,6 +37,8 @@
 
 	#define DEF_TEST_STRING									L"0"
 
+	#define BSYS_COMMANDLINE_ENABLE							(1)
+
 #elif(DEF_TEST_INDEX == 1)
 
 	#define DEF_TEST_STRING									L"1"

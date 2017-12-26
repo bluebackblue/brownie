@@ -23,7 +23,10 @@ namespace NTest{namespace NCommon
 	struct LogItem
 	{
 		wchar buffer[1024];
+
+		#if(BSYS_COLOR_ENABLE)
 		NBsys::NColor::Color_F color;
+		#endif
 	};
 
 
@@ -38,7 +41,11 @@ namespace NTest{namespace NCommon
 
 	/** AddDebugLog
 	*/
+	#if(BSYS_COLOR_ENABLE)
 	static void AddDebugLog(const wchar* a_wstring,const NBsys::NColor::Color_F& a_color)
+	#else
+	static void AddDebugLog(const wchar* a_wstring)
+	#endif
 	{
 		s32 t_length = Memory::StringLengthW(a_wstring,COUNTOF(LogItem::buffer) - 1);
 
@@ -51,7 +58,9 @@ namespace NTest{namespace NCommon
 				s_loglist[s_loglist_index].buffer[s_loglist_write_cur] = 0x0000;
 
 				//改行、終端のある文字の色を採用。
+				#if(BSYS_COLOR_ENABLE)
 				s_loglist[s_loglist_index].color = a_color;
+				#endif
 
 				//改行。
 				if(a_wstring[t_read_cur] == L'\n'){
@@ -68,7 +77,9 @@ namespace NTest{namespace NCommon
 
 					//次のカレントを初期化。
 					s_loglist[s_loglist_index].buffer[s_loglist_write_cur] = 0x0000;
+					#if(BSYS_COLOR_ENABLE)
 					s_loglist[s_loglist_index].color = a_color;
+					#endif
 				}
 
 				if(a_wstring[t_read_cur] == 0x0000){
@@ -118,6 +129,7 @@ namespace NTest{namespace NCommon
 
 	/** GetDebugLogColor
 	*/
+	#if(BSYS_COLOR_ENABLE)
 	NBsys::NColor::Color_F& GetDebugLogColor(s32 a_index)
 	{
 		s32 t_index = a_index;
@@ -128,6 +140,7 @@ namespace NTest{namespace NCommon
 
 		return s_loglist[t_index].color;
 	}
+	#endif
 
 
 	/** GetDebugLogCounter

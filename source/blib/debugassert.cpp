@@ -77,14 +77,14 @@ namespace NBlib
 				{
 					#if defined(PLATFORM_VCWIN)
 
-						const wchar* t_wfilename = a_wfilename;
+						t_wfilename = a_wfilename;
 
 					#elif defined(PLATFORM_GNUCWIN)
 
 						const char* t_filename = a_filename;
 						STLWString t_wstring;
 						CharToWchar(t_filename,t_wstring);
-						const wchar* t_wfilename = t_wstring.c_str();
+						t_wfilename = t_wstring.c_str();
 			
 					#else
 

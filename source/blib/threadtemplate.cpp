@@ -92,7 +92,7 @@ namespace NBlib
 			{
 				t_info.dwType = 0x1000;  
 				t_info.szName = a_threadname.c_str();  
-				t_info.dwThreadID = -1;
+				t_info.dwThreadID = static_cast<DWORD>(-1);
 				t_info.dwFlags = 0;  
 			}
 

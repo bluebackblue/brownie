@@ -219,8 +219,6 @@ namespace NBsys{namespace NFile
 		AutoLock t_autolock(this->lockobject);
 		{
 			return this->pack.IsExist(Path::Name(a_pack_filename_short));
-
-			ASSERT(0);
 		}
 	}
 	#endif

@@ -306,7 +306,7 @@ namespace NBsys{namespace ND3d11
 
 				if(SUCCEEDED(t_result)){
 					s32 t_from_pitch = this->texturewidth * 4;
-					if(t_mapped_resource.RowPitch == t_from_pitch){
+					if(static_cast<s32>(t_mapped_resource.RowPitch) == t_from_pitch){
 						u8* t_to = &reinterpret_cast<u8*>(t_mapped_resource.pData)[t_change_min * this->texturewidth * t_mapped_resource.RowPitch];
 						u8* t_from = &this->texture->GetPixel().get()[t_change_min * this->texturewidth * t_from_pitch];
 
