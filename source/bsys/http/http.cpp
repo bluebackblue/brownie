@@ -112,7 +112,7 @@ namespace NBsys{namespace NHttp
 		STLString t_body_footer = NHttp::MakeBodyString_BinarFooter();
 
 		//バッファ。
-		s32 t_buffer_size = a_size + t_body_header.length() + t_body_footer.length();
+		s32 t_buffer_size = static_cast<s32>(a_size + t_body_header.length() + t_body_footer.length());
 		sharedptr<Http_BinaryItem> t_binary_item(new Http_BinaryItem());
 		t_binary_item->data.reset(new u8[t_buffer_size + 1],default_delete<u8>());
 		t_binary_item->data.get()[t_buffer_size] = 0x00;
@@ -150,7 +150,7 @@ namespace NBsys{namespace NHttp
 		STLString t_body_footer = NHttp::MakeBodyString_TextFooter();
 
 		//バッファ。
-		s32 t_buffer_size = a_value.length() + t_body_header.length() + t_body_footer.length();
+		s32 t_buffer_size = static_cast<s32>(a_value.length() + t_body_header.length() + t_body_footer.length());
 		sharedptr<Http_BinaryItem> t_binary_item(new Http_BinaryItem());
 		t_binary_item->data.reset(new u8[t_buffer_size + 1],default_delete<u8>());
 		t_binary_item->data.get()[t_buffer_size] = 0x00;
@@ -164,7 +164,7 @@ namespace NBsys{namespace NHttp
 			Memory::Copy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_body_header.c_str(),static_cast<s32>(t_body_header.length()));
 			t_offset += static_cast<s32>(t_body_header.length());
 
-			Memory::Copy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),a_value.c_str(),a_value.length());
+			Memory::Copy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),a_value.c_str(),static_cast<s32>(a_value.length()));
 			t_offset += static_cast<s32>(a_value.length());
 
 			Memory::Copy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_body_footer.c_str(),static_cast<s32>(t_body_footer.length()));
@@ -299,7 +299,7 @@ namespace NBsys{namespace NHttp
 						STLString t_send_body = NHttp::MakeBodyString_Header(this->boundary_string,this->mode,this->url,this->host,t_binary_size);
 
 						//バッファ。
-						s32 t_buffer_size = t_send_body.length() + t_binary_size;
+						s32 t_buffer_size = static_cast<s32>(t_send_body.length() + t_binary_size);
 						this->send_buffer.reset(new u8[t_buffer_size + 1],default_delete<u8>());
 						this->send_buffer.get()[t_buffer_size] = 0x00;
 						u8* t_buffer_data = this->send_buffer.get();
