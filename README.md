@@ -26,7 +26,7 @@ mid-level library
 ## folder structure
 フォルダ構造
 * brownie
-* _ licence [使用ライセンス関連ファイル]
+* _ license [使用ライセンス関連ファイル]
 * _ premake [ビルドツール]
 * _ source
 * ___ blib [低レベルライブラリ]
