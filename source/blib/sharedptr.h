@@ -918,7 +918,7 @@ namespace NBlib
 
 		/** ポインタのように振舞う。
 		*/
-		operator bool() const noexcept
+		explicit operator bool() const noexcept
 		{
 			return (this->get()!=nullptr) ? true : false;
 		}
