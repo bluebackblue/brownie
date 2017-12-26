@@ -128,6 +128,26 @@ namespace NBlib
 	}
 
 
+	/** WcharToChar
+	*/
+	STLString WcharToChar(const STLWString& a_wstring)
+	{
+		STLString t_ret;
+		WcharToChar(a_wstring,t_ret);
+		return t_ret;
+	}
+
+
+	/** CharToWchar
+	*/
+	STLWString CharToWchar(const STLString& a_string)
+	{
+		STLWString t_ret;
+		CharToWchar(a_string,t_ret);
+		return t_ret;
+	}
+
+
 	/** 16進数文字列 => s32 への変換。
 	*/
 	void HexCharToInt(const STLString& a_string,s32& a_value)

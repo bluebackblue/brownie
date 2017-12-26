@@ -34,12 +34,22 @@ namespace NBlib
 	void CharToWchar(const STLString& a_string,STLWString& a_wstring);
 
 
+	/** WcharToChar
+	*/
+	STLString WcharToChar(const STLWString& a_wstring);
+
+
+	/** CharToWchar
+	*/
+	STLWString CharToWchar(const STLString& a_string);
+
+
 	/** 16進数文字列 => s32 への変換。
 	*/
 	void HexCharToInt(const STLString& a_string,s32& a_value);
 
 
-	/** 前方一致。
+	/** a_stringの先頭文字がa_prefixと一致するかどうか。
 	*/
 	bool StartsWith(const STLString& a_string,const STLString& a_prefix);
 
