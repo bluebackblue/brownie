@@ -36,21 +36,12 @@ namespace NBsys{namespace NGeometry
 		*/
 		Geometry_Vector_2_Raw raw;
 
-		/** x
-		*/
-		inline const f32& x() const;
-
-		/** x
+		/** raw
 		*/
 		inline f32& x();
-
-		/** y
-		*/
-		inline const f32& y() const;
-
-		/** y
-		*/
 		inline f32& y();
+		inline const f32& x() const;
+		inline const f32& y() const;
 
 		/** constructor
 		*/

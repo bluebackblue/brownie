@@ -71,14 +71,6 @@ namespace NBsys{namespace NGeometry
 
 	/** x
 	*/
-	inline const f32& Geometry_Vector2::x() const
-	{
-		return this->raw.v.x;
-	}
-
-
-	/** x
-	*/
 	inline f32& Geometry_Vector2::x()
 	{
 		return this->raw.v.x;
@@ -87,15 +79,23 @@ namespace NBsys{namespace NGeometry
 
 	/** y
 	*/
-	inline const f32& Geometry_Vector2::y() const
+	inline f32& Geometry_Vector2::y()
 	{
 		return this->raw.v.y;
 	}
 
 
+	/** x
+	*/
+	inline const f32& Geometry_Vector2::x() const
+	{
+		return this->raw.v.x;
+	}
+
+
 	/** y
 	*/
-	inline f32& Geometry_Vector2::y()
+	inline const f32& Geometry_Vector2::y() const
 	{
 		return this->raw.v.y;
 	}

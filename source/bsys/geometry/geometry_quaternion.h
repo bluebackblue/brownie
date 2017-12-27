@@ -44,15 +44,14 @@ namespace NBsys{namespace NGeometry
 
 		/** raw
 		*/
-		inline f32& x(){this->raw.q.x;}
-		inline f32& y(){this->raw.q.y;}
-		inline f32& z(){this->raw.q.z;}
-		inline f32& w(){this->raw.q.w;}
-		inline const f32& x()const{this->raw.q.x;}
-		inline const f32& y()const{this->raw.q.y;}
-		inline const f32& z()const{this->raw.q.z;}
-		inline const f32& w()const{this->raw.q.w;}
-
+		inline f32& x();
+		inline f32& y();
+		inline f32& z();
+		inline f32& w();
+		inline const f32& x() const;
+		inline const f32& y() const;
+		inline const f32& z() const;
+		inline const f32& w() const;
 
 		/** constructor
 		*/

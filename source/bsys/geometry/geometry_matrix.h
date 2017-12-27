@@ -42,40 +42,40 @@ namespace NBsys{namespace NGeometry
 		*/
 		Geometry_Matrix_44_Raw raw;
 
-		/** raw TODO
+		/** raw
 		*/
-		inline f32& ax_x(){this->raw.m.ax_x;}
-		inline f32& ax_y(){this->raw.m.ax_y;}
-		inline f32& ax_z(){this->raw.m.ax_z;}
-		inline f32& ax_w(){this->raw.m.ax_w;}
-		inline f32& ay_x(){this->raw.m.ay_x;}
-		inline f32& ay_y(){this->raw.m.ay_y;}
-		inline f32& ay_z(){this->raw.m.ay_z;}
-		inline f32& ay_w(){this->raw.m.ay_w;}
-		inline f32& az_x(){this->raw.m.az_x;}
-		inline f32& az_y(){this->raw.m.az_y;}
-		inline f32& az_z(){this->raw.m.az_z;}
-		inline f32& az_w(){this->raw.m.az_w;}
-		inline f32& tr_x(){this->raw.m.tr_x;}
-		inline f32& tr_y(){this->raw.m.tr_y;}
-		inline f32& tr_z(){this->raw.m.tr_z;}
-		inline f32& tr_w(){this->raw.m.tr_w;}
-		inline const f32& ax_x()const{this->raw.m.ax_x;}
-		inline const f32& ax_y()const{this->raw.m.ax_y;}
-		inline const f32& ax_z()const{this->raw.m.ax_z;}
-		inline const f32& ax_w()const{this->raw.m.ax_w;}
-		inline const f32& ay_x()const{this->raw.m.ay_x;}
-		inline const f32& ay_y()const{this->raw.m.ay_y;}
-		inline const f32& ay_z()const{this->raw.m.ay_z;}
-		inline const f32& ay_w()const{this->raw.m.ay_w;}
-		inline const f32& az_x()const{this->raw.m.az_x;}
-		inline const f32& az_y()const{this->raw.m.az_y;}
-		inline const f32& az_z()const{this->raw.m.az_z;}
-		inline const f32& az_w()const{this->raw.m.az_w;}
-		inline const f32& tr_x()const{this->raw.m.tr_x;}
-		inline const f32& tr_y()const{this->raw.m.tr_y;}
-		inline const f32& tr_z()const{this->raw.m.tr_z;}
-		inline const f32& tr_w()const{this->raw.m.tr_w;}
+		inline f32& ax_x();
+		inline f32& ax_y();
+		inline f32& ax_z();
+		inline f32& ax_w();
+		inline f32& ay_x();
+		inline f32& ay_y();
+		inline f32& ay_z();
+		inline f32& ay_w();
+		inline f32& az_x();
+		inline f32& az_y();
+		inline f32& az_z();
+		inline f32& az_w();
+		inline f32& tr_x();
+		inline f32& tr_y();
+		inline f32& tr_z();
+		inline f32& tr_w();
+		inline const f32& ax_x() const;
+		inline const f32& ax_y() const;
+		inline const f32& ax_z() const;
+		inline const f32& ax_w() const;
+		inline const f32& ay_x() const;
+		inline const f32& ay_y() const;
+		inline const f32& ay_z() const;
+		inline const f32& ay_w() const;
+		inline const f32& az_x() const;
+		inline const f32& az_y() const;
+		inline const f32& az_z() const;
+		inline const f32& az_w() const;
+		inline const f32& tr_x() const;
+		inline const f32& tr_y() const;
+		inline const f32& tr_z() const;
+		inline const f32& tr_w() const;
 
 		/** constructor
 		*/

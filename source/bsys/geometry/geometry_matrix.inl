@@ -57,6 +57,262 @@ namespace NBsys{namespace NGeometry
 	}
 
 
+	/** ax_x
+	*/
+	inline f32& Geometry_Matrix_44::ax_x()
+	{
+		return this->raw.m.ax_x;
+	}
+
+
+	/** ax_y
+	*/
+	inline f32& Geometry_Matrix_44::ax_y()
+	{
+		return this->raw.m.ax_y;
+	}
+
+
+	/** ax_z
+	*/
+	inline f32& Geometry_Matrix_44::ax_z()
+	{
+		return this->raw.m.ax_z;
+	}
+
+
+	/** ax_w
+	*/
+	inline f32& Geometry_Matrix_44::ax_w()
+	{
+		return this->raw.m.ax_w;
+	}
+
+
+	/** ay_x
+	*/
+	inline f32& Geometry_Matrix_44::ay_x()
+	{
+		return this->raw.m.ay_x;
+	}
+
+
+	/** ay_y
+	*/
+	inline f32& Geometry_Matrix_44::ay_y()
+	{
+		return this->raw.m.ay_y;
+	}
+
+
+	/** ay_z
+	*/
+	inline f32& Geometry_Matrix_44::ay_z()
+	{
+		return this->raw.m.ay_z;
+	}
+
+
+	/** ay_w
+	*/
+	inline f32& Geometry_Matrix_44::ay_w()
+	{
+		return this->raw.m.ay_w;
+	}
+
+
+	/** az_x
+	*/
+	inline f32& Geometry_Matrix_44::az_x()
+	{
+		return this->raw.m.az_x;
+	}
+
+
+	/** az_y
+	*/
+	inline f32& Geometry_Matrix_44::az_y()
+	{
+		return this->raw.m.az_y;
+	}
+
+
+	/** az_z
+	*/
+	inline f32& Geometry_Matrix_44::az_z()
+	{
+		return this->raw.m.az_z;
+	}
+
+
+	/** az_w
+	*/
+	inline f32& Geometry_Matrix_44::az_w()
+	{
+		return this->raw.m.az_w;
+	}
+
+
+	/** tr_x
+	*/
+	inline f32& Geometry_Matrix_44::tr_x()
+	{
+		return this->raw.m.tr_x;
+	}
+
+
+	/** tr_y
+	*/
+	inline f32& Geometry_Matrix_44::tr_y()
+	{
+		return this->raw.m.tr_y;
+	}
+
+
+	/** tr_z
+	*/
+	inline f32& Geometry_Matrix_44::tr_z()
+	{
+		return this->raw.m.tr_z;
+	}
+
+
+	/** tr_w
+	*/
+	inline f32& Geometry_Matrix_44::tr_w()
+	{
+		return this->raw.m.tr_w;
+	}
+
+
+	/** ax_x
+	*/
+	inline const f32& Geometry_Matrix_44::ax_x() const
+	{
+		return this->raw.m.ax_x;
+	}
+
+
+	/** ax_y
+	*/
+	inline const f32& Geometry_Matrix_44::ax_y() const
+	{
+		return this->raw.m.ax_y;
+	}
+
+
+	/** ax_z
+	*/
+	inline const f32& Geometry_Matrix_44::ax_z() const
+	{
+		return this->raw.m.ax_z;
+	}
+
+
+	/** ax_w
+	*/
+	inline const f32& Geometry_Matrix_44::ax_w() const
+	{
+		return this->raw.m.ax_w;
+	}
+
+
+	/** ay_x
+	*/
+	inline const f32& Geometry_Matrix_44::ay_x() const
+	{
+		return this->raw.m.ay_x;
+	}
+
+
+	/** ay_y
+	*/
+	inline const f32& Geometry_Matrix_44::ay_y() const
+	{
+		return this->raw.m.ay_y;
+	}
+
+
+	/** ay_z
+	*/
+	inline const f32& Geometry_Matrix_44::ay_z() const
+	{
+		return this->raw.m.ay_z;
+	}
+
+
+	/** ay_w
+	*/
+	inline const f32& Geometry_Matrix_44::ay_w() const
+	{
+		return this->raw.m.ay_w;
+	}
+
+
+	/** az_x
+	*/
+	inline const f32& Geometry_Matrix_44::az_x() const
+	{
+		return this->raw.m.az_x;
+	}
+
+
+	/** az_y
+	*/
+	inline const f32& Geometry_Matrix_44::az_y() const
+	{
+		return this->raw.m.az_y;
+	}
+
+
+	/** az_z
+	*/
+	inline const f32& Geometry_Matrix_44::az_z() const
+	{
+		return this->raw.m.az_z;
+	}
+
+
+	/** az_w
+	*/
+	inline const f32& Geometry_Matrix_44::az_w() const
+	{
+		return this->raw.m.az_w;
+	}
+
+
+	/** tr_x
+	*/
+	inline const f32& Geometry_Matrix_44::tr_x() const
+	{
+		return this->raw.m.tr_x;
+	}
+
+
+	/** tr_y
+	*/
+	inline const f32& Geometry_Matrix_44::tr_y() const
+	{
+		return this->raw.m.tr_y;
+	}
+
+
+	/** tr_z
+	*/
+	inline const f32& Geometry_Matrix_44::tr_z() const
+	{
+		return this->raw.m.tr_z;
+	}
+
+
+	/** tr_w
+	*/
+	inline const f32& Geometry_Matrix_44::tr_w() const
+	{
+		return this->raw.m.tr_w;
+	}
+
+
 	/** constructor
 	*/
 	inline Geometry_Matrix_44::Geometry_Matrix_44()

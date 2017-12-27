@@ -33,6 +33,70 @@
 #if(BSYS_GEOMETRY_ENABLE)
 namespace NBsys{namespace NGeometry
 {
+	/** x
+	*/
+	inline f32& Geometry_Quaternion::x()
+	{
+		return this->raw.q.x;
+	}
+
+	
+	/** y
+	*/
+	inline f32& Geometry_Quaternion::y()
+	{
+		return this->raw.q.y;
+	}
+
+	
+	/** z
+	*/
+	inline f32& Geometry_Quaternion::z()
+	{
+		return this->raw.q.z;
+	}
+
+
+	/** w
+	*/
+	inline f32& Geometry_Quaternion::w()
+	{
+		return this->raw.q.w;
+	}
+
+
+	/** x
+	*/
+	inline const f32& Geometry_Quaternion::x() const
+	{
+		return this->raw.q.x;
+	}
+
+	
+	/** y
+	*/
+	inline const f32& Geometry_Quaternion::y() const
+	{
+		return this->raw.q.y;
+	}
+
+
+	/** z
+	*/
+	inline const f32& Geometry_Quaternion::z() const
+	{
+		return this->raw.q.z;
+	}
+
+
+	/** w
+	*/
+	inline const f32& Geometry_Quaternion::w() const
+	{
+		return this->raw.q.w;
+	}
+
+
 	/** constructor
 	*/
 	inline Geometry_Quaternion::Geometry_Quaternion()

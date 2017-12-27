@@ -45,14 +45,6 @@ namespace NBsys{namespace NMmd
 		//Mmd_Pmx_Header_Ex
 		this->header_ex = Memory::StreamCopy<Mmd_Pmx_Header_Ex>(a_raw,t_header_ex_size + 1);
 
-		//model_name
-		STLWString model_name_jp;
-		STLWString model_name_en;
-
-		//comment
-		STLWString comment_jp;
-		STLWString comment_en;
-
 		//model name jp
 		{
 			u32 t_length = Memory::StreamCopy<u32>(a_raw);
@@ -290,7 +282,7 @@ namespace NBsys{namespace NMmd
 		this->parts_list_size = Memory::StreamCopy<u32>(a_raw);
 		this->parts_list.resize(this->parts_list_size);
 
-		s32 t_start_index = 0;
+		u32 t_start_index = 0;
 
 		for(u32 ii=0;ii<this->parts_list_size;ii++){
 			Mmd_Pmx_Parts& t_parts = this->parts_list.at(ii);
@@ -413,7 +405,7 @@ namespace NBsys{namespace NMmd
 					t_parts.textureindex_sphere = Memory::StreamCopy<s32>(a_raw);
 				}
 
-				t_parts.textureindex_sphere_mode = Memory::StreamCopy<s8>(a_raw);
+				t_parts.textureindex_sphere_mode = Memory::StreamCopy<u8>(a_raw);
 			}
 
 			//toon
@@ -598,11 +590,11 @@ namespace NBsys{namespace NMmd
 				t_bone.bone_ik_limit_rad = Memory::StreamCopy<f32>(a_raw);
 
 				{
-					t_bone.bone_ik_list_size = Memory::StreamCopy<s32>(a_raw);
+					t_bone.bone_ik_list_size = Memory::StreamCopy<u32>(a_raw);
 					if(t_bone.bone_ik_list_size > 0){
 						t_bone.bone_ik_list.resize(t_bone.bone_ik_list_size);
 
-						for(s32 jj=0;jj<static_cast<s32>(t_bone.bone_ik_list_size);jj++){
+						for(u32 jj=0;jj<static_cast<s32>(t_bone.bone_ik_list_size);jj++){
 							Mmd_Pmx_Bone_Ik& t_bone_ik = t_bone.bone_ik_list[jj];
 
 							//ik_link_boneindex
