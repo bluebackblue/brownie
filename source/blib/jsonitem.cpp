@@ -118,12 +118,12 @@ namespace NBlib
 			case 't':
 			case 'T':
 				{
-					return JsonItem::ValueType::BoolDataTrue;
+					return JsonItem::ValueType::Calc_BoolDataTrue;
 				}break;
 			case 'f':
 			case 'F':
 				{
-					return JsonItem::ValueType::BoolDataFalse;
+					return JsonItem::ValueType::Calc_BoolDataFalse;
 				}break;
 			case '-':
 			case '0':
@@ -137,7 +137,7 @@ namespace NBlib
 			case '8':
 			case '9':
 				{
-					return JsonItem::ValueType::UnknownNumber;
+					return JsonItem::ValueType::Calc_UnknownNumber;
 				}break;
 			default:
 				{
@@ -797,7 +797,7 @@ namespace NBlib
 					{
 						t_value_size = GetLength_StringData(a_jsonstring,t_index);
 					}break;
-				case JsonItem::ValueType::UnknownNumber:
+				case JsonItem::ValueType::Calc_UnknownNumber:
 				case JsonItem::ValueType::IntegerNumber:
 				case JsonItem::ValueType::FloatNumber:
 					{
@@ -811,11 +811,11 @@ namespace NBlib
 					{
 						t_value_size = GetLength_IndexArray(a_jsonstring,t_index);
 					}break;
-				case JsonItem::ValueType::BoolDataTrue:
+				case JsonItem::ValueType::Calc_BoolDataTrue:
 					{
 						t_value_size = GetLength_BoolTrue(a_jsonstring,t_index);
 					}break;
-				case JsonItem::ValueType::BoolDataFalse:
+				case JsonItem::ValueType::Calc_BoolDataFalse:
 					{
 						t_value_size = GetLength_BoolFalse(a_jsonstring,t_index);
 					}break;
@@ -939,7 +939,7 @@ namespace NBlib
 					{
 						t_value_size = GetLength_StringData(a_jsonstring,t_index);
 					}break;
-				case JsonItem::ValueType::UnknownNumber:
+				case JsonItem::ValueType::Calc_UnknownNumber:
 				case JsonItem::ValueType::IntegerNumber:
 				case JsonItem::ValueType::FloatNumber:
 					{
@@ -953,11 +953,11 @@ namespace NBlib
 					{
 						t_value_size = GetLength_IndexArray(a_jsonstring,t_index);
 					}break;
-				case JsonItem::ValueType::BoolDataTrue:
+				case JsonItem::ValueType::Calc_BoolDataTrue:
 					{
 						t_value_size = GetLength_BoolTrue(a_jsonstring,t_index);
 					}break;
-				case JsonItem::ValueType::BoolDataFalse:
+				case JsonItem::ValueType::Calc_BoolDataFalse:
 					{
 						t_value_size = GetLength_BoolFalse(a_jsonstring,t_index);
 					}break;
@@ -1201,9 +1201,9 @@ namespace NBlib
 
 	/** constructor
 	*/
-	JsonItem::JsonItem(const Value_Bool& a_value)
+	JsonItem::JsonItem(const Value_BoolData& a_value)
 	{
-		this->SetBool(a_value.value);
+		this->SetBoolData(a_value.value);
 	}
 
 
@@ -1244,8 +1244,6 @@ namespace NBlib
 			case ValueType::AssociativeArray:
 			case ValueType::IndexArray:
 			case ValueType::BinaryData:
-			case ValueType::BoolDataTrue:
-			case ValueType::BoolDataFalse:
 			case ValueType::IntegerNumber:
 			case ValueType::FloatNumber:
 				{
@@ -1254,7 +1252,7 @@ namespace NBlib
 					this->value.Reset();
 					return;
 				}break;
-			case ValueType::UnknownNumber:
+			case ValueType::Calc_UnknownNumber:
 				{
 					if(NImpl::IsInteger(a_jsonstring)){
 						this->jsonstring.reset(new STLString(a_jsonstring));
@@ -1267,6 +1265,26 @@ namespace NBlib
 						this->value.Reset();
 						return;
 					}
+				}break;
+			case ValueType::Calc_BoolDataTrue:
+				{
+					//値で設定。
+
+					this->jsonstring.reset();
+					this->valuetype = ValueType::BoolData;
+					this->value.bool_data = true;
+					this->value.Reset();
+					return;
+				}break;
+			case ValueType::Calc_BoolDataFalse:
+				{
+					//値で設定。
+
+					this->jsonstring.reset();
+					this->valuetype = ValueType::BoolData;
+					this->value.bool_data = false;
+					this->value.Reset();
+					return;
 				}break;
 			default:
 				{
@@ -1371,14 +1389,15 @@ namespace NBlib
 					this->value.associative_array = NImpl::CreateAssociativeArrayFromJsonString(*t_jsonstring_temp);
 					return;
 				}break;
-			case ValueType::BoolDataTrue:
+			case ValueType::BoolData:
 				{
-					this->value.bool_value = true;
-					return;
-				}break;
-			case ValueType::BoolDataFalse:
-				{
-					this->value.bool_value = false;
+					const char t_char = t_jsonstring_temp->at(0);
+
+					if(t_char == 't' || t_char == 'T'){
+						this->value.bool_data = true;
+					}else{
+						this->value.bool_data = true;
+					}
 					return;
 				}break;
 			case ValueType::BinaryData:
@@ -1489,17 +1508,17 @@ namespace NBlib
 	}
 
 
-	/** [取得][値]GetBool
+	/** [取得][値]GetBoolData
 	*/
-	bool JsonItem::GetBool() const
+	bool JsonItem::GetBoolData() const
 	{
-		ASSERT((this->valuetype == ValueType::BoolDataTrue)||(this->valuetype == ValueType::BoolDataFalse));
+		ASSERT(this->valuetype == ValueType::BoolData);
 
 		if(this->jsonstring != nullptr){
 			this->JsonStringToValue();
 		}
 
-		return this->value.bool_value;
+		return this->value.bool_data;
 	}
 
 
@@ -1524,6 +1543,76 @@ namespace NBlib
 		return this->valuetype;
 	}
 
+
+	/** タイプチェック。文字データ。
+	*/
+	bool JsonItem::IsStringData()
+	{
+		if(this->valuetype == ValueType::StringData){
+			return true;
+		}
+		return false;
+	}
+
+	/** タイプチェック。連想配列。
+	*/
+	bool JsonItem::IsAssociativeArray()
+	{
+		if(this->valuetype == ValueType::AssociativeArray){
+			return true;
+		}
+		return false;
+	}
+
+	/** タイプチェック。インデックス配列。
+	*/
+	bool JsonItem::IsIndexArray()
+	{
+		if(this->valuetype == ValueType::IndexArray){
+			return true;
+		}
+		return false;
+	}
+
+	/** タイプチェック。整数。
+	*/
+	bool JsonItem::IsIntegerNumber()
+	{
+		if(this->valuetype == ValueType::IntegerNumber){
+			return true;
+		}
+		return false;
+	}
+
+	/** タイプチェック。少数。
+	*/
+	bool JsonItem::IsFloatNumber()
+	{
+		if(this->valuetype == ValueType::FloatNumber){
+			return true;
+		}
+		return false;
+	}
+
+	/** タイプチェック。真偽。
+	*/
+	bool JsonItem::IsBoolData()
+	{
+		if(this->valuetype == ValueType::BoolData){
+			return true;
+		}
+		return false;
+	}
+
+	/** タイプチェック。バイナリデータ。
+	*/
+	bool JsonItem::IsBinaryData()
+	{
+		if(this->valuetype == ValueType::BinaryData){
+			return true;
+		}
+		return false;
+	}
 
 	/** [取得]連想リストのアイテム取得。
 	*/
@@ -1573,7 +1662,7 @@ namespace NBlib
 
 	/** [取得]連想リストのアイテムチェック。
 	*/
-	bool JsonItem::IsExistItem(const STLString& a_itemname)
+	bool JsonItem::IsExistItem(const STLString& a_itemname) const
 	{
 		ASSERT(this->valuetype == ValueType::AssociativeArray);
 
@@ -1776,15 +1865,15 @@ namespace NBlib
 	}
 
 
-	/** [設定]Boolセット。
+	/** [設定]真偽データセット。
 	*/
-	void JsonItem::SetBool(bool a_bool)
+	void JsonItem::SetBoolData(bool a_bool)
 	{
 		this->jsonstring.reset();
 		this->value.Reset();
 
-		this->valuetype = a_bool ? ValueType::BoolDataTrue : ValueType::BoolDataFalse;
-		this->value.bool_value = a_bool;
+		this->valuetype = ValueType::BoolData;
+		this->value.bool_data = a_bool;
 	}
 
 

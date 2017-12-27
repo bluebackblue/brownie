@@ -42,17 +42,19 @@ namespace NBlib
 			{
 				None = 0,
 		
-				StringData,			//文字データ。
-				AssociativeArray,	//連想配列。
-				IndexArray,			//インデックス配列。
-				UnknownNumber,		//数値（少数/整数）。
-				IntegerNumber,		//整数。
-				FloatNumber,		//少数。
+				StringData,				//文字データ。
+				AssociativeArray,		//連想配列。
+				IndexArray,				//インデックス配列。
+				IntegerNumber,			//整数。
+				FloatNumber,			//少数。
+				BoolData,				//真偽データ。
+				BinaryData,				//バイナリデータ。
 		
-				BoolDataTrue,		//真。
-				BoolDataFalse,		//偽。
+				//中間計算用。
+				Calc_UnknownNumber,		//数値（少数/整数）。
+				Calc_BoolDataTrue,		//真。
+				Calc_BoolDataFalse,		//偽。
 
-				BinaryData,			//バイナリデータ。
 			};
 		};
 
@@ -122,19 +124,19 @@ namespace NBlib
 			}
 		};
 
-		/** Bool。
+		/** 真偽データ。
 		*/
-		struct Value_Bool
+		struct Value_BoolData
 		{
 			bool value;
-			explicit Value_Bool(bool a_value)
+			explicit Value_BoolData(bool a_value)
 				:
 				value(a_value)
 			{
 			}
 		};
 
-		/** Value_BinaryData
+		/** バイナリデータ。
 		*/
 		struct Value_BinaryData
 		{
@@ -174,9 +176,9 @@ namespace NBlib
 			*/
 			f32															float_number;
 
-			/** 真偽。
+			/** 真偽データ。
 			*/
-			bool														bool_value;
+			bool														bool_data;
 
 			/** バイナリ―。
 			*/
@@ -191,7 +193,7 @@ namespace NBlib
 				this->index_array.reset();
 				this->integer_number = 0;
 				this->float_number = 0.0f;
-				this->bool_value = false;
+				this->bool_data = false;
 				this->binary_data.reset();
 			}
 		};
@@ -278,7 +280,7 @@ namespace NBlib
 
 		/** constructor
 		*/
-		JsonItem(const Value_Bool& a_value);
+		JsonItem(const Value_BoolData& a_value);
 
 		/** constructor
 		*/
@@ -320,9 +322,9 @@ namespace NBlib
 		*/
 		f32 GetFloat() const;
 
-		/** [取得][値]GetBool
+		/** [取得][値]GetBoolData
 		*/
-		bool GetBool() const;
+		bool GetBoolData() const;
 
 		/** [取得][値]GetBinaryData
 		*/
@@ -331,6 +333,34 @@ namespace NBlib
 		/** [取得]GetValueType
 		*/
 		ValueType::Id GetValueType() const;
+
+		/** タイプチェック。文字データ。
+		*/
+		bool IsStringData();
+
+		/** タイプチェック。連想配列。
+		*/
+		bool IsAssociativeArray();
+
+		/** タイプチェック。インデックス配列。
+		*/
+		bool IsIndexArray();
+
+		/** タイプチェック。整数。
+		*/
+		bool IsIntegerNumber();
+
+		/** タイプチェック。少数。
+		*/
+		bool IsFloatNumber();
+
+		/** タイプチェック。真偽データ。
+		*/
+		bool IsBoolData();
+
+		/** タイプチェック。バイナリデータ。
+		*/
+		bool IsBinaryData();
 
 		/** [取得]連想リストのアイテム取得。
 		*/
@@ -342,7 +372,7 @@ namespace NBlib
 
 		/** [取得]連想リストのアイテムチェック。
 		*/
-		bool IsExistItem(const STLString& a_itemname);
+		bool IsExistItem(const STLString& a_itemname) const;
 	
 		/** [取得]インデックスリストのアイテム取得。
 		*/
@@ -392,9 +422,9 @@ namespace NBlib
 		*/
 		void SetFloat(f32 a_float);
 
-		/** [設定]Boolセット。
+		/** [設定]真偽データセット。
 		*/
-		void SetBool(bool a_bool);
+		void SetBoolData(bool a_bool);
 	
 		/** SetBinaryData
 		*/
