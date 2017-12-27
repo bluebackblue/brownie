@@ -1273,7 +1273,6 @@ namespace NBlib
 					this->jsonstring.reset();
 					this->valuetype = ValueType::BoolData;
 					this->value.bool_data = true;
-					this->value.Reset();
 					return;
 				}break;
 			case ValueType::Calc_BoolDataFalse:
@@ -1283,7 +1282,6 @@ namespace NBlib
 					this->jsonstring.reset();
 					this->valuetype = ValueType::BoolData;
 					this->value.bool_data = false;
-					this->value.Reset();
 					return;
 				}break;
 			default:
@@ -1393,10 +1391,10 @@ namespace NBlib
 				{
 					const char t_char = t_jsonstring_temp->at(0);
 
-					if(t_char == 't' || t_char == 'T'){
+					if((t_char == 't')||(t_char == 'T')){
 						this->value.bool_data = true;
 					}else{
-						this->value.bool_data = true;
+						this->value.bool_data = false;
 					}
 					return;
 				}break;
@@ -2021,6 +2019,13 @@ namespace NBlib
 				}
 				t_jsonstring += "}";
 				return t_jsonstring;
+			}break;
+		case ValueType::BoolData:
+			{
+				if(this->value.bool_data){
+					return "true";
+				}
+				return "false";
 			}break;
 		case ValueType::BinaryData:
 			{

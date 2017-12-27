@@ -46,6 +46,7 @@
 #elif(DEF_TEST_INDEX == 2)
 
 	#define DEF_TEST_STRING									L"2"
+	#define BSYS_FILE_ENABLE								(1)
 
 #elif(DEF_TEST_INDEX == 3)
 

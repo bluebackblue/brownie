@@ -106,13 +106,21 @@ namespace NTest
 
 			//ＪＳＯＮ取得。
 			if(t_json->GetValueType() == JsonItem::ValueType::AssociativeArray){
-				if(t_json->IsExistItem("name") == true){
-					STLString t_name = *t_json->GetItem("name")->GetStringData();
-					DEBUGLOG("name = %s\n",t_name.c_str());
+				if(t_json->IsExistItem("name1") == true){
+					STLString t_value = *t_json->GetItem("name1")->GetStringData();
+					DEBUGLOG("name1 = %s\n",t_value.c_str());
 				}
-				if(t_json->IsExistItem("value") == true){
-					s32 t_value = t_json->GetItem("value")->GetInteger();
-					DEBUGLOG("value = %d\n",t_value);
+				if(t_json->IsExistItem("name2") == true){
+					s32 t_value = t_json->GetItem("name2")->GetInteger();
+					DEBUGLOG("name1 = %d\n",t_value);
+				}
+				if(t_json->IsExistItem("name3") == true){
+					f32 t_value = t_json->GetItem("name3")->GetFloat();
+					DEBUGLOG("name1 = %f\n",t_value);
+				}
+				if(t_json->IsExistItem("name4") == true){
+					bool t_value = t_json->GetItem("name4")->GetBoolData();
+					DEBUGLOG("name1 = %d\n",t_value?1:0);
 				}
 			}
 
