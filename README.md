@@ -3,7 +3,7 @@ C++ library
 
 ## license
 MIT License
-https://github.com/bluebackblue/brownie/blob/master/LICENSE
+https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
 
 ## coverity scan
 <a href="https://scan.coverity.com/projects/brownie">
@@ -25,7 +25,7 @@ mid-level library
 
 ## folder structure
 フォルダ構造
-* brownie
+* brownie 「チェックアウト : https://github.com/bluebackblue/brownie」
 * _ license [使用ライセンス関連ファイル]
 * _ premake [ビルドツール]
 * _ source
