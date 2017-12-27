@@ -351,6 +351,16 @@ namespace NBsys{namespace ND3d11
 		*/
 		nonvirtual ~D3d11_Impl();
 
+	private:
+
+		/** copy constructor禁止。
+		*/
+		D3d11_Impl(const D3d11_Impl& a_this) = delete;
+
+		/** コピー禁止。
+		*/
+		void operator =(const D3d11_Impl& a_this) = delete;
+
 	public:
 
 		/** GetWidth

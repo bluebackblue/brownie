@@ -52,6 +52,16 @@ namespace NBsys{namespace NFile
 		*/
 		nonvirtual ~File_Pack_MakeThread();
 
+	private:
+
+		/** copy constructor禁止。
+		*/
+		File_Pack_MakeThread(const File_Pack_MakeThread& a_this) = delete;
+
+		/** コピー禁止。
+		*/
+		void operator =(const File_Pack_MakeThread& a_this) = delete;
+
 	public:
 
 		/** 引数。

@@ -278,14 +278,14 @@ namespace NTest
 					NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 t_vertex;
 					NBsys::NMmd::Mmd_Pmx_VertexData& t_data = this->mmd_pmx->vertex_list.get()[t_index];
 
-					f32 t_color_r = t_mmd_pmx_parts.diffuse.r;
-					f32 t_color_g = t_mmd_pmx_parts.diffuse.g;
-					f32 t_color_b = t_mmd_pmx_parts.diffuse.b;
-					f32 t_color_a = t_mmd_pmx_parts.diffuse.a;
+					f32 t_color_r = t_mmd_pmx_parts.diffuse.r();
+					f32 t_color_g = t_mmd_pmx_parts.diffuse.g();
+					f32 t_color_b = t_mmd_pmx_parts.diffuse.b();
+					f32 t_color_a = t_mmd_pmx_parts.diffuse.a();
 
 					NBsys::NVertex::SetColor<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4>(t_vertex,t_color_r,t_color_g,t_color_b,t_color_a);
-					NBsys::NVertex::SetPos<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4>(t_vertex,t_data.position.x,t_data.position.y,t_data.position.z);
-					NBsys::NVertex::SetUv<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4>(t_vertex,t_data.uv.x,t_data.uv.y);
+					NBsys::NVertex::SetPos<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4>(t_vertex,t_data.position.x(),t_data.position.y(),t_data.position.z());
+					NBsys::NVertex::SetUv<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4>(t_vertex,t_data.uv.x(),t_data.uv.y());
 
 					this->mmd_vertex->AddVertex(t_vertex);
 				}
@@ -411,8 +411,8 @@ namespace NTest
 			this->camera_time += a_delta;
 
 			//カメラ回転。
-			this->camera_position.x = Math::cos_f(this->camera_time / 10) * 20;
-			this->camera_position.z = Math::sin_f(this->camera_time / 10) * 20;
+			this->camera_position.x() = Math::cos_f(this->camera_time / 10) * 20;
+			this->camera_position.z() = Math::sin_f(this->camera_time / 10) * 20;
 
 			if(this->step == 0){
 				//テクスチャ。

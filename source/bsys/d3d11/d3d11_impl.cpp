@@ -1505,7 +1505,7 @@ namespace NBsys{namespace ND3d11
 	{
 		if(this->devicecontext){
 
-			this->devicecontext->ClearRenderTargetView(this->backbuffer_rendertargetview.get(),a_color.p);
+			this->devicecontext->ClearRenderTargetView(this->backbuffer_rendertargetview.get(),a_color.raw.color);
 
 			return;
 		}

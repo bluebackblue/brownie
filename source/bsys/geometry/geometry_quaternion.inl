@@ -113,9 +113,9 @@ namespace NBsys{namespace NGeometry
 		f32 t_cos_half = Math::cosf(a_rad * 0.50f);
 		#endif
 
-		this->x = t_sin_half * t_normal.x;
-		this->y = t_sin_half * t_normal.y;
-		this->z = t_sin_half * t_normal.z;
+		this->x = t_sin_half * t_normal.x();
+		this->y = t_sin_half * t_normal.y();
+		this->z = t_sin_half * t_normal.z();
 		this->w = t_cos_half;
 	}
 

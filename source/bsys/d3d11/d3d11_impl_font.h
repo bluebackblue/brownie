@@ -416,10 +416,10 @@ namespace NBsys{namespace ND3d11
 						f32 t_rect_y1 = t_rect_y0 + (this->texturewidth) * t_scale_h;
 
 						NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4 t_vertex;
-						t_vertex.color_rr = a_color.r;
-						t_vertex.color_gg = a_color.g;
-						t_vertex.color_bb = a_color.b;
-						t_vertex.color_aa = a_color.a;
+						t_vertex.color_rr = a_color.r();
+						t_vertex.color_gg = a_color.g();
+						t_vertex.color_bb = a_color.b();
+						t_vertex.color_aa = a_color.a();
 
 						t_vertex.texture_index_00 = static_cast<u8>(this->fonttexture_type);
 						t_vertex.texture_index_01 = 0;

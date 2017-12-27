@@ -80,6 +80,16 @@ namespace NBsys{namespace NFile
 		*/
 		nonvirtual ~File_Thread();
 
+	private:
+
+		/** copy constructor禁止。
+		*/
+		File_Thread(const File_Thread& a_this) = delete;
+
+		/** コピー禁止。
+		*/
+		void operator =(const File_Thread& a_this) = delete;
+
 	public:
 
 		/** 引数。

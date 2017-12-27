@@ -33,8 +33,8 @@ namespace NBsys{namespace NGeometry
 	{
 		Geometry_Vector2 t_temp;
 		{
-			t_temp.x = a_vector.x * a_scale;
-			t_temp.y = a_vector.y * a_scale;
+			t_temp.x() = a_vector.x() * a_scale;
+			t_temp.y() = a_vector.y() * a_scale;
 		}
 		return t_temp;
 	}
@@ -46,9 +46,9 @@ namespace NBsys{namespace NGeometry
 	{
 		Geometry_Vector3 t_temp;
 		{
-			t_temp.x = a_vector.x * a_scale;
-			t_temp.y = a_vector.y * a_scale;
-			t_temp.z = a_vector.z * a_scale;
+			t_temp.x() = a_vector.x() * a_scale;
+			t_temp.y() = a_vector.y() * a_scale;
+			t_temp.z() = a_vector.z() * a_scale;
 		}
 		return t_temp;
 	}
@@ -60,12 +60,44 @@ namespace NBsys{namespace NGeometry
 	{
 		Geometry_Vector4 t_temp;
 		{
-			t_temp.x = a_vector.x * a_scale;
-			t_temp.y = a_vector.y * a_scale;
-			t_temp.z = a_vector.z * a_scale;
-			t_temp.w = a_vector.w * a_scale;
+			t_temp.x() = a_vector.x() * a_scale;
+			t_temp.y() = a_vector.y() * a_scale;
+			t_temp.z() = a_vector.z() * a_scale;
+			t_temp.w() = a_vector.w() * a_scale;
 		}
 		return t_temp;
+	}
+
+
+	/** x
+	*/
+	inline const f32& Geometry_Vector2::x() const
+	{
+		return this->raw.v.x;
+	}
+
+
+	/** x
+	*/
+	inline f32& Geometry_Vector2::x()
+	{
+		return this->raw.v.x;
+	}
+
+
+	/** y
+	*/
+	inline const f32& Geometry_Vector2::y() const
+	{
+		return this->raw.v.y;
+	}
+
+
+	/** y
+	*/
+	inline f32& Geometry_Vector2::y()
+	{
+		return this->raw.v.y;
 	}
 
 
@@ -80,8 +112,8 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Vector2::Geometry_Vector2(f32 a_x,f32 a_y)
 	{
-		this->x = a_x;
-		this->y = a_y;
+		this->x() = a_x;
+		this->y() = a_y;
 	}
 
 
@@ -89,8 +121,8 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Vector2::Geometry_Vector2(f32 a_value)
 	{
-		this->x = a_value;
-		this->y = a_value;
+		this->x() = a_value;
+		this->y() = a_value;
 	}
 
 
@@ -98,8 +130,8 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Vector2::Geometry_Vector2(const f32* a_value_pointer)
 	{
-		this->x = a_value_pointer[0];
-		this->y = a_value_pointer[1];
+		this->x() = a_value_pointer[0];
+		this->y() = a_value_pointer[1];
 	}
 
 
@@ -150,8 +182,8 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Vector2& Geometry_Vector2::Set(f32 a_x,f32 a_y)
 	{
-		this->x = a_x;
-		this->y = a_y;
+		this->x() = a_x;
+		this->y() = a_y;
 
 		return *this;
 	}
@@ -161,8 +193,8 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Vector2& Geometry_Vector2::Set(const Geometry_Vector2& a_vector)
 	{
-		this->x = a_vector.x;
-		this->y = a_vector.y;
+		this->x() = a_vector.x();
+		this->y() = a_vector.y();
 
 		return *this;
 	}
@@ -182,7 +214,7 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Vector2::operator f32*()
 	{
-		return &this->v[0];
+		return &this->raw.vector[0];
 	}
 
 
@@ -190,7 +222,55 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Vector2::operator const f32*() const
 	{
-		return &this->v[0];
+		return &this->raw.vector[0];
+	}
+
+
+	/** x
+	*/
+	inline const f32& Geometry_Vector3::x() const
+	{
+		return this->raw.v.x;
+	}
+
+
+	/** x
+	*/
+	inline f32& Geometry_Vector3::x()
+	{
+		return this->raw.v.x;
+	}
+
+
+	/** y
+	*/
+	inline const f32& Geometry_Vector3::y() const
+	{
+		return this->raw.v.y;
+	}
+
+
+	/** y
+	*/
+	inline f32& Geometry_Vector3::y()
+	{
+		return this->raw.v.y;
+	}
+
+
+	/** z
+	*/
+	inline const f32& Geometry_Vector3::z() const
+	{
+		return this->raw.v.z;
+	}
+
+
+	/** z
+	*/
+	inline f32& Geometry_Vector3::z()
+	{
+		return this->raw.v.z;
 	}
 
 
@@ -205,9 +285,9 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Vector3::Geometry_Vector3(f32 a_x,f32 a_y,f32 a_z)
 	{
-		this->x = a_x;
-		this->y = a_y;
-		this->z = a_z;
+		this->x() = a_x;
+		this->y() = a_y;
+		this->z() = a_z;
 	}
 
 
@@ -215,9 +295,9 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Vector3::Geometry_Vector3(f32 a_value)
 	{
-		this->x = a_value;
-		this->y = a_value;
-		this->z = a_value;
+		this->x() = a_value;
+		this->y() = a_value;
+		this->z() = a_value;
 	}
 
 
@@ -225,9 +305,9 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Vector3::Geometry_Vector3(const f32* a_value_pointer)
 	{
-		this->x = a_value_pointer[0];
-		this->y = a_value_pointer[1];
-		this->z = a_value_pointer[2];
+		this->x() = a_value_pointer[0];
+		this->y() = a_value_pointer[1];
+		this->z() = a_value_pointer[2];
 	}
 
 
@@ -235,9 +315,9 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Vector3::Geometry_Vector3(const Geometry_Vector3& a_vector)
 	{
-		this->x = a_vector.x;
-		this->y = a_vector.y;
-		this->z = a_vector.z;
+		this->x() = a_vector.x();
+		this->y() = a_vector.y();
+		this->z() = a_vector.z();
 	}
 
 
@@ -280,9 +360,9 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Vector3& Geometry_Vector3::Set(f32 a_x,f32 a_y,f32 a_z)
 	{
-		this->x = a_x;
-		this->y = a_y;
-		this->z = a_z;
+		this->x() = a_x;
+		this->y() = a_y;
+		this->z() = a_z;
 
 		return *this;
 	}
@@ -292,9 +372,9 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Vector3& Geometry_Vector3::Set(const Geometry_Vector3& a_vector)
 	{
-		this->x = a_vector.x;
-		this->y = a_vector.y;
-		this->z = a_vector.z;
+		this->x() = a_vector.x();
+		this->y() = a_vector.y();
+		this->z() = a_vector.z();
 
 		return *this;
 	}
@@ -314,7 +394,7 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Vector3::operator f32*()
 	{
-		return &this->v[0];
+		return &this->raw.vector[0];
 	}
 
 
@@ -322,7 +402,7 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Vector3::operator const f32*() const
 	{
-		return &this->v[0];
+		return &this->raw.vector[0];
 	}
 
 
@@ -332,9 +412,9 @@ namespace NBsys{namespace NGeometry
 	{
 		Geometry_Vector3 t_temp;
 		{
-			t_temp.x = (this->y * a_vector.z) - (this->z * a_vector.y);
-			t_temp.y = (this->z * a_vector.x) - (this->x * a_vector.z);
-			t_temp.z = (this->x * a_vector.y) - (this->y * a_vector.x);
+			t_temp.x() = (this->y() * a_vector.z()) - (this->z() * a_vector.y());
+			t_temp.y() = (this->z() * a_vector.x()) - (this->x() * a_vector.z());
+			t_temp.z() = (this->x() * a_vector.y()) - (this->y() * a_vector.x());
 		}
 		return t_temp;
 	}
@@ -344,13 +424,13 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Vector3& Geometry_Vector3::Set_Cross(const Geometry_Vector3& a_vector)
 	{
-		f32 t_temp_x = (this->y * a_vector.z) - (this->z * a_vector.y);
-		f32 t_temp_y = (this->z * a_vector.x) - (this->x * a_vector.z);
-		f32 t_temp_z = (this->x * a_vector.y) - (this->y * a_vector.x);
+		f32 t_temp_x = (this->y() * a_vector.z()) - (this->z() * a_vector.y());
+		f32 t_temp_y = (this->z() * a_vector.x()) - (this->x() * a_vector.z());
+		f32 t_temp_z = (this->x() * a_vector.y()) - (this->y() * a_vector.x());
 
-		this->x = t_temp_x;
-		this->y = t_temp_y;
-		this->z = t_temp_z;
+		this->x() = t_temp_x;
+		this->y() = t_temp_y;
+		this->z() = t_temp_z;
 
 		return *this;
 	}
@@ -360,13 +440,13 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Vector3& Geometry_Vector3::Set_Cross(const Geometry_Vector3& a_vector_1,const Geometry_Vector3& a_vector_2)
 	{
-		f32 t_temp_x = (a_vector_1.y * a_vector_2.z) - (a_vector_1.z * a_vector_2.y);
-		f32 t_temp_y = (a_vector_1.z * a_vector_2.x) - (a_vector_1.x * a_vector_2.z);
-		f32 t_temp_z = (a_vector_1.x * a_vector_2.y) - (a_vector_1.y * a_vector_2.x);
+		f32 t_temp_x = (a_vector_1.y() * a_vector_2.z()) - (a_vector_1.z() * a_vector_2.y());
+		f32 t_temp_y = (a_vector_1.z() * a_vector_2.x()) - (a_vector_1.x() * a_vector_2.z());
+		f32 t_temp_z = (a_vector_1.x() * a_vector_2.y()) - (a_vector_1.y() * a_vector_2.x());
 
-		this->x = t_temp_x;
-		this->y = t_temp_y;
-		this->z = t_temp_z;
+		this->x() = t_temp_x;
+		this->y() = t_temp_y;
+		this->z() = t_temp_z;
 
 		return *this;
 	}
@@ -384,9 +464,9 @@ namespace NBsys{namespace NGeometry
 
 		t_value = 1.0f / t_value;
 
-		this->x *= t_value;
-		this->y *= t_value;
-		this->z *= t_value;
+		this->x() *= t_value;
+		this->y() *= t_value;
+		this->z() *= t_value;
 
 		return *this;
 	}
@@ -410,9 +490,9 @@ namespace NBsys{namespace NGeometry
 
 		t_value = 1.0f / t_value;
 
-		this->x *= t_value;
-		this->y *= t_value;
-		this->z *= t_value;
+		this->x() *= t_value;
+		this->y() *= t_value;
+		this->z() *= t_value;
 
 		return *this;
 	}
@@ -436,9 +516,9 @@ namespace NBsys{namespace NGeometry
 
 		t_value = 1.0f / t_value;
 
-		this->x *= t_value;
-		this->y *= t_value;
-		this->z *= t_value;
+		this->x() *= t_value;
+		this->y() *= t_value;
+		this->z() *= t_value;
 
 		return t_length;
 	}
@@ -458,9 +538,9 @@ namespace NBsys{namespace NGeometry
 
 			t_value = 1.0f / t_value;
 
-			t_temp.x = this->x * t_value;
-			t_temp.y = this->y * t_value;
-			t_temp.z = this->z * t_value;
+			t_temp.x() = this->x() * t_value;
+			t_temp.y() = this->y() * t_value;
+			t_temp.z() = this->z() * t_value;
 		}
 		return t_temp;
 	}
@@ -484,9 +564,9 @@ namespace NBsys{namespace NGeometry
 
 			t_value = 1.0f / t_value;
 
-			t_temp.x = this->x * t_value;
-			t_temp.y = this->y * t_value;
-			t_temp.z = this->z * t_value;
+			t_temp.x() = this->x() * t_value;
+			t_temp.y() = this->y() * t_value;
+			t_temp.z() = this->z() * t_value;
 		}
 		return t_temp;
 	}
@@ -496,9 +576,9 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Vector3& Geometry_Vector3::operator +=(const Geometry_Vector3& a_vector)
 	{
-		this->x += a_vector.x;
-		this->y += a_vector.y;
-		this->z += a_vector.z;
+		this->x() += a_vector.x();
+		this->y() += a_vector.y();
+		this->z() += a_vector.z();
 
 		return *this;
 	}
@@ -508,9 +588,9 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Vector3& Geometry_Vector3::operator -=(const Geometry_Vector3& a_vector)
 	{
-		this->x -= a_vector.x;
-		this->y -= a_vector.y;
-		this->z -= a_vector.z;
+		this->x() -= a_vector.x();
+		this->y() -= a_vector.y();
+		this->z() -= a_vector.z();
 
 		return *this;
 	}
@@ -520,9 +600,9 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Vector3& Geometry_Vector3::operator *=(f32 a_value)
 	{
-		this->x *= a_value;
-		this->y *= a_value;
-		this->z *= a_value;
+		this->x() *= a_value;
+		this->y() *= a_value;
+		this->z() *= a_value;
 
 		return *this;
 	}
@@ -532,9 +612,9 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Vector3& Geometry_Vector3::operator *=(const Geometry_Vector3& a_vector)
 	{
-		this->x *= a_vector.x;
-		this->y *= a_vector.y;
-		this->z *= a_vector.z;
+		this->x() *= a_vector.x();
+		this->y() *= a_vector.y();
+		this->z() *= a_vector.z();
 
 		return *this;
 	}
@@ -562,7 +642,7 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Vector3 Geometry_Vector3::operator -() const
 	{
-		Geometry_Vector3 t_temp(-this->x,-this->y,-this->z);
+		Geometry_Vector3 t_temp(-this->x(),-this->y(),-this->z());
 
 		return t_temp;
 	}
@@ -574,9 +654,9 @@ namespace NBsys{namespace NGeometry
 	{
 		Geometry_Vector3 t_temp;
 		{
-			t_temp.x = this->x + a_vector.x;
-			t_temp.y = this->y + a_vector.y;
-			t_temp.z = this->z + a_vector.z;
+			t_temp.x() = this->x() + a_vector.x();
+			t_temp.y() = this->y() + a_vector.y();
+			t_temp.z() = this->z() + a_vector.z();
 		}
 
 		return t_temp;
@@ -589,9 +669,9 @@ namespace NBsys{namespace NGeometry
 	{
 		Geometry_Vector3 t_temp;
 		{
-			t_temp.x = this->x - a_vector.x;
-			t_temp.y = this->y - a_vector.y;
-			t_temp.z = this->z - a_vector.z;
+			t_temp.x() = this->x() - a_vector.x();
+			t_temp.y() = this->y() - a_vector.y();
+			t_temp.z() = this->z() - a_vector.z();
 		}
 
 		return t_temp;
@@ -604,9 +684,9 @@ namespace NBsys{namespace NGeometry
 	{
 		Geometry_Vector3 t_temp;
 		{
-			t_temp.x = this->x * a_value;
-			t_temp.y = this->y * a_value;
-			t_temp.z = this->z * a_value;
+			t_temp.x() = this->x() * a_value;
+			t_temp.y() = this->y() * a_value;
+			t_temp.z() = this->z() * a_value;
 		}
 
 		return t_temp;
@@ -629,7 +709,7 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline bool Geometry_Vector3::operator ==(const Geometry_Vector3& a_vector) const
 	{
-		return (this->x == a_vector.x) && (this->y == a_vector.y) && (this->z == a_vector.z);
+		return (this->x() == a_vector.x()) && (this->y() == a_vector.y()) && (this->z() == a_vector.z());
 	}
 
 
@@ -637,7 +717,7 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline bool Geometry_Vector3::operator !=(const Geometry_Vector3& a_vector) const
 	{
-		return (x != a_vector.x) || (y != a_vector.y) || (z != a_vector.z);
+		return (this->x() != a_vector.x()) || (this->y() != a_vector.y()) || (this->z() != a_vector.z());
 	}
 
 
@@ -645,7 +725,7 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline f32 Geometry_Vector3::Dot(const Geometry_Vector3& a_vector) const
 	{
-		f32 t_value = (this->x * a_vector.x) + (this->y * a_vector.y) + (this->z * a_vector.z);
+		f32 t_value = (this->x() * a_vector.x()) + (this->y() * a_vector.y()) + (this->z() * a_vector.z());
 
 		return t_value;
 	}
@@ -655,7 +735,7 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline bool Geometry_Vector3::IsZero() const
 	{
-		return (this->x == 0.0f)&&(this->y == 0.0f)&&(this->z == 0.0f);
+		return (this->x() == 0.0f)&&(this->y() == 0.0f)&&(this->z() == 0.0f);
 	}
 
 
@@ -675,7 +755,7 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline f32 Geometry_Vector3::SquareLength() const
 	{
-		return (this->x * this->x) + (this->y * this->y) + (this->z * this->z);
+		return (this->x() * this->x()) + (this->y() * this->y()) + (this->z() * this->z());
 	}
 
 
@@ -683,9 +763,9 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline f32 Geometry_Vector3::SquareDistance(const Geometry_Vector3& a_vector) const
 	{
-		f32 t_temp_x = (this->x - a_vector.x);
-		f32 t_temp_y = (this->y - a_vector.y);
-		f32 t_temp_z = (this->z - a_vector.z);
+		f32 t_temp_x = (this->x() - a_vector.x());
+		f32 t_temp_y = (this->y() - a_vector.y());
+		f32 t_temp_z = (this->z() - a_vector.z());
 
 		f32 t_value = (t_temp_x * t_temp_x) + (t_temp_y * t_temp_y) + (t_temp_z * t_temp_z);
 
@@ -703,9 +783,9 @@ namespace NBsys{namespace NGeometry
 	{
 		Geometry_Vector3 t_temp;
 		{
-			t_temp.x = this->x + (a_vector.x - this->x) * a_per;
-			t_temp.y = this->y + (a_vector.y - this->y) * a_per;
-			t_temp.z = this->z + (a_vector.z - this->z) * a_per;
+			t_temp.x() = this->x() + (a_vector.x() - this->x()) * a_per;
+			t_temp.y() = this->y() + (a_vector.y() - this->y()) * a_per;
+			t_temp.z() = this->z() + (a_vector.z() - this->z()) * a_per;
 		}
 		return t_temp;
 	}
@@ -721,9 +801,9 @@ namespace NBsys{namespace NGeometry
 	{
 		Geometry_Vector3 t_temp;
 		{
-			t_temp.x = a_vector_1.x + (a_vector_2.x - a_vector_1.x) * a_per;
-			t_temp.y = a_vector_1.y + (a_vector_2.y - a_vector_1.y) * a_per;
-			t_temp.z = a_vector_1.z + (a_vector_2.z - a_vector_1.z) * a_per;
+			t_temp.x() = a_vector_1.x() + (a_vector_2.x() - a_vector_1.x()) * a_per;
+			t_temp.y() = a_vector_1.y() + (a_vector_2.y() - a_vector_1.y()) * a_per;
+			t_temp.z() = a_vector_1.z() + (a_vector_2.z() - a_vector_1.z()) * a_per;
 		}
 		return t_temp;
 	}
@@ -737,9 +817,9 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline void Geometry_Vector3::Set_Lerp(const Geometry_Vector3& a_vector,f32 a_per)
 	{
-		this->x += (a_vector.x - this->x) * a_per;
-		this->y += (a_vector.y - this->y) * a_per;
-		this->z += (a_vector.z - this->z) * a_per;
+		this->x() += (a_vector.x() - this->x()) * a_per;
+		this->y() += (a_vector.y() - this->y()) * a_per;
+		this->z() += (a_vector.z() - this->z()) * a_per;
 	}
 
 
@@ -751,9 +831,73 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline void Geometry_Vector3::Set_Lerp(const Geometry_Vector3& a_vector_1,const Geometry_Vector3& a_vector_2,f32 a_per)
 	{
-		this->x = a_vector_1.x + (a_vector_2.x - a_vector_1.x) * a_per;
-		this->y = a_vector_1.y + (a_vector_2.y - a_vector_1.y) * a_per;
-		this->z = a_vector_1.z + (a_vector_2.z - a_vector_1.z) * a_per;
+		this->x() = a_vector_1.x() + (a_vector_2.x() - a_vector_1.x()) * a_per;
+		this->y() = a_vector_1.y() + (a_vector_2.y() - a_vector_1.y()) * a_per;
+		this->z() = a_vector_1.z() + (a_vector_2.z() - a_vector_1.z()) * a_per;
+	}
+
+
+	/** x
+	*/
+	inline const f32& Geometry_Vector4::x() const
+	{
+		return this->raw.v.x;
+	}
+
+
+	/** x
+	*/
+	inline f32& Geometry_Vector4::x()
+	{
+		return this->raw.v.x;
+	}
+
+
+	/** y
+	*/
+	inline const f32& Geometry_Vector4::y() const
+	{
+		return this->raw.v.y;
+	}
+
+
+	/** y
+	*/
+	inline f32& Geometry_Vector4::y()
+	{
+		return this->raw.v.y;
+	}
+
+
+	/** z
+	*/
+	inline const f32& Geometry_Vector4::z() const
+	{
+		return this->raw.v.z;
+	}
+
+
+	/** z
+	*/
+	inline f32& Geometry_Vector4::z()
+	{
+		return this->raw.v.z;
+	}
+
+
+	/** w
+	*/
+	inline const f32& Geometry_Vector4::w() const
+	{
+		return this->raw.v.w;
+	}
+
+
+	/** w
+	*/
+	inline f32& Geometry_Vector4::w()
+	{
+		return this->raw.v.w;
 	}
 
 
@@ -768,10 +912,10 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Vector4::Geometry_Vector4(f32 a_x,f32 a_y,f32 a_z,f32 a_w)
 	{
-		this->x = a_x;
-		this->y = a_y;
-		this->z = a_z;
-		this->w = a_w;
+		this->x() = a_x;
+		this->y() = a_y;
+		this->z() = a_z;
+		this->w() = a_w;
 	}
 
 
@@ -779,10 +923,10 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Vector4::Geometry_Vector4(const f32* a_value_pointer)
 	{
-		this->x = a_value_pointer[0];
-		this->y = a_value_pointer[1];
-		this->z = a_value_pointer[2];
-		this->w = a_value_pointer[3];
+		this->x() = a_value_pointer[0];
+		this->y() = a_value_pointer[1];
+		this->z() = a_value_pointer[2];
+		this->w() = a_value_pointer[3];
 	}
 
 
@@ -790,10 +934,10 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Vector4::Geometry_Vector4(const Geometry_Vector4& a_vector)
 	{
-		this->x = a_vector.x;
-		this->y = a_vector.y;
-		this->z = a_vector.z;
-		this->w = a_vector.w;
+		this->x() = a_vector.x();
+		this->y() = a_vector.y();
+		this->z() = a_vector.z();
+		this->w() = a_vector.w();
 	}
 
 
@@ -836,10 +980,10 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Vector4& Geometry_Vector4::Set(f32 a_x,f32 a_y,f32 a_z,f32 a_w)
 	{
-		this->x = a_x;
-		this->y = a_y;
-		this->z = a_z;
-		this->w = a_w;
+		this->x() = a_x;
+		this->y() = a_y;
+		this->z() = a_z;
+		this->w() = a_w;
 
 		return *this;
 	}
@@ -849,10 +993,10 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Vector4& Geometry_Vector4::Set(const Geometry_Vector4& a_vector)
 	{
-		this->x = a_vector.x;
-		this->y = a_vector.y;
-		this->z = a_vector.z;
-		this->w = a_vector.w;
+		this->x() = a_vector.x();
+		this->y() = a_vector.y();
+		this->z() = a_vector.z();
+		this->w() = a_vector.w();
 
 		return *this;
 	}
@@ -872,14 +1016,14 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Vector4::operator f32*()
 	{
-		return &this->v[0];
+		return &this->raw.vector[0];
 	}
 
 	/** [キャスト]。
 	*/
 	inline Geometry_Vector4::operator const f32*() const
 	{
-		return &this->v[0];
+		return &this->raw.vector[0];
 	}
 
 

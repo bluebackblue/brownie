@@ -303,10 +303,10 @@ namespace NTest{namespace NCommon
 
 				NBsys::NVertex::Vertex_Data_Pos3Uv2Color4 t_vector;
 
-				t_vector.color_rr = t_instence->color.r; 
-				t_vector.color_gg = t_instence->color.g;
-				t_vector.color_bb = t_instence->color.b;
-				t_vector.color_aa = t_instence->color.a;
+				t_vector.color_rr = t_instence->color.r(); 
+				t_vector.color_gg = t_instence->color.g();
+				t_vector.color_bb = t_instence->color.b();
+				t_vector.color_aa = t_instence->color.a();
 
 				//00
 				{

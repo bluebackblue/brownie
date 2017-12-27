@@ -204,9 +204,9 @@ namespace NBsys{namespace NGeometry
 	{
 		Geometry_Vector3 t_temp;
 		{
-			t_temp.x = this->ax_x;
-			t_temp.y = this->ax_y;
-			t_temp.z = this->ax_z;
+			t_temp.x() = this->ax_x;
+			t_temp.y() = this->ax_y;
+			t_temp.z() = this->ax_z;
 		}
 		return t_temp;
 	}
@@ -218,9 +218,9 @@ namespace NBsys{namespace NGeometry
 	{
 		Geometry_Vector3 t_temp;
 		{
-			t_temp.x = this->ay_x;
-			t_temp.y = this->ay_y;
-			t_temp.z = this->ay_z;
+			t_temp.x() = this->ay_x;
+			t_temp.y() = this->ay_y;
+			t_temp.z() = this->ay_z;
 		}
 		return t_temp;
 	}
@@ -232,9 +232,9 @@ namespace NBsys{namespace NGeometry
 	{
 		Geometry_Vector3 t_temp;
 		{
-			t_temp.x = this->az_x;
-			t_temp.y = this->az_y;
-			t_temp.z = this->az_z;
+			t_temp.x() = this->az_x;
+			t_temp.y() = this->az_y;
+			t_temp.z() = this->az_z;
 		}
 		return t_temp;
 	}
@@ -244,9 +244,9 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline void Geometry_Matrix_44::Set_AxisX(const Geometry_Vector3& a_vector)
 	{
-		this->ax_x = a_vector.x;
-		this->ax_y = a_vector.y;
-		this->ax_z = a_vector.z;
+		this->ax_x = a_vector.x();
+		this->ax_y = a_vector.y();
+		this->ax_z = a_vector.z();
 	}
 
 
@@ -254,9 +254,9 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline void Geometry_Matrix_44::Set_AxisY(const Geometry_Vector3& a_vector)
 	{
-		this->ay_x = a_vector.x;
-		this->ay_y = a_vector.y;
-		this->ay_z = a_vector.z;
+		this->ay_x = a_vector.x();
+		this->ay_y = a_vector.y();
+		this->ay_z = a_vector.z();
 	}
 
 
@@ -264,9 +264,9 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline void Geometry_Matrix_44::Set_AxisZ(const Geometry_Vector3& a_vector)
 	{
-		this->az_x = a_vector.x;
-		this->az_y = a_vector.y;
-		this->az_z = a_vector.z;
+		this->az_x = a_vector.x();
+		this->az_y = a_vector.y();
+		this->az_z = a_vector.z();
 	}
 
 
@@ -284,9 +284,9 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline void Geometry_Matrix_44::Set_Translate(const Geometry_Vector3& a_vector)
 	{
-		this->tr_x = a_vector.x;
-		this->tr_y = a_vector.y;
-		this->tr_z = a_vector.z;
+		this->tr_x = a_vector.x();
+		this->tr_y = a_vector.y();
+		this->tr_z = a_vector.z();
 	}
 
 
@@ -352,7 +352,7 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline void Geometry_Matrix_44::Calc_Scale(const Geometry_Vector3& a_vector)
 	{
-		this->Calc_Scale(a_vector.x,a_vector.y,a_vector.z);
+		this->Calc_Scale(a_vector.x(),a_vector.y(),a_vector.z());
 	}
 
 
@@ -615,19 +615,19 @@ namespace NBsys{namespace NGeometry
 
 		Geometry_Vector3 t_vector = a_vector.Make_Normalize();
 
-		this->ax_x = t_1_cos * t_vector.x * t_vector.x + t_cos;
-		this->ax_y = t_vector.x * t_vector.y * t_1_cos - t_vector.z * t_sin;
-		this->ax_z = t_vector.x * t_vector.z * t_1_cos + t_vector.y * t_sin;
+		this->ax_x = t_1_cos * t_vector.x() * t_vector.x() + t_cos;
+		this->ax_y = t_vector.x() * t_vector.y() * t_1_cos - t_vector.z() * t_sin;
+		this->ax_z = t_vector.x() * t_vector.z() * t_1_cos + t_vector.y() * t_sin;
 		this->ax_w = 0.0f;
 
-		this->ay_x = t_vector.x * t_vector.y * t_1_cos + t_vector.z * t_sin;
-		this->ay_y = t_1_cos * t_vector.y * t_vector.y + t_cos;
-		this->ay_z = t_vector.y * t_vector.z * t_1_cos - t_vector.x * t_sin;
+		this->ay_x = t_vector.x() * t_vector.y() * t_1_cos + t_vector.z() * t_sin;
+		this->ay_y = t_1_cos * t_vector.y() * t_vector.y() + t_cos;
+		this->ay_z = t_vector.y() * t_vector.z() * t_1_cos - t_vector.x() * t_sin;
 		this->ay_w = 0.0f;
 
-		this->az_x = t_vector.x * t_vector.z * t_1_cos - t_vector.y * t_sin;
-		this->az_y = t_vector.y * t_vector.z * t_1_cos + t_vector.x * t_sin;
-		this->az_z = t_1_cos * t_vector.z * t_vector.z + t_cos;
+		this->az_x = t_vector.x() * t_vector.z() * t_1_cos - t_vector.y() * t_sin;
+		this->az_y = t_vector.y() * t_vector.z() * t_1_cos + t_vector.x() * t_sin;
+		this->az_z = t_1_cos * t_vector.z() * t_vector.z() + t_cos;
 		this->az_w = 0.0f;
 
 		this->tr_x = 0.0f;
@@ -811,19 +811,19 @@ namespace NBsys{namespace NGeometry
 		t_y.Set_Normalize();
 
 		{
-			this->ax_x = t_x.x;
-			this->ax_y = t_x.y;
-			this->ax_z = t_x.z;
+			this->ax_x = t_x.x();
+			this->ax_y = t_x.y();
+			this->ax_z = t_x.z();
 			this->ax_w = 0.0f;
 
-			this->ay_x = t_y.x;
-			this->ay_y = t_y.y;
-			this->ay_z = t_y.z;
+			this->ay_x = t_y.x();
+			this->ay_y = t_y.y();
+			this->ay_z = t_y.z();
 			this->ay_w = 0.0f;
 
-			this->az_x = t_z.x;
-			this->az_y = t_z.y;
-			this->az_z = t_z.z;
+			this->az_x = t_z.x();
+			this->az_y = t_z.y();
+			this->az_z = t_z.z();
 			this->az_w = 0.0f;
 
 			this->tr_x = 0.0f;
@@ -852,19 +852,19 @@ namespace NBsys{namespace NGeometry
 		t_z.Set_Normalize();
 
 		{
-			this->ax_x = t_x.x;
-			this->ax_y = t_x.y;
-			this->ax_z = t_x.z;
+			this->ax_x = t_x.x();
+			this->ax_y = t_x.y();
+			this->ax_z = t_x.z();
 			this->ax_w = 0.0f;
 
-			this->ay_x = t_y.x;
-			this->ay_y = t_y.y;
-			this->ay_z = t_y.z;
+			this->ay_x = t_y.x();
+			this->ay_y = t_y.y();
+			this->ay_z = t_y.z();
 			this->ay_w = 0.0f;
 
-			this->az_x = t_z.x;
-			this->az_y = t_z.y;
-			this->az_z = t_z.z;
+			this->az_x = t_z.x();
+			this->az_y = t_z.y();
+			this->az_z = t_z.z();
 			this->az_w = 0.0f;
 
 			this->tr_x = 0.0f;
@@ -1135,19 +1135,19 @@ namespace NBsys{namespace NGeometry
 
 			Geometry_Vector3 t_axis_yy = t_axis_zz.Make_Cross(t_axis_xx);
 
-			this->ax_x = t_axis_xx.x;
-			this->ax_y = t_axis_yy.x;
-			this->ax_z = t_axis_zz.x;
+			this->ax_x = t_axis_xx.x();
+			this->ax_y = t_axis_yy.x();
+			this->ax_z = t_axis_zz.x();
 			this->ax_w = 0.0f;
 
-			this->ay_x = t_axis_xx.y;
-			this->ay_y = t_axis_yy.y;
-			this->ay_z = t_axis_zz.y;
+			this->ay_x = t_axis_xx.y();
+			this->ay_y = t_axis_yy.y();
+			this->ay_z = t_axis_zz.y();
 			this->ay_w = 0.0f;
 
-			this->az_x = t_axis_xx.z;
-			this->az_y = t_axis_yy.z;
-			this->az_z = t_axis_zz.z;
+			this->az_x = t_axis_xx.z();
+			this->az_y = t_axis_yy.z();
+			this->az_z = t_axis_zz.z();
 			this->az_w = 0.0f;
 
 			this->tr_x = -t_axis_xx.Dot( a_camera_position );

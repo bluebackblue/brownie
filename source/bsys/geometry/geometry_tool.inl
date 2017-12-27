@@ -47,8 +47,8 @@ namespace NBsys{namespace NGeometry
 		f32 t_end_vector = a_rate * a_rate * a_rate - a_rate * a_rate;
 		
 		return Geometry_Vector2(
-			a_start_pos.x * t_start_pos + a_start_vector.x * t_start_vector + a_end_pos.x * t_end_pos + a_end_vector.x * t_end_vector,
-			a_start_pos.y * t_start_pos + a_start_vector.y * t_start_vector + a_end_pos.y * t_end_pos + a_end_vector.y * t_end_vector
+			a_start_pos.x() * t_start_pos + a_start_vector.x() * t_start_vector + a_end_pos.x() * t_end_pos + a_end_vector.x() * t_end_vector,
+			a_start_pos.y() * t_start_pos + a_start_vector.y() * t_start_vector + a_end_pos.y() * t_end_pos + a_end_vector.y() * t_end_vector
 		);
 	}
 
@@ -79,8 +79,8 @@ namespace NBsys{namespace NGeometry
 		f32 t_3 = a_rate * a_rate;
 
 		return Geometry_Vector2(
-			t_1 * a_pos_1.x + t_2 * a_pos_2.x + t_3 * a_pos_3.x,
-			t_1 * a_pos_1.y + t_2 * a_pos_2.y + t_3 * a_pos_3.y
+			t_1 * a_pos_1.x() + t_2 * a_pos_2.x() + t_3 * a_pos_3.x(),
+			t_1 * a_pos_1.y() + t_2 * a_pos_2.y() + t_3 * a_pos_3.y()
 		);
 	}
 
@@ -97,8 +97,8 @@ namespace NBsys{namespace NGeometry
 		f32 t_4 = a_rate * a_rate * a_rate;
 
 		return Geometry_Vector2(
-			t_1 * a_pos_1.x + t_2 * a_pos_2.x + t_3 * a_pos_3.x + t_4 * a_pos_4.x,
-			t_1 * a_pos_1.y + t_2 * a_pos_2.y + t_3 * a_pos_3.y + t_4 * a_pos_4.y
+			t_1 * a_pos_1.x() + t_2 * a_pos_2.x() + t_3 * a_pos_3.x() + t_4 * a_pos_4.x(),
+			t_1 * a_pos_1.y() + t_2 * a_pos_2.y() + t_3 * a_pos_3.y() + t_4 * a_pos_4.y()
 		);
 	}
 
@@ -116,8 +116,8 @@ namespace NBsys{namespace NGeometry
 		f32 t_5 = a_rate * a_rate * a_rate;
 
 		return Geometry_Vector2(
-			t_1 * a_pos_1.x + t_2 * a_pos_2.x + t_3 * a_pos_3.x + t_4 * a_pos_4.x + t_5 * a_pos_5.x,
-			t_1 * a_pos_1.y + t_2 * a_pos_2.y + t_3 * a_pos_3.y + t_4 * a_pos_4.y + t_5 * a_pos_5.y
+			t_1 * a_pos_1.x() + t_2 * a_pos_2.x() + t_3 * a_pos_3.x() + t_4 * a_pos_4.x() + t_5 * a_pos_5.x(),
+			t_1 * a_pos_1.y() + t_2 * a_pos_2.y() + t_3 * a_pos_3.y() + t_4 * a_pos_4.y() + t_5 * a_pos_5.y()
 		);
 	}
 

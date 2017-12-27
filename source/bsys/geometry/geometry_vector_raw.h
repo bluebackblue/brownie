@@ -24,55 +24,58 @@ namespace NBsys{namespace NGeometry
 {
 	/** Geometry_Vector_2_Raw
 	*/
-	struct Geometry_Vector_2_Raw
+	union Geometry_Vector_2_Raw
 	{
-		union
+		/** Vector
+		*/
+		struct Vector
 		{
-			struct
-			{
-				f32 x;
-				f32 y;
-			};
+			f32 x;
+			f32 y;
+		}v;
 
-			f32 v[2];
-		};
+		/** vector
+		*/
+		f32 vector[2];
 	};
 
 
 	/** Geometry_Vector_3_Raw
 	*/
-	struct Geometry_Vector_3_Raw
+	union Geometry_Vector_3_Raw
 	{
-		union
+		/** Vector
+		*/
+		struct Vector
 		{
-			struct
-			{
-				f32 x;
-				f32 y;
-				f32 z;
-			};
+			f32 x;
+			f32 y;
+			f32 z;
+		}v;
 
-			f32 v[3];
-		};
+		/** vector
+		*/
+		f32 vector[3];
 	};
 
 
 	/** Geometry_Vector_4_Raw
 	*/
-	struct Geometry_Vector_4_Raw
+	union Geometry_Vector_4_Raw
 	{
-		union
+		/** Vector
+		*/
+		struct Vector
 		{
-			struct
-			{
-				f32 x;
-				f32 y;
-				f32 z;
-				f32 w;
-			};
+			f32 x;
+			f32 y;
+			f32 z;
+			f32 w;
+		}v;
 
-			f32 v[4];
-		};
+		/** vector
+		*/
+		f32 vector[4];
 	};
 
 

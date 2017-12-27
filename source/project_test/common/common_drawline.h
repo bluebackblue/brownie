@@ -225,25 +225,25 @@ namespace NTest{namespace NCommon
 		{
 			NBsys::NVertex::Vertex_Data_Pos3Color4 t_vector;
 
-			t_vector.color_rr = a_color.r; 
-			t_vector.color_gg = a_color.g;
-			t_vector.color_bb = a_color.b;
-			t_vector.color_aa = a_color.a;
+			t_vector.color_rr = a_color.r(); 
+			t_vector.color_gg = a_color.g();
+			t_vector.color_bb = a_color.b();
+			t_vector.color_aa = a_color.a();
 
 			//00
 			{
-				t_vector.pos_xx = a_start.x;
-				t_vector.pos_yy = a_start.y;
-				t_vector.pos_zz = a_start.z;
+				t_vector.pos_xx = a_start.x();
+				t_vector.pos_yy = a_start.y();
+				t_vector.pos_zz = a_start.z();
 
 				this->vertex->AddVertex(t_vector);
 			}
 
 			//10
 			{
-				t_vector.pos_xx = a_end.x;
-				t_vector.pos_yy = a_end.y;
-				t_vector.pos_zz = a_end.z;
+				t_vector.pos_xx = a_end.x();
+				t_vector.pos_yy = a_end.y();
+				t_vector.pos_zz = a_end.z();
 
 				this->vertex->AddVertex(t_vector);
 			}

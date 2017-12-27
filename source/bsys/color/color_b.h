@@ -34,32 +34,63 @@ namespace NBsys{namespace NColor
 {
 	/** Color_B_Raw
 	*/
-	struct Color_B_Raw
+	union Color_B_Raw
 	{
-		union
+		/** Color
+		*/
+		struct Color
 		{
-			struct
-			{
-				u8 r;
-				u8 g;
-				u8 b;
-				u8 a;
-			};
+			u8 r;
+			u8 g;
+			u8 b;
+			u8 a;
+		}c;
 
-			u8 p[4];
-		};
+		/** color
+		*/
+		u8 color[4];
 	};
-
-
-	/** Color_B_Raw is POD
-	*/
-	STATIC_ASSERT(std::is_pod<Color_B_Raw>::value == true);
 
 
 	/** Color_B
 	*/
-	struct Color_B : public Color_B_Raw
+	struct Color_B 
 	{
+		/** raw
+		*/
+		Color_B_Raw raw;
+
+		/** r
+		*/
+		inline const u8& r() const;
+
+		/** r
+		*/
+		inline u8& r();
+
+		/** g
+		*/
+		inline const u8& g() const;
+
+		/** g
+		*/
+		inline u8& g();
+
+		/** b
+		*/
+		inline const u8& b() const;
+
+		/** b
+		*/
+		inline u8& b();
+
+		/** a
+		*/
+		inline const u8& a() const;
+
+		/** a
+		*/
+		inline u8& a();
 
 		/** constructor
 		*/

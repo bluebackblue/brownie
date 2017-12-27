@@ -30,8 +30,28 @@ namespace NBsys{namespace NGeometry
 {
 	/** Geometry_Vector2
 	*/
-	struct Geometry_Vector2 : public Geometry_Vector_2_Raw
+	struct Geometry_Vector2
 	{
+		/** raw
+		*/
+		Geometry_Vector_2_Raw raw;
+
+		/** x
+		*/
+		inline const f32& x() const;
+
+		/** x
+		*/
+		inline f32& x();
+
+		/** y
+		*/
+		inline const f32& y() const;
+
+		/** y
+		*/
+		inline f32& y();
+
 		/** constructor
 		*/
 		inline Geometry_Vector2();
@@ -92,8 +112,36 @@ namespace NBsys{namespace NGeometry
 
 	/** Geometry_Vector3
 	*/
-	struct Geometry_Vector3 : public Geometry_Vector_3_Raw
+	struct Geometry_Vector3
 	{
+		/** raw
+		*/
+		Geometry_Vector_3_Raw raw;
+
+		/** x
+		*/
+		inline const f32& x() const;
+
+		/** x
+		*/
+		inline f32& x();
+
+		/** y
+		*/
+		inline const f32& y() const;
+
+		/** y
+		*/
+		inline f32& y();
+
+		/** z
+		*/
+		inline const f32& z() const;
+
+		/** z
+		*/
+		inline f32& z();
+
 		/** constructor
 		*/
 		inline Geometry_Vector3();
@@ -290,8 +338,44 @@ namespace NBsys{namespace NGeometry
 
 	/** Geometry_Vector4
 	*/
-	struct Geometry_Vector4 : public Geometry_Vector_4_Raw
+	struct Geometry_Vector4
 	{
+		/** raw
+		*/
+		Geometry_Vector_4_Raw raw;
+
+		/** x
+		*/
+		inline const f32& x() const;
+
+		/** x
+		*/
+		inline f32& x();
+
+		/** y
+		*/
+		inline const f32& y() const;
+
+		/** y
+		*/
+		inline f32& y();
+
+		/** z
+		*/
+		inline const f32& z() const;
+
+		/** z
+		*/
+		inline f32& z();
+
+		/** w
+		*/
+		inline const f32& w() const;
+
+		/** w
+		*/
+		inline f32& w();
+
 		/** constructor
 		*/
 		inline Geometry_Vector4();
