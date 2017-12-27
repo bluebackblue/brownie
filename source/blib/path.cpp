@@ -1,7 +1,7 @@
 ﻿
 
 /**
- * Copyright (c) 2016 blueback
+ * Copyright (c) 2016-2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -39,7 +39,7 @@ namespace NBlib
 	{
 		STLWString t_ret;
 
-		for(s32 ii=0;ii<static_cast<s32>(a_path.length());ii++){
+		for(u32 ii=0;ii<static_cast<u32>(a_path.length());ii++){
 			if(a_path[ii] == '\\'){
 				t_ret += L'/';
 			}else{
@@ -67,7 +67,7 @@ namespace NBlib
 	{
 		STLWString t_ret;
 
-		for(s32 ii=0;ii<static_cast<s32>(a_name.length());ii++){
+		for(u32 ii=0;ii<static_cast<u32>(a_name.length());ii++){
 			if(a_name[ii] == '\\'){
 				t_ret += L'/';
 			}else{
@@ -90,7 +90,7 @@ namespace NBlib
 	{
 		STLWString t_ret;
 
-		for(s32 ii=0;ii<static_cast<s32>(a_path.length());ii++){
+		for(u32 ii=0;ii<static_cast<u32>(a_path.length());ii++){
 			if(a_path[ii] == '\\'){
 				t_ret += L'/';
 			}else{
@@ -104,7 +104,7 @@ namespace NBlib
 			}
 		}
 
-		for(s32 ii=0;ii<static_cast<s32>(a_name.length());ii++){
+		for(u32 ii=0;ii<static_cast<u32>(a_name.length());ii++){
 			if(a_name[ii] == '\\'){
 				t_ret += L'/';
 			}else{
@@ -127,7 +127,7 @@ namespace NBlib
 	{
 		STLWString t_ret;
 
-		for(s32 ii=0;ii<static_cast<s32>(a_path_a.length());ii++){
+		for(u32 ii=0;ii<static_cast<u32>(a_path_a.length());ii++){
 			if(a_path_a[ii] == '\\'){
 				t_ret += L'/';
 			}else{
@@ -141,7 +141,7 @@ namespace NBlib
 			}
 		}
 
-		for(s32 ii=0;ii<static_cast<s32>(a_path_b.length());ii++){
+		for(u32 ii=0;ii<static_cast<u32>(a_path_b.length());ii++){
 			if(a_path_b[ii] == '\\'){
 				t_ret += L'/';
 			}else{

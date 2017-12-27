@@ -1,7 +1,7 @@
 ﻿
 
 /**
- * Copyright (c) 2016 blueback
+ * Copyright (c) 2016-2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -27,7 +27,11 @@
 
 /** include
 */
+//#pragma warning(disable:4710)
+#pragma warning(push)
+#pragma warning(disable:4987 4365 4820 4514 4623 4626 5027)
 #include <memory>
+#pragma warning(pop)
 
 
 /** include
@@ -50,7 +54,7 @@ namespace NBlib
 	{
 		#if defined(PLATFORM_VCWIN)
 
-		std::memset(a_data,a_value,a_size);
+		std::memset(a_data,a_value,static_cast<size_t>(a_size));
 
 		#elif defined(PLATFORM_GNUCWIN)
 
@@ -70,7 +74,7 @@ namespace NBlib
 	{
 		#if defined(PLATFORM_VCWIN)
 
-		::memcpy_s(a_dest,a_check_dest_size,a_src,a_src_size);
+		::memcpy_s(a_dest,static_cast<size_t>(a_check_dest_size),a_src,static_cast<size_t>(a_src_size));
 
 		#elif defined(PLATFORM_GNUCWIN)
 
@@ -90,7 +94,7 @@ namespace NBlib
 	{
 		#if defined(PLATFORM_VCWIN)
 
-		return std::memcmp(a_data_1,a_data_2,a_size);
+		return std::memcmp(a_data_1,a_data_2,static_cast<size_t>(a_size));
 
 		#elif defined(PLATFORM_GNUCWIN)
 
@@ -111,7 +115,7 @@ namespace NBlib
 	{
 		#if defined(PLATFORM_VCWIN)
 
-		return static_cast<s32>(::strnlen_s(a_string,a_max));
+		return static_cast<s32>(::strnlen_s(a_string,static_cast<size_t>(a_max)));
 
 		#elif defined(PLATFORM_GNUCWIN)
 
@@ -132,7 +136,7 @@ namespace NBlib
 	{
 		#if defined(PLATFORM_VCWIN)
 
-		return static_cast<s32>(::wcsnlen_s(a_strin,a_max));
+		return static_cast<s32>(::wcsnlen_s(a_strin,static_cast<size_t>(a_max)));
 
 		#elif defined(PLATFORM_GNUCWIN)
 

@@ -1,7 +1,7 @@
 ﻿
 
 /**
- * Copyright (c) 2016 blueback
+ * Copyright (c) 2016-2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -78,7 +78,7 @@ namespace NBlib
 		{
 			LARGE_INTEGER t_value;
 			::QueryPerformanceCounter(&t_value);
-			return t_value.QuadPart * 1000 * 1000 / NImpl::s_frequency.QuadPart;
+			return static_cast<u64>(t_value.QuadPart * 1000 * 1000 / NImpl::s_frequency.QuadPart);
 		}
 		#else
 		{

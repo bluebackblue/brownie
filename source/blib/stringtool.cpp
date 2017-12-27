@@ -1,7 +1,7 @@
 ﻿
 
 /**
- * Copyright (c) 2016 blueback
+ * Copyright (c) 2016-2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -59,12 +59,12 @@ namespace NBlib
 
 			if(t_wchar_use_len > 0){
 				//出力文字。終端を含む。
-				s32 t_alloca_size = t_wchar_use_len * sizeof(wchar);
-				wchar* t_wchar = reinterpret_cast<wchar*>(MALLOCA(t_alloca_size));
+				s32 t_alloca_size = static_cast<s32>(t_wchar_use_len * sizeof(wchar));
+				wchar* t_wchar = reinterpret_cast<wchar*>(MALLOCA(static_cast<size_t>(t_alloca_size)));
 
 				if(t_wchar != nullptr){
 					//変換。
-					t_wchar_use_len = ::MultiByteToWideChar(t_codepage,t_flags,t_char,t_char_len,t_wchar,t_alloca_size / sizeof(wchar));
+					t_wchar_use_len = ::MultiByteToWideChar(t_codepage,t_flags,t_char,t_char_len,t_wchar,t_alloca_size / static_cast<s32>(sizeof(wchar)));
 					if(static_cast<s32>(t_wchar_use_len * sizeof(wchar)) == t_alloca_size){
 						a_wstring = t_wchar;
 
@@ -104,8 +104,8 @@ namespace NBlib
 		
 			if(t_char_use_len > 0){
 				//出力文字。終端文字を含む。
-				s32 t_alloca_size = t_char_use_len * sizeof(char);
-				char* t_char = reinterpret_cast<char*>(MALLOCA(t_alloca_size));
+				s32 t_alloca_size = t_char_use_len * static_cast<s32>(sizeof(char));
+				char* t_char = reinterpret_cast<char*>(MALLOCA(static_cast<size_t>(t_alloca_size)));
 
 				if(t_char != nullptr){
 					//変換。
@@ -247,7 +247,7 @@ namespace NBlib
 			}
 
 			if(t_ii_start == 0){
-				a_value = t_value;
+				a_value = static_cast<s32>(t_value);
 			}else{
 				a_value = - static_cast<s32>(t_value);
 			}
@@ -266,9 +266,9 @@ namespace NBlib
 	{
 		const char* t_string = a_string.c_str();
 		const char* t_prefix = a_prefix.c_str();
-		s32 t_ii_max = static_cast<s32>(a_prefix.size());
+		u32 t_ii_max = static_cast<u32>(a_prefix.size());
 
-		for(s32 ii=0;ii<t_ii_max;ii++){
+		for(u32 ii=0;ii<t_ii_max;ii++){
 			if(a_string[ii] == nullchar){
 				return false;
 			}else if(t_string[ii] != t_prefix[ii]){

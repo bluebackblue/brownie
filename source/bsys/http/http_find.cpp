@@ -1,7 +1,7 @@
 ﻿
 
 /**
- * Copyright (c) 2017 blueback
+ * Copyright (c) 2016-2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -16,7 +16,10 @@
 
 /** include
 */
+#pragma warning(push)
+#pragma warning(disable:4464)
 #include "../types/types.h"
+#pragma warning(pop)
 
 
 /** include
@@ -33,7 +36,11 @@
 
 /** include
 */
+#pragma warning(disable:4710)
+#pragma warning(push)
+#pragma warning(disable:4514 4987 4820 4625 4626 4365 5026 5027 4061 4623 4571 4774)
 #include <regex>
+#pragma warning(pop)
 
 
 /** NBsys::NHttp

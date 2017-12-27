@@ -1,7 +1,7 @@
 ﻿
 
 /**
- * Copyright (c) 2016 blueback
+ * Copyright (c) 2016-2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -26,8 +26,10 @@
 #if defined(PLATFORM_VCWIN) || defined(PLATFORM_GNUCWIN)
 
 	//[include]
+	//#pragma warning(push)
+	//#pragma warning(disable:0)
 	#include <stdarg.h>
-
+	//#pragma warning(pop)
 #endif
 
 
@@ -54,7 +56,7 @@ namespace NBlib
 
 			#if defined(PLATFORM_VCWIN)
 			{
-				::_vsnprintf_s(reinterpret_cast<char*>(a_buffer),t_buffer_len,t_buffer_len-1,a_format,t_va);
+				::_vsnprintf_s(reinterpret_cast<char*>(a_buffer),static_cast<size_t>(t_buffer_len),static_cast<size_t>(t_buffer_len-1),a_format,t_va);
 			}
 			#else
 			{
@@ -88,7 +90,7 @@ namespace NBlib
 
 			#if defined(PLATFORM_VCWIN)
 			{
-				::_vsnwprintf_s(reinterpret_cast<wchar*>(a_buffer),t_buffer_len,t_buffer_len-1,a_format,t_va);
+				::_vsnwprintf_s(reinterpret_cast<wchar*>(a_buffer),static_cast<size_t>(t_buffer_len),static_cast<size_t>(t_buffer_len-1),a_format,t_va);
 			}
 			#else
 			{

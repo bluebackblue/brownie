@@ -1,7 +1,7 @@
 ﻿
 
 /**
- * Copyright (c) 2016 blueback
+ * Copyright (c) 2016-2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -141,9 +141,9 @@ namespace NBlib
 					DWORD t_fix = 0;
 					bool t_ret = true;
 
-					DWORD t_offset_low = static_cast<DWORD>((a_offset+t_index)&0xFFFFFFFF);	//下位。
-					DWORD t_ret_seek = ::SetFilePointer(this->rawhandle,t_offset_low,WIN_NULL,FILE_BEGIN);
-					if(t_ret_seek == INVALID_SET_FILE_POINTER){
+					LARGE_INTEGER t_offset;
+					t_offset.QuadPart = a_offset + t_index;
+					if(::SetFilePointerEx(this->rawhandle,t_offset,WIN_NULL,FILE_BEGIN) == FALSE){
 						t_ret = false;
 					}
 
@@ -198,9 +198,9 @@ namespace NBlib
 					DWORD t_fix = 0;
 					bool t_ret = true;
 
-					DWORD t_offset_low = static_cast<DWORD>((a_offset+t_index)&0xFFFFFFFF);	//下位。
-					DWORD t_ret_seek = ::SetFilePointer(this->rawhandle,t_offset_low,WIN_NULL,FILE_BEGIN);
-					if(t_ret_seek == INVALID_SET_FILE_POINTER){
+					LARGE_INTEGER t_offset;
+					t_offset.QuadPart = a_offset + t_index;
+					if(::SetFilePointerEx(this->rawhandle,t_offset,WIN_NULL,FILE_BEGIN) == FALSE){
 						t_ret = false;
 					}
 
@@ -276,9 +276,9 @@ namespace NBlib
 			{
 				bool t_ret = true;
 
-				DWORD t_offset_low = static_cast<DWORD>((a_offset)&0xFFFFFFFF);	//下位。
-				DWORD t_ret_seek = ::SetFilePointer(this->rawhandle,t_offset_low,WIN_NULL,FILE_BEGIN);
-				if(t_ret_seek == INVALID_SET_FILE_POINTER){
+				LARGE_INTEGER t_offset;
+				t_offset.QuadPart = a_offset;
+				if(::SetFilePointerEx(this->rawhandle,t_offset,WIN_NULL,FILE_BEGIN) == FALSE){
 					t_ret = false;
 				}
 

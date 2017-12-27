@@ -1,7 +1,7 @@
 ﻿
 
 /**
- * Copyright (c) 2016 blueback
+ * Copyright (c) 2016-2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -29,7 +29,11 @@
 */
 #if(BLIB_STDRANDOM_ENABLE)
 
+	#pragma warning(disable:4710)
+	#pragma warning(push)
+	#pragma warning(disable:4987 4820 4365 4625 4626 5027 4514 4571 4623 4774 5026)
 	#include <random>
+	#pragma warning(pop)
 
 #endif
 

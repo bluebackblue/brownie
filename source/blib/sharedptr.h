@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 /**
- * Copyright (c) 2016 blueback
+ * Copyright (c) 2016-2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -26,7 +26,10 @@
 #if defined(PLATFORM_VCWIN)
 
 	//[include]
+	#pragma warning(push)
+	#pragma warning(disable:4514)
 	#include <intrin.h>
+	#pragma warning(pop)
 
 #endif
 
@@ -35,7 +38,11 @@
 */
 #if(BLIB_STDSHAREDPTR_ENABLE)
 
+	//#pragma warning(disable:4710)
+	#pragma warning(push)
+	#pragma warning(disable:4987 4365 4820 4514 4623 4626 5027)
 	#include <memory>
+	#pragma warning(pop)
 
 #endif
 
@@ -287,6 +294,8 @@ namespace NBlib
 		カウント、インスタンス、削除子の管理。
 
 	*/
+	#pragma warning(push)
+	#pragma warning(disable:4820)	//TODO
 	template <typename T,typename D> class sharedptr_impl
 		:
 		public sharedptrbase
@@ -361,6 +370,8 @@ namespace NBlib
 		}
 
 	};
+	#pragma warning(pop)
+
 
 	/** nullsharedptr。
 	*/
@@ -435,9 +446,11 @@ namespace NBlib
 
 	};
 
+
 	/** weakptr
 	*/
 	template <typename T> class weakptr;
+
 
 	/** sharedptr
 	*/

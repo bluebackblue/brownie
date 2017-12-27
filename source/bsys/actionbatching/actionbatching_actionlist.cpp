@@ -1,7 +1,7 @@
 ﻿
 
 /**
- * Copyright (c) 2016 blueback
+ * Copyright (c) 2016-2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -16,7 +16,10 @@
  
 /** include
 */
+#pragma warning(push)
+#pragma warning(disable:4464)
 #include "../types/types.h"
+#pragma warning(pop)
 
 
 /** include
@@ -62,7 +65,7 @@ namespace NBsys{namespace NActionBatching
 		this->endrequest = false;
 
 		if(this->index < static_cast<s32>(this->actionlist.size())){
-			this->actionlist[this->index]->Start();
+			this->actionlist[static_cast<u32>(this->index)]->Start();
 		}else{
 			//空。
 			ASSERT(0);
@@ -79,7 +82,7 @@ namespace NBsys{namespace NActionBatching
 		f32 t_delta = a_delta;
 
 		while(t_delta > 0.0f){
-			s32 t_next = this->actionlist[this->index]->Do(t_delta,this->endrequest);
+			s32 t_next = this->actionlist[static_cast<u32>(this->index)]->Do(t_delta,this->endrequest);
 			if(t_next != 0){
 				this->index += t_next;
 
@@ -90,7 +93,7 @@ namespace NBsys{namespace NActionBatching
 						return true;
 					}else{
 						//次。
-						this->actionlist[this->index]->Start();
+						this->actionlist[static_cast<u32>(this->index)]->Start();
 					}
 				}else{
 					//完了。

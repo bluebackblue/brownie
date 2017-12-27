@@ -1,7 +1,7 @@
 ﻿
 
 /**
- * Copyright (c) 2016 blueback
+ * Copyright (c) 2016-2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -400,7 +400,7 @@ namespace NBlib
 	{
 		#if defined(PLATFORM_VCWIN)
 		{
-			u32 t_flag = (a_flag ? 1 : 0);
+			u32 t_flag = static_cast<u32>(a_flag ? 1 : 0);
 
 			s32 t_ret = ::ioctlsocket(this->rawhandle,FIONBIO,reinterpret_cast<u_long*>(&t_flag));
 

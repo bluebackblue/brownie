@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 /**
- * Copyright (c) 2016 blueback
+ * Copyright (c) 2016-2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -23,7 +23,11 @@
 
 /** include
 */
+#pragma warning(disable:4710)
+#pragma warning(push)
+#pragma warning(disable:4987 4365 4820 4626 5027 4623 4571 4625 5026 4774 4514)
 #include <string>
+#pragma warning(pop)
 
 
 /** NBlib

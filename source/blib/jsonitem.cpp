@@ -1,7 +1,7 @@
 ﻿
 
 /**
- * Copyright (c) 2016 blueback
+ * Copyright (c) 2016-2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -34,7 +34,11 @@
 */
 #if(BLIB_STDREGEX_ENABLE)
 
+	#pragma warning(disable:4710)
+	#pragma warning(push)
+	#pragma warning(disable:4514 4987 4820 4625 4626 4365 5026 5027 4061 4623 4571 4774)
 	#include <regex>
+	#pragma warning(pop)
 
 #endif
 
@@ -95,7 +99,7 @@ namespace NBlib
 	{
 		/** 最初の一文字からタイプを推測。
 		*/
-		JsonItem::ValueType::Id GetValueTypeFromChar(char a_char)
+		static JsonItem::ValueType::Id GetValueTypeFromChar(char a_char)
 		{
 			switch(a_char){
 			case '"':
@@ -152,7 +156,7 @@ namespace NBlib
 
 		/** 整数チェック。
 		*/
-		bool IsInteger(const STLString& a_string)
+		static bool IsInteger(const STLString& a_string)
 		{
 			#if(BLIB_STDREGEX_ENABLE)
 			{
@@ -221,7 +225,7 @@ namespace NBlib
 
 		/** エスケープシーケンス文字を「￥＋文字」に変換。
 		*/
-		const char* CheckEscapeSequence(char a_char)
+		static const char* CheckEscapeSequence(char a_char)
 		{
 			switch(a_char){
 			case '\\':
@@ -252,13 +256,13 @@ namespace NBlib
 
 		/** 「￥＋文字」をシーケンス文字に変換。
 		*/
-		#pragma warning(push,4)
+		#pragma warning(push)
 		#pragma warning(disable:4702)
-		const char* ToSequenceString(const STLString& a_string,s32 a_index)
+		static const char* ToSequenceString(const STLString& a_string,u32 a_index)
 		{
-			if((0 <= a_index) && (a_index < static_cast<s32>(a_string.length()))){
+			if(a_index < static_cast<u32>(a_string.length())){
 				if(a_string[a_index] == '\\'){
-					if((0 <= (a_index+1)) && ((a_index+1) < static_cast<s32>(a_string.length()))){
+					if((a_index + 1) < static_cast<u32>(a_string.length())){
 						switch(a_string[a_index+1]){
 						case '\"':
 							{
@@ -322,12 +326,12 @@ namespace NBlib
 
 		/** 文字のサイズ。
 		*/
-		s32 GetMojiSize(const STLString& a_string,s32 a_index,bool a_escape)
+		static u32 GetMojiSize(const STLString& a_string,u32 a_index,bool a_escape)
 		{
-			if((0 <= a_index) && (a_index < static_cast<s32>(a_string.length()))){
+			if(a_index < static_cast<u32>(a_string.length())){
 				if(a_string[a_index] == '\\'){
 					if(a_escape == true){
-						if(static_cast<s32>(a_string.length()) >= (2 + a_index)){
+						if(static_cast<u32>(a_string.length()) >= (2 + a_index)){
 							//エスケープシーケンスの後ろは１バイト文字。
 							return 2;
 						}else{
@@ -343,7 +347,7 @@ namespace NBlib
 				}else{
 					//エスケープシーケンス以外。
 
-					u8 t_char = a_string[a_index];
+					u8 t_char = static_cast<u8>(a_string[a_index]);
 
 					if((t_char & 0x80) == 0){
 						//t_char & 10000000 == 00000000
@@ -378,18 +382,20 @@ namespace NBlib
 
 		/** 文字列JSONの長さ。
 		*/
-		s32 GetLength_StringData(const STLString& a_string,s32 a_index)
+		static u32 GetLength_StringData(const STLString& a_string,u32 a_index)
 		{
-			if((0 <= a_index) && (a_index < static_cast<s32>(a_string.length()))){
-				if((a_string[a_index] == '"')||(a_string[a_index] == '\'')){
-					s32 t_index = a_index + 1;
+			u32 t_index = static_cast<u32>(a_index);
+
+			if(t_index < static_cast<s32>(a_string.length())){
+				if((a_string[t_index] == '"')||(a_string[t_index] == '\'')){
+					t_index++;
 					while(t_index < static_cast<s32>(a_string.length())){
 						if((a_string[t_index] == '"')||(a_string[t_index] == '\'')){
 							//終端。
 							return t_index - a_index + 1;
 						}else{
 							//次の文字へ。
-							s32 t_add = GetMojiSize(a_string,t_index,true);
+							u32 t_add = NImpl::GetMojiSize(a_string,t_index,true);
 							if(t_add > 0){
 								t_index += t_add;
 							}else{
@@ -422,11 +428,11 @@ namespace NBlib
 
 		/** 数字JSONの長さ。
 		*/
-		s32 GetLength_Number(const STLString& a_string,s32 a_index)
+		static u32 GetLength_Number(const STLString& a_string,u32 a_index)
 		{
-			if((0 <= a_index) && (a_index < static_cast<s32>(a_string.length()))){
-				s32 t_index = a_index;
-				while(t_index < static_cast<s32>(a_string.length())){
+			if(a_index < static_cast<s32>(a_string.length())){
+				u32 t_index = a_index;
+				while(a_index < static_cast<s32>(a_string.length())){
 					switch(a_string[t_index]){
 					case '}':
 					case ']':
@@ -475,12 +481,12 @@ namespace NBlib
 
 		/** 連想リストJSONの長さ。
 		*/
-		s32 GetLength_AssociateArray(const STLString& a_string,s32 a_index)
+		static u32 GetLength_AssociateArray(const STLString& a_string,u32 a_index)
 		{
-			if((0 <= a_index) && (a_index < static_cast<s32>(a_string.length()))){
+			if(a_index < static_cast<s32>(a_string.length())){
 				if(a_string[a_index] == '{'){
 					s32 t_nest = 1;
-					s32 t_index = a_index + 1;
+					u32 t_index = a_index + 1;
 				
 					while(t_index < static_cast<s32>(a_string.length())){
 						if(a_string[t_index] == '}'){
@@ -498,7 +504,7 @@ namespace NBlib
 							t_index++;
 						}else if((a_string[t_index] == '"')||(a_string[t_index] == '\'')){
 							//文字列。
-							s32 t_add = GetLength_StringData(a_string,t_index);
+							u32 t_add = GetLength_StringData(a_string,t_index);
 							if(t_add > 0){
 								t_index += t_add;
 							}else{
@@ -534,12 +540,12 @@ namespace NBlib
 
 		/** インデックスリストJSONの長さ。
 		*/
-		s32 GetLength_IndexArray(const STLString& a_string,s32 a_index)
+		static u32 GetLength_IndexArray(const STLString& a_string,u32 a_index)
 		{
-			if((0 <= a_index) && (a_index < static_cast<s32>(a_string.length()))){
+			if(a_index < static_cast<s32>(a_string.length())){
 				if(a_string[a_index] == '['){
 					s32 t_nest = 1;
-					s32 t_index = a_index + 1;
+					u32 t_index = a_index + 1;
 				
 					while(t_index < static_cast<s32>(a_string.length())){
 						if(a_string[t_index] == ']'){
@@ -557,7 +563,7 @@ namespace NBlib
 							t_index++;
 						}else if((a_string[t_index] == '"')||(a_string[t_index] == '\'')){
 							//文字列。
-							s32 t_add = GetLength_StringData(a_string,t_index);
+							u32 t_add = GetLength_StringData(a_string,t_index);
 							if(t_add > 0){
 								t_index += t_add;
 							}else{
@@ -593,14 +599,15 @@ namespace NBlib
 
 		/** TRUEJSONの長さ。
 		*/
-		s32 GetLength_BoolTrue(const STLString& a_string,s32 a_index)
+		static u32 GetLength_BoolTrue(const STLString& a_string,u32 a_index)
 		{
 			const char t_true_1[4] = {'T','R','U','E'};
 			const char t_true_2[4] = {'t','r','u','e'};
 
 			for(s32 ii=0;ii<COUNTOF(t_true_1);ii++){
-				s32 t_index = a_index + ii;
-				if((0 <= t_index) && (t_index < static_cast<s32>(a_string.length()))){
+				u32 t_index = static_cast<u32>(a_index + ii);
+
+				if(t_index < static_cast<s32>(a_string.length())){
 					if((a_string[t_index] == t_true_1[ii])||(a_string[t_index] == t_true_2[ii])){
 					}else{
 						//TRUE以外。
@@ -617,9 +624,9 @@ namespace NBlib
 			}
 
 			{
-				s32 t_index = a_index + COUNTOF(t_true_1);
+				u32 t_index = static_cast<u32>(a_index + COUNTOF(t_true_1));
 
-				if((0 <= t_index) && (t_index < static_cast<s32>(a_string.length()))){
+				if(t_index < static_cast<s32>(a_string.length())){
 					if((a_string[t_index] == '}')||(a_string[t_index] == ']')||(a_string[t_index] == ',')){
 						//終端。
 						return COUNTOF(t_true_1);
@@ -641,14 +648,15 @@ namespace NBlib
 
 		/** FALSEJSONの長さ。
 		*/
-		s32 GetLength_BoolFalse(const STLString& a_string,s32 a_index)
+		static u32 GetLength_BoolFalse(const STLString& a_string,u32 a_index)
 		{
 			const char t_true_1[5] = {'F','A','L','S','E'};
 			const char t_true_2[5] = {'f','a','l','s','e'};
 
 			for(s32 ii=0;ii<COUNTOF(t_true_1);ii++){
-				s32 t_index = a_index + ii;
-				if((0 <= t_index) && (t_index < static_cast<s32>(a_string.length()))){
+				u32 t_index = a_index + ii;
+
+				if(t_index < static_cast<s32>(a_string.length())){
 					if((a_string[t_index] == t_true_1[ii])||(a_string[t_index] == t_true_2[ii])){
 					}else{
 						//FALSE以外。
@@ -665,9 +673,9 @@ namespace NBlib
 			}
 
 			{
-				s32 t_index = a_index + COUNTOF(t_true_1);
+				u32 t_index = static_cast<u32>(a_index + COUNTOF(t_true_1));
 
-				if((0 <= t_index) && (t_index < static_cast<s32>(a_string.length()))){
+				if(t_index < static_cast<s32>(a_string.length())){
 					if((a_string[t_index] == '}')||(a_string[t_index] == ']')||(a_string[t_index] == ',')){
 						//終端。
 						return COUNTOF(t_true_1);
@@ -689,13 +697,11 @@ namespace NBlib
 
 		/** BinaryDataの長さ。
 		*/
-		s32 GetLength_BinaryData(const STLString& a_string,s32 a_index)
+		static u32 GetLength_BinaryData(const STLString& a_string,u32 a_index)
 		{
-			if((0 <= a_index) && (a_index < static_cast<s32>(a_string.length()))){
+			if(a_index < static_cast<s32>(a_string.length())){
 				if(a_string[a_index] == '<'){
-
-					s32 t_index = a_index + 1;
-				
+					u32 t_index = a_index + 1;
 					while(t_index < static_cast<s32>(a_string.length())){
 						switch(a_string[t_index]){
 						case '>':
@@ -760,11 +766,11 @@ namespace NBlib
 
 		/** JSON文字からインデックスリストの作成[*,*,*]。
 		*/
-		sharedptr<STLVector<sharedptr<JsonItem>>::Type> CreateIndexArrayFromJsonString(const STLString& a_jsonstring)
+		static sharedptr<STLVector<sharedptr<JsonItem>>::Type> CreateIndexArrayFromJsonString(const STLString& a_jsonstring)
 		{
 			sharedptr<STLVector<sharedptr<JsonItem>>::Type> t_indexlist(new STLVector<sharedptr<JsonItem>>::Type());
 		
-			s32 t_index = 0;
+			u32 t_index = 0;
 			while(t_index < static_cast<s32>(a_jsonstring.length())){
 				if(a_jsonstring[t_index] == ']'){
 					//終端。
@@ -791,7 +797,7 @@ namespace NBlib
 				}
 		
 				//値。
-				s32 t_value_size = 0;
+				u32 t_value_size = 0;
 				switch(GetValueTypeFromChar(a_jsonstring[t_index])){
 				case JsonItem::ValueType::StringData:
 					{
@@ -823,6 +829,8 @@ namespace NBlib
 					{
 						t_value_size = GetLength_BinaryData(a_jsonstring,t_index);
 					}break;
+				case JsonItem::ValueType::None:
+				case JsonItem::ValueType::BoolData:
 				default:
 					{
 						//不明。
@@ -871,15 +879,15 @@ namespace NBlib
 
 		/** JSON文字から連想配列の作成。
 		*/
-		sharedptr<STLMap<STLString,sharedptr<JsonItem>>::Type> CreateAssociativeArrayFromJsonString(const STLString& a_jsonstring)
+		static sharedptr<STLMap<STLString,sharedptr<JsonItem>>::Type> CreateAssociativeArrayFromJsonString(const STLString& a_jsonstring)
 		{
 			sharedptr<STLMap<STLString,sharedptr<JsonItem>>::Type> t_associativelist(new STLMap<STLString,sharedptr<JsonItem>>::Type);
 		
-			s32 t_index = 0;
-			while(t_index < static_cast<s32>(a_jsonstring.length())){
+			u32 t_index = 0;
+			while(t_index < static_cast<u32>(a_jsonstring.length())){
 				if(a_jsonstring[t_index] == '}'){
 					//終端。
-					ASSERT(t_index + 1 == static_cast<s32>(a_jsonstring.length()));
+					ASSERT(t_index + 1 == a_jsonstring.length());
 
 					return t_associativelist;
 				}else if(a_jsonstring[t_index] == ','){
@@ -902,9 +910,9 @@ namespace NBlib
 				//名前。
 				STLString t_name_string;
 				if((a_jsonstring[t_index] == '"')||(a_jsonstring[t_index] == '\'')){
-					s32 t_name_size = GetLength_StringData(a_jsonstring,t_index);
+					u32 t_name_size = GetLength_StringData(a_jsonstring,t_index);
 					if(t_name_size >= 2){
-						t_name_string = a_jsonstring.substr(t_index+1,t_name_size-2);
+						t_name_string = a_jsonstring.substr(t_index + 1,t_name_size - 2);
 						t_index += t_name_size;
 					}else{
 						//不明。
@@ -933,7 +941,7 @@ namespace NBlib
 				}
 			
 				//値。
-				s32 t_value_size = 0;
+				u32 t_value_size = 0;
 				switch(GetValueTypeFromChar(a_jsonstring[t_index])){
 				case JsonItem::ValueType::StringData:
 					{
@@ -965,6 +973,8 @@ namespace NBlib
 					{
 						t_value_size = GetLength_BinaryData(a_jsonstring,t_index);
 					}break;
+				case JsonItem::ValueType::BoolData:
+				case JsonItem::ValueType::None:
 				default:
 					{
 						//不明。
@@ -1013,13 +1023,13 @@ namespace NBlib
 
 		/** JSON文字からバイナリデータの作成。
 		*/
-		sharedptr<STLVector<u8>::Type> CreateBinaryDataFromJsonString(const STLString& a_jsonstring)
+		static sharedptr<STLVector<u8>::Type> CreateBinaryDataFromJsonString(const STLString& a_jsonstring)
 		{
 			sharedptr<STLVector<u8>::Type> t_binarydata(new STLVector<u8>::Type());
 
 			t_binarydata->reserve(a_jsonstring.length() / 2);
 
-			s32 t_index = 0;
+			u32 t_index = 0;
 			while(t_index < static_cast<s32>(a_jsonstring.length())){
 				if(a_jsonstring[t_index] == '>'){
 					//終端。
@@ -1284,6 +1294,8 @@ namespace NBlib
 					this->value.bool_data = false;
 					return;
 				}break;
+			case ValueType::None:
+			case ValueType::BoolData:
 			default:
 				{
 					ASSERT(0);
@@ -1317,14 +1329,14 @@ namespace NBlib
 			switch(this->valuetype){
 			case ValueType::StringData:
 				{
-					s32 t_index = 1;
-					s32 t_max = static_cast<s32>(t_jsonstring_temp->length() - 1);
+					u32 t_index = 1;
+					u32 t_max = static_cast<u32>(t_jsonstring_temp->length() - 1);
 
 					this->value.string_data.reset(new STLString());
 					this->value.string_data->reserve(16 + t_max);
 				
 					while(t_index < t_max){
-						s32 t_add = NImpl::GetMojiSize((*t_jsonstring_temp),t_index,true);
+						u32 t_add = NImpl::GetMojiSize((*t_jsonstring_temp),t_index,true);
 						if(t_add == 2){
 							if((*t_jsonstring_temp)[t_index] == '\\'){
 								//エスケープシーケンス文字をシーケンス文字に変換。
@@ -1402,6 +1414,10 @@ namespace NBlib
 				{
 					this->value.binary_data = NImpl::CreateBinaryDataFromJsonString(*t_jsonstring_temp);
 				}break;
+			case ValueType::None:
+			case ValueType::Calc_BoolDataFalse:
+			case ValueType::Calc_BoolDataTrue:
+			case ValueType::Calc_UnknownNumber:
 			default:
 				{
 					//不明。
@@ -1442,6 +1458,17 @@ namespace NBlib
 			{
 				return static_cast<s32>(this->value.string_data->size());
 			}break;
+		case ValueType::None:
+		case ValueType::IntegerNumber:
+		case ValueType::FloatNumber:
+		case ValueType::BoolData:
+		case ValueType::BinaryData:
+		case ValueType::Calc_BoolDataFalse:
+		case ValueType::Calc_BoolDataTrue:
+		case ValueType::Calc_UnknownNumber:
+		default:
+			{
+			}
 		}
 
 		ASSERT(0);
@@ -1683,14 +1710,17 @@ namespace NBlib
 	*/
 	sharedptr<JsonItem>& JsonItem::GetItem(s32 a_index)
 	{
+		ASSERT(a_index >= 0);
+		u32 t_index = static_cast<u32>(a_index);
+
 		ASSERT(this->valuetype == ValueType::IndexArray);
 
 		if(this->jsonstring != nullptr){
 			this->JsonStringToValue();
 		}
 		
-		if((0 <= a_index) && (a_index < static_cast<s32>(this->value.index_array->size()))){
-			return (*(this->value.index_array))[a_index];
+		if(t_index < static_cast<s32>(this->value.index_array->size())){
+			return (*(this->value.index_array))[t_index];
 		}
 		
 		ASSERT(0);
@@ -1703,14 +1733,17 @@ namespace NBlib
 	*/
 	const sharedptr<JsonItem>& JsonItem::GetItem(s32 a_index) const
 	{
+		ASSERT(a_index >= 0);
+		u32 t_index = static_cast<u32>(a_index);
+
 		ASSERT(this->valuetype == ValueType::IndexArray);
 
 		if(this->jsonstring != nullptr){
 			this->JsonStringToValue();
 		}
 		
-		if((0 <= a_index) && (a_index < static_cast<s32>(this->value.index_array->size()))){
-			return (*(this->value.index_array))[a_index];
+		if(t_index < static_cast<s32>(this->value.index_array->size())){
+			return (*(this->value.index_array))[t_index];
 		}
 		
 		ASSERT(0);
@@ -1723,13 +1756,16 @@ namespace NBlib
 	*/
 	bool JsonItem::IsExistItem(s32 a_index)
 	{
+		ASSERT(a_index >= 0);
+		u32 t_index = static_cast<u32>(a_index);
+
 		ASSERT(this->valuetype == ValueType::IndexArray);
 
 		if(this->jsonstring != nullptr){
 			this->JsonStringToValue();
 		}
 		
-		if((0 <= a_index) && (a_index < static_cast<s32>(this->value.index_array->size()))){
+		if(t_index < static_cast<s32>(this->value.index_array->size())){
 			return true;
 		}
 		
@@ -1781,13 +1817,15 @@ namespace NBlib
 	*/
 	void JsonItem::RemoveItem(s32 a_index)
 	{
+		ASSERT(a_index >= 0);
+
 		ASSERT(this->valuetype == ValueType::IndexArray);
 
 		if(this->jsonstring != nullptr){
 			this->JsonStringToValue();
 		}
 		
-		this->value.index_array->erase(this->value.index_array->begin()+a_index);
+		this->value.index_array->erase(this->value.index_array->begin() + a_index);
 	}
 
 
@@ -1927,12 +1965,12 @@ namespace NBlib
 				STLString t_jsonstring = "\"";
 				t_jsonstring.reserve(64);
 				{
-					s32 t_index = 0;
-					s32 t_max = static_cast<s32>(this->value.string_data->length());
+					u32 t_index = 0;
+					u32 t_max = static_cast<u32>(this->value.string_data->length());
 
 					while(t_index < t_max){
 						//１文字取得。
-						s32 t_add = NImpl::GetMojiSize(*this->value.string_data,t_index,true);
+						u32 t_add = NImpl::GetMojiSize(*this->value.string_data,t_index,true);
 						if(t_add == 1){
 							const char* t_add_string = NImpl::CheckEscapeSequence((*(this->value.string_data))[t_index]);
 							if(t_add_string == nullptr){
@@ -2037,6 +2075,10 @@ namespace NBlib
 				t_jsonstring += ">";
 				return t_jsonstring;
 			}break;
+		case JsonItem::ValueType::None:
+		case JsonItem::ValueType::Calc_UnknownNumber:
+		case JsonItem::ValueType::Calc_BoolDataTrue:
+		case JsonItem::ValueType::Calc_BoolDataFalse:
 		default:
 			{
 				//不明。

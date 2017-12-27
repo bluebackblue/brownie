@@ -1,7 +1,7 @@
 ﻿
 
 /**
- * Copyright (c) 2016 blueback
+ * Copyright (c) 2016-2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -43,8 +43,10 @@
 			/** include
 			*/
 			//[include]
-			#pragma warning(disable:4091)
+			#pragma warning(push)
+			#pragma warning(disable:4091 4820)
 			#include <imagehlp.h>
+			#pragma warning(pop)
 
 			/** lib
 			*/

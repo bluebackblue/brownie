@@ -1,7 +1,7 @@
 ﻿
 
 /**
- * Copyright (c) 2016 blueback
+ * Copyright (c) 2016-2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -97,7 +97,7 @@ namespace NBlib
 			}
 
 			#pragma warning(push)  
-			#pragma warning(disable: 6320 6322)  
+			#pragma warning(disable:6320 6322)  
 			__try
 			{
 				::RaiseException(MS_VC_EXCEPTION,0,sizeof(t_info)/sizeof(ULONG_PTR),(ULONG_PTR*)&t_info);  

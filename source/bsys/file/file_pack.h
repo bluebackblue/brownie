@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 /**
- * Copyright (c) 2016 blueback
+ * Copyright (c) 2016-2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -11,7 +11,10 @@
 
 /** include
 */
+#pragma warning(push)
+#pragma warning(disable:4464)
 #include "../types/types.h"
+#pragma warning(pop)
 
 
 /** include
@@ -37,6 +40,16 @@ namespace NBsys{namespace NFile
 		/** パックリスト。
 		*/
 		STLList<sharedptr<File_Pack_WorkItem>>::Type list;
+
+	private:
+
+		/** copy constructor禁止。
+		*/
+		File_Pack(const File_Pack& a_this) = delete;
+
+		/** コピー禁止。
+		*/
+		void operator =(const File_Pack& a_this) = delete;
 
 	public:
 

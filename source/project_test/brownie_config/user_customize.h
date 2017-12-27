@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 /**
- * Copyright (c) 2016 blueback
+ * Copyright (c) 2016-2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -95,7 +95,7 @@
 
 /** BSYS_WINDOWMENU_ENABLE
 */
-#if(BSYS_WINDOWMENU_ENABLE)
+#if defined(BSYS_WINDOWMENU_ENABLE) && (BSYS_WINDOWMENU_ENABLE)
 
 	#if !defined(BLIB_DEBUGASSERT_CALLBACK_ENABLE)
 	#define BLIB_DEBUGASSERT_CALLBACK_ENABLE				(1)
@@ -117,7 +117,7 @@
 
 /** BSYS_MMD_ENABLE
 */
-#if(BSYS_MMD_ENABLE)
+#if defined(BSYS_MMD_ENABLE) && (BSYS_MMD_ENABLE)
 
 	#if !defined(BSYS_TEXTURE_GDIPLUS_ENABLE)
 		#define BSYS_TEXTURE_GDIPLUS_ENABLE					(1)
@@ -128,7 +128,7 @@
 
 /** DEF_TEST_AUTO
 */
-#if(DEF_TEST_AUTO)
+#if defined(DEF_TEST_AUTO) && (DEF_TEST_AUTO)
 
 	#if !defined(BSYS_HTTP_ENABLE)
 	#define BSYS_HTTP_ENABLE								(1)
@@ -163,7 +163,7 @@
 
 /** BSYS_D3D11_ENABLE
 */
-#if(BSYS_D3D11_ENABLE)
+#if defined(BSYS_D3D11_ENABLE) && (BSYS_D3D11_ENABLE)
 
 	#if !defined(BSYS_GEOMETRY_ENABLE)
 	#define BSYS_GEOMETRY_ENABLE							(1)

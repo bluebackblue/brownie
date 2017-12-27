@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 /**
- * Copyright (c) 2016 blueback
+ * Copyright (c) 2016-2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -11,7 +11,10 @@
 
 /** include
 */
+#pragma warning(push)
+#pragma warning(disable:4464)
 #include "../types/types.h"
+#pragma warning(pop)
 
 
 /** include
@@ -59,6 +62,8 @@ namespace NBsys{namespace NFile
 			};
 		};
 
+	private:
+
 		LockObject& lockobject;
 
 		/** メインステップ。
@@ -91,6 +96,10 @@ namespace NBsys{namespace NFile
 		*/
 		s32 convertflag;
 
+		/** パディング。
+		*/
+		u32 dummy1;
+
 		/** データサイズ。
 		*/
 		s64 data_size;
@@ -107,6 +116,10 @@ namespace NBsys{namespace NFile
 		*/
 		bool isbusy;
 
+		/** パディング。
+		*/
+		u8 dummy2[3];
+
 		/** メモリ確保。
 		*/
 		sharedptr<File_Allocator> allocator;
@@ -114,6 +127,10 @@ namespace NBsys{namespace NFile
 		/** メモリ確保時に余分に確保するサイズ。
 		*/
 		s32 add_allocatesize;
+
+		/** パディング。
+		*/
+		u32 dummy3;
 
 	public:
 
@@ -124,6 +141,16 @@ namespace NBsys{namespace NFile
 		/** destructor
 		*/
 		nonvirtual ~File_WorkItem();
+
+	private:
+
+		/** copy constructor禁止。
+		*/
+		File_WorkItem(const File_WorkItem& a_this) = delete;
+
+		/** コピー禁止。
+		*/
+		void operator =(const File_WorkItem& a_this) = delete;
 
 	public:
 

@@ -1,7 +1,7 @@
 ﻿
 
 /**
- * Copyright (c) 2016 blueback
+ * Copyright (c) 2016-2017 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -16,7 +16,10 @@
 
 /** include
 */
+#pragma warning(push)
+#pragma warning(disable:4464)
 #include "../types/types.h"
+#pragma warning(pop)
 
 
 /** include
@@ -61,14 +64,14 @@ namespace NBsys{namespace NFile
 		MemoryContainer t_memorycontainer(BSYS_FILE_MEMORYCONTAINER);
 
 		if(s_thread_list != nullptr){
-			if(s_thread_list->at(a_device_index) == nullptr){
+			if(s_thread_list->at(static_cast<u32>(a_device_index)) == nullptr){
 				File_Thread::ThreadArgument t_threadargument;
 				{
 					t_threadargument.rootpath_full = Path::Dir(a_rootpath_full);
 				}
 
-				s_thread_list->at(a_device_index).reset(new ThreadTemplate<File_Thread>());
-				s_thread_list->at(a_device_index)->Start(t_threadargument);
+				s_thread_list->at(static_cast<u32>(a_device_index)).reset(new ThreadTemplate<File_Thread>());
+				s_thread_list->at(static_cast<u32>(a_device_index))->Start(t_threadargument);
 			}else{
 				ASSERT(0);
 			}
@@ -84,7 +87,7 @@ namespace NBsys{namespace NFile
 	{
 		ASSERT((0 <= a_device_index)&&(a_device_index < static_cast<s32>(s_thread_list->size())));
 
-		return s_thread_list->at(a_device_index);
+		return s_thread_list->at(static_cast<u32>(a_device_index));
 	}
 
 
@@ -114,7 +117,7 @@ namespace NBsys{namespace NFile
 	void CacheClear(s32 a_device_index,s32 a_cachegroup_id)
 	{
 		if(s_thread_list != nullptr){
-			s_thread_list->at(a_device_index)->get()->CacheClear(a_cachegroup_id);
+			s_thread_list->at(static_cast<u32>(a_device_index))->get()->CacheClear(a_cachegroup_id);
 		}else{
 			ASSERT(0);
 		}
