@@ -36,8 +36,24 @@ namespace NBsys{namespace NGeometry
 {
 	/** Geometry_Quaternion
 	*/
-	struct Geometry_Quaternion : public Geometry_Quaternion_Raw
+	struct Geometry_Quaternion
 	{
+		/** raw
+		*/
+		Geometry_Quaternion_Raw raw;
+
+		/** raw
+		*/
+		inline f32& x(){this->raw.q.x;}
+		inline f32& y(){this->raw.q.y;}
+		inline f32& z(){this->raw.q.z;}
+		inline f32& w(){this->raw.q.w;}
+		inline const f32& x()const{this->raw.q.x;}
+		inline const f32& y()const{this->raw.q.y;}
+		inline const f32& z()const{this->raw.q.z;}
+		inline const f32& w()const{this->raw.q.w;}
+
+
 		/** constructor
 		*/
 		inline Geometry_Quaternion();

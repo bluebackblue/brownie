@@ -24,20 +24,17 @@ namespace NBsys{namespace NGeometry
 {
 	/** Geometry_Quaternion_Raw
 	*/
-	struct Geometry_Quaternion_Raw
+	union Geometry_Quaternion_Raw
 	{
-		union
+		struct Quaternion
 		{
-			struct
-			{
-				f32 x;
-				f32 y;
-				f32 z;
-				f32 w;
-			};
+			f32 x;
+			f32 y;
+			f32 z;
+			f32 w;
+		}q;
 
-			f32 v[4];
-		};
+		f32 quaternion[4];
 	};
 
 

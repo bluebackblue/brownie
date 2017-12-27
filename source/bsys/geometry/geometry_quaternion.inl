@@ -44,10 +44,10 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Quaternion::Geometry_Quaternion(const Geometry_Identity_Type& /*a_identity*/)
 	{
-		this->x = 0.0f;
-		this->y = 0.0f;
-		this->z = 0.0f;
-		this->w = 1.0f;
+		this->x() = 0.0f;
+		this->y() = 0.0f;
+		this->z() = 0.0f;
+		this->w() = 1.0f;
 	}
 
 
@@ -55,15 +55,15 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Quaternion::Geometry_Quaternion(const Geometry_Quaternion& a_quaternion)
 	{
-		ASSERT(Math::is_nan(a_quaternion.x) == false);
-		ASSERT(Math::is_nan(a_quaternion.y) == false);
-		ASSERT(Math::is_nan(a_quaternion.z) == false);
-		ASSERT(Math::is_nan(a_quaternion.w) == false);
+		ASSERT(Math::is_nan(a_quaternion.x()) == false);
+		ASSERT(Math::is_nan(a_quaternion.y()) == false);
+		ASSERT(Math::is_nan(a_quaternion.z()) == false);
+		ASSERT(Math::is_nan(a_quaternion.w()) == false);
 
-		this->x = a_quaternion.x;
-		this->y = a_quaternion.y;
-		this->z = a_quaternion.z;
-		this->w = a_quaternion.w;
+		this->x() = a_quaternion.x();
+		this->y() = a_quaternion.y();
+		this->z() = a_quaternion.z();
+		this->w() = a_quaternion.w();
 	}
 
 
@@ -76,10 +76,10 @@ namespace NBsys{namespace NGeometry
 		ASSERT(Math::is_nan(a_list[2]) == false);
 		ASSERT(Math::is_nan(a_list[3]) == false);
 
-		this->x = a_list[0];
-		this->y = a_list[1];
-		this->z = a_list[2];
-		this->w = a_list[3];
+		this->x() = a_list[0];
+		this->y() = a_list[1];
+		this->z() = a_list[2];
+		this->w() = a_list[3];
 	}
 
 
@@ -92,10 +92,10 @@ namespace NBsys{namespace NGeometry
 		ASSERT(Math::is_nan(a_z) == false);
 		ASSERT(Math::is_nan(a_w) == false);
 
-		this->x = a_x;
-		this->y = a_y;
-		this->z = a_z;
-		this->w = a_w;
+		this->x() = a_x;
+		this->y() = a_y;
+		this->z() = a_z;
+		this->w() = a_w;
 	}
 
 
@@ -113,10 +113,10 @@ namespace NBsys{namespace NGeometry
 		f32 t_cos_half = Math::cosf(a_rad * 0.50f);
 		#endif
 
-		this->x = t_sin_half * t_normal.x();
-		this->y = t_sin_half * t_normal.y();
-		this->z = t_sin_half * t_normal.z();
-		this->w = t_cos_half;
+		this->x() = t_sin_half * t_normal.x();
+		this->y() = t_sin_half * t_normal.y();
+		this->z() = t_sin_half * t_normal.z();
+		this->w() = t_cos_half;
 	}
 
 
@@ -131,7 +131,7 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline void Geometry_Quaternion::Set_Normalize()
 	{
-		f32 t_s = (this->x * this->x) + (this->y * this->y) + (this->z * this->z) + (this->w * this->w);
+		f32 t_s = (this->x() * this->x()) + (this->y() * this->y()) + (this->z() * this->z()) + (this->w() * this->w());
 
 		t_s = Math::sqrt_f(t_s);
 
@@ -141,10 +141,10 @@ namespace NBsys{namespace NGeometry
 
 		ASSERT(Math::is_nan(t_s) == false);
 
-		this->x *= t_s;
-		this->y *= t_s;
-		this->z *= t_s;
-		this->w *= t_s;
+		this->x() *= t_s;
+		this->y() *= t_s;
+		this->z() *= t_s;
+		this->w() *= t_s;
 	}
 
 
@@ -152,9 +152,9 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline void Geometry_Quaternion::Set_Conjugate()
 	{
-		this->x *= -1;
-		this->y *= -1;
-		this->z *= -1;
+		this->x() *= -1;
+		this->y() *= -1;
+		this->z() *= -1;
 	}
 
 
@@ -164,10 +164,10 @@ namespace NBsys{namespace NGeometry
 	{
 		Geometry_Quaternion t_temp;
 		{
-			t_temp.x = -this->x;
-			t_temp.y = -this->y;
-			t_temp.z = -this->z;
-			t_temp.w = this->w;
+			t_temp.x() = -this->x();
+			t_temp.y() = -this->y();
+			t_temp.z() = -this->z();
+			t_temp.w() = this->w();
 		}
 		return t_temp;
 	}
@@ -191,7 +191,7 @@ namespace NBsys{namespace NGeometry
 	{
 		Geometry_Quaternion t_temp;
 
-		f32 t_omega_v = (this->x * a_quaternion.x) + (this->y * a_quaternion.y) + (this->z * a_quaternion.z) + (this->w * a_quaternion.w);
+		f32 t_omega_v = (this->x() * a_quaternion.x()) + (this->y() * a_quaternion.y()) + (this->z() * a_quaternion.z()) + (this->w() * a_quaternion.w());
 		f32 t_omega = Math::acos_f(Math::abs_f(t_omega_v));
 
 		f32 t_s = Math::sin_f(t_omega);
@@ -202,10 +202,10 @@ namespace NBsys{namespace NGeometry
 		f32 t_from_per = Math::sin_f(t_omega - a_per * t_omega) / t_s;
 		f32 t_to_per = Math::sin_f(a_per * t_omega) / t_s;
     
-		t_temp.x = this->x * t_from_per + a_quaternion.x * t_to_per;
-		t_temp.y = this->y * t_from_per + a_quaternion.y * t_to_per;
-		t_temp.z = this->z * t_from_per + a_quaternion.z * t_to_per;
-		t_temp.w = this->w * t_from_per + a_quaternion.w * t_to_per;
+		t_temp.x() = this->x() * t_from_per + a_quaternion.x() * t_to_per;
+		t_temp.y() = this->y() * t_from_per + a_quaternion.y() * t_to_per;
+		t_temp.z() = this->z() * t_from_per + a_quaternion.z() * t_to_per;
+		t_temp.w() = this->w() * t_from_per + a_quaternion.w() * t_to_per;
 
 		return t_temp;
 	}

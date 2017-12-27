@@ -29,124 +29,89 @@ namespace NBsys{namespace NGeometry
 {
 	/** Geometry_Matrix_44_Raw
 	*/
-	struct Geometry_Matrix_44_Raw
+	union Geometry_Matrix_44_Raw
 	{
-		union
+		struct Matrix_Num
 		{
-			struct
-			{
-				#if(BSYS_GEOMETRY_ROWCOLUMN_TYPE == 0x00)
+			f32 m_11;
+			f32 m_12;
+			f32 m_13;
+			f32 m_14;
 
-				//行優先(Row-major)
-				//D3DXMATRIX
+			f32 m_21;
+			f32 m_22;
+			f32 m_23;
+			f32 m_24;
 
-				f32 m_11;
-				f32 m_12;
-				f32 m_13;
-				f32 m_14;
+			f32 m_31;
+			f32 m_32;
+			f32 m_33;
+			f32 m_34;
 
-				f32 m_21;
-				f32 m_22;
-				f32 m_23;
-				f32 m_24;
+			f32 m_41;
+			f32 m_42;
+			f32 m_43;
+			f32 m_44;
+		}mn;
 
-				f32 m_31;
-				f32 m_32;
-				f32 m_33;
-				f32 m_34;
+		struct Matrix
+		{
+			#if(BSYS_GEOMETRY_ROWCOLUMN_TYPE == 0x00)
 
-				f32 m_41;
-				f32 m_42;
-				f32 m_43;
-				f32 m_44;
+			//行優先(Row-major)
+			//D3DXMATRIX
+			//Maya
 
-				#else
+			f32 ax_x;
+			f32 ax_y;
+			f32 ax_z;
+			f32 ax_w;
 
-				//列優先(Column-major)
-				//HLSL
+			f32 ay_x;
+			f32 ay_y;
+			f32 ay_z;
+			f32 ay_w;
 
-				f32 m_11;
-				f32 m_12;
-				f32 m_13;
-				f32 m_14;
+			f32 az_x;
+			f32 az_y;
+			f32 az_z;
+			f32 az_w;
 
-				f32 m_21;
-				f32 m_22;
-				f32 m_23;
-				f32 m_24;
+			f32 tr_x;
+			f32 tr_y;
+			f32 tr_z;
+			f32 tr_w;
 
-				f32 m_31;
-				f32 m_32;
-				f32 m_33;
-				f32 m_34;
+			#else
 
-				f32 m_41;
-				f32 m_42;
-				f32 m_43;
-				f32 m_44;
+			//列優先(Column-major)
+			//HLSL
+			//OpenGL
 
-				#endif
-			};
+			f32 ax_x;
+			f32 ay_x;
+			f32 az_x;
+			f32 tr_x;
 
-			struct
-			{
-				#if(BSYS_GEOMETRY_ROWCOLUMN_TYPE == 0x00)
+			f32 ax_y;
+			f32 ay_y;
+			f32 az_y;
+			f32 tr_y;
 
-				//行優先(Row-major)
-				//D3DXMATRIX
-				//Maya
+			f32 ax_z;
+			f32 ay_z;
+			f32 az_z;
+			f32 tr_z;
 
-				f32 ax_x;
-				f32 ax_y;
-				f32 ax_z;
-				f32 ax_w;
+			f32 ax_w;
+			f32 ay_w;
+			f32 az_w;
+			f32 tr_w;
 
-				f32 ay_x;
-				f32 ay_y;
-				f32 ay_z;
-				f32 ay_w;
+			#endif
+		}m;
 
-				f32 az_x;
-				f32 az_y;
-				f32 az_z;
-				f32 az_w;
-
-				f32 tr_x;
-				f32 tr_y;
-				f32 tr_z;
-				f32 tr_w;
-
-				#else
-
-				//列優先(Column-major)
-				//HLSL
-				//OpenGL
-
-				f32 ax_x;
-				f32 ay_x;
-				f32 az_x;
-				f32 tr_x;
-
-				f32 ax_y;
-				f32 ay_y;
-				f32 az_y;
-				f32 tr_y;
-
-				f32 ax_z;
-				f32 ay_z;
-				f32 az_z;
-				f32 tr_z;
-
-				f32 ax_w;
-				f32 ay_w;
-				f32 az_w;
-				f32 tr_w;
-
-				#endif
-			};
-
-			f32 m[4][4];
-		};
+		f32 matrix[4][4];
 	};
 
 

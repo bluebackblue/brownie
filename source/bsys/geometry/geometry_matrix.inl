@@ -73,25 +73,25 @@ namespace NBsys{namespace NGeometry
 		f32 a_tr_x,f32 a_tr_y,f32 a_tr_z,f32 a_tr_w
 	)
 	{
-		this->ax_x = a_ax_x;
-		this->ax_y = a_ax_y;
-		this->ax_z = a_ax_z;
-		this->ax_w = a_ax_w;
+		this->ax_x() = a_ax_x;
+		this->ax_y() = a_ax_y;
+		this->ax_z() = a_ax_z;
+		this->ax_w() = a_ax_w;
 
-		this->ay_x = a_ay_x;
-		this->ay_y = a_ay_y;
-		this->ay_z = a_ay_z;
-		this->ay_w = a_ay_w;
+		this->ay_x() = a_ay_x;
+		this->ay_y() = a_ay_y;
+		this->ay_z() = a_ay_z;
+		this->ay_w() = a_ay_w;
 
-		this->az_x = a_az_x;
-		this->az_y = a_az_y;
-		this->az_z = a_az_z;
-		this->az_w = a_az_w;
+		this->az_x() = a_az_x;
+		this->az_y() = a_az_y;
+		this->az_z() = a_az_z;
+		this->az_w() = a_az_w;
 
-		this->tr_x = a_tr_x;
-		this->tr_y = a_tr_y;
-		this->tr_z = a_tr_z;
-		this->tr_w = a_tr_w;
+		this->tr_x() = a_tr_x;
+		this->tr_y() = a_tr_y;
+		this->tr_z() = a_tr_z;
+		this->tr_w() = a_tr_w;
 	}
 
 
@@ -115,25 +115,26 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Matrix_44::Geometry_Matrix_44(const f32* a_m)
 	{
-		this->m_11 = a_m[0];
-		this->m_12 = a_m[1];
-		this->m_13 = a_m[2];
-		this->m_14 = a_m[3];
+		//TODO:
+		this->raw.mn.m_11 = a_m[0];
+		this->raw.mn.m_12 = a_m[1];
+		this->raw.mn.m_13 = a_m[2];
+		this->raw.mn.m_14 = a_m[3];
 
-		this->m_21 = a_m[4];
-		this->m_22 = a_m[5];
-		this->m_23 = a_m[6];
-		this->m_24 = a_m[7];
+		this->raw.mn.m_21 = a_m[4];
+		this->raw.mn.m_22 = a_m[5];
+		this->raw.mn.m_23 = a_m[6];
+		this->raw.mn.m_24 = a_m[7];
 
-		this->m_31 = a_m[8];
-		this->m_32 = a_m[9];
-		this->m_33 = a_m[10];
-		this->m_34 = a_m[11];
+		this->raw.mn.m_31 = a_m[8];
+		this->raw.mn.m_32 = a_m[9];
+		this->raw.mn.m_33 = a_m[10];
+		this->raw.mn.m_34 = a_m[11];
 
-		this->m_41 = a_m[12];
-		this->m_42 = a_m[13];
-		this->m_43 = a_m[14];
-		this->m_44 = a_m[15];
+		this->raw.mn.m_41 = a_m[12];
+		this->raw.mn.m_42 = a_m[13];
+		this->raw.mn.m_43 = a_m[14];
+		this->raw.mn.m_44 = a_m[15];
 	}
 
 
@@ -176,25 +177,25 @@ namespace NBsys{namespace NGeometry
 		f32 a_tr_x,f32 a_tr_y,f32 a_tr_z,f32 a_tr_w
 	)
 	{
-		this->ax_x = a_ax_x;
-		this->ax_y = a_ax_y;
-		this->ax_z = a_ax_z;
-		this->ax_w = a_ax_w;
+		this->ax_x() = a_ax_x;
+		this->ax_y() = a_ax_y;
+		this->ax_z() = a_ax_z;
+		this->ax_w() = a_ax_w;
 
-		this->ay_x = a_ay_x;
-		this->ay_y = a_ay_y;
-		this->ay_z = a_ay_z;
-		this->ay_w = a_ay_w;
+		this->ay_x() = a_ay_x;
+		this->ay_y() = a_ay_y;
+		this->ay_z() = a_ay_z;
+		this->ay_w() = a_ay_w;
 
-		this->az_x = a_az_x;
-		this->az_y = a_az_y;
-		this->az_z = a_az_z;
-		this->az_w = a_az_w;
+		this->az_x() = a_az_x;
+		this->az_y() = a_az_y;
+		this->az_z() = a_az_z;
+		this->az_w() = a_az_w;
 
-		this->tr_x = a_tr_x;
-		this->tr_y = a_tr_y;
-		this->tr_z = a_tr_z;
-		this->tr_w = a_tr_w;
+		this->tr_x() = a_tr_x;
+		this->tr_y() = a_tr_y;
+		this->tr_z() = a_tr_z;
+		this->tr_w() = a_tr_w;
 	}
 
 
@@ -204,9 +205,9 @@ namespace NBsys{namespace NGeometry
 	{
 		Geometry_Vector3 t_temp;
 		{
-			t_temp.x() = this->ax_x;
-			t_temp.y() = this->ax_y;
-			t_temp.z() = this->ax_z;
+			t_temp.x() = this->ax_x();
+			t_temp.y() = this->ax_y();
+			t_temp.z() = this->ax_z();
 		}
 		return t_temp;
 	}
@@ -218,9 +219,9 @@ namespace NBsys{namespace NGeometry
 	{
 		Geometry_Vector3 t_temp;
 		{
-			t_temp.x() = this->ay_x;
-			t_temp.y() = this->ay_y;
-			t_temp.z() = this->ay_z;
+			t_temp.x() = this->ay_x();
+			t_temp.y() = this->ay_y();
+			t_temp.z() = this->ay_z();
 		}
 		return t_temp;
 	}
@@ -232,9 +233,9 @@ namespace NBsys{namespace NGeometry
 	{
 		Geometry_Vector3 t_temp;
 		{
-			t_temp.x() = this->az_x;
-			t_temp.y() = this->az_y;
-			t_temp.z() = this->az_z;
+			t_temp.x() = this->az_x();
+			t_temp.y() = this->az_y();
+			t_temp.z() = this->az_z();
 		}
 		return t_temp;
 	}
@@ -244,9 +245,9 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline void Geometry_Matrix_44::Set_AxisX(const Geometry_Vector3& a_vector)
 	{
-		this->ax_x = a_vector.x();
-		this->ax_y = a_vector.y();
-		this->ax_z = a_vector.z();
+		this->ax_x() = a_vector.x();
+		this->ax_y() = a_vector.y();
+		this->ax_z() = a_vector.z();
 	}
 
 
@@ -254,9 +255,9 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline void Geometry_Matrix_44::Set_AxisY(const Geometry_Vector3& a_vector)
 	{
-		this->ay_x = a_vector.x();
-		this->ay_y = a_vector.y();
-		this->ay_z = a_vector.z();
+		this->ay_x() = a_vector.x();
+		this->ay_y() = a_vector.y();
+		this->ay_z() = a_vector.z();
 	}
 
 
@@ -264,9 +265,9 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline void Geometry_Matrix_44::Set_AxisZ(const Geometry_Vector3& a_vector)
 	{
-		this->az_x = a_vector.x();
-		this->az_y = a_vector.y();
-		this->az_z = a_vector.z();
+		this->az_x() = a_vector.x();
+		this->az_y() = a_vector.y();
+		this->az_z() = a_vector.z();
 	}
 
 
@@ -274,9 +275,9 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline void Geometry_Matrix_44::Set_Translate(f32 a_x,f32 a_y,f32 a_z)
 	{
-		this->tr_x = a_x;
-		this->tr_y = a_y;
-		this->tr_z = a_z;
+		this->tr_x() = a_x;
+		this->tr_y() = a_y;
+		this->tr_z() = a_z;
 	}
 
 
@@ -284,9 +285,9 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline void Geometry_Matrix_44::Set_Translate(const Geometry_Vector3& a_vector)
 	{
-		this->tr_x = a_vector.x();
-		this->tr_y = a_vector.y();
-		this->tr_z = a_vector.z();
+		this->tr_x() = a_vector.x();
+		this->tr_y() = a_vector.y();
+		this->tr_z() = a_vector.z();
 	}
 
 
@@ -296,9 +297,9 @@ namespace NBsys{namespace NGeometry
 	{
 		Geometry_Matrix_44 t_temp = Geometry_Identity();
 		{
-			t_temp.tr_x = a_x;
-			t_temp.tr_y = a_y;
-			t_temp.tr_z = a_z;
+			t_temp.tr_x() = a_x;
+			t_temp.tr_y() = a_y;
+			t_temp.tr_z() = a_z;
 		}
 
 		return t_temp;
@@ -309,7 +310,7 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Vector3 Geometry_Matrix_44::Make_Translate_Vector() const
 	{
-		Geometry_Vector3 t_temp(this->tr_x,this->tr_y,this->tr_z);
+		Geometry_Vector3 t_temp(this->tr_x(),this->tr_y(),this->tr_z());
 
 		return t_temp;
 	}
@@ -321,9 +322,9 @@ namespace NBsys{namespace NGeometry
 	{
 		Geometry_Matrix_44 t_temp = Geometry_Identity();
 		{
-			t_temp.tr_x = this->tr_x;
-			t_temp.tr_y = this->tr_y;
-			t_temp.tr_z = this->tr_z;
+			t_temp.tr_x() = this->tr_x();
+			t_temp.tr_y() = this->tr_y();
+			t_temp.tr_z() = this->tr_z();
 		}
 
 		return t_temp;
@@ -388,9 +389,9 @@ namespace NBsys{namespace NGeometry
 	{
 		Geometry_Matrix_44 t_temp;
 		{
-			f32 t_ax_value = (this->ax_x * this->ax_x) + (this->ax_y * this->ax_y) + (this->ax_z * this->ax_z);
-			f32 t_ay_value = (this->ay_x * this->ay_x) + (this->ay_y * this->ay_y) + (this->ay_z * this->ay_z);
-			f32 t_az_value = (this->az_x * this->az_x) + (this->az_y * this->az_y) + (this->az_z * this->az_z);
+			f32 t_ax_value = (this->ax_x() * this->ax_x()) + (this->ax_y() * this->ax_y()) + (this->ax_z() * this->ax_z());
+			f32 t_ay_value = (this->ay_x() * this->ay_x()) + (this->ay_y() * this->ay_y()) + (this->ay_z() * this->ay_z());
+			f32 t_az_value = (this->az_x() * this->az_x()) + (this->az_y() * this->az_y()) + (this->az_z() * this->az_z());
 
 			ASSERT(t_ax_value != 0.0f);
 			ASSERT(t_ay_value != 0.0f);
@@ -409,9 +410,9 @@ namespace NBsys{namespace NGeometry
 			t_az_value = 1.0f / t_ax_value;
 
 			t_temp.Set(
-				this->ax_x * t_ax_value,this->ax_y * t_ax_value,this->ax_z * t_ax_value,0.0f,
-				this->ay_x * t_ay_value,this->ay_y * t_ay_value,this->ay_z * t_ay_value,0.0f,
-				this->az_x * t_az_value,this->az_y * t_az_value,this->az_z * t_az_value,0.0f,
+				this->ax_x() * t_ax_value,this->ax_y() * t_ax_value,this->ax_z() * t_ax_value,0.0f,
+				this->ay_x() * t_ay_value,this->ay_y() * t_ay_value,this->ay_z() * t_ay_value,0.0f,
+				this->az_x() * t_az_value,this->az_y() * t_az_value,this->az_z() * t_az_value,0.0f,
 				0.0f,0.0f,0.0f,1.0f
 			);
 		}
@@ -428,25 +429,25 @@ namespace NBsys{namespace NGeometry
 			f32 t_sin_x = NImpl_Matrix::sinf(a_rad);
 			f32 t_cos_x = NImpl_Matrix::cosf(a_rad);
 
-			t_temp.ax_x = 1.0f;
-			t_temp.ax_y = 0.0f;
-			t_temp.ax_z = 0.0f;
-			t_temp.ax_w = 0.0f;
+			t_temp.ax_x() = 1.0f;
+			t_temp.ax_y() = 0.0f;
+			t_temp.ax_z() = 0.0f;
+			t_temp.ax_w() = 0.0f;
 
-			t_temp.ay_x = 0.0f;
-			t_temp.ay_y = t_cos_x;
-			t_temp.ay_z = t_sin_x;
-			t_temp.ay_w = 0.0f;
+			t_temp.ay_x() = 0.0f;
+			t_temp.ay_y() = t_cos_x;
+			t_temp.ay_z() = t_sin_x;
+			t_temp.ay_w() = 0.0f;
 
-			t_temp.az_x = 0.0f;
-			t_temp.az_y = -t_sin_x;
-			t_temp.az_z = t_cos_x;
-			t_temp.az_w = 0.0f;
+			t_temp.az_x() = 0.0f;
+			t_temp.az_y() = -t_sin_x;
+			t_temp.az_z() = t_cos_x;
+			t_temp.az_w() = 0.0f;
 
-			t_temp.tr_x = 0.0f;
-			t_temp.tr_y = 0.0f;
-			t_temp.tr_z = 0.0f;
-			t_temp.tr_w = 1.0f;
+			t_temp.tr_x() = 0.0f;
+			t_temp.tr_y() = 0.0f;
+			t_temp.tr_z() = 0.0f;
+			t_temp.tr_w() = 1.0f;
 		}
 		return t_temp;
 	}
@@ -461,25 +462,25 @@ namespace NBsys{namespace NGeometry
 			f32 t_sin_y = NImpl_Matrix::sinf(a_rad);
 			f32 t_cos_y = NImpl_Matrix::cosf(a_rad);
 
-			t_temp.ax_x = t_cos_y;
-			t_temp.ax_y = 0.0f;
-			t_temp.ax_z = -t_sin_y;
-			t_temp.ax_w = 0.0f;
+			t_temp.ax_x() = t_cos_y;
+			t_temp.ax_y() = 0.0f;
+			t_temp.ax_z() = -t_sin_y;
+			t_temp.ax_w() = 0.0f;
 
-			t_temp.ay_x = 0.0f;
-			t_temp.ay_y = 1.0f;
-			t_temp.ay_z = 0.0f;
-			t_temp.ay_w = 0.0f;
+			t_temp.ay_x() = 0.0f;
+			t_temp.ay_y() = 1.0f;
+			t_temp.ay_z() = 0.0f;
+			t_temp.ay_w() = 0.0f;
 
-			t_temp.az_x = t_sin_y;
-			t_temp.az_y = 0.0f;
-			t_temp.az_z = t_cos_y;
-			t_temp.az_w = 0.0f;
+			t_temp.az_x() = t_sin_y;
+			t_temp.az_y() = 0.0f;
+			t_temp.az_z() = t_cos_y;
+			t_temp.az_w() = 0.0f;
 
-			t_temp.tr_x = 0.0f;
-			t_temp.tr_y = 0.0f;
-			t_temp.tr_z = 0.0f;
-			t_temp.tr_w = 1.0f;
+			t_temp.tr_x() = 0.0f;
+			t_temp.tr_y() = 0.0f;
+			t_temp.tr_z() = 0.0f;
+			t_temp.tr_w() = 1.0f;
 		}
 		return t_temp;
 	}
@@ -494,25 +495,25 @@ namespace NBsys{namespace NGeometry
 			f32 t_sin_z = NImpl_Matrix::sinf(a_rad);
 			f32 t_cos_z = NImpl_Matrix::cosf(a_rad);
 
-			t_temp.ax_x = t_cos_z;
-			t_temp.ax_y = t_sin_z;
-			t_temp.ax_z = 0.0f;
-			t_temp.ax_w = 0.0f;
+			t_temp.ax_x() = t_cos_z;
+			t_temp.ax_y() = t_sin_z;
+			t_temp.ax_z() = 0.0f;
+			t_temp.ax_w() = 0.0f;
 
-			t_temp.ay_x = -t_sin_z;
-			t_temp.ay_y = t_cos_z;
-			t_temp.ay_z = 0.0f;
-			t_temp.ay_w = 0.0f;
+			t_temp.ay_x() = -t_sin_z;
+			t_temp.ay_y() = t_cos_z;
+			t_temp.ay_z() = 0.0f;
+			t_temp.ay_w() = 0.0f;
 
-			t_temp.az_x = 0.0f;
-			t_temp.az_y = 0.0f;
-			t_temp.az_z = 1.0f;
-			t_temp.az_w = 0.0f;
+			t_temp.az_x() = 0.0f;
+			t_temp.az_y() = 0.0f;
+			t_temp.az_z() = 1.0f;
+			t_temp.az_w() = 0.0f;
 
-			t_temp.tr_x = 0.0f;
-			t_temp.tr_y = 0.0f;
-			t_temp.tr_z = 0.0f;
-			t_temp.tr_w = 1.0f;
+			t_temp.tr_x() = 0.0f;
+			t_temp.tr_y() = 0.0f;
+			t_temp.tr_z() = 0.0f;
+			t_temp.tr_w() = 1.0f;
 		}
 		return t_temp;
 	}
@@ -525,25 +526,25 @@ namespace NBsys{namespace NGeometry
 		f32 t_sin_x = NImpl_Matrix::sinf(a_rad);
 		f32 t_cos_x = NImpl_Matrix::cosf(a_rad);
 
-		this->ax_x = 1.0f;
-		this->ax_y = 0.0f;
-		this->ax_z = 0.0f;
-		this->ax_w = 0.0f;
+		this->ax_x() = 1.0f;
+		this->ax_y() = 0.0f;
+		this->ax_z() = 0.0f;
+		this->ax_w() = 0.0f;
 
-		this->ay_x = 0.0f;
-		this->ay_y = t_cos_x;
-		this->ay_z = t_sin_x;
-		this->ay_w = 0.0f;
+		this->ay_x() = 0.0f;
+		this->ay_y() = t_cos_x;
+		this->ay_z() = t_sin_x;
+		this->ay_w() = 0.0f;
 
-		this->az_x = 0.0f;
-		this->az_y = -t_sin_x;
-		this->az_z = t_cos_x;
-		this->az_w = 0.0f;
+		this->az_x() = 0.0f;
+		this->az_y() = -t_sin_x;
+		this->az_z() = t_cos_x;
+		this->az_w() = 0.0f;
 
-		this->tr_x = 0.0f;
-		this->tr_y = 0.0f;
-		this->tr_z = 0.0f;
-		this->tr_w = 1.0f;
+		this->tr_x() = 0.0f;
+		this->tr_y() = 0.0f;
+		this->tr_z() = 0.0f;
+		this->tr_w() = 1.0f;
 	}
 
 
@@ -554,25 +555,25 @@ namespace NBsys{namespace NGeometry
 		f32 t_sin_y = NImpl_Matrix::sinf(a_rad);
 		f32 t_cos_y = NImpl_Matrix::cosf(a_rad);
 
-		this->ax_x = t_cos_y;
-		this->ax_y = 0.0f;
-		this->ax_z = -t_sin_y;
-		this->ax_w = 0.0f;
+		this->ax_x() = t_cos_y;
+		this->ax_y() = 0.0f;
+		this->ax_z() = -t_sin_y;
+		this->ax_w() = 0.0f;
 
-		this->ay_x = 0.0f;
-		this->ay_y = 1.0f;
-		this->ay_z = 0.0f;
-		this->ay_w = 0.0f;
+		this->ay_x() = 0.0f;
+		this->ay_y() = 1.0f;
+		this->ay_z() = 0.0f;
+		this->ay_w() = 0.0f;
 
-		this->az_x = t_sin_y;
-		this->az_y = 0.0f;
-		this->az_z = t_cos_y;
-		this->az_w = 0.0f;
+		this->az_x() = t_sin_y;
+		this->az_y() = 0.0f;
+		this->az_z() = t_cos_y;
+		this->az_w() = 0.0f;
 
-		this->tr_x = 0.0f;
-		this->tr_y = 0.0f;
-		this->tr_z = 0.0f;
-		this->tr_w = 1.0f;
+		this->tr_x() = 0.0f;
+		this->tr_y() = 0.0f;
+		this->tr_z() = 0.0f;
+		this->tr_w() = 1.0f;
 	}
 
 
@@ -583,25 +584,25 @@ namespace NBsys{namespace NGeometry
 		f32 t_sin_z = NImpl_Matrix::sinf(a_rad);
 		f32 t_cos_z = NImpl_Matrix::cosf(a_rad);
 
-		this->ax_x = t_cos_z;
-		this->ax_y = t_sin_z;
-		this->ax_z = 0.0f;
-		this->ax_w = 0.0f;
+		this->ax_x() = t_cos_z;
+		this->ax_y() = t_sin_z;
+		this->ax_z() = 0.0f;
+		this->ax_w() = 0.0f;
 
-		this->ay_x = -t_sin_z;
-		this->ay_y = t_cos_z;
-		this->ay_z = 0.0f;
-		this->ay_w = 0.0f;
+		this->ay_x() = -t_sin_z;
+		this->ay_y() = t_cos_z;
+		this->ay_z() = 0.0f;
+		this->ay_w() = 0.0f;
 
-		this->az_x = 0.0f;
-		this->az_y = 0.0f;
-		this->az_z = 1.0f;
-		this->az_w = 0.0f;
+		this->az_x() = 0.0f;
+		this->az_y() = 0.0f;
+		this->az_z() = 1.0f;
+		this->az_w() = 0.0f;
 
-		this->tr_x = 0.0f;
-		this->tr_y = 0.0f;
-		this->tr_z = 0.0f;
-		this->tr_w = 1.0f;
+		this->tr_x() = 0.0f;
+		this->tr_y() = 0.0f;
+		this->tr_z() = 0.0f;
+		this->tr_w() = 1.0f;
 	}
 
 
@@ -615,25 +616,25 @@ namespace NBsys{namespace NGeometry
 
 		Geometry_Vector3 t_vector = a_vector.Make_Normalize();
 
-		this->ax_x = t_1_cos * t_vector.x() * t_vector.x() + t_cos;
-		this->ax_y = t_vector.x() * t_vector.y() * t_1_cos - t_vector.z() * t_sin;
-		this->ax_z = t_vector.x() * t_vector.z() * t_1_cos + t_vector.y() * t_sin;
-		this->ax_w = 0.0f;
+		this->ax_x() = t_1_cos * t_vector.x() * t_vector.x() + t_cos;
+		this->ax_y() = t_vector.x() * t_vector.y() * t_1_cos - t_vector.z() * t_sin;
+		this->ax_z() = t_vector.x() * t_vector.z() * t_1_cos + t_vector.y() * t_sin;
+		this->ax_w() = 0.0f;
 
-		this->ay_x = t_vector.x() * t_vector.y() * t_1_cos + t_vector.z() * t_sin;
-		this->ay_y = t_1_cos * t_vector.y() * t_vector.y() + t_cos;
-		this->ay_z = t_vector.y() * t_vector.z() * t_1_cos - t_vector.x() * t_sin;
-		this->ay_w = 0.0f;
+		this->ay_x() = t_vector.x() * t_vector.y() * t_1_cos + t_vector.z() * t_sin;
+		this->ay_y() = t_1_cos * t_vector.y() * t_vector.y() + t_cos;
+		this->ay_z() = t_vector.y() * t_vector.z() * t_1_cos - t_vector.x() * t_sin;
+		this->ay_w() = 0.0f;
 
-		this->az_x = t_vector.x() * t_vector.z() * t_1_cos - t_vector.y() * t_sin;
-		this->az_y = t_vector.y() * t_vector.z() * t_1_cos + t_vector.x() * t_sin;
-		this->az_z = t_1_cos * t_vector.z() * t_vector.z() + t_cos;
-		this->az_w = 0.0f;
+		this->az_x() = t_vector.x() * t_vector.z() * t_1_cos - t_vector.y() * t_sin;
+		this->az_y() = t_vector.y() * t_vector.z() * t_1_cos + t_vector.x() * t_sin;
+		this->az_z() = t_1_cos * t_vector.z() * t_vector.z() + t_cos;
+		this->az_w() = 0.0f;
 
-		this->tr_x = 0.0f;
-		this->tr_y = 0.0f;
-		this->tr_z = 0.0f;
-		this->tr_w = 1.0f;
+		this->tr_x() = 0.0f;
+		this->tr_y() = 0.0f;
+		this->tr_z() = 0.0f;
+		this->tr_w() = 1.0f;
 	}
 
 
@@ -641,46 +642,46 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Matrix_44 Geometry_Matrix_44::Make_Inverse() const
 	{
-		f32 t_ax_x = this->ay_y * this->az_z - this->ay_z * this->az_y;
-		f32 t_ax_y = this->ax_y * this->az_z - this->ax_z * this->az_y;
-		f32 t_ax_z = this->ax_y * this->ay_z - this->ax_z * this->ay_y;
+		f32 t_ax_x = this->ay_y() * this->az_z() - this->ay_z() * this->az_y();
+		f32 t_ax_y = this->ax_y() * this->az_z() - this->ax_z() * this->az_y();
+		f32 t_ax_z = this->ax_y() * this->ay_z() - this->ax_z() * this->ay_y();
 
-		f32 t_ay_x = this->ay_x * this->az_z - this->ay_z * this->az_x;
-		f32 t_ay_y = this->ax_x * this->az_z - this->ax_z * this->az_x;
-		f32 t_ay_z = this->ax_x * this->ay_z - this->ax_z * this->ay_x;
+		f32 t_ay_x = this->ay_x() * this->az_z() - this->ay_z() * this->az_x();
+		f32 t_ay_y = this->ax_x() * this->az_z() - this->ax_z() * this->az_x();
+		f32 t_ay_z = this->ax_x() * this->ay_z() - this->ax_z() * this->ay_x();
 
-		f32 t_az_x = this->ay_x * this->az_y - this->ay_y * this->az_x;
-		f32 t_az_y = this->ax_x * this->az_y - this->ax_y * this->az_x;
-		f32 t_az_z = this->ax_x * this->ay_y - this->ax_y * this->ay_x;
+		f32 t_az_x = this->ay_x() * this->az_y() - this->ay_y() * this->az_x();
+		f32 t_az_y = this->ax_x() * this->az_y() - this->ax_y() * this->az_x();
+		f32 t_az_z = this->ax_x() * this->ay_y() - this->ax_y() * this->ay_x();
 		
-		f32 t_det = (this->ax_x * t_ax_x) - (this->ax_y * t_ay_x) + (this->ax_z * t_az_x);
+		f32 t_det = (this->ax_x() * t_ax_x) - (this->ax_y() * t_ay_x) + (this->ax_z() * t_az_x);
 		t_det = 1.0f / t_det;
 
 		Geometry_Matrix_44 t_temp;
 		{
-			t_temp.ax_x =  t_ax_x * t_det;
-			t_temp.ax_y = -t_ax_y * t_det;
-			t_temp.ax_z =  t_ax_z * t_det;
-			t_temp.ax_w = 0.0f;
+			t_temp.ax_x() =  t_ax_x * t_det;
+			t_temp.ax_y() = -t_ax_y * t_det;
+			t_temp.ax_z() =  t_ax_z * t_det;
+			t_temp.ax_w() = 0.0f;
 
-			t_temp.ay_x = -t_ay_x * t_det;
-			t_temp.ay_y =  t_ay_y * t_det;
-			t_temp.ay_z = -t_ay_z * t_det;
-			t_temp.ay_w = 0.0f;
+			t_temp.ay_x() = -t_ay_x * t_det;
+			t_temp.ay_y() =  t_ay_y * t_det;
+			t_temp.ay_z() = -t_ay_z * t_det;
+			t_temp.ay_w() = 0.0f;
 
-			t_temp.az_x =  t_az_x * t_det;
-			t_temp.az_y = -t_az_y * t_det;
-			t_temp.az_z =  t_az_z * t_det;
-			t_temp.az_w = 0.0f;
+			t_temp.az_x() =  t_az_x * t_det;
+			t_temp.az_y() = -t_az_y * t_det;
+			t_temp.az_z() =  t_az_z * t_det;
+			t_temp.az_w() = 0.0f;
 
-			f32 t_tr_x = -((this->tr_x * t_temp.ax_x) + (this->tr_y * t_temp.ay_x) + (this->tr_z * t_temp.az_x));
-			f32 t_tr_y = -((this->tr_x * t_temp.ax_y) + (this->tr_y * t_temp.ay_y) + (this->tr_z * t_temp.az_y));
-			f32 t_tr_z = -((this->tr_x * t_temp.ax_z) + (this->tr_y * t_temp.ay_z) + (this->tr_z * t_temp.az_z));
+			f32 t_tr_x = -((this->tr_x() * t_temp.ax_x()) + (this->tr_y() * t_temp.ay_x()) + (this->tr_z() * t_temp.az_x()));
+			f32 t_tr_y = -((this->tr_x() * t_temp.ax_y()) + (this->tr_y() * t_temp.ay_y()) + (this->tr_z() * t_temp.az_y()));
+			f32 t_tr_z = -((this->tr_x() * t_temp.ax_z()) + (this->tr_y() * t_temp.ay_z()) + (this->tr_z() * t_temp.az_z()));
 
-			t_temp.tr_x = t_tr_x;
-			t_temp.tr_y = t_tr_y;
-			t_temp.tr_z = t_tr_z;
-			t_temp.tr_w = 1.0f;
+			t_temp.tr_x() = t_tr_x;
+			t_temp.tr_y() = t_tr_y;
+			t_temp.tr_z() = t_tr_z;
+			t_temp.tr_w() = 1.0f;
 		}
 
 		return t_temp;
@@ -691,45 +692,45 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline void Geometry_Matrix_44::Set_Inverse()
 	{
-		f32 t_ax_x = (this->ay_y * this->az_z) - (this->ay_z * this->az_y);
-		f32 t_ax_y = (this->ax_y * this->az_z) - (this->ax_z * this->az_y);
-		f32 t_ax_z = (this->ax_y * this->ay_z) - (this->ax_z * this->ay_y);
+		f32 t_ax_x = (this->ay_y() * this->az_z()) - (this->ay_z() * this->az_y());
+		f32 t_ax_y = (this->ax_y() * this->az_z()) - (this->ax_z() * this->az_y());
+		f32 t_ax_z = (this->ax_y() * this->ay_z()) - (this->ax_z() * this->ay_y());
 
-		f32 t_ay_x = (this->ay_x * this->az_z) - (this->ay_z * this->az_x);
-		f32 t_ay_y = (this->ax_x * this->az_z) - (this->ax_z * this->az_x);
-		f32 t_ay_z = (this->ax_x * this->ay_z) - (this->ax_z * this->ay_x);
+		f32 t_ay_x = (this->ay_x() * this->az_z()) - (this->ay_z() * this->az_x());
+		f32 t_ay_y = (this->ax_x() * this->az_z()) - (this->ax_z() * this->az_x());
+		f32 t_ay_z = (this->ax_x() * this->ay_z()) - (this->ax_z() * this->ay_x());
 
-		f32 t_az_x = (this->ay_x * this->az_y) - (this->ay_y * this->az_x);
-		f32 t_az_y = (this->ax_x * this->az_y) - (this->ax_y * this->az_x);
-		f32 t_az_z = (this->ax_x * this->ay_y) - (this->ax_y * this->ay_x);
+		f32 t_az_x = (this->ay_x() * this->az_y()) - (this->ay_y() * this->az_x());
+		f32 t_az_y = (this->ax_x() * this->az_y()) - (this->ax_y() * this->az_x());
+		f32 t_az_z = (this->ax_x() * this->ay_y()) - (this->ax_y() * this->ay_x());
 		
-		f32 t_det = (this->ax_x * t_ax_x) - (this->ax_y * t_ay_x) + (this->ax_z * t_az_x);
+		f32 t_det = (this->ax_x() * t_ax_x) - (this->ax_y() * t_ay_x) + (this->ax_z() * t_az_x);
 		t_det = 1.0f / t_det;
 
 		{
-			this->ax_x =  t_ax_x * t_det;
-			this->ax_y = -t_ax_y * t_det;
-			this->ax_z =  t_ax_z * t_det;
-			this->ax_w = 0.0f;
+			this->ax_x() =  t_ax_x * t_det;
+			this->ax_y() = -t_ax_y * t_det;
+			this->ax_z() =  t_ax_z * t_det;
+			this->ax_w() = 0.0f;
 
-			this->ay_x = -t_ay_x * t_det;
-			this->ay_y =  t_ay_y * t_det;
-			this->ay_z = -t_ay_z * t_det;
-			this->ay_w = 0.0f;
+			this->ay_x() = -t_ay_x * t_det;
+			this->ay_y() =  t_ay_y * t_det;
+			this->ay_z() = -t_ay_z * t_det;
+			this->ay_w() = 0.0f;
 
-			this->az_x =  t_az_x * t_det;
-			this->az_y = -t_az_y * t_det;
-			this->az_z =  t_az_z * t_det;
-			this->az_w = 0.0f;
+			this->az_x() =  t_az_x * t_det;
+			this->az_y() = -t_az_y * t_det;
+			this->az_z() =  t_az_z * t_det;
+			this->az_w() = 0.0f;
 
-			f32 t_tr_x = -((this->tr_x * this->ax_x) + (this->tr_y * this->ay_x) + (this->tr_z * this->az_x));
-			f32 t_tr_y = -((this->tr_x * this->ax_y) + (this->tr_y * this->ay_y) + (this->tr_z * this->az_y));
-			f32 t_tr_z = -((this->tr_x * this->ax_z) + (this->tr_y * this->ay_z) + (this->tr_z * this->az_z));
+			f32 t_tr_x = -((this->tr_x() * this->ax_x()) + (this->tr_y() * this->ay_x()) + (this->tr_z() * this->az_x()));
+			f32 t_tr_y = -((this->tr_x() * this->ax_y()) + (this->tr_y() * this->ay_y()) + (this->tr_z() * this->az_y()));
+			f32 t_tr_z = -((this->tr_x() * this->ax_z()) + (this->tr_y() * this->ay_z()) + (this->tr_z() * this->az_z()));
 
-			this->tr_x = t_tr_x;
-			this->tr_y = t_tr_y;
-			this->tr_z = t_tr_z;
-			this->tr_w = 1.0f;
+			this->tr_x() = t_tr_x;
+			this->tr_y() = t_tr_y;
+			this->tr_z() = t_tr_z;
+			this->tr_w() = 1.0f;
 		}
 	}
 
@@ -740,25 +741,25 @@ namespace NBsys{namespace NGeometry
 	{
 		Geometry_Matrix_44 t_temp;
 		{
-			t_temp.m[0][0] = this->m[0][0];
-			t_temp.m[0][1] = this->m[1][0];
-			t_temp.m[0][2] = this->m[2][0];
-			t_temp.m[0][3] = this->m[3][0];
+			t_temp.raw.matrix[0][0] = this->raw.matrix[0][0];
+			t_temp.raw.matrix[0][1] = this->raw.matrix[1][0];
+			t_temp.raw.matrix[0][2] = this->raw.matrix[2][0];
+			t_temp.raw.matrix[0][3] = this->raw.matrix[3][0];
 
-			t_temp.m[1][0] = this->m[0][1];
-			t_temp.m[1][1] = this->m[1][1];
-			t_temp.m[1][2] = this->m[2][1];
-			t_temp.m[1][3] = this->m[3][1];
+			t_temp.raw.matrix[1][0] = this->raw.matrix[0][1];
+			t_temp.raw.matrix[1][1] = this->raw.matrix[1][1];
+			t_temp.raw.matrix[1][2] = this->raw.matrix[2][1];
+			t_temp.raw.matrix[1][3] = this->raw.matrix[3][1];
 
-			t_temp.m[2][0] = this->m[0][2];
-			t_temp.m[2][1] = this->m[1][2];
-			t_temp.m[2][2] = this->m[2][2];
-			t_temp.m[2][3] = this->m[3][2];
+			t_temp.raw.matrix[2][0] = this->raw.matrix[0][2];
+			t_temp.raw.matrix[2][1] = this->raw.matrix[1][2];
+			t_temp.raw.matrix[2][2] = this->raw.matrix[2][2];
+			t_temp.raw.matrix[2][3] = this->raw.matrix[3][2];
 
-			t_temp.m[3][0] = this->m[0][3];
-			t_temp.m[3][1] = this->m[1][3];
-			t_temp.m[3][2] = this->m[2][3];
-			t_temp.m[3][3] = this->m[3][3];
+			t_temp.raw.matrix[3][0] = this->raw.matrix[0][3];
+			t_temp.raw.matrix[3][1] = this->raw.matrix[1][3];
+			t_temp.raw.matrix[3][2] = this->raw.matrix[2][3];
+			t_temp.raw.matrix[3][3] = this->raw.matrix[3][3];
 		}
 
 		return t_temp;
@@ -769,30 +770,30 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline void Geometry_Matrix_44::Set_Transpose()
 	{
-		f32 t_m_0_1 = this->m[0][1];
-		f32 t_m_0_2 = this->m[0][2];
-		f32 t_m_0_3 = this->m[0][3];
+		f32 t_m_0_1 = this->raw.matrix[0][1];
+		f32 t_m_0_2 = this->raw.matrix[0][2];
+		f32 t_m_0_3 = this->raw.matrix[0][3];
 
-		f32 t_m_1_2 = this->m[1][2];
-		f32 t_m_1_3 = this->m[1][3];
+		f32 t_m_1_2 = this->raw.matrix[1][2];
+		f32 t_m_1_3 = this->raw.matrix[1][3];
 
-		f32 t_m_2_3 = this->m[2][3];
+		f32 t_m_2_3 = this->raw.matrix[2][3];
 
-		this->m[0][1] = this->m[1][0];
-		this->m[0][2] = this->m[2][0];
-		this->m[0][3] = this->m[3][0];
+		this->raw.matrix[0][1] = this->raw.matrix[1][0];
+		this->raw.matrix[0][2] = this->raw.matrix[2][0];
+		this->raw.matrix[0][3] = this->raw.matrix[3][0];
 
-		this->m[1][0] = t_m_0_1;
-		this->m[1][2] = this->m[2][1];
-		this->m[1][3] = this->m[3][1];
+		this->raw.matrix[1][0] = t_m_0_1;
+		this->raw.matrix[1][2] = this->raw.matrix[2][1];
+		this->raw.matrix[1][3] = this->raw.matrix[3][1];
 
-		this->m[2][0] = t_m_0_2;
-		this->m[2][1] = t_m_1_2;
-		this->m[2][3] = this->m[3][2];
+		this->raw.matrix[2][0] = t_m_0_2;
+		this->raw.matrix[2][1] = t_m_1_2;
+		this->raw.matrix[2][3] = this->raw.matrix[3][2];
 
-		this->m[3][0] = t_m_0_3;
-		this->m[3][1] = t_m_1_3;
-		this->m[3][2] = t_m_2_3;
+		this->raw.matrix[3][0] = t_m_0_3;
+		this->raw.matrix[3][1] = t_m_1_3;
+		this->raw.matrix[3][2] = t_m_2_3;
 	}
 
 
@@ -811,25 +812,25 @@ namespace NBsys{namespace NGeometry
 		t_y.Set_Normalize();
 
 		{
-			this->ax_x = t_x.x();
-			this->ax_y = t_x.y();
-			this->ax_z = t_x.z();
-			this->ax_w = 0.0f;
+			this->ax_x() = t_x.x();
+			this->ax_y() = t_x.y();
+			this->ax_z() = t_x.z();
+			this->ax_w() = 0.0f;
 
-			this->ay_x = t_y.x();
-			this->ay_y = t_y.y();
-			this->ay_z = t_y.z();
-			this->ay_w = 0.0f;
+			this->ay_x() = t_y.x();
+			this->ay_y() = t_y.y();
+			this->ay_z() = t_y.z();
+			this->ay_w() = 0.0f;
 
-			this->az_x = t_z.x();
-			this->az_y = t_z.y();
-			this->az_z = t_z.z();
-			this->az_w = 0.0f;
+			this->az_x() = t_z.x();
+			this->az_y() = t_z.y();
+			this->az_z() = t_z.z();
+			this->az_w() = 0.0f;
 
-			this->tr_x = 0.0f;
-			this->tr_y = 0.0f;
-			this->tr_z = 0.0f;
-			this->tr_w = 1.0f;
+			this->tr_x() = 0.0f;
+			this->tr_y() = 0.0f;
+			this->tr_z() = 0.0f;
+			this->tr_w() = 1.0f;
 		}
 	}
 
@@ -852,25 +853,25 @@ namespace NBsys{namespace NGeometry
 		t_z.Set_Normalize();
 
 		{
-			this->ax_x = t_x.x();
-			this->ax_y = t_x.y();
-			this->ax_z = t_x.z();
-			this->ax_w = 0.0f;
+			this->ax_x() = t_x.x();
+			this->ax_y() = t_x.y();
+			this->ax_z() = t_x.z();
+			this->ax_w() = 0.0f;
 
-			this->ay_x = t_y.x();
-			this->ay_y = t_y.y();
-			this->ay_z = t_y.z();
-			this->ay_w = 0.0f;
+			this->ay_x() = t_y.x();
+			this->ay_y() = t_y.y();
+			this->ay_z() = t_y.z();
+			this->ay_w() = 0.0f;
 
-			this->az_x = t_z.x();
-			this->az_y = t_z.y();
-			this->az_z = t_z.z();
-			this->az_w = 0.0f;
+			this->az_x() = t_z.x();
+			this->az_y() = t_z.y();
+			this->az_z() = t_z.z();
+			this->az_w() = 0.0f;
 
-			this->tr_x = 0.0f;
-			this->tr_y = 0.0f;
-			this->tr_z = 0.0f;
-			this->tr_w = 1.0f;
+			this->tr_x() = 0.0f;
+			this->tr_y() = 0.0f;
+			this->tr_z() = 0.0f;
+			this->tr_w() = 1.0f;
 		}
 	}
 
@@ -881,25 +882,25 @@ namespace NBsys{namespace NGeometry
 	{
 		Geometry_Quaternion t_temp_quaternion;
 		{
-			f32 t_tr = this->ax_x + this->ay_y + this->az_z;
+			f32 t_tr = this->ax_x() + this->ay_y() + this->az_z();
 			if(t_tr > 0.0f){
 
 				f32 t_s = Math::sqrt_f(t_tr + 1.0f);
-				t_temp_quaternion.w = t_s * 0.5f;
+				t_temp_quaternion.w() = t_s * 0.5f;
 				t_s = 0.5f / t_s;
 
-				t_temp_quaternion.x = (this->az_y - this->ay_z) * t_s;
-				t_temp_quaternion.y = (this->ax_z - this->az_x) * t_s;
-				t_temp_quaternion.z = (this->ay_x - this->ax_y) * t_s;
+				t_temp_quaternion.x() = (this->az_y() - this->ay_z()) * t_s;
+				t_temp_quaternion.y() = (this->ax_z() - this->az_x()) * t_s;
+				t_temp_quaternion.z() = (this->ay_x() - this->ax_y()) * t_s;
 
 			}else{
 
 				s32 ii = 0;
 				{
-					if(this->ay_y > this->ax_x){
+					if(this->ay_y() > this->ax_x()){
 						ii = 1;
 					}
-					if(this->az_z > this->m[ii][ii]){
+					if(this->az_z() > this->raw.matrix[ii][ii]){
 						ii = 2;
 					}
 				}
@@ -908,7 +909,7 @@ namespace NBsys{namespace NGeometry
 				s32 jj = t_next[ii];
 				s32 kk = t_next[jj];
 
-				f32 t_s = Math::sqrt_f((this->m[ii][ii] - (this->m[jj][jj] + this->m[kk][kk])) + 1.0f);
+				f32 t_s = Math::sqrt_f((this->raw.matrix[ii][ii] - (this->raw.matrix[jj][jj] + this->raw.matrix[kk][kk])) + 1.0f);
 
 				f32 t_temp[3];
 				t_temp[ii] = t_s * 0.5f;
@@ -917,13 +918,13 @@ namespace NBsys{namespace NGeometry
 					t_s = 0.5f / t_s;
 				}
 
-				t_temp_quaternion.w = (this->m[kk][jj] - this->m[jj][kk]) * t_s;
-				t_temp[jj] = (this->m[ii][jj] + this->m[jj][ii]) * t_s;
-				t_temp[kk] = (this->m[ii][kk] + this->m[kk][ii]) * t_s;
+				t_temp_quaternion.w() = (this->raw.matrix[kk][jj] - this->raw.matrix[jj][kk]) * t_s;
+				t_temp[jj] = (this->raw.matrix[ii][jj] + this->raw.matrix[jj][ii]) * t_s;
+				t_temp[kk] = (this->raw.matrix[ii][kk] + this->raw.matrix[kk][ii]) * t_s;
 
-				t_temp_quaternion.x = t_temp[0];
-				t_temp_quaternion.y = t_temp[1];
-				t_temp_quaternion.z = t_temp[2];
+				t_temp_quaternion.x() = t_temp[0];
+				t_temp_quaternion.y() = t_temp[1];
+				t_temp_quaternion.z() = t_temp[2];
 			}
 		}
 		return t_temp_quaternion;
@@ -943,39 +944,39 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline void Geometry_Matrix_44::Set_Quaternion(const Geometry_Quaternion& a_quaternion)
 	{
-		f32 t_s = 2.0f / ((a_quaternion.x * a_quaternion.x) + (a_quaternion.y * a_quaternion.y) + (a_quaternion.z * a_quaternion.z) + (a_quaternion.w * a_quaternion.w));
+		f32 t_s = 2.0f / ((a_quaternion.x() * a_quaternion.x()) + (a_quaternion.y() * a_quaternion.y()) + (a_quaternion.z() * a_quaternion.z()) + (a_quaternion.w() * a_quaternion.w()));
 
-		f32 t_wx = a_quaternion.w * a_quaternion.x * t_s;
-		f32 t_wy = a_quaternion.w * a_quaternion.y * t_s;
-		f32 t_wz = a_quaternion.w * a_quaternion.z * t_s;
+		f32 t_wx = a_quaternion.w() * a_quaternion.x() * t_s;
+		f32 t_wy = a_quaternion.w() * a_quaternion.y() * t_s;
+		f32 t_wz = a_quaternion.w() * a_quaternion.z() * t_s;
 
-		f32 t_xx = a_quaternion.x * a_quaternion.x * t_s;
-		f32 t_xy = a_quaternion.x * a_quaternion.y * t_s;
-		f32 t_xz = a_quaternion.x * a_quaternion.z * t_s;
+		f32 t_xx = a_quaternion.x() * a_quaternion.x() * t_s;
+		f32 t_xy = a_quaternion.x() * a_quaternion.y() * t_s;
+		f32 t_xz = a_quaternion.x() * a_quaternion.z() * t_s;
 
-		f32 t_yy = a_quaternion.y * a_quaternion.y * t_s;
-		f32 t_yz = a_quaternion.y * a_quaternion.z * t_s;
-		f32 t_zz = a_quaternion.z * a_quaternion.z * t_s;
+		f32 t_yy = a_quaternion.y() * a_quaternion.y() * t_s;
+		f32 t_yz = a_quaternion.y() * a_quaternion.z() * t_s;
+		f32 t_zz = a_quaternion.z() * a_quaternion.z() * t_s;
 
-		this->ax_x = 1.0f - (t_yy + t_zz);
-		this->ax_y = t_xy - t_wz;
-		this->ax_z = t_xz + t_wy;
-		this->ax_w = 0.0f;
+		this->ax_x() = 1.0f - (t_yy + t_zz);
+		this->ax_y() = t_xy - t_wz;
+		this->ax_z() = t_xz + t_wy;
+		this->ax_w() = 0.0f;
 
-		this->ay_x = t_xy + t_wz;
-		this->ay_y = 1.0f - (t_xx + t_zz);
-		this->ay_z = t_yz - t_wx;
-		this->ay_w = 0.0f;
+		this->ay_x() = t_xy + t_wz;
+		this->ay_y() = 1.0f - (t_xx + t_zz);
+		this->ay_z() = t_yz - t_wx;
+		this->ay_w() = 0.0f;
 
-		this->az_x = t_xz - t_wy;
-		this->az_y = t_yz + t_wx;
-		this->az_z = 1.0f - (t_xx + t_yy);
-		this->az_w = 0.0f;
+		this->az_x() = t_xz - t_wy;
+		this->az_y() = t_yz + t_wx;
+		this->az_z() = 1.0f - (t_xx + t_yy);
+		this->az_w() = 0.0f;
 
-		this->tr_x = 0.0f;
-		this->tr_y = 0.0f;
-		this->tr_z = 0.0f;
-		this->tr_w = 1.0f;
+		this->tr_x() = 0.0f;
+		this->tr_y() = 0.0f;
+		this->tr_z() = 0.0f;
+		this->tr_w() = 1.0f;
 	}
 
 
@@ -1001,25 +1002,25 @@ namespace NBsys{namespace NGeometry
 				0       0       -zn*zf/(zf-zn)  0
 				*/
 				
-				this->ax_x = t_w;
-				this->ax_y = 0.0f;
-				this->ax_z = 0.0f;
-				this->ax_w = 0.0f;
+				this->ax_x() = t_w;
+				this->ax_y() = 0.0f;
+				this->ax_z() = 0.0f;
+				this->ax_w() = 0.0f;
 
-				this->ay_x = 0.0f;
-				this->ay_y = t_h;
-				this->ay_z = 0.0f;
-				this->ay_w = 0.0f;
+				this->ay_x() = 0.0f;
+				this->ay_y() = t_h;
+				this->ay_z() = 0.0f;
+				this->ay_w() = 0.0f;
 
-				this->az_x = 0.0f;
-				this->az_y = 0.0f;
-				this->az_z = a_far / (a_far - a_near);
-				this->az_w = 1.0f;
+				this->az_x() = 0.0f;
+				this->az_y() = 0.0f;
+				this->az_z() = a_far / (a_far - a_near);
+				this->az_w() = 1.0f;
 
-				this->tr_x = 0.0f;
-				this->tr_y = 0.0f;
-				this->tr_z = -(a_near * a_far) / (a_far - a_near);
-				this->tr_w = 0.0f;
+				this->tr_x() = 0.0f;
+				this->tr_y() = 0.0f;
+				this->tr_z() = -(a_near * a_far) / (a_far - a_near);
+				this->tr_w() = 0.0f;
 			}
 			#else
 			{
@@ -1135,25 +1136,25 @@ namespace NBsys{namespace NGeometry
 
 			Geometry_Vector3 t_axis_yy = t_axis_zz.Make_Cross(t_axis_xx);
 
-			this->ax_x = t_axis_xx.x();
-			this->ax_y = t_axis_yy.x();
-			this->ax_z = t_axis_zz.x();
-			this->ax_w = 0.0f;
+			this->ax_x() = t_axis_xx.x();
+			this->ax_y() = t_axis_yy.x();
+			this->ax_z() = t_axis_zz.x();
+			this->ax_w() = 0.0f;
 
-			this->ay_x = t_axis_xx.y();
-			this->ay_y = t_axis_yy.y();
-			this->ay_z = t_axis_zz.y();
-			this->ay_w = 0.0f;
+			this->ay_x() = t_axis_xx.y();
+			this->ay_y() = t_axis_yy.y();
+			this->ay_z() = t_axis_zz.y();
+			this->ay_w() = 0.0f;
 
-			this->az_x = t_axis_xx.z();
-			this->az_y = t_axis_yy.z();
-			this->az_z = t_axis_zz.z();
-			this->az_w = 0.0f;
+			this->az_x() = t_axis_xx.z();
+			this->az_y() = t_axis_yy.z();
+			this->az_z() = t_axis_zz.z();
+			this->az_w() = 0.0f;
 
-			this->tr_x = -t_axis_xx.Dot( a_camera_position );
-			this->tr_y = -t_axis_yy.Dot( a_camera_position );
-			this->tr_z = -t_axis_zz.Dot( a_camera_position );
-			this->tr_w = 1.0f;
+			this->tr_x() = -t_axis_xx.Dot( a_camera_position );
+			this->tr_y() = -t_axis_yy.Dot( a_camera_position );
+			this->tr_z() = -t_axis_zz.Dot( a_camera_position );
+			this->tr_w() = 1.0f;
 		}
 		#else
 		{
@@ -1219,45 +1220,45 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Matrix_44& Geometry_Matrix_44::operator *=(const Geometry_Matrix_44& a_matrix)
 	{
-		f32 t_ax_x = (this->ax_x * a_matrix.ax_x) + (this->ax_y * a_matrix.ay_x) + (this->ax_z * a_matrix.az_x) + (this->ax_w * a_matrix.tr_x);
-		f32 t_ax_y = (this->ax_x * a_matrix.ax_y) + (this->ax_y * a_matrix.ay_y) + (this->ax_z * a_matrix.az_y) + (this->ax_w * a_matrix.tr_y);
-		f32 t_ax_z = (this->ax_x * a_matrix.ax_z) + (this->ax_y * a_matrix.ay_z) + (this->ax_z * a_matrix.az_z) + (this->ax_w * a_matrix.tr_z);
-		f32 t_ax_w = (this->ax_x * a_matrix.ax_w) + (this->ax_y * a_matrix.ay_w) + (this->ax_z * a_matrix.az_w) + (this->ax_w * a_matrix.tr_w);
+		f32 t_ax_x = (this->ax_x() * a_matrix.ax_x()) + (this->ax_y() * a_matrix.ay_x()) + (this->ax_z() * a_matrix.az_x()) + (this->ax_w() * a_matrix.tr_x());
+		f32 t_ax_y = (this->ax_x() * a_matrix.ax_y()) + (this->ax_y() * a_matrix.ay_y()) + (this->ax_z() * a_matrix.az_y()) + (this->ax_w() * a_matrix.tr_y());
+		f32 t_ax_z = (this->ax_x() * a_matrix.ax_z()) + (this->ax_y() * a_matrix.ay_z()) + (this->ax_z() * a_matrix.az_z()) + (this->ax_w() * a_matrix.tr_z());
+		f32 t_ax_w = (this->ax_x() * a_matrix.ax_w()) + (this->ax_y() * a_matrix.ay_w()) + (this->ax_z() * a_matrix.az_w()) + (this->ax_w() * a_matrix.tr_w());
 
-		f32 t_ay_x = (this->ay_x * a_matrix.ax_x) + (this->ay_y * a_matrix.ay_x) + (this->ay_z * a_matrix.az_x) + (this->ay_w * a_matrix.tr_x);
-		f32 t_ay_y = (this->ay_x * a_matrix.ax_y) + (this->ay_y * a_matrix.ay_y) + (this->ay_z * a_matrix.az_y) + (this->ay_w * a_matrix.tr_y);
-		f32 t_ay_z = (this->ay_x * a_matrix.ax_z) + (this->ay_y * a_matrix.ay_z) + (this->ay_z * a_matrix.az_z) + (this->ay_w * a_matrix.tr_z);
-		f32 t_ay_w = (this->ay_x * a_matrix.ax_w) + (this->ay_y * a_matrix.ay_w) + (this->ay_z * a_matrix.az_w) + (this->ay_w * a_matrix.tr_w);
+		f32 t_ay_x = (this->ay_x() * a_matrix.ax_x()) + (this->ay_y() * a_matrix.ay_x()) + (this->ay_z() * a_matrix.az_x()) + (this->ay_w() * a_matrix.tr_x());
+		f32 t_ay_y = (this->ay_x() * a_matrix.ax_y()) + (this->ay_y() * a_matrix.ay_y()) + (this->ay_z() * a_matrix.az_y()) + (this->ay_w() * a_matrix.tr_y());
+		f32 t_ay_z = (this->ay_x() * a_matrix.ax_z()) + (this->ay_y() * a_matrix.ay_z()) + (this->ay_z() * a_matrix.az_z()) + (this->ay_w() * a_matrix.tr_z());
+		f32 t_ay_w = (this->ay_x() * a_matrix.ax_w()) + (this->ay_y() * a_matrix.ay_w()) + (this->ay_z() * a_matrix.az_w()) + (this->ay_w() * a_matrix.tr_w());
 
-		f32 t_az_x = (this->az_x * a_matrix.ax_x) + (this->az_y * a_matrix.ay_x) + (this->az_z * a_matrix.az_x) + (this->az_w * a_matrix.tr_x);
-		f32 t_az_y = (this->az_x * a_matrix.ax_y) + (this->az_y * a_matrix.ay_y) + (this->az_z * a_matrix.az_y) + (this->az_w * a_matrix.tr_y);
-		f32 t_az_z = (this->az_x * a_matrix.ax_z) + (this->az_y * a_matrix.ay_z) + (this->az_z * a_matrix.az_z) + (this->az_w * a_matrix.tr_z);
-		f32 t_az_w = (this->az_x * a_matrix.ax_w) + (this->az_y * a_matrix.ay_w) + (this->az_z * a_matrix.az_w) + (this->az_w * a_matrix.tr_w);
+		f32 t_az_x = (this->az_x() * a_matrix.ax_x()) + (this->az_y() * a_matrix.ay_x()) + (this->az_z() * a_matrix.az_x()) + (this->az_w() * a_matrix.tr_x());
+		f32 t_az_y = (this->az_x() * a_matrix.ax_y()) + (this->az_y() * a_matrix.ay_y()) + (this->az_z() * a_matrix.az_y()) + (this->az_w() * a_matrix.tr_y());
+		f32 t_az_z = (this->az_x() * a_matrix.ax_z()) + (this->az_y() * a_matrix.ay_z()) + (this->az_z() * a_matrix.az_z()) + (this->az_w() * a_matrix.tr_z());
+		f32 t_az_w = (this->az_x() * a_matrix.ax_w()) + (this->az_y() * a_matrix.ay_w()) + (this->az_z() * a_matrix.az_w()) + (this->az_w() * a_matrix.tr_w());
 
-		f32 t_tr_x = (this->tr_x * a_matrix.ax_x) + (this->tr_y * a_matrix.ay_x) + (this->tr_z * a_matrix.az_x) + (this->tr_w * a_matrix.tr_x);
-		f32 t_tr_y = (this->tr_x * a_matrix.ax_y) + (this->tr_y * a_matrix.ay_y) + (this->tr_z * a_matrix.az_y) + (this->tr_w * a_matrix.tr_y);
-		f32 t_tr_z = (this->tr_x * a_matrix.ax_z) + (this->tr_y * a_matrix.ay_z) + (this->tr_z * a_matrix.az_z) + (this->tr_w * a_matrix.tr_z);
-		f32 t_tr_w = (this->tr_x * a_matrix.ax_w) + (this->tr_y * a_matrix.ay_w) + (this->tr_z * a_matrix.az_w) + (this->tr_w * a_matrix.tr_w);
+		f32 t_tr_x = (this->tr_x() * a_matrix.ax_x()) + (this->tr_y() * a_matrix.ay_x()) + (this->tr_z() * a_matrix.az_x()) + (this->tr_w() * a_matrix.tr_x());
+		f32 t_tr_y = (this->tr_x() * a_matrix.ax_y()) + (this->tr_y() * a_matrix.ay_y()) + (this->tr_z() * a_matrix.az_y()) + (this->tr_w() * a_matrix.tr_y());
+		f32 t_tr_z = (this->tr_x() * a_matrix.ax_z()) + (this->tr_y() * a_matrix.ay_z()) + (this->tr_z() * a_matrix.az_z()) + (this->tr_w() * a_matrix.tr_z());
+		f32 t_tr_w = (this->tr_x() * a_matrix.ax_w()) + (this->tr_y() * a_matrix.ay_w()) + (this->tr_z() * a_matrix.az_w()) + (this->tr_w() * a_matrix.tr_w());
 
-		this->ax_x = t_ax_x;
-		this->ax_y = t_ax_y;
-		this->ax_z = t_ax_z;
-		this->ax_w = t_ax_w;
+		this->ax_x() = t_ax_x;
+		this->ax_y() = t_ax_y;
+		this->ax_z() = t_ax_z;
+		this->ax_w() = t_ax_w;
 
-		this->ay_x = t_ay_x;
-		this->ay_y = t_ay_y;
-		this->ay_z = t_ay_z;
-		this->ay_w = t_ay_w;
+		this->ay_x() = t_ay_x;
+		this->ay_y() = t_ay_y;
+		this->ay_z() = t_ay_z;
+		this->ay_w() = t_ay_w;
 
-		this->az_x = t_az_x;
-		this->az_y = t_az_y;
-		this->az_z = t_az_z;
-		this->az_w = t_az_w;
+		this->az_x() = t_az_x;
+		this->az_y() = t_az_y;
+		this->az_z() = t_az_z;
+		this->az_w() = t_az_w;
 
-		this->tr_x = t_tr_x;
-		this->tr_y = t_tr_y;
-		this->tr_z = t_tr_z;
-		this->tr_w = t_tr_w;
+		this->tr_x() = t_tr_x;
+		this->tr_y() = t_tr_y;
+		this->tr_z() = t_tr_z;
+		this->tr_w() = t_tr_w;
 
 		return *this;
 	}
@@ -1269,25 +1270,25 @@ namespace NBsys{namespace NGeometry
 	{
 		Geometry_Matrix_44 t_temp;
 		{
-			t_temp.ax_x = (this->ax_x * a_matrix.ax_x) + (this->ax_y * a_matrix.ay_x) + (this->ax_z * a_matrix.az_x) + (this->ax_w * a_matrix.tr_x);
-			t_temp.ax_y = (this->ax_x * a_matrix.ax_y) + (this->ax_y * a_matrix.ay_y) + (this->ax_z * a_matrix.az_y) + (this->ax_w * a_matrix.tr_y);
-			t_temp.ax_z = (this->ax_x * a_matrix.ax_z) + (this->ax_y * a_matrix.ay_z) + (this->ax_z * a_matrix.az_z) + (this->ax_w * a_matrix.tr_z);
-			t_temp.ax_w = (this->ax_x * a_matrix.ax_w) + (this->ax_y * a_matrix.ay_w) + (this->ax_z * a_matrix.az_w) + (this->ax_w * a_matrix.tr_w);
+			t_temp.ax_x() = (this->ax_x() * a_matrix.ax_x()) + (this->ax_y() * a_matrix.ay_x()) + (this->ax_z() * a_matrix.az_x()) + (this->ax_w() * a_matrix.tr_x());
+			t_temp.ax_y() = (this->ax_x() * a_matrix.ax_y()) + (this->ax_y() * a_matrix.ay_y()) + (this->ax_z() * a_matrix.az_y()) + (this->ax_w() * a_matrix.tr_y());
+			t_temp.ax_z() = (this->ax_x() * a_matrix.ax_z()) + (this->ax_y() * a_matrix.ay_z()) + (this->ax_z() * a_matrix.az_z()) + (this->ax_w() * a_matrix.tr_z());
+			t_temp.ax_w() = (this->ax_x() * a_matrix.ax_w()) + (this->ax_y() * a_matrix.ay_w()) + (this->ax_z() * a_matrix.az_w()) + (this->ax_w() * a_matrix.tr_w());
 
-			t_temp.ay_x = (this->ay_x * a_matrix.ax_x) + (this->ay_y * a_matrix.ay_x) + (this->ay_z * a_matrix.az_x) + (this->ay_w * a_matrix.tr_x);
-			t_temp.ay_y = (this->ay_x * a_matrix.ax_y) + (this->ay_y * a_matrix.ay_y) + (this->ay_z * a_matrix.az_y) + (this->ay_w * a_matrix.tr_y);
-			t_temp.ay_z = (this->ay_x * a_matrix.ax_z) + (this->ay_y * a_matrix.ay_z) + (this->ay_z * a_matrix.az_z) + (this->ay_w * a_matrix.tr_z);
-			t_temp.ay_w = (this->ay_x * a_matrix.ax_w) + (this->ay_y * a_matrix.ay_w) + (this->ay_z * a_matrix.az_w) + (this->ay_w * a_matrix.tr_w);
+			t_temp.ay_x() = (this->ay_x() * a_matrix.ax_x()) + (this->ay_y() * a_matrix.ay_x()) + (this->ay_z() * a_matrix.az_x()) + (this->ay_w() * a_matrix.tr_x());
+			t_temp.ay_y() = (this->ay_x() * a_matrix.ax_y()) + (this->ay_y() * a_matrix.ay_y()) + (this->ay_z() * a_matrix.az_y()) + (this->ay_w() * a_matrix.tr_y());
+			t_temp.ay_z() = (this->ay_x() * a_matrix.ax_z()) + (this->ay_y() * a_matrix.ay_z()) + (this->ay_z() * a_matrix.az_z()) + (this->ay_w() * a_matrix.tr_z());
+			t_temp.ay_w() = (this->ay_x() * a_matrix.ax_w()) + (this->ay_y() * a_matrix.ay_w()) + (this->ay_z() * a_matrix.az_w()) + (this->ay_w() * a_matrix.tr_w());
 
-			t_temp.az_x = (this->az_x * a_matrix.ax_x) + (this->az_y * a_matrix.ay_x) + (this->az_z * a_matrix.az_x) + (this->az_w * a_matrix.tr_x);
-			t_temp.az_y = (this->az_x * a_matrix.ax_y) + (this->az_y * a_matrix.ay_y) + (this->az_z * a_matrix.az_y) + (this->az_w * a_matrix.tr_y);
-			t_temp.az_z = (this->az_x * a_matrix.ax_z) + (this->az_y * a_matrix.ay_z) + (this->az_z * a_matrix.az_z) + (this->az_w * a_matrix.tr_z);
-			t_temp.az_w = (this->az_x * a_matrix.ax_w) + (this->az_y * a_matrix.ay_w) + (this->az_z * a_matrix.az_w) + (this->az_w * a_matrix.tr_w);
+			t_temp.az_x() = (this->az_x() * a_matrix.ax_x()) + (this->az_y() * a_matrix.ay_x()) + (this->az_z() * a_matrix.az_x()) + (this->az_w() * a_matrix.tr_x());
+			t_temp.az_y() = (this->az_x() * a_matrix.ax_y()) + (this->az_y() * a_matrix.ay_y()) + (this->az_z() * a_matrix.az_y()) + (this->az_w() * a_matrix.tr_y());
+			t_temp.az_z() = (this->az_x() * a_matrix.ax_z()) + (this->az_y() * a_matrix.ay_z()) + (this->az_z() * a_matrix.az_z()) + (this->az_w() * a_matrix.tr_z());
+			t_temp.az_w() = (this->az_x() * a_matrix.ax_w()) + (this->az_y() * a_matrix.ay_w()) + (this->az_z() * a_matrix.az_w()) + (this->az_w() * a_matrix.tr_w());
 
-			t_temp.tr_x = (this->tr_x * a_matrix.ax_x) + (this->tr_y * a_matrix.ay_x) + (this->tr_z * a_matrix.az_x) + (this->tr_w * a_matrix.tr_x);
-			t_temp.tr_y = (this->tr_x * a_matrix.ax_y) + (this->tr_y * a_matrix.ay_y) + (this->tr_z * a_matrix.az_y) + (this->tr_w * a_matrix.tr_y);
-			t_temp.tr_z = (this->tr_x * a_matrix.ax_z) + (this->tr_y * a_matrix.ay_z) + (this->tr_z * a_matrix.az_z) + (this->tr_w * a_matrix.tr_z);
-			t_temp.tr_w = (this->tr_x * a_matrix.ax_w) + (this->tr_y * a_matrix.ay_w) + (this->tr_z * a_matrix.az_w) + (this->tr_w * a_matrix.tr_w);
+			t_temp.tr_x() = (this->tr_x() * a_matrix.ax_x()) + (this->tr_y() * a_matrix.ay_x()) + (this->tr_z() * a_matrix.az_x()) + (this->tr_w() * a_matrix.tr_x());
+			t_temp.tr_y() = (this->tr_x() * a_matrix.ax_y()) + (this->tr_y() * a_matrix.ay_y()) + (this->tr_z() * a_matrix.az_y()) + (this->tr_w() * a_matrix.tr_y());
+			t_temp.tr_z() = (this->tr_x() * a_matrix.ax_z()) + (this->tr_y() * a_matrix.ay_z()) + (this->tr_z() * a_matrix.az_z()) + (this->tr_w() * a_matrix.tr_z());
+			t_temp.tr_w() = (this->tr_x() * a_matrix.ax_w()) + (this->tr_y() * a_matrix.ay_w()) + (this->tr_z() * a_matrix.az_w()) + (this->tr_w() * a_matrix.tr_w());
 		}
 		return t_temp;
 	}
@@ -1297,25 +1298,25 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Matrix_44& Geometry_Matrix_44::operator *=(f32 a_value)
 	{
-		this->ax_x *= a_value;
-		this->ax_y *= a_value;
-		this->ax_z *= a_value;
-		this->ax_w *= a_value;
+		this->ax_x() *= a_value;
+		this->ax_y() *= a_value;
+		this->ax_z() *= a_value;
+		this->ax_w() *= a_value;
 
-		this->ay_x *= a_value;
-		this->ay_y *= a_value;
-		this->ay_z *= a_value;
-		this->ay_w *= a_value;
+		this->ay_x() *= a_value;
+		this->ay_y() *= a_value;
+		this->ay_z() *= a_value;
+		this->ay_w() *= a_value;
 
-		this->az_x *= a_value;
-		this->az_y *= a_value;
-		this->az_z *= a_value;
-		this->az_w *= a_value;
+		this->az_x() *= a_value;
+		this->az_y() *= a_value;
+		this->az_z() *= a_value;
+		this->az_w() *= a_value;
 
-		this->tr_x *= a_value;
-		this->tr_y *= a_value;
-		this->tr_z *= a_value;
-		this->tr_w *= a_value;
+		this->tr_x() *= a_value;
+		this->tr_y() *= a_value;
+		this->tr_z() *= a_value;
+		this->tr_w() *= a_value;
 
 		return *this;
 	}
@@ -1327,25 +1328,25 @@ namespace NBsys{namespace NGeometry
 	{
 		Geometry_Matrix_44 t_temp;
 		{
-			t_temp.ax_x = this->ax_x * a_value;
-			t_temp.ax_y = this->ax_y * a_value;
-			t_temp.ax_z = this->ax_z * a_value;
-			t_temp.ax_w = this->ax_w * a_value;
+			t_temp.ax_x() = this->ax_x() * a_value;
+			t_temp.ax_y() = this->ax_y() * a_value;
+			t_temp.ax_z() = this->ax_z() * a_value;
+			t_temp.ax_w() = this->ax_w() * a_value;
 
-			t_temp.ay_x = this->ay_x * a_value;
-			t_temp.ay_y = this->ay_y * a_value;
-			t_temp.ay_z = this->ay_z * a_value;
-			t_temp.ay_w = this->ay_w * a_value;
+			t_temp.ay_x() = this->ay_x() * a_value;
+			t_temp.ay_y() = this->ay_y() * a_value;
+			t_temp.ay_z() = this->ay_z() * a_value;
+			t_temp.ay_w() = this->ay_w() * a_value;
 
-			t_temp.az_x = this->az_x * a_value;
-			t_temp.az_y = this->az_y * a_value;
-			t_temp.az_z = this->az_z * a_value;
-			t_temp.az_w = this->az_w * a_value;
+			t_temp.az_x() = this->az_x() * a_value;
+			t_temp.az_y() = this->az_y() * a_value;
+			t_temp.az_z() = this->az_z() * a_value;
+			t_temp.az_w() = this->az_w() * a_value;
 
-			t_temp.tr_x = this->tr_x * a_value;
-			t_temp.tr_y = this->tr_y * a_value;
-			t_temp.tr_z = this->tr_z * a_value;
-			t_temp.tr_w = this->tr_w * a_value;
+			t_temp.tr_x() = this->tr_x() * a_value;
+			t_temp.tr_y() = this->tr_y() * a_value;
+			t_temp.tr_z() = this->tr_z() * a_value;
+			t_temp.tr_w() = this->tr_w() * a_value;
 		}
 		return t_temp;
 	}
@@ -1355,25 +1356,25 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Matrix_44& Geometry_Matrix_44::operator +=(const Geometry_Matrix_44& a_matrix)
 	{
-		this->ax_x += a_matrix.ax_x;
-		this->ax_y += a_matrix.ax_y;
-		this->ax_z += a_matrix.ax_z;
-		this->ax_w += a_matrix.ax_w;
+		this->ax_x() += a_matrix.ax_x();
+		this->ax_y() += a_matrix.ax_y();
+		this->ax_z() += a_matrix.ax_z();
+		this->ax_w() += a_matrix.ax_w();
 
-		this->ay_x += a_matrix.ay_x;
-		this->ay_y += a_matrix.ay_y;
-		this->ay_z += a_matrix.ay_z;
-		this->ay_w += a_matrix.ay_w;
+		this->ay_x() += a_matrix.ay_x();
+		this->ay_y() += a_matrix.ay_y();
+		this->ay_z() += a_matrix.ay_z();
+		this->ay_w() += a_matrix.ay_w();
 
-		this->az_x += a_matrix.az_x;
-		this->az_y += a_matrix.az_y;
-		this->az_z += a_matrix.az_z;
-		this->az_w += a_matrix.az_w;
+		this->az_x() += a_matrix.az_x();
+		this->az_y() += a_matrix.az_y();
+		this->az_z() += a_matrix.az_z();
+		this->az_w() += a_matrix.az_w();
 
-		this->tr_x += a_matrix.tr_x;
-		this->tr_y += a_matrix.tr_y;
-		this->tr_z += a_matrix.tr_z;
-		this->tr_w += a_matrix.tr_w;
+		this->tr_x() += a_matrix.tr_x();
+		this->tr_y() += a_matrix.tr_y();
+		this->tr_z() += a_matrix.tr_z();
+		this->tr_w() += a_matrix.tr_w();
 
 		return *this;
 	}
@@ -1385,25 +1386,25 @@ namespace NBsys{namespace NGeometry
 	{
 		Geometry_Matrix_44 t_temp;
 		{
-			t_temp.ax_x = (this->ax_x + a_matrix.ax_x);
-			t_temp.ax_y = (this->ax_y + a_matrix.ax_y);
-			t_temp.ax_z = (this->ax_z + a_matrix.ax_z);
-			t_temp.ax_w = (this->ax_w + a_matrix.ax_w);
+			t_temp.ax_x() = (this->ax_x() + a_matrix.ax_x());
+			t_temp.ax_y() = (this->ax_y() + a_matrix.ax_y());
+			t_temp.ax_z() = (this->ax_z() + a_matrix.ax_z());
+			t_temp.ax_w() = (this->ax_w() + a_matrix.ax_w());
 
-			t_temp.ay_x = (this->ay_x + a_matrix.ay_x);
-			t_temp.ay_y = (this->ay_y + a_matrix.ay_y);
-			t_temp.ay_z = (this->ay_z + a_matrix.ay_z);
-			t_temp.ay_w = (this->ay_w + a_matrix.ay_w);
+			t_temp.ay_x() = (this->ay_x() + a_matrix.ay_x());
+			t_temp.ay_y() = (this->ay_y() + a_matrix.ay_y());
+			t_temp.ay_z() = (this->ay_z() + a_matrix.ay_z());
+			t_temp.ay_w() = (this->ay_w() + a_matrix.ay_w());
 
-			t_temp.az_x = (this->az_x + a_matrix.az_x);
-			t_temp.az_y = (this->az_y + a_matrix.az_y);
-			t_temp.az_z = (this->az_z + a_matrix.az_z);
-			t_temp.az_w = (this->az_w + a_matrix.az_w);
+			t_temp.az_x() = (this->az_x() + a_matrix.az_x());
+			t_temp.az_y() = (this->az_y() + a_matrix.az_y());
+			t_temp.az_z() = (this->az_z() + a_matrix.az_z());
+			t_temp.az_w() = (this->az_w() + a_matrix.az_w());
 
-			t_temp.tr_x = (this->tr_x + a_matrix.tr_x);
-			t_temp.tr_y = (this->tr_y + a_matrix.tr_y);
-			t_temp.tr_z = (this->tr_z + a_matrix.tr_z);
-			t_temp.tr_w = (this->tr_w + a_matrix.tr_w);
+			t_temp.tr_x() = (this->tr_x() + a_matrix.tr_x());
+			t_temp.tr_y() = (this->tr_y() + a_matrix.tr_y());
+			t_temp.tr_z() = (this->tr_z() + a_matrix.tr_z());
+			t_temp.tr_w() = (this->tr_w() + a_matrix.tr_w());
 		}
 		return t_temp;
 	}
