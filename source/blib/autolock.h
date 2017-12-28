@@ -35,6 +35,12 @@ namespace NBlib
 		*/
 		AtomicValue<s32> nestvalue;
 
+		/** パディング。
+		*/
+		#if defined(ROM_64BIT)
+		u8 dummy[4];
+		#endif
+
 		/** lockobject
 		*/
 		LockObject& lockobject;
