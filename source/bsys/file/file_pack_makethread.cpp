@@ -164,7 +164,7 @@ namespace NBsys{namespace NFile
 					t_offset += sizeof(wchar) * t_all_filename.size();
 
 					//ヘッダーサイズ。
-					t_header_size = static_cast<s32>(t_offset);
+					t_header_size = static_cast<u32>(t_offset);
 
 					{
 						//ヘッダーサイズ。

@@ -298,7 +298,7 @@ namespace NTest
 
 				//テクスチャー読み込み開始。
 				if(t_model_patrs.texture_index >= 0){
-					t_model_patrs.texture_filepath = Path::DirAndName(t_pmx_path,this->mmd_pmx->texturename_list[t_model_patrs.texture_index]);
+					t_model_patrs.texture_filepath = Path::DirAndName(t_pmx_path,this->mmd_pmx->texturename_list[static_cast<size_t>(t_model_patrs.texture_index)]);
 					t_model_patrs.texture_file = new NBsys::NFile::File_Object(2,t_model_patrs.texture_filepath,-1,sharedptr<NBsys::NFile::File_Allocator>(),1);
 				}else{
 					t_model_patrs.texture_filepath = Path::DirAndName(L"",L"white.bmp");
@@ -347,7 +347,7 @@ namespace NTest
 			//バーテックスバッファ。
 			this->d3d11->Render_SetVertexBuffer(this->mmd_vertexbuffer_id);
 
-			for(s32 ii=0;ii<static_cast<s32>(this->mmd_model->size());ii++){
+			for(u32 ii=0;ii<static_cast<u32>(this->mmd_model->size());ii++){
 				Mmd_VS_ConstantBuffer_B0 t_vs_constantbuffer_b0;
 				Mmd_PS_ConstantBuffer_B1 t_ps_constantbuffer_b1;
 
@@ -376,7 +376,7 @@ namespace NTest
 				this->d3d11->Render_PSSetConstantBuffers(this->mmd_ps_constantbuffer_b1_id);
 
 				//描画。
-				this->d3d11->Render_Draw(this->mmd_vertex->GetVertexCountOf(ii),this->mmd_vertex->GetVertexOffset(ii));
+				this->d3d11->Render_Draw(this->mmd_vertex->GetVertexCountOf(static_cast<s32>(ii)),this->mmd_vertex->GetVertexOffset(static_cast<s32>(ii)));
 			}
 		}
 

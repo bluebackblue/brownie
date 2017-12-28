@@ -259,13 +259,13 @@ namespace NTest{namespace NCommon
 			STLList<sharedptr<Render2D_Item_Base>>::const_iterator t_it = a_it_start;
 			STLList<sharedptr<Render2D_Item_Base>>::const_iterator t_it_renderstart = t_it;
 			if(t_it != a_it_end){
-				const Render2D_Item_Rect* t_instence = reinterpret_cast<const Render2D_Item_Rect*>(t_it->get());
+				const Render2D_Item_Rect* t_instence = dynamic_cast<const Render2D_Item_Rect*>(t_it->get());
 
 				t_current_texture_id = t_instence->texture_id;
 			}
 
 			while(t_it != a_it_end){
-				const Render2D_Item_Rect* t_instence = reinterpret_cast<const Render2D_Item_Rect*>(t_it->get());
+				const Render2D_Item_Rect* t_instence = dynamic_cast<const Render2D_Item_Rect*>(t_it->get());
 
 				if(t_instence->texture_id != t_current_texture_id){
 					this->RenderCall(t_it_renderstart,t_it);
@@ -292,12 +292,12 @@ namespace NTest{namespace NCommon
 			//バーテックスクリア。
 			this->vertex->ClearVertex();
 
-			const Render2D_Item_Rect* t_instence_start = reinterpret_cast<const Render2D_Item_Rect*>(a_it_start->get());
+			const Render2D_Item_Rect* t_instence_start = dynamic_cast<const Render2D_Item_Rect*>(a_it_start->get());
 
 			s32 t_texture_id = t_instence_start->texture_id;
 
 			for(STLList<sharedptr<Render2D_Item_Base>>::const_iterator t_it = a_it_start;t_it != a_it_end;t_it++){
-				const Render2D_Item_Rect* t_instence = reinterpret_cast<const Render2D_Item_Rect*>(t_it->get());
+				const Render2D_Item_Rect* t_instence = dynamic_cast<const Render2D_Item_Rect*>(t_it->get());
 
 				//バーテックス作成。
 

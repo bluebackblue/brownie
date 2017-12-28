@@ -159,7 +159,7 @@ namespace NTest{namespace NCommon
 
 		/** destructor
 		*/
-		nonvirtual ~App_Base()
+		virtual ~App_Base()
 		{
 		}
 
@@ -411,7 +411,7 @@ namespace NTest{namespace NCommon
 
 		/** 更新。
 		*/
-		virtual void Update(f32 a_delta)
+		virtual void Update(f32 /*a_delta*/)
 		{
 		}
 

@@ -47,8 +47,6 @@ namespace NTest{namespace NCommon
 	static void AddDebugLog(const wchar* a_wstring)
 	#endif
 	{
-		s32 t_length = Memory::StringLengthW(a_wstring,COUNTOF(LogItem::buffer) - 1);
-
 		//ログ総数更新。
 		s_loglist_counter++;
 
@@ -160,8 +158,9 @@ namespace NTest{namespace NCommon
 bool Blib_DebugAssert_Callback(const wchar* a_wmessage,const wchar* a_wfilename,s32 a_line)
 {
 	wchar t_buffer[COUNTOF(NTest::NCommon::LogItem::buffer)];
-	s32 t_buffer_offset = 0;
+
 	VASTRING(t_buffer,COUNTOF(t_buffer),L"[ASSERT]:%s:%s(%d)",a_wmessage,a_wfilename,a_line);
+
 	NTest::NCommon::AddDebugLog(t_buffer,NBsys::NColor::Color_F(1.0f,0.0f,0.0f,1.0f));
 
 	return true;
@@ -187,7 +186,6 @@ bool Blib_DebugBreak_Callback()
 bool Blib_DebugLog_Callback(const NBlib::wchar* a_tag,const NBlib::wchar* a_wstring)
 {
 	wchar t_buffer[COUNTOF(NTest::NCommon::LogItem::buffer)];
-	s32 t_buffer_offset = 0;
 
 	if(a_tag){
 		VASTRING(t_buffer,COUNTOF(t_buffer),L"[%s]%s\n",a_tag,a_wstring);
@@ -240,7 +238,7 @@ void* operator new(std::size_t a_size,void* a_pointer) noexcept
 
 /** 単純な記憶域の解放。
 */
-void operator delete(void* a_pointer,std::size_t a_size) noexcept
+void operator delete(void* a_pointer,std::size_t /*a_size*/) noexcept
 {
 	operator delete(a_pointer,std::nothrow_t());
 }
@@ -290,7 +288,7 @@ void* operator new[](std::size_t a_size,void* a_pointer) noexcept
 
 /** 単純な配列の記憶域の解放。
 */
-void operator delete[](void* a_pointer,std::size_t a_size) noexcept
+void operator delete[](void* a_pointer,std::size_t /*a_size*/) noexcept
 {
 	operator delete(a_pointer);
 }

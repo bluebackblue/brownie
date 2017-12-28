@@ -74,15 +74,24 @@ namespace NTest{namespace NCommon
 	class Render2D_Item_Rect : public Render2D_Item_Base
 	{
 	public:
+
+		/** xywh
+		*/
 		f32 x;
 		f32 y;
 		f32 w;
 		f32 h;
 
+		/** texture_id
+		*/
 		s32 texture_id;
+
+		/** color
+		*/
 		NBsys::NColor::Color_F color;
 		
 	public:
+
 		/** constructor
 		*/
 		Render2D_Item_Rect(s32 a_z_sort)
@@ -102,6 +111,7 @@ namespace NTest{namespace NCommon
 		virtual ~Render2D_Item_Rect()
 		{
 		}
+
 	};
 
 
@@ -111,22 +121,40 @@ namespace NTest{namespace NCommon
 	class Render2D_Item_Font : public Render2D_Item_Base
 	{
 	public:
+
+		/** xywh
+		*/
 		f32 x;
 		f32 y;
 		f32 w;
 		f32 h;
 
+		/** clip
+		*/
 		bool clip;
 
+		/** size
+		*/
 		f32 size;
 
+		/** fonttexture_type
+		*/
 		NBsys::ND3d11::D3d11_FontTextureType::Id fonttexture_type;
 
+		/** color
+		*/
 		NBsys::NColor::Color_F color;
 
+		/** alignment_x
+		*/
 		s32 alignment_x;
+
+		/** alignment_y
+		*/
 		s32 alignment_y;
 
+		/** string
+		*/
 		STLWString string;
 		
 	public:

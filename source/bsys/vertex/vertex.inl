@@ -146,7 +146,7 @@ namespace NBsys{namespace NVertex
 	*/
 	template <typename T> void Vertex<T>::ReserveVertex(s32 a_count_of)
 	{
-		this->vertex_list.reserve(a_count_of);
+		this->vertex_list.reserve(static_cast<size_t>(a_count_of));
 	}
 
 
@@ -171,7 +171,7 @@ namespace NBsys{namespace NVertex
 	*/
 	template <typename T> s32 Vertex<T>::GetVertexCountOf(s32 a_parts_index)
 	{
-		return this->parts_list[a_parts_index]->vertex_countof;
+		return this->parts_list[static_cast<size_t>(a_parts_index)]->vertex_countof;
 	}
 
 
@@ -187,7 +187,7 @@ namespace NBsys{namespace NVertex
 	*/
 	template <typename T> s32 Vertex<T>::GetVertexOffset(s32 a_parts_index)
 	{
-		return this->parts_list[a_parts_index]->vertex_offset;
+		return this->parts_list[static_cast<size_t>(a_parts_index)]->vertex_offset;
 	}
 
 

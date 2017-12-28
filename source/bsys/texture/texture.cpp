@@ -106,9 +106,10 @@ namespace NBsys{namespace NTexture
 	sharedptr<Texture> CreateTexture(const sharedptr<u8>& a_data,s32 a_size,const STLWString& a_name)
 	{
 		#if(BSYS_TEXTURE_GDIPLUS_ENABLE)
-		return CreateTexture_GdiPlus(a_data,a_size,a_name);
-		#endif
-
+		{
+			return CreateTexture_GdiPlus(a_data,a_size,a_name);
+		}
+		#else
 		{
 			STLWString t_filetype_string = L"";
 
@@ -124,9 +125,10 @@ namespace NBsys{namespace NTexture
 			}else if(t_filetype_string == L".tga"){
 				return CreateTexture_Tga(a_data,a_size,a_name);
 			}
-		}
 
-		return nullptr;
+			return nullptr;
+		}
+		#endif
 	}
 
 

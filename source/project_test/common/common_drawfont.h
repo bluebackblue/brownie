@@ -286,9 +286,10 @@ namespace NTest{namespace NCommon
 
 			STLList<sharedptr<Render2D_Item_Base>>::iterator t_it_end = a_list.end();
 			for(STLList<sharedptr<Render2D_Item_Base>>::const_iterator t_it = a_list.begin();t_it != t_it_end;t_it++){
-				const Render2D_Item_Font* t_instence = reinterpret_cast<const Render2D_Item_Font*>(t_it->get());
-
-				if(t_instence->itemtype == Render2D_ItemType::Font){
+				if((*t_it)->itemtype == Render2D_ItemType::Font){
+					const Render2D_Item_Font* t_instence = dynamic_cast<const Render2D_Item_Font*>(t_it->get());
+					ASSERT(t_instence != nullptr);
+					
 					//フォントテクスチャー更新。
 					bool t_cahnge = this->d3d11->Render_PreUpdateFontTexture(t_instence->fonttexture_type,t_instence->string);
 					if(t_cahnge == true){
@@ -333,7 +334,8 @@ namespace NTest{namespace NCommon
 			STLList<sharedptr<Render2D_Item_Base>>::const_iterator t_it = a_it_start;
 			STLList<sharedptr<Render2D_Item_Base>>::const_iterator t_it_renderstart = t_it;
 			if(t_it != a_it_end){
-				const Render2D_Item_Font* t_instence = reinterpret_cast<const Render2D_Item_Font*>(t_it->get());
+				const Render2D_Item_Font* t_instence = dynamic_cast<const Render2D_Item_Font*>(t_it->get());
+				ASSERT(t_instence != nullptr);
 
 				t_current_clip_x = t_clip_value(t_instence->clip,t_instence->x);
 				t_current_clip_y = t_clip_value(t_instence->clip,t_instence->y);
@@ -342,7 +344,8 @@ namespace NTest{namespace NCommon
 			}
 
 			while(t_it != a_it_end){
-				const Render2D_Item_Font* t_instence = reinterpret_cast<const Render2D_Item_Font*>(t_it->get());
+				const Render2D_Item_Font* t_instence = dynamic_cast<const Render2D_Item_Font*>(t_it->get());
+				ASSERT(t_instence != nullptr);
 
 				if(
 					(t_clip_value(t_instence->clip,t_instence->x) != t_current_clip_x)||
@@ -372,7 +375,8 @@ namespace NTest{namespace NCommon
 		*/
 		void RenderCall(STLList<sharedptr<Render2D_Item_Base>>::const_iterator a_it_start,STLList<sharedptr<Render2D_Item_Base>>::const_iterator a_it_end)
 		{
-			const Render2D_Item_Font* t_instence_start = reinterpret_cast<const Render2D_Item_Font*>(a_it_start->get());
+			const Render2D_Item_Font* t_instence_start = dynamic_cast<const Render2D_Item_Font*>(a_it_start->get());
+			ASSERT(t_instence_start != nullptr);
 
 			f32 t_viewport_offset_x = 0.0f;
 			f32 t_viewport_offset_y = 0.0f;
@@ -405,7 +409,8 @@ namespace NTest{namespace NCommon
 			this->d3d11->Render_DrawFont_ClearLockFlag(NBsys::ND3d11::D3d11_FontTextureType::ExFont);
 
 			for(STLList<sharedptr<Render2D_Item_Base>>::const_iterator t_it = a_it_start;t_it != a_it_end;t_it++){
-				const Render2D_Item_Font* t_instence = reinterpret_cast<const Render2D_Item_Font*>(t_it->get());
+				const Render2D_Item_Font* t_instence = dynamic_cast<const Render2D_Item_Font*>(t_it->get());
+				ASSERT(t_instence != nullptr);
 
 				NBsys::ND3d11::D3d11_FontTextureType::Id t_fonttexture_type = t_instence->fonttexture_type;
 

@@ -104,7 +104,7 @@ namespace NTest{namespace NCommon
 
 	/** ボタン取得。
 	*/
-	bool Pad_Device::GetButton(s32 a_virtualpad_index,NBsys::NPad::Pad_Device_Base::ButtonType::Id a_device_button)
+	bool Pad_Device::GetButton(s32 /*a_virtualpad_index*/,NBsys::NPad::Pad_Device_Base::ButtonType::Id a_device_button)
 	{
 		switch(a_device_button){
 		case NBsys::NPad::Pad_Device_Base::ButtonType::DeviceButton_14:
@@ -117,6 +117,24 @@ namespace NTest{namespace NCommon
 				//mouse r
 				return this->mouse_r;
 			}break;
+		case NBsys::NPad::Pad_Device_Base::ButtonType::DeviceButton_1:
+		case NBsys::NPad::Pad_Device_Base::ButtonType::DeviceButton_2:
+		case NBsys::NPad::Pad_Device_Base::ButtonType::DeviceButton_3:
+		case NBsys::NPad::Pad_Device_Base::ButtonType::DeviceButton_4:
+		case NBsys::NPad::Pad_Device_Base::ButtonType::DeviceButton_5:
+		case NBsys::NPad::Pad_Device_Base::ButtonType::DeviceButton_6:
+		case NBsys::NPad::Pad_Device_Base::ButtonType::DeviceButton_7:
+		case NBsys::NPad::Pad_Device_Base::ButtonType::DeviceButton_8:
+		case NBsys::NPad::Pad_Device_Base::ButtonType::DeviceButton_9:
+		case NBsys::NPad::Pad_Device_Base::ButtonType::DeviceButton_10:
+		case NBsys::NPad::Pad_Device_Base::ButtonType::DeviceButton_11:
+		case NBsys::NPad::Pad_Device_Base::ButtonType::DeviceButton_12:
+		case NBsys::NPad::Pad_Device_Base::ButtonType::DeviceButton_13:
+		case NBsys::NPad::Pad_Device_Base::ButtonType::None:
+		case NBsys::NPad::Pad_Device_Base::ButtonType::Max:
+		default:
+			{
+			}break;
 		}
 
 		return false;
@@ -124,14 +142,14 @@ namespace NTest{namespace NCommon
 
 	/** アナログ取得。
 	*/
-	f32 Pad_Device::GetAnalog(s32 a_virtualpad_index,NBsys::NPad::Pad_Device_Base::AnalogType::Id a_device_analog)
+	f32 Pad_Device::GetAnalog(s32 /*a_virtualpad_index*/,NBsys::NPad::Pad_Device_Base::AnalogType::Id /*a_device_analog*/)
 	{
 		return 0.0f;
 	}
 
 	/** タッチ取得。
 	*/
-	NBsys::NPad::TouchValue Pad_Device::GetTouch(s32 a_virtualpad_index,NBsys::NPad::Pad_Device_Base::TouchType::Id a_device_touch)
+	NBsys::NPad::TouchValue Pad_Device::GetTouch(s32 /*a_virtualpad_index*/,NBsys::NPad::Pad_Device_Base::TouchType::Id a_device_touch)
 	{
 		switch(a_device_touch){
 		case NBsys::NPad::Pad_Device_Base::TouchType::DeviceTouch_1:
@@ -145,6 +163,18 @@ namespace NTest{namespace NCommon
 				//mouse r
 
 				return NBsys::NPad::TouchValue(this->mouse_x,this->mouse_y,this->mouse_r);
+			}break;
+		case NBsys::NPad::Pad_Device_Base::TouchType::DeviceTouch_3:
+		case NBsys::NPad::Pad_Device_Base::TouchType::DeviceTouch_4:
+		case NBsys::NPad::Pad_Device_Base::TouchType::DeviceTouch_5:
+		case NBsys::NPad::Pad_Device_Base::TouchType::DeviceTouch_6:
+		case NBsys::NPad::Pad_Device_Base::TouchType::DeviceTouch_7:
+		case NBsys::NPad::Pad_Device_Base::TouchType::DeviceTouch_8:
+		case NBsys::NPad::Pad_Device_Base::TouchType::DeviceTouch_9:
+		case NBsys::NPad::Pad_Device_Base::TouchType::DeviceTouch_10:
+		case NBsys::NPad::Pad_Device_Base::TouchType::Max:
+		case NBsys::NPad::Pad_Device_Base::TouchType::None:
+			{
 			}break;
 		}
 
