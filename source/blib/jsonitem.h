@@ -182,7 +182,11 @@ namespace NBlib
 
 			/** パディング。
 			*/
+			#if(ROM_64BIT)
+			u8 dummy[7];
+			#else
 			u8 dummy[3];
+			#endif
 
 			/** バイナリ―。
 			*/
@@ -209,6 +213,12 @@ namespace NBlib
 		/** バリアント型。タイプ。
 		*/
 		ValueType::Id valuetype;
+
+		/** パディング。
+		*/
+		#if(ROM_64BIT)
+		u8 dummy[4];
+		#endif
 
 		/** バリアント型。
 		*/

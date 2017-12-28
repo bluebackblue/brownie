@@ -55,7 +55,8 @@ namespace NBlib
 	/** THREADNAME_INFO
 	*/
 	#if defined(PLATFORM_VCWIN)
-
+		#pragma warning(push)
+		#pragma warning(disable:4820)
 		#pragma pack(push,8)  
 		struct THREADNAME_INFO  
 		{
@@ -76,7 +77,7 @@ namespace NBlib
 			DWORD	dwFlags;
 		};  
 		#pragma pack(pop)
-
+		#pragma warning(pop)
 	#endif
 
 

@@ -27,7 +27,7 @@
 
 	//[include]
 	#pragma warning(push)
-	#pragma warning(disable:4514)
+	#pragma warning(disable:4514 4820)
 	#include <intrin.h>
 	#pragma warning(pop)
 

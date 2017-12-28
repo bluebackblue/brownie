@@ -71,7 +71,11 @@ namespace NBlib
 
 		/** パディング。
 		*/
+		#if defined(ROM_64BIT)
+		u8 dummy[7];
+		#else
 		u8 dummy[3];
+		#endif
 
 	public:
 
