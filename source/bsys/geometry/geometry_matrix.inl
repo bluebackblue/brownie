@@ -371,26 +371,25 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Matrix_44::Geometry_Matrix_44(const f32* a_m)
 	{
-		//TODO:
-		this->raw.mn.m_11 = a_m[0];
-		this->raw.mn.m_12 = a_m[1];
-		this->raw.mn.m_13 = a_m[2];
-		this->raw.mn.m_14 = a_m[3];
+		this->raw.matrix[0][0] = a_m[0];
+		this->raw.matrix[0][1] = a_m[1];
+		this->raw.matrix[0][2] = a_m[2];
+		this->raw.matrix[0][3] = a_m[3];
 
-		this->raw.mn.m_21 = a_m[4];
-		this->raw.mn.m_22 = a_m[5];
-		this->raw.mn.m_23 = a_m[6];
-		this->raw.mn.m_24 = a_m[7];
+		this->raw.matrix[1][0] = a_m[4];
+		this->raw.matrix[1][1] = a_m[5];
+		this->raw.matrix[1][2] = a_m[6];
+		this->raw.matrix[1][3] = a_m[7];
 
-		this->raw.mn.m_31 = a_m[8];
-		this->raw.mn.m_32 = a_m[9];
-		this->raw.mn.m_33 = a_m[10];
-		this->raw.mn.m_34 = a_m[11];
+		this->raw.matrix[2][0] = a_m[8];
+		this->raw.matrix[2][1] = a_m[9];
+		this->raw.matrix[2][2] = a_m[10];
+		this->raw.matrix[2][3] = a_m[11];
 
-		this->raw.mn.m_41 = a_m[12];
-		this->raw.mn.m_42 = a_m[13];
-		this->raw.mn.m_43 = a_m[14];
-		this->raw.mn.m_44 = a_m[15];
+		this->raw.matrix[3][0] = a_m[12];
+		this->raw.matrix[3][1] = a_m[13];
+		this->raw.matrix[3][2] = a_m[14];
+		this->raw.matrix[3][3] = a_m[15];
 	}
 
 

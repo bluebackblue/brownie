@@ -64,7 +64,7 @@ namespace NTest
 		t_vector.push_back(1);
 		t_vector.push_back(2);
 		t_vector.push_back(3);
-		std::sort(t_vector.cbegin(),t_vector.cend(),[](const s32& a_top,const s32& a_down){
+		std::sort(t_vector.begin(),t_vector.end(),[](const s32& a_top,const s32& a_down){
 			return (a_top > a_down);
 		});
 

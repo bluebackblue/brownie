@@ -295,7 +295,7 @@ namespace NBlib
 
 	*/
 	#pragma warning(push)
-	#pragma warning(disable:4820)	//TODO
+	#pragma warning(disable:4820)
 	template <typename T,typename D> class sharedptr_impl
 		:
 		public sharedptrbase

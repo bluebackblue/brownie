@@ -31,29 +31,6 @@ namespace NBsys{namespace NGeometry
 	*/
 	union Geometry_Matrix_44_Raw
 	{
-		struct Matrix_Num
-		{
-			f32 m_11;
-			f32 m_12;
-			f32 m_13;
-			f32 m_14;
-
-			f32 m_21;
-			f32 m_22;
-			f32 m_23;
-			f32 m_24;
-
-			f32 m_31;
-			f32 m_32;
-			f32 m_33;
-			f32 m_34;
-
-			f32 m_41;
-			f32 m_42;
-			f32 m_43;
-			f32 m_44;
-		}mn;
-
 		struct Matrix
 		{
 			#if(BSYS_GEOMETRY_ROWCOLUMN_TYPE == 0x00)
