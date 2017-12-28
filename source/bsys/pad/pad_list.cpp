@@ -62,7 +62,7 @@ namespace NBsys{namespace NPad
 	*/
 	sharedptr<Pad_Virtual>& Pad_List::GetVirtualPad(s32 a_virtualpad_index)
 	{
-		return this->virtual_list[a_virtualpad_index];
+		return this->virtual_list[static_cast<u32>(a_virtualpad_index)];
 	}
 
 
