@@ -59,6 +59,16 @@ namespace NBsys{namespace ND3d11
 		{
 		}
 
+	private:
+
+		/** copy constructor禁止。
+		*/
+		D3d11_Impl_ActionBatching_BlendState_Create(const D3d11_Impl_ActionBatching_BlendState_Create& a_this) = delete;
+
+		/** コピー禁止。
+		*/
+		void operator =(const D3d11_Impl_ActionBatching_BlendState_Create& a_this) = delete;
+
 	public:
 
 		/** アクション開始。

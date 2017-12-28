@@ -175,6 +175,16 @@ namespace NBsys{namespace ND3d11
 
 	private:
 
+		/** copy constructor禁止。
+		*/
+		D3d11_Impl_Font(const D3d11_Impl_Font& a_this) = delete;
+
+		/** コピー禁止。
+		*/
+		void operator =(const D3d11_Impl_Font& a_this) = delete;
+
+	private:
+
 		/** 書き換え可能位置の検索。
 		*/
 		s32 FindNoLockFontIndex()
