@@ -85,7 +85,7 @@ namespace NBlib
 			return t_it_last;
 		}
 
-		/** get_prev
+		/** get_prev_safe
 		*/
 		static iterator get_prev_safe(Type& a_list,iterator& a_it)
 		{
