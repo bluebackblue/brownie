@@ -82,10 +82,10 @@ namespace NBsys{namespace NOpengl
 						glGetShaderiv(t_shader_rawid.rawid,GL_INFO_LOG_LENGTH,&t_infoLogLength);
 						sharedptr<GLchar> t_logbuffer(new GLchar[t_infoLogLength],default_delete<GLchar[]>());
 						glGetShaderInfoLog(t_shader_rawid.rawid,t_infoLogLength,nullptr,t_logbuffer.get());
-						TAGLOG("CreateShader","%ls %s",a_name.c_str(),t_logbuffer.get());
+						TAGLOG(L"CreateShader","%ls %s",a_name.c_str(),t_logbuffer.get());
 						return false;
 					}else{
-						TAGLOG("CreateShader","%ls ok",a_name.c_str());
+						TAGLOG(L"CreateShader","%ls ok",a_name.c_str());
 					}
 				}
 
@@ -127,10 +127,10 @@ namespace NBsys{namespace NOpengl
 						glGetProgramiv(t_shaderprogram_rawid.rawid,GL_INFO_LOG_LENGTH,&t_infoLogLength);
 						sharedptr<GLchar> t_logbuffer(new GLchar[t_infoLogLength],default_delete<GLchar[]>());
 						glGetProgramInfoLog(t_shaderprogram_rawid.rawid,t_infoLogLength,nullptr,t_logbuffer.get());
-						TAGLOG("LinkShader","%ls %ls %s",a_vertex_name.c_str(),a_fragment_name.c_str(),t_logbuffer.get());
+						TAGLOG(L"LinkShader","%ls %ls %s",a_vertex_name.c_str(),a_fragment_name.c_str(),t_logbuffer.get());
 						return false;
 					}else{
-						TAGLOG("LinkShader","%ls %ls ok",a_vertex_name.c_str(),a_fragment_name.c_str());
+						TAGLOG(L"LinkShader","%ls %ls ok",a_vertex_name.c_str(),a_fragment_name.c_str());
 					}
 				}
 
@@ -252,25 +252,25 @@ namespace NBsys{namespace NOpengl
 			}
 
 			{
-				TAGLOG("GL_VENDOR",											"%s",glGetString(GL_VENDOR));
-				TAGLOG("GL_RENDERER",										"%s",glGetString(GL_RENDERER));
-				TAGLOG("GL_VERSION",										"%s",glGetString(GL_VERSION));
-				TAGLOG("GL_SHADING_LANGUAGE_VERSION",						"%s",glGetString(GL_SHADING_LANGUAGE_VERSION));
+				TAGLOG(L"GL_VENDOR",										"%s",glGetString(GL_VENDOR));
+				TAGLOG(L"GL_RENDERER",										"%s",glGetString(GL_RENDERER));
+				TAGLOG(L"GL_VERSION",										"%s",glGetString(GL_VERSION));
+				TAGLOG(L"GL_SHADING_LANGUAGE_VERSION",						"%s",glGetString(GL_SHADING_LANGUAGE_VERSION));
 
 				{
 					GLint t_max_textureunit = 0;
 
 					glGetIntegerv(GL_MAX_TEXTURE_UNITS,						&t_max_textureunit);
-					TAGLOG("GL_MAX_TEXTURE_UNITS",							"%d",t_max_textureunit);
+					TAGLOG(L"GL_MAX_TEXTURE_UNITS",							"%d",t_max_textureunit);
 
 					glGetIntegerv(GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS,		&t_max_textureunit);
-					TAGLOG("GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS",				"%d",t_max_textureunit);
+					TAGLOG(L"GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS",			"%d",t_max_textureunit);
 
 					glGetIntegerv(GL_MAX_TEXTURE_SIZE,						&t_max_textureunit);
-					TAGLOG("GL_MAX_TEXTURE_SIZE",							"%d",t_max_textureunit);
+					TAGLOG(L"GL_MAX_TEXTURE_SIZE",							"%d",t_max_textureunit);
 
 					glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS,				&t_max_textureunit);
-					TAGLOG("GL_MAX_TEXTURE_IMAGE_UNITS",					"%d",t_max_textureunit);
+					TAGLOG(L"GL_MAX_TEXTURE_IMAGE_UNITS",					"%d",t_max_textureunit);
 				}
 			}
 
