@@ -137,8 +137,8 @@ namespace NBsys{namespace NFont
 				t_font_state.code = a_code;
 				t_font_state.x = t_glyphmetrics.gmptGlyphOrigin.x;
 				t_font_state.y = t_text_metric.tmAscent - t_glyphmetrics.gmptGlyphOrigin.y;
-				t_font_state.black_box_x = t_glyphmetrics.gmBlackBoxX;
-				t_font_state.black_box_y = t_glyphmetrics.gmBlackBoxY;
+				t_font_state.black_box_x = static_cast<s32>(t_glyphmetrics.gmBlackBoxX);
+				t_font_state.black_box_y = static_cast<s32>(t_glyphmetrics.gmBlackBoxY);
 				t_font_state.glyph_origin_x = t_glyphmetrics.gmptGlyphOrigin.x;
 				t_font_state.glyph_origin_y = t_glyphmetrics.gmptGlyphOrigin.y;
 				t_font_state.cell_inc_x = t_glyphmetrics.gmCellIncX;
@@ -174,7 +174,7 @@ namespace NBsys{namespace NFont
 						u8 t_alpha = t_buffer[t_buffer_offset];
 						if(t_alpha > 0){
 							s32 t_alpha_32 = static_cast<s32>(t_alpha) * 4;
-							t_alpha = (t_alpha_32 <= 0xFF ? static_cast<u8>(t_alpha_32) : 0xFF);
+							t_alpha = static_cast<u8>(t_alpha_32 <= 0xFF ? t_alpha_32 : 0xFF);
 
 							t_dest_data[t_dest_offset+0] = 0xFF;
 							t_dest_data[t_dest_offset+1] = 0xFF;
