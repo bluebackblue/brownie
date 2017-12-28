@@ -193,5 +193,25 @@ namespace NBlib
 	};
 
 
+	/** get_last_iterator
+	*/
+	template <typename LIST> inline typename LIST::iterator get_last_iterator(const LIST& a_list)
+	{
+		LIST::iterator t_it_last = a_list.end();
+		--t_it_last;
+		return t_it_last;
+	}
+
+
+	/** get_last_const_iterator
+	*/
+	template <typename LIST> inline typename LIST::const_iterator get_last_const_iterator(const LIST& a_list)
+	{
+		LIST::const_iterator t_it_last = a_list.cend();
+		--t_it_last;
+		return t_it_last;
+	}
+
+
 }
 

@@ -103,7 +103,7 @@ namespace NBsys{namespace NWindowMenu
 
 								//最後尾へ移動。
 								if(this->mouse.down_l || this->mouse.down_r){
-									auto t_it_last = STLList<sharedptr<WindowMenu_Window_Base>>::get_last(this->list);	//TODO:
+									auto t_it_last = get_last_const_iterator(this->list);
 									if(t_it != t_it_last){
 										t_it_movetolast = t_it;
 									}
@@ -133,7 +133,7 @@ namespace NBsys{namespace NWindowMenu
 
 				//アクティブ変更チェック。
 				if(this->changeactive_check  == true){
-					auto t_it_last = STLList<sharedptr<WindowMenu_Window_Base>>::get_last(this->list);	//TODO:
+					auto t_it_last = get_last_const_iterator(this->list);
 
 					if(t_it_last != this->list.cend()){
 						if(this->active.get() != (*t_it_last).get()){
