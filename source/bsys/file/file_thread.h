@@ -63,7 +63,7 @@ namespace NBsys{namespace NFile
 		/** パック。
 		*/
 		#if(BSYS_FILE_PACK_ENABLE)
-		File_Pack pack;
+		sharedptr<File_Pack> pack;
 		#endif
 
 		/** キャッシュ。

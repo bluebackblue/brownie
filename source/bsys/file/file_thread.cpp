@@ -41,7 +41,7 @@ namespace NBsys{namespace NFile
 		request_event(true),
 
 		#if(BSYS_FILE_PACK_ENABLE)
-		pack(this->lockobject),
+		pack(),
 		#endif
 
 		cache()
@@ -50,6 +50,8 @@ namespace NBsys{namespace NFile
 		for(s32 ii=0;ii<COUNTOF(this->worklist);ii++){
 			this->worklist[ii].reset();
 		}
+
+		this->pack.reset(new File_Pack(this->lockobject));
 	}
 
 
@@ -105,7 +107,7 @@ namespace NBsys{namespace NFile
 						if(t_workitem_pack->Update(Path::Dir(a_threadargument.rootpath_full))){
 							if(t_workitem_pack->GetErrorCode() == ErrorCode::Success){
 								//パックファイル。ヘッダー読み込み完了。
-								this->pack.Resist(t_workitem_pack);
+								this->pack->Resist(t_workitem_pack);
 							}else{
 								//パックファイル。読み込み失敗。
 								ASSERT(0);
@@ -221,7 +223,7 @@ namespace NBsys{namespace NFile
 		//■排他。
 		AutoLock t_autolock(this->lockobject);
 		{
-			return this->pack.IsExist(Path::Name(a_pack_filename_short));
+			return this->pack->IsExist(Path::Name(a_pack_filename_short));
 		}
 	}
 	#endif
@@ -313,7 +315,7 @@ namespace NBsys{namespace NFile
 	#if(BSYS_FILE_PACK_ENABLE)
 	File_Pack& File_Thread::Pack_GetInstance()
 	{
-		return this->pack;
+		return *this->pack;
 	}
 	#endif
 
