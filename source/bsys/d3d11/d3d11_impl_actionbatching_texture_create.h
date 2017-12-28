@@ -19,8 +19,15 @@
 
 /** include
 */
-#include "./d3d11_impl.h"
+#pragma warning(push)
+#pragma warning(disable:4464)
 #include "../actionbatching/actionbatching.h"
+#pragma warning(pop)
+
+
+/** include
+*/
+#include "./d3d11_impl.h"
 
 
 /** NBsys::ND3d11
@@ -45,6 +52,12 @@ namespace NBsys{namespace ND3d11
 		/** write_flag
 		*/
 		bool write_flag;
+
+		/** パディング。
+		*/
+		#if(ROM_64BIT)
+		u8 dummy[7];
+		#endif
 
 	public:
 

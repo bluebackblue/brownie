@@ -19,12 +19,15 @@
 
 /** include
 */
-#include "./opengl_type.h"
+#pragma warning(push)
+#pragma warning(disable:4464)
+#include "../file/file.h"
+#pragma warning(pop)
 
 
 /** include
 */
-#include "../file/file.h"
+#include "./opengl_type.h"
 
 
 /** NBsys::NOpengl

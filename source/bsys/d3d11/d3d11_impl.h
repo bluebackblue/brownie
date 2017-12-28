@@ -26,6 +26,8 @@
 
 /** include
 */
+#pragma warning(push)
+#pragma warning(disable:4464)
 #include "../window/window.h"
 #include "../color/color.h"
 #include "../actionbatching/actionbatching.h"
@@ -33,6 +35,7 @@
 #include "../texture/texture.h"
 #include "../font/font.h"
 #include "../vertex/vertex.h"
+#pragma warning(pop)
 
 
 /** include
@@ -125,6 +128,12 @@ namespace NBsys{namespace ND3d11
 		/** write_flag
 		*/
 		bool write_flag;
+
+		/** パディング。
+		*/
+		#if(ROM_64BIT)
+		u8 dummy[3];
+		#endif
 	};
 
 
@@ -175,6 +184,12 @@ namespace NBsys{namespace ND3d11
 		/** alpha_blend
 		*/
 		bool alpha_blend;
+
+		/** パディング。
+		*/
+		#if(ROM_64BIT)
+		u8 dummy[7];
+		#endif
 	};
 
 
@@ -189,6 +204,12 @@ namespace NBsys{namespace ND3d11
 		/** culltype
 		*/
 		D3d11_CullType::Id culltype;
+
+		/** パディング。
+		*/
+		#if(ROM_64BIT)
+		u8 dummy[4];
+		#endif
 	};
 
 
@@ -207,6 +228,12 @@ namespace NBsys{namespace ND3d11
 		/** depthwrie_flag
 		*/
 		bool depthwrie_flag;
+
+		/** パディング。
+		*/
+		#if(ROM_64BIT)
+		u8 dummy[6];
+		#endif
 	};
 
 
@@ -244,6 +271,12 @@ namespace NBsys{namespace ND3d11
 		/** testpresent_mode
 		*/
 		bool testpresent_mode;
+
+		/** パディング。
+		*/
+		#if(ROM_64BIT)
+		u8 dummy[7];
+		#endif
 
 		/** id_maker
 		*/

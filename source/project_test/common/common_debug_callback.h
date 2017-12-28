@@ -11,7 +11,10 @@
 
 /** include
 */
+#pragma warning(push)
+#pragma warning(disable:4464)
 #include "../include.h"
+#pragma warning(pop)
 
 
 /** NTest::NCommon

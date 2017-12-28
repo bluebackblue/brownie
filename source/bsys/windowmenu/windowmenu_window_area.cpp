@@ -24,7 +24,10 @@
 
 /** include
 */
+#pragma warning(push)
+#pragma warning(disable:4464)
 #include "../color/color.h"
+#pragma warning(pop)
 
 
 /** include

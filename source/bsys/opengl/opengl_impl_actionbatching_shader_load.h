@@ -19,7 +19,10 @@
 
 /** include
 */
+#pragma warning(push)
+#pragma warning(disable:4464)
 #include "../actionbatching/actionbatching.h"
+#pragma warning(pop)
 
 
 /** include

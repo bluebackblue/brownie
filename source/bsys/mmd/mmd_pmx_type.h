@@ -19,8 +19,11 @@
 
 /** include
 */
+#pragma warning(push)
+#pragma warning(disable:4464)
 #include "../geometry/geometry.h"
 #include "../color/color.h"
+#pragma warning(pop)
 
 
 /** NBsys::NMmd
@@ -63,21 +66,48 @@ namespace NBsys{namespace NMmd
 	*/
 	struct Mmd_Pmx_VertexData
 	{
+		/** position
+		*/
 		NBsys::NGeometry::Geometry_Vector3	position;
+
+		/** normal
+		*/
 		NBsys::NGeometry::Geometry_Vector3	normal;
+
+		/** uv
+		*/
 		NBsys::NGeometry::Geometry_Vector2	uv;
 
+		/** uv_ex
+		*/
 		NBsys::NGeometry::Geometry_Vector4	uv_ex[4];
 
+		/** weight_type
+		*/
 		u8									weight_type;
 
+		/** パディング。
+		*/
+		#if(ROM_64BIT)
+		u8 dummy[1];
+		#endif
+
+		/** bone_index
+		*/
 		s32									bone_index[4];
+
+		/** bone_weight
+		*/
 		f32									bone_weight[4];
 
+		/** sdef
+		*/
 		NBsys::NGeometry::Geometry_Vector3	sdef_c;
 		NBsys::NGeometry::Geometry_Vector3	sdef_r0;
 		NBsys::NGeometry::Geometry_Vector3	sdef_r1;
 
+		/** edge
+		*/
 		f32									edge_mag;
 	};
 
@@ -152,6 +182,12 @@ namespace NBsys{namespace NMmd
 		s32 textureindex;
 		s32 textureindex_sphere;
 		u8 textureindex_sphere_mode;
+
+		/** パディング。
+		*/
+		#if(ROM_64BIT)
+		u8 dummy[1];
+		#endif
 
 		/** toon
 		*/

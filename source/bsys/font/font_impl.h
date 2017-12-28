@@ -59,6 +59,12 @@ namespace NBsys{namespace NFont
 		*/
 		s32 font_size;
 
+		/** パディング。
+		*/
+		#if(ROM_64BIT)
+		u8 dummy[4];
+		#endif
+
 		/** font_name
 		*/
 		STLWString font_name;

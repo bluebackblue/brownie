@@ -51,6 +51,12 @@ namespace NBsys{namespace NFile
 		*/
 		MainStep::Id mainstep;
 
+		/** パディング。
+		*/
+		#if defined(ROM_64BIT)
+		u8 dummy1[4];
+		#endif
+
 		/** ファイルハンドル。
 		*/
 		FileHandle filehandle;
@@ -70,6 +76,12 @@ namespace NBsys{namespace NFile
 		/** エラーコード。
 		*/
 		ErrorCode::Id errorcode;
+
+		/** パディング。
+		*/
+		#if defined(ROM_64BIT)
+		u8 dummy2[4];
+		#endif
 
 		/** filelist
 		*/

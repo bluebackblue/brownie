@@ -11,17 +11,23 @@
 
 /** include
 */
+#pragma warning(push)
+#pragma warning(disable:4464)
 #include "../include.h"
+#pragma warning(pop)
+
+
+/** include
+*/
+#pragma warning(push)
+#pragma warning(disable:4464)
+#include "../bsys/window/window_impl.h"
+#pragma warning(pop)
 
 
 /** include
 */
 #include "./common_pad_device.h"
-
-
-/** include
-*/
-#include "../bsys/window/window_impl.h"
 
 
 /** VK

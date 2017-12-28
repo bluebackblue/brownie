@@ -38,6 +38,12 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		bool is_active;
 
+		/** パディング。
+		*/
+		#if(ROM_64BIT)
+		u8 dummy[3];
+		#endif
+
 		/** color
 		*/
 		NBsys::NColor::Color_F color_title_bg_normal;

@@ -11,12 +11,18 @@
 
 /** include
 */
+#pragma warning(push)
+#pragma warning(disable:4464)
 #include "../entry.h"
+#pragma warning(pop)
 
 
 /** include
 */
+#pragma warning(push)
+#pragma warning(disable:4464)
 #include "../common/common_app_base.h"
+#pragma warning(pop)
 
 
 /** NTest

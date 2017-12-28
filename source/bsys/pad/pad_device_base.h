@@ -19,7 +19,14 @@
 
 /** include
 */
+#pragma warning(push)
+#pragma warning(disable:4464)
 #include "../geometry/geometry.h"
+#pragma warning(pop)
+
+
+/** include
+*/
 #include "./pad_touchvalue.h"
 
 

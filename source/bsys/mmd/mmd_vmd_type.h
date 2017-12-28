@@ -19,8 +19,11 @@
 
 /** include
 */
+#pragma warning(push)
+#pragma warning(disable:4464)
 #include "../geometry/geometry.h"
 #include "../color/color.h"
+#pragma warning(pop)
 
 
 /** NBsys::NMmd

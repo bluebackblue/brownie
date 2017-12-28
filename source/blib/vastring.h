@@ -22,7 +22,7 @@
 
 /** include
 */
-//#pragma warning(disable:4710)
+#pragma warning(disable:4710)
 #pragma warning(push)
 #pragma warning(disable:4710 4820 4548 4987 4623 4626 5027 4365 4571 4625 4514 5026 4774)
 #include <iostream>
@@ -31,7 +31,7 @@
 
 /** include
 */
-//#pragma warning(disable:4710)
+#pragma warning(disable:4710)
 #pragma warning(push)
 #pragma warning(disable:4710 4548 4987 4820 4514 4365 4623 5027 4626 4625)
 #include <functional>

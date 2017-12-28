@@ -19,15 +19,18 @@
 
 /** include
 */
-#include "./opengl_shaderlayout.h"
-
-
-/** include
-*/
+#pragma warning(push)
+#pragma warning(disable:4464)
 //#include "../texture/texture_decl.h"
 //#include "../geometry/geometry.h"
 #include "../color/color.h"
 //#include "../font/font.h"
+#pragma warning(pop)
+
+
+/** include
+*/
+#include "./opengl_shaderlayout.h"
 
 
 /** NBsys::NOpengl

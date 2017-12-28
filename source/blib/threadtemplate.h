@@ -27,7 +27,7 @@
 */
 #if(BLIB_STDTHREAD_ENABLE)
 
-//#pragma warning(disable:4710)
+#pragma warning(disable:4710)
 #pragma warning(push)
 #pragma warning(disable:4987 4365 4820 4623 5027 4514 4626)
 #include <thread>
@@ -89,7 +89,11 @@ namespace NBlib
 
 		/** パディング。
 		*/
+		#if defined(ROM_64BIT)
+		u8 dummy[7];
+		#else
 		u8 dummy[3];
+		#endif
 
 		/** argument
 		*/

@@ -19,9 +19,12 @@
 
 /** include
 */
+#pragma warning(push)
+#pragma warning(disable:4464)
 #include "../font/font.h"
 #include "../texture/texture.h"
 #include "../vertex/vertex.h"
+#pragma warning(pop)
 
 
 /** include
@@ -45,8 +48,22 @@ namespace NBsys{namespace ND3d11
 		*/
 		struct Item
 		{
+			/** code
+			*/
 			wchar code;
+
+			/** lock
+			*/
 			bool lock;
+
+			/** パディング。
+			*/
+			#if(ROM_64BIT)
+			u8 dummy[1];
+			#endif
+
+			/** fontstate
+			*/
 			NBsys::NFont::Font_State fontstate;
 
 			Item(wchar a_code)
@@ -82,6 +99,12 @@ namespace NBsys{namespace ND3d11
 		/** textureheight
 		*/
 		s32 textureheight;
+
+		/** パディング。
+		*/
+		#if(ROM_64BIT)
+		u8 dummy1[4];
+		#endif
 	
 		/** texture
 		*/
@@ -90,6 +113,12 @@ namespace NBsys{namespace ND3d11
 		/** textureid
 		*/
 		s32 textureid;
+
+		/** パディング。
+		*/
+		#if(ROM_64BIT)
+		u8 dummy2[4];
+		#endif
 
 		/** list
 		*/

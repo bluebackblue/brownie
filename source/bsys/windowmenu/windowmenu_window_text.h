@@ -46,6 +46,12 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		bool clip;
 
+		/** パディング。
+		*/
+		#if(ROM_64BIT)
+		u8 dummy[3];
+		#endif
+
 		/** alignment_x
 		*/
 		s32 alignment_x;

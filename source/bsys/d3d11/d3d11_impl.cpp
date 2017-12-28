@@ -24,13 +24,18 @@
 
 /** include
 */
-#include "./d3d11_impl.h"
-#include "./d3d11_impl_font.h"
+#pragma warning(push)
+#pragma warning(disable:4464)
+#include "../window/window_impl.h"
+#pragma warning(pop)
 
 
 /** include
 */
-#include "../window/window_impl.h"
+#include "./d3d11_impl.h"
+#include "./d3d11_impl_font.h"
+
+
 
 
 /** include

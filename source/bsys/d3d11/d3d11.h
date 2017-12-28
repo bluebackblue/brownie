@@ -19,12 +19,15 @@
 
 /** include
 */
+#pragma warning(push)
+#pragma warning(disable:4464)
 #include "../window/window.h"
 #include "../color/color.h"
 #include "../file/file.h"
 #include "../texture/texture.h"
 #include "../font/font.h"
 #include "../vertex/vertex.h"
+#pragma warning(pop)
 
 
 /** include

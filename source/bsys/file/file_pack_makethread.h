@@ -80,6 +80,12 @@ namespace NBsys{namespace NFile
 			*/
 			s32 priority;
 
+			/** パディング。
+			*/
+			#if defined(ROM_64BIT)
+			u8 dummy[4];			
+			#endif
+
 			/** rootpath_full
 			*/
 			STLWString rootpath_full;

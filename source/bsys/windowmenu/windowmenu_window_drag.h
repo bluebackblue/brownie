@@ -38,6 +38,12 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		bool drag_flag;
 
+		/** パディング。
+		*/
+		#if(ROM_64BIT)
+		u8 dummy[3];
+		#endif
+
 		/** start
 		*/
 		f32 start_x;

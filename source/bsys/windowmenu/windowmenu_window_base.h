@@ -24,7 +24,10 @@
 
 /** include
 */
+#pragma warning(push)
+#pragma warning(disable:4464)
 #include "../color/color.h"
+#pragma warning(pop)
 
 
 /** include
@@ -80,6 +83,12 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		bool enable;
 
+		/** パディング。
+		*/
+		#if(ROM_64BIT)
+		u8 dummy1[3];
+		#endif
+
 		/** type
 		*/
 		WindowMenu_WindowType::Id type;
@@ -121,6 +130,12 @@ namespace NBsys{namespace NWindowMenu
 		/** 描画する。
 		*/
 		bool draw_enable;
+
+		/** パディング。
+		*/
+		#if(ROM_64BIT)
+		u8 dummy2[2];
+		#endif
 
 		/** 計算結果。
 		*/

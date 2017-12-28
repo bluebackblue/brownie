@@ -11,8 +11,11 @@
 
 /** include
 */
+#pragma warning(push)
+#pragma warning(disable:4464)
 #include "../blib/blib.h"
 #include "../bsys/bsys.h"
+#pragma warning(pop)
 
 
 /** NBlib

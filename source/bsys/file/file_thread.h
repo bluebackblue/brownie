@@ -42,6 +42,12 @@ namespace NBsys{namespace NFile
 		*/
 		AtomicValue<bool> endrequest;
 
+		/** パディング。
+		*/
+		#if defined(ROM_64BIT)
+		u8 dummy[7];
+		#endif
+
 		/** ロックオブジェクト。
 		*/
 		LockObject lockobject;
@@ -107,6 +113,12 @@ namespace NBsys{namespace NFile
 			/** priority
 			*/
 			s32 priority;
+
+			/** パディング。
+			*/
+			#if defined(ROM_64BIT)
+			u8 dummy[4];
+			#endif
 
 			/** rootpath_full
 			*/

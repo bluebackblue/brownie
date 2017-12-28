@@ -19,11 +19,14 @@
 
 /** include
 */
+#pragma warning(push)
+#pragma warning(disable:4464)
 //#include "../texture/texture.h"
 #include "../actionbatching/actionbatching.h"
 //#include "../geometry/geometry.h"
 #include "../color/color.h"
 //#include "../font/font.h"
+#pragma warning(pop)
 
 
 /** include

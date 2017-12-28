@@ -46,6 +46,12 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		bool mouseblock;
 
+		/** パディング。
+		*/
+		#if(ROM_64BIT)
+		u8 dummy[3];
+		#endif
+
 	public:
 
 		/** constructor
