@@ -482,7 +482,7 @@ namespace NBsys{namespace ND3d11
 	sharedptr<D3d11_Impl_VertexShader>& D3d11_Impl::GetVertexShader(s32 a_vertexshader_id)
 	{
 		auto t_it = this->vertexshader_list.find(a_vertexshader_id);
-		if(t_it != this->vertexshader_list.end()){
+		if(t_it != this->vertexshader_list.cend()){
 			if(t_it->second != nullptr){
 				return t_it->second;
 			}
@@ -496,7 +496,7 @@ namespace NBsys{namespace ND3d11
 	sharedptr<D3d11_Impl_PixelShader>& D3d11_Impl::GetPixelShader(s32 a_pixelshader_id)
 	{
 		auto t_it = this->pixelshader_list.find(a_pixelshader_id);
-		if(t_it != this->pixelshader_list.end()){
+		if(t_it != this->pixelshader_list.cend()){
 			if(t_it->second != nullptr){
 				return t_it->second;
 			}
@@ -510,7 +510,7 @@ namespace NBsys{namespace ND3d11
 	sharedptr<D3d11_Impl_VertexBuffer>& D3d11_Impl::GetVertexBuffer(s32 a_vertexbuffer_id)
 	{
 		auto t_it = this->vertexbuffer_list.find(a_vertexbuffer_id);
-		if(t_it != this->vertexbuffer_list.end()){
+		if(t_it != this->vertexbuffer_list.cend()){
 			if(t_it->second != nullptr){
 				return t_it->second;
 			}
@@ -524,7 +524,7 @@ namespace NBsys{namespace ND3d11
 	sharedptr<D3d11_Impl_ConstantBuffer>& D3d11_Impl::GetConstantBuffer(s32 a_constantbuffer_id)
 	{
 		auto t_it = this->constantbuffer_list.find(a_constantbuffer_id);
-		if(t_it != this->constantbuffer_list.end()){
+		if(t_it != this->constantbuffer_list.cend()){
 			if(t_it->second != nullptr){
 				return t_it->second;
 			}
@@ -538,7 +538,7 @@ namespace NBsys{namespace ND3d11
 	sharedptr<D3d11_Impl_Texture>& D3d11_Impl::GetTexture(s32 a_texture_id)
 	{
 		auto t_it = this->texture_list.find(a_texture_id);
-		if(t_it != this->texture_list.end()){
+		if(t_it != this->texture_list.cend()){
 			if(t_it->second != nullptr){
 				return t_it->second;
 			}
@@ -552,7 +552,7 @@ namespace NBsys{namespace ND3d11
 	sharedptr<D3d11_Impl_BlendState>& D3d11_Impl::GetBlendState(s32 a_blendstate_id)
 	{
 		auto t_it = this->blendstate_list.find(a_blendstate_id);
-		if(t_it != this->blendstate_list.end()){
+		if(t_it != this->blendstate_list.cend()){
 			if(t_it->second != nullptr){
 				return t_it->second;
 			}
@@ -566,7 +566,7 @@ namespace NBsys{namespace ND3d11
 	sharedptr<D3d11_Impl_RasterizerState>& D3d11_Impl::GetRasterizerState(s32 a_rasterizerstate_id)
 	{
 		auto t_it = this->rasterizerstate_list.find(a_rasterizerstate_id);
-		if(t_it != this->rasterizerstate_list.end()){
+		if(t_it != this->rasterizerstate_list.cend()){
 			if(t_it->second != nullptr){
 				return t_it->second;
 			}
@@ -580,7 +580,7 @@ namespace NBsys{namespace ND3d11
 	sharedptr<D3d11_Impl_DepthStencilState>& D3d11_Impl::GetDepthStencilState(s32 a_depthstencilstate_id)
 	{
 		auto t_it = this->depthstencilstate_list.find(a_depthstencilstate_id);
-		if(t_it != this->depthstencilstate_list.end()){
+		if(t_it != this->depthstencilstate_list.cend()){
 			if(t_it->second != nullptr){
 				return t_it->second;
 			}
@@ -594,7 +594,7 @@ namespace NBsys{namespace ND3d11
 	sharedptr<D3d11_Impl_SamplerState>& D3d11_Impl::GetSamplerState(s32 a_samplerstate_id)
 	{
 		auto t_it = this->samplerstate_list.find(a_samplerstate_id);
-		if(t_it != this->samplerstate_list.end()){
+		if(t_it != this->samplerstate_list.cend()){
 			if(t_it->second != nullptr){
 				return t_it->second;
 			}

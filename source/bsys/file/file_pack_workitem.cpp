@@ -78,7 +78,7 @@ namespace NBsys{namespace NFile
 	sharedptr<File_Pack_FileHandle>& File_Pack_WorkItem::FindFromFileNameShort(const STLWString& a_filename_short)
 	{
 		auto t_it = this->filelist.find(a_filename_short);
-		if(t_it != this->filelist.end()){
+		if(t_it != this->filelist.cend()){
 			return t_it->second;
 		}
 		return sharedptr<File_Pack_FileHandle>::null();

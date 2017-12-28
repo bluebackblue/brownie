@@ -297,7 +297,7 @@ namespace NBsys{namespace NFile
 
 	/** [メインスレッド]リークチェック。
 	*/
-	void File_Thread::LeakCheck()
+	void File_Thread::LeakCheck() const
 	{
 		//■排他。
 		AutoLock t_autolock(this->lockobject);

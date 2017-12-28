@@ -577,7 +577,7 @@ namespace NBsys{namespace NOpengl
 			//テクスチャー。Depth。
 			{
 				auto t_it = this->texture_list.find(a_textureid_depth);
-				if(t_it != this->texture_list.end()){
+				if(t_it != this->texture_list.cend()){
 					t_texture_depth = t_it->second;
 				}
 			}
@@ -585,7 +585,7 @@ namespace NBsys{namespace NOpengl
 			//テクスチャー。Color0。
 			{
 				auto t_it = this->texture_list.find(a_textureid_color0);
-				if(t_it != this->texture_list.end()){
+				if(t_it != this->texture_list.cend()){
 					t_texture_color0 = t_it->second;
 				}
 			}
@@ -656,7 +656,7 @@ namespace NBsys{namespace NOpengl
 		{
 			auto t_it = std::as_const(this->texture_list).find(a_textureid);
 
-			if(t_it != this->texture_list.end()){
+			if(t_it != this->texture_list.cend()){
 				return(t_it->second)->GetTexture_RawID();
 			}
 
@@ -1090,7 +1090,7 @@ namespace NBsys{namespace NOpengl
 			if(a_vertexbufferid >= 0){
 				RawID t_vertexbuffer_rawid;
 				auto t_it_vertexbuffer = std::as_const(this->vertexbuffer_list).find(a_vertexbufferid);
-				if(t_it_vertexbuffer != this->vertexbuffer_list.end()){
+				if(t_it_vertexbuffer != this->vertexbuffer_list.cend()){
 					t_vertexbuffer_rawid = t_it_vertexbuffer->second->GetVertexBuffer_RawID();
 				}
 
@@ -1139,7 +1139,7 @@ namespace NBsys{namespace NOpengl
 			if(t_shaderstate){
 
 				auto t_it = std::as_const(t_shaderstate->attribute_list).find(a_name);
-				if(t_it != t_shaderstate->attribute_list.end()){
+				if(t_it != t_shaderstate->attribute_list.cend()){
 
 					s32 t_size = 1;
 
@@ -1300,7 +1300,7 @@ namespace NBsys{namespace NOpengl
 
 			if(t_shaderstate){
 				auto t_it = std::as_const(t_shaderstate->uniform_list).find(a_name);
-				if(t_it != t_shaderstate->uniform_list.end()){
+				if(t_it != t_shaderstate->uniform_list.cend()){
 
 					ASSERT(a_countof <= t_it->second.countof);
 
@@ -1833,7 +1833,7 @@ namespace NBsys{namespace NOpengl
 
 			if(a_textureid >= 0){
 				auto t_it = std::as_const(this->texture_list).find(a_textureid);
-				if(t_it != this->texture_list.end()){
+				if(t_it != this->texture_list.cend()){
 					RawID t_texture_rawid = (t_it->second)->GetTexture_RawID();
 					if(t_texture_rawid.IsInvalid() == false){
 
@@ -1886,7 +1886,7 @@ namespace NBsys{namespace NOpengl
 		{
 			if(a_framebufferid >= 0){
 				auto t_it = std::as_const(this->framebuffer_list).find(a_framebufferid);
-				if(t_it != this->framebuffer_list.end()){
+				if(t_it != this->framebuffer_list.cend()){
 					RawID t_framebuffer_rawid = (t_it->second)->GetFrameBuffer_RawID();
 					if(t_framebuffer_rawid.IsInvalid() == false){
 

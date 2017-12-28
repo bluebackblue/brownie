@@ -54,7 +54,7 @@ namespace NBsys{namespace NFile
 		MemoryContainer t_memorycontainer(BSYS_FILE_MEMORYCONTAINER);
 
 		auto t_it_item = this->map.find(a_workitem->GetFileNameShort());
-		if(t_it_item == this->map.end()){
+		if(t_it_item == this->map.cend()){
 			//新規。
 			sharedptr<File_Cache_Item> t_newitem(new File_Cache_Item(a_workitem));
 
@@ -75,7 +75,7 @@ namespace NBsys{namespace NFile
 	const sharedptr<File_WorkItem>& File_Cache::GetCacheFromFileNameShort(const STLWString& a_filename_short) const
 	{
 		auto t_it_item = this->map.find(a_filename_short);
-		if(t_it_item != this->map.end()){
+		if(t_it_item != this->map.cend()){
 			return t_it_item->second->workitem;
 		}
 

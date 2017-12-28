@@ -125,7 +125,7 @@ namespace NBsys{namespace NWindowMenu
 			}
 		);
 
-		if(t_it != this->child_list.end()){
+		if(t_it != this->child_list.cend()){
 			this->child_list.erase(t_it);
 			a_window->parent = nullptr;
 
@@ -155,7 +155,7 @@ namespace NBsys{namespace NWindowMenu
 		this->CalcW(WindowMenu_SizeType::Fix);
 		this->CalcH(WindowMenu_SizeType::Fix);
 
-		auto t_it_end = this->child_list.end();
+		auto t_it_end = this->child_list.cend();
 		for(auto t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 			t_it->get()->CalcRect();
 		}

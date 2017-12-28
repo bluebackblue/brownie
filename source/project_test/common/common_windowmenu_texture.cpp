@@ -201,7 +201,7 @@ namespace NTest{namespace NCommon
 		std::sort(t_list.begin(),t_list.end());
 
 		if(this->window_texture->texture_id < 0){
-			this->window_texture->texture_id = *t_list.begin();
+			this->window_texture->texture_id = *t_list.cbegin();
 			return;
 		}
 
@@ -214,7 +214,7 @@ namespace NTest{namespace NCommon
 			}
 		}
 
-		this->window_texture->texture_id = *t_list.begin();
+		this->window_texture->texture_id = *t_list.cbegin();
 		return;
 	}
 
@@ -233,7 +233,7 @@ namespace NTest{namespace NCommon
 		std::sort(t_list.begin(),t_list.end(),std::greater<int>());
 
 		if(this->window_texture->texture_id < 0){
-			this->window_texture->texture_id = *t_list.begin();
+			this->window_texture->texture_id = *t_list.cbegin();
 			return;
 		}
 

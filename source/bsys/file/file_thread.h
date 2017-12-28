@@ -50,7 +50,7 @@ namespace NBsys{namespace NFile
 
 		/** ロックオブジェクト。
 		*/
-		LockObject lockobject;
+		mutable LockObject lockobject;
 
 		/** 作業リスト。
 		*/
@@ -176,7 +176,7 @@ namespace NBsys{namespace NFile
 
 		/** [メインスレッド]リークチェック。
 		*/
-		void LeakCheck();
+		void LeakCheck() const;
 
 		/** [ファイルスレッド]Pack_GetInstance。
 

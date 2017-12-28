@@ -53,7 +53,7 @@ namespace NBsys{namespace NFile
 	void File_Cache_Item::AddID(s32 a_cachegroup_id)
 	{
 		auto t_it = this->cachegroup_id_list.find(a_cachegroup_id);
-		if(t_it == this->cachegroup_id_list.end()){
+		if(t_it == this->cachegroup_id_list.cend()){
 			this->cachegroup_id_list.insert(IDListType::value_type(a_cachegroup_id,true));
 		}else{
 			t_it->second = true;
@@ -66,7 +66,7 @@ namespace NBsys{namespace NFile
 	void File_Cache_Item::KillID(s32 a_cachegroup_id)
 	{
 		auto t_it = this->cachegroup_id_list.find(a_cachegroup_id);
-		if(t_it == this->cachegroup_id_list.end()){
+		if(t_it == this->cachegroup_id_list.cend()){
 		}else{
 			t_it->second = false;
 		}
@@ -78,7 +78,7 @@ namespace NBsys{namespace NFile
 	bool File_Cache_Item::Find(s32 a_cachegroup_id)
 	{
 		auto t_it = this->cachegroup_id_list.find(a_cachegroup_id);
-		if(t_it != this->cachegroup_id_list.end()){
+		if(t_it != this->cachegroup_id_list.cend()){
 			if(t_it->second == true){
 				return true;
 			}

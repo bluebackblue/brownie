@@ -1651,7 +1651,7 @@ namespace NBlib
 
 		{
 			auto t_it = this->value.associative_array->find(a_itemname);
-			if(t_it != this->value.associative_array->end()){
+			if(t_it != this->value.associative_array->cend()){
 				return t_it->second;
 			}
 		}
@@ -1674,7 +1674,7 @@ namespace NBlib
 
 		{
 			auto t_it = this->value.associative_array->find(a_itemname);
-			if(t_it != this->value.associative_array->end()){
+			if(t_it != this->value.associative_array->cend()){
 				return t_it->second;
 			}
 		}
@@ -1697,7 +1697,7 @@ namespace NBlib
 		
 		{
 			auto t_it = this->value.associative_array->find(a_itemname);
-			if(t_it != this->value.associative_array->end()){
+			if(t_it != this->value.associative_array->cend()){
 				return true;
 			}
 		}
@@ -1825,7 +1825,7 @@ namespace NBlib
 			this->JsonStringToValue();
 		}
 		
-		this->value.index_array->erase(this->value.index_array->begin() + a_index);
+		this->value.index_array->erase(this->value.index_array->cbegin() + a_index);
 	}
 
 

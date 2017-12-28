@@ -96,8 +96,8 @@ namespace NBsys{namespace NFile
 	void LeakCheck()
 	{
 		if(s_thread_list != nullptr){
-			auto t_it = s_thread_list->begin();
-			auto t_it_end = s_thread_list->end();
+			auto t_it = s_thread_list->cbegin();
+			auto t_it_end = s_thread_list->cend();
 
 			for(;t_it!=t_it_end;++t_it){
 				if(t_it->get() != nullptr){

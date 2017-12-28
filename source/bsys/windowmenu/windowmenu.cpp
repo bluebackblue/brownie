@@ -81,7 +81,7 @@ namespace NBsys{namespace NWindowMenu
 		GetSystemInstance()->callback->GetMouse_Callback(this->mouse.x,this->mouse.y,this->mouse.on_l,this->mouse.on_r,this->mouse.down_l,this->mouse.down_r,this->mouse.up_l,this->mouse.up_r);
 
 		{
-			auto t_it_begin = this->list.begin();
+			auto t_it_begin = this->list.cbegin();
 			auto t_it_end = this->list.end();
 			if(t_it_begin != t_it_end){
 				//マウス更新。
@@ -135,7 +135,7 @@ namespace NBsys{namespace NWindowMenu
 				if(this->changeactive_check  == true){
 					auto t_it_last = STLList<sharedptr<WindowMenu_Window_Base>>::get_last(this->list);	//TODO:
 
-					if(t_it_last != this->list.end()){
+					if(t_it_last != this->list.cend()){
 						if(this->active.get() != (*t_it_last).get()){
 							//アクティブ解除。
 							if(this->active){
@@ -224,7 +224,7 @@ namespace NBsys{namespace NWindowMenu
 		}
 
 		s32 t_z_sort = 0;
-		auto t_it_end = this->list.end();
+		auto t_it_end = this->list.cend();
 		for(auto t_it = this->list.begin();t_it != t_it_end;++t_it){
 			WindowMenu_Window_Base* t_instance = t_it->get();
 

@@ -390,7 +390,7 @@ namespace NBsys{namespace ND3d11
 					wchar t_code = a_string[ii];
 					if(t_code != nullwchar){
 						auto t_it = std::as_const(this->maplist).find(t_code);
-						if(t_it != this->maplist.end()){
+						if(t_it != this->maplist.cend()){
 							//リストに追加。
 							u32 t_font_index = t_it->second;
 							t_work_list.push_back(t_font_index);

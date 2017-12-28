@@ -64,7 +64,7 @@ namespace NTest
 		t_vector.push_back(1);
 		t_vector.push_back(2);
 		t_vector.push_back(3);
-		std::sort(t_vector.begin(),t_vector.end(),[](const s32& a_top,const s32& a_down){
+		std::sort(t_vector.cbegin(),t_vector.cend(),[](const s32& a_top,const s32& a_down){
 			return (a_top > a_down);
 		});
 
@@ -72,7 +72,7 @@ namespace NTest
 		STLMap<s16,s64>::Type t_map;
 		t_map.insert(std::make_pair(t_s16,t_s64));	//TODO:
 		auto t_it = t_map.find(t_s16);
-		if(t_it != t_map.end()){
+		if(t_it != t_map.cend()){
 			ASSERT(t_it->second == t_s64);
 		}
 
