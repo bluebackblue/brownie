@@ -863,7 +863,7 @@ namespace NBsys{namespace ND3d11
 			sharedptr<ID3DBlob> t_blob_error;
 			ID3DBlob* t_raw = nullptr;
 			ID3DBlob* t_raw_error = nullptr;
-			HRESULT t_result = D3DCompile(t_data,t_size,nullptr,nullptr,nullptr,"VS","vs_4_0",D3DCOMPILE_ENABLE_STRICTNESS|D3DCOMPILE_DEBUG,0,&t_raw,&t_raw_error);
+			HRESULT t_result = ::D3DCompile(t_data,static_cast<size_t>(t_size),nullptr,nullptr,nullptr,"VS","vs_4_0",D3DCOMPILE_ENABLE_STRICTNESS|D3DCOMPILE_DEBUG,0,&t_raw,&t_raw_error);
 			if(t_raw != nullptr){
 				t_blob.reset(t_raw,release_delete<ID3DBlob>());
 			}
@@ -903,15 +903,15 @@ namespace NBsys{namespace ND3d11
 		/** ID3D11InputLayout
 		*/
 		if(t_blob){
-			s32 t_layout_size = static_cast<s32>(a_vertexshader->layout->size());
+			u32 t_layout_size = static_cast<u32>(a_vertexshader->layout->size());
 			D3D11_INPUT_ELEMENT_DESC* t_layout_data = new D3D11_INPUT_ELEMENT_DESC[t_layout_size];
 			sharedptr<D3D11_INPUT_ELEMENT_DESC> t_layout(t_layout_data,default_delete<D3D11_INPUT_ELEMENT_DESC[]>());
 			{
-				 for(s32 ii=0;ii<t_layout_size;ii++){
+				 for(u32 ii=0;ii<t_layout_size;ii++){
 					t_layout_data[ii].SemanticName			= a_vertexshader->layout->at(ii).semantic_name.c_str();
-					t_layout_data[ii].SemanticIndex			= a_vertexshader->layout->at(ii).semantic_index;
-					t_layout_data[ii].InputSlot				= a_vertexshader->layout->at(ii).input_slot;
-					t_layout_data[ii].AlignedByteOffset		= a_vertexshader->layout->at(ii).offset;
+					t_layout_data[ii].SemanticIndex			= static_cast<UINT>(a_vertexshader->layout->at(ii).semantic_index);
+					t_layout_data[ii].InputSlot				= static_cast<UINT>(a_vertexshader->layout->at(ii).input_slot);
+					t_layout_data[ii].AlignedByteOffset		= static_cast<UINT>(a_vertexshader->layout->at(ii).offset);
 					t_layout_data[ii].InputSlotClass		= D3D11_INPUT_PER_VERTEX_DATA;
 					t_layout_data[ii].InstanceDataStepRate	= 0;
 
@@ -921,9 +921,6 @@ namespace NBsys{namespace ND3d11
 					case D3d11_LayoutFormatType::R32G32_FLOAT:			t_layout_data[ii].Format = DXGI_FORMAT_R32G32_FLOAT;		break;
 					case D3d11_LayoutFormatType::R8G8B8A8_UINT:			t_layout_data[ii].Format = DXGI_FORMAT_R8G8B8A8_UINT;		break;
 					case D3d11_LayoutFormatType::R8_UINT:				t_layout_data[ii].Format = DXGI_FORMAT_R8_UINT;				break;
-
-
-					
 					default:ASSERT(0);break;
 					}
 				 }
@@ -959,7 +956,7 @@ namespace NBsys{namespace ND3d11
 			sharedptr<ID3DBlob> t_blob_error;
 			ID3DBlob* t_raw = nullptr;
 			ID3DBlob* t_raw_error = nullptr;
-			HRESULT t_result = D3DCompile(t_data,t_size,nullptr,nullptr,nullptr,"PS","ps_4_0",D3DCOMPILE_ENABLE_STRICTNESS|D3DCOMPILE_DEBUG,0,&t_raw,&t_raw_error);
+			HRESULT t_result = ::D3DCompile(t_data,static_cast<size_t>(t_size),nullptr,nullptr,nullptr,"PS","ps_4_0",D3DCOMPILE_ENABLE_STRICTNESS|D3DCOMPILE_DEBUG,0,&t_raw,&t_raw_error);
 			if(t_raw != nullptr){
 				t_blob.reset(t_raw,release_delete<ID3DBlob>());
 			}
@@ -1003,7 +1000,7 @@ namespace NBsys{namespace ND3d11
 		D3D11_BUFFER_DESC t_desc = {0};
 		{
 			t_desc.Usage = D3D11_USAGE_DEFAULT;
-			t_desc.ByteWidth = a_vertexbuffer->countofvertex * a_vertexbuffer->stridebyte;
+			t_desc.ByteWidth = static_cast<UINT>(a_vertexbuffer->countofvertex * a_vertexbuffer->stridebyte);
 			t_desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 			t_desc.CPUAccessFlags = 0;
 
@@ -1036,7 +1033,7 @@ namespace NBsys{namespace ND3d11
 		D3D11_BUFFER_DESC t_desc = {0};
 		{
 			t_desc.Usage = D3D11_USAGE_DEFAULT;
-			t_desc.ByteWidth = a_constantbuffer->size;
+			t_desc.ByteWidth = static_cast<UINT>(a_constantbuffer->size);
 			t_desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 			t_desc.CPUAccessFlags = 0;
 		}
@@ -1059,8 +1056,8 @@ namespace NBsys{namespace ND3d11
 		{
 			D3D11_TEXTURE2D_DESC t_desc = {0};
 			{
-				t_desc.Width = a_texture->texture->GetWidth();
-				t_desc.Height = a_texture->texture->GetHeight();
+				t_desc.Width = static_cast<UINT>(a_texture->texture->GetWidth());
+				t_desc.Height = static_cast<UINT>(a_texture->texture->GetHeight());
 				t_desc.MipLevels = 1;
 				t_desc.ArraySize = 1;
 				t_desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -1085,7 +1082,7 @@ namespace NBsys{namespace ND3d11
 			D3D11_SUBRESOURCE_DATA t_data = {0};
 			{
 				t_data.pSysMem = a_texture->texture->GetPixel().get();
-				t_data.SysMemPitch = a_texture->texture->GetPitch();
+				t_data.SysMemPitch = static_cast<UINT>(a_texture->texture->GetPitch());
 				t_data.SysMemSlicePitch = 0;
 			}
 
@@ -1335,8 +1332,6 @@ namespace NBsys{namespace ND3d11
 		if(this->font_list[a_fonttexture_type] != nullptr){
 			this->font_list[a_fonttexture_type]->WriteFontTexture();
 		}
-
-		false;
 	}
 	#endif
 
@@ -1440,20 +1435,20 @@ namespace NBsys{namespace ND3d11
 				if(this->devicecontext){
 					HRESULT t_result = this->devicecontext.get()->Map(t_texture.get(),0,D3D11_MAP_READ,0,&t_mapped_resource);
 					if(SUCCEEDED(t_result)){
-						s32 t_size = t_mapped_resource.RowPitch * t_desc_backbuffer.Height;
+						u32 t_size = t_mapped_resource.RowPitch * t_desc_backbuffer.Height;
 			
 						t_screenshot.reset(
 							new NBsys::NTexture::Texture(
 								new u8[t_size],
-								t_desc_backbuffer.Width,
-								t_desc_backbuffer.Height,
-								t_mapped_resource.RowPitch,
+								static_cast<s32>(t_desc_backbuffer.Width),
+								static_cast<s32>(t_desc_backbuffer.Height),
+								static_cast<s32>(t_mapped_resource.RowPitch),
 								NBsys::NTexture::TextureType::R8G8B8A8,
 								L"screenshot"
 							)
 						);
 
-						Memory::Copy(t_screenshot->GetPixel().get(),t_size,t_mapped_resource.pData,t_size);
+						Memory::Copy(t_screenshot->GetPixel().get(),static_cast<s32>(t_size),t_mapped_resource.pData,static_cast<s32>(t_size));
 						this->devicecontext.get()->Unmap(t_texture.get(),0);
 					}
 				}
@@ -1535,7 +1530,7 @@ namespace NBsys{namespace ND3d11
 	{
 		if(this->testpresent_mode == false){
 			if(this->swapchain){
-				HRESULT t_result = this->swapchain->Present(a_sync_interval,0);
+				HRESULT t_result = this->swapchain->Present(static_cast<UINT>(a_sync_interval),0);
 
 				if(t_result == DXGI_STATUS_OCCLUDED){
 
@@ -1633,7 +1628,7 @@ namespace NBsys{namespace ND3d11
 	{
 		if(this->devicecontext){
 			if(this->devicecontext){
-				this->devicecontext->Draw(a_count_of_vertex,a_start_of_vertex);
+				this->devicecontext->Draw(static_cast<UINT>(a_count_of_vertex),static_cast<UINT>(a_start_of_vertex));
 			
 				return;
 			}
@@ -1657,7 +1652,7 @@ namespace NBsys{namespace ND3d11
 						t_constantbuffer->buffer.get()
 					};
 
-					this->devicecontext->VSSetConstantBuffers(t_constantbuffer->register_b_index,COUNTOF(t_list),t_list);
+					this->devicecontext->VSSetConstantBuffers(static_cast<UINT>(t_constantbuffer->register_b_index),COUNTOF(t_list),t_list);
 
 					return;
 				}
@@ -1681,7 +1676,7 @@ namespace NBsys{namespace ND3d11
 						t_constantbuffer->buffer.get()
 					};
 
-					this->devicecontext->PSSetConstantBuffers(t_constantbuffer->register_b_index,COUNTOF(t_list),t_list);
+					this->devicecontext->PSSetConstantBuffers(static_cast<UINT>(t_constantbuffer->register_b_index),COUNTOF(t_list),t_list);
 
 					return;
 				}
@@ -1704,9 +1699,9 @@ namespace NBsys{namespace ND3d11
 						t_vertexbuffer->buffer.get(),
 					};
 					
-					UINT t_stride = t_vertexbuffer->stridebyte;
+					UINT t_stride = static_cast<UINT>(t_vertexbuffer->stridebyte);
 					
-					UINT t_offset = t_vertexbuffer->offset;
+					UINT t_offset = static_cast<UINT>(t_vertexbuffer->offset);
 
 					this->devicecontext->IASetVertexBuffers(0,COUNTOF(t_list),t_list,&t_stride,&t_offset);
 
@@ -1776,7 +1771,7 @@ namespace NBsys{namespace ND3d11
 						t_texture->resourceview.get()
 					};
 
-					this->devicecontext->PSSetShaderResources(a_register_t_index,COUNTOF(t_resourceview_list),t_resourceview_list);
+					this->devicecontext->PSSetShaderResources(static_cast<UINT>(a_register_t_index),COUNTOF(t_resourceview_list),t_resourceview_list);
 
 					return;
 				}
@@ -1787,7 +1782,7 @@ namespace NBsys{namespace ND3d11
 				nullptr
 			};
 
-			this->devicecontext->PSSetShaderResources(a_register_t_index,COUNTOF(t_resourceview_list),t_resourceview_list);
+			this->devicecontext->PSSetShaderResources(static_cast<UINT>(a_register_t_index),COUNTOF(t_resourceview_list),t_resourceview_list);
 
 			return;
 		}
@@ -1872,7 +1867,7 @@ namespace NBsys{namespace ND3d11
 						t_samplerstate->samplerstate.get()
 					};
 
-					this->devicecontext->PSSetSamplers(a_register_t_index,1,t_samplerstate_list);
+					this->devicecontext->PSSetSamplers(static_cast<UINT>(a_register_t_index),1,t_samplerstate_list);
 
 					return;
 				}

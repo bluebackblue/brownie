@@ -366,6 +366,11 @@ namespace NBsys{namespace NFile
 					return true;
 				}
 			}break;
+		default:
+		case MainStep::None:
+			{
+				ASSERT(0);
+			}break;
 		}
 
 		ThreadSleep(0);

@@ -115,7 +115,7 @@ namespace NBsys{namespace NTexture
 			s32 t_offset = static_cast<s32>(a_name.size() - 4);
 			
 			if(t_offset >= 0){
-				t_filetype_string = a_name.substr(t_offset,4);
+				t_filetype_string = a_name.substr(static_cast<u32>(t_offset),4);
 				std::transform(t_filetype_string.begin(),t_filetype_string.end(),t_filetype_string.begin(),::tolower);
 			}
 

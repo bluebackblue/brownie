@@ -151,12 +151,12 @@ namespace NBsys{namespace NFile
 
 				//各ファイルサイズ。
 				sharedptr<u32> t_file_size(new u32[t_all_count]);
-				Memory::Copy(t_file_size.get(),sizeof(u32) * t_all_count,&t_header.get()[t_offset],sizeof(u32) * t_all_count);
+				Memory::Copy(t_file_size.get(),static_cast<s32>(sizeof(u32) * t_all_count),&t_header.get()[t_offset],static_cast<s32>(sizeof(u32) * t_all_count));
 				t_offset += sizeof(u32) * t_all_count;
 
 				//各ファイル名文字サイズ。
 				sharedptr<u16> t_filename_length(new u16[t_all_count]);
-				Memory::Copy(t_filename_length.get(),sizeof(u16) * t_all_count,&t_header.get()[t_offset],sizeof(u16) * t_all_count);
+				Memory::Copy(t_filename_length.get(),static_cast<s32>(sizeof(u16) * t_all_count),&t_header.get()[t_offset],static_cast<s32>(sizeof(u16) * t_all_count));
 				t_offset += sizeof(u16) * t_all_count;
 
 				//各ファイル名をまとめたもの。
@@ -164,9 +164,9 @@ namespace NBsys{namespace NFile
 					s64 t_offset_path = t_offset;
 					s64 t_offset_data = t_header_size;
 
-					for(s32 ii=0;ii<static_cast<s32>(t_all_count);ii++){
+					for(u32 ii=0;ii<t_all_count;ii++){
 						wchar t_buffer[300] = {0};
-						s32 t_length = sizeof(u16)*(t_filename_length.get()[ii]+1);
+						s32 t_length = static_cast<s32>(sizeof(u16) * (t_filename_length.get()[ii]+1));
 						ASSERT(t_length < COUNTOF(t_buffer));
 
 						Memory::Copy(&t_buffer[0],sizeof(t_buffer),&t_header.get()[t_offset_path],t_length);
@@ -201,6 +201,10 @@ namespace NBsys{namespace NFile
 					//エラー完了。
 					return true;
 				}
+			}break;
+		case MainStep::None:
+			{
+				ASSERT(0);
 			}break;
 		}
 

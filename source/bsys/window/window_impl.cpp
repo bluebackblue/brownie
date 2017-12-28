@@ -144,7 +144,7 @@ namespace NBsys{namespace NWindow
 		if(t_handle != WIN_NULL){
 
 			#if defined(ROM_64BIT)
-			LONG_PTR t_value = reinterpret_cast<AddressType>(this);
+			LONG_PTR t_value = reinterpret_cast<LONG_PTR>(this);
 			::SetWindowLongPtr(t_handle,GWLP_USERDATA,t_value);
 			#else
 			LONG t_value = reinterpret_cast<AddressType>(this);

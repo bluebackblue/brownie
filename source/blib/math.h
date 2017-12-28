@@ -19,7 +19,7 @@
 */
 #pragma warning(disable:4710)
 #pragma warning(push)
-#pragma warning(disable:4514 4987 4365 4820)
+#pragma warning(disable:4514 4987 4365 4820 4242 4244)
 #include <algorithm>
 #pragma warning(pop)
 

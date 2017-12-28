@@ -98,17 +98,16 @@ namespace NBsys{namespace NTexture
 		sharedptr<Texture> t_to_texture;
 
 		if(t_bitmap->GetLastStatus() == Gdiplus::Ok){
-			s32 t_tex_width = t_bitmap->GetWidth();
-			s32 t_tex_height = t_bitmap->GetHeight();
+			s32 t_tex_width = static_cast<s32>(t_bitmap->GetWidth());
+			s32 t_tex_height = static_cast<s32>(t_bitmap->GetHeight());
 			s32 t_tex_pitch = static_cast<s32>(NBlib::Math::pow_f(2,NBlib::Math::ceil_f(NBlib::Math::log2_f(static_cast<f32>(t_tex_width))))) * 4;
 
-			Gdiplus::PixelFormat t_format = t_bitmap->GetPixelFormat();
 			Gdiplus::BitmapData t_bitmap_data;
 			Gdiplus::Rect t_rect(0,0,t_tex_width,t_tex_height);
 			Gdiplus::Status t_status = t_bitmap->LockBits(&t_rect,Gdiplus::ImageLockModeRead,PixelFormat32bppARGB,&t_bitmap_data);
 			if(t_status == Gdiplus::Status::Ok){
 
-				sharedptr<u8> t_to_pixel(new u8[t_tex_height * t_tex_pitch],default_delete<u8[]>());
+				sharedptr<u8> t_to_pixel(new u8[static_cast<size_t>(t_tex_height * t_tex_pitch)],default_delete<u8[]>());
 			
 				for(s32 yy=0;yy<t_tex_height;yy++){
 					const u8* t_from = reinterpret_cast<const u8*>(t_bitmap_data.Scan0) + yy * t_bitmap_data.Stride;
@@ -247,7 +246,7 @@ namespace NBsys{namespace NTexture
 			void* t_global_buffer = t_globalmemory->Map();
 			if(t_global_buffer){
 
-				t_jpg_data.reset(new u8[t_write_size]);
+				t_jpg_data.reset(new u8[static_cast<u32>(t_write_size)]);
 				Memory::Copy(t_jpg_data.get(),t_write_size,t_global_buffer,t_write_size);
 				t_jpg_size = t_write_size;
 

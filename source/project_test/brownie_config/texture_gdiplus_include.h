@@ -12,5 +12,12 @@
 /** include
 */
 #include <brownie_config/windows_include.h>
+
+
+/** include
+*/
+#pragma warning(push)
+#pragma warning(disable:4365 4263 4264 4458 4061)
 #include <gdiplus.h>
+#pragma warning(pop)
 

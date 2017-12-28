@@ -101,7 +101,7 @@ namespace NBsys{namespace ND3d11
 		s32		: fontindex
 
 		*/
-		STLMap<wchar,s32>::Type maplist;
+		STLMap<wchar,u32>::Type maplist;
 
 	public:
 
@@ -140,6 +140,7 @@ namespace NBsys{namespace ND3d11
 				{
 					t_drawtypemax = BSYS_D3D11_FONT_DRAWTYPEMAX_EX;
 				}break;
+			case NBsys::ND3d11::D3d11_FontTextureType::Max:
 			default:
 				{
 					ASSERT(0);
@@ -148,7 +149,7 @@ namespace NBsys{namespace ND3d11
 
 			this->textureheight = static_cast<s32>(NBlib::Math::pow_f(2,NBlib::Math::ceil_f(NBlib::Math::log2_f(static_cast<f32>(this->texturewidth * t_drawtypemax)))));
 
-			sharedptr<u8> t_pixel(new u8[this->texturewidth * this->textureheight * 4]);
+			sharedptr<u8> t_pixel(new u8[static_cast<u32>(this->texturewidth * this->textureheight * 4)]);
 
 			this->texture.reset(new NBsys::NTexture::Texture(
 				t_pixel,
@@ -189,15 +190,15 @@ namespace NBsys{namespace ND3d11
 		*/
 		s32 FindNoLockFontIndex()
 		{
-			for(s32 ii=0;ii<static_cast<s32>(this->list.size());ii++){
+			for(u32 ii=0;ii<static_cast<u32>(this->list.size());ii++){
 				if((this->list[ii].lock == false)&&(this->list[ii].code == nullchar)){
-					return ii;
+					return static_cast<s32>(ii);
 				}
 			}
 
-			for(s32 ii=0;ii<static_cast<s32>(this->list.size());ii++){
+			for(u32 ii=0;ii<static_cast<u32>(this->list.size());ii++){
 				if(this->list[ii].lock == false){
-					return ii;
+					return static_cast<s32>(ii);
 				}
 			}
 
@@ -228,27 +229,25 @@ namespace NBsys{namespace ND3d11
 		{
 			bool t_change = false;
 
-			for(s32 ii=0;ii<static_cast<s32>(a_string.length());ii++){
+			for(u32 ii=0;ii<static_cast<u32>(a_string.length());ii++){
 
 				wchar t_code = a_string[ii];
 
 				if(t_code != nullwchar){
 					s32 t_font_index = 0;
 
-					STLMap<wchar,s32>::iterator t_it = this->maplist.find(t_code);
+					auto t_it = std::as_const(this->maplist).find(t_code);
 					if(t_it != this->maplist.end()){
 						//すでに作成済み。
-						t_font_index = t_it->second;
-						ASSERT(t_font_index >= 0);
 					}else{
 						//書き換え可能位置の検索。
 						t_font_index = this->FindNoLockFontIndex();
 
 						if(t_font_index >= 0){
-							wchar t_old_code = this->list[t_font_index].code;
+							wchar t_old_code = this->list[static_cast<u32>(t_font_index)].code;
 							if(t_old_code != nullwchar){
 								//旧コードを削除。
-								STLMap<wchar,s32>::iterator t_old_it = this->maplist.find(t_old_code);
+								auto t_old_it = this->maplist.find(t_old_code);
 								if(t_old_it != this->maplist.end()){
 									this->maplist.erase(t_old_it);
 								}
@@ -266,10 +265,10 @@ namespace NBsys{namespace ND3d11
 							t_change = true;
 
 							//登録。
-							this->list[t_font_index].code = t_code;
-							this->list[t_font_index].lock = true;
-							this->list[t_font_index].fontstate = t_font_state;
-							this->maplist.insert(STLMap<wchar,s32>::value_type(t_code,t_font_index));
+							this->list[static_cast<u32>(t_font_index)].code = t_code;
+							this->list[static_cast<u32>(t_font_index)].lock = true;
+							this->list[static_cast<u32>(t_font_index)].fontstate = t_font_state;
+							this->maplist.insert(std::make_pair(t_code,t_font_index));
 						}else{
 							ASSERT(0);
 						}
@@ -303,6 +302,7 @@ namespace NBsys{namespace ND3d11
 				{
 					t_drawtypemax = BSYS_D3D11_FONT_DRAWTYPEMAX_EX;
 				}break;
+			case NBsys::ND3d11::D3d11_FontTextureType::Max:
 			default:
 				{
 					ASSERT(0);
@@ -327,8 +327,8 @@ namespace NBsys{namespace ND3d11
 						Memory::Copy(t_to,t_size,t_from,t_size);
 					}else{
 						for(s32 ii=t_change_min;ii<=t_change_max;ii++){
-							s32 t_blocksize_to = ii * t_mapped_resource.RowPitch * this->texturewidth;
-							s32 t_blocksize_from = ii * t_from_pitch * this->texturewidth;
+							u32 t_blocksize_to = static_cast<u32>(ii * t_mapped_resource.RowPitch * this->texturewidth);
+							u32 t_blocksize_from = static_cast<u32>(ii * t_from_pitch * this->texturewidth);
 
 							for(s32 yy=0;yy<this->texturewidth;yy++){
 								u8* t_to = &reinterpret_cast<u8*>(t_mapped_resource.pData)[yy * t_mapped_resource.RowPitch + t_blocksize_to];
@@ -355,15 +355,15 @@ namespace NBsys{namespace ND3d11
 			f32 t_string_w = 0.0f;
 			f32 t_string_h = a_view_size_h;
 
-			STLVector<s32>::Type t_work_list;
+			STLVector<u32>::Type t_work_list;
 			{
-				for(s32 ii=0;ii<static_cast<s32>(a_string.length());ii++){
+				for(u32 ii=0;ii<static_cast<u32>(a_string.length());ii++){
 					wchar t_code = a_string[ii];
 					if(t_code != nullwchar){
-						STLMap<wchar,s32>::iterator t_it = this->maplist.find(t_code);
+						auto t_it = std::as_const(this->maplist).find(t_code);
 						if(t_it != this->maplist.end()){
 							//リストに追加。
-							s32 t_font_index = t_it->second;
+							u32 t_font_index = t_it->second;
 							t_work_list.push_back(t_font_index);
 
 							//幅。
@@ -398,9 +398,9 @@ namespace NBsys{namespace ND3d11
 					t_y = a_y + a_h - t_string_h;
 				}
 
-				s32 ii_max = static_cast<s32>(t_work_list.size());
-				for(s32 ii=0;ii<ii_max;ii++){
-					s32 t_font_index = t_work_list[ii];
+				u32 ii_max = static_cast<u32>(t_work_list.size());
+				for(u32 ii=0;ii<ii_max;ii++){
+					u32 t_font_index = t_work_list[ii];
 					NBsys::NFont::Font_State& t_font_state = this->list[t_font_index].fontstate;
 
 					{

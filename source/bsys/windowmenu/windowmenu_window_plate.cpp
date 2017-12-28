@@ -93,7 +93,7 @@ namespace NBsys{namespace NWindowMenu
 
 	/** マウス処理。
 	*/
-	bool WindowMenu_Window_Plate::CallBack_InRangeMouseUpdate(WindowMenu_Mouse& a_mouse)
+	bool WindowMenu_Window_Plate::CallBack_InRangeMouseUpdate(WindowMenu_Mouse& /*a_mouse*/)
 	{
 		//マウス操作を親に伝えない。
 		return this->mouseblock;
