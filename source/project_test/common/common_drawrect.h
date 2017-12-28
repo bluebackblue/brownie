@@ -259,8 +259,8 @@ namespace NTest{namespace NCommon
 		{
 			s32 t_current_texture_id = -1;
 
-			STLList<sharedptr<Render2D_Item_Base>>::const_iterator t_it = a_it_start;
-			STLList<sharedptr<Render2D_Item_Base>>::const_iterator t_it_renderstart = t_it;
+			auto t_it = a_it_start;
+			auto t_it_renderstart = t_it;
 			if(t_it != a_it_end){
 				const Render2D_Item_Rect* t_instence = dynamic_cast<const Render2D_Item_Rect*>(t_it->get());
 
@@ -299,7 +299,7 @@ namespace NTest{namespace NCommon
 
 			s32 t_texture_id = t_instence_start->texture_id;
 
-			for(STLList<sharedptr<Render2D_Item_Base>>::const_iterator t_it = a_it_start;t_it != a_it_end;t_it++){
+			for(auto t_it = a_it_start;t_it != a_it_end;t_it++){
 				const Render2D_Item_Rect* t_instence = dynamic_cast<const Render2D_Item_Rect*>(t_it->get());
 
 				//バーテックス作成。

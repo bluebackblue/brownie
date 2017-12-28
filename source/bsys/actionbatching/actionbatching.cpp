@@ -50,7 +50,7 @@ namespace NBsys{namespace NActionBatching
 	*/
 	void ActionBatching::Update(f32 a_delta)
 	{
-		STLList<sharedptr<ActionBatching_ActionList>>::iterator t_it = this->worklist.begin();
+		auto t_it = this->worklist.begin();
 		while(t_it != this->worklist.end()){
 			if((*t_it)->Do(a_delta) == true){
 

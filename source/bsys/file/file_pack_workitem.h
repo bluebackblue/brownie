@@ -105,7 +105,7 @@ namespace NBsys{namespace NFile
 
 		/** パックファイル名取得。
 		*/
-		const STLWString& GetPackFileNameShort();
+		const STLWString& GetPackFileNameShort() const;
 
 		/** ファイル検索。
 		*/

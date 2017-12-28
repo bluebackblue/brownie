@@ -102,7 +102,7 @@ namespace NBlib
 
 		/** get_last
 		*/
-		static iterator get_last(Type& a_list)
+		static iterator get_last(Type& a_list) //TODO:
 		{
 			iterator t_it_last = a_list.end();
 			--t_it_last;

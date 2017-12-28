@@ -173,7 +173,7 @@ namespace NTest{namespace NCommon
 
 	/** 削除リクエスト。取得。
 	*/
-	bool WindowMenu_Texture::CallBack_GetDeleteRequest()
+	bool WindowMenu_Texture::CallBack_GetDeleteRequest() const
 	{
 		return this->endrequest;
 	}
@@ -206,8 +206,8 @@ namespace NTest{namespace NCommon
 		}
 
 		s32 t_texture_id = this->window_texture->texture_id;
-		STLVector<s32>::const_iterator t_it_end = t_list.end();
-		for(STLVector<s32>::const_iterator t_it = t_list.begin();t_it != t_it_end;++t_it){
+		auto t_it_end = t_list.cend();
+		for(auto t_it = t_list.cbegin();t_it != t_it_end;++t_it){
 			if(t_texture_id < *t_it){
 				this->window_texture->texture_id = *t_it;
 				return;
@@ -238,15 +238,15 @@ namespace NTest{namespace NCommon
 		}
 
 		s32 t_texture_id = this->window_texture->texture_id;
-		STLVector<s32>::const_iterator t_it_end = t_list.end();
-		for(STLVector<s32>::const_iterator t_it = t_list.begin();t_it != t_it_end;++t_it){
+		auto t_it_end = t_list.cend();
+		for(auto t_it = t_list.cbegin();t_it != t_it_end;++t_it){
 			if(t_texture_id > *t_it){
 				this->window_texture->texture_id = *t_it;
 				return;
 			}
 		}
 
-		this->window_texture->texture_id = *t_list.begin();
+		this->window_texture->texture_id = *t_list.cbegin();
 		return;
 	}
 

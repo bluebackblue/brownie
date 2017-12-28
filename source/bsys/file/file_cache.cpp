@@ -53,7 +53,7 @@ namespace NBsys{namespace NFile
 	{
 		MemoryContainer t_memorycontainer(BSYS_FILE_MEMORYCONTAINER);
 
-		STLMap<STLWString,sharedptr<File_Cache_Item>>::iterator t_it_item = this->map.find(a_workitem->GetFileNameShort());
+		auto t_it_item = this->map.find(a_workitem->GetFileNameShort());
 		if(t_it_item == this->map.end()){
 			//新規。
 			sharedptr<File_Cache_Item> t_newitem(new File_Cache_Item(a_workitem));
@@ -74,7 +74,7 @@ namespace NBsys{namespace NFile
 	*/
 	const sharedptr<File_WorkItem>& File_Cache::GetCacheFromFileNameShort(const STLWString& a_filename_short) const
 	{
-		STLMap<STLWString,sharedptr<File_Cache_Item>>::const_iterator t_it_item = this->map.find(a_filename_short);
+		auto t_it_item = this->map.find(a_filename_short);
 		if(t_it_item != this->map.end()){
 			return t_it_item->second->workitem;
 		}
@@ -91,13 +91,13 @@ namespace NBsys{namespace NFile
 			//全部。削除。
 			STLMap<STLWString,sharedptr<File_Cache_Item>>::Type().swap(this->map);
 		}else{
-			STLMap<STLWString,sharedptr<File_Cache_Item>>::iterator t_it = this->map.begin();
+			auto t_it = this->map.begin();
 			while(t_it != this->map.end()){
 				t_it->second->KillID(a_cachegroup_id);
 
 				if(t_it->second->IsEmpty()){
 					//中身が空のものはキャッシュマップから削除。
-					STLMap<STLWString,sharedptr<File_Cache_Item>>::iterator t_it_erase = t_it;
+					auto t_it_erase = t_it;
 					t_it++;
 					this->map.erase(t_it_erase);
 					continue;
@@ -113,8 +113,8 @@ namespace NBsys{namespace NFile
 	*/
 	void File_Cache::LeakCheck() const
 	{
-		STLMap<STLWString,sharedptr<File_Cache_Item>>::const_iterator t_it = this->map.begin();
-		while(t_it != this->map.end()){
+		auto t_it = this->map.cbegin();
+		while(t_it != this->map.cend()){
 			if(t_it->second.use_count() > 1){
 				//誰かから参照されている。
 				ASSERT(0);

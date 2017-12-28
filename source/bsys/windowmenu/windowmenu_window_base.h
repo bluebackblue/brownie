@@ -247,7 +247,7 @@ namespace NBsys{namespace NWindowMenu
 
 		/** 削除リクエスト。取得。
 		*/
-		virtual bool CallBack_GetDeleteRequest();
+		virtual bool CallBack_GetDeleteRequest() const;
 
 		/** 削除リクエスト。設定。
 		*/

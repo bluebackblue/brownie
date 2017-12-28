@@ -64,8 +64,8 @@ namespace NBsys{namespace NWindowMenu
 	{
 		//削除リクエスト。
 		{
-			STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->list.begin();
-			while(t_it != this->list.end()){
+			auto t_it = this->list.cbegin();
+			while(t_it != this->list.cend()){
 				if((*t_it)->CallBack_GetDeleteRequest() == true){
 					t_it = this->list.erase(t_it);
 
@@ -81,13 +81,13 @@ namespace NBsys{namespace NWindowMenu
 		GetSystemInstance()->callback->GetMouse_Callback(this->mouse.x,this->mouse.y,this->mouse.on_l,this->mouse.on_r,this->mouse.down_l,this->mouse.down_r,this->mouse.up_l,this->mouse.up_r);
 
 		{
-			STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_begin = this->list.begin();
-			STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->list.end();
+			auto t_it_begin = this->list.begin();
+			auto t_it_end = this->list.end();
 			if(t_it_begin != t_it_end){
 				//マウス更新。
 				{
-					STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_movetolast = t_it_end;
-					STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = t_it_end;
+					auto t_it_movetolast = t_it_end;
+					auto t_it = t_it_end;
 			
 					for(;;){
 						t_it--;
@@ -96,14 +96,14 @@ namespace NBsys{namespace NWindowMenu
 
 						if(t_instance->enable == true){
 							
-							//無効時は呼び出さないコールバック。
+							//有効時のみ呼び出すコールバック。
 							bool t_ret = t_instance->System_MouseUpdate(this->mouse);
 							if(t_ret == true){
 								//マウス操作を次に伝えない。
 
 								//最後尾へ移動。
 								if(this->mouse.down_l || this->mouse.down_r){
-									STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_last = STLList<sharedptr<WindowMenu_Window_Base>>::get_last(this->list);
+									auto t_it_last = STLList<sharedptr<WindowMenu_Window_Base>>::get_last(this->list);	//TODO:
 									if(t_it != t_it_last){
 										t_it_movetolast = t_it;
 									}
@@ -133,7 +133,7 @@ namespace NBsys{namespace NWindowMenu
 
 				//アクティブ変更チェック。
 				if(this->changeactive_check  == true){
-					STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_last = STLList<sharedptr<WindowMenu_Window_Base>>::get_last(this->list);
+					auto t_it_last = STLList<sharedptr<WindowMenu_Window_Base>>::get_last(this->list);	//TODO:
 
 					if(t_it_last != this->list.end()){
 						if(this->active.get() != (*t_it_last).get()){
@@ -157,11 +157,11 @@ namespace NBsys{namespace NWindowMenu
 
 				//更新。
 				{
-					for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
+					for(auto t_it = this->list.begin();t_it != t_it_end;++t_it){
 						WindowMenu_Window_Base* t_instance = t_it->get();
 
 						if(t_instance->enable){
-							//無効時は呼び出さないコールバック。
+							//有効時のみ呼び出すコールバック。
 							t_instance->System_Update();
 						}
 					}
@@ -171,21 +171,21 @@ namespace NBsys{namespace NWindowMenu
 
 		//領域再計算、親子関係変更。
 		if(this->changerect_check){
-			STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->list.end();
-			for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
+			auto t_it_end = this->list.end();
+			for(auto t_it = this->list.begin();t_it != t_it_end;++t_it){
 				WindowMenu_Window_Base* t_instance = t_it->get();
 
 				if(t_instance->enable == true){
-					//無効時は呼び出さないコールバック。
+					//有効時のみ呼び出すコールバック。
 					t_instance->CallBack_CalcRectClear(STLList<sharedptr<WindowMenu_Window_Base>>::iterator(),-1);
 				}
 			}
 			{
-				for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
+				for(auto t_it = this->list.begin();t_it != t_it_end;++t_it){
 					WindowMenu_Window_Base* t_instance = t_it->get();
 
 					if(t_instance->enable == true){
-						//無効時は呼び出さないコールバック。
+						//有効時のみ呼び出すコールバック。
 						t_instance->CalcRect();
 					}
 				}
@@ -201,21 +201,21 @@ namespace NBsys{namespace NWindowMenu
 	{
 		//領域再計算、親子関係変更。
 		if(this->changerect_check){
-			STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->list.end();
-			for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
+			auto t_it_end = this->list.end();
+			for(auto t_it = this->list.begin();t_it != t_it_end;++t_it){
 				WindowMenu_Window_Base* t_instance = t_it->get();
 
 				if(t_instance->enable == true){
-					//無効時は呼び出さないコールバック。
+					//有効時のみ呼び出すコールバック。
 					t_instance->CallBack_CalcRectClear(STLList<sharedptr<WindowMenu_Window_Base>>::iterator(),-1);
 				}
 			}
 			{
-				for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
+				for(auto t_it = this->list.begin();t_it != t_it_end;++t_it){
 					WindowMenu_Window_Base* t_instance = t_it->get();
 
 					if(t_instance->enable == true){
-						//無効時は呼び出さないコールバック。
+						//有効時のみ呼び出すコールバック。
 						t_instance->CalcRect();
 					}
 				}
@@ -224,12 +224,12 @@ namespace NBsys{namespace NWindowMenu
 		}
 
 		s32 t_z_sort = 0;
-		STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->list.end();
-		for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
+		auto t_it_end = this->list.end();
+		for(auto t_it = this->list.begin();t_it != t_it_end;++t_it){
 			WindowMenu_Window_Base* t_instance = t_it->get();
 
 			if(t_instance->enable){
-				//無効時は呼び出さないコールバック。
+				//有効時のみ呼び出すコールバック。
 				t_instance->System_Draw(t_z_sort);
 			}
 

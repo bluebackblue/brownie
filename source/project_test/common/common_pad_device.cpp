@@ -110,7 +110,7 @@ namespace NTest{namespace NCommon
 
 	/** ボタン取得。
 	*/
-	bool Pad_Device::GetButton(s32 /*a_virtualpad_index*/,NBsys::NPad::Pad_Device_Base::ButtonType::Id a_device_button)
+	bool Pad_Device::GetButton(s32 /*a_virtualpad_index*/,NBsys::NPad::Pad_Device_Base::ButtonType::Id a_device_button) const
 	{
 		switch(a_device_button){
 		case NBsys::NPad::Pad_Device_Base::ButtonType::DeviceButton_14:
@@ -148,14 +148,14 @@ namespace NTest{namespace NCommon
 
 	/** アナログ取得。
 	*/
-	f32 Pad_Device::GetAnalog(s32 /*a_virtualpad_index*/,NBsys::NPad::Pad_Device_Base::AnalogType::Id /*a_device_analog*/)
+	f32 Pad_Device::GetAnalog(s32 /*a_virtualpad_index*/,NBsys::NPad::Pad_Device_Base::AnalogType::Id /*a_device_analog*/) const
 	{
 		return 0.0f;
 	}
 
 	/** タッチ取得。
 	*/
-	NBsys::NPad::TouchValue Pad_Device::GetTouch(s32 /*a_virtualpad_index*/,NBsys::NPad::Pad_Device_Base::TouchType::Id a_device_touch)
+	NBsys::NPad::TouchValue Pad_Device::GetTouch(s32 /*a_virtualpad_index*/,NBsys::NPad::Pad_Device_Base::TouchType::Id a_device_touch) const
 	{
 		switch(a_device_touch){
 		case NBsys::NPad::Pad_Device_Base::TouchType::DeviceTouch_1:

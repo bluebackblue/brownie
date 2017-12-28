@@ -432,7 +432,7 @@ namespace NBsys{namespace NOpengl
 
 		{
 			//バーテックスバッファ。
-			STLMap<s32,sharedptr<Opengl_Impl_VertexBuffer>>::iterator t_it = this->vertexbuffer_list.find(a_vertexbufferid);
+			auto t_it = this->vertexbuffer_list.find(a_vertexbufferid);
 			sharedptr<Opengl_Impl_VertexBuffer>& t_vertexbuffer = t_it->second;
 
 			//レンダーコマンド。
@@ -549,7 +549,7 @@ namespace NBsys{namespace NOpengl
 
 		{
 			//テクスチャー。
-			STLMap<s32,sharedptr<Opengl_Impl_Texture>>::iterator t_it = this->texture_list.find(a_textureid);
+			auto t_it = this->texture_list.find(a_textureid);
 			sharedptr<Opengl_Impl_Texture>& t_texture = t_it->second;
 
 			//レンダーコマンド。
@@ -576,7 +576,7 @@ namespace NBsys{namespace NOpengl
 
 			//テクスチャー。Depth。
 			{
-				STLMap<s32,sharedptr<Opengl_Impl_Texture>>::iterator t_it = this->texture_list.find(a_textureid_depth);
+				auto t_it = this->texture_list.find(a_textureid_depth);
 				if(t_it != this->texture_list.end()){
 					t_texture_depth = t_it->second;
 				}
@@ -584,7 +584,7 @@ namespace NBsys{namespace NOpengl
 		
 			//テクスチャー。Color0。
 			{
-				STLMap<s32,sharedptr<Opengl_Impl_Texture>>::iterator t_it = this->texture_list.find(a_textureid_color0);
+				auto t_it = this->texture_list.find(a_textureid_color0);
 				if(t_it != this->texture_list.end()){
 					t_texture_color0 = t_it->second;
 				}
@@ -654,7 +654,7 @@ namespace NBsys{namespace NOpengl
 		AutoLock t_autolock(this->lockobject);
 
 		{
-			STLMap<s32,sharedptr<Opengl_Impl_Texture>>::iterator t_it = this->texture_list.find(a_textureid);
+			auto t_it = std::as_const(this->texture_list).find(a_textureid);
 
 			if(t_it != this->texture_list.end()){
 				return(t_it->second)->GetTexture_RawID();
@@ -1089,7 +1089,7 @@ namespace NBsys{namespace NOpengl
 
 			if(a_vertexbufferid >= 0){
 				RawID t_vertexbuffer_rawid;
-				STLMap<s32,sharedptr<Opengl_Impl_VertexBuffer>>::iterator t_it_vertexbuffer = this->vertexbuffer_list.find(a_vertexbufferid);
+				auto t_it_vertexbuffer = std::as_const(this->vertexbuffer_list).find(a_vertexbufferid);
 				if(t_it_vertexbuffer != this->vertexbuffer_list.end()){
 					t_vertexbuffer_rawid = t_it_vertexbuffer->second->GetVertexBuffer_RawID();
 				}
@@ -1138,7 +1138,7 @@ namespace NBsys{namespace NOpengl
 
 			if(t_shaderstate){
 
-				STLMap<STLString,Opengl_Impl_ShaderState::Attribute>::const_iterator t_it = t_shaderstate->attribute_list.find(a_name);
+				auto t_it = std::as_const(t_shaderstate->attribute_list).find(a_name);
 				if(t_it != t_shaderstate->attribute_list.end()){
 
 					s32 t_size = 1;
@@ -1299,7 +1299,7 @@ namespace NBsys{namespace NOpengl
 			sharedptr<Opengl_Impl_ShaderState>& t_shaderstate = this->shaderstate_list[a_shaderid];
 
 			if(t_shaderstate){
-				STLMap<STLString,Opengl_Impl_ShaderState::Uniform>::const_iterator t_it = t_shaderstate->uniform_list.find(a_name);
+				auto t_it = std::as_const(t_shaderstate->uniform_list).find(a_name);
 				if(t_it != t_shaderstate->uniform_list.end()){
 
 					ASSERT(a_countof <= t_it->second.countof);
@@ -1832,7 +1832,7 @@ namespace NBsys{namespace NOpengl
 			}
 
 			if(a_textureid >= 0){
-				STLMap<s32,sharedptr<Opengl_Impl_Texture>>::iterator t_it = this->texture_list.find(a_textureid);
+				auto t_it = std::as_const(this->texture_list).find(a_textureid);
 				if(t_it != this->texture_list.end()){
 					RawID t_texture_rawid = (t_it->second)->GetTexture_RawID();
 					if(t_texture_rawid.IsInvalid() == false){
@@ -1885,7 +1885,7 @@ namespace NBsys{namespace NOpengl
 
 		{
 			if(a_framebufferid >= 0){
-				STLMap<s32,sharedptr<Opengl_Impl_FrameBuffer>>::iterator t_it = this->framebuffer_list.find(a_framebufferid);
+				auto t_it = std::as_const(this->framebuffer_list).find(a_framebufferid);
 				if(t_it != this->framebuffer_list.end()){
 					RawID t_framebuffer_rawid = (t_it->second)->GetFrameBuffer_RawID();
 					if(t_framebuffer_rawid.IsInvalid() == false){
@@ -2028,15 +2028,15 @@ namespace NBsys{namespace NOpengl
 		{
 			if(this->shaderstate_list[a_shaderid].enable == true){
 
-				STLMap<STLString,Opengl_Impl::Uniform>::const_iterator t_it = this->shaderstate_list[a_shaderid].uniform_list.find(a_name);
-				if(t_it != this->shaderstate_list[a_shaderid].uniform_list.end()){
+				auto t_it = std::as_const(this->shaderstate_list[a_shaderid]).uniform_list.find(a_name);
+				if(t_it != this->shaderstate_list[a_shaderid].uniform_list.cend()){
 
 					RawID t_texture_rawid;
 					{
 						if(a_textureid >= 0){
-							STLMap<s32,sharedptr<Opengl_Impl_Texture>>::iterator t_it = this->texture_list.find(a_textureid);
-							if(t_it != this->texture_list.end()){
-								t_texture_rawid = (t_it->second)->GetTexture_RawID();
+							auto t_it_texture = std::as_const(this->texture_list).find(a_textureid);
+							if(t_it_texture != this->texture_list.cend()){
+								t_texture_rawid = (t_it_texture->second)->GetTexture_RawID();
 							}
 						}
 					}

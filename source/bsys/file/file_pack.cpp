@@ -66,8 +66,8 @@ namespace NBsys{namespace NFile
 		//■排他。
 		AutoLock t_autolock(this->lockobject);
 
-		STLList<sharedptr<File_Pack_WorkItem>>::iterator t_it_end = this->list.end();
-		for(STLList<sharedptr<File_Pack_WorkItem>>::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
+		auto t_it_end = this->list.cend();
+		for(auto t_it = this->list.cbegin();t_it != t_it_end;++t_it){
 			if((*t_it)->GetPackFileNameShort() == a_pack_filename_short){
 				return true;
 			}
@@ -84,8 +84,8 @@ namespace NBsys{namespace NFile
 		//■排他。
 		AutoLock t_autolock(this->lockobject);
 
-		STLList<sharedptr<File_Pack_WorkItem>>::iterator t_it_end = this->list.end();
-		for(STLList<sharedptr<File_Pack_WorkItem>>::iterator t_it = this->list.begin();t_it != t_it_end;++t_it){
+		auto t_it_end = this->list.end();
+		for(auto t_it = this->list.begin();t_it != t_it_end;++t_it){
 			sharedptr<File_Pack_FileHandle>& t_pack_filehandle = (*t_it)->FindFromFileNameShort(a_filename_short);
 			if(t_pack_filehandle != nullptr){
 				return t_pack_filehandle;

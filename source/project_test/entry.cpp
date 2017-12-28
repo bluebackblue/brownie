@@ -81,19 +81,7 @@ int main(int a_argc,char** a_argv)
 	UNUSED(a_argv);
 	#endif
 
-	#if(DEF_TEST_AUTO)
-	{
-		try{
-			NTest::Test_Main();
-		}catch(...){
-			//DEBUGBREAK();
-		}
-	}
-	#else
-	{
-		NTest::Test_Main();
-	}
-	#endif
+	NTest::Test_Main();
 
 	#if defined(PLATFORM_GNUCWIN)
 	return 0;

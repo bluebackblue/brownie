@@ -72,8 +72,8 @@ namespace NBsys{namespace NPad
 	{
 		//デバイスの更新。
 		if(a_device_update == true){
-			STLVector<sharedptr<Pad_Device_Base>>::iterator t_it_end = this->device_list.end();
-			for(STLVector<sharedptr<Pad_Device_Base>>::iterator t_it = this->device_list.begin();t_it!=t_it_end;++t_it){
+			auto t_it_end = this->device_list.end();
+			for(auto t_it = this->device_list.begin();t_it!=t_it_end;++t_it){
 				if(*t_it != nullptr){
 					(*t_it)->DeviceUpdate();
 				}
@@ -82,8 +82,8 @@ namespace NBsys{namespace NPad
 
 		//仮想パッド更新。
 		{
-			STLVector<sharedptr<Pad_Virtual>>::iterator t_it_end = this->virtual_list.end();
-			for(STLVector<sharedptr<Pad_Virtual>>::iterator t_it = this->virtual_list.begin();t_it!=t_it_end;++t_it){
+			auto t_it_end = this->virtual_list.end();
+			for(auto t_it = this->virtual_list.begin();t_it!=t_it_end;++t_it){
 				if(*t_it != nullptr){
 					(*t_it)->Update();
 				}

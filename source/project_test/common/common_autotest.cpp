@@ -145,8 +145,8 @@ namespace NTest{namespace NCommon
 			 bool t_ret = this->send_http->ConnectUpdate();
 			 if((t_ret == true)||(this->send_recvbuffer->GetUseSize()>0)){
 
-				u8* t_recv_data = this->send_recvbuffer->GetItemFromUseList(0);
-				s32 t_recv_size = this->send_recvbuffer->GetUseSize();
+				//u8* t_recv_data = this->send_recvbuffer->GetItemFromUseList(0);
+				//s32 t_recv_size = this->send_recvbuffer->GetUseSize();
 
 				if(this->send_http->IsRecvHeader()){
 					//ヘッダー読み込み済み。

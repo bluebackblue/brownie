@@ -67,7 +67,7 @@ namespace NBsys{namespace NFile
 
 	/** パックファイル名取得。
 	*/
-	const STLWString& File_Pack_WorkItem::GetPackFileNameShort()
+	const STLWString& File_Pack_WorkItem::GetPackFileNameShort() const
 	{
 		return this->pack_filename_short;
 	}
@@ -77,7 +77,7 @@ namespace NBsys{namespace NFile
 	*/
 	sharedptr<File_Pack_FileHandle>& File_Pack_WorkItem::FindFromFileNameShort(const STLWString& a_filename_short)
 	{
-		STLMap<STLWString,sharedptr<File_Pack_FileHandle>>::iterator t_it = this->filelist.find(a_filename_short);
+		auto t_it = this->filelist.find(a_filename_short);
 		if(t_it != this->filelist.end()){
 			return t_it->second;
 		}

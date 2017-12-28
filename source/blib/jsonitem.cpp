@@ -168,9 +168,9 @@ namespace NBlib
 			}
 			#else
 			{
-				STLString::const_iterator t_start = a_string.begin();
-				STLString::const_iterator t_end = a_string.end();
-				STLString::const_iterator t_it = t_start;
+				auto t_start = a_string.cbegin();
+				auto t_end = a_string.cend();
+				auto t_it = t_start;
 
 				if(t_it != t_end){
 					switch((*t_it)){
@@ -1650,7 +1650,7 @@ namespace NBlib
 		}
 
 		{
-			STLMap<STLString,sharedptr<JsonItem>>::iterator t_it = this->value.associative_array->find(a_itemname);
+			auto t_it = this->value.associative_array->find(a_itemname);
 			if(t_it != this->value.associative_array->end()){
 				return t_it->second;
 			}
@@ -1673,7 +1673,7 @@ namespace NBlib
 		}
 
 		{
-			STLMap<STLString,sharedptr<JsonItem>>::iterator t_it = this->value.associative_array->find(a_itemname);
+			auto t_it = this->value.associative_array->find(a_itemname);
 			if(t_it != this->value.associative_array->end()){
 				return t_it->second;
 			}
@@ -1696,7 +1696,7 @@ namespace NBlib
 		}
 		
 		{
-			STLMap<STLString,sharedptr<JsonItem>>::iterator t_it = this->value.associative_array->find(a_itemname);
+			auto t_it = this->value.associative_array->find(a_itemname);
 			if(t_it != this->value.associative_array->end()){
 				return true;
 			}
@@ -1935,9 +1935,9 @@ namespace NBlib
 			this->JsonStringToValue();
 		}
 
-		STLMap<STLString,sharedptr<JsonItem>>::iterator t_start = this->value.associative_array->begin();
-		STLMap<STLString,sharedptr<JsonItem>>::iterator t_end = this->value.associative_array->end();
-		STLMap<STLString,sharedptr<JsonItem>>::iterator t_it = t_start;
+		auto t_start = this->value.associative_array->cbegin();
+		auto t_end = this->value.associative_array->cend();
+		auto t_it = t_start;
 
 		sharedptr<STLVector<STLString>::Type> t_ret_keylist(new STLVector<STLString>::Type());
 
@@ -2010,9 +2010,9 @@ namespace NBlib
 				STLString t_jsonstring = "[";
 				t_jsonstring.reserve(64);
 				{
-					STLVector<sharedptr<JsonItem>>::const_iterator t_start = this->value.index_array->begin();
-					STLVector<sharedptr<JsonItem>>::const_iterator t_end = this->value.index_array->end();
-					STLVector<sharedptr<JsonItem>>::const_iterator t_it = t_start;
+					auto t_start = this->value.index_array->cbegin();
+					auto t_end = this->value.index_array->cend();
+					auto t_it = t_start;
 
 					//一つ目。
 					if(t_it != t_end){
@@ -2034,9 +2034,9 @@ namespace NBlib
 				STLString t_jsonstring = "{";
 				t_jsonstring.reserve(64);
 				{
-					STLMap<STLString,sharedptr<JsonItem>>::const_iterator t_start = this->value.associative_array->begin();
-					STLMap<STLString,sharedptr<JsonItem>>::const_iterator t_end = this->value.associative_array->end();
-					STLMap<STLString,sharedptr<JsonItem>>::const_iterator t_it = t_start;
+					auto t_start = this->value.associative_array->cbegin();
+					auto t_end = this->value.associative_array->cend();
+					auto t_it = t_start;
 
 					if(t_it != t_end){
 						//一つ目。

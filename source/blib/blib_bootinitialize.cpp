@@ -84,8 +84,8 @@ namespace NBlib
 	*/
 	nonvirtual Blib::~Blib()
 	{
-		STLVector<std::function<void(void)>>::iterator t_it_end = this->call_list.end();
-		for(STLVector<std::function<void(void)>>::iterator t_it = this->call_list.begin();t_it!=t_it_end;++t_it){
+		auto t_it_end = this->call_list.cend();
+		for(auto t_it = this->call_list.cbegin();t_it!=t_it_end;++t_it){
 			(*t_it)();
 		}
 		this->call_list.clear();

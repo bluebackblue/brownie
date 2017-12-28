@@ -269,8 +269,8 @@ namespace NTest{namespace NCommon
 
 			//描画。
 			{
-				STLList<sharedptr<Render2D_Item_Base>>::const_iterator t_it_end = this->list.end();
-				STLList<sharedptr<Render2D_Item_Base>>::const_iterator t_it = this->list.begin();
+				auto t_it_end = this->list.cend();
+				auto t_it = this->list.cbegin();
 
 				for(s32 ii=0;ii<COUNTOF(this->material_list);ii++){
 					if(this->material_list[ii].get() != nullptr){
@@ -279,7 +279,7 @@ namespace NTest{namespace NCommon
 				}
 
 				Render2D_ItemType::Id t_current_itemtype = Render2D_ItemType::None;
-				STLList<sharedptr<Render2D_Item_Base>>::const_iterator t_it_renderstart = t_it;
+				auto t_it_renderstart = t_it;
 				if(t_it != t_it_end){
 					t_current_itemtype = t_it->get()->itemtype;
 				}

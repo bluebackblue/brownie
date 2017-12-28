@@ -115,25 +115,25 @@ namespace NBsys{namespace NHttp
 		STLString t_body_footer = NHttp::MakeBodyString_BinarFooter();
 
 		//バッファ。
-		s32 t_buffer_size = static_cast<s32>(a_size + t_body_header.length() + t_body_footer.length());
+		u32 t_buffer_size = static_cast<u32>(a_size + t_body_header.length() + t_body_footer.length());
 		sharedptr<Http_BinaryItem> t_binary_item(new Http_BinaryItem());
 		t_binary_item->data.reset(new u8[t_buffer_size + 1],default_delete<u8>());
 		t_binary_item->data.get()[t_buffer_size] = 0x00;
 		u8* t_buffer_data = t_binary_item->data.get();
-		t_binary_item->size = t_buffer_size;
+		t_binary_item->size = static_cast<s32>(t_buffer_size);
 
 		//コピー。
 		{
-			s32 t_offset = 0;
+			u32 t_offset = 0;
 
-			Memory::Copy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_body_header.c_str(),static_cast<s32>(t_body_header.length()));
-			t_offset += static_cast<s32>(t_body_header.length());
+			Memory::Copy(&t_buffer_data[t_offset],static_cast<s32>(t_buffer_size - t_offset),t_body_header.c_str(),static_cast<s32>(t_body_header.length()));
+			t_offset += static_cast<u32>(t_body_header.length());
 
-			Memory::Copy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),a_data.get(),a_size);
-			t_offset += static_cast<s32>(a_size);
+			Memory::Copy(&t_buffer_data[t_offset],static_cast<s32>(t_buffer_size - t_offset),a_data.get(),a_size);
+			t_offset += static_cast<u32>(a_size);
 
-			Memory::Copy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_body_footer.c_str(),static_cast<s32>(t_body_footer.length()));
-			t_offset += static_cast<s32>(t_body_footer.length());
+			Memory::Copy(&t_buffer_data[t_offset],static_cast<s32>(t_buffer_size - t_offset),t_body_footer.c_str(),static_cast<s32>(t_body_footer.length()));
+			t_offset += static_cast<u32>(t_body_footer.length());
 
 			ASSERT(t_offset == t_buffer_size);
 		}
@@ -153,25 +153,25 @@ namespace NBsys{namespace NHttp
 		STLString t_body_footer = NHttp::MakeBodyString_TextFooter();
 
 		//バッファ。
-		s32 t_buffer_size = static_cast<s32>(a_value.length() + t_body_header.length() + t_body_footer.length());
+		u32 t_buffer_size = static_cast<u32>(a_value.length() + t_body_header.length() + t_body_footer.length());
 		sharedptr<Http_BinaryItem> t_binary_item(new Http_BinaryItem());
 		t_binary_item->data.reset(new u8[t_buffer_size + 1],default_delete<u8>());
 		t_binary_item->data.get()[t_buffer_size] = 0x00;
 		u8* t_buffer_data = t_binary_item->data.get();
-		t_binary_item->size = t_buffer_size;
+		t_binary_item->size = static_cast<s32>(t_buffer_size);
 
 		//コピー。
 		{
-			s32 t_offset = 0;
+			u32 t_offset = 0;
 
-			Memory::Copy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_body_header.c_str(),static_cast<s32>(t_body_header.length()));
-			t_offset += static_cast<s32>(t_body_header.length());
+			Memory::Copy(&t_buffer_data[t_offset],static_cast<s32>(t_buffer_size - t_offset),t_body_header.c_str(),static_cast<s32>(t_body_header.length()));
+			t_offset += static_cast<u32>(t_body_header.length());
 
-			Memory::Copy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),a_value.c_str(),static_cast<s32>(a_value.length()));
-			t_offset += static_cast<s32>(a_value.length());
+			Memory::Copy(&t_buffer_data[t_offset],static_cast<s32>(t_buffer_size - t_offset),a_value.c_str(),static_cast<s32>(a_value.length()));
+			t_offset += static_cast<u32>(a_value.length());
 
-			Memory::Copy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_body_footer.c_str(),static_cast<s32>(t_body_footer.length()));
-			t_offset += static_cast<s32>(t_body_footer.length());
+			Memory::Copy(&t_buffer_data[t_offset],static_cast<s32>(t_buffer_size - t_offset),t_body_footer.c_str(),static_cast<s32>(t_body_footer.length()));
+			t_offset += static_cast<u32>(t_body_footer.length());
 
 			ASSERT(t_offset == t_buffer_size);
 		}
@@ -286,6 +286,9 @@ namespace NBsys{namespace NHttp
 			}
 
 			switch(this->step){
+			case Step::None:
+				{
+				}break;
 			case Step::Start:
 				{
 					{
@@ -293,7 +296,7 @@ namespace NBsys{namespace NHttp
 
 						//バイナリ総サイズ。
 						if(this->mode == Http_Mode::Post){
-							for(STLMap<STLString,sharedptr<Http_BinaryItem>>::iterator t_it = this->binary_list.begin();t_it!=this->binary_list.end();t_it++){
+							for(auto t_it = this->binary_list.cbegin();t_it!=this->binary_list.cend();t_it++){
 								if(t_it->second != nullptr){
 									t_binary_size += t_it->second->size;
 								}
@@ -311,39 +314,39 @@ namespace NBsys{namespace NHttp
 						STLString t_send_body = NHttp::MakeBodyString_Header(this->boundary_string,this->mode,this->url,this->host,t_binary_size);
 
 						//バッファ。
-						s32 t_buffer_size = static_cast<s32>(t_send_body.length() + t_binary_size);
+						u32 t_buffer_size = static_cast<u32>(t_send_body.length() + t_binary_size);
 						this->send_buffer.reset(new u8[t_buffer_size + 1],default_delete<u8>());
 						this->send_buffer.get()[t_buffer_size] = 0x00;
 						u8* t_buffer_data = this->send_buffer.get();
 
 						//送信バッファの作成。
 						{
-							s32 t_offset = 0;
+							u32 t_offset = 0;
 
 							//ボディー。
-							Memory::Copy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_send_body.c_str(),static_cast<s32>(t_send_body.length()));
-							t_offset += static_cast<s32>(t_send_body.length());
+							Memory::Copy(&t_buffer_data[t_offset],static_cast<s32>(t_buffer_size - t_offset),t_send_body.c_str(),static_cast<s32>(t_send_body.length()));
+							t_offset += static_cast<u32>(t_send_body.length());
 
 							if(this->mode == Http_Mode::Post){
 
 								//バイナリ。
-								for(STLMap<STLString,sharedptr<Http_BinaryItem>>::iterator t_it = this->binary_list.begin();t_it!=this->binary_list.end();t_it++){
+								for(auto t_it = this->binary_list.cbegin();t_it!=this->binary_list.cend();t_it++){
 									if(t_it->second != nullptr){
-										Memory::Copy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_it->second->data.get(),t_it->second->size);
-										t_offset += t_it->second->size;
+										Memory::Copy(&t_buffer_data[t_offset],static_cast<s32>(t_buffer_size - t_offset),t_it->second->data.get(),t_it->second->size);
+										t_offset += static_cast<u32>(t_it->second->size);
 									}
 								}
 
 								//バイナリ終端。
-								Memory::Copy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_binary_footer.c_str(),static_cast<s32>(t_binary_footer.length()));
-								t_offset += static_cast<s32>(t_binary_footer.length());
+								Memory::Copy(&t_buffer_data[t_offset],static_cast<s32>(t_buffer_size - t_offset),t_binary_footer.c_str(),static_cast<s32>(t_binary_footer.length()));
+								t_offset += static_cast<u32>(t_binary_footer.length());
 							}
 
 							ASSERT(t_offset == t_buffer_size);
 						}
 
 						//送信バッファ設定。
-						this->send->Send(this->socket,this->send_buffer,t_buffer_size);
+						this->send->Send(this->socket,this->send_buffer,static_cast<s32>(t_buffer_size));
 					}
 
 					this->step = Step::Connect;

@@ -129,7 +129,7 @@ namespace NTest{namespace NCommon
 
 	/** 削除リクエスト。取得。
 	*/
-	bool WindowMenu_Log::CallBack_GetDeleteRequest()
+	bool WindowMenu_Log::CallBack_GetDeleteRequest() const
 	{
 		return this->endrequest;
 	}

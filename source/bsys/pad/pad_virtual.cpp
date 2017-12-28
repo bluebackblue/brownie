@@ -124,9 +124,8 @@ namespace NBsys{namespace NPad
 	*/
 	void Pad_Virtual::SetButton(Pad_Virtual::ButtonType::Id a_virtual_button,Pad_Device_Base::ButtonType::Id a_device_button,sharedptr<Pad_Device_Base> a_device)
 	{
-		for(STLList<ButtonItem>::iterator t_it = this->list_button.begin();t_it != this->list_button.end();++t_it){
+		for(auto t_it = this->list_button.begin();t_it != this->list_button.end();++t_it){
 			if(t_it->virtual_button == a_virtual_button){
-				//t_it->virtual_button = a_virtual_button;
 				t_it->device_button = a_device_button;
 				t_it->device = a_device;
 			}
@@ -138,9 +137,8 @@ namespace NBsys{namespace NPad
 	*/
 	void Pad_Virtual::SetAnalog(Pad_Virtual::AnalogType::Id a_virtual_analog,Pad_Device_Base::AnalogType::Id a_device_analog,sharedptr<Pad_Device_Base> a_device)
 	{
-		for(STLList<AnalogItem>::iterator t_it = this->list_analog.begin();t_it != this->list_analog.end();++t_it){
+		for(auto t_it = this->list_analog.begin();t_it != this->list_analog.end();++t_it){
 			if(t_it->virtual_analog == a_virtual_analog){
-				//t_it->virtual_analog = a_virtual_analog;
 				t_it->device_analog = a_device_analog;
 				t_it->device = a_device;
 			}
@@ -152,9 +150,8 @@ namespace NBsys{namespace NPad
 	*/
 	void Pad_Virtual::SetTouch(Pad_Virtual::TouchType::Id a_virtual_touch,Pad_Device_Base::TouchType::Id a_device_touch,sharedptr<Pad_Device_Base> a_device)
 	{
-		for(STLList<TouchItem>::iterator t_it = this->list_touch.begin();t_it != this->list_touch.end();++t_it){
+		for(auto t_it = this->list_touch.begin();t_it != this->list_touch.end();++t_it){
 			if(t_it->virtual_touch == a_virtual_touch){
-				//t_it->virtual_touch = a_virtual_touch;
 				t_it->device_touch = a_device_touch;
 				t_it->device = a_device;
 			}
@@ -174,8 +171,8 @@ namespace NBsys{namespace NPad
 			}
 
 			{
-				STLList<ButtonItem>::iterator t_it_end = this->list_button.end();
-				for(STLList<ButtonItem>::iterator t_it = this->list_button.begin();t_it!=t_it_end;++t_it){
+				auto t_it_end = this->list_button.cend();
+				for(auto t_it = this->list_button.cbegin();t_it!=t_it_end;++t_it){
 					this->button[t_it->virtual_button] = t_it->device->GetButton(this->virtualpad_index,t_it->device_button);
 				}
 			}
@@ -194,8 +191,8 @@ namespace NBsys{namespace NPad
 			}
 
 			{
-				STLList<AnalogItem>::iterator t_it_end = this->list_analog.end();
-				for(STLList<AnalogItem>::iterator t_it = this->list_analog.begin();t_it!=t_it_end;++t_it){
+				auto t_it_end = this->list_analog.cend();
+				for(auto t_it = this->list_analog.cbegin();t_it!=t_it_end;++t_it){
 					this->analog[t_it->virtual_analog] = t_it->device->GetAnalog(this->virtualpad_index,t_it->device_analog);
 				}
 			}
@@ -207,8 +204,8 @@ namespace NBsys{namespace NPad
 			}
 
 			{
-				STLList<TouchItem>::iterator t_it_end = this->list_touch.end();
-				for(STLList<TouchItem>::iterator t_it = this->list_touch.begin();t_it!=t_it_end;++t_it){
+				auto t_it_end = this->list_touch.cend();
+				for(auto t_it = this->list_touch.cbegin();t_it!=t_it_end;++t_it){
 					this->touch[t_it->virtual_touch] = t_it->device->GetTouch(this->virtualpad_index,t_it->device_touch);
 				}
 			}
@@ -231,8 +228,8 @@ namespace NBsys{namespace NPad
 			}
 
 			{
-				STLList<ButtonItem>::iterator t_it_end = this->list_button.end();
-				for(STLList<ButtonItem>::iterator t_it = this->list_button.begin();t_it!=t_it_end;++t_it){
+				auto t_it_end = this->list_button.cend();
+				for(auto t_it = this->list_button.cbegin();t_it!=t_it_end;++t_it){
 					this->button[t_it->virtual_button] = false;
 				}
 			}
@@ -244,8 +241,8 @@ namespace NBsys{namespace NPad
 			}
 
 			{
-				STLList<AnalogItem>::iterator t_it_end = this->list_analog.end();
-				for(STLList<AnalogItem>::iterator t_it = this->list_analog.begin();t_it!=t_it_end;++t_it){
+				auto t_it_end = this->list_analog.cend();
+				for(auto t_it = this->list_analog.cbegin();t_it!=t_it_end;++t_it){
 					this->analog[t_it->virtual_analog] = 0.0f;
 				}
 			}
@@ -257,8 +254,8 @@ namespace NBsys{namespace NPad
 			}
 
 			{
-				STLList<TouchItem>::iterator t_it_end = this->list_touch.end();
-				for(STLList<TouchItem>::iterator t_it = this->list_touch.begin();t_it!=t_it_end;++t_it){
+				auto t_it_end = this->list_touch.cend();
+				for(auto t_it = this->list_touch.cbegin();t_it!=t_it_end;++t_it){
 					this->touch[t_it->virtual_touch].Set(0.0f,0.0f,false);
 				}
 			}

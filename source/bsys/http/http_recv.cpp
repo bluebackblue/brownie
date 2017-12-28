@@ -82,7 +82,7 @@ namespace NBsys{namespace NHttp
 
 		this->need_recv_size = -1;
 		this->step = Step::StateCode;
-		this->recvbuffer.reset(new u8[this->recvbuffer_size]);
+		this->recvbuffer.reset(new u8[static_cast<size_t>(this->recvbuffer_size)]);
 	}
 
 
@@ -197,6 +197,9 @@ namespace NBsys{namespace NHttp
 
 		//受信バッファ解析。
 		switch(this->step){
+		case Step::None:
+			{
+			}break;
 		case Step::StateCode:
 			{
 				//ステータス。

@@ -266,7 +266,7 @@ namespace NBsys{namespace ND3d11
 					s32 t_font_index = 0;
 
 					auto t_it = std::as_const(this->maplist).find(t_code);
-					if(t_it != this->maplist.end()){
+					if(t_it != this->maplist.cend()){
 						//すでに作成済み。
 					}else{
 						//書き換え可能位置の検索。
@@ -276,9 +276,9 @@ namespace NBsys{namespace ND3d11
 							wchar t_old_code = this->list[static_cast<u32>(t_font_index)].code;
 							if(t_old_code != nullwchar){
 								//旧コードを削除。
-								auto t_old_it = this->maplist.find(t_old_code);
-								if(t_old_it != this->maplist.end()){
-									this->maplist.erase(t_old_it);
+								auto t_it_old = std::as_const(this->maplist).find(t_old_code);
+								if(t_it_old != this->maplist.cend()){
+									this->maplist.erase(t_it_old);
 								}
 							}
 

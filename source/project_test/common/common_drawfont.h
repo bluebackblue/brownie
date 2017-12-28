@@ -287,8 +287,8 @@ namespace NTest{namespace NCommon
 		{
 			bool t_cahnge_list[NBsys::ND3d11::D3d11_FontTextureType::Max] = {true};
 
-			STLList<sharedptr<Render2D_Item_Base>>::iterator t_it_end = a_list.end();
-			for(STLList<sharedptr<Render2D_Item_Base>>::const_iterator t_it = a_list.begin();t_it != t_it_end;t_it++){
+			auto t_it_end = a_list.cend();
+			for(auto t_it = a_list.cbegin();t_it != t_it_end;t_it++){
 				if((*t_it)->itemtype == Render2D_ItemType::Font){
 					const Render2D_Item_Font* t_instence = dynamic_cast<const Render2D_Item_Font*>(t_it->get());
 					ASSERT(t_instence != nullptr);
@@ -334,8 +334,8 @@ namespace NTest{namespace NCommon
 			f32 t_current_clip_w = -1.0f;
 			f32 t_current_clip_h = -1.0f;
 
-			STLList<sharedptr<Render2D_Item_Base>>::const_iterator t_it = a_it_start;
-			STLList<sharedptr<Render2D_Item_Base>>::const_iterator t_it_renderstart = t_it;
+			auto t_it = a_it_start;
+			auto t_it_renderstart = t_it;
 			if(t_it != a_it_end){
 				const Render2D_Item_Font* t_instence = dynamic_cast<const Render2D_Item_Font*>(t_it->get());
 				ASSERT(t_instence != nullptr);
@@ -411,7 +411,7 @@ namespace NTest{namespace NCommon
 			this->d3d11->Render_DrawFont_ClearLockFlag(NBsys::ND3d11::D3d11_FontTextureType::LFont);
 			this->d3d11->Render_DrawFont_ClearLockFlag(NBsys::ND3d11::D3d11_FontTextureType::ExFont);
 
-			for(STLList<sharedptr<Render2D_Item_Base>>::const_iterator t_it = a_it_start;t_it != a_it_end;t_it++){
+			for(auto t_it = a_it_start;t_it != a_it_end;t_it++){
 				const Render2D_Item_Font* t_instence = dynamic_cast<const Render2D_Item_Font*>(t_it->get());
 				ASSERT(t_instence != nullptr);
 

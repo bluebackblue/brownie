@@ -119,7 +119,7 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	void WindowMenu_Window_Base::RemoveChild(sharedptr<WindowMenu_Window_Base> a_window)
 	{
-		STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = std::find_if(this->child_list.begin(),this->child_list.end(),
+		auto t_it = std::find_if(this->child_list.cbegin(),this->child_list.cend(),
 			[&](const sharedptr<WindowMenu_Window_Base> a_item){
 				return (a_item.get() == a_window.get());
 			}
@@ -155,8 +155,8 @@ namespace NBsys{namespace NWindowMenu
 		this->CalcW(WindowMenu_SizeType::Fix);
 		this->CalcH(WindowMenu_SizeType::Fix);
 
-		STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
-		for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
+		auto t_it_end = this->child_list.end();
+		for(auto t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 			t_it->get()->CalcRect();
 		}
 	}
@@ -187,7 +187,7 @@ namespace NBsys{namespace NWindowMenu
 						this->calc_x = this->parent->calc_x + this->offset.x;
 						this->calc_x_fix = true;
 					}else{
-						STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_before = std::prev(this->calc_it);
+						auto t_it_before = std::prev(this->calc_it);
 						WindowMenu_Window_Base* t_before = t_it_before->get();
 
 						t_before->CalcX(a_from_sizetype);
@@ -230,7 +230,7 @@ namespace NBsys{namespace NWindowMenu
 						this->calc_y = this->parent->calc_y + this->offset.y;
 						this->calc_y_fix = true;
 					}else{
-						STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_before = std::prev(this->calc_it);
+						auto t_it_before = std::prev(this->calc_it);
 						WindowMenu_Window_Base* t_before = t_it_before->get();
 
 						t_before->CalcY(a_from_sizetype);
@@ -281,8 +281,8 @@ namespace NBsys{namespace NWindowMenu
 
 					s32 t_stretch_count = 0;
 					f32 t_total = 0.0f;
-					STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->parent->child_list.end();
-					for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->parent->child_list.begin();t_it != t_it_end;++t_it){
+					auto t_it_end = this->parent->child_list.end();
+					for(auto t_it = this->parent->child_list.begin();t_it != t_it_end;++t_it){
 						WindowMenu_Window_Base* t_parent_child = t_it->get();
 
 						if(t_parent_child->size.type_w == WindowMenu_SizeType::StretchParent){
@@ -318,8 +318,8 @@ namespace NBsys{namespace NWindowMenu
 					//縦積み。
 
 					f32 t_temp = 0.0f;
-					STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
-					for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
+					auto t_it_end = this->child_list.end();
+					for(auto t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 						WindowMenu_Window_Base* t_child = t_it->get();
 
 						t_child->CalcW(WindowMenu_SizeType::StretchChild);
@@ -335,8 +335,8 @@ namespace NBsys{namespace NWindowMenu
 					//横積み。
 					
 					f32 t_temp = 0.0f;
-					STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
-					for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
+					auto t_it_end = this->child_list.end();
+					for(auto t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 						WindowMenu_Window_Base* t_child = t_it->get();
 
 						t_child->CalcW(WindowMenu_SizeType::StretchChild);
@@ -384,8 +384,8 @@ namespace NBsys{namespace NWindowMenu
 
 					s32 t_stretch_count = 0;
 					f32 t_total = 0.0f;
-					STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->parent->child_list.end();
-					for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->parent->child_list.begin();t_it != t_it_end;++t_it){
+					auto t_it_end = this->parent->child_list.end();
+					for(auto t_it = this->parent->child_list.begin();t_it != t_it_end;++t_it){
 						WindowMenu_Window_Base* t_parent_child = t_it->get();
 
 						if(t_parent_child->size.type_h == WindowMenu_SizeType::StretchParent){
@@ -421,8 +421,8 @@ namespace NBsys{namespace NWindowMenu
 					//横積み。
 
 					f32 t_temp = 0.0f;
-					STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
-					for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
+					auto t_it_end = this->child_list.end();
+					for(auto t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 						WindowMenu_Window_Base* t_child = t_it->get();
 
 						t_child->CalcH(WindowMenu_SizeType::StretchChild);
@@ -438,8 +438,8 @@ namespace NBsys{namespace NWindowMenu
 					//縦積み。
 					
 					f32 t_temp = 0.0f;
-					STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
-					for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
+					auto t_it_end = this->child_list.end();
+					for(auto t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 						WindowMenu_Window_Base* t_child = t_it->get();
 
 						t_child->CalcH(WindowMenu_SizeType::StretchChild);
@@ -462,8 +462,8 @@ namespace NBsys{namespace NWindowMenu
 			//範囲内。
 
 			//子から処理。
-			STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
-			for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
+			auto t_it_end = this->child_list.end();
+			for(auto t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 				bool t_ret = (*t_it)->System_MouseUpdate(a_mouse);
 				if(t_ret == true){
 					//マウス操作を親に伝えない。
@@ -489,8 +489,8 @@ namespace NBsys{namespace NWindowMenu
 	{
 		this->CallBack_Update();
 
-		STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
-		for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
+		auto t_it_end = this->child_list.end();
+		for(auto t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 			(*t_it)->System_Update();
 		}
 	}
@@ -504,8 +504,8 @@ namespace NBsys{namespace NWindowMenu
 		if(t_ret == true){
 			//子の描画を行う。
 
-			STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
-			for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
+			auto t_it_end = this->child_list.end();
+			for(auto t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 				(*t_it)->System_Draw(a_z_sort);
 			}
 		}
@@ -516,8 +516,8 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	void WindowMenu_Window_Base::System_ChangeActive(bool a_active)
 	{
-		STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
-		for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
+		auto t_it_end = this->child_list.end();
+		for(auto t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 			(*t_it)->System_ChangeActive(a_active);
 		}
 		this->CallBack_ChangeActive(a_active);
@@ -558,7 +558,7 @@ namespace NBsys{namespace NWindowMenu
 
 	/** 親の削除リクエスト。取得。
 	*/
-	bool WindowMenu_Window_Base::CallBack_GetDeleteRequest()
+	bool WindowMenu_Window_Base::CallBack_GetDeleteRequest() const
 	{
 		return false;
 	}
@@ -594,8 +594,8 @@ namespace NBsys{namespace NWindowMenu
 		this->calc_it = a_it;
 
 		s32 t_index = 0;
-		STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it_end = this->child_list.end();
-		for(STLList<sharedptr<WindowMenu_Window_Base>>::iterator t_it = this->child_list.begin();t_it != t_it_end;++t_it){
+		auto t_it_end = this->child_list.end();
+		for(auto t_it = this->child_list.begin();t_it != t_it_end;++t_it){
 			(*t_it)->CallBack_CalcRectClear(t_it,t_index);
 			t_index++;
 		}

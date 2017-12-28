@@ -96,8 +96,8 @@ namespace NBsys{namespace NFile
 	void LeakCheck()
 	{
 		if(s_thread_list != nullptr){
-			STLVector<sharedptr<ThreadTemplate<File_Thread>>>::iterator t_it = s_thread_list->begin();
-			STLVector<sharedptr<ThreadTemplate<File_Thread>>>::iterator t_it_end = s_thread_list->end();
+			auto t_it = s_thread_list->begin();
+			auto t_it_end = s_thread_list->end();
 
 			for(;t_it!=t_it_end;++t_it){
 				if(t_it->get() != nullptr){
@@ -129,8 +129,8 @@ namespace NBsys{namespace NFile
 	void EndSystemRequest()
 	{
 		if(s_thread_list != nullptr){
-			STLVector<sharedptr<ThreadTemplate<File_Thread>>>::iterator t_it = s_thread_list->begin();
-			STLVector<sharedptr<ThreadTemplate<File_Thread>>>::iterator t_it_end = s_thread_list->end();
+			auto t_it = s_thread_list->begin();
+			auto t_it_end = s_thread_list->end();
 
 			for(;t_it!=t_it_end;++t_it){
 				if(t_it->get() != nullptr){
