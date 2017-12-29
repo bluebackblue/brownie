@@ -27,6 +27,14 @@
 #include "./blib_bootinitialize.h"
 
 
+/** warning
+
+4710 : この関数はインライン展開のために選択されましたが、コンパイラはインライン展開を実行しませんでした。
+
+*/
+#pragma warning(disable:4710)
+
+
 /** NBlib
 */
 namespace NBlib

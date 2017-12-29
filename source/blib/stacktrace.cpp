@@ -26,6 +26,14 @@
 #include "./vastring.h"
 
 
+/** warning
+
+4710 : この関数はインライン展開のために選択されましたが、コンパイラはインライン展開を実行しませんでした。
+
+*/
+#pragma warning(disable:4710)
+
+
 /** include
 */
 #if defined(ROM_MASTER)
@@ -44,7 +52,7 @@
 			*/
 			//[include]
 			#pragma warning(push)
-			#pragma warning(disable:4091 4820 4514)
+			#pragma warning(disable:4710 4091 4820 4514)
 			#include <imagehlp.h>
 			#pragma warning(pop)
 

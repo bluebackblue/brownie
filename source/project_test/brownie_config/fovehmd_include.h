@@ -12,7 +12,7 @@
 /** include
 */
 #pragma warning(push)
-#pragma warning(disable:4514 4820)
+#pragma warning(disable:4710 4514 4820)
 #include <fovehmd/FOVE SDK 0.11.4/include/IFVRHeadset.h>
 #include <fovehmd/FOVE SDK 0.11.4/include/IFVRCompositor.h>
 #pragma warning(pop)

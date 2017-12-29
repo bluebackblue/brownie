@@ -20,6 +20,8 @@
 /** NBsys::NHttp
 */
 #if(BSYS_HTTP_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4710)
 namespace NBsys{namespace NHttp
 {
 	/** Http_Recv
@@ -183,5 +185,6 @@ namespace NBsys{namespace NHttp
 
 
 }}
+#pragma warning(pop)
 #endif
 

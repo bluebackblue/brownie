@@ -29,13 +29,21 @@
 */
 #if(BLIB_STDRANDOM_ENABLE)
 
-	#pragma warning(disable:4710)
 	#pragma warning(push)
-	#pragma warning(disable:4987 4820 4365 4625 4626 5027 4514 4571 4623 4774 5026)
+	#pragma warning(disable:4710 4987 4820 4365 4625 4626 5027 4514 4571 4623 4774 5026)
 	#include <random>
 	#pragma warning(pop)
 
 #endif
+
+
+/** warning
+
+4710 : この関数はインライン展開のために選択されましたが、コンパイラはインライン展開を実行しませんでした。
+
+*/
+#pragma warning(disable:4710)
+
 
 /** NBlib
 */

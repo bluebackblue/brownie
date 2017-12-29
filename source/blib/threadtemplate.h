@@ -27,17 +27,18 @@
 */
 #if(BLIB_STDTHREAD_ENABLE)
 
-#pragma warning(disable:4710)
-#pragma warning(push)
-#pragma warning(disable:4987 4365 4820 4623 5027 4514 4626)
-#include <thread>
-#pragma warning(pop)
+	#pragma warning(push)
+	#pragma warning(disable:4710 4987 4365 4820 4623 5027 4514 4626)
+	#include <thread>
+	#pragma warning(pop)
 
 #endif
 
 
 /** NBlib
 */
+#pragma warning(push)
+#pragma warning(disable:4710)
 namespace NBlib
 {
 	/** ThreadSleep
@@ -278,4 +279,5 @@ namespace NBlib
 
 
 }
+#pragma warning(pop)
 

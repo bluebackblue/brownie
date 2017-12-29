@@ -26,7 +26,7 @@
 */
 #if(BSYS_D3D11_ENABLE)
 #pragma warning(push)
-#pragma warning(disable:4514)
+#pragma warning(disable:4514 4710)
 namespace NBsys{namespace ND3d11
 {
 	/** D3d11_Sampler

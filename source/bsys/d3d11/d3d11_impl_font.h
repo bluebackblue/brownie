@@ -34,6 +34,8 @@
 
 /** NBsys::NOpengl
 */
+#pragma warning(push)
+#pragma warning(disable:4710)
 #if(BSYS_D3D11_ENABLE)
 namespace NBsys{namespace ND3d11
 {
@@ -542,5 +544,6 @@ namespace NBsys{namespace ND3d11
 
 
 }}
+#pragma warning(pop)
 #endif
 

@@ -26,8 +26,18 @@
 #include "./filehandle_impl.h"
 
 
+/** warning
+
+4710 : この関数はインライン展開のために選択されましたが、コンパイラはインライン展開を実行しませんでした。
+
+*/
+#pragma warning(disable:4710)
+
+
 /** NBlib
 */
+#pragma warning(push)
+#pragma warning(disable:4711)
 namespace NBlib
 {
 	/** constructor
@@ -215,6 +225,7 @@ namespace NBlib
 						t_errorcount++;
 						if(t_errorcount > BLIB_FILEHANDLE_RETRYMAX){
 							BOOL t_ret_flush = ::FlushFileBuffers(this->rawhandle);
+							UNUSED(t_ret_flush);
 							ASSERT(t_ret_flush == TRUE);
 							return false;
 						}
@@ -302,4 +313,5 @@ namespace NBlib
 
 
 }
+#pragma warning(pop)
 

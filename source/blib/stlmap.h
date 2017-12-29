@@ -23,20 +23,18 @@
 
 /** include
 */
-#pragma warning(disable:4710)
 #pragma warning(push)
-#pragma warning(disable:4514 4987 4365 4820)
+#pragma warning(disable:4710 4711 4514 4987 4365 4820)
 #include <map>
 #pragma warning(pop)
 
 
 #if(BLIB_STDUNORDEREDMAP_ENABLE)
 
-#pragma warning(disable:4710)
-#pragma warning(push)
-#pragma warning(disable:4987 4820 4514 4365 4625 4571)
-#include <unordered_map>
-#pragma warning(pop)
+	#pragma warning(push)
+	#pragma warning(disable:4710 4711 4987 4820 4514 4365 4625 4571)
+	#include <unordered_map>
+	#pragma warning(pop)
 
 #endif
 

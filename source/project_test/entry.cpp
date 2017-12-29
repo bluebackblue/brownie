@@ -54,7 +54,7 @@ static bool s_leakcheck = false;
 
 /** warning
 
-4710 : The given function was selected for inline expansion, but the compiler did not perform the inlining.
+4710 : この関数はインライン展開のために選択されましたが、コンパイラはインライン展開を実行しませんでした。
 
 */
 #pragma warning(disable:4710)

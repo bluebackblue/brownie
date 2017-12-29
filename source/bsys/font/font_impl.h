@@ -25,7 +25,7 @@
 
 	//[include]
 	#pragma warning(push)
-	#pragma warning(disable:4514)
+	#pragma warning(disable:4710 4514)
 	#include <mbstring.h>
 	#pragma warning(pop)
 

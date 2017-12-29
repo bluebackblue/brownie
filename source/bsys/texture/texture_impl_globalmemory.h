@@ -27,6 +27,8 @@
 /** NBsys::NTexture
 */
 #if(BSYS_TEXTURE_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4710)
 namespace NBsys{namespace NTexture
 {
 	/** Texture_Impl_GlobalMemory
@@ -263,5 +265,6 @@ namespace NBsys{namespace NTexture
 
 
 }}
+#pragma warning(pop)
 #endif
 

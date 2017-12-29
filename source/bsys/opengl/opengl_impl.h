@@ -288,7 +288,7 @@ namespace NBsys{namespace NOpengl
 
 		/** [描画命令]ワールドライン描画。
 		*/
-		#if(ROM_DEVELOP)
+		#if defined(ROM_DEVELOP)
 		void Render_DrawWorldLine();
 		#endif
 

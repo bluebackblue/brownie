@@ -24,14 +24,15 @@
 /** include
 */
 #pragma warning(push)
-#pragma warning(disable:4514)
+#pragma warning(disable:4710 4711 4514)
 #include <limits>
 #pragma warning(pop)
 
 
-//#pragma warning(disable:4710)
+/** include
+*/
 #pragma warning(push)
-#pragma warning(disable:4987 4365 4820 4514 4623 4626 5027 4571)
+#pragma warning(disable:4710 4711 4987 4365 4820 4514 4623 4626 5027 4571)
 #include <memory>
 #pragma warning(pop)
 

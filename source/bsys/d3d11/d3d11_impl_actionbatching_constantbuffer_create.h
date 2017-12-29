@@ -33,6 +33,8 @@
 /** NBsys::ND3d11
 */
 #if(BSYS_D3D11_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4710)
 namespace NBsys{namespace ND3d11
 {
 	/** コンスタントバッファー作成。
@@ -65,7 +67,6 @@ namespace NBsys{namespace ND3d11
 		virtual ~D3d11_Impl_ActionBatching_ConstantBuffer_Create()
 		{
 		}
-
 
 	private:
 
@@ -104,5 +105,6 @@ namespace NBsys{namespace ND3d11
 
 
 }}
+#pragma warning(pop)
 #endif
 

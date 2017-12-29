@@ -19,15 +19,13 @@
 */
 #if(BLIB_STDMUTEX_ENABLE)
 
-	#pragma warning(disable:4710)
 	#pragma warning(push)
-	#pragma warning(disable:4365 4820 4514 4548 4623 4626 5027 4625 5026 4987 4571)
+	#pragma warning(disable:4710 4365 4820 4514 4548 4623 4626 5027 4625 5026 4987 4571)
 	#include <mutex>
 	#pragma warning(pop)
 
-	#pragma warning(disable:4710)
 	#pragma warning(push)
-	#pragma warning(disable:4820 4987 4625 5026 4625 4626 4365 4623 5027 4571 4514)
+	#pragma warning(disable:4710 4820 4987 4625 5026 4625 4626 4365 4623 5027 4571 4514)
 	#include <condition_variable>
 	#pragma warning(pop)
 

@@ -23,7 +23,7 @@
 /** NBlib
 */
 #pragma warning(push)
-#pragma warning(disable:4514)
+#pragma warning(disable:4710 4514)
 namespace NBlib
 {
 	/** 削除子。

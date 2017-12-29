@@ -29,16 +29,25 @@
 
 /** include
 */
-#pragma warning(disable:4710)
 #pragma warning(push)
 #pragma warning(disable:4514 4987 4820 4625 4626 4365 5026 5027 4061 4623 4571 4774)
 #include <regex>
 #pragma warning(pop)
 
 
+/** warning
+
+4710 : この関数はインライン展開のために選択されましたが、コンパイラはインライン展開を実行しませんでした。
+
+*/
+#pragma warning(disable:4710)
+
+
 /** NTest::NCommon
 */
 #if(BSYS_WINDOWMENU_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4711)
 namespace NTest{namespace NCommon
 {
 	/** constructor
@@ -166,5 +175,6 @@ namespace NTest{namespace NCommon
 
 
 }}
+#pragma warning(pop)
 #endif
 

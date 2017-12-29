@@ -18,7 +18,7 @@
 /** include
 */
 #pragma warning(push)
-#pragma warning(disable:4820 4668)
+#pragma warning(disable:4710 4820 4668)
 #include <windows.h>
 #pragma warning(pop)
 

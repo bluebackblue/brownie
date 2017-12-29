@@ -27,7 +27,7 @@
 
 	//[include]
 	#pragma warning(push)
-	#pragma warning(disable:4514 4820)
+	#pragma warning(disable:4710 4711 4514 4820)
 	#include <intrin.h>
 	#pragma warning(pop)
 
@@ -38,9 +38,8 @@
 */
 #if(BLIB_STDSHAREDPTR_ENABLE)
 
-	#pragma warning(disable:4710)
 	#pragma warning(push)
-	#pragma warning(disable:4987 4365 4820 4514 4623 4626 5027)
+	#pragma warning(disable:4711 4987 4365 4820 4514 4623 4626 5027)
 	#include <memory>
 	#pragma warning(pop)
 
@@ -48,6 +47,10 @@
 
 
 /** NBlib
+
+4711 : 自動インライン展開を選択しました。
+4514 : 参照されていないインライン関数は削除されました。
+
 */
 #if(BLIB_STDSHAREDPTR_ENABLE)
 
@@ -56,7 +59,7 @@
 #else
 
 #pragma warning(push)
-#pragma warning(disable:4514)
+#pragma warning(disable:4514 4711 4710)
 namespace NBlib
 {
 	/** sharedptrbase。

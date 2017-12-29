@@ -34,6 +34,8 @@
 /** NBsys::NOpengl
 */
 #if(BSYS_OPENGL_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4710)
 namespace NBsys{namespace NOpengl
 {
 	/** バーテックスバッファ作成。
@@ -102,5 +104,6 @@ namespace NBsys{namespace NOpengl
 	};
 
 }}
+#pragma warning(pop)
 #endif
 

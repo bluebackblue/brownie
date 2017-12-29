@@ -28,13 +28,26 @@
 /** include
 */
 #pragma warning(push)
-#pragma warning(disable:4514)
+#pragma warning(disable:4710 4514)
 #include <cmath>
 #pragma warning(pop)
 
 
-/** NBlib
+/** warning
+
+4710 : この関数はインライン展開のために選択されましたが、コンパイラはインライン展開を実行しませんでした。
+
 */
+#pragma warning(disable:4710)
+
+
+/** NBlib
+
+4711 : 自動インライン展開を選択しました。
+
+*/
+#pragma warning(push)
+#pragma warning(disable:4711)
 namespace NBlib
 {
 	/** SinCosSample
@@ -393,4 +406,5 @@ namespace NBlib
 
 
 }
+#pragma warning(pop)
 

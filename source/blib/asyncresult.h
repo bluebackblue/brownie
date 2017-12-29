@@ -23,6 +23,8 @@
 
 /** NBlib
 */
+#pragma warning(push)
+#pragma warning(disable:4710)
 namespace NBlib
 {
 	/** AsyncResult
@@ -110,4 +112,5 @@ namespace NBlib
 
 
 }
+#pragma warning(pop)
 

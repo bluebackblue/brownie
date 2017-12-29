@@ -26,6 +26,8 @@
 /** NBsys::NPad
 */
 #if(BSYS_PAD_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4710)
 namespace NBsys{namespace NPad
 {
 	/** Pad_Virtual
@@ -277,5 +279,6 @@ namespace NBsys{namespace NPad
 
 
 }}
+#pragma warning(pop)
 #endif
 

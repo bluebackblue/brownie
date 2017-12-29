@@ -26,11 +26,11 @@
 
 /** include
 */
-//#pragma warning(push)
-//#pragma warning(disable:0)
+#pragma warning(push)
+#pragma warning(disable:4710)
 #include <cstdint>
 #include <cstddef>
-//#pragma warning(pop)
+#pragma warning(pop)
 
 /** NBlib
 */

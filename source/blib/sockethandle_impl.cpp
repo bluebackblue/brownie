@@ -36,8 +36,18 @@
 #endif
 
 
+/** warning
+
+4710 : この関数はインライン展開のために選択されましたが、コンパイラはインライン展開を実行しませんでした。
+
+*/
+#pragma warning(disable:4710)
+
+
 /** NBlib
 */
+#pragma warning(push)
+#pragma warning(disable:4711)
 namespace NBlib
 {
 	/** constructor
@@ -378,7 +388,7 @@ namespace NBlib
 			s32 t_flag = (a_flag ? 1 : 0);
 
 			s32 t_ret = ::setsockopt(this->rawhandle,SOL_SOCKET,SO_BROADCAST,reinterpret_cast<char*>(&t_flag),sizeof(t_flag));
-
+			UNUSED(t_ret);
 			ASSERT(t_ret == 0);
 		}
 		#else
@@ -400,7 +410,7 @@ namespace NBlib
 			u32 t_flag = static_cast<u32>(a_flag ? 1 : 0);
 
 			s32 t_ret = ::ioctlsocket(this->rawhandle,FIONBIO,reinterpret_cast<u_long*>(&t_flag));
-
+			UNUSED(t_ret);
 			ASSERT(t_ret == 0);
 		}
 		#else
@@ -552,4 +562,5 @@ namespace NBlib
 
 
 }
+#pragma warning(pop)
 

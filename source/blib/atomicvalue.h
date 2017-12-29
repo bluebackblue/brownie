@@ -25,7 +25,7 @@
 #if(BLIB_STDATOMIC_ENABLE)
 
 	#pragma warning(push)
-	#pragma warning(disable:4365 4061 4514)
+	#pragma warning(disable:4710 4365 4061 4514)
 	#include <atomic>
 	#pragma warning(pop)
 

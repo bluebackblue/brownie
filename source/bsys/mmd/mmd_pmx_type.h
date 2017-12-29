@@ -29,6 +29,8 @@
 /** NBsys::NMmd
 */
 #if(BSYS_MMD_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4710)
 namespace NBsys{namespace NMmd
 {
 	/** Mmd_Pmx_Header
@@ -311,5 +313,6 @@ namespace NBsys{namespace NMmd
 
 
 }}
+#pragma warning(pop)
 #endif
 

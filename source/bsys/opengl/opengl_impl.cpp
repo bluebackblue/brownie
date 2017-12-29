@@ -48,7 +48,7 @@
 
 /** warning
 
-4710 : The given function was selected for inline expansion, but the compiler did not perform the inlining.
+4710 : この関数はインライン展開のために選択されましたが、コンパイラはインライン展開を実行しませんでした。
 
 */
 #pragma warning(disable:4710)
@@ -91,9 +91,11 @@ namespace NBsys{namespace NOpengl
 						sharedptr<GLchar> t_logbuffer(new GLchar[static_cast<std::size_t>(t_infoLogLength)],default_delete<GLchar[]>());
 						glGetShaderInfoLog(t_shader_rawid.rawid,t_infoLogLength,nullptr,t_logbuffer.get());
 						TAGLOG(L"CreateShader","%ls %s",a_name.c_str(),t_logbuffer.get());
+						UNUSED(a_name);
 						return false;
 					}else{
 						TAGLOG(L"CreateShader","%ls ok",a_name.c_str());
+						UNUSED(a_name);
 					}
 				}
 
@@ -136,9 +138,13 @@ namespace NBsys{namespace NOpengl
 						sharedptr<GLchar> t_logbuffer(new GLchar[static_cast<std::size_t>(t_infoLogLength)],default_delete<GLchar[]>());
 						glGetProgramInfoLog(t_shaderprogram_rawid.rawid,t_infoLogLength,nullptr,t_logbuffer.get());
 						TAGLOG(L"LinkShader","%ls %ls %s",a_vertex_name.c_str(),a_fragment_name.c_str(),t_logbuffer.get());
+						UNUSED(a_vertex_name);
+						UNUSED(a_fragment_name);
 						return false;
 					}else{
 						TAGLOG(L"LinkShader","%ls %ls ok",a_vertex_name.c_str(),a_fragment_name.c_str());
+						UNUSED(a_vertex_name);
+						UNUSED(a_fragment_name);
 					}
 				}
 
@@ -732,7 +738,7 @@ namespace NBsys{namespace NOpengl
 	右手 : 親指 = X軸 / 人差し指 = Y軸 / 中指 = Z軸。
 
 	*/
-	#if(ROM_DEVELOP)
+	#if defined(ROM_DEVELOP)
 	void Opengl_Impl::Render_DrawWorldLine()
 	{
 		//AutoLock t_autolock(this->lockobject);

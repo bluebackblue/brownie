@@ -26,16 +26,26 @@
 #if defined(PLATFORM_VCWIN) || defined(PLATFORM_GNUCWIN)
 
 	//[include]
-	//#pragma warning(push)
-	//#pragma warning(disable:0)
+	#pragma warning(push)
+	#pragma warning(disable:4710)
 	#include <stdarg.h>
-	//#pragma warning(pop)
+	#pragma warning(pop)
 
 #endif
 
 
+/** warning
+
+4710 : この関数はインライン展開のために選択されましたが、コンパイラはインライン展開を実行しませんでした。
+
+*/
+#pragma warning(disable:4710)
+
+
 /** NBlib
 */
+#pragma warning(push)
+#pragma warning(disable:4711)
 namespace NBlib
 {
 	/** VaString
@@ -148,4 +158,5 @@ namespace NBlib
 
 
 }
+#pragma warning(pop)
 

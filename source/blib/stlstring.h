@@ -23,9 +23,8 @@
 
 /** include
 */
-#pragma warning(disable:4710)
 #pragma warning(push)
-#pragma warning(disable:4987 4365 4820 4626 5027 4623 4571 4625 5026 4774 4514)
+#pragma warning(disable:4710 4711 4987 4365 4820 4626 5027 4623 4571 4625 5026 4774 4514)
 #include <string>
 #pragma warning(pop)
 

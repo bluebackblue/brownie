@@ -27,8 +27,18 @@
 #include "./path.h"
 
 
+/** warning
+
+4710 : この関数はインライン展開のために選択されましたが、コンパイラはインライン展開を実行しませんでした。
+
+*/
+#pragma warning(disable:4710)
+
+
 /** NBlib
 */
+#pragma warning(push)
+#pragma warning(disable:4711)
 namespace NBlib
 {
 	/** constructor
@@ -153,4 +163,5 @@ namespace NBlib
 
 
 }
+#pragma warning(pop)
 

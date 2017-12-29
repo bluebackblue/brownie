@@ -29,7 +29,7 @@
 
 /** warning
 
-4710 : The given function was selected for inline expansion, but the compiler did not perform the inlining.
+4710 : この関数はインライン展開のために選択されましたが、コンパイラはインライン展開を実行しませんでした。
 
 */
 #pragma warning(disable:4710)
@@ -38,6 +38,8 @@
 /** NBsys::NRootSearch
 */
 #if(BSYS_ROOTSEARCH_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4711)
 namespace NBsys{namespace NRootSearch
 {
 	/** constructor
@@ -148,5 +150,6 @@ namespace NBsys{namespace NRootSearch
 	}
 
 }}
+#pragma warning(pop)
 #endif
 
