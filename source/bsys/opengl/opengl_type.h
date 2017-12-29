@@ -76,7 +76,6 @@ namespace NBsys{namespace NOpengl
 			Texture28,
 			Texture29,
 			Texture30,
-			Texture31,
 
 			/** Float。
 			*/

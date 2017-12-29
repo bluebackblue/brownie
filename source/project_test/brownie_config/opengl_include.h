@@ -16,7 +16,10 @@
 
 /** include
 */
+#pragma warning(push)
+#pragma warning(disable:4820)
 #include <glew/glew-2.0.0/include/GL/glew.h>
 #include <glfw/glfw-3.2.1/include/GLFW/glfw3.h>
 #include <glfw/glfw-3.2.1/include/GLFW/glfw3native.h>
+#pragma warning(pop)
 

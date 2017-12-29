@@ -30,6 +30,10 @@ namespace NBsys{namespace NHttp
 		*/
 		s32 size;
 
+		/** padding
+		*/
+		padding64(0,4);
+
 		/** データ。
 		*/
 		sharedptr<u8> data;

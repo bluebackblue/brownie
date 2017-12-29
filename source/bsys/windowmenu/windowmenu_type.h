@@ -28,6 +28,8 @@
 /** NBsys::NWindowMenu
 */
 #if(BSYS_WINDOWMENU_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4514)
 namespace NBsys{namespace NWindowMenu
 {
 	/** WindowMenu_WindowType
@@ -249,5 +251,6 @@ namespace NBsys{namespace NWindowMenu
 
 
 }}
+#pragma warning(pop)
 #endif
 

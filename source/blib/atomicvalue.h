@@ -34,6 +34,8 @@
 
 /** NBlib
 */
+#pragma warning(push)
+#pragma warning(disable:4514)
 namespace NBlib
 {
 	/** 使用可能な型の列挙。
@@ -299,4 +301,5 @@ namespace NBlib
 
 
 }
+#pragma warning(pop)
 

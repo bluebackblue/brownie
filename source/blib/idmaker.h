@@ -22,6 +22,8 @@
 
 /** NBlib
 */
+#pragma warning(push)
+#pragma warning(disable:4514)
 namespace NBlib
 {
 	/** IDMaker
@@ -42,9 +44,10 @@ namespace NBlib
 		*/
 		bool autocreate;
 
-		/** パディング。
+		/** padding
 		*/
-		u8 dummy[3];
+		padding64(0,3);
+		padding32(0,3);
 
 	public:
 
@@ -125,4 +128,5 @@ namespace NBlib
 
 
 }
+#pragma warning(pop)
 

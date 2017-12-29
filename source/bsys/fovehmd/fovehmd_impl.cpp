@@ -36,6 +36,14 @@
 #endif
 
 
+/** warning
+
+4710 : The given function was selected for inline expansion, but the compiler did not perform the inlining.
+
+*/
+#pragma warning(disable:4710)
+
+
 /** NBsys::NFovehmd
 */
 #if(BSYS_FOVEHMD_ENABLE)
@@ -91,7 +99,7 @@ namespace NBsys{namespace NFovehmd
 		if(this->headset){
 			//ランタイム、コンポジター起動。
 			bool t_ret_initialize = this->headset->Initialise(Fove::EFVR_ClientCapabilities::Orientation | Fove::EFVR_ClientCapabilities::Position);
-			TAGLOG("fovehmd",VASTRING_DEBUG("ret_initialize = %s",t_ret_initialize ? "true" : "false"));
+			TAGLOG(L"fovehmd","ret_initialize = %s",t_ret_initialize ? "true" : "false");
 		}else{
 			//失敗。
 			//Unable to create headset connection.
@@ -116,6 +124,8 @@ namespace NBsys{namespace NFovehmd
 
 	/** 接続中。
 	*/
+	#pragma warning(push)
+	#pragma warning(disable:4702)
 	bool Fovehmd_Impl::ConnectUpdate()
 	{
 		if(this->errorcode.code == ErrorCode::Success){
@@ -127,32 +137,36 @@ namespace NBsys{namespace NFovehmd
 					//成功。
 
 					this->singleeye_resolution.Set(static_cast<f32>(t_ret.x),static_cast<f32>(t_ret.y));
-					return true;
+					return false;
 
 				}else{
 
 					//取得失敗。
 
-					return false;
+					//継続。
+					return true;
 
 				}
 			}else{
 
+				//エラー発生。
 				ASSERT(0);
 				this->errorcode.code = ErrorCode::UnknownError;
-				return true;
+				return false;
 
 			}
 
 		}else{
 
-			//エラーが発生している。
-			return true;
+			//エラー発生。
+			return false;
 
 		}
-		
-		return false;
+
+		//継続。
+		return true;
 	}
+	#pragma warning(pop)
 
 
 	/** サイズ取得。

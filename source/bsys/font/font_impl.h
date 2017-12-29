@@ -20,10 +20,15 @@
 /** include
 */
 #if defined(PLATFORM_VCWIN)
+
 	#include <brownie_config/windows_include.h>
 
 	//[include]
+	#pragma warning(push)
+	#pragma warning(disable:4514)
 	#include <mbstring.h>
+	#pragma warning(pop)
+
 #endif
 
 
@@ -59,11 +64,9 @@ namespace NBsys{namespace NFont
 		*/
 		s32 font_size;
 
-		/** パディング。
+		/** padding
 		*/
-		#if(ROM_64BIT)
-		u8 dummy[4];
-		#endif
+		padding64(0,4);
 
 		/** font_name
 		*/

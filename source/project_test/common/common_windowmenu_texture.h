@@ -32,6 +32,11 @@ namespace NTest{namespace NCommon
 		*/
 		bool endrequest;
 
+		/** padding
+		*/
+		padding64(0,7);
+		padding32(0,3);
+
 		/** window_texture
 		*/
 		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Plate> window_texture;

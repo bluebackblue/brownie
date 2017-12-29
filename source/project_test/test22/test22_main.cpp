@@ -17,6 +17,14 @@
 #pragma warning(pop)
 
 
+/** warning
+
+4710 : The given function was selected for inline expansion, but the compiler did not perform the inlining.
+
+*/
+#pragma warning(disable:4710)
+
+
 /** NTest
 */
 #if(DEF_TEST_INDEX == 22)
@@ -333,7 +341,7 @@ namespace NTest
 		while(1){
 			s_fovehmd->ResetErrorCode();
 			s_fovehmd->ConnectStart();
-			while(s_fovehmd->ConnectUpdate() == false){
+			while(s_fovehmd->ConnectUpdate() == true){
 				ThreadSleep(16);
 			}
 			if(s_fovehmd->GetErrorCode().code == ErrorCode::Success){

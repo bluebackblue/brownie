@@ -22,6 +22,8 @@
 
 /** NBlib
 */
+#pragma warning(push)
+#pragma warning(disable:4514)
 namespace NBlib
 {
 	/** 削除子。
@@ -214,4 +216,5 @@ namespace NBlib
 
 
 }
+#pragma warning(pop)
 

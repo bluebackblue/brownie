@@ -52,11 +52,10 @@ namespace NBsys{namespace NWindow
 		*/
 		bool isopen;
 
-		/** パディング。
+		/** padding
 		*/
-		#if(ROM_64BIT)
-		u8 dummy1[1];
-		#endif
+		padding64(0,1);
+		padding32(0,1);
 
 		/** default
 		*/
@@ -68,11 +67,9 @@ namespace NBsys{namespace NWindow
 		s32 client_width;
 		s32 client_height;
 
-		/** パディング。
+		/** padding
 		*/
-		#if(ROM_64BIT)
-		u8 dummy2[4];
-		#endif
+		padding64(1,4);
 
 	public:
 

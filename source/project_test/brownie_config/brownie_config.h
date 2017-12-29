@@ -637,6 +637,15 @@
 	-------------------
 
 	-------------------
+	BSYS_OPENGL_DEBUG_ENABLE
+
+		0 : オフ
+		1 : オン
+
+		デバッグ機能を制御します。
+	-------------------
+
+	-------------------
 	BSYS_OPENGL_UPDATE_FPS
 
 		ＦＰＳを設定します。
@@ -662,6 +671,9 @@
 */
 #if !defined(BSYS_OPENGL_ENABLE)
 	#define BSYS_OPENGL_ENABLE								(0)
+#endif
+#if !defined(BSYS_OPENGL_DEBUG_ENABLE)
+	#define BSYS_OPENGL_DEBUG_ENABLE						(0)
 #endif
 #if !defined(BSYS_OPENGL_UPDATE_FPS)
 	#define BSYS_OPENGL_UPDATE_FPS							(60)
@@ -795,7 +807,7 @@
 	-------------------
 
 	-------------------
-	BSYS_D3D11_DEBUG
+	BSYS_D3D11_DEBUG_ENABLE
 
 		0 : オフ
 		1 : オン
@@ -831,8 +843,8 @@
 #if !defined(BSYS_D3D11_ENABLE)
 	#define BSYS_D3D11_ENABLE								(0)
 #endif
-#if !defined(BSYS_D3D11_DEBUG)
-	#define BSYS_D3D11_DEBUG								(0)
+#if !defined(BSYS_D3D11_DEBUG_ENABLE)
+	#define BSYS_D3D11_DEBUG_ENABLE							(0)
 #endif
 #if !defined(BSYS_D3D11_FONT_DRAWTYPEMAX_S)
 	#define BSYS_D3D11_FONT_DRAWTYPEMAX_S					(128)

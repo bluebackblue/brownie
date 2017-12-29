@@ -46,11 +46,10 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		bool mouseblock;
 
-		/** パディング。
+		/** padding
 		*/
-		#if(ROM_64BIT)
-		u8 dummy[3];
-		#endif
+		padding64(0,3);
+		padding32(0,3);
 
 	public:
 

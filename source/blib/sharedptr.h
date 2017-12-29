@@ -54,6 +54,9 @@
 	#define sharedptr std::shared_ptr
 
 #else
+
+#pragma warning(push)
+#pragma warning(disable:4514)
 namespace NBlib
 {
 	/** sharedptrbase。
@@ -1108,6 +1111,7 @@ namespace NBlib
 
 
 }
+#pragma warning(pop)
 #endif
 
 

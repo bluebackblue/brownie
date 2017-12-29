@@ -36,6 +36,14 @@
 #include "./windowmenu_window_window.h"
 
 
+/** warning
+
+4710 : The given function was selected for inline expansion, but the compiler did not perform the inlining.
+
+*/
+#pragma warning(disable:4710)
+
+
 /** NBsys::NWindowMenu
 */
 #if(BSYS_WINDOWMENU_ENABLE)

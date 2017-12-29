@@ -26,6 +26,8 @@
 /** NBsys::NOpengl
 */
 #if(BSYS_OPENGL_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4514)
 namespace NBsys{namespace NOpengl
 {
 	/** Opengl_Impl_VertexBuffer
@@ -33,6 +35,7 @@ namespace NBsys{namespace NOpengl
 	class Opengl_Impl_VertexBuffer
 	{
 	private:
+
 		/** data_byte
 		*/
 		sharedptr<u8> data_byte;
@@ -49,6 +52,10 @@ namespace NBsys{namespace NOpengl
 		*/
 		RawID vertexbuffer_rawid;
 	
+		/** padding
+		*/
+		padding64(0,4);
+
 	public:
 		/** constructor
 		*/
@@ -104,5 +111,6 @@ namespace NBsys{namespace NOpengl
 	};
 
 }}
+#pragma warning(pop)
 #endif
 

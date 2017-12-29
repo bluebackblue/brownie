@@ -52,6 +52,10 @@ namespace NBsys{namespace NRootSearch
 		*/
 		bool root;
 
+		/** padding
+		*/
+		padding64(0,7);
+
 		/** コネクトインデックスリスト。
 		*/
 		STLVector<RootSearch_ConnectIndex>::Type connectindex_list;

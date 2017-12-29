@@ -25,13 +25,13 @@
 
 	//[include]
 	#pragma warning(push)
-	#pragma warning(disable:4820 4668)
+	#pragma warning(disable:4514 4820 4668)
 	#include <winsock2.h>
 	#pragma warning(pop)
 
 	//[include]
 	#pragma warning(push)
-	#pragma warning(disable:4820 4668 4365 4574)
+	#pragma warning(disable:4514 4820 4668 4365 4574)
 	#include <ws2tcpip.h>
 	#pragma warning(pop)
 

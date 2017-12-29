@@ -46,6 +46,14 @@
 #endif
 
 
+/** warning
+
+4710 : The given function was selected for inline expansion, but the compiler did not perform the inlining.
+
+*/
+#pragma warning(disable:4710)
+
+
 /** NBsys::NOpengl
 */
 #if(BSYS_OPENGL_ENABLE)
@@ -80,7 +88,7 @@ namespace NBsys{namespace NOpengl
 					if(t_status == GL_FALSE){
 						GLint t_infoLogLength;
 						glGetShaderiv(t_shader_rawid.rawid,GL_INFO_LOG_LENGTH,&t_infoLogLength);
-						sharedptr<GLchar> t_logbuffer(new GLchar[t_infoLogLength],default_delete<GLchar[]>());
+						sharedptr<GLchar> t_logbuffer(new GLchar[static_cast<std::size_t>(t_infoLogLength)],default_delete<GLchar[]>());
 						glGetShaderInfoLog(t_shader_rawid.rawid,t_infoLogLength,nullptr,t_logbuffer.get());
 						TAGLOG(L"CreateShader","%ls %s",a_name.c_str(),t_logbuffer.get());
 						return false;
@@ -125,7 +133,7 @@ namespace NBsys{namespace NOpengl
 					if(t_status == GL_FALSE){
 						GLint t_infoLogLength;
 						glGetProgramiv(t_shaderprogram_rawid.rawid,GL_INFO_LOG_LENGTH,&t_infoLogLength);
-						sharedptr<GLchar> t_logbuffer(new GLchar[t_infoLogLength],default_delete<GLchar[]>());
+						sharedptr<GLchar> t_logbuffer(new GLchar[static_cast<std::size_t>(t_infoLogLength)],default_delete<GLchar[]>());
 						glGetProgramInfoLog(t_shaderprogram_rawid.rawid,t_infoLogLength,nullptr,t_logbuffer.get());
 						TAGLOG(L"LinkShader","%ls %ls %s",a_vertex_name.c_str(),a_fragment_name.c_str(),t_logbuffer.get());
 						return false;
@@ -471,7 +479,7 @@ namespace NBsys{namespace NOpengl
 		
 		{
 			//シェーダーステータス。
-			sharedptr<Opengl_Impl_ShaderState> t_shaderstate = this->shaderstate_list[a_shaderid];
+			sharedptr<Opengl_Impl_ShaderState> t_shaderstate = this->shaderstate_list[static_cast<std::size_t>(a_shaderid)];
 
 			//レンダーコマンド。
 			sharedptr<NBsys::NActionBatching::ActionBatching_ActionList> t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
@@ -481,7 +489,7 @@ namespace NBsys{namespace NOpengl
 			this->StartBatching(t_actionlist);
 
 			//管理リスト。
-			this->shaderstate_list[a_shaderid].reset();
+			this->shaderstate_list[static_cast<std::size_t>(a_shaderid)].reset();
 		}
 	}
 
@@ -495,7 +503,7 @@ namespace NBsys{namespace NOpengl
 
 		{
 			if(a_shademodeltype == Opengl_ShadeModelType::Flat){
-				#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+				#if(BSYS_OPENGL_DEBUG_ENABLE)
 				{
 					TAGLOG("gl",VASTRING_DEBUG("glShadeModel : GL_FLAT"));
 				}
@@ -503,7 +511,7 @@ namespace NBsys{namespace NOpengl
 
 				glShadeModel(GL_FLAT);
 			}else{
-				#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+				#if(BSYS_OPENGL_DEBUG_ENABLE)
 				{
 					TAGLOG("gl",VASTRING_DEBUG("glShadeModel : GL_SMOOTH"));
 				}
@@ -673,7 +681,7 @@ namespace NBsys{namespace NOpengl
 		//AutoLock t_autolock(this->lockobject);
 
 		{
-			#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+			#if(BSYS_OPENGL_DEBUG_ENABLE)
 			{
 				TAGLOG("gl",VASTRING_DEBUG("glClearColor : %f : %f : %f : %f",a_color.F_GetR(),a_color.F_GetG(),a_color.F_GetB(),a_color.F_GetA()));
 			}
@@ -694,7 +702,7 @@ namespace NBsys{namespace NOpengl
 
 			if(a_depth == true){
 
-				#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+				#if(BSYS_OPENGL_DEBUG_ENABLE)
 				{
 					TAGLOG("gl",VASTRING_DEBUG("glClear : GL_DEPTH_BUFFER_BIT"));
 				}
@@ -702,9 +710,9 @@ namespace NBsys{namespace NOpengl
 
 				t_mask |= GL_DEPTH_BUFFER_BIT;
 			}
-			if(a_color |= true){
+			if(a_color == true){
 
-				#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+				#if(BSYS_OPENGL_DEBUG_ENABLE)
 				{
 					TAGLOG("gl",VASTRING_DEBUG("glClear : GL_DEPTH_BUFFER_BIT"));
 				}
@@ -788,7 +796,7 @@ namespace NBsys{namespace NOpengl
 			{
 				glGenBuffers(1,&t_vertexbuffer_rawid.rawid);
 
-				#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+				#if(BSYS_OPENGL_DEBUG_ENABLE)
 				{
 					TAGLOG("gl",VASTRING_DEBUG("glGenBuffers : vertexbuffer_rawid = %d",t_vertexbuffer_rawid.rawid));
 				}
@@ -798,7 +806,7 @@ namespace NBsys{namespace NOpengl
 			if(t_vertexbuffer_rawid.IsInvalid() == false){
 				a_vertexbuffer->SetVertexBuffer_RawID(t_vertexbuffer_rawid);
 
-				#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+				#if(BSYS_OPENGL_DEBUG_ENABLE)
 				{
 					TAGLOG("gl",VASTRING_DEBUG("glBindBuffer : GL_ARRAY_BUFFER : vertexbuffer_rawid = %d",t_vertexbuffer_rawid.rawid));
 				}
@@ -813,7 +821,7 @@ namespace NBsys{namespace NOpengl
 					const u8* t_data_byte = a_vertexbuffer->GetDataByte().get();
 					s32 t_size_byte = a_vertexbuffer->GetSizeByte();
 
-					#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+					#if(BSYS_OPENGL_DEBUG_ENABLE)
 					{
 						TAGLOG("gl",VASTRING_DEBUG("glBufferData : GL_ARRAY_BUFFER : t_size_byte = %d : data_byte = 0x%08x : GL_STATIC_DRAW",t_size_byte,t_data_byte));
 					}
@@ -822,7 +830,7 @@ namespace NBsys{namespace NOpengl
 					glBufferData(GL_ARRAY_BUFFER,t_size_byte,t_data_byte,GL_STATIC_DRAW);
 				}
 
-				#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+				#if(BSYS_OPENGL_DEBUG_ENABLE)
 				{
 					TAGLOG("gl",VASTRING_DEBUG("glBindBuffer : GL_ARRAY_BUFFER : 0"));
 				}
@@ -847,7 +855,7 @@ namespace NBsys{namespace NOpengl
 
 				if(t_vertexbuffer_rawid.IsInvalid() == false){
 
-					#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+					#if(BSYS_OPENGL_DEBUG_ENABLE)
 					{
 						TAGLOG("gl",VASTRING_DEBUG("glDeleteBuffers : vertexbuffer_rawid = %d",t_vertexbuffer_rawid.rawid));
 					}
@@ -936,38 +944,30 @@ namespace NBsys{namespace NOpengl
 
 						//カレントシェーダー用。グローバル変数作成。
 						if(t_item.uniform_list != nullptr){
-							s32 jj_max = static_cast<s32>(t_item.uniform_list->size());
-							for(s32 jj=0;jj<jj_max;jj++){
+							u32 jj_max = static_cast<u32>(t_item.uniform_list->size());
+							for(u32 jj=0;jj<jj_max;jj++){
 								Opengl_ShaderLayout::Uniform& t_value = t_item.uniform_list->at(jj);
 								GLint t_location = glGetUniformLocation(t_shaderstate->shaderprogram_rawid.rawid,t_value.name.c_str());
-								t_shaderstate->uniform_list.insert(
-									STLMap<STLString,Opengl_Impl_ShaderState::Uniform>::value_type(
-										t_value.name,
-										Opengl_Impl_ShaderState::Uniform(
-											t_location,
-											t_value.shadervaluetype,
-											t_value.countof
-										)
-									)
-								);
+								t_shaderstate->uniform_list.insert(std::make_pair(
+									t_value.name,
+									new Opengl_Impl_Uniform(t_location,t_value.shadervaluetype,t_value.countof)
+								));
 							}
 						}
 
 						//カレントシェーダー用。頂点変数作成。
 						if(t_item.attribute_list != nullptr){
-							s32 jj_max = static_cast<s32>(t_item.attribute_list->size());
-							for(s32 jj=0;jj<jj_max;jj++){
+							u32 jj_max = static_cast<u32>(t_item.attribute_list->size());
+							for(u32 jj=0;jj<jj_max;jj++){
 								Opengl_ShaderLayout::Attribute& t_value = t_item.attribute_list->at(jj);
 								GLint t_location = glGetAttribLocation(t_shaderstate->shaderprogram_rawid.rawid,t_value.name.c_str());
-								t_shaderstate->attribute_list.insert(
-									STLMap<STLString,Opengl_Impl_ShaderState::Attribute>::value_type(
-										t_value.name,
-										Opengl_Impl_ShaderState::Attribute(
+								t_shaderstate->attribute_list.insert(std::make_pair(
+									t_value.name,
+									new Opengl_Impl_Attribute(
 											t_location,
 											t_value.shadervaluetype
-										)
 									)
-								);
+								));
 							}
 						}
 					
@@ -976,7 +976,7 @@ namespace NBsys{namespace NOpengl
 						this->current_shaderprogram_rawid.SetInvalid();
 
 						//設定。
-						this->shaderstate_list[t_item.shaderid] = t_shaderstate;
+						this->shaderstate_list[static_cast<std::size_t>(t_item.shaderid)] = t_shaderstate;
 					}
 				}
 			}
@@ -1011,11 +1011,11 @@ namespace NBsys{namespace NOpengl
 
 				//設定。
 
-				sharedptr<Opengl_Impl_ShaderState>& t_shaderstate = this->shaderstate_list[a_shaderid];
+				sharedptr<Opengl_Impl_ShaderState>& t_shaderstate = this->shaderstate_list[static_cast<std::size_t>(a_shaderid)];
 
 				if(t_shaderstate){
 
-					#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+					#if(BSYS_OPENGL_DEBUG_ENABLE)
 					{
 						TAGLOG("gl",VASTRING_DEBUG("glUseProgram : shaderprogram_rawid = %d",t_shaderstate.shaderprogram_rawid));
 					}
@@ -1024,7 +1024,7 @@ namespace NBsys{namespace NOpengl
 					glUseProgram(t_shaderstate->shaderprogram_rawid.rawid);
 					this->current_shaderprogram_rawid = t_shaderstate->shaderprogram_rawid;
 
-					#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+					#if(BSYS_OPENGL_DEBUG_ENABLE)
 					{
 						TAGLOG("gl",VASTRING_DEBUG("glBindVertexArray : vertexarray_rawid = %d",t_shaderstate.vertexarray_rawid));
 					}
@@ -1035,7 +1035,7 @@ namespace NBsys{namespace NOpengl
 				}else{
 					ASSERT(0);
 
-					#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+					#if(BSYS_OPENGL_DEBUG_ENABLE)
 					{
 						TAGLOG("gl",VASTRING_DEBUG("glBindVertexArray : 0"));
 					}
@@ -1044,7 +1044,7 @@ namespace NBsys{namespace NOpengl
 					glBindVertexArray(0);
 					this->current_vertexarray_rawid.SetInvalid();
 
-					#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+					#if(BSYS_OPENGL_DEBUG_ENABLE)
 					{
 						TAGLOG("gl",VASTRING_DEBUG("glUseProgram : 0"));
 					}
@@ -1057,7 +1057,7 @@ namespace NBsys{namespace NOpengl
 
 				//解除。
 
-				#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+				#if(BSYS_OPENGL_DEBUG_ENABLE)
 				{
 					TAGLOG("gl",VASTRING_DEBUG("glBindVertexArray : 0"));
 				}
@@ -1066,7 +1066,7 @@ namespace NBsys{namespace NOpengl
 				glBindVertexArray(0);
 				this->current_vertexarray_rawid.SetInvalid();
 
-				#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+				#if(BSYS_OPENGL_DEBUG_ENABLE)
 				{
 					TAGLOG("gl",VASTRING_DEBUG("glUseProgram : 0"));
 				}
@@ -1095,7 +1095,7 @@ namespace NBsys{namespace NOpengl
 				}
 
 				if(t_vertexbuffer_rawid.IsInvalid() == false){
-					#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+					#if(BSYS_OPENGL_DEBUG_ENABLE)
 					{
 						TAGLOG("gl",VASTRING_DEBUG("glBindBuffer : GL_ARRAY_BUFFER : vertexbuffer_rawid = %d",t_vertexbuffer_rawid.rawid));
 					}
@@ -1106,7 +1106,7 @@ namespace NBsys{namespace NOpengl
 					ASSERT(0);
 				}
 			}else{
-				#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+				#if(BSYS_OPENGL_DEBUG_ENABLE)
 				{
 					TAGLOG("gl",VASTRING_DEBUG("glBindBuffer : GL_ARRAY_BUFFER : 0"));
 				}
@@ -1134,7 +1134,7 @@ namespace NBsys{namespace NOpengl
 		{
 			s32 t_use_byte = 0;
 
-			sharedptr<Opengl_Impl_ShaderState>& t_shaderstate = this->shaderstate_list[a_shaderid];
+			sharedptr<Opengl_Impl_ShaderState>& t_shaderstate = this->shaderstate_list[static_cast<std::size_t>(a_shaderid)];
 
 			if(t_shaderstate){
 
@@ -1145,7 +1145,7 @@ namespace NBsys{namespace NOpengl
 
 					GLenum t_type = GL_FLOAT;
 
-					switch(t_it->second.shadervaluetype){
+					switch(t_it->second->shadervaluetype){
 					case Opengl_ShaderValueType::Float:
 						{
 							t_size = 1;
@@ -1213,27 +1213,58 @@ namespace NBsys{namespace NOpengl
 
 							t_use_byte = 4 * t_size;
 						}break;
+					case Opengl_ShaderValueType::Texture0:
+					case Opengl_ShaderValueType::Texture1:
+					case Opengl_ShaderValueType::Texture2:
+					case Opengl_ShaderValueType::Texture3:
+					case Opengl_ShaderValueType::Texture4:
+					case Opengl_ShaderValueType::Texture5:
+					case Opengl_ShaderValueType::Texture6:
+					case Opengl_ShaderValueType::Texture7:
+					case Opengl_ShaderValueType::Texture8:
+					case Opengl_ShaderValueType::Texture9:
+					case Opengl_ShaderValueType::Texture10:
+					case Opengl_ShaderValueType::Texture11:
+					case Opengl_ShaderValueType::Texture12:
+					case Opengl_ShaderValueType::Texture13:
+					case Opengl_ShaderValueType::Texture14:
+					case Opengl_ShaderValueType::Texture15:
+					case Opengl_ShaderValueType::Texture16:
+					case Opengl_ShaderValueType::Texture17:
+					case Opengl_ShaderValueType::Texture18:
+					case Opengl_ShaderValueType::Texture19:
+					case Opengl_ShaderValueType::Texture20:
+					case Opengl_ShaderValueType::Texture21:
+					case Opengl_ShaderValueType::Texture22:
+					case Opengl_ShaderValueType::Texture23:
+					case Opengl_ShaderValueType::Texture24:
+					case Opengl_ShaderValueType::Texture25:
+					case Opengl_ShaderValueType::Texture26:
+					case Opengl_ShaderValueType::Texture27:
+					case Opengl_ShaderValueType::Texture28:
+					case Opengl_ShaderValueType::Texture29:
+					case Opengl_ShaderValueType::Texture30:
 					default:
 						{
 							ASSERT(0);
 						}break;
 					}
 
-					#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+					#if(BSYS_OPENGL_DEBUG_ENABLE)
 					{
 						TAGLOG("gl",VASTRING_DEBUG("glEnableVertexAttribArray : location = %d ",t_it->second.location));
 					}
 					#endif
 
-					glEnableVertexAttribArray(t_it->second.location);
+					glEnableVertexAttribArray(static_cast<GLuint>(t_it->second->location));
 
-					#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+					#if(BSYS_OPENGL_DEBUG_ENABLE)
 					{
 						TAGLOG("gl",VASTRING_DEBUG("glVertexAttribPointer : location = %d : size = %d : type = %d : GL_FALSE : stride_byte = %d : offset_byte = %d",t_it->second.location,t_size,t_type,a_stride_byte,a_offset_byte));
 					}
 					#endif
 
-					glVertexAttribPointer(t_it->second.location,t_size,t_type,GL_FALSE,a_stride_byte,(static_cast<char*>(nullptr) + (a_offset_byte)));
+					glVertexAttribPointer(static_cast<GLuint>(t_it->second->location),t_size,t_type,GL_FALSE,a_stride_byte,(static_cast<char*>(nullptr) + (a_offset_byte)));
 				}
 			}else{
 				ASSERT(0);
@@ -1256,7 +1287,7 @@ namespace NBsys{namespace NOpengl
 		{
 			ASSERT((a_vertex_countof % 3) == 0);
 
-			#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+			#if(BSYS_OPENGL_DEBUG_ENABLE)
 			{
 				TAGLOG("gl",VASTRING_DEBUG("glDrawArrays : GL_TRIANGLES : vertex_offset = %d : vertex_countof = %d",a_vertex_offset,a_vertex_countof));
 			}
@@ -1273,7 +1304,7 @@ namespace NBsys{namespace NOpengl
 		//AutoLock t_autolock(this->lockobject);
 
 		{
-			#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+			#if(BSYS_OPENGL_DEBUG_ENABLE)
 			{
 				TAGLOG("gl",VASTRING_DEBUG("glViewport : %d : %d : %d : %d",static_cast<s32>(a_x),static_cast<s32>(a_y),static_cast<s32>(a_width),static_cast<s32>(a_height)));
 			}
@@ -1296,68 +1327,68 @@ namespace NBsys{namespace NOpengl
 		AutoLock t_autolock(this->lockobject);
 
 		{
-			sharedptr<Opengl_Impl_ShaderState>& t_shaderstate = this->shaderstate_list[a_shaderid];
+			sharedptr<Opengl_Impl_ShaderState>& t_shaderstate = this->shaderstate_list[static_cast<std::size_t>(a_shaderid)];
 
 			if(t_shaderstate){
 				auto t_it = std::as_const(t_shaderstate->uniform_list).find(a_name);
 				if(t_it != t_shaderstate->uniform_list.cend()){
 
-					ASSERT(a_countof <= t_it->second.countof);
+					ASSERT(a_countof <= t_it->second->countof);
 
-					switch(t_it->second.shadervaluetype){
+					switch(t_it->second->shadervaluetype){
 					case Opengl_ShaderValueType::Float:
 						{
-							#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+							#if(BSYS_OPENGL_DEBUG_ENABLE)
 							{
 								TAGLOG("gl",VASTRING_DEBUG("glUniform1fv : location = %d : countof = %d : GL_FALSE : data_byte = 0x%08x",t_it->second.location,a_countof,a_data_byte));
 							}
 							#endif
 
-							glUniform1fv(t_it->second.location,a_countof,reinterpret_cast<const GLfloat*>(a_data_byte));
+							glUniform1fv(t_it->second->location,a_countof,reinterpret_cast<const GLfloat*>(a_data_byte));
 						}break;
 					case Opengl_ShaderValueType::Float2:
 					case Opengl_ShaderValueType::Vector2:
 						{
-							#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+							#if(BSYS_OPENGL_DEBUG_ENABLE)
 							{
 								TAGLOG("gl",VASTRING_DEBUG("glUniform2fv : location = %d : countof = %d : GL_FALSE : data_byte = 0x%08x",t_it->second.location,a_countof,a_data_byte));
 							}
 							#endif
 
-							glUniform2fv(t_it->second.location,a_countof,reinterpret_cast<const GLfloat*>(a_data_byte));
+							glUniform2fv(t_it->second->location,a_countof,reinterpret_cast<const GLfloat*>(a_data_byte));
 						}break;
 					case Opengl_ShaderValueType::Float3:
 					case Opengl_ShaderValueType::Vector3:
 						{
-							#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+							#if(BSYS_OPENGL_DEBUG_ENABLE)
 							{
 								TAGLOG("gl",VASTRING_DEBUG("glUniform3fv : location = %d : countof = %d : GL_FALSE : data_byte = 0x%08x",t_it->second.location,a_countof,a_data_byte));
 							}
 							#endif
 
-							glUniform3fv(t_it->second.location,a_countof,reinterpret_cast<const GLfloat*>(a_data_byte));
+							glUniform3fv(t_it->second->location,a_countof,reinterpret_cast<const GLfloat*>(a_data_byte));
 						}break;
 					case Opengl_ShaderValueType::Float4:
 					case Opengl_ShaderValueType::Vector4:
 						{
-							#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+							#if(BSYS_OPENGL_DEBUG_ENABLE)
 							{
 								TAGLOG("gl",VASTRING_DEBUG("glUniform4fv : location = %d : countof = %d : GL_FALSE : data_byte = 0x%08x",t_it->second.location,a_countof,a_data_byte));
 							}
 							#endif
 
-							glUniform4fv(t_it->second.location,a_countof,reinterpret_cast<const GLfloat*>(a_data_byte));
+							glUniform4fv(t_it->second->location,a_countof,reinterpret_cast<const GLfloat*>(a_data_byte));
 						}break;
 					case Opengl_ShaderValueType::Float16:
 					case Opengl_ShaderValueType::Matrix:
 						{
-							#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+							#if(BSYS_OPENGL_DEBUG_ENABLE)
 							{
 								TAGLOG("gl",VASTRING_DEBUG("glUniformMatrix4fv : location = %d : countof = %d : GL_FALSE : data_byte = 0x%08x",t_it->second.location,a_countof,a_data_byte));
 							}
 							#endif
 
-							glUniformMatrix4fv(t_it->second.location,a_countof,GL_FALSE,reinterpret_cast<const GLfloat*>(a_data_byte));
+							glUniformMatrix4fv(t_it->second->location,a_countof,GL_FALSE,reinterpret_cast<const GLfloat*>(a_data_byte));
 						}break;
 					case Opengl_ShaderValueType::IntToFloat:
 						{
@@ -1375,6 +1406,37 @@ namespace NBsys{namespace NOpengl
 						{
 							ASSERT(0);
 						}break;
+					case Opengl_ShaderValueType::Texture0:
+					case Opengl_ShaderValueType::Texture1:
+					case Opengl_ShaderValueType::Texture2:
+					case Opengl_ShaderValueType::Texture3:
+					case Opengl_ShaderValueType::Texture4:
+					case Opengl_ShaderValueType::Texture5:
+					case Opengl_ShaderValueType::Texture6:
+					case Opengl_ShaderValueType::Texture7:
+					case Opengl_ShaderValueType::Texture8:
+					case Opengl_ShaderValueType::Texture9:
+					case Opengl_ShaderValueType::Texture10:
+					case Opengl_ShaderValueType::Texture11:
+					case Opengl_ShaderValueType::Texture12:
+					case Opengl_ShaderValueType::Texture13:
+					case Opengl_ShaderValueType::Texture14:
+					case Opengl_ShaderValueType::Texture15:
+					case Opengl_ShaderValueType::Texture16:
+					case Opengl_ShaderValueType::Texture17:
+					case Opengl_ShaderValueType::Texture18:
+					case Opengl_ShaderValueType::Texture19:
+					case Opengl_ShaderValueType::Texture20:
+					case Opengl_ShaderValueType::Texture21:
+					case Opengl_ShaderValueType::Texture22:
+					case Opengl_ShaderValueType::Texture23:
+					case Opengl_ShaderValueType::Texture24:
+					case Opengl_ShaderValueType::Texture25:
+					case Opengl_ShaderValueType::Texture26:
+					case Opengl_ShaderValueType::Texture27:
+					case Opengl_ShaderValueType::Texture28:
+					case Opengl_ShaderValueType::Texture29:
+					case Opengl_ShaderValueType::Texture30:
 					default:
 						{
 							ASSERT(0);
@@ -1397,7 +1459,7 @@ namespace NBsys{namespace NOpengl
 	
 		{
 			if(a_flag == true){
-				#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+				#if(BSYS_OPENGL_DEBUG_ENABLE)
 				{
 					TAGLOG("gl",VASTRING_DEBUG("glEnable : GL_DEPTH_TEST"));
 				}
@@ -1405,7 +1467,7 @@ namespace NBsys{namespace NOpengl
 
 				glEnable(GL_DEPTH_TEST);
 			}else{
-				#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+				#if(BSYS_OPENGL_DEBUG_ENABLE)
 				{
 					TAGLOG("gl",VASTRING_DEBUG("glDisable : GL_DEPTH_TEST"));
 				}
@@ -1430,7 +1492,7 @@ namespace NBsys{namespace NOpengl
 			{
 				glGenFramebuffersEXT(1,&t_framebuffer_rawid.rawid);
 
-				#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+				#if(BSYS_OPENGL_DEBUG_ENABLE)
 				{
 					TAGLOG("gl",VASTRING_DEBUG("glGenFramebuffersEXT : framebuffer_rawid = %d",t_framebuffer_rawid.rawid));
 				}
@@ -1441,7 +1503,7 @@ namespace NBsys{namespace NOpengl
 				a_framebuffer->SetFrameBuffer_RawID(t_framebuffer_rawid);
 
 				{
-					#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+					#if(BSYS_OPENGL_DEBUG_ENABLE)
 					{
 						TAGLOG("gl",VASTRING_DEBUG("glBindFramebufferEXT : GL_FRAMEBUFFER_EXT : framebuffer_rawid = %d",t_framebuffer_rawid.rawid));
 					}
@@ -1457,7 +1519,7 @@ namespace NBsys{namespace NOpengl
 					if(a_framebuffer->GetTexture_Depth() != nullptr){
 						RawID t_texture_rawid = a_framebuffer->GetTexture_Depth()->GetTexture_RawID();
 
-						#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+						#if(BSYS_OPENGL_DEBUG_ENABLE)
 						{
 							TAGLOG("gl",VASTRING_DEBUG("glFramebufferTexture2DEXT : GL_FRAMEBUFFER_EXT : GL_DEPTH_ATTACHMENT_EXT : GL_TEXTURE_2D : texture_rawid = %d : level = %d",t_texture_rawid.rawid,0));
 						}
@@ -1469,7 +1531,7 @@ namespace NBsys{namespace NOpengl
 					if(a_framebuffer->GetTexture_Color0() != nullptr){
 						RawID t_texture_rawid = a_framebuffer->GetTexture_Color0()->GetTexture_RawID();
 
-						#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+						#if(BSYS_OPENGL_DEBUG_ENABLE)
 						{
 							TAGLOG("gl",VASTRING_DEBUG("glFramebufferTexture2DEXT : GL_FRAMEBUFFER_EXT : GL_COLOR_ATTACHMENT0_EXT : GL_TEXTURE_2D : texture_rawid = %d : level = %d",t_texture_rawid.rawid,0));
 						}
@@ -1483,7 +1545,7 @@ namespace NBsys{namespace NOpengl
 				*/
 				/*
 				{
-					#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+					#if(BSYS_OPENGL_DEBUG_ENABLE)
 					{
 						TAGLOG("gl",VASTRING_DEBUG("glDrawBuffer : GL_NONE"));
 					}
@@ -1491,7 +1553,7 @@ namespace NBsys{namespace NOpengl
 
 					glDrawBuffer(GL_NONE);
 
-					#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+					#if(BSYS_OPENGL_DEBUG_ENABLE)
 					{
 						TAGLOG("gl",VASTRING_DEBUG("glReadBuffer : GL_NONE"));
 					}
@@ -1502,7 +1564,7 @@ namespace NBsys{namespace NOpengl
 				*/
 
 				{
-					#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+					#if(BSYS_OPENGL_DEBUG_ENABLE)
 					{
 						TAGLOG("gl",VASTRING_DEBUG("glCheckFramebufferStatusEXT : GL_FRAMEBUFFER_EXT"));
 					}
@@ -1514,7 +1576,7 @@ namespace NBsys{namespace NOpengl
 					}
 				}
 
-				#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+				#if(BSYS_OPENGL_DEBUG_ENABLE)
 				{
 					TAGLOG("gl",VASTRING_DEBUG("glBindFramebufferEXT : GL_FRAMEBUFFER_EXT : 0"));
 				}
@@ -1538,7 +1600,7 @@ namespace NBsys{namespace NOpengl
 			{
 				glGenTextures(1,&t_texture_rawid.rawid);
 
-				#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+				#if(BSYS_OPENGL_DEBUG_ENABLE)
 				{
 					TAGLOG("gl",VASTRING_DEBUG("glGenTextures : texture_rawid = %d",t_texture_rawid));
 				}
@@ -1553,7 +1615,7 @@ namespace NBsys{namespace NOpengl
 					{
 
 						{
-							#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+							#if(BSYS_OPENGL_DEBUG_ENABLE)
 							{
 								TAGLOG("gl",VASTRING_DEBUG("glBindTexture : GL_TEXTURE_2D : texture_rawid = %d",t_texture_rawid));
 							}
@@ -1571,7 +1633,7 @@ namespace NBsys{namespace NOpengl
 						/** テクスチャの割り当て。
 						*/
 						{
-							#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+							#if(BSYS_OPENGL_DEBUG_ENABLE)
 							{
 								TAGLOG("gl",VASTRING_DEBUG("glTexImage2D : GL_TEXTURE_2D : level = %d : GL_DEPTH_COMPONENT : width = %d : height = %d : border = %d : GL_DEPTH_COMPONENT : GL_UNSIGNED_BYTE",0,t_width,t_height,0));
 							}
@@ -1610,7 +1672,7 @@ namespace NBsys{namespace NOpengl
 						glTexParameteri(GL_TEXTURE_2D,GL_DEPTH_TEXTURE_MODE,GL_LUMINANCE);
   
 						{
-							#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+							#if(BSYS_OPENGL_DEBUG_ENABLE)
 							{
 								TAGLOG("gl",VASTRING_DEBUG("glBindTexture : GL_TEXTURE_2D : 0"));
 							}
@@ -1624,7 +1686,7 @@ namespace NBsys{namespace NOpengl
 					{
 
 						{
-							#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+							#if(BSYS_OPENGL_DEBUG_ENABLE)
 							{
 								TAGLOG("gl",VASTRING_DEBUG("glBindTexture : GL_TEXTURE_2D : texture_rawid = %d",t_texture_rawid.rawid));
 							}
@@ -1640,7 +1702,7 @@ namespace NBsys{namespace NOpengl
 						s32 t_height = a_texture->GetTexture()->GetHeight();
 
 						{
-							#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+							#if(BSYS_OPENGL_DEBUG_ENABLE)
 							{
 								TAGLOG("gl",VASTRING_DEBUG("glTexImage2D : GL_TEXTURE_2D : level = %d : GL_RGBA : width = %d : height = %d : border = %d : GL_RGBA : GL_UNSIGNED_BYTE",0,t_width,t_height,0));
 							}
@@ -1670,7 +1732,7 @@ namespace NBsys{namespace NOpengl
 						glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
 
 						{
-							#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+							#if(BSYS_OPENGL_DEBUG_ENABLE)
 							{
 								TAGLOG("gl",VASTRING_DEBUG("glBindTexture : GL_TEXTURE_2D : 0"));
 							}
@@ -1700,7 +1762,7 @@ namespace NBsys{namespace NOpengl
 
 			if(t_texture_rawid.IsInvalid() == false){
 
-				#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+				#if(BSYS_OPENGL_DEBUG_ENABLE)
 				{
 					TAGLOG("gl",VASTRING_DEBUG("glDeleteTextures : texture_rawid = %d",t_texture_rawid.rawid));
 				}
@@ -1725,7 +1787,7 @@ namespace NBsys{namespace NOpengl
 		AutoLock t_autolock(this->lockobject);
 
 		{
-			#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+			#if(BSYS_OPENGL_DEBUG_ENABLE)
 			{
 				TAGLOG("gl",VASTRING_DEBUG("glColorMask : %d : %d : %d : %d",((a_r)?(1):(0)),((a_g)?(1):(0)),((a_b)?(1):(0)),((a_a)?(1):(0))));
 			}
@@ -1747,7 +1809,7 @@ namespace NBsys{namespace NOpengl
 
 		{
 			if(a_flag == true){
-				#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+				#if(BSYS_OPENGL_DEBUG_ENABLE)
 				{
 					TAGLOG("gl",VASTRING_DEBUG("glEnable : GL_POLYGON_OFFSET_FILL"));
 				}
@@ -1755,7 +1817,7 @@ namespace NBsys{namespace NOpengl
 
 				glEnable(GL_POLYGON_OFFSET_FILL);
 
-				#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+				#if(BSYS_OPENGL_DEBUG_ENABLE)
 				{
 					TAGLOG("gl",VASTRING_DEBUG("glPolygonOffset : factor = %d : unit = %d",a_factor,a_unit));
 				}
@@ -1763,7 +1825,7 @@ namespace NBsys{namespace NOpengl
 
 				glPolygonOffset(a_factor,a_unit);
 			}else{
-				#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+				#if(BSYS_OPENGL_DEBUG_ENABLE)
 				{
 					TAGLOG("gl",VASTRING_DEBUG("glDisable : GL_POLYGON_OFFSET_FILL"));
 				}
@@ -1788,7 +1850,7 @@ namespace NBsys{namespace NOpengl
 
 		{
 			{
-				#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+				#if(BSYS_OPENGL_DEBUG_ENABLE)
 				{
 					TAGLOG("gl",VASTRING_DEBUG("glActiveTexture : GL_TEXTURE%d",a_textureunitid));
 				}
@@ -1837,7 +1899,7 @@ namespace NBsys{namespace NOpengl
 					RawID t_texture_rawid = (t_it->second)->GetTexture_RawID();
 					if(t_texture_rawid.IsInvalid() == false){
 
-						#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+						#if(BSYS_OPENGL_DEBUG_ENABLE)
 						{
 							TAGLOG("gl",VASTRING_DEBUG("glEnable : GL_TEXTURE_2D"));
 						}
@@ -1845,7 +1907,7 @@ namespace NBsys{namespace NOpengl
 
 						glEnable(GL_TEXTURE_2D);
 
-						#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+						#if(BSYS_OPENGL_DEBUG_ENABLE)
 						{
 							TAGLOG("gl",VASTRING_DEBUG("glBindTexture : GL_TEXTURE_2D : texture_rawid = %d",t_texture_rawid.rawid));
 						}
@@ -1858,7 +1920,7 @@ namespace NBsys{namespace NOpengl
 				}
 			}
 
-			#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+			#if(BSYS_OPENGL_DEBUG_ENABLE)
 			{
 				TAGLOG("gl",VASTRING_DEBUG("glBindTexture : GL_TEXTURE_2D : 0"));
 			}
@@ -1867,7 +1929,7 @@ namespace NBsys{namespace NOpengl
 			glBindTexture(GL_TEXTURE_2D,0);
 			this->current_texture_rawid.SetInvalid();
 
-			#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+			#if(BSYS_OPENGL_DEBUG_ENABLE)
 			{
 				TAGLOG("gl",VASTRING_DEBUG("glDisable : GL_TEXTURE_2D"));
 			}
@@ -1890,7 +1952,7 @@ namespace NBsys{namespace NOpengl
 					RawID t_framebuffer_rawid = (t_it->second)->GetFrameBuffer_RawID();
 					if(t_framebuffer_rawid.IsInvalid() == false){
 
-						#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+						#if(BSYS_OPENGL_DEBUG_ENABLE)
 						{
 							TAGLOG("gl",VASTRING_DEBUG("glBindFramebufferEXT : GL_FRAMEBUFFER_EXT : framebuffer_rawid = %d",t_framebuffer_rawid.rawid));
 						}
@@ -1904,7 +1966,7 @@ namespace NBsys{namespace NOpengl
 				}
 			}
 
-			#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+			#if(BSYS_OPENGL_DEBUG_ENABLE)
 			{
 				TAGLOG("gl",VASTRING_DEBUG("glBindFramebufferEXT : GL_FRAMEBUFFER_EXT : 0"));
 			}
@@ -1922,7 +1984,7 @@ namespace NBsys{namespace NOpengl
 		//AutoLock t_autolock(this->lockobject);
 
 		{
-			#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+			#if(BSYS_OPENGL_DEBUG_ENABLE)
 			{
 				TAGLOG("gl",VASTRING_DEBUG("glMatrixMode : GL_PROJECTION"));
 			}
@@ -1930,7 +1992,7 @@ namespace NBsys{namespace NOpengl
 
 			glMatrixMode(GL_PROJECTION);
 
-			#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+			#if(BSYS_OPENGL_DEBUG_ENABLE)
 			{
 				TAGLOG("gl",VASTRING_DEBUG("glLoadIdentity"));
 			}
@@ -1938,7 +2000,7 @@ namespace NBsys{namespace NOpengl
 
 			glLoadIdentity();
 		
-			#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+			#if(BSYS_OPENGL_DEBUG_ENABLE)
 			{
 				TAGLOG("gl",VASTRING_DEBUG("glLoadMatrixf"));
 			}
@@ -1955,7 +2017,7 @@ namespace NBsys{namespace NOpengl
 		//AutoLock t_autolock(this->lockobject);
 
 		{
-			#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+			#if(BSYS_OPENGL_DEBUG_ENABLE)
 			{
 				TAGLOG("gl",VASTRING_DEBUG("glMatrixMode : GL_MODELVIEW"));
 			}
@@ -1963,7 +2025,7 @@ namespace NBsys{namespace NOpengl
 
 			glMatrixMode(GL_MODELVIEW);
 
-			#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+			#if(BSYS_OPENGL_DEBUG_ENABLE)
 			{
 				TAGLOG("gl",VASTRING_DEBUG("glLoadIdentity"));
 			}
@@ -1971,7 +2033,7 @@ namespace NBsys{namespace NOpengl
 
 			glLoadIdentity();
 
-			#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+			#if(BSYS_OPENGL_DEBUG_ENABLE)
 			{
 				TAGLOG("gl",VASTRING_DEBUG("glLoadMatrixf"));
 			}
@@ -1994,7 +2056,7 @@ namespace NBsys{namespace NOpengl
 
 		{
 			if(a_flag == true){
-				#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+				#if(BSYS_OPENGL_DEBUG_ENABLE)
 				{
 					TAGLOG("gl",VASTRING_DEBUG("glEnable : GL_BLEND"));
 				}
@@ -2003,7 +2065,7 @@ namespace NBsys{namespace NOpengl
 				glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 				glEnable(GL_BLEND);
 			}else{
-				#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+				#if(BSYS_OPENGL_DEBUG_ENABLE)
 				{
 					TAGLOG("gl",VASTRING_DEBUG("glDisable : GL_BLEND"));
 				}
@@ -2213,7 +2275,7 @@ namespace NBsys{namespace NOpengl
 							}break;
 						}
 
-						#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+						#if(BSYS_OPENGL_DEBUG_ENABLE)
 						{
 							TAGLOG("gl",VASTRING_DEBUG("glEnable : GL_TEXTURE_2D"));
 						}
@@ -2221,7 +2283,7 @@ namespace NBsys{namespace NOpengl
 
 						glEnable(GL_TEXTURE_2D);
 
-						#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+						#if(BSYS_OPENGL_DEBUG_ENABLE)
 						{
 							TAGLOG("gl",VASTRING_DEBUG("glActiveTexture : GL_TEXTURE%d",t_activetexture_id));
 						}
@@ -2229,7 +2291,7 @@ namespace NBsys{namespace NOpengl
 
 						glActiveTexture(t_activetexture);
 				
-						#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+						#if(BSYS_OPENGL_DEBUG_ENABLE)
 						{
 							TAGLOG("gl",VASTRING_DEBUG("glBindTexture : GL_TEXTURE_2D : texture_rawid = %d",t_texture_rawid.rawid));
 						}
@@ -2238,7 +2300,7 @@ namespace NBsys{namespace NOpengl
 						glBindTexture(GL_TEXTURE_2D,t_texture_rawid.rawid);
 						this->current_texture_rawid = t_texture_rawid;
 
-						#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+						#if(BSYS_OPENGL_DEBUG_ENABLE)
 						{
 							TAGLOG("gl",VASTRING_DEBUG("glUniform1i : location = %d : activetexture_id = %d",t_it->second.location,t_activetexture_id));
 						}
@@ -2266,7 +2328,7 @@ namespace NBsys{namespace NOpengl
 		{
 			ASSERT((a_vertex_countof % 4) == 0);
 
-			#if(BSYS_OPENGL_DETAILLOG_ENABLE)
+			#if(BSYS_OPENGL_DEBUG_ENABLE)
 			{
 				TAGLOG("gl",VASTRING_DEBUG("glDrawArrays : GL_QUADS : vertex_offset = %d : vertex_countof = %d",a_vertex_offset,a_vertex_countof));
 			}

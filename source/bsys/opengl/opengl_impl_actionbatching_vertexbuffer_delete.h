@@ -68,6 +68,16 @@ namespace NBsys{namespace NOpengl
 		{
 		}
 
+	private:
+
+		/** copy constructor禁止。
+		*/
+		Opengl_Impl_ActionBatching_VertexBuffer_Delete(const Opengl_Impl_ActionBatching_VertexBuffer_Create& a_this) = delete;
+
+		/** コピー禁止。
+		*/
+		void operator =(const Opengl_Impl_ActionBatching_VertexBuffer_Delete& a_this) = delete;
+
 	public:
 
 		/** アクション開始。
@@ -78,7 +88,7 @@ namespace NBsys{namespace NOpengl
 
 		/** アクション中。
 		*/
-		virtual s32 Do(f32& a_delta,bool a_endrequest)
+		virtual s32 Do(f32& /*a_delta*/,bool a_endrequest)
 		{
 			if(a_endrequest == true){
 				//中断。

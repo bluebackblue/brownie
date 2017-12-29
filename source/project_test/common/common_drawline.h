@@ -20,6 +20,8 @@
 /** NTest::NCommon
 */
 #if(BSYS_D3D11_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4514)
 namespace NTest{namespace NCommon
 {
 	/** DrawLine_VS_ConstantBuffer_B0
@@ -100,6 +102,11 @@ namespace NTest{namespace NCommon
 		*/
 		bool is_initialized;
 
+		/** padding
+		*/
+		padding64(0,3);
+		padding32(0,3);
+
 		/** d3d11
 		*/
 		sharedptr<NBsys::ND3d11::D3d11> d3d11;
@@ -122,6 +129,10 @@ namespace NTest{namespace NCommon
 		*/
 		sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Color4>> vertex;
 		s32 vertex_buffer_id;
+
+		/** padding
+		*/
+		padding64(1,4);
 
 	public:
 		/** constructor
@@ -304,5 +315,6 @@ namespace NTest{namespace NCommon
 
 
 }}
+#pragma warning(pop)
 #endif
 

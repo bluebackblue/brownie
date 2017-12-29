@@ -162,10 +162,6 @@ namespace NBlib
 
 	private:
 
-		/** list
-		*/
-		T list[SIZE];
-
 		/** 使用領域開始インデックス。
 		*/
 		s32 index_usestart;
@@ -177,6 +173,14 @@ namespace NBlib
 		/** 使用サイズ。
 		*/
 		s32 usesize;
+
+		/** padding
+		*/
+		padding64(0,4);
+
+		/** list
+		*/
+		T list[SIZE];
 
 	public:
 

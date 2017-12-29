@@ -41,9 +41,10 @@ namespace NBsys{namespace NActionBatching
 		*/
 		bool endrequest;
 
-		/** パディング。
+		/** padding
 		*/
-		u8 dummy[3];
+		padding64(0,3);
+		padding32(0,3);
 
 	public:
 

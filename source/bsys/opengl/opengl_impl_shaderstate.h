@@ -25,73 +25,82 @@
 /** NBsys::NOpengl
 */
 #if(BSYS_OPENGL_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4514)
 namespace NBsys{namespace NOpengl
 {
+
+	/** Opengl_Impl_Uniform
+	*/
+	struct Opengl_Impl_Uniform
+	{
+		/** location
+		*/
+		GLint location;
+
+		/** shadervaluetype
+		*/
+		Opengl_ShaderValueType::Id shadervaluetype;
+
+		/** 配列数。
+		*/
+		s32 countof;
+
+		/** constructor
+		*/
+		Opengl_Impl_Uniform(GLint a_location,Opengl_ShaderValueType::Id a_shadervaluetype,s32 a_countof)
+			:
+			location(a_location),
+			shadervaluetype(a_shadervaluetype),
+			countof(a_countof)
+		{
+		}
+
+		/** destructor
+		*/
+		nonvirtual ~Opengl_Impl_Uniform()
+		{
+		}
+	};
+
+
+	/** Opengl_Impl_Attribute
+	*/
+	class Opengl_Impl_Attribute
+	{
+	public:
+
+		/** location
+		*/
+		GLint location;
+
+		/** shadervaluetype
+		*/
+		Opengl_ShaderValueType::Id shadervaluetype;
+
+		/** constructor
+		*/
+		Opengl_Impl_Attribute(GLint a_location,Opengl_ShaderValueType::Id a_shadervaluetype)
+			:
+			location(a_location),
+			shadervaluetype(a_shadervaluetype)
+		{
+			this->location = 0;
+		}
+
+		/** destructor
+		*/
+		nonvirtual ~Opengl_Impl_Attribute()
+		{
+		}
+
+	};
+
+
 	/** Opengl_Impl_ShaderState
 	*/
 	struct Opengl_Impl_ShaderState
 	{
-		/** Uniform
-		*/
-		struct Uniform
-		{
-			/** location
-			*/
-			GLint location;
-
-			/** shadervaluetype
-			*/
-			Opengl_ShaderValueType::Id shadervaluetype;
-
-			/** 配列数。
-			*/
-			s32 countof;
-
-			/** constructor
-			*/
-			Uniform(GLint a_location,Opengl_ShaderValueType::Id a_shadervaluetype,s32 a_countof)
-				:
-				location(a_location),
-				shadervaluetype(a_shadervaluetype),
-				countof(a_countof)
-			{
-			}
-
-			/** destructor
-			*/
-			nonvirtual ~Uniform()
-			{
-			}
-		};
-
-		/** Attribute
-		*/
-		struct Attribute
-		{
-			/** location
-			*/
-			GLint location;
-
-			/** shadervaluetype
-			*/
-			Opengl_ShaderValueType::Id shadervaluetype;
-
-			/** constructor
-			*/
-			Attribute(GLint a_location,Opengl_ShaderValueType::Id a_shadervaluetype)
-				:
-				location(a_location),
-				shadervaluetype(a_shadervaluetype)
-			{
-			}
-
-			/** destructor
-			*/
-			nonvirtual ~Attribute()
-			{
-			}
-		};
-
 		/** vertexshader_rawid
 		*/
 		RawID vertexshader_rawid;
@@ -104,17 +113,25 @@ namespace NBsys{namespace NOpengl
 		*/
 		RawID shaderprogram_rawid;
 
+		/** padding
+		*/
+		padding64(0,4);
+
 		/** vertex_uniform_list
 		*/
-		STLMap<STLString,Opengl_Impl_ShaderState::Uniform>::Type uniform_list;
+		STLMap<STLString,sharedptr<Opengl_Impl_Uniform>>::Type uniform_list;
 
 		/** attribute_list
 		*/
-		STLMap<STLString,Opengl_Impl_ShaderState::Attribute>::Type attribute_list;
+		STLMap<STLString,sharedptr<Opengl_Impl_Attribute>>::Type attribute_list;
 
 		/** vertexarray_rawid
 		*/
 		RawID vertexarray_rawid;
+
+		/** padding
+		*/
+		padding64(1,4);
 
 		/** constructor
 		*/
@@ -129,6 +146,8 @@ namespace NBsys{namespace NOpengl
 		}
 	};
 
+
 }}
+#pragma warning(pop)
 #endif
 

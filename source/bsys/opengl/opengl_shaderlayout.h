@@ -33,6 +33,8 @@
 /** NBsys::NOpengl
 */
 #if(BSYS_OPENGL_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4514)
 namespace NBsys{namespace NOpengl
 {
 	/** Opengl_ShaderLayout
@@ -85,6 +87,10 @@ namespace NBsys{namespace NOpengl
 			/** shadervaluetype
 			*/
 			Opengl_ShaderValueType::Id shadervaluetype;
+
+			/**
+			*/
+			padding64(0,4);
 			
 			/** constructor
 			*/
@@ -109,6 +115,10 @@ namespace NBsys{namespace NOpengl
 			/** shaderid
 			*/
 			s32 shaderid;
+
+			/** padding
+			*/
+			padding64(0,4);
 
 			/** vertex_fileobject
 			*/
@@ -179,5 +189,6 @@ namespace NBsys{namespace NOpengl
 
 	};
 }}
+#pragma warning(pop)
 #endif
 

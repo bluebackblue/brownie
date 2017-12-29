@@ -30,6 +30,8 @@
 /** NBsys::NFile
 */
 #if(BSYS_FILE_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4514)
 namespace NBsys{namespace NFile
 {
 	/** File_Thread
@@ -42,11 +44,10 @@ namespace NBsys{namespace NFile
 		*/
 		AtomicValue<bool> endrequest;
 
-		/** パディング。
+		/** padding
 		*/
-		#if defined(ROM_64BIT)
-		u8 dummy[7];
-		#endif
+		padding64(0,7);
+		padding32(0,3);
 
 		/** ロックオブジェクト。
 		*/
@@ -114,11 +115,9 @@ namespace NBsys{namespace NFile
 			*/
 			s32 priority;
 
-			/** パディング。
+			/** padding
 			*/
-			#if defined(ROM_64BIT)
-			u8 dummy[4];
-			#endif
+			padding64(0,4);
 
 			/** rootpath_full
 			*/
@@ -191,5 +190,6 @@ namespace NBsys{namespace NFile
 
 
 }}
+#pragma warning(pop)
 #endif
 

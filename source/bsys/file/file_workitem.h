@@ -96,9 +96,10 @@ namespace NBsys{namespace NFile
 		*/
 		s32 convertflag;
 
-		/** パディング。
+		/** padding
 		*/
-		u32 dummy1;
+		padding64(0,4);
+		padding32(0,4);
 
 		/** データサイズ。
 		*/
@@ -116,9 +117,10 @@ namespace NBsys{namespace NFile
 		*/
 		bool isbusy;
 
-		/** パディング。
+		/** padding
 		*/
-		u8 dummy2[3];
+		padding64(1,3);
+		padding32(1,3);
 
 		/** メモリ確保。
 		*/
@@ -128,9 +130,10 @@ namespace NBsys{namespace NFile
 		*/
 		s32 add_allocatesize;
 
-		/** パディング。
+		/** padding
 		*/
-		u32 dummy3;
+		padding64(2,4);
+		padding32(2,4);
 
 	public:
 

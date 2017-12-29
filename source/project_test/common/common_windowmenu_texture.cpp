@@ -22,6 +22,14 @@
 #include "./common_windowmenu_texture.h"
 
 
+/** warning
+
+4710 : The given function was selected for inline expansion, but the compiler did not perform the inlining.
+
+*/
+#pragma warning(disable:4710)
+
+
 /** NTest
 */
 #if(BSYS_WINDOWMENU_ENABLE)

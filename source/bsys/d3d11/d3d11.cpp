@@ -32,6 +32,14 @@
 #include "./d3d11.h"
 
 
+/** warning
+
+4710 : The given function was selected for inline expansion, but the compiler did not perform the inlining.
+
+*/
+#pragma warning(disable:4710)
+
+
 /** NBsys::Nd3d11
 */
 #if(BSYS_D3D11_ENABLE)

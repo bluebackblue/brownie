@@ -20,6 +20,8 @@
 /** NBsys::NRootSearch
 */
 #if(BSYS_ROOTSEARCH_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4514)
 namespace NBsys{namespace NRootSearch
 {
 	/** RootSearch_NodeIndex
@@ -145,5 +147,6 @@ namespace NBsys{namespace NRootSearch
 
 	};
 }}
+#pragma warning(pop)
 #endif
 

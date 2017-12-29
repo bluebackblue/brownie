@@ -75,6 +75,11 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		bool changerect_check;
 
+		/** padding
+		*/
+		padding64(0,6);
+		padding32(0,2);
+
 	public:
 
 		/** constructor

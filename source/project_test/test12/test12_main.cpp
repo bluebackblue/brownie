@@ -25,6 +25,14 @@
 #pragma warning(pop)
 
 
+/** warning
+
+4710 : The given function was selected for inline expansion, but the compiler did not perform the inlining.
+
+*/
+#pragma warning(disable:4710)
+
+
 /** NTest
 */
 #if(DEF_TEST_INDEX == 12)
@@ -36,30 +44,6 @@ namespace NTest
 	{
 	private:
 
-		/** step
-		*/
-		s32 step;
-
-		/** カメラ。
-		*/
-		NBsys::NGeometry::Geometry_Vector3 camera_position;
-		NBsys::NGeometry::Geometry_Vector3 camera_up;
-		NBsys::NGeometry::Geometry_Vector3 camera_target;
-		f32 camera_fov_deg;
-		f32 camera_near;
-		f32 camera_far;
-		f32 camera_time;
-
-		/** ターゲット。
-		*/
-		NBsys::NGeometry::Geometry_Vector3 target_from;
-		NBsys::NGeometry::Geometry_Vector3 target_to_a;
-		NBsys::NGeometry::Geometry_Vector3 target_to_b;
-
-		/** windowmenu_texture
-		*/
-		sharedptr<NCommon::WindowMenu_Texture> windowmenu_texture;
-
 		/** Mmd_ModelParts
 		*/
 		struct Mmd_ModelParts
@@ -68,11 +52,16 @@ namespace NTest
 			*/
 			STLWString patrs_name;
 			s32 texture_index;
+			s32 texture_id;
 			STLWString texture_filepath;
 			sharedptr<NBsys::NFile::File_Object> texture_file;
 			sharedptr<NBsys::NTexture::Texture> texture;
-			s32 texture_id;
 			bool cullfull;
+
+			/** padding
+			*/
+			padding64(0,7);
+			padding32(0,3);
 
 			/** constructor
 			*/
@@ -138,7 +127,39 @@ namespace NTest
 			{
 			}
 		};
-		
+
+		/** step
+		*/
+		s32 step;
+
+		/** カメラ。
+		*/
+		NBsys::NGeometry::Geometry_Vector3 camera_position;
+		NBsys::NGeometry::Geometry_Vector3 camera_up;
+		NBsys::NGeometry::Geometry_Vector3 camera_target;
+		f32 camera_fov_deg;
+		f32 camera_near;
+		f32 camera_far;
+		f32 camera_time;
+
+		/** ターゲット。
+		*/
+		NBsys::NGeometry::Geometry_Vector3 target_from;
+		NBsys::NGeometry::Geometry_Vector3 target_to_a;
+		NBsys::NGeometry::Geometry_Vector3 target_to_b;
+
+		/** padding
+		*/
+		padding64(0,4);
+
+		/** windowmenu_texture
+		*/
+		sharedptr<NCommon::WindowMenu_Texture> windowmenu_texture;
+
+		/** padding
+		*/
+		padding64(1,4);	
+
 		/** mmd
 		*/
 		s32 mmd_step;
@@ -153,6 +174,10 @@ namespace NTest
 		s32 mmd_vs_constantbuffer_b0_id;
 		s32 mmd_ps_constantbuffer_b1_id;
 		s32 mmd_vertexbuffer_id;
+
+		/** padding
+		*/
+		padding64(2,4);	
 
 	public:
 

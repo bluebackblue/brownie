@@ -33,6 +33,8 @@
 /** NBsys::NPad
 */
 #if(BSYS_PAD_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4514)
 namespace NBsys{namespace NPad
 {
 	/** Pad_Device_Base
@@ -151,5 +153,6 @@ namespace NBsys{namespace NPad
 
 
 }}
+#pragma warning(pop)
 #endif
 

@@ -42,6 +42,11 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		bool on_flag;
 
+		/** padding
+		*/
+		padding64(0,2);
+		padding32(0,2);
+
 		/** color
 		*/
 		NBsys::NColor::Color_F color_normal;

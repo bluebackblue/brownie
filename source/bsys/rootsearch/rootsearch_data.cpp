@@ -27,6 +27,14 @@
 #include "./rootsearch_data.h"
 
 
+/** warning
+
+4710 : The given function was selected for inline expansion, but the compiler did not perform the inlining.
+
+*/
+#pragma warning(disable:4710)
+
+
 /** NBsys::NRootSearch
 */
 #if(BSYS_ROOTSEARCH_ENABLE)
@@ -51,11 +59,11 @@ namespace NBsys{namespace NRootSearch
 	*/
 	bool RootSearch_Data::ConnectCheck(RootSearch_NodeIndex& a_nodeindex_from,RootSearch_NodeIndex& a_nodeindex_to,bool a_root)
 	{
-		STLVector<RootSearch_ConnectIndex>::Type& t_connectindex_list = this->node_pool[a_nodeindex_from.GetValue()].ConnectIndexList(a_root);
+		STLVector<RootSearch_ConnectIndex>::Type& t_connectindex_list = this->node_pool[static_cast<u32>(a_nodeindex_from.GetValue())].ConnectIndexList(a_root);
 
-		s32 ii_max = static_cast<s32>(t_connectindex_list.size());
-		for(s32 ii=0;ii<ii_max;ii++){
-			if(this->connect_pool[t_connectindex_list[ii].GetValue()].GetNodeIndex() == a_nodeindex_to){
+		u32 ii_max = static_cast<u32>(t_connectindex_list.size());
+		for(u32 ii=0;ii<ii_max;ii++){
+			if(this->connect_pool[static_cast<u32>(t_connectindex_list[ii].GetValue())].GetNodeIndex() == a_nodeindex_to){
 				return true;
 			}
 		}
@@ -83,8 +91,8 @@ namespace NBsys{namespace NRootSearch
 	*/
 	void RootSearch_Data::Connect(RootSearch_NodeIndex a_nodeindex_a,RootSearch_NodeIndex a_nodeindex_b,bool a_root,s32 a_cost)
 	{
-		RootSearch_Node& t_node_a = this->node_pool[a_nodeindex_a.GetValue()];
-		RootSearch_Node& t_node_b = this->node_pool[a_nodeindex_b.GetValue()];
+		RootSearch_Node& t_node_a = this->node_pool[static_cast<u32>(a_nodeindex_a.GetValue())];
+		//RootSearch_Node& t_node_b = this->node_pool[static_cast<u32>(a_nodeindex_b.GetValue())];
 
 		if(this->ConnectCheck(a_nodeindex_a,a_nodeindex_b,a_root) == false){
 			this->connect_pool.push_back(RootSearch_Connect(a_nodeindex_b,a_cost));
@@ -104,11 +112,11 @@ namespace NBsys{namespace NRootSearch
 		s32 t_index = -1;
 		f32 t_min = -1;
 
-		s32 ii_max = static_cast<s32>(this->node_pool.size());
-		for(s32 ii=0;ii<ii_max;ii++){
+		u32 ii_max = static_cast<u32>(this->node_pool.size());
+		for(u32 ii=0;ii<ii_max;ii++){
 			f32 t_square_length = (this->node_pool[ii].GetPos() - a_pos).SquareLength();
 			if(t_index < 0 || t_index < t_min){
-				t_index = ii;
+				t_index = static_cast<s32>(ii);
 				t_min = t_square_length;
 			}
 		}
@@ -120,7 +128,7 @@ namespace NBsys{namespace NRootSearch
 	*/
 	RootSearch_Node& RootSearch_Data::GetNode(RootSearch_NodeIndex a_nodeindex)
 	{
-		return this->node_pool[a_nodeindex.GetValue()];
+		return this->node_pool[static_cast<std::size_t>(a_nodeindex.GetValue())];
 	}
 
 	/** ルートノードの計算。
@@ -129,8 +137,8 @@ namespace NBsys{namespace NRootSearch
 	{
 		STLVector<RootSearch_Node*>::Type t_root_node_list;
 
-		s32 ii_max = static_cast<s32>(this->node_pool.size());
-		for(s32 ii=0;ii<ii_max;ii++){
+		u32 ii_max = static_cast<u32>(this->node_pool.size());
+		for(u32 ii=0;ii<ii_max;ii++){
 			if(this->node_pool[ii].IsRoot()){
 				t_root_node_list.push_back(&this->node_pool[ii]);
 			}

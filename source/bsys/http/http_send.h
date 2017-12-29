@@ -36,6 +36,10 @@ namespace NBsys{namespace NHttp
 		*/
 		bool iserror;
 
+		/** padding
+		*/
+		padding64(0,7);
+
 		/** send_buffer
 		*/
 		sharedptr<u8> buffer;

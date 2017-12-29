@@ -53,11 +53,10 @@ namespace NBsys{namespace ND3d11
 		*/
 		bool write_flag;
 
-		/** パディング。
+		/** padding
 		*/
-		#if(ROM_64BIT)
-		u8 dummy[7];
-		#endif
+		padding64(0,7);
+		padding32(0,3);
 
 	public:
 

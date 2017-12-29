@@ -129,11 +129,11 @@ namespace NBsys{namespace ND3d11
 		*/
 		bool write_flag;
 
-		/** パディング。
+		/** padding
 		*/
-		#if(ROM_64BIT)
-		u8 dummy[3];
-		#endif
+		padding64(0,3);
+		padding32(0,3);
+
 	};
 
 
@@ -185,11 +185,10 @@ namespace NBsys{namespace ND3d11
 		*/
 		bool alpha_blend;
 
-		/** パディング。
+		/** padding
 		*/
-		#if(ROM_64BIT)
-		u8 dummy[7];
-		#endif
+		padding64(0,7);
+		padding32(0,3);
 	};
 
 
@@ -205,11 +204,9 @@ namespace NBsys{namespace ND3d11
 		*/
 		D3d11_CullType::Id culltype;
 
-		/** パディング。
+		/** padding
 		*/
-		#if(ROM_64BIT)
-		u8 dummy[4];
-		#endif
+		padding64(0,4);
 	};
 
 
@@ -229,11 +226,10 @@ namespace NBsys{namespace ND3d11
 		*/
 		bool depthwrie_flag;
 
-		/** パディング。
+		/** padding
 		*/
-		#if(ROM_64BIT)
-		u8 dummy[6];
-		#endif
+		padding64(0,6);
+		padding32(0,2);
 	};
 
 
@@ -272,11 +268,10 @@ namespace NBsys{namespace ND3d11
 		*/
 		bool testpresent_mode;
 
-		/** パディング。
+		/** padding
 		*/
-		#if(ROM_64BIT)
-		u8 dummy[7];
-		#endif
+		padding64(0,7);
+		padding32(0,3);
 
 		/** id_maker
 		*/

@@ -139,7 +139,7 @@ namespace NBlib
 
 	#if defined(ROM_32BIT)
 
-		#define padding32(INDEX,SIZE)	u8 dummy[SIZE]	
+		#define padding32(INDEX,SIZE)	u8 dummy ## INDEX[SIZE]	
 
 	#else
 
@@ -156,7 +156,7 @@ namespace NBlib
 
 	#if defined(ROM_64BIT)
 
-		#define padding64(INDEX,SIZE)	u8 dummy[SIZE]	
+		#define padding64(INDEX,SIZE)	u8 dummy ## INDEX[SIZE]	
 
 	#else
 

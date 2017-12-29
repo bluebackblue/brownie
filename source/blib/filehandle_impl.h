@@ -40,11 +40,16 @@ namespace NBlib
 	{
 	private:
 
-		/** handle
-		*/
 		#if defined(PLATFORM_VCWIN)
 
+		/** handle
+		*/
 		HANDLE rawhandle;
+
+		/** padding
+		*/
+		padding64(0,6);
+		padding32(0,2);
 
 		#endif
 
@@ -55,14 +60,6 @@ namespace NBlib
 		/** readmode
 		*/
 		bool readmode;
-
-		/** パディング。
-		*/
-		#if(ROM_64BIT)
-		u8 dummy[6];
-		#else
-		u8 dummy[2];
-		#endif
 
 	public:
 

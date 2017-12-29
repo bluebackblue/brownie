@@ -91,6 +91,10 @@ namespace NBsys{namespace NHttp
 		*/
 		Step::Id step;
 
+		/** padding
+		*/
+		padding64(0,4);
+
 		/** socket
 		*/
 		sharedptr<SocketHandle> socket;
@@ -98,6 +102,10 @@ namespace NBsys{namespace NHttp
 		/** iserror
 		*/
 		bool iserror;
+
+		/** padding
+		*/
+		padding64(1,7);
 
 		/** sendbuffer
 		*/

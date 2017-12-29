@@ -14,6 +14,12 @@
 #include "./include.h"
 
 
+/** warning push
+*/
+#pragma warning(push)
+#pragma warning(disable:4514)
+
+
 /** EntryParam
 */
 struct EntryParam
@@ -37,3 +43,7 @@ struct EntryParam
 */
 EntryParam& GetEntryParamReference();
 
+
+/** warning pop
+*/
+#pragma warning(pop)

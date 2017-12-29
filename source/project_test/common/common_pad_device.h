@@ -66,6 +66,11 @@ namespace NTest{namespace NCommon
 		*/
 		bool mouse_r;
 
+		/** padding
+		*/
+		padding64(0,6);
+		padding32(0,2);
+
 	public:
 
 		/** constructor

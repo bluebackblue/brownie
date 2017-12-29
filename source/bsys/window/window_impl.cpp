@@ -27,6 +27,14 @@
 #include "./window_impl.h"
 
 
+/** warning
+
+4710 : The given function was selected for inline expansion, but the compiler did not perform the inlining.
+
+*/
+#pragma warning(disable:4710)
+
+
 /** NBsys::NWindow
 */
 #if(BSYS_WINDOW_ENABLE)
@@ -147,7 +155,7 @@ namespace NBsys{namespace NWindow
 			LONG_PTR t_value = reinterpret_cast<LONG_PTR>(this);
 			::SetWindowLongPtr(t_handle,GWLP_USERDATA,t_value);
 			#else
-			LONG t_value = reinterpret_cast<AddressType>(this);
+			LONG t_value = reinterpret_cast<LONG>(this);
 			::SetWindowLongPtr(t_handle,GWL_USERDATA,t_value);
 			#endif
 

@@ -32,13 +32,13 @@
 
 	//[include]
 	#pragma warning(push)
-	#pragma warning(disable:4820 4668)
+	#pragma warning(disable:4514 4820 4668)
 	#include <winsock2.h>
 	#pragma warning(pop)
 
 	//[include]
 	#pragma warning(push)
-	#pragma warning(disable:4820 4668 4365 4574)
+	#pragma warning(disable:4514 4820 4668 4365 4574)
 	#include <ws2tcpip.h>
 	#pragma warning(pop)
 
@@ -63,19 +63,16 @@ namespace NBlib
 
 		addrinfo* rawaddrinfo;
 
+		/** padding
+		*/
+		padding64(0,7);
+		padding32(0,3);
+
 		#endif
 
 		/** isopen
 		*/
 		bool isopen;
-
-		/** パディング。
-		*/
-		#if defined(ROM_64BIT)
-		u8 dummy[7];
-		#else
-		u8 dummy[3];
-		#endif
 
 	public:
 

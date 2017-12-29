@@ -36,6 +36,8 @@
 
 /** NBlib
 */
+#pragma warning(push)
+#pragma warning(disable:4514)
 namespace NBlib
 {
 	/** SimpleEvent
@@ -62,13 +64,10 @@ namespace NBlib
 		*/
 		bool						manual_reset;
 
-		/** パディング。
+		/** padding
 		*/
-		#if defined(ROM_64BIT)
-		u8 dummy[6];
-		#else
-		u8 dummy[2];
-		#endif
+		padding64(0,6);
+		padding32(0,2);
 
 		#endif
 
@@ -215,4 +214,5 @@ namespace NBlib
 
 
 }
+#pragma warning(pop)
 

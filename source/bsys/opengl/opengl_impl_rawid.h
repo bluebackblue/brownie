@@ -25,6 +25,8 @@
 /** NBsys::NOpengl
 */
 #if(BSYS_OPENGL_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4514)
 namespace NBsys{namespace NOpengl
 {
 	/** RawID
@@ -71,5 +73,6 @@ namespace NBsys{namespace NOpengl
 	};
 
 }}
+#pragma warning(pop)
 #endif
 

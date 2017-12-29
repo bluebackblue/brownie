@@ -17,13 +17,15 @@
 
 /** NBlib
 */
+#pragma warning(push)
+#pragma warning(disable:4514)
 namespace NBlib
 {
 	/** ErrorCode
 	*/
 	struct ErrorCode
 	{
-		enum Id
+		enum Id : u32
 		{
 			//成功。
 			Success						= 0x00000000,
@@ -84,4 +86,5 @@ namespace NBlib
 
 
 }
+#pragma warning(pop)
 

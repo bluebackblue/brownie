@@ -46,11 +46,10 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		bool clip;
 
-		/** パディング。
+		/** padding
 		*/
-		#if(ROM_64BIT)
-		u8 dummy[3];
-		#endif
+		padding64(0,3);
+		padding32(0,3);
 
 		/** alignment_x
 		*/
@@ -59,6 +58,10 @@ namespace NBsys{namespace NWindowMenu
 		/** alignment_y
 		*/
 		s32 alignment_y;
+
+		/** padding
+		*/
+		padding64(1,4);
 
 	public:
 

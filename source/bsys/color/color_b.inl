@@ -26,6 +26,8 @@
 /** NBsys::NColor
 */
 #if(BSYS_COLOR_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4514)
 namespace NBsys{namespace NColor
 {
 	/** r
@@ -301,5 +303,6 @@ namespace NBsys{namespace NColor
 
 
 }}
+#pragma warning(pop)
 #endif
 

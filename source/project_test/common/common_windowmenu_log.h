@@ -32,6 +32,11 @@ namespace NTest{namespace NCommon
 		*/
 		bool endrequest;
 
+		/** padding
+		*/
+		padding64(0,7);
+		padding32(0,3);
+
 		/** logtext
 		*/
 		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Text> window_logtext[16];
@@ -39,6 +44,10 @@ namespace NTest{namespace NCommon
 		/** debuglog_counter
 		*/
 		s32 debuglog_counter;
+
+		/** padding
+		*/
+		padding64(1,4);
 
 	public:
 

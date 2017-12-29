@@ -56,11 +56,10 @@ namespace NBsys{namespace ND3d11
 			*/
 			bool lock;
 
-			/** パディング。
+			/** padding
 			*/
-			#if(ROM_64BIT)
-			u8 dummy[1];
-			#endif
+			padding64(0,1);
+			padding32(0,1);
 
 			/** fontstate
 			*/
@@ -88,6 +87,10 @@ namespace NBsys{namespace ND3d11
 		*/
 		sharedptr<NBsys::NFont::Font> font;
 
+		/** padding
+		*/
+		padding64(0,4);
+
 		/** fonttexture_type
 		*/
 		D3d11_FontTextureType::Id fonttexture_type;
@@ -100,12 +103,6 @@ namespace NBsys{namespace ND3d11
 		*/
 		s32 textureheight;
 
-		/** パディング。
-		*/
-		#if(ROM_64BIT)
-		u8 dummy1[4];
-		#endif
-	
 		/** texture
 		*/
 		sharedptr<NBsys::NTexture::Texture> texture;
@@ -114,11 +111,9 @@ namespace NBsys{namespace ND3d11
 		*/
 		s32 textureid;
 
-		/** パディング。
+		/** padding
 		*/
-		#if(ROM_64BIT)
-		u8 dummy2[4];
-		#endif
+		padding64(1,4);
 
 		/** list
 		*/

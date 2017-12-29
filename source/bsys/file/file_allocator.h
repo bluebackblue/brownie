@@ -20,6 +20,8 @@
 /** NBsys::NFile
 */
 #if(BSYS_FILE_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4514)
 namespace NBsys{namespace NFile
 {
 	/** File_Allocator
@@ -79,5 +81,6 @@ namespace NBsys{namespace NFile
 
 
 }}
+#pragma warning(pop)
 #endif
 

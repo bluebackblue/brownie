@@ -31,6 +31,8 @@
 /** NBsys::NGeometry
 */
 #if(BSYS_GEOMETRY_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4514)
 namespace NBsys{namespace NGeometry
 {
 	/** x
@@ -276,5 +278,6 @@ namespace NBsys{namespace NGeometry
 
 
 }}
+#pragma warning(pop)
 #endif
 

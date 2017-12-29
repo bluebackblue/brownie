@@ -72,6 +72,16 @@ namespace NBsys{namespace NOpengl
 		{
 		}
 
+	private:
+
+		/** copy constructor禁止。
+		*/
+		Opengl_Impl_ActionBatching_Shader_Load(const Opengl_Impl_ActionBatching_Shader_Load& a_this) = delete;
+
+		/** コピー禁止。
+		*/
+		void operator =(const Opengl_Impl_ActionBatching_Shader_Load& a_this) = delete;
+
 	public:
 
 		/** アクション開始。

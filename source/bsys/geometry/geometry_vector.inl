@@ -25,6 +25,8 @@
 /** NBsys::NGeometry
 */
 #if(BSYS_GEOMETRY_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4514)
 namespace NBsys{namespace NGeometry
 {
 	/** [作成]乗算。
@@ -1118,5 +1120,6 @@ namespace NBsys{namespace NGeometry
 
 
 }}
+#pragma warning(pop)
 #endif
 

@@ -17,6 +17,14 @@
 #pragma warning(pop)
 
 
+/** warning
+
+4710 : The given function was selected for inline expansion, but the compiler did not perform the inlining.
+
+*/
+#pragma warning(disable:4710)
+
+
 /** NTest
 */
 #if(DEF_TEST_INDEX == 1)

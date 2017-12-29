@@ -58,11 +58,11 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		bool up_r;
 
-		/** パディング。
+		/** padding
 		*/
-		#if(ROM_64BIT)
-		u8 dummy[2];
-		#endif
+		padding64(0,2);
+		padding32(0,2);
+
 	};
 
 

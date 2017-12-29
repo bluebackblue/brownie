@@ -149,6 +149,10 @@ namespace NBsys{namespace NTexture
 		*/
 		sharedptr<Texture_Impl_GlobalMemory> globalmemory;
 
+		/** padding
+		*/
+		padding32(0,4);
+
 		/** statstg
 		*/
 		STATSTG statstg;

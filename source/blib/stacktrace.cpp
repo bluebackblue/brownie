@@ -44,7 +44,7 @@
 			*/
 			//[include]
 			#pragma warning(push)
-			#pragma warning(disable:4091 4820)
+			#pragma warning(disable:4091 4820 4514)
 			#include <imagehlp.h>
 			#pragma warning(pop)
 

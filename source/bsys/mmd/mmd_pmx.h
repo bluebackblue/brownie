@@ -35,6 +35,8 @@
 /** NBsys::NMmd
 */
 #if(BSYS_MMD_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4514)
 namespace NBsys{namespace NMmd
 {
 	/** Mmd_Pmx
@@ -51,6 +53,11 @@ namespace NBsys{namespace NMmd
 		*/
 		Mmd_Pmx_Header_Ex header_ex;
 
+		/** padding
+		*/
+		padding64(0,7);
+		padding32(0,3);
+
 		/** model_name
 		*/
 		STLWString model_name_jp;
@@ -61,25 +68,45 @@ namespace NBsys{namespace NMmd
 		STLWString comment_jp;
 		STLWString comment_en;
 
+		/** padding
+		*/
+		padding64(1,4);
+
 		/** vertex_list
 		*/
 		u32 vertex_list_size;
 		sharedptr<Mmd_Pmx_VertexData> vertex_list;
+
+		/** padding
+		*/
+		padding64(2,4);
 
 		/** index_list
 		*/
 		u32 index_list_size;
 		sharedptr<u32> index_list;
 
+		/** padding
+		*/
+		padding64(3,4);
+
 		/** texturename_list
 		*/
 		u32 texturename_list_size;
 		STLVector<STLWString>::Type texturename_list;
 
+		/** padding
+		*/
+		padding64(4,4);
+
 		/** parts_list
 		*/
 		u32 parts_list_size;
 		STLVector<Mmd_Pmx_Parts>::Type parts_list;
+
+		/** padding
+		*/
+		padding64(5,4);
 
 		/** bone_list
 		*/
@@ -142,5 +169,6 @@ namespace NBsys{namespace NMmd
 
 
 }}
+#pragma warning(pop)
 #endif
 

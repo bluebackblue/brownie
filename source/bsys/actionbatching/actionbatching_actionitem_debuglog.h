@@ -25,6 +25,8 @@
 /** NBsys::NActionBatching
 */
 #if(BSYS_ACTIONBATCHING_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4514)
 namespace NBsys{namespace NActionBatching
 {
 	/** ActionBatching_Action_DebugLog
@@ -73,5 +75,6 @@ namespace NBsys{namespace NActionBatching
 
 
 }}
+#pragma warning(pop)
 #endif
 

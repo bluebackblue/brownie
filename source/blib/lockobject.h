@@ -29,6 +29,8 @@
 
 /** NBlib
 */
+#pragma warning(push)
+#pragma warning(disable:4514)
 namespace NBlib
 {
 	/** LockObject
@@ -142,4 +144,5 @@ namespace NBlib
 
 
 }
+#pragma warning(pop)
 

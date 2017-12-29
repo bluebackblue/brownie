@@ -38,6 +38,8 @@
 /** NBsys::NWindowMenu
 */
 #if(BSYS_WINDOWMENU_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4514)
 namespace NBsys{namespace NWindowMenu
 {
 	/** WindowMenu_Window_Base
@@ -83,11 +85,10 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		bool enable;
 
-		/** パディング。
+		/** padding
 		*/
-		#if(ROM_64BIT)
-		u8 dummy1[3];
-		#endif
+		padding64(0,3);
+		padding32(0,3);
 
 		/** type
 		*/
@@ -131,11 +132,10 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		bool draw_enable;
 
-		/** パディング。
+		/** padding
 		*/
-		#if(ROM_64BIT)
-		u8 dummy2[2];
-		#endif
+		padding64(1,2);
+		padding32(1,2);
 
 		/** 計算結果。
 		*/
@@ -147,6 +147,10 @@ namespace NBsys{namespace NWindowMenu
 		f32 calc_y;
 		f32 calc_w;
 		f32 calc_h;
+
+		/** padding
+		*/
+		padding64(2,4);
 
 		/** 計算に必要な親が所持している自分のインデックス。
 		*/
@@ -261,5 +265,6 @@ namespace NBsys{namespace NWindowMenu
 
 
 }}
+#pragma warning(pop)
 #endif
 

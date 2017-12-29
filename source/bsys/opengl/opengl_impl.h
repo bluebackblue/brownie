@@ -76,6 +76,10 @@ namespace NBsys{namespace NOpengl
 		*/
 		void (*draw_proc)();
 
+		/** padding
+		*/
+		padding64(0,2);
+
 		/** mouse_l
 		*/
 		bool mouse_l;
@@ -91,6 +95,10 @@ namespace NBsys{namespace NOpengl
 		/** mouse_y
 		*/
 		s32 mouse_y;
+
+		/** padding
+		*/
+		padding64(1,4);
 
 		/** id_maker
 		*/
@@ -158,6 +166,16 @@ namespace NBsys{namespace NOpengl
 		/** destructor
 		*/
 		nonvirtual ~Opengl_Impl() noexcept;
+
+	private:
+
+		/** copy constructor禁止。
+		*/
+		Opengl_Impl(const Opengl_Impl& a_this) = delete;
+
+		/** コピー禁止。
+		*/
+		void operator =(const Opengl_Impl& a_this) = delete;
 
 	public:
 

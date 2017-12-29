@@ -25,6 +25,8 @@
 /** NBsys::ND3d11
 */
 #if(BSYS_D3D11_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4514)
 namespace NBsys{namespace ND3d11
 {
 	/** D3d11_Sampler
@@ -57,5 +59,6 @@ namespace NBsys{namespace ND3d11
 
 
 }}
+#pragma warning(pop)
 #endif
 

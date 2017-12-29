@@ -25,6 +25,8 @@
 
 /** NBlib
 */
+#pragma warning(push)
+#pragma warning(disable:4514)
 namespace NBlib
 {
 	/** JsonItem
@@ -158,39 +160,36 @@ namespace NBlib
 
 			/** 文字データ。
 			*/
-			sharedptr<STLString>										string_data;
+			sharedptr<STLString> string_data;
 
 			/** 連想配列。
 			*/
-			sharedptr<STLMap<STLString,sharedptr<JsonItem>>::Type>		associative_array;
+			sharedptr<STLMap<STLString,sharedptr<JsonItem>>::Type> associative_array;
 
 			/** インデックス配列。
 			*/
-			sharedptr<STLVector<sharedptr<JsonItem>>::Type>				index_array;
+			sharedptr<STLVector<sharedptr<JsonItem>>::Type> index_array;
 
 			/** 整数。
 			*/
-			s32															integer_number;
+			s32 integer_number;
 
 			/** 少数。
 			*/
-			f32															float_number;
+			f32 float_number;
 
 			/** 真偽データ。
 			*/
-			bool														bool_data;
+			bool bool_data;
 
-			/** パディング。
+			/** padding
 			*/
-			#if(ROM_64BIT)
-			u8 dummy[7];
-			#else
-			u8 dummy[3];
-			#endif
+			padding64(0,7);
+			padding32(0,3);
 
 			/** バイナリ―。
 			*/
-			sharedptr<STLVector<u8>::Type>								binary_data;
+			sharedptr<STLVector<u8>::Type> binary_data;
 
 			/** リセット。
 			*/
@@ -214,11 +213,9 @@ namespace NBlib
 		*/
 		ValueType::Id valuetype;
 
-		/** パディング。
+		/** padding
 		*/
-		#if(ROM_64BIT)
-		u8 dummy[4];
-		#endif
+		padding64(0,4);
 
 		/** バリアント型。
 		*/
@@ -457,4 +454,5 @@ namespace NBlib
 
 
 }
+#pragma warning(pop)
 

@@ -42,11 +42,10 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		bool on_flag;
 
-		/** パディング。
+		/** padding
 		*/
-		#if(ROM_64BIT)
-		u8 dummy1[2];
-		#endif
+		padding64(0,2);
+		padding32(0,2);
 
 		/** color
 		*/
@@ -54,11 +53,9 @@ namespace NBsys{namespace NWindowMenu
 		NBsys::NColor::Color_F color_on;
 		NBsys::NColor::Color_F color_ondown;
 
-		/** パディング。
+		/** padding
 		*/
-		#if(ROM_64BIT)
-		u8 dummy2[4];
-		#endif
+		padding64(1,4);
 
 		/** string
 		*/

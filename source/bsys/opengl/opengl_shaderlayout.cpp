@@ -27,6 +27,14 @@
 #include "./opengl_shaderlayout.h"
 
 
+/** warning
+
+4710 : The given function was selected for inline expansion, but the compiler did not perform the inlining.
+
+*/
+#pragma warning(disable:4710)
+
+
 /** NBsys::NOpengl
 */
 #if(BSYS_OPENGL_ENABLE)
@@ -55,8 +63,8 @@ namespace NBsys{namespace NOpengl
 	*/
 	bool Opengl_ShaderLayout::IsBusy() const
 	{
-		s32 ii_max = static_cast<s32>(this->list.size());
-		for(s32 ii=0;ii<ii_max;ii++){
+		u32 ii_max = static_cast<u32>(this->list.size());
+		for(u32 ii=0;ii<ii_max;ii++){
 			if(this->list[ii].vertex_fileobject->IsBusy() == true){
 				return true;
 			}
@@ -78,7 +86,7 @@ namespace NBsys{namespace NOpengl
 	*/
 	Opengl_ShaderLayout::Item& Opengl_ShaderLayout::GetItem(s32 a_index)
 	{
-		return this->list[a_index];
+		return this->list[static_cast<std::size_t>(a_index)];
 	}
 }}
 #endif

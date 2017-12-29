@@ -27,9 +27,19 @@
 #include "./actionbatching.h"
 
 
+/** warning
+
+4710 : The given function was selected for inline expansion, but the compiler did not perform the inlining.
+
+*/
+#pragma warning(disable:4710)
+
+
 /** NBsys::NActionBatching
 */
 #if(BSYS_ACTIONBATCHING_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4514)
 namespace NBsys{namespace NActionBatching
 {
 	/** constructor
@@ -88,6 +98,7 @@ namespace NBsys{namespace NActionBatching
 
 
 }}
+#pragma warning(pop)
 #endif
 
 

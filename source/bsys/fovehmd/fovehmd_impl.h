@@ -41,19 +41,13 @@ namespace NBsys{namespace NFovehmd
 	{
 	public:
 
-		/** constructor
-		*/
-		Fovehmd_Impl() noexcept;
-
-		/** destructor
-		*/
-		nonvirtual ~Fovehmd_Impl() noexcept;
-
-	public:
-
 		/** errorcode
 		*/
 		ErrorCode errorcode;
+
+		/** padding
+		*/
+		padding64(0,4);
 
 		/** headset
 		*/
@@ -98,6 +92,20 @@ namespace NBsys{namespace NFovehmd
 		/** translate_right
 		*/
 		NBsys::NGeometry::Geometry_Matrix_44 eye_translate_right;
+
+		/** padding
+		*/
+		padding64(1,4);
+
+	public:
+
+		/** constructor
+		*/
+		Fovehmd_Impl() noexcept;
+
+		/** destructor
+		*/
+		nonvirtual ~Fovehmd_Impl() noexcept;
 
 	public:
 

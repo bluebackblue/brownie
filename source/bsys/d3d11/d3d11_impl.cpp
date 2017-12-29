@@ -58,6 +58,14 @@
 #endif
 
 
+/** warning
+
+4710 : The given function was selected for inline expansion, but the compiler did not perform the inlining.
+
+*/
+#pragma warning(disable:4710)
+
+
 /** NBsys::ND3d11
 */
 #if(BSYS_D3D11_ENABLE)
@@ -229,7 +237,7 @@ namespace NBsys{namespace ND3d11
 					this->devicecontext.reset(t_raw_devicecontext,release_delete<ID3D11DeviceContext>());
 				}
 				if(FAILED(t_result)){
-					DEEPDEBUG_ASSERT(BSYS_D3D11_DEBUG,0);
+					DEEPDEBUG_ASSERT(BSYS_D3D11_DEBUG_ENABLE,0);
 					this->swapchain.reset();
 					this->devicecontext.reset();
 					this->device.reset();
@@ -246,7 +254,7 @@ namespace NBsys{namespace ND3d11
 					this->backbuffer.reset(t_raw,release_delete<ID3D11Texture2D>());
 				}
 				if(FAILED(t_result)){
-					DEEPDEBUG_ASSERT(BSYS_D3D11_DEBUG,0);
+					DEEPDEBUG_ASSERT(BSYS_D3D11_DEBUG_ENABLE,0);
 					this->backbuffer.reset();
 				}
 			}
@@ -258,7 +266,7 @@ namespace NBsys{namespace ND3d11
 					this->backbuffer_rendertargetview.reset(t_raw,release_delete<ID3D11RenderTargetView>());
 				}
 				if(FAILED(t_result)){
-					DEEPDEBUG_ASSERT(BSYS_D3D11_DEBUG,0);
+					DEEPDEBUG_ASSERT(BSYS_D3D11_DEBUG_ENABLE,0);
 					this->backbuffer_rendertargetview.reset();
 				}
 			}
@@ -270,7 +278,7 @@ namespace NBsys{namespace ND3d11
 					this->backbuffer_shaderresourceview.reset(t_raw,release_delete<ID3D11ShaderResourceView>());
 				}
 				if(FAILED(t_result)){
-					DEEPDEBUG_ASSERT(BSYS_D3D11_DEBUG,0);
+					DEEPDEBUG_ASSERT(BSYS_D3D11_DEBUG_ENABLE,0);
 					this->backbuffer_shaderresourceview.reset();
 				}
 			}
@@ -303,7 +311,7 @@ namespace NBsys{namespace ND3d11
 					this->depthbuffer.reset(t_raw,release_delete<ID3D11Texture2D>());
 				}
 				if(FAILED(t_result)){
-					DEEPDEBUG_ASSERT(BSYS_D3D11_DEBUG,0);
+					DEEPDEBUG_ASSERT(BSYS_D3D11_DEBUG_ENABLE,0);
 					this->depthbuffer.reset();
 				}
 			}
@@ -322,7 +330,7 @@ namespace NBsys{namespace ND3d11
 					this->depthbuffer_depthstencilview.reset(t_raw,release_delete<ID3D11DepthStencilView>());
 				}
 				if(FAILED(t_result)){
-					DEEPDEBUG_ASSERT(BSYS_D3D11_DEBUG,0);
+					DEEPDEBUG_ASSERT(BSYS_D3D11_DEBUG_ENABLE,0);
 					this->depthbuffer_depthstencilview.reset();
 				}
 			}
@@ -343,7 +351,7 @@ namespace NBsys{namespace ND3d11
 					this->depthbuffer_shaderresourceview.reset(t_raw,release_delete<ID3D11ShaderResourceView>());
 				}
 				if(FAILED(t_result)){
-					DEEPDEBUG_ASSERT(BSYS_D3D11_DEBUG,0);
+					DEEPDEBUG_ASSERT(BSYS_D3D11_DEBUG_ENABLE,0);
 					this->depthbuffer_shaderresourceview.reset();
 				}
 			}
@@ -361,7 +369,7 @@ namespace NBsys{namespace ND3d11
 					this->depthbuffer_depthstencilstate.reset(t_raw,release_delete<ID3D11DepthStencilState>());
 				}
 				if(FAILED(t_result)){
-					DEEPDEBUG_ASSERT(BSYS_D3D11_DEBUG,0);
+					DEEPDEBUG_ASSERT(BSYS_D3D11_DEBUG_ENABLE,0);
 					this->depthbuffer_depthstencilstate.reset();
 				}
 			}

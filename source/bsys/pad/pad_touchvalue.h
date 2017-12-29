@@ -20,6 +20,8 @@
 /** NBsys::NPad
 */
 #if(BSYS_PAD_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4514)
 namespace NBsys{namespace NPad
 {
 	/** TouchValue
@@ -29,6 +31,11 @@ namespace NBsys{namespace NPad
 		f32		x;
 		f32		y;
 		bool	flag;
+
+		/** padding
+		*/
+		padding64(0,3);
+		padding32(0,3);
 
 		/** constructor
 		*/
@@ -70,5 +77,6 @@ namespace NBsys{namespace NPad
 
 
 }}
+#pragma warning(pop)
 #endif
 

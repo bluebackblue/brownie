@@ -53,13 +53,10 @@ namespace NBlib
 		*/
 		bool isopen;
 
-		/** パディング。
+		/** padding
 		*/
-		#if defined(ROM_64BIT)
-		u8 dummy[7];
-		#else
-		u8 dummy[3];
-		#endif
+		padding64(0,7);
+		padding32(0,3);
 
 		/** list
 		*/

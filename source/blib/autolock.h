@@ -23,6 +23,8 @@
 
 /** NBlib
 */
+#pragma warning(push)
+#pragma warning(disable:4514)
 namespace NBlib
 {
 	/** AutoLock
@@ -35,11 +37,9 @@ namespace NBlib
 		*/
 		AtomicValue<s32> nestvalue;
 
-		/** パディング。
+		/** padding
 		*/
-		#if defined(ROM_64BIT)
-		u8 dummy[4];
-		#endif
+		padding64(0,4);
 
 		/** lockobject
 		*/
@@ -145,4 +145,5 @@ namespace NBlib
 
 
 }
+#pragma warning(pop)
 

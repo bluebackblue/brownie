@@ -17,6 +17,8 @@
 
 /** NBlib
 */
+#pragma warning(push)
+#pragma warning(disable:4514)
 namespace NBlib
 {
 	/** 線形合同法。
@@ -165,4 +167,5 @@ namespace NBlib
 
 
 }
+#pragma warning(pop)
 

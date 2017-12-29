@@ -29,6 +29,8 @@
 
 /** NBlib
 */
+#pragma warning(push)
+#pragma warning(disable:4514)
 namespace NBlib
 {
 	/** Muid_Impl
@@ -219,4 +221,5 @@ namespace NBlib
 
 
 }
+#pragma warning(pop)
 
