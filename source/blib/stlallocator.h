@@ -127,6 +127,11 @@ namespace NBlib
 
 	};
 
+	/** 比較演算子
+	*/
+	template <class T1,class T2> bool operator==(const STLAllocator<T1>&,const STLAllocator<T2>&){return true;}
+	template <class T1,class T2> bool operator!=(const STLAllocator<T1>&,const STLAllocator<T2>&){return false;}
+
 	#endif
 
 
@@ -180,6 +185,12 @@ namespace NBlib
 		};
 
 	};
+
+	/** 比較演算子
+	*/
+	template <class T1,class T2> bool operator==(const STLAllocator_String<T1>&,const STLAllocator_String<T2>&){return true;}
+	template <class T1,class T2> bool operator!=(const STLAllocator_String<T1>&,const STLAllocator_String<T2>&){return false;}
+
 	#endif
 
 

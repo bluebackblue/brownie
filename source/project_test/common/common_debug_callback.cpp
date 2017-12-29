@@ -27,6 +27,8 @@
 
 /** NTest::NCommon
 */
+#pragma warning(push)
+#pragma warning(disable:4505)
 namespace NTest{namespace NCommon
 {
 	/** LogItem
@@ -161,6 +163,7 @@ namespace NTest{namespace NCommon
 
 
 }}
+#pragma warning(pop)
 
 
 /** Blib_DebugAssert_Callback

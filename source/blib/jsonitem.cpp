@@ -25,7 +25,6 @@
 #include "./stlallocator.h"
 #include "./jsonitem.h"
 #include "./debugassert.h"
-#include "./vastring.h"
 #include "./autolock.h"
 #include "./blib_bootinitialize.h"
 
@@ -2004,13 +2003,11 @@ namespace NBlib
 			}break;
 		case ValueType::IntegerNumber:
 			{
-				char t_buffer[32] = {0};
-				return VASTRING(t_buffer,sizeof(t_buffer),"%d",this->value.integer_number);
+				return STLString(std::to_string(this->value.integer_number).c_str());
 			}break;
 		case ValueType::FloatNumber:
 			{
-				char t_buffer[32] = {0};
-				return VASTRING(t_buffer,sizeof(t_buffer),"%f",this->value.float_number);
+				return STLString(std::to_string(this->value.float_number).c_str());
 			}break;
 		case ValueType::IndexArray:
 			{

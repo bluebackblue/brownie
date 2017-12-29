@@ -214,7 +214,7 @@ namespace NBlib
 					}
 				
 					char t_port[8] = {0};
-					const char* t_port_reference = VASTRING(&t_port[0],sizeof(t_port),"%d",a_port);
+					const char* t_port_reference = VASTRING(&t_port[0],sizeof(t_port),"%d",a_port);	//TODO:to_string
 
 					if(::getaddrinfo(a_ip.c_str(),t_port_reference,&t_addrinfo_hints,&this->rawaddrinfo) != 0){
 						this->rawaddrinfo = nullptr;
@@ -251,7 +251,7 @@ namespace NBlib
 			#if defined(PLATFORM_VCWIN)
 			{
 				char t_port[8] = {0};
-				const char* t_port_reference = VASTRING(&t_port[0],sizeof(t_port),"%d",a_port);
+				const char* t_port_reference = VASTRING(&t_port[0],sizeof(t_port),"%d",a_port);	//TODO:to_string
 
 				addrinfo t_addrinfo_hints = {0};
 				{
