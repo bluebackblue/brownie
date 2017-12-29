@@ -70,7 +70,7 @@ namespace NBlib
 	bool IsBootInitialize();
 
 
-	/** 終了時に呼び出す。
+	/** 終了時に呼び出す関数の登録。
 	*/
 	void CallOnExit(const std::function<void(void)>& a_function);
 

@@ -56,6 +56,11 @@ namespace NBlib
 	#endif
 
 
+	/** ロックオブジェクト。
+	*/
+	static LockObject s_lockobject;
+
+
 	/** グローバル乱数。
 	*/
 	static RandomTemplate<Random_LinearCongruentialGenerators> s_globalrand;
@@ -66,7 +71,7 @@ namespace NBlib
 	static LockObject s_globalrand_lockobject;
 
 
-	/** インスｋタンス。
+	/** インスタンス。
 	*/
 	static weakptr<Blib> s_instance;
 
@@ -202,10 +207,15 @@ namespace NBlib
 	}
 
 
-	/** 終了時に呼び出す。
+	/** 終了時に呼び出す関数の登録。
+
+	複数スレッドからの呼び出し。
+
 	*/
 	void CallOnExit(const std::function<void(void)>& a_function)
 	{
+		AutoLock t_autolock(s_lockobject);
+
 		sharedptr<Blib> t_instance = s_instance;
 		if(t_instance){
 			t_instance->call_list.push_back(a_function);
