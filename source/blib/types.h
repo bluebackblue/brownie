@@ -132,3 +132,37 @@ namespace NBlib
 
 #endif
 
+
+/** padding32
+*/
+#if !defined(padding32)
+
+	#if defined(ROM_32BIT)
+
+		#define padding32(INDEX,SIZE)	u8 dummy[SIZE]	
+
+	#else
+
+		#define padding32(INDEX,SIZE)
+
+	#endif
+
+#endif
+
+
+/** padding64
+*/
+#if !defined(padding64)
+
+	#if defined(ROM_64BIT)
+
+		#define padding64(INDEX,SIZE)	u8 dummy[SIZE]	
+
+	#else
+
+		#define padding64(INDEX,SIZE)
+
+	#endif
+
+#endif
+

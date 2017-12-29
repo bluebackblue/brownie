@@ -49,12 +49,12 @@ bool Blib_DebugLog_Callback(const NBlib::wchar* a_tag,const NBlib::wchar* a_wstr
 */
 namespace NBlib
 {
-	/** DebugLog
-	*/
 	#if defined(ROM_MASTER)
 
 	#else
 
+		/** DebugLog
+		*/
 		void DebugLog(const wchar* a_tag,const char* a_string)
 		{
 			#if defined(PLATFORM_VCWIN)
@@ -68,12 +68,12 @@ namespace NBlib
 
 	#endif
 
-	/** DebugLog
-	*/
 	#if defined(ROM_MASTER)
 
 	#else
 
+		/** DebugLog
+		*/
 		void DebugLog(const wchar* a_tag,const wchar* a_wstring)
 		{
 			#if(BLIB_DEBUGLOG_CALLBACK_ENABLE)

@@ -59,6 +59,18 @@ namespace NBlib
 		{
 		}
 
+	private:
+
+		/** copy constructor禁止。
+		*/
+		LockObject(const LockObject& a_this) = delete;
+
+		/** コピー禁止。
+		*/
+		void operator =(const LockObject& a_this) = delete;
+
+	public:
+
 		/** Lock
 		*/
 		void Lock()
@@ -125,16 +137,6 @@ namespace NBlib
 		{
 			return a_raw.TryLock();
 		}
-
-	private:
-
-		/** copy constructor禁止。
-		*/
-		LockObject(const LockObject& a_this) = delete;
-
-		/** コピー禁止。
-		*/
-		void operator =(const LockObject& a_this) = delete;
 
 	};
 

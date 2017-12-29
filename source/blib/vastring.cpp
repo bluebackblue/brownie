@@ -30,6 +30,7 @@
 	//#pragma warning(disable:0)
 	#include <stdarg.h>
 	//#pragma warning(pop)
+
 #endif
 
 
@@ -109,39 +110,39 @@ namespace NBlib
 
 	#else
 
-	/** [static]GetBuffer
-	*/
-	char* DebugLogBuffer::GetBuffer()
-	{
-		#if(BLIB_THREADLOCAL_ENABLE)
+		/** [static]GetBuffer
+		*/
+		char* DebugLogBuffer::GetBuffer()
 		{
-			ThreadLocal& t_threadlocal_reference = GetThreadLocal(BLIB_VASTRING_DEBUG_THREADLOCALSLOT);
+			#if(BLIB_THREADLOCAL_ENABLE)
+			{
+				NBlib::ThreadLocal& t_threadlocal_reference = NBlib::GetThreadLocal(BLIB_VASTRING_DEBUG_THREADLOCALSLOT);
 
-			if(t_threadlocal_reference.pointer == nullptr){
-				t_threadlocal_reference.pointer = std::malloc(BLIB_VASTRING_DEBUG_SIZE);
+				if(t_threadlocal_reference.pointer == nullptr){
+					t_threadlocal_reference.pointer = std::malloc(BLIB_VASTRING_DEBUG_SIZE);
 
-				CallOnExit(std::bind([](void* a_pointer){
-					return std::free(a_pointer);
-				},t_threadlocal_reference.pointer));
+					CallOnExit(std::bind([](void* a_pointer){
+						return std::free(a_pointer);
+					},t_threadlocal_reference.pointer));
+				}
+
+				return reinterpret_cast<char*>(t_threadlocal_reference.pointer);
 			}
-
-			return reinterpret_cast<char*>(t_threadlocal_reference.pointer);
+			#else
+			{
+				ASSERT(0);
+				return nullptr;
+			}
+			#endif
 		}
-		#else
+
+
+		/** [static]GetBufferSize
+		*/
+		s32 DebugLogBuffer::GetBufferSize()
 		{
-			ASSERT(0);
-			return nullptr;
+			return BLIB_VASTRING_DEBUG_SIZE;
 		}
-		#endif
-	}
-
-
-	/** [static]GetBufferSize
-	*/
-	s32 DebugLogBuffer::GetBufferSize()
-	{
-		return BLIB_VASTRING_DEBUG_SIZE;
-	}
 
 	#endif
 

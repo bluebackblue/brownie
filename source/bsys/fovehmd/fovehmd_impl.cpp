@@ -126,8 +126,7 @@ namespace NBsys{namespace NFovehmd
 
 					//成功。
 
-					this->singleeye_resolution.x = static_cast<f32>(t_ret.x);
-					this->singleeye_resolution.y = static_cast<f32>(t_ret.y);
+					this->singleeye_resolution.Set(static_cast<f32>(t_ret.x),static_cast<f32>(t_ret.y));
 					return true;
 
 				}else{
@@ -287,7 +286,7 @@ namespace NBsys{namespace NFovehmd
 	{
 		NBsys::NGeometry::Geometry_Matrix_44 t_camera_matrix = this->camera_matrix;
 		{
-			t_camera_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(this->camera_position.x + a_camera_position.x,this->camera_position.y + a_camera_position.y,this->camera_position.z + a_camera_position.z);
+			t_camera_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(this->camera_position + a_camera_position);
 			t_camera_matrix *= this->eye_translate_left;
 		}
 
@@ -304,7 +303,7 @@ namespace NBsys{namespace NFovehmd
 	{
 		NBsys::NGeometry::Geometry_Matrix_44 t_camera_matrix = this->camera_matrix;
 		{
-			t_camera_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(this->camera_position.x + a_camera_position.x,this->camera_position.y + a_camera_position.y,this->camera_position.z + a_camera_position.z);
+			t_camera_matrix *= NBsys::NGeometry::Geometry_Matrix_44::Make_Translate(this->camera_position + a_camera_position);
 			t_camera_matrix *= this->eye_translate_right;
 		}
 

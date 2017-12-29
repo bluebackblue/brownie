@@ -289,6 +289,7 @@ namespace NBlib
 
 	};
 
+
 	/** sharedptr_impl。
 
 		カウント、インスタンス、削除子の管理。

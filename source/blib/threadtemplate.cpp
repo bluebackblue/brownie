@@ -55,6 +55,7 @@ namespace NBlib
 	/** THREADNAME_INFO
 	*/
 	#if defined(PLATFORM_VCWIN)
+
 		#pragma warning(push)
 		#pragma warning(disable:4820)
 		#pragma pack(push,8)  
@@ -78,6 +79,7 @@ namespace NBlib
 		};  
 		#pragma pack(pop)
 		#pragma warning(pop)
+
 	#endif
 
 
@@ -85,29 +87,29 @@ namespace NBlib
 	*/
 	#if defined(PLATFORM_VCWIN)
 
-		void SetThreadName(const STLString& a_threadname)
+	void SetThreadName(const STLString& a_threadname)
+	{
+		const DWORD MS_VC_EXCEPTION = 0x406D1388;
+
+		THREADNAME_INFO t_info;
 		{
-			const DWORD MS_VC_EXCEPTION = 0x406D1388;
-
-			THREADNAME_INFO t_info;
-			{
-				t_info.dwType = 0x1000;  
-				t_info.szName = a_threadname.c_str();  
-				t_info.dwThreadID = static_cast<DWORD>(-1);
-				t_info.dwFlags = 0;  
-			}
-
-			#pragma warning(push)  
-			#pragma warning(disable:6320 6322)  
-			__try
-			{
-				::RaiseException(MS_VC_EXCEPTION,0,sizeof(t_info)/sizeof(ULONG_PTR),(ULONG_PTR*)&t_info);  
-			}
-			__except(EXCEPTION_EXECUTE_HANDLER)
-			{
-			}
-			#pragma warning(pop)  
+			t_info.dwType = 0x1000;  
+			t_info.szName = a_threadname.c_str();  
+			t_info.dwThreadID = static_cast<DWORD>(-1);
+			t_info.dwFlags = 0;  
 		}
+
+		#pragma warning(push)  
+		#pragma warning(disable:6320 6322)  
+		__try
+		{
+			::RaiseException(MS_VC_EXCEPTION,0,sizeof(t_info)/sizeof(ULONG_PTR),(ULONG_PTR*)&t_info);  
+		}
+		__except(EXCEPTION_EXECUTE_HANDLER)
+		{
+		}
+		#pragma warning(pop)  
+	}
 
 	#endif
 

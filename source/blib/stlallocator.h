@@ -28,11 +28,13 @@
 #include <limits>
 #pragma warning(pop)
 
+
 //#pragma warning(disable:4710)
 #pragma warning(push)
 #pragma warning(disable:4987 4365 4820 4514 4623 4626 5027 4571)
 #include <memory>
 #pragma warning(pop)
+
 
 /** NBlib
 */
@@ -75,8 +77,11 @@ namespace NBlib
 	/** STLAllocator
 	*/
 	#if(0)
+
 	#define STLAllocator std::allocator
+
 	#else
+
 	template <typename T> class STLAllocator : public std::allocator<T>
 	{
 	public:
@@ -121,6 +126,7 @@ namespace NBlib
 		};
 
 	};
+
 	#endif
 
 

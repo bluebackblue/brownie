@@ -64,6 +64,16 @@ namespace NBlib
 			this->Unlock();
 		}
 
+	private:
+
+		/** copy constructor禁止。
+		*/
+		AutoLock(const AutoLock& a_this) = delete;
+
+		/** コピー禁止。
+		*/
+		void operator =(const AutoLock& a_this) = delete;
+
 	public:
 
 		/** Lock
@@ -89,16 +99,6 @@ namespace NBlib
 				this->lockobject.Unlock();
 			}
 		}
-
-	private:
-
-		/** copy constructor禁止。
-		*/
-		AutoLock(const AutoLock& a_this) = delete;
-
-		/** コピー禁止。
-		*/
-		void operator =(const AutoLock& a_this) = delete;
 
 	};
 

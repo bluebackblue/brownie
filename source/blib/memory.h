@@ -69,10 +69,8 @@ namespace NBlib
 				Memory::Copy(&t_ret,static_cast<s32>(sizeof(T)),a_current_pointer,static_cast<s32>(sizeof(T)));
 
 				if(a_increment < 0){
-					//自動インクリメント。
 					a_current_pointer += sizeof(T);
 				}else{
-					//手動インクリメント。
 					a_current_pointer += a_increment;
 				}
 			}
@@ -88,10 +86,8 @@ namespace NBlib
 				Memory::Copy(&t_ret,static_cast<s32>(sizeof(T)),a_current_pointer,static_cast<s32>(sizeof(T)));
 
 				if(a_increment < 0){
-					//自動インクリメント。
 					a_current_pointer += sizeof(T);
 				}else{
-					//手動インクリメント。
 					a_current_pointer += a_increment;
 				}
 			}

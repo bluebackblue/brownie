@@ -249,7 +249,7 @@ void operator delete(void* a_pointer,std::size_t /*a_size*/) noexcept
 
 /** 単純な記憶域の解放。例外をスローしない。
 */
-void operator delete(void* a_pointer,const std::nothrow_t& /**/) noexcept
+void operator delete(void* a_pointer,const std::nothrow_t& /*_*/) noexcept
 {
 	std::free(a_pointer);
 }

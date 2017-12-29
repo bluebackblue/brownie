@@ -68,7 +68,7 @@ namespace NBlib
 	#if(BLIB_MEMORYCONTAINER_ENABLE)
 	static MemoryContainer_Data* GetData_ThreadLocal()
 	{
-		ThreadLocal& t_threadlocal_reference = GetThreadLocal(BLIB_MEMORYCONTAINER_THREADLOCALSLOT);
+		NBlib::ThreadLocal& t_threadlocal_reference = NBlib::GetThreadLocal(BLIB_MEMORYCONTAINER_THREADLOCALSLOT);
 
 		MemoryContainer_Data* t_data;
 

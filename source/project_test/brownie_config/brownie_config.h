@@ -379,7 +379,7 @@
 	-------------------
 */
 #if !defined(BLIB_STACKTRACE_ENABLE)
-#define BLIB_STACKTRACE_ENABLE								(1)
+	#define BLIB_STACKTRACE_ENABLE								(1)
 #endif
 
 
@@ -398,7 +398,7 @@
 	-------------------
 */
 #if !defined(BLIB_STDTHREAD_ENABLE)
-#define BLIB_STDTHREAD_ENABLE								(1)
+	#define BLIB_STDTHREAD_ENABLE								(1)
 #endif
 
 

@@ -46,8 +46,8 @@ namespace NBlib
 	/** DebugAssert
 	*/
 	#if defined(ROM_MASTER)
-	#else
 
+	#else
 
 		#if defined(PLATFORM_VCWIN)
 

@@ -116,6 +116,16 @@ namespace NBlib
 			this->EndWait();
 		}
 
+	private:
+
+		/** copy constructor禁止。
+		*/
+		ThreadTemplate<T>& operator =(const ThreadTemplate<T>& a_instance) = delete;
+
+		/** 代入禁止。
+		*/
+		ThreadTemplate(const ThreadTemplate<T>& a_instance) = delete;
+
 	public:
 
 		/** スレッド開始。
@@ -266,16 +276,6 @@ namespace NBlib
 			TAGLOG("ThreadTemplate::ThreadMain","isopen.Store(false) : end");
 			#endif
 		}
-
-	private:
-
-		/** copy constructor禁止。
-		*/
-		ThreadTemplate<T>& operator =(const ThreadTemplate<T>& a_instance) = delete;
-
-		/** 代入禁止。
-		*/
-		ThreadTemplate(const ThreadTemplate<T>& a_instance) = delete;
 
 	};
 

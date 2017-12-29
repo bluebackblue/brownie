@@ -37,6 +37,9 @@ namespace NBlib
 		/** list
 		*/
 		sharedptr<T> list;
+
+		/** list_cache
+		*/
 		T* list_cache;
 
 	public:

@@ -37,12 +37,6 @@ namespace NBlib
 			//未初期化。
 			Uninitialized				= 0x80000002,	//未初期化。
 
-
-
-
-
-
-
 			//ロード。
 			Load_Error					= 0x80001000,	// 不明。
 			Load_AccessError			= 0x80001001,	// アクセスエラー。
@@ -85,6 +79,7 @@ namespace NBlib
 		nonvirtual ~ErrorCode()
 		{
 		}
+
 	};
 
 

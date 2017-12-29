@@ -72,16 +72,6 @@ namespace NBlib
 
 		#endif
 
-	private:
-
-		/** copy constructor禁止。
-		*/
-		SimpleEvent(const SimpleEvent& a_this) = delete;
-
-		/** コピー禁止。
-		*/
-		void operator =(const SimpleEvent& a_this) = delete;
-
 	public:
 
 		/** constructor
@@ -107,6 +97,18 @@ namespace NBlib
 		nonvirtual ~SimpleEvent()
 		{
 		}
+
+	private:
+
+		/** copy constructor禁止。
+		*/
+		SimpleEvent(const SimpleEvent& a_this) = delete;
+
+		/** コピー禁止。
+		*/
+		void operator =(const SimpleEvent& a_this) = delete;
+
+	public:
 
 		/** 待ち。
 		*/

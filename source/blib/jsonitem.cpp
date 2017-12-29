@@ -1579,6 +1579,7 @@ namespace NBlib
 		return false;
 	}
 
+
 	/** タイプチェック。連想配列。
 	*/
 	bool JsonItem::IsAssociativeArray()
@@ -1588,6 +1589,7 @@ namespace NBlib
 		}
 		return false;
 	}
+
 
 	/** タイプチェック。インデックス配列。
 	*/
@@ -1599,6 +1601,7 @@ namespace NBlib
 		return false;
 	}
 
+
 	/** タイプチェック。整数。
 	*/
 	bool JsonItem::IsIntegerNumber()
@@ -1608,6 +1611,7 @@ namespace NBlib
 		}
 		return false;
 	}
+
 
 	/** タイプチェック。少数。
 	*/
@@ -1619,6 +1623,7 @@ namespace NBlib
 		return false;
 	}
 
+
 	/** タイプチェック。真偽。
 	*/
 	bool JsonItem::IsBoolData()
@@ -1629,6 +1634,7 @@ namespace NBlib
 		return false;
 	}
 
+
 	/** タイプチェック。バイナリデータ。
 	*/
 	bool JsonItem::IsBinaryData()
@@ -1638,6 +1644,7 @@ namespace NBlib
 		}
 		return false;
 	}
+
 
 	/** [取得]連想リストのアイテム取得。
 	*/

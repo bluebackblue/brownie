@@ -49,7 +49,7 @@ namespace NBlib
 	*/
 	struct ThreadLocalData
 	{
-		ThreadLocal slot[BLIB_THREADLOCAL_SLOTMAX];
+		NBlib::ThreadLocal slot[BLIB_THREADLOCAL_SLOTMAX];
 
 		/** リセット。
 		*/
@@ -64,7 +64,7 @@ namespace NBlib
 
 	/** GetThreadLocal
 	*/
-	ThreadLocal& GetThreadLocal(s32 a_index)
+	NBlib::ThreadLocal& GetThreadLocal(s32 a_index)
 	{
 		#if(BLIB_STDTHREADLOCAL_ENABLE)
 

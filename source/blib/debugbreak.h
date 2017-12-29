@@ -78,17 +78,25 @@
 	/** ROM_DEEPDEBUG or ROM_FULLDEBUG
 	*/
 	#if defined(ROM_DEEPDEBUG) || defined(ROM_FULLDEBUG)
+
 		#define DEEPDEBUG_DEBUGBREAK(ENABLE)					do{if(ENABLE){DEBUGBREAK();}}while(0)
+
 	#else
+
 		#define DEEPDEBUG_DEBUGBREAK(ENABLE)
+
 	#endif
 
 	/** ROM_FULLDEBUG
 	*/
 	#if defined(ROM_FULLDEBUG)
+
 		#define FULLDEBUG_DEBUGBREAK(ENABLE)					do{if(ENABLE){DEBUGBREAK();}}while(0)
+
 	#else
+
 		#define FULLDEBUG_DEBUGBREAK(ENABLE)
+
 	#endif
 
 #endif

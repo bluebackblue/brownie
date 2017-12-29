@@ -33,54 +33,51 @@ namespace NBlib
 {
 	#if(BLIB_STDSHAREDPTR_ENABLE)
 
-
 	#else
 
-
-	/** [static]確保。
-	*/
-	void* sharedptrbase::Alloc(size_t a_size)
-	{
-		#if(BLIB_GLOBALFIXEDALLOCATOR_ENABLE)
-		if(a_size <= GlobalFixedAllocator_Type::Config::BlockSize){
-			AutoLock t_autolock(GlobalFixedAllocator_LockObject());
-			void* t_pointer = GlobalFixedAllocator_Get().Alloc();
-			if(t_pointer != nullptr){
-				return t_pointer;
-			}
-		}
-		#endif
-
+		/** [static]確保。
+		*/
+		void* sharedptrbase::Alloc(size_t a_size)
 		{
-			void* t_pointer = new u8[a_size];
-			if(t_pointer != nullptr){
-				return t_pointer;
+			#if(BLIB_GLOBALFIXEDALLOCATOR_ENABLE)
+			if(a_size <= GlobalFixedAllocator_Type::Config::BlockSize){
+				AutoLock t_autolock(GlobalFixedAllocator_LockObject());
+				void* t_pointer = GlobalFixedAllocator_Get().Alloc();
+				if(t_pointer != nullptr){
+					return t_pointer;
+				}
 			}
+			#endif
+
+			{
+				void* t_pointer = new u8[a_size];
+				if(t_pointer != nullptr){
+					return t_pointer;
+				}
+			}
+
+			ASSERT(0);
+			return nullptr;
 		}
 
-		ASSERT(0);
-		return nullptr;
-	}
 
-
-	/** [static]解放。
-	*/
-	void sharedptrbase::Free(void* a_pointer)
-	{
-		#if(BLIB_GLOBALFIXEDALLOCATOR_ENABLE)
+		/** [static]解放。
+		*/
+		void sharedptrbase::Free(void* a_pointer)
 		{
-			AutoLock t_autolock(GlobalFixedAllocator_LockObject());
-			bool t_ret = GlobalFixedAllocator_Get().Free(a_pointer);
-			if(t_ret == true){
-				return;
+			#if(BLIB_GLOBALFIXEDALLOCATOR_ENABLE)
+			{
+				AutoLock t_autolock(GlobalFixedAllocator_LockObject());
+				bool t_ret = GlobalFixedAllocator_Get().Free(a_pointer);
+				if(t_ret == true){
+					return;
+				}
 			}
+			#endif
+
+			u8* t_pointer = reinterpret_cast<u8*>(a_pointer);
+			delete [] t_pointer;
 		}
-		#endif
-
-		u8* t_pointer = reinterpret_cast<u8*>(a_pointer);
-		delete [] t_pointer;
-	}
-
 
 	#endif
 

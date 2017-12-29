@@ -91,6 +91,18 @@ namespace NBlib
 		{
 		}
 
+	private:
+
+		/** copy constructor禁止。
+		*/
+		AtomicValue(const AtomicValue& a_this) = delete;
+
+		/** コピー禁止。
+		*/
+		void operator =(const AtomicValue& a_this) = delete;
+
+	public:
+
 		/** Load
 		*/
 		T Load() const
@@ -175,16 +187,6 @@ namespace NBlib
 			#endif
 		}
 
-	private:
-
-		/** copy constructor禁止。
-		*/
-		AtomicValue(const AtomicValue& a_this) = delete;
-
-		/** コピー禁止。
-		*/
-		void operator =(const AtomicValue& a_this) = delete;
-
 	};
 
 
@@ -231,6 +233,18 @@ namespace NBlib
 		nonvirtual ~AtomicValue()
 		{
 		}
+
+	private:
+
+		/** copy constructor禁止。
+		*/
+		AtomicValue(const AtomicValue& a_this) = delete;
+
+		/** コピー禁止。
+		*/
+		void operator =(const AtomicValue& a_this) = delete;
+
+	public:
 
 		/** Load
 		*/
@@ -280,16 +294,6 @@ namespace NBlib
 
 			#endif
 		}
-
-	private:
-
-		/** copy constructor禁止。
-		*/
-		AtomicValue(const AtomicValue& a_this) = delete;
-
-		/** コピー禁止。
-		*/
-		void operator =(const AtomicValue& a_this) = delete;
 
 	};
 

@@ -159,6 +159,10 @@ namespace NBsys{namespace NGeometry
 		*/
 		static inline Geometry_Matrix_44 Make_Translate(f32 a_x,f32 a_y,f32 a_z);
 
+		/** [static][作成]平行移動。
+		*/
+		static inline Geometry_Matrix_44 Make_Translate(const Geometry_Vector3& a_vector);
+
 		/** [作成]平行移動。
 		*/
 		inline Geometry_Vector3 Make_Translate_Vector() const;

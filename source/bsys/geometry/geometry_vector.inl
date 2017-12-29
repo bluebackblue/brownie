@@ -191,6 +191,26 @@ namespace NBsys{namespace NGeometry
 
 	/** [設定]。
 	*/
+	inline Geometry_Vector2& Geometry_Vector2::Set_X(f32 a_x)
+	{
+		this->x() = a_x;
+
+		return *this;
+	}
+
+
+	/** [設定]。
+	*/
+	inline Geometry_Vector2& Geometry_Vector2::Set_Y(f32 a_y)
+	{
+		this->y() = a_y;
+
+		return *this;
+	}
+
+
+	/** [設定]。
+	*/
 	inline Geometry_Vector2& Geometry_Vector2::Set(const Geometry_Vector2& a_vector)
 	{
 		this->x() = a_vector.x();
@@ -362,6 +382,36 @@ namespace NBsys{namespace NGeometry
 	{
 		this->x() = a_x;
 		this->y() = a_y;
+		this->z() = a_z;
+
+		return *this;
+	}
+
+
+	/** [設定]。
+	*/
+	inline Geometry_Vector3& Geometry_Vector3::Set_X(f32 a_x)
+	{
+		this->x() = a_x;
+
+		return *this;
+	}
+
+
+	/** [設定]。
+	*/
+	inline Geometry_Vector3& Geometry_Vector3::Set_Y(f32 a_y)
+	{
+		this->y() = a_y;
+
+		return *this;
+	}
+
+
+	/** [設定]。
+	*/
+	inline Geometry_Vector3& Geometry_Vector3::Set_Z(f32 a_z)
+	{
 		this->z() = a_z;
 
 		return *this;
@@ -983,6 +1033,46 @@ namespace NBsys{namespace NGeometry
 		this->x() = a_x;
 		this->y() = a_y;
 		this->z() = a_z;
+		this->w() = a_w;
+
+		return *this;
+	}
+
+
+	/** [設定]。
+	*/
+	inline Geometry_Vector4& Geometry_Vector4::Set_X(f32 a_x)
+	{
+		this->x() = a_x;
+
+		return *this;
+	}
+
+
+	/** [設定]。
+	*/
+	inline Geometry_Vector4& Geometry_Vector4::Set_Y(f32 a_y)
+	{
+		this->y() = a_y;
+
+		return *this;
+	}
+
+
+	/** [設定]。
+	*/
+	inline Geometry_Vector4& Geometry_Vector4::Set_Z(f32 a_z)
+	{
+		this->z() = a_z;
+
+		return *this;
+		}
+
+
+	/** [設定]。
+	*/
+	inline Geometry_Vector4& Geometry_Vector4::Set_W(f32 a_w)
+	{
 		this->w() = a_w;
 
 		return *this;

@@ -561,6 +561,21 @@ namespace NBsys{namespace NGeometry
 	}
 
 
+	/** [static][作成]平行移動。
+	*/
+	inline Geometry_Matrix_44 Geometry_Matrix_44::Make_Translate(const Geometry_Vector3& a_vector)
+	{
+		Geometry_Matrix_44 t_temp = Geometry_Identity();
+		{
+			t_temp.tr_x() = a_vector.raw.v.x;
+			t_temp.tr_y() = a_vector.raw.v.y;
+			t_temp.tr_z() = a_vector.raw.v.z;
+		}
+
+		return t_temp;
+	}
+
+
 	/** [作成]平行移動。
 	*/
 	inline Geometry_Vector3 Geometry_Matrix_44::Make_Translate_Vector() const

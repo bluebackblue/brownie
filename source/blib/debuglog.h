@@ -24,12 +24,12 @@
 */
 namespace NBlib
 {
-	/** DebugLog
-	*/
 	#if defined(ROM_MASTER)
 
 	#else
 
+		/** DebugLog
+		*/
 		void DebugLog(const wchar* a_tag,const char* a_string);
 		void DebugLog(const wchar* a_tag,const wchar* a_wstring);
 
@@ -59,21 +59,29 @@ namespace NBlib
 	/** ROM_DEEPDEBUG or ROM_FULLDEBUG
 	*/
 	#if defined(ROM_DEEPDEBUG) || defined(ROM_FULLDEBUG)
+
 		#define DEEPDEBUG_TAGLOG(ENABLE,TAG,...)				do{if(ENABLE){TAGLOG(TAG,__VA_ARGS__);}}while(0)
 		#define DEEPDEBUG_DEBUGLOG(ENABLE,...)					do{if(ENABLE){DEBUGLOG(__VA_ARGS__);}}while(0)
+
 	#else
+
 		#define DEEPDEBUG_TAGLOG(ENABLE,TAG,...)
 		#define DEEPDEBUG_DEBUGLOG(ENABLE,...)
+
 	#endif
 
 	/** ROM_FULLDEBUG
 	*/
 	#if defined(ROM_FULLDEBUG)
+
 		#define FULLDEBUG_TAGLOG(ENABLE,TAG,...)				do{if(ENABLE){TAGLOG(TAG,__VA_ARGS__);}}while(0)
 		#define FULLDEBUG_DEBUGLOG(ENABLE,...)					do{if(ENABLE){DEBUGLOG(__VA_ARGS__);}}while(0)
+
 	#else
+
 		#define FULLDEBUG_TAGLOG(ENABLE,TAG,...)
 		#define FULLDEBUG_DEBUGLOG(ENABLE,...)
+
 	#endif
 
 #endif

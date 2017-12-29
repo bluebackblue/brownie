@@ -70,7 +70,7 @@ namespace NTest
 
 		//map
 		STLMap<s16,s64>::Type t_map;
-		t_map.insert(std::make_pair(t_s16,t_s64));	//TODO:
+		t_map.insert(std::make_pair(t_s16,t_s64));
 		auto t_it = t_map.find(t_s16);
 		if(t_it != t_map.cend()){
 			ASSERT(t_it->second == t_s64);

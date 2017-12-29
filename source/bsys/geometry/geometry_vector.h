@@ -85,6 +85,14 @@ namespace NBsys{namespace NGeometry
 
 		/** [設定]。
 		*/
+		inline Geometry_Vector2& Set_X(f32 a_x);
+
+		/** [設定]。
+		*/
+		inline Geometry_Vector2& Set_Y(f32 a_y);
+
+		/** [設定]。
+		*/
 		inline Geometry_Vector2& Set(const Geometry_Vector2& a_vector);
 
 		/** [設定]Set_Zero。
@@ -172,6 +180,18 @@ namespace NBsys{namespace NGeometry
 		/** [設定]。
 		*/
 		inline Geometry_Vector3& Set(f32 a_x,f32 a_y,f32 a_z);
+
+		/** [設定]。
+		*/
+		inline Geometry_Vector3& Set_X(f32 a_x);
+
+		/** [設定]。
+		*/
+		inline Geometry_Vector3& Set_Y(f32 a_y);
+
+		/** [設定]。
+		*/
+		inline Geometry_Vector3& Set_Z(f32 a_z);
 
 		/** [設定]。
 		*/
@@ -402,6 +422,22 @@ namespace NBsys{namespace NGeometry
 		/** [設定]。
 		*/
 		inline Geometry_Vector4& Set(f32 a_x,f32 a_y,f32 a_z,f32 a_w);
+
+		/** [設定]。
+		*/
+		inline Geometry_Vector4& Set_X(f32 a_x);
+
+		/** [設定]。
+		*/
+		inline Geometry_Vector4& Set_Y(f32 a_y);
+
+		/** [設定]。
+		*/
+		inline Geometry_Vector4& Set_Z(f32 a_z);
+
+		/** [設定]。
+		*/
+		inline Geometry_Vector4& Set_W(f32 a_w);
 
 		/** [設定]。
 		*/
