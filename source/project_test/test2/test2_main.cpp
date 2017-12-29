@@ -141,6 +141,7 @@ namespace NTest
 				t_filehandle.WriteOpen(L"./project_test/test2/out.json");
 				STLString t_jsonstring = t_json->ConvertJsonString();
 				t_filehandle.Write(reinterpret_cast<const u8*>(t_jsonstring.c_str()),t_jsonstring.size(),0);
+				t_filehandle.SetEOF(t_jsonstring.size());
 				t_filehandle.Close();
 			}
 		}
