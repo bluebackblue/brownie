@@ -64,6 +64,10 @@ namespace NBsys{namespace NOpengl
 		*/
 		GLFWwindow* window;
 
+		/** padding
+		*/
+		padding32(0,4);
+
 		/** performance_counter_update
 		*/
 		u64 performance_counter_update;
@@ -78,7 +82,8 @@ namespace NBsys{namespace NOpengl
 
 		/** padding
 		*/
-		padding64(0,2);
+		padding64(1,2);
+		padding32(1,2);
 
 		/** mouse_l
 		*/
@@ -98,7 +103,7 @@ namespace NBsys{namespace NOpengl
 
 		/** padding
 		*/
-		padding64(1,4);
+		padding64(2,4);
 
 		/** id_maker
 		*/

@@ -85,7 +85,7 @@
 	#define BSYS_GEOMETRY_PERSPECTIVE_TYPE					(0x00)
 	#define BSYS_GEOMETRY_ROWCOLUMN_TYPE					(0x00)
 	#define BSYS_GEOMETRY_LEFTRIGHT_TYPE					(0x00)
-	#define BSYS_FOVEHMD_ENABLE								(1)
+	#define BSYS_FOVEHMD_ENABLE								(0)
 	#define BSYS_WINDOW_ENABLE								(1)
 	#define BSYS_D3D11_ENABLE								(1)
 	#define BSYS_D3D11_DEBUG_ENABLE							(1)

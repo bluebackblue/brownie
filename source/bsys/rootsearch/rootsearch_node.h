@@ -55,6 +55,7 @@ namespace NBsys{namespace NRootSearch
 		/** padding
 		*/
 		padding64(0,7);
+		padding32(0,3);
 
 		/** コネクトインデックスリスト。
 		*/

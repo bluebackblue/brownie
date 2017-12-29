@@ -48,6 +48,7 @@ namespace NBsys{namespace NFovehmd
 		/** padding
 		*/
 		padding64(0,4);
+		padding32(0,4);
 
 		/** headset
 		*/
@@ -96,6 +97,7 @@ namespace NBsys{namespace NFovehmd
 		/** padding
 		*/
 		padding64(1,4);
+		padding32(1,4);
 
 	public:
 

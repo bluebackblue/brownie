@@ -39,6 +39,7 @@ namespace NTest{namespace NCommon
 		/** padding
 		*/
 		padding32(0,2);
+		padding64(0,6);
 
 		/** d3d11
 		*/
@@ -52,10 +53,16 @@ namespace NTest{namespace NCommon
 		*/
 		s32 capture_step;
 
+		#if(BSYS_TEXTURE_ENABLE)
+
+		/** padding
+		*/
+		padding64(1,4);
+
 		/** capture_texture
 		*/
-		#if(BSYS_TEXTURE_ENABLE)
 		sharedptr<NBsys::NTexture::Texture> capture_texture;
+
 		#endif
 
 		/** capture_jpg
