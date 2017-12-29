@@ -24,7 +24,6 @@
 */
 #include "./debugassert.h"
 #include "./sockethandle_impl.h"
-#include "./vastring.h"
 #include "./memory.h"
 
 
@@ -213,10 +212,9 @@ namespace NBlib
 						t_addrinfo_hints.ai_family = AF_INET;
 					}
 				
-					char t_port[8] = {0};
-					const char* t_port_reference = VASTRING(&t_port[0],sizeof(t_port),"%d",a_port);	//TODO:to_string
+					STLString t_port(std::to_string(a_port).c_str());
 
-					if(::getaddrinfo(a_ip.c_str(),t_port_reference,&t_addrinfo_hints,&this->rawaddrinfo) != 0){
+					if(::getaddrinfo(a_ip.c_str(),t_port.c_str(),&t_addrinfo_hints,&this->rawaddrinfo) != 0){
 						this->rawaddrinfo = nullptr;
 						return false;
 					}
@@ -250,8 +248,7 @@ namespace NBlib
 
 			#if defined(PLATFORM_VCWIN)
 			{
-				char t_port[8] = {0};
-				const char* t_port_reference = VASTRING(&t_port[0],sizeof(t_port),"%d",a_port);	//TODO:to_string
+				STLString t_port(std::to_string(a_port).c_str());
 
 				addrinfo t_addrinfo_hints = {0};
 				{
@@ -259,7 +256,7 @@ namespace NBlib
 					t_addrinfo_hints.ai_socktype = SOCK_DGRAM;
 				}
 
-				if(::getaddrinfo(a_ip.c_str(),t_port_reference,&t_addrinfo_hints,&this->rawaddrinfo) != 0){
+				if(::getaddrinfo(a_ip.c_str(),t_port.c_str(),&t_addrinfo_hints,&this->rawaddrinfo) != 0){
 					return false;
 				}
 			}

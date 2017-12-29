@@ -36,6 +36,10 @@ namespace NTest{namespace NCommon
 		*/
 		bool action_end;
 
+		/** padding
+		*/
+		padding32(0,2);
+
 		/** d3d11
 		*/
 		#if(BSYS_D3D11_ENABLE)

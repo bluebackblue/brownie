@@ -175,7 +175,11 @@ bool Blib_DebugAssert_Callback(const wchar* a_wmessage,const wchar* a_wfilename,
 
 	VASTRING(t_buffer,COUNTOF(t_buffer),L"[ASSERT]:%s:%s(%d)",a_wmessage,a_wfilename,a_line);
 
+	#if(BSYS_COLOR_ENABLE)
 	NTest::NCommon::AddDebugLog(t_buffer,NBsys::NColor::Color_F(1.0f,0.0f,0.0f,1.0f));
+	#else
+	NTest::NCommon::AddDebugLog(t_buffer);
+	#endif
 
 	return true;
 }
@@ -187,7 +191,11 @@ bool Blib_DebugAssert_Callback(const wchar* a_wmessage,const wchar* a_wfilename,
 #if(BLIB_DEBUGBREAK_CALLBACK_ENABLE)
 bool Blib_DebugBreak_Callback()
 {
+	#if(BSYS_COLOR_ENABLE)
 	NTest::NCommon::AddDebugLog(L"DEBUGBREAK();",NBsys::NColor::Color_F(1.0f,0.0f,0.0f,1.0f));
+	#else
+	NTest::NCommon::AddDebugLog(L"DEBUGBREAK();");
+	#endif
 
 	return true;
 }
@@ -207,7 +215,11 @@ bool Blib_DebugLog_Callback(const NBlib::wchar* a_tag,const NBlib::wchar* a_wstr
 		VASTRING(t_buffer,COUNTOF(t_buffer),L"%s",a_wstring);
 	}
 
+	#if(BSYS_COLOR_ENABLE)
 	NTest::NCommon::AddDebugLog(t_buffer,NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
+	#else
+	NTest::NCommon::AddDebugLog(t_buffer);
+	#endif
 
 	return true;
 }

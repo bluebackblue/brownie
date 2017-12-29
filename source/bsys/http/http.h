@@ -106,6 +106,7 @@ namespace NBsys{namespace NHttp
 		/** padding
 		*/
 		padding64(1,7);
+		padding32(1,3);
 
 		/** sendbuffer
 		*/

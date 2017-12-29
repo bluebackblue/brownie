@@ -169,9 +169,8 @@ namespace NBsys{namespace NHttp
 
 		//Content-Length: コンテンツサイズ。
 		if(a_mode == Http_Mode::Post){
-			char t_temp[32];
 			t_body += "Content-Length: ";
-			t_body += VASTRING(t_temp,COUNTOF(t_temp),"%ld",a_binary_size);//TODO:to_string
+			t_body += std::to_string(a_binary_size).c_str();
 			t_body += "\r\n";
 		}
 

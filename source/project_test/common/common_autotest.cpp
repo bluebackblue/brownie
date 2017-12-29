@@ -75,7 +75,7 @@ namespace NTest{namespace NCommon
 		if(this->capture_step == 0){
 			//スクリーンショット。
 
-			#if(BSYS_TEXTURE_ENABLE)
+			#if((BSYS_TEXTURE_ENABLE)&&(BSYS_D3D11_ENABLE))
 			this->capture_texture = this->d3d11->Render_ScreenShot();
 			#endif
 
@@ -113,7 +113,7 @@ namespace NTest{namespace NCommon
 			//テスト番号。
 			{
 				char t_buffer[16];
-				STLString t_index_string = VASTRING(t_buffer,sizeof(t_buffer),"%d",DEF_TEST_INDEX);
+				STLString t_index_string = VASTRING(t_buffer,sizeof(t_buffer),"%d",DEF_TEST_INDEX);	//TODO:
 				this->send_http->AddPostContent("index",t_index_string);
 			}
 
