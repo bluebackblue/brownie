@@ -31,7 +31,7 @@ namespace NBlib
 
 		#if(BLIB_STACKTRACE_ENABLE)
 
-			void StackTrace(STLString& a_out_string,s32 a_index = 1);
+			void StackTrace(STLString& a_out_string,s32 a_index = -1);
 
 		#endif
 
@@ -42,17 +42,17 @@ namespace NBlib
 */
 #if defined(ROM_MASTER)
 
-	#define STACKTRACE	
+	#define STACKTRACE(...)
 
 #else
 
 	#if(BLIB_STACKTRACE_ENABLE)
 
-		#define STACKTRACE NBlib::StackTrace
+		#define STACKTRACE(...) NBlib::StackTrace(__VA_ARGS__)
 
 	#else
 
-		#define STACKTRACE
+		#define STACKTRACE(...)
 
 	#endif
 
