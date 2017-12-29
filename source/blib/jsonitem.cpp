@@ -2003,11 +2003,11 @@ namespace NBlib
 			}break;
 		case ValueType::IntegerNumber:
 			{
-				return STLString(std::to_string(this->value.integer_number).c_str());
+				return ToString(this->value.integer_number);
 			}break;
 		case ValueType::FloatNumber:
 			{
-				return STLString(std::to_string(this->value.float_number).c_str());
+				return ToString(this->value.float_number);
 			}break;
 		case ValueType::IndexArray:
 			{

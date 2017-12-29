@@ -170,7 +170,7 @@ namespace NBsys{namespace NHttp
 		//Content-Length: コンテンツサイズ。
 		if(a_mode == Http_Mode::Post){
 			t_body += "Content-Length: ";
-			t_body += std::to_string(a_binary_size).c_str();
+			t_body += ToString(a_binary_size);
 			t_body += "\r\n";
 		}
 

@@ -212,7 +212,7 @@ namespace NBlib
 						t_addrinfo_hints.ai_family = AF_INET;
 					}
 				
-					STLString t_port(std::to_string(a_port).c_str());
+					STLString t_port(ToString(a_port));
 
 					if(::getaddrinfo(a_ip.c_str(),t_port.c_str(),&t_addrinfo_hints,&this->rawaddrinfo) != 0){
 						this->rawaddrinfo = nullptr;
@@ -248,7 +248,7 @@ namespace NBlib
 
 			#if defined(PLATFORM_VCWIN)
 			{
-				STLString t_port(std::to_string(a_port).c_str());
+				STLString t_port(ToString(a_port));
 
 				addrinfo t_addrinfo_hints = {0};
 				{

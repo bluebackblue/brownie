@@ -44,6 +44,22 @@ namespace NBlib
 	typedef std::basic_string<wchar,std::char_traits<wchar>,STLAllocator_String<wchar>> STLWString;
 
 
+	/** ToString
+	*/
+	template <typename T> STLString ToString(T a_value)
+	{
+		return STLString(std::to_string(a_value).c_str());
+	}
+
+
+	/** ToWString
+	*/
+	template <typename T> STLWString ToWString(T a_value)
+	{
+		return STLWString(std::to_wstring(a_value).c_str());
+	}
+
+
 }
 
 

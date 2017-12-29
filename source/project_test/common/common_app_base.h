@@ -547,7 +547,7 @@ namespace NTest{namespace NCommon
 					{
 						//FPS。
 						if(this->render2d){
-							STLWString t_string(std::to_wstring(static_cast<s32>(1.0f / t_delta)).c_str());
+							STLWString t_string(ToWString(static_cast<s32>(1.0f / t_delta)).c_str());
 
 							{
 								sharedptr<NCommon::Render2D_Item_Font> t_font(new NCommon::Render2D_Item_Font(99999));
