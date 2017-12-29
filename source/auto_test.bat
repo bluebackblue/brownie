@@ -8,7 +8,7 @@ FOR /F %%D IN (testdefine.txt) DO (
 			@ECHO #define DEF_TEST_INDEX ^(%%D^) >> .\project_test\brownie_config\test.h
 
 			@REM ビルド。
-			%MSBUILD% brownie.vcxproj /t:rebuild /p:Configuration=%%C;Platform=%%P
+			%MSBUILD% brownie.vcxproj /t:rebuild /p:Configuration=%%C;Platform=%%P >> log.txt
 
 			@REM 移動。
 			move .\bin\%%P\%%C\brownie.exe brownie_%%P_%%C_%%D.exe
