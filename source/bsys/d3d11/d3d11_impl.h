@@ -60,7 +60,7 @@
 */
 #if(BSYS_D3D11_ENABLE)
 #pragma warning(push)
-#pragma warning(disable:4710)
+#pragma warning(disable:4710 4820)
 namespace NBsys{namespace ND3d11
 {
 	/** D3d11_Impl_VertexShader
@@ -130,12 +130,6 @@ namespace NBsys{namespace ND3d11
 		/** write_flag
 		*/
 		bool write_flag;
-
-		/** padding
-		*/
-		padding64(0,3);
-		padding32(0,3);
-
 	};
 
 
@@ -186,11 +180,6 @@ namespace NBsys{namespace ND3d11
 		/** alpha_blend
 		*/
 		bool alpha_blend;
-
-		/** padding
-		*/
-		padding64(0,7);
-		padding32(0,3);
 	};
 
 
@@ -205,10 +194,6 @@ namespace NBsys{namespace ND3d11
 		/** culltype
 		*/
 		D3d11_CullType::Id culltype;
-
-		/** padding
-		*/
-		padding64(0,4);
 	};
 
 
@@ -227,11 +212,6 @@ namespace NBsys{namespace ND3d11
 		/** depthwrie_flag
 		*/
 		bool depthwrie_flag;
-
-		/** padding
-		*/
-		padding64(0,6);
-		padding32(0,2);
 	};
 
 
@@ -269,11 +249,6 @@ namespace NBsys{namespace ND3d11
 		/** testpresent_mode
 		*/
 		bool testpresent_mode;
-
-		/** padding
-		*/
-		padding64(0,7);
-		padding32(0,3);
 
 		/** id_maker
 		*/

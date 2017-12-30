@@ -26,6 +26,8 @@
 /** NBsys::NWindowMenu
 */
 #if(BSYS_WINDOWMENU_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4820)
 namespace NBsys{namespace NWindowMenu
 {
 	/** 閉じるボタン。
@@ -41,11 +43,6 @@ namespace NBsys{namespace NWindowMenu
 		/** on_flag
 		*/
 		bool on_flag;
-
-		/** padding
-		*/
-		padding64(0,2);
-		padding32(0,2);
 
 		/** color
 		*/
@@ -103,5 +100,6 @@ namespace NBsys{namespace NWindowMenu
 
 
 }}
+#pragma warning(pop)
 #endif
 

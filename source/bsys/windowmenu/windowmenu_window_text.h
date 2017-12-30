@@ -26,6 +26,8 @@
 /** NBsys::NWindowMenu
 */
 #if(BSYS_WINDOWMENU_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4820)
 namespace NBsys{namespace NWindowMenu
 {
 	/** テキスト。
@@ -46,11 +48,6 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		bool clip;
 
-		/** padding
-		*/
-		padding64(0,3);
-		padding32(0,3);
-
 		/** alignment_x
 		*/
 		s32 alignment_x;
@@ -58,10 +55,6 @@ namespace NBsys{namespace NWindowMenu
 		/** alignment_y
 		*/
 		s32 alignment_y;
-
-		/** padding
-		*/
-		padding64(1,4);
 
 	public:
 
@@ -85,5 +78,6 @@ namespace NBsys{namespace NWindowMenu
 
 
 }}
+#pragma warning(pop)
 #endif
 

@@ -25,6 +25,8 @@
 /** NBsys::NFile
 */
 #if((BSYS_FILE_ENABLE)&&(BSYS_FILE_PACK_ENABLE))
+#pragma warning(push)
+#pragma warning(disable:4820)
 namespace NBsys{namespace NFile
 {
 	/** File_Pack_WorkItem
@@ -51,11 +53,6 @@ namespace NBsys{namespace NFile
 		*/
 		MainStep::Id mainstep;
 
-		/** padding
-		*/
-		padding64(0,4);
-		padding32(0,4);
-
 		/** ファイルハンドル。
 		*/
 		FileHandle filehandle;
@@ -75,11 +72,6 @@ namespace NBsys{namespace NFile
 		/** エラーコード。
 		*/
 		ErrorCode::Id errorcode;
-
-		/** padding
-		*/
-		padding64(1,4);
-		padding32(1,4);
 
 		/** filelist
 		*/
@@ -117,5 +109,6 @@ namespace NBsys{namespace NFile
 
 
 }}
+#pragma warning(pop)
 #endif
 

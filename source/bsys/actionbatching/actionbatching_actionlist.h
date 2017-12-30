@@ -25,6 +25,8 @@
 /** NBsys::NActionBatching
 */
 #if(BSYS_ACTIONBATCHING_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4820)
 namespace NBsys{namespace NActionBatching
 {
 	/** ActionBatching_ActionList
@@ -40,11 +42,6 @@ namespace NBsys{namespace NActionBatching
 		/** endrequest
 		*/
 		bool endrequest;
-
-		/** padding
-		*/
-		padding64(0,3);
-		padding32(0,3);
 
 	public:
 
@@ -88,5 +85,6 @@ namespace NBsys{namespace NActionBatching
 
 
 }}
+#pragma warning(pop)
 #endif
 

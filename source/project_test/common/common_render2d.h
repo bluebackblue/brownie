@@ -21,7 +21,7 @@
 */
 #if(BSYS_D3D11_ENABLE)
 #pragma warning(push)
-#pragma warning(disable:4514 4710)
+#pragma warning(disable:4514 4710 4820)
 namespace NTest{namespace NCommon
 {
 	/** Render2D_ItemType
@@ -94,11 +94,7 @@ namespace NTest{namespace NCommon
 		/** color
 		*/
 		NBsys::NColor::Color_F color;
-
-		/** padding
-		*/
-		padding64(0,4);
-		
+	
 	public:
 
 		/** constructor
@@ -142,11 +138,6 @@ namespace NTest{namespace NCommon
 		*/
 		bool clip;
 
-		/** padding
-		*/
-		padding64(0,3);
-		padding32(0,3);
-
 		/** size
 		*/
 		f32 size;
@@ -166,10 +157,6 @@ namespace NTest{namespace NCommon
 		/** alignment_y
 		*/
 		s32 alignment_y;
-
-		/** padding
-		*/
-		padding64(1,4);
 
 		/** string
 		*/

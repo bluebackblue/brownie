@@ -26,6 +26,8 @@
 /** NBsys::NWindowMenu
 */
 #if(BSYS_WINDOWMENU_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4820)
 namespace NBsys{namespace NWindowMenu
 {
 	/** プレート。
@@ -50,5 +52,6 @@ namespace NBsys{namespace NWindowMenu
 
 
 }}
+#pragma warning(pop)
 #endif
 

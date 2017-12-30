@@ -27,7 +27,7 @@
 */
 #if(BSYS_PAD_ENABLE)
 #pragma warning(push)
-#pragma warning(disable:4710)
+#pragma warning(disable:4710 4820)
 namespace NBsys{namespace NPad
 {
 	/** Pad_Virtual
@@ -156,11 +156,6 @@ namespace NBsys{namespace NPad
 		*/
 		bool enable;
 
-		/** padding
-		*/
-		padding64(0,3);
-		padding32(0,3);
-
 		/** repeat
 		*/
 		s32 repeat_loopstart;
@@ -178,11 +173,6 @@ namespace NBsys{namespace NPad
 		*/
 		STLList<TouchItem>::Type list_touch;
 
-		/** padding
-		*/
-		padding64(1,2);
-		padding32(1,2);
-
 		/** button
 		*/
 		bool button[ButtonType::Max];
@@ -197,17 +187,7 @@ namespace NBsys{namespace NPad
 		*/
 		TouchValue touch[TouchType::Max];
 		bool touch_flag_old[TouchType::Max];
-
-		/** padding
-		*/
-		padding64(2,1);
-		padding32(2,1);
-
 		s32 touch_flag_repeat[TouchType::Max];
-
-		/** padding
-		*/
-		padding64(3,4);
 
 	public:
 

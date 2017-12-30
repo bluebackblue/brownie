@@ -108,7 +108,7 @@ namespace NBsys{namespace NTexture
 		if(t_bitmap->GetLastStatus() == Gdiplus::Ok){
 			s32 t_tex_width = static_cast<s32>(t_bitmap->GetWidth());
 			s32 t_tex_height = static_cast<s32>(t_bitmap->GetHeight());
-			s32 t_tex_pitch = static_cast<s32>(NBlib::Math::pow_f(2,NBlib::Math::ceil_f(NBlib::Math::log2_f(static_cast<f32>(t_tex_width))))) * 4;
+			s32 t_tex_pitch = NTexture::CalcJustWidth(t_tex_width) * 4;
 
 			Gdiplus::BitmapData t_bitmap_data;
 			Gdiplus::Rect t_rect(0,0,t_tex_width,t_tex_height);

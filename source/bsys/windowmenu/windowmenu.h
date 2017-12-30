@@ -43,6 +43,8 @@
 /** NBsys::NWindowMenu
 */
 #if(BSYS_WINDOWMENU_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4820)
 namespace NBsys{namespace NWindowMenu
 {
 	/** WindowMenu
@@ -74,11 +76,6 @@ namespace NBsys{namespace NWindowMenu
 		/** 領域再計算、親子関係変更。
 		*/
 		bool changerect_check;
-
-		/** padding
-		*/
-		padding64(0,6);
-		padding32(0,2);
 
 	public:
 
@@ -141,5 +138,6 @@ namespace NBsys{namespace NWindowMenu
 
 
 }}
+#pragma warning(pop)
 #endif
 

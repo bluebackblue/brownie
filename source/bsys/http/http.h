@@ -29,6 +29,8 @@
 /** NBsys::NHttp
 */
 #if(BSYS_HTTP_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4710 4820)
 namespace NBsys{namespace NHttp
 {
 	/** Http
@@ -91,10 +93,6 @@ namespace NBsys{namespace NHttp
 		*/
 		Step::Id step;
 
-		/** padding
-		*/
-		padding64(0,4);
-
 		/** socket
 		*/
 		sharedptr<SocketHandle> socket;
@@ -102,11 +100,6 @@ namespace NBsys{namespace NHttp
 		/** iserror
 		*/
 		bool iserror;
-
-		/** padding
-		*/
-		padding64(1,7);
-		padding32(1,3);
 
 		/** sendbuffer
 		*/
@@ -211,5 +204,6 @@ namespace NBsys{namespace NHttp
 
 
 }}
+#pragma warning(pop)
 #endif
 

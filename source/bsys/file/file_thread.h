@@ -31,7 +31,7 @@
 */
 #if(BSYS_FILE_ENABLE)
 #pragma warning(push)
-#pragma warning(disable:4514)
+#pragma warning(disable:4514 4820)
 namespace NBsys{namespace NFile
 {
 	/** File_Thread
@@ -43,11 +43,6 @@ namespace NBsys{namespace NFile
 		/** endrequest
 		*/
 		AtomicValue<bool> endrequest;
-
-		/** padding
-		*/
-		padding64(0,7);
-		padding32(0,3);
 
 		/** ロックオブジェクト。
 		*/
@@ -114,10 +109,6 @@ namespace NBsys{namespace NFile
 			/** priority
 			*/
 			s32 priority;
-
-			/** padding
-			*/
-			padding64(0,4);
 
 			/** rootpath_full
 			*/

@@ -21,7 +21,7 @@
 */
 #if(BSYS_HTTP_ENABLE)
 #pragma warning(push)
-#pragma warning(disable:4710)
+#pragma warning(disable:4710 4820)
 namespace NBsys{namespace NHttp
 {
 	/** Http_Send
@@ -37,11 +37,6 @@ namespace NBsys{namespace NHttp
 		/** iserror
 		*/
 		bool iserror;
-
-		/** padding
-		*/
-		padding64(0,7);
-		padding32(0,3);
 
 		/** send_buffer
 		*/

@@ -37,7 +37,7 @@
 */
 #if(DEF_TEST_INDEX == 12)
 #pragma warning(push)
-#pragma warning(disable:4710)
+#pragma warning(disable:4710 4820)
 namespace NTest
 {
 	/** App
@@ -59,11 +59,6 @@ namespace NTest
 			sharedptr<NBsys::NFile::File_Object> texture_file;
 			sharedptr<NBsys::NTexture::Texture> texture;
 			bool cullfull;
-
-			/** padding
-			*/
-			padding64(0,7);
-			padding32(0,3);
 
 			/** constructor
 			*/
@@ -150,17 +145,9 @@ namespace NTest
 		NBsys::NGeometry::Geometry_Vector3 target_to_a;
 		NBsys::NGeometry::Geometry_Vector3 target_to_b;
 
-		/** padding
-		*/
-		padding64(0,4);
-
 		/** windowmenu_texture
 		*/
 		sharedptr<NCommon::WindowMenu_Texture> windowmenu_texture;
-
-		/** padding
-		*/
-		padding64(1,4);	
 
 		/** mmd
 		*/
@@ -176,10 +163,6 @@ namespace NTest
 		s32 mmd_vs_constantbuffer_b0_id;
 		s32 mmd_ps_constantbuffer_b1_id;
 		s32 mmd_vertexbuffer_id;
-
-		/** padding
-		*/
-		padding64(2,4);	
 
 	public:
 

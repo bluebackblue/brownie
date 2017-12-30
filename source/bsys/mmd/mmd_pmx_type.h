@@ -30,7 +30,7 @@
 */
 #if(BSYS_MMD_ENABLE)
 #pragma warning(push)
-#pragma warning(disable:4710)
+#pragma warning(disable:4710 4820)
 namespace NBsys{namespace NMmd
 {
 	/** Mmd_Pmx_Header
@@ -87,11 +87,6 @@ namespace NBsys{namespace NMmd
 		/** weight_type
 		*/
 		u8									weight_type;
-
-		/** padding
-		*/
-		padding64(0,3);
-		padding32(0,3);
 
 		/** bone_index
 		*/
@@ -184,11 +179,6 @@ namespace NBsys{namespace NMmd
 		s32 textureindex_sphere;
 		u8 textureindex_sphere_mode;
 
-		/** padding
-		*/
-		padding64(0,2);
-		padding32(0,2);
-
 		/** toon
 		*/
 		u8 toon_mode;
@@ -212,11 +202,6 @@ namespace NBsys{namespace NMmd
 		/** ik_link_boneindex
 		*/
 		s32 ik_link_boneindex;
-
-		/** padding
-		*/
-		padding64(0,3);
-		padding32(0,3);
 
 		/** ik_link_limit_enable
 		*/
@@ -264,11 +249,6 @@ namespace NBsys{namespace NMmd
 		bool boneflag_deform_after_physics;	//物理後変形
 		bool boneflag_deform_outer_parent;	//外部親変形
 
-		/** padding
-		*/
-		padding64(0,2);
-		padding32(0,2);
-
 		/** bone_position_offset
 		*/
 		NBsys::NGeometry::Geometry_Vector3 bone_position_offset;
@@ -300,10 +280,6 @@ namespace NBsys{namespace NMmd
 		s32 bone_ik_target_boneindex;
 		s32 bone_ik_iteration_count;
 		f32	bone_ik_limit_rad;
-
-		/** padding
-		*/
-		padding64(1,4);
 
 		/** bone_ik_list
 		*/

@@ -21,7 +21,7 @@
 */
 #if(BSYS_HTTP_ENABLE)
 #pragma warning(push)
-#pragma warning(disable:4710)
+#pragma warning(disable:4710 4820)
 namespace NBsys{namespace NHttp
 {
 	/** Http_BinaryItem
@@ -31,10 +31,6 @@ namespace NBsys{namespace NHttp
 		/** サイズ。
 		*/
 		s32 size;
-
-		/** padding
-		*/
-		padding64(0,4);
 
 		/** データ。
 		*/

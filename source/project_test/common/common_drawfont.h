@@ -26,7 +26,7 @@
 */
 #if((BSYS_D3D11_ENABLE)&&(BSYS_FONT_ENABLE))
 #pragma warning(push)
-#pragma warning(disable:4514 4710)
+#pragma warning(disable:4514 4710 4820)
 namespace NTest{namespace NCommon
 {
 	/** DrawFont_VS_ConstantBuffer_B0
@@ -118,11 +118,6 @@ namespace NTest{namespace NCommon
 		*/
 		bool is_initialized;
 
-		/** padding
-		*/
-		padding64(0,3);
-		padding32(0,3);
-
 		/** d3d11
 		*/
 		sharedptr<NBsys::ND3d11::D3d11> d3d11;
@@ -148,18 +143,10 @@ namespace NTest{namespace NCommon
 		s32 sampler_id;
 		s32 rasterizerstate_cull_none_id;
 
-		/** padding
-		*/
-		padding64(1,4);
-
 		/** vertex
 		*/
 		sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4>> vertex;
 		s32 vertex_buffer_id;
-
-		/** padding
-		*/
-		padding64(2,4);
 
 	public:
 		/** constructor

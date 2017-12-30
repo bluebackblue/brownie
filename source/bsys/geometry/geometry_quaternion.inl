@@ -121,10 +121,10 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Quaternion::Geometry_Quaternion(const Geometry_Quaternion& a_quaternion)
 	{
-		ASSERT(Math::is_nan(a_quaternion.x()) == false);
-		ASSERT(Math::is_nan(a_quaternion.y()) == false);
-		ASSERT(Math::is_nan(a_quaternion.z()) == false);
-		ASSERT(Math::is_nan(a_quaternion.w()) == false);
+		ASSERT(NMath::is_nan(a_quaternion.x()) == false);
+		ASSERT(NMath::is_nan(a_quaternion.y()) == false);
+		ASSERT(NMath::is_nan(a_quaternion.z()) == false);
+		ASSERT(NMath::is_nan(a_quaternion.w()) == false);
 
 		this->x() = a_quaternion.x();
 		this->y() = a_quaternion.y();
@@ -137,10 +137,10 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Quaternion::Geometry_Quaternion(const f32* a_list)
 	{
-		ASSERT(Math::is_nan(a_list[0]) == false);
-		ASSERT(Math::is_nan(a_list[1]) == false);
-		ASSERT(Math::is_nan(a_list[2]) == false);
-		ASSERT(Math::is_nan(a_list[3]) == false);
+		ASSERT(NMath::is_nan(a_list[0]) == false);
+		ASSERT(NMath::is_nan(a_list[1]) == false);
+		ASSERT(NMath::is_nan(a_list[2]) == false);
+		ASSERT(NMath::is_nan(a_list[3]) == false);
 
 		this->x() = a_list[0];
 		this->y() = a_list[1];
@@ -153,10 +153,10 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Quaternion::Geometry_Quaternion(f32 a_x,f32 a_y,f32 a_z,f32 a_w)
 	{
-		ASSERT(Math::is_nan(a_x) == false);
-		ASSERT(Math::is_nan(a_y) == false);
-		ASSERT(Math::is_nan(a_z) == false);
-		ASSERT(Math::is_nan(a_w) == false);
+		ASSERT(NMath::is_nan(a_x) == false);
+		ASSERT(NMath::is_nan(a_y) == false);
+		ASSERT(NMath::is_nan(a_z) == false);
+		ASSERT(NMath::is_nan(a_w) == false);
 
 		this->x() = a_x;
 		this->y() = a_y;
@@ -172,11 +172,11 @@ namespace NBsys{namespace NGeometry
 		Geometry_Vector3 t_normal = a_normal.Make_Normalize();
 
 		#if(BSYS_GEOMETRY_MATRIX_SINCOSFAST_ENABLE)
-		f32 t_sin_half = Math::sin_f_fast(a_rad * 0.50f);
-		f32 t_cos_half = Math::cos_f_fast(a_rad * 0.50f);
+		f32 t_sin_half = NMath::sin_f_fast(a_rad * 0.50f);
+		f32 t_cos_half = NMath::cos_f_fast(a_rad * 0.50f);
 		#else
-		f32 t_sin_half = Math::sinf(a_rad * 0.50f);
-		f32 t_cos_half = Math::cosf(a_rad * 0.50f);
+		f32 t_sin_half = NMath::sinf(a_rad * 0.50f);
+		f32 t_cos_half = NMath::cosf(a_rad * 0.50f);
 		#endif
 
 		this->x() = t_sin_half * t_normal.x();
@@ -199,13 +199,13 @@ namespace NBsys{namespace NGeometry
 	{
 		f32 t_s = (this->x() * this->x()) + (this->y() * this->y()) + (this->z() * this->z()) + (this->w() * this->w());
 
-		t_s = Math::sqrt_f(t_s);
+		t_s = NMath::sqrt_f(t_s);
 
 		if(t_s != 0.0f){
 			t_s = 1.0f / t_s;
 		}
 
-		ASSERT(Math::is_nan(t_s) == false);
+		ASSERT(NMath::is_nan(t_s) == false);
 
 		this->x() *= t_s;
 		this->y() *= t_s;
@@ -258,15 +258,15 @@ namespace NBsys{namespace NGeometry
 		Geometry_Quaternion t_temp;
 
 		f32 t_omega_v = (this->x() * a_quaternion.x()) + (this->y() * a_quaternion.y()) + (this->z() * a_quaternion.z()) + (this->w() * a_quaternion.w());
-		f32 t_omega = Math::acos_f(Math::abs_f(t_omega_v));
+		f32 t_omega = NMath::acos_f(NMath::abs_f(t_omega_v));
 
-		f32 t_s = Math::sin_f(t_omega);
+		f32 t_s = NMath::sin_f(t_omega);
 		if(t_s < std::numeric_limits<float>::epsilon()){
 			t_s = std::numeric_limits<float>::epsilon();
 		}
 
-		f32 t_from_per = Math::sin_f(t_omega - a_per * t_omega) / t_s;
-		f32 t_to_per = Math::sin_f(a_per * t_omega) / t_s;
+		f32 t_from_per = NMath::sin_f(t_omega - a_per * t_omega) / t_s;
+		f32 t_to_per = NMath::sin_f(a_per * t_omega) / t_s;
     
 		t_temp.x() = this->x() * t_from_per + a_quaternion.x() * t_to_per;
 		t_temp.y() = this->y() * t_from_per + a_quaternion.y() * t_to_per;

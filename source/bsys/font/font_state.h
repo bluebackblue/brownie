@@ -21,7 +21,7 @@
 */
 #if(BSYS_FONT_ENABLE)
 #pragma warning(push)
-#pragma warning(disable:4514)
+#pragma warning(disable:4514 4820)
 namespace NBsys{namespace NFont
 {
 	/** Font_State
@@ -31,11 +31,6 @@ namespace NBsys{namespace NFont
 		/** code
 		*/
 		wchar code;
-
-		/** padding
-		*/
-		padding64(0,2);
-		padding32(0,2);
 
 		/** x
 		*/

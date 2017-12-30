@@ -48,6 +48,8 @@
 /** NBsys::NOpengl
 */
 #if(BSYS_OPENGL_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4710 4820)
 namespace NBsys{namespace NOpengl
 {
 	/** Opengl_Impl
@@ -64,10 +66,6 @@ namespace NBsys{namespace NOpengl
 		*/
 		GLFWwindow* window;
 
-		/** padding
-		*/
-		padding32(0,4);
-
 		/** performance_counter_update
 		*/
 		u64 performance_counter_update;
@@ -79,11 +77,6 @@ namespace NBsys{namespace NOpengl
 		/** draw_proc
 		*/
 		void (*draw_proc)();
-
-		/** padding
-		*/
-		padding64(1,2);
-		padding32(1,2);
 
 		/** mouse_l
 		*/
@@ -100,10 +93,6 @@ namespace NBsys{namespace NOpengl
 		/** mouse_y
 		*/
 		s32 mouse_y;
-
-		/** padding
-		*/
-		padding64(2,4);
 
 		/** id_maker
 		*/
@@ -132,8 +121,6 @@ namespace NBsys{namespace NOpengl
 		/** current_vertexarray_rawid
 		*/
 		RawID current_vertexarray_rawid;
-
-
 
 		#if(0)
 
@@ -401,5 +388,6 @@ namespace NBsys{namespace NOpengl
 	};
 
 }}
+#pragma warning(pop)
 #endif
 

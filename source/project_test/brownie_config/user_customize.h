@@ -70,7 +70,7 @@
 	#define BSYS_ACTIONBATCHING_ENABLE						(1)
 	#define BSYS_COLOR_ENABLE								(1)
 	#define BSYS_FILE_ENABLE								(1)
-	#define BSYS_FILE_PACK_ENABLE							(1)
+	#define BSYS_FILE_PACK_ENABLE							(0)
 	#define BSYS_FILE_MEMORYCONTAINER						(0x01)
 	#define BSYS_FILE_LISTSIZE								(512)
 	#define BSYS_VERTEX_ENABLE								(1)

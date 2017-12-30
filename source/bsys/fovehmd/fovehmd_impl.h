@@ -33,6 +33,8 @@
 /** NBsys::Fovehmd
 */
 #if(BSYS_FOVEHMD_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4820)
 namespace NBsys{namespace NFovehmd
 {
 	/** Fovehmd_Impl
@@ -44,11 +46,6 @@ namespace NBsys{namespace NFovehmd
 		/** errorcode
 		*/
 		ErrorCode errorcode;
-
-		/** padding
-		*/
-		padding64(0,4);
-		padding32(0,4);
 
 		/** headset
 		*/
@@ -93,11 +90,6 @@ namespace NBsys{namespace NFovehmd
 		/** translate_right
 		*/
 		NBsys::NGeometry::Geometry_Matrix_44 eye_translate_right;
-
-		/** padding
-		*/
-		padding64(1,4);
-		padding32(1,4);
 
 	public:
 
@@ -179,5 +171,6 @@ namespace NBsys{namespace NFovehmd
 
 
 }}
+#pragma warning(pop)
 #endif
 

@@ -34,7 +34,7 @@
 */
 #if(BSYS_D3D11_ENABLE)
 #pragma warning(push)
-#pragma warning(disable:4710)
+#pragma warning(disable:4710 4820)
 namespace NBsys{namespace ND3d11
 {
 	/** テクスチャー作成。
@@ -54,11 +54,6 @@ namespace NBsys{namespace ND3d11
 		/** write_flag
 		*/
 		bool write_flag;
-
-		/** padding
-		*/
-		padding64(0,7);
-		padding32(0,3);
 
 	public:
 

@@ -27,7 +27,7 @@
 */
 #if(BSYS_OPENGL_ENABLE)
 #pragma warning(push)
-#pragma warning(disable:4514 4710)
+#pragma warning(disable:4514 4710 4820)
 namespace NBsys{namespace NOpengl
 {
 	/** Opengl_Impl_VertexBuffer
@@ -52,10 +52,6 @@ namespace NBsys{namespace NOpengl
 		*/
 		RawID vertexbuffer_rawid;
 	
-		/** padding
-		*/
-		padding64(0,4);
-
 	public:
 		/** constructor
 		*/

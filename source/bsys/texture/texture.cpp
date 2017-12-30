@@ -38,6 +38,8 @@
 /** NBsys::NTexture
 */
 #if(BSYS_TEXTURE_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4514)
 namespace NBsys{namespace NTexture
 {
 	/** コンストラクタ。
@@ -109,6 +111,22 @@ namespace NBsys{namespace NTexture
 	}
 
 
+	/** ２の乗数の幅を計算する。
+	*/
+	s32 CalcJustWidth(s32 a_width)
+	{
+		//幅が２の何乗か。
+		f32 t_width = NBlib::NMath::log2_f(static_cast<f32>(a_width));
+		
+		//小数点切り上げ。
+		t_width = NBlib::NMath::ceil_f(t_width);
+
+		//幅の再計算。
+		s32 t_new_width = static_cast<s32>(NBlib::NMath::pow_f(2,t_width));
+
+		return t_new_width;
+	}
+
 	/** CreateTexture
 	*/
 	sharedptr<Texture> CreateTexture(const sharedptr<u8>& a_data,s32 a_size,const STLWString& a_name)
@@ -159,5 +177,6 @@ namespace NBsys{namespace NTexture
 
 	
 }}
+#pragma warning(pop)
 #endif
 

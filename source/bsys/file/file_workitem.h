@@ -28,6 +28,8 @@
 /** NBsys::NFile
 */
 #if(BSYS_FILE_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4820)
 namespace NBsys{namespace NFile
 {
 	/** File_WorkItem
@@ -96,11 +98,6 @@ namespace NBsys{namespace NFile
 		*/
 		s32 convertflag;
 
-		/** padding
-		*/
-		padding64(0,4);
-		padding32(0,4);
-
 		/** データサイズ。
 		*/
 		s64 data_size;
@@ -117,11 +114,6 @@ namespace NBsys{namespace NFile
 		*/
 		bool isbusy;
 
-		/** padding
-		*/
-		padding64(1,3);
-		padding32(1,3);
-
 		/** メモリ確保。
 		*/
 		sharedptr<File_Allocator> allocator;
@@ -129,11 +121,6 @@ namespace NBsys{namespace NFile
 		/** メモリ確保時に余分に確保するサイズ。
 		*/
 		s32 add_allocatesize;
-
-		/** padding
-		*/
-		padding64(2,4);
-		padding32(2,4);
 
 	public:
 
@@ -199,5 +186,6 @@ namespace NBsys{namespace NFile
 
 
 }}
+#pragma warning(pop)
 #endif
 

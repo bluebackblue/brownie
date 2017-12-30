@@ -40,6 +40,8 @@
 /** NBsys::NFont
 */
 #if(BSYS_FONT_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4820)
 namespace NBsys{namespace NFont
 {
 	/** Font_Impl
@@ -63,10 +65,6 @@ namespace NBsys{namespace NFont
 		/** font_size
 		*/
 		s32 font_size;
-
-		/** padding
-		*/
-		padding64(0,4);
 
 		/** font_name
 		*/
@@ -92,5 +90,6 @@ namespace NBsys{namespace NFont
 
 
 }}
+#pragma warning(pop)
 #endif
 

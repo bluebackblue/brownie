@@ -34,9 +34,9 @@
 
 /** NBsys::NOpengl
 */
-#pragma warning(push)
-#pragma warning(disable:4710)
 #if(BSYS_D3D11_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4710 4820)
 namespace NBsys{namespace ND3d11
 {
 	/** D3d11_Impl_Font
@@ -57,11 +57,6 @@ namespace NBsys{namespace ND3d11
 			/** lock
 			*/
 			bool lock;
-
-			/** padding
-			*/
-			padding64(0,1);
-			padding32(0,1);
 
 			/** fontstate
 			*/
@@ -89,10 +84,6 @@ namespace NBsys{namespace ND3d11
 		*/
 		sharedptr<NBsys::NFont::Font> font;
 
-		/** padding
-		*/
-		padding64(0,4);
-
 		/** fonttexture_type
 		*/
 		D3d11_FontTextureType::Id fonttexture_type;
@@ -112,10 +103,6 @@ namespace NBsys{namespace ND3d11
 		/** textureid
 		*/
 		s32 textureid;
-
-		/** padding
-		*/
-		padding64(1,4);
 
 		/** list
 		*/
@@ -145,7 +132,7 @@ namespace NBsys{namespace ND3d11
 			list(),
 			maplist()
 		{
-			this->texturewidth = static_cast<s32>(NBlib::Math::pow_f(2,NBlib::Math::ceil_f(NBlib::Math::log2_f(static_cast<f32>(a_texture_width)))));
+			this->texturewidth = NTexture::CalcJustWidth(a_texture_width);
 
 			s32 t_drawtypemax = 0;
 
@@ -173,7 +160,7 @@ namespace NBsys{namespace ND3d11
 				}break;
 			}
 
-			this->textureheight = static_cast<s32>(NBlib::Math::pow_f(2,NBlib::Math::ceil_f(NBlib::Math::log2_f(static_cast<f32>(this->texturewidth * t_drawtypemax)))));
+			this->textureheight = NTexture::CalcJustWidth(this->texturewidth * t_drawtypemax);
 
 			sharedptr<u8> t_pixel(new u8[static_cast<u32>(this->texturewidth * this->textureheight * 4)]);
 

@@ -20,6 +20,8 @@
 /** NTest
 */
 #if(DEF_TEST_AUTO)
+#pragma warning(push)
+#pragma warning(disable:4710 4820)
 namespace NTest{namespace NCommon
 {
 	/** AutoTest
@@ -36,11 +38,6 @@ namespace NTest{namespace NCommon
 		*/
 		bool action_end;
 
-		/** padding
-		*/
-		padding32(0,2);
-		padding64(0,6);
-
 		/** d3d11
 		*/
 		#if(BSYS_D3D11_ENABLE)
@@ -54,10 +51,6 @@ namespace NTest{namespace NCommon
 		s32 capture_step;
 
 		#if(BSYS_TEXTURE_ENABLE)
-
-		/** padding
-		*/
-		padding64(1,4);
 
 		/** capture_texture
 		*/
@@ -107,5 +100,6 @@ namespace NTest{namespace NCommon
 
 
 }}
+#pragma warning(pop)
 #endif
 

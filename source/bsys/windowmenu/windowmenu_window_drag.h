@@ -26,6 +26,8 @@
 /** NBsys::NWindowMenu
 */
 #if(BSYS_WINDOWMENU_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4820)
 namespace NBsys{namespace NWindowMenu
 {
 	/** ドラッグ。
@@ -38,11 +40,6 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		bool drag_flag;
 
-		/** padding
-		*/
-		padding64(0,3);
-		padding32(0,3);
-
 		/** start
 		*/
 		f32 start_x;
@@ -52,10 +49,6 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		f32 old_x;
 		f32 old_y;
-
-		/** padding
-		*/
-		padding64(1,4);
 
 	public:
 
@@ -83,5 +76,6 @@ namespace NBsys{namespace NWindowMenu
 
 
 }}
+#pragma warning(pop)
 #endif
 

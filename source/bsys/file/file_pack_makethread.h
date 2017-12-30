@@ -31,7 +31,7 @@
 */
 #if((BSYS_FILE_ENABLE)&&(BSYS_FILE_PACK_ENABLE))
 #pragma warning(push)
-#pragma warning(disable:4710 4514)
+#pragma warning(disable:4710 4514 4820)
 namespace NBsys{namespace NFile
 {
 	/** File_Pack_MakeThread
@@ -81,10 +81,6 @@ namespace NBsys{namespace NFile
 			/** priority
 			*/
 			s32 priority;
-
-			/** padding
-			*/
-			padding64(0,4);
 
 			/** rootpath_full
 			*/

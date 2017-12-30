@@ -59,7 +59,9 @@ namespace NBsys{namespace NFile
 			this->worklist[ii].reset();
 		}
 
+		#if(BSYS_FILE_PACK_ENABLE)
 		this->pack.reset(new File_Pack(this->lockobject));
+		#endif
 	}
 
 

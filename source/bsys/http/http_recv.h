@@ -21,7 +21,7 @@
 */
 #if(BSYS_HTTP_ENABLE)
 #pragma warning(push)
-#pragma warning(disable:4710)
+#pragma warning(disable:4710 4820)
 namespace NBsys{namespace NHttp
 {
 	/** Http_Recv
@@ -59,11 +59,6 @@ namespace NBsys{namespace NHttp
 		*/
 		bool iserror;
 
-		/** padding
-		*/
-		padding64(0,7);
-		padding32(0,3);
-
 		/** 受信バッファ。
 		*/
 		sharedptr<u8> recvbuffer;
@@ -71,10 +66,6 @@ namespace NBsys{namespace NHttp
 		/** 受信バッファサイズ。
 		*/
 		s32 recvbuffer_size;
-
-		/** padding
-		*/
-		padding64(1,4);
 
 		/** 受信データ解析用バッファ。
 		*/
@@ -112,11 +103,6 @@ namespace NBsys{namespace NHttp
 		*/
 		bool header_is_transfer_encodeing_chunked;
 
-		/** padding
-		*/
-		padding64(2,2);
-		padding32(2,2);
-
 		/** header_content_length
 		*/
 		s32 header_content_length;
@@ -132,10 +118,6 @@ namespace NBsys{namespace NHttp
 		/** step
 		*/
 		Step::Id step;
-
-		/** padding
-		*/
-		padding64(3,4);
 
 	public:
 

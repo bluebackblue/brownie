@@ -27,6 +27,8 @@
 /** NBsys::NWindow
 */
 #if(BSYS_WINDOW_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4820)
 namespace NBsys{namespace NWindow
 {
 	/** Window_Impl
@@ -52,11 +54,6 @@ namespace NBsys{namespace NWindow
 		*/
 		bool isopen;
 
-		/** padding
-		*/
-		padding64(0,1);
-		padding32(0,1);
-
 		/** default
 		*/
 		s32 default_width;
@@ -66,10 +63,6 @@ namespace NBsys{namespace NWindow
 		*/
 		s32 client_width;
 		s32 client_height;
-
-		/** padding
-		*/
-		padding64(1,4);
 
 	public:
 
@@ -151,5 +144,6 @@ namespace NBsys{namespace NWindow
 
 
 }}
+#pragma warning(pop)
 #endif
 

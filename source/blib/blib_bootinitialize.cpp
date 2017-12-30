@@ -129,7 +129,7 @@ namespace NBlib
 		sharedptr<Blib> t_instance(new Blib());
 		s_instance = t_instance;
 
-		Math::Initialize();
+		NMath::Initialize();
 
 		{
 			#if defined(PLATFORM_VCWIN)

@@ -26,7 +26,7 @@
 */
 #if(BSYS_OPENGL_ENABLE)
 #pragma warning(push)
-#pragma warning(disable:4514 4710)
+#pragma warning(disable:4514 4710 4820)
 namespace NBsys{namespace NOpengl
 {
 
@@ -113,10 +113,6 @@ namespace NBsys{namespace NOpengl
 		*/
 		RawID shaderprogram_rawid;
 
-		/** padding
-		*/
-		padding64(0,4);
-
 		/** vertex_uniform_list
 		*/
 		STLMap<STLString,sharedptr<Opengl_Impl_Uniform>>::Type uniform_list;
@@ -128,10 +124,6 @@ namespace NBsys{namespace NOpengl
 		/** vertexarray_rawid
 		*/
 		RawID vertexarray_rawid;
-
-		/** padding
-		*/
-		padding64(1,4);
 
 		/** constructor
 		*/

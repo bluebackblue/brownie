@@ -110,6 +110,11 @@ namespace NBsys{namespace NTexture
 	};
 
 
+	/** ２の乗数の幅を計算する。
+	*/
+	s32 CalcJustWidth(s32 a_width);
+
+
 	/** CreateTexture
 	*/
 	sharedptr<Texture> CreateTexture(const sharedptr<u8>& a_data,s32 a_size,const STLWString& a_name);

@@ -20,6 +20,8 @@
 /** NTest::NCommon
 */
 #if(BSYS_WINDOWMENU_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4820)
 namespace NTest{namespace NCommon
 {
 	/** WindowMenu_Texture
@@ -31,11 +33,6 @@ namespace NTest{namespace NCommon
 		/** endrequest
 		*/
 		bool endrequest;
-
-		/** padding
-		*/
-		padding64(0,7);
-		padding32(0,3);
 
 		/** window_texture
 		*/
@@ -79,5 +76,6 @@ namespace NTest{namespace NCommon
 
 
 }}
+#pragma warning(pop)
 #endif
 

@@ -28,7 +28,7 @@
 */
 #if(BSYS_TEXTURE_ENABLE)
 #pragma warning(push)
-#pragma warning(disable:4710)
+#pragma warning(disable:4710 4820)
 namespace NBsys{namespace NTexture
 {
 	/** Texture_Impl_GlobalMemory
@@ -150,10 +150,6 @@ namespace NBsys{namespace NTexture
 		/** globalmemory
 		*/
 		sharedptr<Texture_Impl_GlobalMemory> globalmemory;
-
-		/** padding
-		*/
-		padding32(0,4);
 
 		/** statstg
 		*/

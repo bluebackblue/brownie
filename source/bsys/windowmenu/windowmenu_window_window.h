@@ -26,6 +26,8 @@
 /** NBsys::NWindowMenu
 */
 #if(BSYS_WINDOWMENU_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4820)
 namespace NBsys{namespace NWindowMenu
 {
 	/** ウィンドウ。
@@ -38,19 +40,10 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		bool is_active;
 
-		/** padding
-		*/
-		padding64(0,3);
-		padding32(0,3);
-
 		/** color
 		*/
 		NBsys::NColor::Color_F color_title_bg_normal;
 		NBsys::NColor::Color_F color_title_bg_active;
-
-		/** padding
-		*/
-		padding64(1,4);
 
 		/** タイトルドラッグ。
 		*/
@@ -102,5 +95,6 @@ namespace NBsys{namespace NWindowMenu
 
 
 }}
+#pragma warning(pop)
 #endif
 

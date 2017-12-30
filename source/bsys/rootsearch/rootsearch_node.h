@@ -34,6 +34,8 @@
 /** NBsys::NRootSearch
 */
 #if(BSYS_ROOTSEARCH_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4710 4820)
 namespace NBsys{namespace NRootSearch
 {
 	/** ノード。
@@ -51,11 +53,6 @@ namespace NBsys{namespace NRootSearch
 		/** ルート。
 		*/
 		bool root;
-
-		/** padding
-		*/
-		padding64(0,7);
-		padding32(0,3);
 
 		/** コネクトインデックスリスト。
 		*/
@@ -95,5 +92,6 @@ namespace NBsys{namespace NRootSearch
 
 	};
 }}
+#pragma warning(pop)
 #endif
 

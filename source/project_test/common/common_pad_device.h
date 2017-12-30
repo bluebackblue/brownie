@@ -20,6 +20,8 @@
 /** NTest::NCommon
 */
 #if(BSYS_PAD_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4820)
 namespace NTest{namespace NCommon
 {
 	/** Pad_Device
@@ -66,11 +68,6 @@ namespace NTest{namespace NCommon
 		*/
 		bool mouse_r;
 
-		/** padding
-		*/
-		padding64(0,6);
-		padding32(0,2);
-
 	public:
 
 		/** constructor
@@ -103,5 +100,6 @@ namespace NTest{namespace NCommon
 
 
 }}
+#pragma warning(pop)
 #endif
 

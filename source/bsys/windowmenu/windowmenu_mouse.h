@@ -20,6 +20,8 @@
 /** NBsys::NWindowMenu
 */
 #if(BSYS_WINDOWMENU_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4820)
 namespace NBsys{namespace NWindowMenu
 {
 	/** WindowMenu_Mouse
@@ -58,14 +60,10 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		bool up_r;
 
-		/** padding
-		*/
-		padding64(0,2);
-		padding32(0,2);
-
 	};
 
 
 }}
+#pragma warning(pop)
 #endif
 
