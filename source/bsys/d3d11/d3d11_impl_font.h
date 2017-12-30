@@ -337,7 +337,7 @@ namespace NBsys{namespace ND3d11
 						u8* t_from = &this->texture->GetPixel().get()[t_change_min * this->texturewidth * t_from_pitch];
 
 						s32 t_size = (t_change_max - t_change_min + 1) * this->texturewidth * t_from_pitch;
-						Memory::Copy(t_to,t_size,t_from,t_size);
+						NMemory::Copy(t_to,t_size,t_from,t_size);
 					}else{
 						for(s32 ii=t_change_min;ii<=t_change_max;ii++){
 							u32 t_blocksize_to = static_cast<u32>(ii * t_mapped_resource.RowPitch * this->texturewidth);
@@ -348,7 +348,7 @@ namespace NBsys{namespace ND3d11
 								u8* t_from = &this->texture->GetPixel().get()[yy * t_from_pitch + t_blocksize_from];
 
 								s32 t_size = t_from_pitch;
-								Memory::Copy(t_to,t_size,t_from,t_size);
+								NMemory::Copy(t_to,t_size,t_from,t_size);
 							}
 						}
 					}

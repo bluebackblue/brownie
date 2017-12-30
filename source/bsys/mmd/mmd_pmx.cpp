@@ -45,17 +45,17 @@ namespace NBsys{namespace NMmd
 	bool Mmd_Pmx::Load_Header(u8*& a_raw)
 	{
 		//Mmd_Pmx_Header
-		this->header = Memory::StreamCopy<Mmd_Pmx_Header>(a_raw);
+		this->header = NMemory::StreamCopy<Mmd_Pmx_Header>(a_raw);
 
 		//t_header_ex_size
-		u8 t_header_ex_size = Memory::StreamCopy<u8>(a_raw,0);
+		u8 t_header_ex_size = NMemory::StreamCopy<u8>(a_raw,0);
 
 		//Mmd_Pmx_Header_Ex
-		this->header_ex = Memory::StreamCopy<Mmd_Pmx_Header_Ex>(a_raw,t_header_ex_size + 1);
+		this->header_ex = NMemory::StreamCopy<Mmd_Pmx_Header_Ex>(a_raw,t_header_ex_size + 1);
 
 		//model name jp
 		{
-			u32 t_length = Memory::StreamCopy<u32>(a_raw);
+			u32 t_length = NMemory::StreamCopy<u32>(a_raw);
 			if(t_length > 0){
 				if(this->header_ex.is_utf8){
 					STLString t_buffer(reinterpret_cast<char*>(a_raw),t_length);
@@ -69,7 +69,7 @@ namespace NBsys{namespace NMmd
 
 		//model name en
 		{
-			u32 t_length = Memory::StreamCopy<u32>(a_raw);
+			u32 t_length = NMemory::StreamCopy<u32>(a_raw);
 			if(t_length > 0){
 				if(this->header_ex.is_utf8){
 					STLString t_buffer(reinterpret_cast<char*>(a_raw),t_length);
@@ -83,7 +83,7 @@ namespace NBsys{namespace NMmd
 
 		//comment jp
 		{
-			u32 t_length = Memory::StreamCopy<u32>(a_raw);
+			u32 t_length = NMemory::StreamCopy<u32>(a_raw);
 			if(t_length > 0){
 				if(this->header_ex.is_utf8){
 					STLString t_buffer(reinterpret_cast<char*>(a_raw),t_length);
@@ -97,7 +97,7 @@ namespace NBsys{namespace NMmd
 
 		//comment en
 		{
-			u32 t_length = Memory::StreamCopy<u32>(a_raw);
+			u32 t_length = NMemory::StreamCopy<u32>(a_raw);
 			if(t_length > 0){
 				if(this->header_ex.is_utf8){
 					STLString t_buffer(reinterpret_cast<char*>(a_raw),t_length);
@@ -117,103 +117,103 @@ namespace NBsys{namespace NMmd
 	*/
 	bool Mmd_Pmx::Load_Vertex(u8*& a_raw)
 	{
-		this->vertex_list_size = Memory::StreamCopy<u32>(a_raw);
+		this->vertex_list_size = NMemory::StreamCopy<u32>(a_raw);
 		this->vertex_list.reset(new Mmd_Pmx_VertexData[this->vertex_list_size],default_delete<Mmd_Pmx_VertexData[]>());
 
 		for(u32 ii=0;ii<this->vertex_list_size;ii++){
 			Mmd_Pmx_VertexData& t_vertex_data = this->vertex_list.get()[ii];
 
 			//position
-			t_vertex_data.position = Memory::StreamCopy<NBsys::NGeometry::Geometry_Vector3>(a_raw);
+			t_vertex_data.position = NMemory::StreamCopy<NBsys::NGeometry::Geometry_Vector3>(a_raw);
 
 			//normal
-			t_vertex_data.normal = Memory::StreamCopy<NBsys::NGeometry::Geometry_Vector3>(a_raw);
+			t_vertex_data.normal = NMemory::StreamCopy<NBsys::NGeometry::Geometry_Vector3>(a_raw);
 
 			//uv
-			t_vertex_data.uv = Memory::StreamCopy<NBsys::NGeometry::Geometry_Vector2>(a_raw);
+			t_vertex_data.uv = NMemory::StreamCopy<NBsys::NGeometry::Geometry_Vector2>(a_raw);
 
 			//uv_ex
 			for(s32 jj=0;jj<this->header_ex.uv_ex_size;jj++){
-				t_vertex_data.uv_ex[jj] = Memory::StreamCopy<NBsys::NGeometry::Geometry_Vector4>(a_raw);
+				t_vertex_data.uv_ex[jj] = NMemory::StreamCopy<NBsys::NGeometry::Geometry_Vector4>(a_raw);
 			}
 
 			//weight_type
-			t_vertex_data.weight_type = Memory::StreamCopy<u8>(a_raw);
+			t_vertex_data.weight_type = NMemory::StreamCopy<u8>(a_raw);
 
 			//bone
 			switch (t_vertex_data.weight_type){
 			case 0:
 				{
 					if(this->header_ex.bone_index_size == 1){
-						t_vertex_data.bone_index[0] = Memory::StreamCopy<s8>(a_raw);
+						t_vertex_data.bone_index[0] = NMemory::StreamCopy<s8>(a_raw);
 					}else if(this->header_ex.bone_index_size == 2){
-						t_vertex_data.bone_index[0] = Memory::StreamCopy<s16>(a_raw);
+						t_vertex_data.bone_index[0] = NMemory::StreamCopy<s16>(a_raw);
 					}else{
-						t_vertex_data.bone_index[0] = Memory::StreamCopy<s32>(a_raw);
+						t_vertex_data.bone_index[0] = NMemory::StreamCopy<s32>(a_raw);
 					}
 				}break;
 			case 1:
 				{
 					for(s32 jj=0;jj<2;jj++){
 						if(this->header_ex.bone_index_size == 1){
-							t_vertex_data.bone_index[jj] = Memory::StreamCopy<s8>(a_raw);
+							t_vertex_data.bone_index[jj] = NMemory::StreamCopy<s8>(a_raw);
 						}else if(this->header_ex.bone_index_size == 2){
-							t_vertex_data.bone_index[jj] = Memory::StreamCopy<s16>(a_raw);
+							t_vertex_data.bone_index[jj] = NMemory::StreamCopy<s16>(a_raw);
 						}else{
-							t_vertex_data.bone_index[jj] = Memory::StreamCopy<s32>(a_raw);
+							t_vertex_data.bone_index[jj] = NMemory::StreamCopy<s32>(a_raw);
 						}
 					}
 
-					t_vertex_data.bone_weight[0] = Memory::StreamCopy<f32>(a_raw);
+					t_vertex_data.bone_weight[0] = NMemory::StreamCopy<f32>(a_raw);
 				}break;
 			case 2:
 				{
 					for(s32 jj=0;jj<4;jj++){
 						if(this->header_ex.bone_index_size == 1){
-							t_vertex_data.bone_index[jj] = Memory::StreamCopy<s8>(a_raw);
+							t_vertex_data.bone_index[jj] = NMemory::StreamCopy<s8>(a_raw);
 						}else if(this->header_ex.bone_index_size == 2){
-							t_vertex_data.bone_index[jj] = Memory::StreamCopy<s16>(a_raw);
+							t_vertex_data.bone_index[jj] = NMemory::StreamCopy<s16>(a_raw);
 						}else{
-							t_vertex_data.bone_index[jj] = Memory::StreamCopy<s32>(a_raw);
+							t_vertex_data.bone_index[jj] = NMemory::StreamCopy<s32>(a_raw);
 						}
 					}
 
 					for(s32 jj=0;jj<4;jj++){
-						t_vertex_data.bone_weight[jj] = Memory::StreamCopy<f32>(a_raw);
+						t_vertex_data.bone_weight[jj] = NMemory::StreamCopy<f32>(a_raw);
 					}
 				}break;
 			case 3:
 				{
 					for(s32 jj=0;jj<2;jj++){
 						if(this->header_ex.bone_index_size == 1){
-							t_vertex_data.bone_index[jj] = Memory::StreamCopy<s8>(a_raw);
+							t_vertex_data.bone_index[jj] = NMemory::StreamCopy<s8>(a_raw);
 						}else if(this->header_ex.bone_index_size == 2){
-							t_vertex_data.bone_index[jj] = Memory::StreamCopy<s16>(a_raw);
+							t_vertex_data.bone_index[jj] = NMemory::StreamCopy<s16>(a_raw);
 						}else{
-							t_vertex_data.bone_index[jj] = Memory::StreamCopy<s32>(a_raw);
+							t_vertex_data.bone_index[jj] = NMemory::StreamCopy<s32>(a_raw);
 						}
 					}
 
-					t_vertex_data.bone_weight[0] = Memory::StreamCopy<f32>(a_raw);
+					t_vertex_data.bone_weight[0] = NMemory::StreamCopy<f32>(a_raw);
 
-					t_vertex_data.sdef_c = Memory::StreamCopy<NBsys::NGeometry::Geometry_Vector3>(a_raw);
-					t_vertex_data.sdef_r0 = Memory::StreamCopy<NBsys::NGeometry::Geometry_Vector3>(a_raw);
-					t_vertex_data.sdef_r1 = Memory::StreamCopy<NBsys::NGeometry::Geometry_Vector3>(a_raw);
+					t_vertex_data.sdef_c = NMemory::StreamCopy<NBsys::NGeometry::Geometry_Vector3>(a_raw);
+					t_vertex_data.sdef_r0 = NMemory::StreamCopy<NBsys::NGeometry::Geometry_Vector3>(a_raw);
+					t_vertex_data.sdef_r1 = NMemory::StreamCopy<NBsys::NGeometry::Geometry_Vector3>(a_raw);
 				}break;
 			case 4:
 				{
 					for(s32 jj=0;jj<4;jj++){
 						if(this->header_ex.bone_index_size == 1){
-							t_vertex_data.bone_index[jj] = Memory::StreamCopy<s8>(a_raw);
+							t_vertex_data.bone_index[jj] = NMemory::StreamCopy<s8>(a_raw);
 						}else if(this->header_ex.bone_index_size == 2){
-							t_vertex_data.bone_index[jj] = Memory::StreamCopy<s16>(a_raw);
+							t_vertex_data.bone_index[jj] = NMemory::StreamCopy<s16>(a_raw);
 						}else{
-							t_vertex_data.bone_index[jj] = Memory::StreamCopy<s32>(a_raw);
+							t_vertex_data.bone_index[jj] = NMemory::StreamCopy<s32>(a_raw);
 						}
 					}
 
 					for(s32 jj=0;jj<4;jj++){
-						t_vertex_data.bone_weight[jj] = Memory::StreamCopy<f32>(a_raw);
+						t_vertex_data.bone_weight[jj] = NMemory::StreamCopy<f32>(a_raw);
 					}
 				}break;
 			default:
@@ -223,7 +223,7 @@ namespace NBsys{namespace NMmd
 			}
 
 			//edge_mag
-			t_vertex_data.edge_mag = Memory::StreamCopy<f32>(a_raw);
+			t_vertex_data.edge_mag = NMemory::StreamCopy<f32>(a_raw);
 		}
 
 		return true;
@@ -234,20 +234,20 @@ namespace NBsys{namespace NMmd
 	*/
 	bool Mmd_Pmx::Load_Index(u8*& a_raw)
 	{
-		this->index_list_size = Memory::StreamCopy<u32>(a_raw);
+		this->index_list_size = NMemory::StreamCopy<u32>(a_raw);
 		this->index_list.reset(new u32[this->index_list_size],default_delete<u32[]>());
 
 		if(this->header_ex.vertex_index_size == 1){
 			for(u32 ii=0;ii<this->index_list_size;ii++){
-				this->index_list.get()[ii] = Memory::StreamCopy<u8>(a_raw);
+				this->index_list.get()[ii] = NMemory::StreamCopy<u8>(a_raw);
 			}
 		}else if(this->header_ex.vertex_index_size == 2){
 			for(u32 ii=0;ii<this->index_list_size;ii++){
-				this->index_list.get()[ii] = Memory::StreamCopy<u16>(a_raw);
+				this->index_list.get()[ii] = NMemory::StreamCopy<u16>(a_raw);
 			}
 		}else{
 			for(u32 ii=0;ii<this->index_list_size;ii++){
-				this->index_list.get()[ii] = Memory::StreamCopy<u32>(a_raw);
+				this->index_list.get()[ii] = NMemory::StreamCopy<u32>(a_raw);
 			}
 		}
 
@@ -259,13 +259,13 @@ namespace NBsys{namespace NMmd
 	*/
 	bool Mmd_Pmx::Load_TextureName(u8*& a_raw)
 	{
-		this->texturename_list_size = Memory::StreamCopy<u32>(a_raw);
+		this->texturename_list_size = NMemory::StreamCopy<u32>(a_raw);
 
 		for(u32 ii=0;ii<this->texturename_list_size;ii++){
 
 			STLWString t_texturename;
 					
-			u32 t_length = Memory::StreamCopy<u32>(a_raw);
+			u32 t_length = NMemory::StreamCopy<u32>(a_raw);
 			if(t_length > 0){
 				if(this->header_ex.is_utf8){
 					STLString t_buffer(reinterpret_cast<char*>(a_raw),t_length);
@@ -287,7 +287,7 @@ namespace NBsys{namespace NMmd
 	*/
 	bool Mmd_Pmx::Load_Parts(u8*& a_raw)
 	{
-		this->parts_list_size = Memory::StreamCopy<u32>(a_raw);
+		this->parts_list_size = NMemory::StreamCopy<u32>(a_raw);
 		this->parts_list.resize(this->parts_list_size);
 
 		u32 t_start_index = 0;
@@ -297,7 +297,7 @@ namespace NBsys{namespace NMmd
 
 			//parts_name_jp
 			{
-				u32 t_length = Memory::StreamCopy<u32>(a_raw);
+				u32 t_length = NMemory::StreamCopy<u32>(a_raw);
 				if(t_length > 0){
 					if(this->header_ex.is_utf8){
 						STLString t_buffer(reinterpret_cast<char*>(a_raw),t_length);
@@ -311,7 +311,7 @@ namespace NBsys{namespace NMmd
 
 			//parts_name_en
 			{
-				u32 t_length = Memory::StreamCopy<u32>(a_raw);
+				u32 t_length = NMemory::StreamCopy<u32>(a_raw);
 				if(t_length > 0){
 					if(this->header_ex.is_utf8){
 						STLString t_buffer(reinterpret_cast<char*>(a_raw),t_length);
@@ -325,22 +325,22 @@ namespace NBsys{namespace NMmd
 
 			//diffuse
 			{
-				t_parts.diffuse = Memory::StreamCopy<NBsys::NColor::Color_F>(a_raw);
+				t_parts.diffuse = NMemory::StreamCopy<NBsys::NColor::Color_F>(a_raw);
 			}
 
 			//specular : TODO : COLOR3
 			{
-				t_parts.specular = Memory::StreamCopy<NBsys::NGeometry::Geometry_Vector3>(a_raw);
+				t_parts.specular = NMemory::StreamCopy<NBsys::NGeometry::Geometry_Vector3>(a_raw);
 			}
 
 			//specular_power
 			{
-				t_parts.specular_power = Memory::StreamCopy<f32>(a_raw);
+				t_parts.specular_power = NMemory::StreamCopy<f32>(a_raw);
 			}
 
 			//ambient
 			{
-				t_parts.ambient = Memory::StreamCopy<NBsys::NGeometry::Geometry_Vector3>(a_raw);
+				t_parts.ambient = NMemory::StreamCopy<NBsys::NGeometry::Geometry_Vector3>(a_raw);
 			}
 
 			//mode
@@ -354,7 +354,7 @@ namespace NBsys{namespace NMmd
 				//01000000 : Point描画。
 				//10000000 : Line描画。
 
-				u8 t_drawmode = Memory::StreamCopy<u8>(a_raw);
+				u8 t_drawmode = NMemory::StreamCopy<u8>(a_raw);
 
 				/** 両面描画。
 				*/
@@ -391,50 +391,50 @@ namespace NBsys{namespace NMmd
 
 			//edge
 			{
-				t_parts.edge_color = Memory::StreamCopy<NBsys::NColor::Color_F>(a_raw);
-				t_parts.edge_size = Memory::StreamCopy<f32>(a_raw);
+				t_parts.edge_color = NMemory::StreamCopy<NBsys::NColor::Color_F>(a_raw);
+				t_parts.edge_size = NMemory::StreamCopy<f32>(a_raw);
 			}
 
 			//textureindex
 			{
 				if(this->header_ex.texture_index_size == 1){
-					t_parts.textureindex = Memory::StreamCopy<s8>(a_raw);
+					t_parts.textureindex = NMemory::StreamCopy<s8>(a_raw);
 				}else if(this->header_ex.texture_index_size == 2){
-					t_parts.textureindex = Memory::StreamCopy<s16>(a_raw);
+					t_parts.textureindex = NMemory::StreamCopy<s16>(a_raw);
 				}else{
-					t_parts.textureindex = Memory::StreamCopy<s32>(a_raw);
+					t_parts.textureindex = NMemory::StreamCopy<s32>(a_raw);
 				}
 
 				if(this->header_ex.texture_index_size == 1){
-					t_parts.textureindex_sphere = Memory::StreamCopy<s8>(a_raw);
+					t_parts.textureindex_sphere = NMemory::StreamCopy<s8>(a_raw);
 				}else if(this->header_ex.texture_index_size == 2){
-					t_parts.textureindex_sphere = Memory::StreamCopy<s16>(a_raw);
+					t_parts.textureindex_sphere = NMemory::StreamCopy<s16>(a_raw);
 				}else{
-					t_parts.textureindex_sphere = Memory::StreamCopy<s32>(a_raw);
+					t_parts.textureindex_sphere = NMemory::StreamCopy<s32>(a_raw);
 				}
 
-				t_parts.textureindex_sphere_mode = Memory::StreamCopy<u8>(a_raw);
+				t_parts.textureindex_sphere_mode = NMemory::StreamCopy<u8>(a_raw);
 			}
 
 			//toon
 			{
-				t_parts.toon_mode = Memory::StreamCopy<u8>(a_raw);
+				t_parts.toon_mode = NMemory::StreamCopy<u8>(a_raw);
 
 				if(t_parts.toon_mode == 0){
 					//個別。
 
 					if(this->header_ex.texture_index_size == 1){
-						t_parts.toon_textureindex = Memory::StreamCopy<s8>(a_raw);
+						t_parts.toon_textureindex = NMemory::StreamCopy<s8>(a_raw);
 					}else if(this->header_ex.texture_index_size == 2){
-						t_parts.toon_textureindex = Memory::StreamCopy<s16>(a_raw);
+						t_parts.toon_textureindex = NMemory::StreamCopy<s16>(a_raw);
 					}else{
-						t_parts.toon_textureindex = Memory::StreamCopy<s32>(a_raw);
+						t_parts.toon_textureindex = NMemory::StreamCopy<s32>(a_raw);
 					}
 
 				}else if(t_parts.toon_mode == 1){
 					//共通。
 
-					t_parts.toon_textureindex = Memory::StreamCopy<s8>(a_raw);
+					t_parts.toon_textureindex = NMemory::StreamCopy<s8>(a_raw);
 				}else{
 					ASSERT(0);
 				}
@@ -442,7 +442,7 @@ namespace NBsys{namespace NMmd
 
 			//comment
 			{
-				u32 t_length = Memory::StreamCopy<u32>(a_raw);
+				u32 t_length = NMemory::StreamCopy<u32>(a_raw);
 				if(t_length > 0){
 					if(this->header_ex.is_utf8){
 						STLString t_buffer(reinterpret_cast<char*>(a_raw),t_length);
@@ -457,7 +457,7 @@ namespace NBsys{namespace NMmd
 			//index_size
 			{
 				t_parts.start_index = t_start_index;
-				t_parts.count_of_index = Memory::StreamCopy<u32>(a_raw);
+				t_parts.count_of_index = NMemory::StreamCopy<u32>(a_raw);
 				t_start_index += t_parts.count_of_index;
 			}
 		}
@@ -470,7 +470,7 @@ namespace NBsys{namespace NMmd
 	*/
 	bool Mmd_Pmx::Load_Bone(u8*& a_raw)
 	{
-		this->bone_list_size = Memory::StreamCopy<u32>(a_raw);
+		this->bone_list_size = NMemory::StreamCopy<u32>(a_raw);
 		this->bone_list.resize(this->bone_list_size);
 
 		for(u32 ii=0;ii<this->bone_list_size;ii++){
@@ -478,7 +478,7 @@ namespace NBsys{namespace NMmd
 
 			//bonename_jp
 			{
-				u32 t_length = Memory::StreamCopy<u32>(a_raw);
+				u32 t_length = NMemory::StreamCopy<u32>(a_raw);
 				if(t_length > 0){
 					if(this->header_ex.is_utf8){
 						STLString t_buffer(reinterpret_cast<char*>(a_raw),t_length);
@@ -492,7 +492,7 @@ namespace NBsys{namespace NMmd
 
 			//bonename_en
 			{
-				u32 t_length = Memory::StreamCopy<u32>(a_raw);
+				u32 t_length = NMemory::StreamCopy<u32>(a_raw);
 				if(t_length > 0){
 					if(this->header_ex.is_utf8){
 						STLString t_buffer(reinterpret_cast<char*>(a_raw),t_length);
@@ -504,22 +504,22 @@ namespace NBsys{namespace NMmd
 				}
 			}
 
-			t_bone.bone_position = Memory::StreamCopy<NBsys::NGeometry::Geometry_Vector3>(a_raw);
+			t_bone.bone_position = NMemory::StreamCopy<NBsys::NGeometry::Geometry_Vector3>(a_raw);
 
 			//boneindex_parent
 			{
 				if(this->header_ex.bone_index_size == 1){
-					t_bone.boneindex_parent = Memory::StreamCopy<s8>(a_raw);
+					t_bone.boneindex_parent = NMemory::StreamCopy<s8>(a_raw);
 				}else if(this->header_ex.bone_index_size == 2){
-					t_bone.boneindex_parent = Memory::StreamCopy<s16>(a_raw);
+					t_bone.boneindex_parent = NMemory::StreamCopy<s16>(a_raw);
 				}else{
-					t_bone.boneindex_parent = Memory::StreamCopy<s32>(a_raw);
+					t_bone.boneindex_parent = NMemory::StreamCopy<s32>(a_raw);
 				}
 			}
 
-			t_bone.deform_depth = Memory::StreamCopy<s32>(a_raw);
+			t_bone.deform_depth = NMemory::StreamCopy<s32>(a_raw);
 
-			u16 t_boneflag = Memory::StreamCopy<u16>(a_raw);
+			u16 t_boneflag = NMemory::StreamCopy<u16>(a_raw);
 			t_bone.boneflag_target_showmode			= (0x0001 & t_boneflag) > 0;
 			t_bone.boneflag_allow_rotate			= (0x0002 & t_boneflag) > 0;
 			t_bone.boneflag_allow_translate			= (0x0004 & t_boneflag) > 0;
@@ -538,16 +538,16 @@ namespace NBsys{namespace NMmd
 
 
 			if (t_bone.boneflag_target_showmode == false){
-				t_bone.bone_position_offset = Memory::StreamCopy<NBsys::NGeometry::Geometry_Vector3>(a_raw);
+				t_bone.bone_position_offset = NMemory::StreamCopy<NBsys::NGeometry::Geometry_Vector3>(a_raw);
 			}else{
 				//boneindex_link
 				{
 					if(this->header_ex.bone_index_size == 1){
-						t_bone.boneindex_link = Memory::StreamCopy<s8>(a_raw);
+						t_bone.boneindex_link = NMemory::StreamCopy<s8>(a_raw);
 					}else if(this->header_ex.bone_index_size == 2){
-						t_bone.boneindex_link = Memory::StreamCopy<s16>(a_raw);
+						t_bone.boneindex_link = NMemory::StreamCopy<s16>(a_raw);
 					}else{
-						t_bone.boneindex_link = Memory::StreamCopy<s32>(a_raw);
+						t_bone.boneindex_link = NMemory::StreamCopy<s32>(a_raw);
 					}
 				}
 			}
@@ -557,28 +557,28 @@ namespace NBsys{namespace NMmd
 				//boneindex_append
 				{
 					if(this->header_ex.bone_index_size == 1){
-						t_bone.boneindex_append = Memory::StreamCopy<s8>(a_raw);
+						t_bone.boneindex_append = NMemory::StreamCopy<s8>(a_raw);
 					}else if(this->header_ex.bone_index_size == 2){
-						t_bone.boneindex_append = Memory::StreamCopy<s16>(a_raw);
+						t_bone.boneindex_append = NMemory::StreamCopy<s16>(a_raw);
 					}else{
-						t_bone.boneindex_append = Memory::StreamCopy<s32>(a_raw);
+						t_bone.boneindex_append = NMemory::StreamCopy<s32>(a_raw);
 					}
 				}
 
-				t_bone.boneindex_append_weight = Memory::StreamCopy<f32>(a_raw);
+				t_bone.boneindex_append_weight = NMemory::StreamCopy<f32>(a_raw);
 			}
 
 			if(t_bone.boneflag_fixed_axis){
-				t_bone.bone_fixed_axis = Memory::StreamCopy<NBsys::NGeometry::Geometry_Vector3>(a_raw);
+				t_bone.bone_fixed_axis = NMemory::StreamCopy<NBsys::NGeometry::Geometry_Vector3>(a_raw);
 			}
 
 			if(t_bone.boneflag_local_axis){
-				t_bone.bone_local_axis_x = Memory::StreamCopy<NBsys::NGeometry::Geometry_Vector3>(a_raw);
-				t_bone.bone_local_axis_z = Memory::StreamCopy<NBsys::NGeometry::Geometry_Vector3>(a_raw);
+				t_bone.bone_local_axis_x = NMemory::StreamCopy<NBsys::NGeometry::Geometry_Vector3>(a_raw);
+				t_bone.bone_local_axis_z = NMemory::StreamCopy<NBsys::NGeometry::Geometry_Vector3>(a_raw);
 			}
 
 			if(t_bone.boneflag_deform_outer_parent){
-				t_bone.bone_key_value = Memory::StreamCopy<s32>(a_raw);
+				t_bone.bone_key_value = NMemory::StreamCopy<s32>(a_raw);
 			}
 
 			if(t_bone.boneflag_ik){
@@ -586,19 +586,19 @@ namespace NBsys{namespace NMmd
 				//ik_target_boneindex
 				{
 					if(this->header_ex.bone_index_size == 1){
-						t_bone.bone_ik_target_boneindex = Memory::StreamCopy<s8>(a_raw);
+						t_bone.bone_ik_target_boneindex = NMemory::StreamCopy<s8>(a_raw);
 					}else if(this->header_ex.bone_index_size == 2){
-						t_bone.bone_ik_target_boneindex = Memory::StreamCopy<s16>(a_raw);
+						t_bone.bone_ik_target_boneindex = NMemory::StreamCopy<s16>(a_raw);
 					}else{
-						t_bone.bone_ik_target_boneindex = Memory::StreamCopy<s32>(a_raw);
+						t_bone.bone_ik_target_boneindex = NMemory::StreamCopy<s32>(a_raw);
 					}
 				}
 
-				t_bone.bone_ik_iteration_count = Memory::StreamCopy<s32>(a_raw);
-				t_bone.bone_ik_limit_rad = Memory::StreamCopy<f32>(a_raw);
+				t_bone.bone_ik_iteration_count = NMemory::StreamCopy<s32>(a_raw);
+				t_bone.bone_ik_limit_rad = NMemory::StreamCopy<f32>(a_raw);
 
 				{
-					t_bone.bone_ik_list_size = Memory::StreamCopy<u32>(a_raw);
+					t_bone.bone_ik_list_size = NMemory::StreamCopy<u32>(a_raw);
 					if(t_bone.bone_ik_list_size > 0){
 						t_bone.bone_ik_list.resize(t_bone.bone_ik_list_size);
 
@@ -608,19 +608,19 @@ namespace NBsys{namespace NMmd
 							//ik_link_boneindex
 							{
 								if(this->header_ex.bone_index_size == 1){
-									t_bone_ik.ik_link_boneindex = Memory::StreamCopy<s8>(a_raw);
+									t_bone_ik.ik_link_boneindex = NMemory::StreamCopy<s8>(a_raw);
 								}else if(this->header_ex.bone_index_size == 2){
-									t_bone_ik.ik_link_boneindex = Memory::StreamCopy<s16>(a_raw);
+									t_bone_ik.ik_link_boneindex = NMemory::StreamCopy<s16>(a_raw);
 								}else{
-									t_bone_ik.ik_link_boneindex = Memory::StreamCopy<s32>(a_raw);
+									t_bone_ik.ik_link_boneindex = NMemory::StreamCopy<s32>(a_raw);
 								}
 							}
 
 							//ik_link_limit
-							t_bone_ik.ik_link_limit_enable = Memory::StreamCopy<u8>(a_raw);
+							t_bone_ik.ik_link_limit_enable = NMemory::StreamCopy<u8>(a_raw);
 							if(t_bone_ik.ik_link_limit_enable > 0){
-								t_bone_ik.ik_link_limit_min = Memory::StreamCopy<NBsys::NGeometry::Geometry_Vector3>(a_raw);
-								t_bone_ik.ik_link_limit_max = Memory::StreamCopy<NBsys::NGeometry::Geometry_Vector3>(a_raw);
+								t_bone_ik.ik_link_limit_min = NMemory::StreamCopy<NBsys::NGeometry::Geometry_Vector3>(a_raw);
+								t_bone_ik.ik_link_limit_max = NMemory::StreamCopy<NBsys::NGeometry::Geometry_Vector3>(a_raw);
 							}else{
 								t_bone_ik.ik_link_limit_min = NBsys::NGeometry::Geometry_Identity();
 								t_bone_ik.ik_link_limit_max = NBsys::NGeometry::Geometry_Identity();

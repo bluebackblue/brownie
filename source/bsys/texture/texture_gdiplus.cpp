@@ -92,7 +92,7 @@ namespace NBsys{namespace NTexture
 		//グローバルメモリにデータをコピー。
 		void* t_global_buffer = t_globalmemory->Map();
 		if(t_global_buffer){
-			Memory::Copy(t_global_buffer,a_size,a_data.get(),a_size);
+			NMemory::Copy(t_global_buffer,a_size,a_data.get(),a_size);
 			t_globalmemory->Unmap();
 		}
 
@@ -180,7 +180,7 @@ namespace NBsys{namespace NTexture
 				Gdiplus::GetImageEncoders(t_encoder_count,t_encoder_buffersize,t_imagecodecinfo.get());
 				
 				for(s32 ii=0;ii<static_cast<s32>(t_encoder_count);ii++){
-					if(Memory::StringCompareW(L"image/jpeg",t_imagecodecinfo.get()[ii].MimeType) == 0){
+					if(NMemory::StringCompareW(L"image/jpeg",t_imagecodecinfo.get()[ii].MimeType) == 0){
 						t_index = ii;
 						break;
 					}
@@ -255,7 +255,7 @@ namespace NBsys{namespace NTexture
 			if(t_global_buffer){
 
 				t_jpg_data.reset(new u8[static_cast<u32>(t_write_size)]);
-				Memory::Copy(t_jpg_data.get(),t_write_size,t_global_buffer,t_write_size);
+				NMemory::Copy(t_jpg_data.get(),t_write_size,t_global_buffer,t_write_size);
 				t_jpg_size = t_write_size;
 
 				t_globalmemory->Unmap();

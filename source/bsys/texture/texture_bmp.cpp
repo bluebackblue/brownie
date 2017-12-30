@@ -48,68 +48,68 @@ namespace NBsys{namespace NTexture
 		const u8* t_raw = reinterpret_cast<const u8*>(a_data.get());
 
 		//タイプ。
-		u16 t_header_type =	Memory::StreamCopy<u16>(t_raw);
+		u16 t_header_type =	NMemory::StreamCopy<u16>(t_raw);
 		if(t_header_type != 0x4D42){
 			ASSERT(0);
 			return nullptr;
 		}
 
 		//ファイルサイズ。
-		u32 t_heaer_filesize = Memory::StreamCopy<u32>(t_raw);
+		u32 t_heaer_filesize = NMemory::StreamCopy<u32>(t_raw);
 		if(t_heaer_filesize > static_cast<u32>(a_size)){
 			ASSERT(0);
 			return nullptr;
 		}
 
 		//予約。
-		u16 t_header_reserved1 = Memory::StreamCopy<u16>(t_raw);
+		u16 t_header_reserved1 = NMemory::StreamCopy<u16>(t_raw);
 		UNUSED(t_header_reserved1);
-		u16 t_header_reserved2 = Memory::StreamCopy<u16>(t_raw);
+		u16 t_header_reserved2 = NMemory::StreamCopy<u16>(t_raw);
 		UNUSED(t_header_reserved2);
 
 		//オフセット。
-		u32 t_data_offset = Memory::StreamCopy<u32>(t_raw);
+		u32 t_data_offset = NMemory::StreamCopy<u32>(t_raw);
 
 		//構造体のサイズ。
-		u32 t_size = Memory::StreamCopy<u32>(t_raw);
+		u32 t_size = NMemory::StreamCopy<u32>(t_raw);
 		UNUSED(t_size);
 
 		//ビットマップの幅(ピクセル)。
-		u32 t_width = Memory::StreamCopy<u32>(t_raw);
+		u32 t_width = NMemory::StreamCopy<u32>(t_raw);
 
 		//ビットマップの高さ(ピクセル)。
-		u32 t_height = Memory::StreamCopy<u32>(t_raw);
+		u32 t_height = NMemory::StreamCopy<u32>(t_raw);
 
 		//常に1。
-		u16 t_planes = Memory::StreamCopy<u16>(t_raw);
+		u16 t_planes = NMemory::StreamCopy<u16>(t_raw);
 		UNUSED(t_planes);
 
 		//1ピクセル辺りのビット数。
-		u16 t_bit_count = Memory::StreamCopy<u16>(t_raw);
+		u16 t_bit_count = NMemory::StreamCopy<u16>(t_raw);
 		UNUSED(t_bit_count);
 
 		//圧縮形態 無圧縮ならばBI_RGB(16,256色の場合)。
-		u32 t_compression = Memory::StreamCopy<u32>(t_raw);
+		u32 t_compression = NMemory::StreamCopy<u32>(t_raw);
 		UNUSED(t_compression);
 
 		//画像のバイト数 biCompressionがBI_RGBの場合は0でもよい。
-		u32 t_size_image = Memory::StreamCopy<u32>(t_raw);
+		u32 t_size_image = NMemory::StreamCopy<u32>(t_raw);
 		UNUSED(t_size_image);
 
 		//X方向の1ピクセル辺りのメートル数。
-		u32 t_x_pels_per_meter = Memory::StreamCopy<u32>(t_raw);
+		u32 t_x_pels_per_meter = NMemory::StreamCopy<u32>(t_raw);
 		UNUSED(t_x_pels_per_meter);
 
 		//Y方向の1ピクセル辺りのメートル数。
-		u32 t_y_pels_per_meter = Memory::StreamCopy<u32>(t_raw);
+		u32 t_y_pels_per_meter = NMemory::StreamCopy<u32>(t_raw);
 		UNUSED(t_y_pels_per_meter);
 
 		//カラーテーブルに含まれる色の数(0場合はその型の最大になる)。
-		u32 t_color_size = Memory::StreamCopy<u32>(t_raw);
+		u32 t_color_size = NMemory::StreamCopy<u32>(t_raw);
 		UNUSED(t_color_size);
 
 		//重要な色の数 0の場合は全部重要。
-		u32 t_color_size_important = Memory::StreamCopy<u32>(t_raw);
+		u32 t_color_size_important = NMemory::StreamCopy<u32>(t_raw);
 		UNUSED(t_color_size_important);
 
 		const u8* t_src = reinterpret_cast<const u8*>(a_data.get()) + t_data_offset;

@@ -427,8 +427,8 @@ namespace NTest
 			this->camera_time += a_delta;
 
 			//カメラ回転。
-			this->camera_position.x() = Math::cos_f(this->camera_time / 10) * 20;
-			this->camera_position.z() = Math::sin_f(this->camera_time / 10) * 20;
+			this->camera_position.x() = NMath::cos_f(this->camera_time / 10) * 20;
+			this->camera_position.z() = NMath::sin_f(this->camera_time / 10) * 20;
 
 			if(this->step == 0){
 				//テクスチャ。

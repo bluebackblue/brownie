@@ -154,17 +154,17 @@ namespace NBsys{namespace NFile
 
 				//総数。
 				u32 t_all_count = 0;
-				Memory::Copy(&t_all_count,sizeof(u32),&t_header.get()[t_offset],sizeof(u32));
+				NMemory::Copy(&t_all_count,sizeof(u32),&t_header.get()[t_offset],sizeof(u32));
 				t_offset += sizeof(u32);
 
 				//各ファイルサイズ。
 				sharedptr<u32> t_file_size(new u32[t_all_count]);
-				Memory::Copy(t_file_size.get(),static_cast<s32>(sizeof(u32) * t_all_count),&t_header.get()[t_offset],static_cast<s32>(sizeof(u32) * t_all_count));
+				NMemory::Copy(t_file_size.get(),static_cast<s32>(sizeof(u32) * t_all_count),&t_header.get()[t_offset],static_cast<s32>(sizeof(u32) * t_all_count));
 				t_offset += sizeof(u32) * t_all_count;
 
 				//各ファイル名文字サイズ。
 				sharedptr<u16> t_filename_length(new u16[t_all_count]);
-				Memory::Copy(t_filename_length.get(),static_cast<s32>(sizeof(u16) * t_all_count),&t_header.get()[t_offset],static_cast<s32>(sizeof(u16) * t_all_count));
+				NMemory::Copy(t_filename_length.get(),static_cast<s32>(sizeof(u16) * t_all_count),&t_header.get()[t_offset],static_cast<s32>(sizeof(u16) * t_all_count));
 				t_offset += sizeof(u16) * t_all_count;
 
 				//各ファイル名をまとめたもの。
@@ -177,7 +177,7 @@ namespace NBsys{namespace NFile
 						s32 t_length = static_cast<s32>(sizeof(u16) * (t_filename_length.get()[ii]+1));
 						ASSERT(t_length < COUNTOF(t_buffer));
 
-						Memory::Copy(&t_buffer[0],sizeof(t_buffer),&t_header.get()[t_offset_path],t_length);
+						NMemory::Copy(&t_buffer[0],sizeof(t_buffer),&t_header.get()[t_offset_path],t_length);
 						t_offset_path += sizeof(u16) * (t_filename_length.get()[ii] + 1);
 						
 						STLWString t_filename_short = Path::DirAndName(this->pack_rootpath_short,t_buffer);

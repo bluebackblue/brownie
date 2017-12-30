@@ -319,7 +319,7 @@ namespace NBsys{namespace ND3d11
 			if(this->device){
 				D3D11_DEPTH_STENCIL_VIEW_DESC t_desc;
 				{
-					Memory::ZeroClear(t_desc);
+					NMemory::ZeroClear(t_desc);
 					t_desc.Format = t_format_depthstencil;
 					t_desc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
 					t_desc.Texture2D.MipSlice = 0;
@@ -338,7 +338,7 @@ namespace NBsys{namespace ND3d11
 			if(this->device){
 				D3D11_SHADER_RESOURCE_VIEW_DESC t_desc;
 				{
-					Memory::ZeroClear(t_desc);
+					NMemory::ZeroClear(t_desc);
 					t_desc.Format = t_format_depthstencil_resource;
 					t_desc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 					t_desc.Texture2D.MipLevels = 1;
@@ -1112,7 +1112,7 @@ namespace NBsys{namespace ND3d11
 		{
 			D3D11_SHADER_RESOURCE_VIEW_DESC t_desc;
 			{
-				Memory::ZeroClear(t_desc);
+				NMemory::ZeroClear(t_desc);
 				t_desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 				t_desc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 				t_desc.Texture2D.MipLevels = 1;
@@ -1183,7 +1183,7 @@ namespace NBsys{namespace ND3d11
 	{
 		D3D11_RASTERIZER_DESC t_desc;
 		{
-			Memory::ZeroClear(t_desc);
+			NMemory::ZeroClear(t_desc);
 			t_desc.FillMode = D3D11_FILL_SOLID;
 			t_desc.DepthClipEnable = FALSE;
 			t_desc.MultisampleEnable = FALSE;
@@ -1251,7 +1251,7 @@ namespace NBsys{namespace ND3d11
 	{
 		D3D11_SAMPLER_DESC t_desc;
 		{
-			Memory::ZeroClear(t_desc);
+			NMemory::ZeroClear(t_desc);
 			t_desc.ComparisonFunc = D3D11_COMPARISON_NEVER;
 			t_desc.MinLOD = 0;
 			t_desc.MaxLOD = D3D11_FLOAT32_MAX;
@@ -1461,7 +1461,7 @@ namespace NBsys{namespace ND3d11
 							)
 						);
 
-						Memory::Copy(t_screenshot->GetPixel().get(),static_cast<s32>(t_size),t_mapped_resource.pData,static_cast<s32>(t_size));
+						NMemory::Copy(t_screenshot->GetPixel().get(),static_cast<s32>(t_size),t_mapped_resource.pData,static_cast<s32>(t_size));
 						this->devicecontext.get()->Unmap(t_texture.get(),0);
 					}
 				}
@@ -1741,7 +1741,7 @@ namespace NBsys{namespace ND3d11
 					if(SUCCEEDED(t_result)){
 
 						s32 t_size = t_vertexbuffer->stridebyte * t_vertexbuffer->countofvertex;
-						Memory::Copy(t_mapped_resource.pData,t_size,a_data,a_size);
+						NMemory::Copy(t_mapped_resource.pData,t_size,a_data,a_size);
 						this->devicecontext->Unmap(t_vertexbuffer->buffer.get(),0);
 
 					}
