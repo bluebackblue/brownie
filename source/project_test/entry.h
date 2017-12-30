@@ -17,7 +17,7 @@
 /** warning push
 */
 #pragma warning(push)
-#pragma warning(disable:4514)
+#pragma warning(disable:4514 4710)
 
 
 /** EntryParam
@@ -47,3 +47,4 @@ EntryParam& GetEntryParamReference();
 /** warning pop
 */
 #pragma warning(pop)
+

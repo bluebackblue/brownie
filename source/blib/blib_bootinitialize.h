@@ -27,7 +27,7 @@
 /** include
 */
 #pragma warning(push)
-#pragma warning(disable:4710 4548 4987 4820 4514 4365 4623 5027 4626 4625)
+#pragma warning(disable:4710 4711 4548 4987 4820 4514 4365 4623 5027 4626 4625)
 #include <functional>
 #pragma warning(pop)
 

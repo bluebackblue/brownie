@@ -36,6 +36,8 @@
 /** NTest
 */
 #if(DEF_TEST_INDEX == 12)
+#pragma warning(push)
+#pragma warning(disable:4710)
 namespace NTest
 {
 	/** App
@@ -532,5 +534,6 @@ namespace NTest
 
 
 }
+#pragma warning(pop)
 #endif
 

@@ -27,7 +27,7 @@
 */
 #if(BSYS_GEOMETRY_ENABLE)
 #pragma warning(push)
-#pragma warning(disable:4514)
+#pragma warning(disable:4514 4710)
 namespace NBsys{namespace NGeometry
 {
 	/** NBsys::NGeometry::NImpl_Matrix

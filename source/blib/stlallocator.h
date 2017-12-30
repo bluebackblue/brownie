@@ -39,6 +39,8 @@
 
 /** NBlib
 */
+#pragma warning(push)
+#pragma warning(disable:4711)
 namespace NBlib
 {
 	/** STLAllocatorBase
@@ -196,4 +198,5 @@ namespace NBlib
 
 
 }
+#pragma warning(pop)
 

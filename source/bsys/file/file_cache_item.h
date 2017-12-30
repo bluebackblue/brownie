@@ -25,6 +25,8 @@
 /** NBsys::NFile
 */
 #if(BSYS_FILE_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4711)
 namespace NBsys{namespace NFile
 {
 	/** File_Cache_Item
@@ -67,5 +69,6 @@ namespace NBsys{namespace NFile
 
 
 }}
+#pragma warning(pop)
 #endif
 

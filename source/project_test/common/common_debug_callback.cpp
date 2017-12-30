@@ -20,15 +20,16 @@
 /** warning
 
 4710 : この関数はインライン展開のために選択されましたが、コンパイラはインライン展開を実行しませんでした。
+4711 : 自動インライン展開を選択しました。
 
 */
-#pragma warning(disable:4710)
+#pragma warning(disable:4710 4711)
 
 
 /** NTest::NCommon
 */
 #pragma warning(push)
-#pragma warning(disable:4505 4711)
+#pragma warning(disable:4505)
 namespace NTest{namespace NCommon
 {
 	/** LogItem

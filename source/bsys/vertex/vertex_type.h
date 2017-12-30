@@ -20,6 +20,8 @@
 /** NBsys::NVertex
 */
 #if(BSYS_VERTEX_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4710)
 namespace NBsys{namespace NVertex
 {
 	/** Vertex_Data_Pos3
@@ -756,6 +758,6 @@ namespace NBsys{namespace NVertex
 
 
 }}
+#pragma warning(pop)
 #endif
-
 

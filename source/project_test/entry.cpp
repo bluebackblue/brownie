@@ -21,6 +21,19 @@
 #endif
 
 
+/** include
+*/
+#include "./entry.h"
+
+
+/** warning
+
+4710 : この関数はインライン展開のために選択されましたが、コンパイラはインライン展開を実行しませんでした。
+
+*/
+#pragma warning(disable:4710)
+
+
 /** NTest
 */
 namespace NTest
@@ -29,11 +42,6 @@ namespace NTest
 	*/
 	void Test_Main();
 }
-
-
-/** include
-*/
-#include "./entry.h"
 
 
 /** GetEntryParamReference

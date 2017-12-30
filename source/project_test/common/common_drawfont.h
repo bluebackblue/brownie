@@ -26,7 +26,7 @@
 */
 #if((BSYS_D3D11_ENABLE)&&(BSYS_FONT_ENABLE))
 #pragma warning(push)
-#pragma warning(disable:4514)
+#pragma warning(disable:4514 4710)
 namespace NTest{namespace NCommon
 {
 	/** DrawFont_VS_ConstantBuffer_B0
