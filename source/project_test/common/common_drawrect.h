@@ -26,7 +26,7 @@
 */
 #if(BSYS_D3D11_ENABLE)
 #pragma warning(push)
-#pragma warning(disable:4514 4820)
+#pragma warning(disable:4514 4820 4710)
 namespace NTest{namespace NCommon
 {
 	/** DrawRect_VS_ConstantBuffer_B0

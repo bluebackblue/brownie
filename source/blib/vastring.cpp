@@ -67,7 +67,7 @@ namespace NBlib
 
 			#if defined(PLATFORM_VCWIN)
 			{
-				::_vsnprintf_s(reinterpret_cast<char*>(a_buffer),static_cast<size_t>(t_buffer_len),static_cast<size_t>(t_buffer_len-1),a_format,t_va);
+				::_vsnprintf_s(reinterpret_cast<char*>(a_buffer),static_cast<std::size_t>(t_buffer_len),static_cast<std::size_t>(t_buffer_len-1),a_format,t_va);
 			}
 			#else
 			{
@@ -101,7 +101,7 @@ namespace NBlib
 
 			#if defined(PLATFORM_VCWIN)
 			{
-				::_vsnwprintf_s(reinterpret_cast<wchar*>(a_buffer),static_cast<size_t>(t_buffer_len),static_cast<size_t>(t_buffer_len-1),a_format,t_va);
+				::_vsnwprintf_s(reinterpret_cast<wchar*>(a_buffer),static_cast<std::size_t>(t_buffer_len),static_cast<std::size_t>(t_buffer_len-1),a_format,t_va);
 			}
 			#else
 			{

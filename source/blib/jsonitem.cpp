@@ -266,9 +266,9 @@ namespace NBlib
 		#pragma warning(disable:4702)
 		static const char* ToSequenceString(const STLString& a_string,u32 a_index)
 		{
-			if(a_index < static_cast<u32>(a_string.length())){
+			if(a_index < a_string.length()){
 				if(a_string[a_index] == '\\'){
-					if((a_index + 1) < static_cast<u32>(a_string.length())){
+					if((a_index + 1) < a_string.length()){
 						switch(a_string[a_index+1]){
 						case '\"':
 							{
@@ -334,10 +334,10 @@ namespace NBlib
 		*/
 		static u32 GetMojiSize(const STLString& a_string,u32 a_index,bool a_escape)
 		{
-			if(a_index < static_cast<u32>(a_string.length())){
+			if(a_index < a_string.length()){
 				if(a_string[a_index] == '\\'){
 					if(a_escape == true){
-						if(static_cast<u32>(a_string.length()) >= (2 + a_index)){
+						if(a_string.length() >= (2 + a_index)){
 							//エスケープシーケンスの後ろは１バイト文字。
 							return 2;
 						}else{
@@ -392,10 +392,10 @@ namespace NBlib
 		{
 			u32 t_index = static_cast<u32>(a_index);
 
-			if(t_index < static_cast<s32>(a_string.length())){
+			if(t_index < a_string.length()){
 				if((a_string[t_index] == '"')||(a_string[t_index] == '\'')){
 					t_index++;
-					while(t_index < static_cast<s32>(a_string.length())){
+					while(t_index < a_string.length()){
 						if((a_string[t_index] == '"')||(a_string[t_index] == '\'')){
 							//終端。
 							return t_index - a_index + 1;
@@ -436,9 +436,9 @@ namespace NBlib
 		*/
 		static u32 GetLength_Number(const STLString& a_string,u32 a_index)
 		{
-			if(a_index < static_cast<s32>(a_string.length())){
+			if(a_index < a_string.length()){
 				u32 t_index = a_index;
-				while(a_index < static_cast<s32>(a_string.length())){
+				while(a_index < a_string.length()){
 					switch(a_string[t_index]){
 					case '}':
 					case ']':
@@ -489,12 +489,12 @@ namespace NBlib
 		*/
 		static u32 GetLength_AssociateArray(const STLString& a_string,u32 a_index)
 		{
-			if(a_index < static_cast<s32>(a_string.length())){
+			if(a_index < a_string.length()){
 				if(a_string[a_index] == '{'){
 					s32 t_nest = 1;
 					u32 t_index = a_index + 1;
 				
-					while(t_index < static_cast<s32>(a_string.length())){
+					while(t_index < a_string.length()){
 						if(a_string[t_index] == '}'){
 							if(t_nest <= 1){
 								//終端。
@@ -548,12 +548,12 @@ namespace NBlib
 		*/
 		static u32 GetLength_IndexArray(const STLString& a_string,u32 a_index)
 		{
-			if(a_index < static_cast<s32>(a_string.length())){
+			if(a_index < a_string.length()){
 				if(a_string[a_index] == '['){
 					s32 t_nest = 1;
 					u32 t_index = a_index + 1;
 				
-					while(t_index < static_cast<s32>(a_string.length())){
+					while(t_index < a_string.length()){
 						if(a_string[t_index] == ']'){
 							if(t_nest <= 1){
 								//終端。
@@ -613,7 +613,7 @@ namespace NBlib
 			for(s32 ii=0;ii<COUNTOF(t_true_1);ii++){
 				u32 t_index = static_cast<u32>(a_index + ii);
 
-				if(t_index < static_cast<s32>(a_string.length())){
+				if(t_index < a_string.length()){
 					if((a_string[t_index] == t_true_1[ii])||(a_string[t_index] == t_true_2[ii])){
 					}else{
 						//TRUE以外。
@@ -632,7 +632,7 @@ namespace NBlib
 			{
 				u32 t_index = static_cast<u32>(a_index + COUNTOF(t_true_1));
 
-				if(t_index < static_cast<s32>(a_string.length())){
+				if(t_index < a_string.length()){
 					if((a_string[t_index] == '}')||(a_string[t_index] == ']')||(a_string[t_index] == ',')){
 						//終端。
 						return COUNTOF(t_true_1);
@@ -662,7 +662,7 @@ namespace NBlib
 			for(s32 ii=0;ii<COUNTOF(t_true_1);ii++){
 				u32 t_index = a_index + ii;
 
-				if(t_index < static_cast<s32>(a_string.length())){
+				if(t_index < a_string.length()){
 					if((a_string[t_index] == t_true_1[ii])||(a_string[t_index] == t_true_2[ii])){
 					}else{
 						//FALSE以外。
@@ -681,7 +681,7 @@ namespace NBlib
 			{
 				u32 t_index = static_cast<u32>(a_index + COUNTOF(t_true_1));
 
-				if(t_index < static_cast<s32>(a_string.length())){
+				if(t_index < a_string.length()){
 					if((a_string[t_index] == '}')||(a_string[t_index] == ']')||(a_string[t_index] == ',')){
 						//終端。
 						return COUNTOF(t_true_1);
@@ -705,10 +705,10 @@ namespace NBlib
 		*/
 		static u32 GetLength_BinaryData(const STLString& a_string,u32 a_index)
 		{
-			if(a_index < static_cast<s32>(a_string.length())){
+			if(a_index < a_string.length()){
 				if(a_string[a_index] == '<'){
 					u32 t_index = a_index + 1;
-					while(t_index < static_cast<s32>(a_string.length())){
+					while(t_index < a_string.length()){
 						switch(a_string[t_index]){
 						case '>':
 							{
@@ -777,10 +777,10 @@ namespace NBlib
 			sharedptr<STLVector<sharedptr<JsonItem>>::Type> t_indexlist(new STLVector<sharedptr<JsonItem>>::Type());
 		
 			u32 t_index = 0;
-			while(t_index < static_cast<s32>(a_jsonstring.length())){
+			while(t_index < a_jsonstring.length()){
 				if(a_jsonstring[t_index] == ']'){
 					//終端。
-					ASSERT(t_index + 1 == static_cast<s32>(a_jsonstring.length()));
+					ASSERT(t_index + 1 == a_jsonstring.length());
 
 					return t_indexlist;
 				}else if(a_jsonstring[t_index] == ','){
@@ -890,10 +890,10 @@ namespace NBlib
 			sharedptr<STLMap<STLString,sharedptr<JsonItem>>::Type> t_associativelist(new STLMap<STLString,sharedptr<JsonItem>>::Type);
 		
 			u32 t_index = 0;
-			while(t_index < static_cast<u32>(a_jsonstring.length())){
+			while(t_index < a_jsonstring.length()){
 				if(a_jsonstring[t_index] == '}'){
 					//終端。
-					ASSERT(t_index + 1 == a_jsonstring.length());
+					ASSERT((t_index + 1) == a_jsonstring.length());
 
 					return t_associativelist;
 				}else if(a_jsonstring[t_index] == ','){
@@ -1036,10 +1036,10 @@ namespace NBlib
 			t_binarydata->reserve(a_jsonstring.length() / 2);
 
 			u32 t_index = 0;
-			while(t_index < static_cast<s32>(a_jsonstring.length())){
+			while(t_index < a_jsonstring.length()){
 				if(a_jsonstring[t_index] == '>'){
 					//終端。
-					ASSERT(t_index + 1 == static_cast<s32>(a_jsonstring.length()));
+					ASSERT((t_index + 1) == a_jsonstring.length());
 
 					return t_binarydata;
 				}else if(a_jsonstring[t_index] == '<'){
@@ -1093,7 +1093,7 @@ namespace NBlib
 
 					t_index++;
 
-					if(t_index < static_cast<s32>(a_jsonstring.length())){
+					if(t_index < a_jsonstring.length()){
 						switch(a_jsonstring[t_index]){
 						case '0':t_binary |= 0x00;break;
 						case '1':t_binary |= 0x01;break;
@@ -1253,7 +1253,7 @@ namespace NBlib
 	*/
 	void JsonItem::SetJsonString(const STLString& a_jsonstring)
 	{
-		if(static_cast<s32>(a_jsonstring.length()) > 0){
+		if(a_jsonstring.length() > 0){
 			ValueType::Id t_valuetype = NImpl::GetValueTypeFromChar(a_jsonstring[0]);
 			switch(t_valuetype){
 			case ValueType::StringData:

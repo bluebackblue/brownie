@@ -68,7 +68,7 @@ namespace NBlib
 			if(t_wchar_use_len > 0){
 				//出力文字。終端を含む。
 				s32 t_alloca_size = static_cast<s32>(t_wchar_use_len * sizeof(wchar));
-				wchar* t_wchar = reinterpret_cast<wchar*>(MALLOCA(static_cast<size_t>(t_alloca_size)));
+				wchar* t_wchar = reinterpret_cast<wchar*>(MALLOCA(static_cast<std::size_t>(t_alloca_size)));
 
 				if(t_wchar != nullptr){
 					//変換。
@@ -113,7 +113,7 @@ namespace NBlib
 			if(t_char_use_len > 0){
 				//出力文字。終端文字を含む。
 				s32 t_alloca_size = t_char_use_len * static_cast<s32>(sizeof(char));
-				char* t_char = reinterpret_cast<char*>(MALLOCA(static_cast<size_t>(t_alloca_size)));
+				char* t_char = reinterpret_cast<char*>(MALLOCA(static_cast<std::size_t>(t_alloca_size)));
 
 				if(t_char != nullptr){
 					//変換。
@@ -161,19 +161,19 @@ namespace NBlib
 	void HexCharToInt(const STLString& a_string,s32& a_value)
 	{
 		const char* t_data = a_string.c_str();
-		s32 t_size = static_cast<s32>(a_string.size());
+		u32 t_size = a_string.size();
 
 		u32 t_value = 0;
 
 		if(t_size > 0){
 
-			s32 t_ii_start = 0;
+			u32 t_ii_start = 0;
 
 			if(t_data[0] == '-'){
 				t_ii_start = 1;
 			}
 
-			for(s32 ii=t_ii_start;ii<t_size;ii++){
+			for(u32 ii=t_ii_start;ii<t_size;ii++){
 
 				t_value <<= 4;
 
@@ -274,7 +274,7 @@ namespace NBlib
 	{
 		const char* t_string = a_string.c_str();
 		const char* t_prefix = a_prefix.c_str();
-		u32 t_ii_max = static_cast<u32>(a_prefix.size());
+		u32 t_ii_max = a_prefix.size();
 
 		for(u32 ii=0;ii<t_ii_max;ii++){
 			if(a_string[ii] == nullchar){

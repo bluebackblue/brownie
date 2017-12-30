@@ -35,16 +35,16 @@ namespace NBlib
 	{
 		/** Copy
 		*/
-		template <typename T,typename U> inline void Copy(void* a_dest,T a_check_dest_size,const void* a_src,U a_size)
+		template <typename T,typename U> inline void Copy(void* a_dest,T a_check_dest_size,const void* a_source,U a_size)
 		{
 			#if defined(ROM_MASTER)
 			{
 				UNUSED(a_check_dest_size);
-				std::memcpy(a_dest,a_scr,a_size);
+				std::memcpy(a_dest,a_source,static_cast<std::size_t>(a_size));
 			}
 			#else
 			{
-				::memcpy_s(a_dest,static_cast<size_t>(a_check_dest_size),a_src,static_cast<size_t>(a_size));
+				::memcpy_s(a_dest,static_cast<std::size_t>(a_check_dest_size),a_source,static_cast<std::size_t>(a_size));
 			}
 			#endif
 		}
@@ -54,7 +54,7 @@ namespace NBlib
 		*/
 		template <typename T> inline void Set(void* a_data,s32 a_value,T a_size)
 		{
-			std::memset(a_data,a_value,static_cast<size_t>(a_size));
+			std::memset(a_data,a_value,static_cast<std::size_t>(a_size));
 		}
 
 
@@ -62,7 +62,7 @@ namespace NBlib
 		*/
 		template <typename T> inline void Compare(const void* a_data_1,const void* a_data_2,std::size_t a_size)
 		{
-			std::memcmp(a_data_1,a_data_2,static_cast<size_t>(a_size));
+			std::memcmp(a_data_1,a_data_2,static_cast<std::size_t>(a_size));
 		}
 
 

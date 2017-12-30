@@ -115,7 +115,7 @@ namespace NBsys{namespace NTexture
 			Gdiplus::Status t_status = t_bitmap->LockBits(&t_rect,Gdiplus::ImageLockModeRead,PixelFormat32bppARGB,&t_bitmap_data);
 			if(t_status == Gdiplus::Status::Ok){
 
-				sharedptr<u8> t_to_pixel(new u8[static_cast<size_t>(t_tex_height * t_tex_pitch)],default_delete<u8[]>());
+				sharedptr<u8> t_to_pixel(new u8[static_cast<std::size_t>(t_tex_height * t_tex_pitch)],default_delete<u8[]>());
 			
 				for(s32 yy=0;yy<t_tex_height;yy++){
 					const u8* t_from = reinterpret_cast<const u8*>(t_bitmap_data.Scan0) + yy * t_bitmap_data.Stride;
@@ -254,7 +254,7 @@ namespace NBsys{namespace NTexture
 			void* t_global_buffer = t_globalmemory->Map();
 			if(t_global_buffer){
 
-				t_jpg_data.reset(new u8[static_cast<u32>(t_write_size)]);
+				t_jpg_data.reset(new u8[static_cast<std::size_t>(t_write_size)]);
 				NMemory::Copy(t_jpg_data.get(),t_write_size,t_global_buffer,t_write_size);
 				t_jpg_size = t_write_size;
 

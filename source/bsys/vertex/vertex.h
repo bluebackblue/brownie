@@ -102,7 +102,7 @@ namespace NBsys{namespace NVertex
 
 		/** バーテックス数。
 		*/
-		s32 GetVertexCountOf(s32 a_parts_index);
+		template <typename T2> s32 GetVertexCountOf(T2 a_parts_index);
 
 		/** 全バーテックス数。
 		*/
@@ -110,7 +110,7 @@ namespace NBsys{namespace NVertex
 
 		/** バーテックスオフセット。
 		*/
-		s32 GetVertexOffset(s32 a_parts_index);
+		template <typename T2> s32 GetVertexOffset(T2 a_parts_index);
 
 		/** GetVertexPointer。
 		*/

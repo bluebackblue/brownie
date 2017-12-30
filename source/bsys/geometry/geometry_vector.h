@@ -99,6 +99,14 @@ namespace NBsys{namespace NGeometry
 		*/
 		inline Geometry_Vector2& Set_Zero();
 
+		/** [取得]。
+		*/
+		inline f32 Get_X();
+
+		/** [取得]。
+		*/
+		inline f32 Get_Y();
+
 		/** [キャスト]。
 		*/
 		inline operator f32*();
@@ -200,6 +208,18 @@ namespace NBsys{namespace NGeometry
 		/** [設定]Set_Zero。
 		*/
 		inline Geometry_Vector3& Set_Zero();
+
+		/** [取得]。
+		*/
+		inline f32 Get_X();
+
+		/** [取得]。
+		*/
+		inline f32 Get_Y();
+
+		/** [取得]。
+		*/
+		inline f32 Get_Z();
 
 		/** [キャスト]。
 		*/
@@ -446,6 +466,22 @@ namespace NBsys{namespace NGeometry
 		/** [設定]Set_Zero。
 		*/
 		inline Geometry_Vector4& Set_Zero();
+
+		/** [取得]。
+		*/
+		inline f32 Get_X();
+
+		/** [取得]。
+		*/
+		inline f32 Get_Y();
+
+		/** [取得]。
+		*/
+		inline f32 Get_Z();
+
+		/** [取得]。
+		*/
+		inline f32 Get_W();
 
 		/** [キャスト]。
 		*/

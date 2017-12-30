@@ -232,6 +232,22 @@ namespace NBsys{namespace NGeometry
 	}
 
 
+	/** [取得]。
+	*/
+	inline f32 Geometry_Vector2::Get_X()
+	{
+		return this->raw.v.x;
+	}
+
+
+	/** [取得]。
+	*/
+	inline f32 Geometry_Vector2::Get_Y()
+	{
+		return this->raw.v.x;
+	}
+
+
 	/** [キャスト]。
 	*/
 	inline Geometry_Vector2::operator f32*()
@@ -439,6 +455,30 @@ namespace NBsys{namespace NGeometry
 		*this = Geometry_Vector3::Zero();
 
 		return *this;
+	}
+
+
+	/** [取得]。
+	*/
+	inline f32 Geometry_Vector3::Get_X()
+	{
+		return this->raw.v.x;
+	}
+
+
+	/** [取得]。
+	*/
+	inline f32 Geometry_Vector3::Get_Y()
+	{
+		return this->raw.v.x;
+	}
+
+
+	/** [取得]。
+	*/
+	inline f32 Geometry_Vector3::Get_Z()
+	{
+		return this->raw.v.x;
 	}
 
 
@@ -1101,6 +1141,38 @@ namespace NBsys{namespace NGeometry
 		*this = Geometry_Vector4::Zero();
 
 		return *this;
+	}
+
+
+	/** [取得]。
+	*/
+	inline f32 Geometry_Vector4::Get_X()
+	{
+		return this->raw.v.x;
+	}
+
+
+	/** [取得]。
+	*/
+	inline f32 Geometry_Vector4::Get_Y()
+	{
+		return this->raw.v.x;
+	}
+
+
+	/** [取得]。
+	*/
+	inline f32 Geometry_Vector4::Get_Z()
+	{
+		return this->raw.v.x;
+	}
+
+
+	/** [取得]。
+	*/
+	inline f32 Geometry_Vector4::Get_W()
+	{
+		return this->raw.v.x;
 	}
 
 

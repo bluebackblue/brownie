@@ -61,7 +61,7 @@ namespace NBsys{namespace NTexture
 			ASSERT(a_size > 0);
 
 			#if(PLATFORM_VCWIN)
-			this->handle = ::GlobalAlloc(GMEM_MOVEABLE,static_cast<size_t>(a_size));
+			this->handle = ::GlobalAlloc(GMEM_MOVEABLE,static_cast<std::size_t>(a_size));
 			#endif
 		}
 

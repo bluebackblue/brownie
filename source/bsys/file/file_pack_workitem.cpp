@@ -159,12 +159,12 @@ namespace NBsys{namespace NFile
 
 				//各ファイルサイズ。
 				sharedptr<u32> t_file_size(new u32[t_all_count]);
-				NMemory::Copy(t_file_size.get(),static_cast<s32>(sizeof(u32) * t_all_count),&t_header.get()[t_offset],static_cast<s32>(sizeof(u32) * t_all_count));
+				NMemory::Copy(t_file_size.get(),(sizeof(u32) * t_all_count),&t_header.get()[t_offset],(sizeof(u32) * t_all_count));
 				t_offset += sizeof(u32) * t_all_count;
 
 				//各ファイル名文字サイズ。
 				sharedptr<u16> t_filename_length(new u16[t_all_count]);
-				NMemory::Copy(t_filename_length.get(),static_cast<s32>(sizeof(u16) * t_all_count),&t_header.get()[t_offset],static_cast<s32>(sizeof(u16) * t_all_count));
+				NMemory::Copy(t_filename_length.get(),(sizeof(u16) * t_all_count),&t_header.get()[t_offset],(sizeof(u16) * t_all_count));
 				t_offset += sizeof(u16) * t_all_count;
 
 				//各ファイル名をまとめたもの。

@@ -203,13 +203,13 @@ namespace NBsys{namespace ND3d11
 		*/
 		s32 FindNoLockFontIndex()
 		{
-			for(u32 ii=0;ii<static_cast<u32>(this->list.size());ii++){
+			for(u32 ii=0;ii<this->list.size();ii++){
 				if((this->list[ii].lock == false)&&(this->list[ii].code == nullchar)){
 					return static_cast<s32>(ii);
 				}
 			}
 
-			for(u32 ii=0;ii<static_cast<u32>(this->list.size());ii++){
+			for(u32 ii=0;ii<this->list.size();ii++){
 				if(this->list[ii].lock == false){
 					return static_cast<s32>(ii);
 				}
@@ -242,7 +242,7 @@ namespace NBsys{namespace ND3d11
 		{
 			bool t_change = false;
 
-			for(u32 ii=0;ii<static_cast<u32>(a_string.length());ii++){
+			for(u32 ii=0;ii<a_string.length();ii++){
 
 				wchar t_code = a_string[ii];
 
@@ -370,7 +370,7 @@ namespace NBsys{namespace ND3d11
 
 			STLVector<u32>::Type t_work_list;
 			{
-				for(u32 ii=0;ii<static_cast<u32>(a_string.length());ii++){
+				for(u32 ii=0;ii<a_string.length();ii++){
 					wchar t_code = a_string[ii];
 					if(t_code != nullwchar){
 						auto t_it = std::as_const(this->maplist).find(t_code);
@@ -411,7 +411,7 @@ namespace NBsys{namespace ND3d11
 					t_y = a_y + a_h - t_string_h;
 				}
 
-				u32 ii_max = static_cast<u32>(t_work_list.size());
+				u32 ii_max = t_work_list.size();
 				for(u32 ii=0;ii<ii_max;ii++){
 					u32 t_font_index = t_work_list[ii];
 					NBsys::NFont::Font_State& t_font_state = this->list[t_font_index].fontstate;

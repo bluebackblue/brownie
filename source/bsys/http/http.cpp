@@ -134,13 +134,13 @@ namespace NBsys{namespace NHttp
 		{
 			u32 t_offset = 0;
 
-			Memory::Copy(&t_buffer_data[t_offset],static_cast<s32>(t_buffer_size - t_offset),t_body_header.c_str(),static_cast<s32>(t_body_header.length()));
+			NMemory::Copy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_body_header.c_str(),t_body_header.length());
 			t_offset += static_cast<u32>(t_body_header.length());
 
-			Memory::Copy(&t_buffer_data[t_offset],static_cast<s32>(t_buffer_size - t_offset),a_data.get(),a_size);
+			NMemory::Copy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),a_data.get(),a_size);
 			t_offset += static_cast<u32>(a_size);
 
-			Memory::Copy(&t_buffer_data[t_offset],static_cast<s32>(t_buffer_size - t_offset),t_body_footer.c_str(),static_cast<s32>(t_body_footer.length()));
+			NMemory::Copy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_body_footer.c_str(),t_body_footer.length());
 			t_offset += static_cast<u32>(t_body_footer.length());
 
 			ASSERT(t_offset == t_buffer_size);
@@ -172,13 +172,13 @@ namespace NBsys{namespace NHttp
 		{
 			u32 t_offset = 0;
 
-			Memory::Copy(&t_buffer_data[t_offset],static_cast<s32>(t_buffer_size - t_offset),t_body_header.c_str(),static_cast<s32>(t_body_header.length()));
+			NMemory::Copy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_body_header.c_str(),t_body_header.length());
 			t_offset += static_cast<u32>(t_body_header.length());
 
-			Memory::Copy(&t_buffer_data[t_offset],static_cast<s32>(t_buffer_size - t_offset),a_value.c_str(),static_cast<s32>(a_value.length()));
+			NMemory::Copy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),a_value.c_str(),a_value.length());
 			t_offset += static_cast<u32>(a_value.length());
 
-			Memory::Copy(&t_buffer_data[t_offset],static_cast<s32>(t_buffer_size - t_offset),t_body_footer.c_str(),static_cast<s32>(t_body_footer.length()));
+			NMemory::Copy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_body_footer.c_str(),t_body_footer.length());
 			t_offset += static_cast<u32>(t_body_footer.length());
 
 			ASSERT(t_offset == t_buffer_size);
@@ -332,7 +332,7 @@ namespace NBsys{namespace NHttp
 							u32 t_offset = 0;
 
 							//ボディー。
-							Memory::Copy(&t_buffer_data[t_offset],static_cast<s32>(t_buffer_size - t_offset),t_send_body.c_str(),static_cast<s32>(t_send_body.length()));
+							NMemory::Copy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_send_body.c_str(),t_send_body.length());
 							t_offset += static_cast<u32>(t_send_body.length());
 
 							if(this->mode == Http_Mode::Post){
@@ -340,13 +340,13 @@ namespace NBsys{namespace NHttp
 								//バイナリ。
 								for(auto t_it = this->binary_list.cbegin();t_it!=this->binary_list.cend();t_it++){
 									if(t_it->second != nullptr){
-										Memory::Copy(&t_buffer_data[t_offset],static_cast<s32>(t_buffer_size - t_offset),t_it->second->data.get(),t_it->second->size);
+										NMemory::Copy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_it->second->data.get(),t_it->second->size);
 										t_offset += static_cast<u32>(t_it->second->size);
 									}
 								}
 
 								//バイナリ終端。
-								Memory::Copy(&t_buffer_data[t_offset],static_cast<s32>(t_buffer_size - t_offset),t_binary_footer.c_str(),static_cast<s32>(t_binary_footer.length()));
+								NMemory::Copy(&t_buffer_data[t_offset],(t_buffer_size - t_offset),t_binary_footer.c_str(),t_binary_footer.length());
 								t_offset += static_cast<u32>(t_binary_footer.length());
 							}
 

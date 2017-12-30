@@ -123,14 +123,17 @@ namespace NTest
 				}
 				if(t_json->IsExistItem("name2") == true){
 					s32 t_value = t_json->GetItem("name2")->GetInteger();
+					UNUSED(t_value);
 					DEBUGLOG("name1 = %d\n",t_value);
 				}
 				if(t_json->IsExistItem("name3") == true){
 					f32 t_value = t_json->GetItem("name3")->GetFloat();
+					UNUSED(t_value);
 					DEBUGLOG("name1 = %f\n",t_value);
 				}
 				if(t_json->IsExistItem("name4") == true){
 					bool t_value = t_json->GetItem("name4")->GetBoolData();
+					UNUSED(t_value);
 					DEBUGLOG("name1 = %d\n",t_value?1:0);
 				}
 			}

@@ -876,7 +876,7 @@ namespace NBsys{namespace ND3d11
 			sharedptr<ID3DBlob> t_blob_error;
 			ID3DBlob* t_raw = nullptr;
 			ID3DBlob* t_raw_error = nullptr;
-			HRESULT t_result = ::D3DCompile(t_data,static_cast<size_t>(t_size),nullptr,nullptr,nullptr,"VS","vs_4_0",D3DCOMPILE_ENABLE_STRICTNESS|D3DCOMPILE_DEBUG,0,&t_raw,&t_raw_error);
+			HRESULT t_result = ::D3DCompile(t_data,static_cast<std::size_t>(t_size),nullptr,nullptr,nullptr,"VS","vs_4_0",D3DCOMPILE_ENABLE_STRICTNESS|D3DCOMPILE_DEBUG,0,&t_raw,&t_raw_error);
 			if(t_raw != nullptr){
 				t_blob.reset(t_raw,release_delete<ID3DBlob>());
 			}
@@ -969,7 +969,7 @@ namespace NBsys{namespace ND3d11
 			sharedptr<ID3DBlob> t_blob_error;
 			ID3DBlob* t_raw = nullptr;
 			ID3DBlob* t_raw_error = nullptr;
-			HRESULT t_result = ::D3DCompile(t_data,static_cast<size_t>(t_size),nullptr,nullptr,nullptr,"PS","ps_4_0",D3DCOMPILE_ENABLE_STRICTNESS|D3DCOMPILE_DEBUG,0,&t_raw,&t_raw_error);
+			HRESULT t_result = ::D3DCompile(t_data,static_cast<std::size_t>(t_size),nullptr,nullptr,nullptr,"PS","ps_4_0",D3DCOMPILE_ENABLE_STRICTNESS|D3DCOMPILE_DEBUG,0,&t_raw,&t_raw_error);
 			if(t_raw != nullptr){
 				t_blob.reset(t_raw,release_delete<ID3DBlob>());
 			}
@@ -1461,7 +1461,7 @@ namespace NBsys{namespace ND3d11
 							)
 						);
 
-						NMemory::Copy(t_screenshot->GetPixel().get(),static_cast<s32>(t_size),t_mapped_resource.pData,static_cast<s32>(t_size));
+						NMemory::Copy(t_screenshot->GetPixel().get(),t_size,t_mapped_resource.pData,t_size);
 						this->devicecontext.get()->Unmap(t_texture.get(),0);
 					}
 				}

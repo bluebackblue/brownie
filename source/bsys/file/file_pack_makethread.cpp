@@ -155,7 +155,7 @@ namespace NBsys{namespace NFile
 					//各ファイル名文字数。
 					s64 t_filename_length_offset = t_offset;
 					sharedptr<u16> t_filename_length(new u16[t_all_count],default_delete<u16[]>());
-					for(u32 ii=0;ii<static_cast<u32>(t_filename_pack_short_list.size());ii++){
+					for(u32 ii=0;ii<t_filename_pack_short_list.size();ii++){
 						t_filename_length.get()[ii] = static_cast<u16>(t_filename_pack_short_list[ii].length());
 					}
 					t_offset += sizeof(u16) * t_all_count;
@@ -163,8 +163,8 @@ namespace NBsys{namespace NFile
 					//各ファイル名をまとめたもの。
 					s64 t_all_filename_offset = t_offset;
 					STLVector<wchar>::Type t_all_filename;
-					for(u32 ii=0;ii<static_cast<u32>(t_filename_pack_short_list.size());ii++){
-						for(u32 jj=0;jj<static_cast<u32>(t_filename_pack_short_list[ii].length());jj++){
+					for(u32 ii=0;ii<t_filename_pack_short_list.size();ii++){
+						for(u32 jj=0;jj<t_filename_pack_short_list[ii].length();jj++){
 							t_all_filename.push_back(t_filename_pack_short_list[ii][jj]);
 						}
 						t_all_filename.push_back(0x0000);
@@ -186,18 +186,18 @@ namespace NBsys{namespace NFile
 						}
 
 						//各ファイル名文字サイズ。
-						if(t_filehandle_write.Write(reinterpret_cast<u8*>(t_filename_length.get()),static_cast<s32>(sizeof(u16) * t_all_count),t_filename_length_offset) == false){
+						if(t_filehandle_write.Write(reinterpret_cast<u8*>(t_filename_length.get()),static_cast<s64>(sizeof(u16) * t_all_count),t_filename_length_offset) == false){
 							ASSERT(0);
 						}
 
 						//各ファイル名をひとまとめにしたもの。
-						if(t_filehandle_write.Write(reinterpret_cast<u8*>(&t_all_filename[0]),static_cast<s32>(sizeof(wchar) * t_all_filename.size()),t_all_filename_offset) == false){
+						if(t_filehandle_write.Write(reinterpret_cast<u8*>(&t_all_filename[0]),static_cast<s64>(sizeof(wchar) * t_all_filename.size()),t_all_filename_offset) == false){
 							ASSERT(0);
 						}
 					}
 
 					{
-						for(u32 ii=0;ii<static_cast<s32>(t_filename_fullpath_list.size());ii++){
+						for(u32 ii=0;ii<t_filename_fullpath_list.size();ii++){
 							FileHandle t_filehandle_read;
 							t_filehandle_read.ReadOpen(Path::Name(t_filename_fullpath_list[ii]));
 

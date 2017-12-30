@@ -150,7 +150,7 @@ namespace NBlib
 	{
 		ASSERT((0<=a_index)&&(a_index<static_cast<s32>(this->list.size())));
 
-		return this->list[static_cast<u32>(a_index)];
+		return this->list[static_cast<std::size_t>(a_index)];
 	}
 
 

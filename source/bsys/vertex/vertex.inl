@@ -135,8 +135,6 @@ namespace NBsys{namespace NVertex
 	*/
 	template <typename T> void Vertex<T>::AddVertex(const T& a_vertex)
 	{
-		//ASSERT(this->vertex_list.capacity() > this->vertex_list.size());
-
 		this->vertex_list.push_back(a_vertex);
 		this->parts_list[this->parts_list.size() - 1]->vertex_countof++;
 	}
@@ -146,7 +144,7 @@ namespace NBsys{namespace NVertex
 	*/
 	template <typename T> void Vertex<T>::ReserveVertex(s32 a_count_of)
 	{
-		this->vertex_list.reserve(static_cast<size_t>(a_count_of));
+		this->vertex_list.reserve(static_cast<std::size_t>(a_count_of));
 	}
 
 
@@ -169,9 +167,9 @@ namespace NBsys{namespace NVertex
 
 	/** GetVertexCountOf
 	*/
-	template <typename T> s32 Vertex<T>::GetVertexCountOf(s32 a_parts_index)
+	template <typename T> template<typename T2> s32 Vertex<T>::GetVertexCountOf(T2 a_parts_index)
 	{
-		return this->parts_list[static_cast<size_t>(a_parts_index)]->vertex_countof;
+		return this->parts_list[static_cast<std::size_t>(a_parts_index)]->vertex_countof;
 	}
 
 
@@ -185,9 +183,9 @@ namespace NBsys{namespace NVertex
 
 	/** GetVertexOffset
 	*/
-	template <typename T> s32 Vertex<T>::GetVertexOffset(s32 a_parts_index)
+	template <typename T> template<typename T2> s32 Vertex<T>::GetVertexOffset(T2 a_parts_index)
 	{
-		return this->parts_list[static_cast<size_t>(a_parts_index)]->vertex_offset;
+		return this->parts_list[static_cast<std::size_t>(a_parts_index)]->vertex_offset;
 	}
 
 

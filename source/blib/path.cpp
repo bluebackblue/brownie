@@ -47,7 +47,7 @@ namespace NBlib
 	{
 		STLWString t_ret;
 
-		for(u32 ii=0;ii<static_cast<u32>(a_path.length());ii++){
+		for(u32 ii=0;ii<a_path.length();ii++){
 			if(a_path[ii] == '\\'){
 				t_ret += L'/';
 			}else{
@@ -75,7 +75,7 @@ namespace NBlib
 	{
 		STLWString t_ret;
 
-		for(u32 ii=0;ii<static_cast<u32>(a_name.length());ii++){
+		for(u32 ii=0;ii<a_name.length();ii++){
 			if(a_name[ii] == '\\'){
 				t_ret += L'/';
 			}else{
@@ -98,7 +98,7 @@ namespace NBlib
 	{
 		STLWString t_ret;
 
-		for(u32 ii=0;ii<static_cast<u32>(a_path.length());ii++){
+		for(u32 ii=0;ii<a_path.length();ii++){
 			if(a_path[ii] == '\\'){
 				t_ret += L'/';
 			}else{
@@ -112,7 +112,7 @@ namespace NBlib
 			}
 		}
 
-		for(u32 ii=0;ii<static_cast<u32>(a_name.length());ii++){
+		for(u32 ii=0;ii<a_name.length();ii++){
 			if(a_name[ii] == '\\'){
 				t_ret += L'/';
 			}else{
@@ -135,7 +135,7 @@ namespace NBlib
 	{
 		STLWString t_ret;
 
-		for(u32 ii=0;ii<static_cast<u32>(a_path_a.length());ii++){
+		for(u32 ii=0;ii<a_path_a.length();ii++){
 			if(a_path_a[ii] == '\\'){
 				t_ret += L'/';
 			}else{
@@ -149,7 +149,7 @@ namespace NBlib
 			}
 		}
 
-		for(u32 ii=0;ii<static_cast<u32>(a_path_b.length());ii++){
+		for(u32 ii=0;ii<a_path_b.length();ii++){
 			if(a_path_b[ii] == '\\'){
 				t_ret += L'/';
 			}else{

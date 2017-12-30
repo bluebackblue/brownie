@@ -43,14 +43,14 @@ namespace NBlib
 		*/
 		static void CopyToBuffer_Raw(R& a_to_ringbuffer,T* a_from_data,s32 a_copy_fixcount,s32 a_copycount)
 		{
-			Memory::Copy(a_to_ringbuffer.GetItemFromFreeList(0),static_cast<s32>(a_copycount * sizeof(T)),&a_from_data[static_cast<size_t>(a_copy_fixcount)],static_cast<s32>(a_copycount * sizeof(T)));
+			NMemory::Copy(a_to_ringbuffer.GetItemFromFreeList(0),(a_copycount * sizeof(T)),&a_from_data[static_cast<std::size_t>(a_copy_fixcount)],(a_copycount * sizeof(T)));
 		}
 
 		/** [static]CopyToBuffer_Raw
 		*/
 		static void CopyFromBuffer_Raw(R& a_from_ringbuffer,T* a_to_data,s32 a_copy_fixcount,s32 a_copycount)
 		{
-			Memory::Copy(&a_to_data[static_cast<size_t>(a_copy_fixcount)],static_cast<s32>(a_copycount * sizeof(T)),a_from_ringbuffer.GetItemFromUseList(0),static_cast<s32>(a_copycount * sizeof(T)));
+			NMemory::Copy(&a_to_data[static_cast<std::size_t>(a_copy_fixcount)],(a_copycount * sizeof(T)),a_from_ringbuffer.GetItemFromUseList(0),(a_copycount * sizeof(T)));
 		}
 
 	};
