@@ -96,8 +96,8 @@ namespace NTest
 			this->camera_time += a_delta;
 
 			//カメラ回転。
-			this->camera_position.x = Math::cos_f(this->camera_time / 10) * 20;
-			this->camera_position.z = Math::sin_f(this->camera_time / 10) * 20;
+			this->camera_position.Set_X(Math::cos_f(this->camera_time / 10) * 20);
+			this->camera_position.Set_Y(Math::sin_f(this->camera_time / 10) * 20);
 		}
 
 		/** 描画命令呼び出し。
@@ -141,22 +141,22 @@ namespace NTest
 
 					//ライン描画。
 					{
-						NBsys::NGeometry::Geometry_Matrix_44 t_matrix_a = t_quat_a.Make_Matrix();
-						NBsys::NGeometry::Geometry_Vector3 t_to_a = this->target_from + t_matrix_a.Make_AxisZ() * 5;
+						NBsys::NGeometry::Geometry_Matrix_44 t_temp = t_quat_a.Make_Matrix();
+						NBsys::NGeometry::Geometry_Vector3 t_to_a = this->target_from + t_temp.Make_AxisZ() * 5;
 						this->drawline->DrawLine(this->target_from,t_to_a,NBsys::NColor::Color_F(0.0f,0.0f,1.0f,1.0f));
 					}
 
 					//ライン描画。
 					{
-						NBsys::NGeometry::Geometry_Matrix_44 t_matrix_b = t_quat_b.Make_Matrix();
-						NBsys::NGeometry::Geometry_Vector3 t_to_b = this->target_from + t_matrix_b.Make_AxisZ() * 5;
+						NBsys::NGeometry::Geometry_Matrix_44 t_temp = t_quat_b.Make_Matrix();
+						NBsys::NGeometry::Geometry_Vector3 t_to_b = this->target_from + t_temp.Make_AxisZ() * 5;
 						this->drawline->DrawLine(this->target_from,t_to_b,NBsys::NColor::Color_F(1.0f,0.0f,0.0f,1.0f));
 					}
 
 					//ライン描画。
 					{
-						NBsys::NGeometry::Geometry_Matrix_44 t_matrix_b = t_quat_a.Make_Slerp(t_quat_b,Math::abs_f(Math::cos_f(this->camera_time)));
-						NBsys::NGeometry::Geometry_Vector3 t_to_b = this->target_from + t_matrix_b.Make_AxisZ() * 20;
+						NBsys::NGeometry::Geometry_Matrix_44 t_temp = t_quat_a.Make_Slerp(t_quat_b,Math::abs_f(Math::cos_f(this->camera_time)));
+						NBsys::NGeometry::Geometry_Vector3 t_to_b = this->target_from + t_temp.Make_AxisZ() * 20;
 						this->drawline->DrawLine(this->target_from,t_to_b,NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f));
 					}
 				}
