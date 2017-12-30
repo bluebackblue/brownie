@@ -143,7 +143,7 @@ namespace NBsys{namespace NTexture
 			
 			if(t_offset >= 0){
 				t_filetype_string = a_name.substr(static_cast<u32>(t_offset),4);
-				std::transform(t_filetype_string.cbegin(),t_filetype_string.cend(),t_filetype_string.cbegin(),::tolower);
+				std::transform(t_filetype_string.begin(),t_filetype_string.end(),t_filetype_string.begin(),::tolower);
 			}
 
 			if(t_filetype_string == L".bmp"){
@@ -170,6 +170,8 @@ namespace NBsys{namespace NTexture
 		if((std::get<0>(t_ret).get() != nullptr)&&(std::get<1>(t_ret) > 0)){
 			return t_ret;
 		}
+		#else
+		UNUSED(a_texture);
 		#endif
 
 		return t_ret;
