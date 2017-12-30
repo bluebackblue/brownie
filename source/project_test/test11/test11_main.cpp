@@ -96,8 +96,8 @@ namespace NTest
 			this->camera_time += a_delta;
 
 			//カメラ回転。
-			this->camera_position.x = Math::cos_f(this->camera_time / 10) * 20;
-			this->camera_position.z = Math::sin_f(this->camera_time / 10) * 20;
+			this->camera_position.Set_X(NMath::cos_f(this->camera_time / 10) * 20);
+			this->camera_position.Set_Y(NMath::sin_f(this->camera_time / 10) * 20);
 		}
 
 		/** 描画命令呼び出し。
