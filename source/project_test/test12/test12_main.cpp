@@ -223,15 +223,18 @@ namespace NTest
 			sharedptr<STLVector<NBsys::ND3d11::D3d11_Layout>::Type> t_layout(new STLVector<NBsys::ND3d11::D3d11_Layout>::Type());
 			{
 				s32 t_offset = 0;
-
+				
+				//position
+				t_offset = NBsys::NVertex::GetOffset_Position<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4>();
 				t_layout->push_back(NBsys::ND3d11::D3d11_Layout("POSITION",		0,NBsys::ND3d11::D3d11_LayoutFormatType::R32G32B32_FLOAT,		0,	t_offset));
-				t_offset += sizeof(f32) * 3;
 
+				//uv
+				t_offset = NBsys::NVertex::GetOffset_Uv<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4>();
 				t_layout->push_back(NBsys::ND3d11::D3d11_Layout("TEXCOORD",		0,NBsys::ND3d11::D3d11_LayoutFormatType::R32G32_FLOAT,			0,	t_offset));
-				t_offset += sizeof(f32) * 2;
 
+				//color
+				t_offset = NBsys::NVertex::GetOffset_Color<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4>();
 				t_layout->push_back(NBsys::ND3d11::D3d11_Layout("COLOR",		0,NBsys::ND3d11::D3d11_LayoutFormatType::R32G32B32A32_FLOAT,	0,	t_offset));
-				t_offset += sizeof(f32) * 4;
 			}
 
 			this->mmd_vertexshader_id = this->d3d11->CreateVertexShader(this->mmd_asyncresult_vertexshader,t_simple_vertex_fx,t_layout);

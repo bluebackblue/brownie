@@ -36,51 +36,64 @@ namespace NBsys{namespace NVertex
 
 	XXX			: メンバ変数名
 	TTT			: メンバ変数タイプ	
-	INVALID		: メンバ変数が存在しない場合のGetValue戻り値
+	INVALID		: メンバ変数が存在しない場合の戻り値
 
 	*/
-	#define DEF_VERTEX_MEMBER(XXX,TTT,INVALID)													\
-	template <typename V,bool> struct XXX ## _setget											\
-	{																							\
-		static void SetValue(V& /*a_vertex*/,TTT /*a_value*/){}									\
-		static TTT GetValue(V& /*a_vertex*/){return INVALID;}									\
-	};																							\
-	template <typename V> struct XXX ## _setget<V,true>											\
-	{																							\
-		static void SetValue(V& a_vertex,TTT a_value)											\
-		{																						\
-			a_vertex.XXX = a_value;																\
-		}																						\
-		static TTT GetValue(V& a_vertex)														\
-		{																						\
-			return 0.0f;																		\
-		}																						\
-	};																							\
-	struct XXX ## _check																		\
-	{																							\
-		template <class T> static std::true_type check(decltype(T::XXX)*);						\
-		template <class T> static std::false_type check(...);									\
+	#define DEF_VERTEX_MEMBER(XXX,TTT,INVALID)																	\
+	template <typename V,bool> struct XXX ## _setget															\
+	{																											\
+		static void SetValue(V& /*a_vertex*/,TTT /*a_value*/){}													\
+		static TTT GetValue(V& /*a_vertex*/){return INVALID;}													\
+		static constexpr std::size_t GetOffset(){return -1;}													\
+	};																											\
+	template <typename V> struct XXX ## _setget<V,true>															\
+	{																											\
+		static void SetValue(V& a_vertex,TTT a_value)															\
+		{																										\
+			a_vertex.XXX = a_value;																				\
+		}																										\
+		static TTT GetValue(V& a_vertex)																		\
+		{																										\
+			return 0.0f;																						\
+		}																										\
+		static constexpr std::size_t GetOffset()																\
+		{																										\
+			return reinterpret_cast<std::size_t>(&(reinterpret_cast<V*>(nullptr)->XXX));						\
+		}																										\
+	};																											\
+	struct XXX ## _check																						\
+	{																											\
+		template <class T> static std::true_type check(decltype(T::XXX)*);										\
+		template <class T> static std::false_type check(...);													\
 	}
 
 
-	/** CALL_GET_MEMBER
+	/** CALL_GET_VALUE
 
 	XXX			: メンバ変数名
 	VERTEX		: バーテックス
 
 	*/
-	#define CALL_GET_MEMBER(XXX,VERTEX)															\
+	#define GET_VALUE(XXX,VERTEX)																				\
 	NImpl::XXX ## _setget<T,decltype(NImpl::XXX ## _check::check<T>(nullptr))::value>::GetValue(VERTEX)
 
-	/** CALL_SET_MEMBER
+	/** CALL_SET_VALUE
 
 	XXX			: メンバ変数名
 	VERTEX		: バーテックス
 	VALUE		: 値
 
 	*/
-	#define CALL_SET_MEMBER(XXX,VERTEX,VALUE)													\
+	#define SET_VALUE(XXX,VERTEX,VALUE)																			\
 	NImpl::XXX ## _setget<T,decltype(NImpl::XXX ## _check::check<T>(nullptr))::value>::SetValue(VERTEX,VALUE)
+
+	/** CALC_GET_OFFSET
+
+	XXX			: メンバ変数名
+
+	*/
+	#define CALC_OFFSET(XXX)																					\
+	NImpl::XXX ## _setget<T,decltype(NImpl::XXX ## _check::check<T>(nullptr))::value>::GetOffset()
 
 
 	/** Vertex_Data_Pos3
@@ -219,6 +232,7 @@ namespace NBsys{namespace NVertex
 		DEF_VERTEX_MEMBER(matrix_weight_02,f32,0.0f);
 		DEF_VERTEX_MEMBER(matrix_weight_03,f32,0.0f);
 
+		#undef DEF_VERTEX_MEMBER
 	}
 
 
@@ -226,15 +240,14 @@ namespace NBsys{namespace NVertex
 	*/
 	template <typename T> inline void SetPos_XX(T& a_vertex,f32 a_pos_xx)
 	{
-		CALL_SET_MEMBER(pos_xx,a_vertex,a_pos_xx);
+		SET_VALUE(pos_xx,a_vertex,a_pos_xx);
 	}
-
 
 	/** SetPos_YY
 	*/
 	template <typename T> inline void SetPos_YY(T& a_vertex,f32 a_pos_yy)
 	{
-		CALL_SET_MEMBER(pos_yy,a_vertex,a_pos_yy);
+		SET_VALUE(pos_yy,a_vertex,a_pos_yy);
 	}
 
 	
@@ -242,7 +255,7 @@ namespace NBsys{namespace NVertex
 	*/
 	template <typename T> inline void SetPos_ZZ(T& a_vertex,f32 a_pos_zz)
 	{
-		CALL_SET_MEMBER(pos_zz,a_vertex,a_pos_zz);
+		SET_VALUE(pos_zz,a_vertex,a_pos_zz);
 	}
 
 
@@ -250,7 +263,7 @@ namespace NBsys{namespace NVertex
 	*/
 	template <typename T> inline void SetPos_WW(T& a_vertex,f32 a_pos_ww)
 	{
-		CALL_SET_MEMBER(pos_ww,a_vertex,a_pos_ww);
+		SET_VALUE(pos_ww,a_vertex,a_pos_ww);
 	}
 
 
@@ -258,7 +271,7 @@ namespace NBsys{namespace NVertex
 	*/
 	template <typename T> inline void SetUv_XX(T& a_vertex,f32 a_uv_xx)
 	{
-		CALL_SET_MEMBER(uv_xx,a_vertex,a_uv_xx);
+		SET_VALUE(uv_xx,a_vertex,a_uv_xx);
 	}
 
 
@@ -266,7 +279,7 @@ namespace NBsys{namespace NVertex
 	*/
 	template <typename T> inline void SetUv_YY(T& a_vertex,f32 a_uv_yy)
 	{
-		CALL_SET_MEMBER(uv_yy,a_vertex,a_uv_yy);
+		SET_VALUE(uv_yy,a_vertex,a_uv_yy);
 	}
 
 
@@ -274,7 +287,7 @@ namespace NBsys{namespace NVertex
 	*/
 	template <typename T> inline void SetColor_RR(T& a_vertex,f32 a_color_rr)
 	{
-		CALL_SET_MEMBER(color_rr,a_vertex,a_color_rr);
+		SET_VALUE(color_rr,a_vertex,a_color_rr);
 	}
 
 
@@ -282,7 +295,7 @@ namespace NBsys{namespace NVertex
 	*/
 	template <typename T> inline void SetColor_GG(T& a_vertex,f32 a_color_gg)
 	{
-		CALL_SET_MEMBER(color_gg,a_vertex,a_color_gg);
+		SET_VALUE(color_gg,a_vertex,a_color_gg);
 	}
 
 	
@@ -290,7 +303,7 @@ namespace NBsys{namespace NVertex
 	*/
 	template <typename T> inline void SetColor_BB(T& a_vertex,f32 a_color_bb)
 	{
-		CALL_SET_MEMBER(color_bb,a_vertex,a_color_bb);
+		SET_VALUE(color_bb,a_vertex,a_color_bb);
 	}
 
 
@@ -298,7 +311,7 @@ namespace NBsys{namespace NVertex
 	*/
 	template <typename T> inline void SetColor_AA(T& a_vertex,f32 a_color_aa)
 	{
-		CALL_SET_MEMBER(color_aa,a_vertex,a_color_aa);
+		SET_VALUE(color_aa,a_vertex,a_color_aa);
 	}
 
 	
@@ -306,10 +319,10 @@ namespace NBsys{namespace NVertex
 	*/
 	template <typename T> inline void SetMatrixIndex(T& a_vertex,s32 a_matrix_index_0,s32 a_matrix_index_1,s32 a_matrix_index_2,s32 a_matrix_index_3)
 	{
-		CALL_SET_MEMBER(texture_index_00,a_vertex,a_matrix_index_0);
-		CALL_SET_MEMBER(texture_index_01,a_vertex,a_matrix_index_1);
-		CALL_SET_MEMBER(texture_index_02,a_vertex,a_matrix_index_2);
-		CALL_SET_MEMBER(texture_index_03,a_vertex,a_matrix_index_3);
+		SET_VALUE(texture_index_00,a_vertex,a_matrix_index_0);
+		SET_VALUE(texture_index_01,a_vertex,a_matrix_index_1);
+		SET_VALUE(texture_index_02,a_vertex,a_matrix_index_2);
+		SET_VALUE(texture_index_03,a_vertex,a_matrix_index_3);
 	}
 
 
@@ -317,10 +330,10 @@ namespace NBsys{namespace NVertex
 	*/
 	template <typename T> inline void SetMatrixWeight(T& a_vertex,f32 a_matrix_weight_0,f32 a_matrix_weight_1,f32 a_matrix_weight_2,f32 a_matrix_weight_3)
 	{
-		CALL_SET_MEMBER(matrix_weight_00,a_vertex,a_matrix_weight_0);
-		CALL_SET_MEMBER(matrix_weight_01,a_vertex,a_matrix_weight_1);
-		CALL_SET_MEMBER(matrix_weight_02,a_vertex,a_matrix_weight_2);
-		CALL_SET_MEMBER(matrix_weight_03,a_vertex,a_matrix_weight_3);
+		SET_VALUE(matrix_weight_00,a_vertex,a_matrix_weight_0);
+		SET_VALUE(matrix_weight_01,a_vertex,a_matrix_weight_1);
+		SET_VALUE(matrix_weight_02,a_vertex,a_matrix_weight_2);
+		SET_VALUE(matrix_weight_03,a_vertex,a_matrix_weight_3);
 	}
 
 
@@ -404,90 +417,51 @@ namespace NBsys{namespace NVertex
 	}
 
 
-
-	//TODO:シェーダ用の変数オフセット。
-
-	/** GetPosOffset_XX
+	/** T::pos_xxのオフセットを取得。
 	*/
-	//template <typename T> inline s32 GetPosOffset_XX()
-	//{
-	//	return NImpl::Vertex_SetPos_XX<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetPos_XX<T,true>*>::value>::GetOffset();
-	//}
+	template <typename T> constexpr s32 GetOffset_Position()
+	{
+		return static_cast<s32>(CALC_OFFSET(pos_xx));
+	}
 
-	/** GetPosOffset_YY
+
+	/** T::uv_xxのオフセットを取得。
 	*/
-	//template <typename T> inline s32 GetPosOffset_YY()
-	//{
-	//	return NImpl::Vertex_SetPos_YY<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetPos_YY<T,true>*>::value>::GetOffset();
-	//}
+	template <typename T> constexpr s32 GetOffset_Uv()
+	{
+		return static_cast<s32>(CALC_OFFSET(uv_xx));
+	}
 
-	/** GetPosOffset_ZZ
+
+	/** T::color_rrのオフセットを取得。
 	*/
-	//template <typename T> inline s32 GetPosOffset_ZZ()
-	//{
-	//	return NImpl::Vertex_SetPos_ZZ<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetPos_ZZ<T,true>*>::value>::GetOffset();
-	//}
+	template <typename T> constexpr s32 GetOffset_Color()
+	{
+		return static_cast<s32>(CALC_OFFSET(color_rr));
+	}
 
-	/** GetPosOffset_WW
+
+	/** GetOffset_TextureIndex
 	*/
-	//template <typename T> inline s32 GetPosOffset_WW()
-	//{
-	//	return NImpl::Vertex_SetPos_WW<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetPos_WW<T,true>*>::value>::GetOffset();
-	//}
+	template <typename T> constexpr s32 GetOffset_TextureIndex(s32 a_index)
+	{
+		if(a_index == 0){
+			return static_cast<s32>(CALC_OFFSET(texture_index_00));
+		}else if(a_index == 1){
+			return static_cast<s32>(CALC_OFFSET(texture_index_01));
+		}else if(a_index == 2){
+			return static_cast<s32>(CALC_OFFSET(texture_index_02));
+		}else{
+			return static_cast<s32>(CALC_OFFSET(texture_index_03));
+		}
+	}
 
-	/** GetColorOffset_RR
+
+	/** undef
 	*/
-	//template <typename T> inline s32 GetColorOffset_RR()
-	//{
-	//	return NImpl::Vertex_SetColor_RR<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetColor_RR<T,true>*>::value>::GetOffset();
-	//}
-
-	//** GetColorOffset_GG
-	//*/
-	//template <typename T> inline s32 GetColorOffset_GG()
-	//{
-	//	return NImpl::Vertex_SetColor_GG<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetColor_GG<T,true>*>::value>::GetOffset();
-	//}
-
-	//** GetColorOffset_BB
-	//*/
-	//template <typename T> inline s32 GetColorOffset_BB()
-	//{
-	//	return NImpl::Vertex_SetColor_BB<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetColor_BB<T,true>*>::value>::GetOffset();
-	//}
-
-	//** GetColorOffset_AA
-	//*/
-	//template <typename T> inline s32 GetColorOffset_AA()
-	//{
-	//	return NImpl::Vertex_SetColor_AA<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetColor_AA<T,true>*>::value>::GetOffset();
-	//}
-
-	/** GetUvOffset_XX
-	*/
-	//template <typename T> inline s32 GetUvOffset_XX()
-	//{
-	//	return NImpl::Vertex_SetUv_XX<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetUv_XX<T,true>*>::value>::GetOffset();
-	//}
-
-	/** GetUvOffset_YY
-	*/
-	//template <typename T> inline s32 GetUvOffset_YY()
-	//{
-	//	return NImpl::Vertex_SetUv_YY<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetUv_YY<T,true>*>::value>::GetOffset();
-	//}
-
-	//template <typename T> inline s32 GetMatrixIndexOffset()
-	//{
-	//	CALL_SET_MEMBER(uv_xx,a_vertex,a_uv_xx);
-	//}
-
-	/** GetMatrixWeightOffset
-	*/
-	//template <typename T> inline s32 GetMatrixWeightOffset()
-	//{
-	//	return NImpl::Vertex_SetMatrixweight4<T,is_convertible<NImpl::Vertex_Convertible<T>*,NImpl::Vertex_SetMatrixweight4<T,true>*>::value>::GetOffset();
-	//}
+	#undef CALC_OFFSET
+	#undef GET_VALUE
+	#undef SET_VALUE
 
 
 }}

@@ -202,23 +202,26 @@ namespace NTest{namespace NCommon
 					{
 						s32 t_offset = 0;
 
+						t_offset = NBsys::NVertex::GetOffset_Position<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4>();
 						t_layout->push_back(NBsys::ND3d11::D3d11_Layout("POSITION",0,NBsys::ND3d11::D3d11_LayoutFormatType::R32G32B32_FLOAT,0,t_offset));
-						t_offset += sizeof(f32) * 3;
 
+						t_offset = NBsys::NVertex::GetOffset_Uv<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4>();
 						t_layout->push_back(NBsys::ND3d11::D3d11_Layout("TEXCOORD",0,NBsys::ND3d11::D3d11_LayoutFormatType::R32G32_FLOAT,0,t_offset));
-						t_offset += sizeof(f32) * 2;
 
+						t_offset = NBsys::NVertex::GetOffset_Color<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4>();
 						t_layout->push_back(NBsys::ND3d11::D3d11_Layout("COLOR",0,NBsys::ND3d11::D3d11_LayoutFormatType::R32G32B32A32_FLOAT,0,t_offset));
-						t_offset += sizeof(f32) * 4;
 
+						t_offset = NBsys::NVertex::GetOffset_TextureIndex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4>(0);
 						t_layout->push_back(NBsys::ND3d11::D3d11_Layout("BLENDINDICES",0,NBsys::ND3d11::D3d11_LayoutFormatType::R8_UINT,0,t_offset));
-						t_offset += sizeof(u8);
+
+						t_offset = NBsys::NVertex::GetOffset_TextureIndex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4>(1);
 						t_layout->push_back(NBsys::ND3d11::D3d11_Layout("BLENDINDICES",1,NBsys::ND3d11::D3d11_LayoutFormatType::R8_UINT,0,t_offset));
-						t_offset += sizeof(u8);
+
+						t_offset = NBsys::NVertex::GetOffset_TextureIndex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4>(2);
 						t_layout->push_back(NBsys::ND3d11::D3d11_Layout("BLENDINDICES",2,NBsys::ND3d11::D3d11_LayoutFormatType::R8_UINT,0,t_offset));
-						t_offset += sizeof(u8);
+
+						t_offset = NBsys::NVertex::GetOffset_TextureIndex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4>(3);
 						t_layout->push_back(NBsys::ND3d11::D3d11_Layout("BLENDINDICES",3,NBsys::ND3d11::D3d11_LayoutFormatType::R8_UINT,0,t_offset));
-						t_offset += sizeof(u8);
 					}
 
 					//シェーダー。
