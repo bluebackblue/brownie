@@ -42,7 +42,7 @@ mid-level library
 * ___ testdefine.txt 「自動テスト制御ファイル」
 * ___ auto_test.bat 「自動テスト開始バッチ」
 * sdk [blib/bsys内で使用するミドルウェアの設置場所(このリポジトリには含まれていません)]
-* brownie_testdata 「チェックアウト : https://github.com/bluebackblue/brownie_testdata 」
+* brownie_testdata 「チェックアウト : https://github.com/bluebackblue/brownie_testdata 」 このリポジトリとは別のリポジトリです。
 
 ## include path
 インクルードパス
@@ -59,6 +59,7 @@ mid-level library
 
 ## brownie_testdata
 テストプロジェクトで使用するデータ用リポジトリです。
+
 上のフォルダ構造を参考にチェックアウトを行ってください。
 
 ## test project
