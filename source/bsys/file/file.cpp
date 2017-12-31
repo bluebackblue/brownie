@@ -182,11 +182,27 @@ namespace NBsys{namespace NFile
 
 
 	/** [パック]ロードリクエスト。
+
+		a_device_index					: ドライブ。
+		a_pack_filename_short			: 読み込むパックファイルのドライブ相対パス。
+		a_pack_connectto_rootpath_short	: パックファイルの接続先相対パス。
+
+	*/
+	/*
+	#if(BSYS_FILE_PACK_ENABLE)
+	void Pack_LoadRequest(s32 a_device_index,const STLWString& a_pack_filename_short,const STLWString& a_pack_connectto_rootpath_short)
+	{
+		NBsys::NFile::GetSystemInstance(a_device_index)->get()->Pack_LoadRequest(a_pack_filename_short,a_pack_connectto_rootpath_short);
+	}
+	#endif
+	*/
+
+	/** [パック]アンロードリクエスト。
 	*/
 	#if(BSYS_FILE_PACK_ENABLE)
-	void Pack_LoadRequest(s32 a_device_index,const STLWString& a_pack_filename_short,const STLWString& a_pack_rootpath_short)
+	void Pack_UnLoad(s32 a_device_index,const STLWString& a_pack_filename_short)
 	{
-		NBsys::NFile::GetSystemInstance(a_device_index)->get()->Pack_LoadRequest(a_pack_filename_short,a_pack_rootpath_short);
+		NBsys::NFile::GetSystemInstance(a_device_index)->get()->Pack_UnLoad(a_pack_filename_short);
 	}
 	#endif
 

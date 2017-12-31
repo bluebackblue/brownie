@@ -1120,9 +1120,22 @@ namespace NBlib
 
 #if(BLIB_STDSHAREDPTR_ENABLE)
 
+	/** sharedptr_null
+	*/
+	template <typename T> inline typename sharedptr<T>& sharedptr_null()
+	{
+		static sharedptr<T> s_null_sharedptr;
+		return s_null_sharedptr;
+	}
 
 #else
 
+	/** sharedptr_null
+	*/
+	template <typename T> inline typename NBlib::sharedptr<T>& sharedptr_null()
+	{
+		return NBlib::sharedptr<T>::null();
+	}
 
 	/** static_pointer_cast
 	*/

@@ -19,7 +19,8 @@
 
 /** include
 */
-#include "./file_pack_filehandle.h"
+#include "./file_pack_filestate.h"
+#include "./file_thread_decl.h"
 
 
 /** NBsys::NFile
@@ -49,6 +50,10 @@ namespace NBsys{namespace NFile
 			};
 		};
 
+		/** lockobject
+		*/
+		mutable LockObject lockobject;
+
 		/** メインステップ。
 		*/
 		MainStep::Id mainstep;
@@ -73,9 +78,13 @@ namespace NBsys{namespace NFile
 		*/
 		ErrorCode::Id errorcode;
 
-		/** filelist
+		/** 処理中。
 		*/
-		STLMap<STLWString,sharedptr<File_Pack_FileHandle>>::Type filelist;
+		AtomicValue<bool> isbusy;
+
+		/** filestate_list
+		*/
+		STLMap<STLWString,sharedptr<File_Pack_FileState>>::Type filestate_list;
 
 	public:
 
@@ -87,11 +96,25 @@ namespace NBsys{namespace NFile
 		*/
 		nonvirtual ~File_Pack_WorkItem();
 
+	private:
+
+		/** copy constructor禁止。
+		*/
+		File_Pack_WorkItem(const File_Pack_WorkItem& a_this) = delete;
+
+		/** コピー禁止。
+		*/
+		void operator =(const File_Pack_WorkItem& a_this) = delete;
+
 	public:
 
 		/** エラーコード取得。
 		*/
 		ErrorCode::Id GetErrorCode() const;
+
+		/** IsBusy
+		*/
+		bool IsBusy() const;
 
 		/** パックファイル名取得。
 		*/
@@ -99,11 +122,15 @@ namespace NBsys{namespace NFile
 
 		/** ファイル検索。
 		*/
-		sharedptr<File_Pack_FileHandle>& FindFromFileNameShort(const STLWString& a_filename_short);
+		sharedptr<File_Pack_FileState>& FindFromFileNameShort(const STLWString& a_filename_short);
+
+		/** 読み込み。
+		*/
+		bool Read(const sharedptr<File_Pack_FileState>& a_filestate,u8* a_buffer,s64 a_size,s64 a_offset);
 
 		/** 更新。
 		*/
-		bool Update(const STLWString& a_rootpath_full);
+		bool Update(File_Thread& a_thread,const STLWString& a_rootpath_full);
 
 	};
 

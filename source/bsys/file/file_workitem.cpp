@@ -26,7 +26,7 @@
 */
 #include "./file_workitem.h"
 #include "./file_allocator.h"
-#include "./file_pack_filehandle.h"
+#include "./file_pack_filestate.h"
 #include "./file_thread.h"
 
 
@@ -45,14 +45,14 @@ namespace NBsys{namespace NFile
 {
 	/** constructor
 	*/
-	File_WorkItem::File_WorkItem(LockObject& a_lockobject,const STLWString& a_filename_short,const sharedptr<File_Allocator>& a_allocator,s32 a_add_allocatesize)
+	File_WorkItem::File_WorkItem(const STLWString& a_filename_short,const sharedptr<File_Allocator>& a_allocator,s32 a_add_allocatesize)
 		:
-		lockobject(a_lockobject),
+		lockobject(),
 		mainstep(MainStep::Open),
 		mode(Mode::None),
 
 		#if(BSYS_FILE_PACK_ENABLE)
-		pack_filehandle(),
+		pack_filehstate(),
 		#endif
 
 		normal_filehandle(),
@@ -73,6 +73,10 @@ namespace NBsys{namespace NFile
 	*/
 	File_WorkItem::~File_WorkItem()
 	{
+		//■排他。
+		AutoLock t_autolock(this->lockobject);
+
+		this->normal_filehandle.Close();
 	}
 
 
@@ -80,6 +84,7 @@ namespace NBsys{namespace NFile
 	*/
 	ErrorCode::Id File_WorkItem::GetErrorCode() const
 	{
+		//■排他。
 		AutoLock t_autolock(this->lockobject);
 
 		return this->errorcode;
@@ -90,6 +95,7 @@ namespace NBsys{namespace NFile
 	*/
 	sharedptr<u8>& File_WorkItem::GetData()
 	{
+		//■排他。
 		AutoLock t_autolock(this->lockobject);
 
 		if(this->mainstep == MainStep::End){
@@ -105,6 +111,7 @@ namespace NBsys{namespace NFile
 	*/
 	s64 File_WorkItem::GetSize() const
 	{
+		//■排他。
 		AutoLock t_autolock(this->lockobject);
 
 		return this->data_size;
@@ -115,6 +122,7 @@ namespace NBsys{namespace NFile
 	*/
 	s32 File_WorkItem::GetAddAllocateSize() const
 	{
+		//■排他。
 		AutoLock t_autolock(this->lockobject);
 
 		return this->add_allocatesize;
@@ -125,12 +133,7 @@ namespace NBsys{namespace NFile
 	*/
 	bool File_WorkItem::IsBusy() const
 	{
-		AutoLock t_autolock(this->lockobject);
-
-		if((this->mainstep == MainStep::End)||(this->mainstep == MainStep::Error)){
-			return false;
-		}
-		return true;
+		return this->isbusy.Load();
 	}
 
 
@@ -138,6 +141,7 @@ namespace NBsys{namespace NFile
 	*/
 	const STLWString& File_WorkItem::GetFileNameShort() const
 	{
+		//■排他。
 		AutoLock t_autolock(this->lockobject);
 
 		return this->filename_short;
@@ -148,6 +152,7 @@ namespace NBsys{namespace NFile
 	*/
 	File_ConvertLock_ReturnType::Id File_WorkItem::ConvertLock()
 	{
+		//■排他。
 		AutoLock t_autolock(this->lockobject);
 
 		if(this->convertflag < 0){
@@ -173,6 +178,7 @@ namespace NBsys{namespace NFile
 	*/
 	void File_WorkItem::ConvertUnlock()
 	{
+		//■排他。
 		AutoLock t_autolock(this->lockobject);
 
 		if(this->convertflag < 0){
@@ -204,6 +210,9 @@ namespace NBsys{namespace NFile
 	*/
 	bool File_WorkItem::Update(File_Thread& a_thread,const STLWString& a_rootpath_full,bool a_cancel)
 	{
+		//■排他。
+		AutoLock t_autolock(this->lockobject);
+
 		switch(this->mainstep){
 		case MainStep::Open:
 			{
@@ -212,8 +221,6 @@ namespace NBsys{namespace NFile
 				STLWString t_filename_full;
 				STLWString t_filename_short;
 				{
-					//■排他。
-					AutoLock t_autolock(this->lockobject);
 
 					t_filename_full = Path::DirAndName(a_rootpath_full,this->filename_short);
 					t_filename_short = Path::Name(this->filename_short);
@@ -224,9 +231,8 @@ namespace NBsys{namespace NFile
 				//■[処理]パックからファイルを開く。
 				#if(BSYS_FILE_PACK_ENABLE)
 				if(this->mode == Mode::None){
-					File_Pack& t_pack = a_thread.Pack_GetInstance();
-					this->pack_filehandle = t_pack.CreatePackFileHandle(t_filename_short);
-					if(this->pack_filehandle != nullptr){
+					this->pack_filehstate = a_thread.Pack_TryCreateFileState(t_filename_short);
+					if(this->pack_filehstate != nullptr){
 						this->mode = Mode::Pack;
 					}
 				}
@@ -245,17 +251,18 @@ namespace NBsys{namespace NFile
 				if(this->mode != Mode::None){
 					//■[処理]ファイルサイズ。
 
+					s64 t_data_size = 0;
+
 					if(this->mode == Mode::Pack){
 						#if(BSYS_FILE_PACK_ENABLE)
-						this->data_size = this->pack_filehandle->GetSize();
+						t_data_size = this->pack_filehstate->data_size;
 						#endif
 					}else if(this->mode == Mode::Normal){
-						this->data_size = this->normal_filehandle.GetSize();
+						t_data_size = this->normal_filehandle.GetSize();
 					}
 
 					{
-						//■排他。
-						AutoLock t_autolock(this->lockobject);
+						this->data_size = t_data_size;
 
 						if(this->data_size > 0LL){
 							this->data_offset = 0LL;
@@ -278,9 +285,6 @@ namespace NBsys{namespace NFile
 						}
 					}
 				}else{
-					//■排他。
-					AutoLock t_autolock(this->lockobject);
-
 					//ファイルを開くのに失敗。
 					this->errorcode = ErrorCode::Load_OpenError;
 					this->mainstep = MainStep::Error;
@@ -294,9 +298,6 @@ namespace NBsys{namespace NFile
 				u8* t_readdata = nullptr;
 				s64 t_readoffset = 0LL;
 				{
-					//■排他。
-					AutoLock t_autolock(this->lockobject);
-
 					t_readsize = this->data_size - this->data_offset;
 					if(t_readsize >= (512*1024)){
 						t_readsize = (512*1024);
@@ -311,7 +312,7 @@ namespace NBsys{namespace NFile
 				if(this->mode == Mode::Pack){
 					//■[処理]読み込み。
 					#if(BSYS_FILE_PACK_ENABLE)
-					t_ret_read = this->pack_filehandle->Read(t_readdata,t_readsize,t_readoffset);
+					t_ret_read = a_thread.Pack_Read(this->pack_filehstate,t_readdata,t_readsize,t_readoffset);
 					#endif
 				}else if(this->mode == Mode::Normal){
 					//■[処理]読み込み。
@@ -319,9 +320,6 @@ namespace NBsys{namespace NFile
 				}
 
 				{
-					//■排他。
-					AutoLock t_autolock(this->lockobject);
-
 					if(a_cancel){
 						//キャンセル。
 						this->errorcode = ErrorCode::Load_CancelError;
@@ -352,10 +350,8 @@ namespace NBsys{namespace NFile
 				}
 
 				{
-					AutoLock t_autolock(this->lockobject);
-
 					//完了。
-					this->isbusy = false;
+					this->isbusy.Store(false);
 					return true;
 				}
 			}break;
@@ -367,10 +363,8 @@ namespace NBsys{namespace NFile
 				}
 
 				{
-					AutoLock t_autolock(this->lockobject);
-
 					//エラー完了。
-					this->isbusy = false;
+					this->isbusy.Store(false);
 					return true;
 				}
 			}break;

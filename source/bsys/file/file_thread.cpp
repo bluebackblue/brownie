@@ -60,7 +60,7 @@ namespace NBsys{namespace NFile
 		}
 
 		#if(BSYS_FILE_PACK_ENABLE)
-		this->pack.reset(new File_Pack(this->lockobject));
+		this->pack.reset(new File_Pack());
 		#endif
 	}
 
@@ -92,78 +92,82 @@ namespace NBsys{namespace NFile
 			//リクエスト受付開始。
 			this->request_event.Clear();
 
-			//パック。
-			#if(BSYS_FILE_PACK_ENABLE)
-			while(1){
-				//処理が必要なものを検索。
-				sharedptr<File_Pack_WorkItem> t_workitem_pack;
-				{
-					//■排他。
-					AutoLock t_autolock(this->lockobject);
-
-					for(s32 ii=0;ii<COUNTOF(this->worklist_pack);ii++){
-						if(this->worklist_pack[ii] != nullptr){
-							t_request = true;
-							t_workitem_pack = this->worklist_pack[ii];
-							this->worklist_pack[ii].reset();
-							break;
-						}
-					}
-				}
-
-				//処理。
-				if(t_workitem_pack){
-					while(1){
-						if(t_workitem_pack->Update(Path::Dir(a_threadargument.rootpath_full))){
-							if(t_workitem_pack->GetErrorCode() == ErrorCode::Success){
-								//パックファイル。ヘッダー読み込み完了。
-								this->pack->Resist(t_workitem_pack);
-							}else{
-								//パックファイル。読み込み失敗。
-								ASSERT(0);
-							}
-							break;
-						}
-					}
-					t_workitem_pack.reset();
-				}else{
-					break;
-				}
-			}
-			#endif
-
-			//読み込み。
 			{
-				//処理が必要なものを検索。
-				sharedptr<File_WorkItem> t_workitem;
-				{
-					//■排他。
-					AutoLock t_autolock(this->lockobject);
+				//パック。
+				#if(BSYS_FILE_PACK_ENABLE)
+				while(1){
+					//処理が必要なものを検索。
+					sharedptr<File_Pack_WorkItem> t_workitem_pack;
+					{
+						//■排他。(this->packworklist[])にアクセス。
+						AutoLock  t_autolock_workitem_pack(this->lockobject_packworklist);
 
-					for(s32 ii=0;ii<COUNTOF(this->worklist);ii++){
-						if(this->worklist[ii] != nullptr){
-							t_request = true;
-							t_workitem = this->worklist[ii];
-							this->worklist[ii].reset();
-							break;
+						for(s32 ii=0;ii<COUNTOF(this->packworklist);ii++){
+							if(this->packworklist[ii] != nullptr){
+								t_request = true;
+								t_workitem_pack = this->packworklist[ii];
+								this->packworklist[ii].reset();
+								break;
+							}
 						}
+					}
+
+					//処理。
+					if(t_workitem_pack){
+						//■排他。(this->pack)にアクセス。
+						AutoLock t_autolock_pack(this->lockobject_pack);
+
+						while(1){
+							if(t_workitem_pack->Update(*this,a_threadargument.rootpath_full)){
+								if(t_workitem_pack->GetErrorCode() == ErrorCode::Success){
+									//パックファイル。ヘッダー読み込み完了。
+									this->pack->Regist(t_workitem_pack->GetPackFileNameShort(),t_workitem_pack);
+								}else{
+									//パックファイル。読み込み失敗。
+									ASSERT(0);
+								}
+								break;
+							}
+						}
+						t_workitem_pack.reset();
+					}else{
+						break;
 					}
 				}
+				#endif
 
-				//処理。
-				if(t_workitem){
-					while(1){
-						bool t_cancel = false;
+				//読み込み。
+				{
+					//処理が必要なものを検索。
+					sharedptr<File_WorkItem> t_workitem;
+					{
+						//■排他。(this->worklist[])にアクセス。
 
-						if(t_workitem.use_count() <= 1){
-							t_cancel = true;
-						}
-
-						if(t_workitem->Update(*this,Path::Dir(a_threadargument.rootpath_full),t_cancel)){
-							break;
+						for(s32 ii=0;ii<COUNTOF(this->worklist);ii++){
+							if(this->worklist[ii] != nullptr){
+								t_request = true;
+								t_workitem = this->worklist[ii];
+								this->worklist[ii].reset();
+								break;
+							}
 						}
 					}
-					t_workitem.reset();
+
+					//処理。
+					if(t_workitem){
+						while(1){
+							bool t_cancel = false;
+
+							if(t_workitem.use_count() <= 1){
+								t_cancel = true;
+							}
+
+							if(t_workitem->Update(*this,a_threadargument.rootpath_full,t_cancel)){
+								break;
+							}
+						}
+						t_workitem.reset();
+					}
 				}
 			}
 
@@ -180,46 +184,61 @@ namespace NBsys{namespace NFile
 	void File_Thread::EndRequest()
 	{
 		//■排他。
-		AutoLock t_autolock(this->lockobject);
+		//AutoLock t_autolock(this->lockobject_thread);
 
-		this->endrequest.Store(true);
-		this->request_event.Signal();
+		{
+			this->endrequest.Store(true);
+			this->request_event.Signal();
+		}
 	}
 
 
-	/** [メインスレッド]ロックオブジェクトの取得。
-	*/
-	LockObject& File_Thread::GetLockObject()
-	{
-		return this->lockobject;
-	}
-
-	
 	/** [メインスレッド][パック]ロードリクエスト。
 	*/
 	#if(BSYS_FILE_PACK_ENABLE)
-	void File_Thread::Pack_LoadRequest(const STLWString& a_pack_filename_short,const STLWString& a_pack_rootpath_short)
+	sharedptr<File_Pack_WorkItem> File_Thread::Pack_LoadRequest(const STLWString& a_pack_filename_short,const STLWString& a_pack_connectto_rootpath_short)
 	{
-		//■排他。
-		AutoLock t_autolock(this->lockobject);
 		{
 			MemoryContainer t_memorycontainer(BSYS_FILE_MEMORYCONTAINER);
 
-			sharedptr<File_Pack_WorkItem> t_workitem_pack(new File_Pack_WorkItem(Path::Name(a_pack_filename_short),Path::Dir(a_pack_rootpath_short)));
+			sharedptr<File_Pack_WorkItem> t_workitem_pack(new File_Pack_WorkItem(Path::Name(a_pack_filename_short),Path::Dir(a_pack_connectto_rootpath_short)));
 
 			//作業リストに登録。
-			for(s32 ii=0;ii<COUNTOF(this->worklist_pack);ii++){
-				if(this->worklist_pack[ii] == nullptr){
-					//作業リストに空きあり。
+			{
+				//■排他。(this->packworklist[])にアクセス。
+				//■この排他処理から抜けた瞬間にworklistからworkitemが消費されるので参照カウント数が０にならないように注意。
+				AutoLock t_autolock(this->lockobject_packworklist);
 
-					this->worklist_pack[ii] = t_workitem_pack;
-					this->request_event.Signal();
+				for(s32 ii=0;ii<COUNTOF(this->packworklist);ii++){
+					if(this->packworklist[ii] == nullptr){
+						//作業リストに空きあり。
 
-					return;
+						this->packworklist[ii] = t_workitem_pack;
+						this->request_event.Signal();
+
+						return t_workitem_pack;
+					}
 				}
-			}
 
-			ASSERT(0);
+				ASSERT(0);
+			}
+		}
+
+		return sharedptr<File_Pack_WorkItem>::null();
+	}
+	#endif
+
+
+	/** [メインスレッド][パック]アンロード。
+	*/
+	#if(BSYS_FILE_PACK_ENABLE)
+	void File_Thread::Pack_UnLoad(const STLWString& a_pack_filename_short)
+	{
+		//■排他。(this->pack)にアクセス。
+		AutoLock t_autolock(this->lockobject_pack);
+
+		{
+			this->pack->UnRegist(a_pack_filename_short);
 		}
 	}
 	#endif
@@ -230,8 +249,9 @@ namespace NBsys{namespace NFile
 	#if(BSYS_FILE_PACK_ENABLE)
 	bool File_Thread::Pack_IsExist(const STLWString& a_pack_filename_short)
 	{
-		//■排他。
-		AutoLock t_autolock(this->lockobject);
+		//■排他。(this->pack)にアクセス。
+		AutoLock t_autolock(this->lockobject_pack);
+
 		{
 			return this->pack->IsExist(Path::Name(a_pack_filename_short));
 		}
@@ -243,38 +263,47 @@ namespace NBsys{namespace NFile
 	*/
 	const sharedptr<File_WorkItem> File_Thread::LoadRequest(const STLWString& a_filename_short,s32 a_cachegroup_id,const sharedptr<File_Allocator>& a_allocator,s32 a_add_allocatesize)
 	{
-		//■排他。
-		AutoLock t_autolock(this->lockobject);
 		{
 			MemoryContainer t_memorycontainer(BSYS_FILE_MEMORYCONTAINER);
 
 			sharedptr<File_WorkItem> t_workitem;
 			
-			if(a_cachegroup_id > 0){
-				const sharedptr<File_WorkItem>& t_workitem_ref = this->cache.GetCacheFromFileNameShort(Path::Name(a_filename_short));
-				if(t_workitem_ref != nullptr){
-					//■キャッシュにあり。
+			//キャッシュ操作。
+			{
+				//■排他。(this->cache)にアクセス。
+				AutoLock t_autolock_cache(this->lockobject_cache);
 
-					//キャッシュグループＩＤ追加。
-					this->cache.SetCache(t_workitem_ref,a_cachegroup_id);
+				if(a_cachegroup_id > 0){
+					const sharedptr<File_WorkItem>& t_workitem_ref = this->cache.GetCacheFromFileNameShort(Path::Name(a_filename_short));
+					if(t_workitem_ref != nullptr){
+						//■キャッシュにあり。
 
-					return t_workitem_ref;
+						//キャッシュグループＩＤ追加。
+						this->cache.SetCache(t_workitem_ref,a_cachegroup_id);
+
+						return t_workitem_ref;
+					}else{
+						//■キャッシュになし。
+						t_workitem.reset(new File_WorkItem(Path::Name(a_filename_short),a_allocator,a_add_allocatesize));
+
+						//キャッシュグループＩＤ追加。
+						this->cache.SetCache(t_workitem,a_cachegroup_id);
+					}
 				}else{
-					//■キャッシュになし。
-					t_workitem.reset(new File_WorkItem(this->lockobject,Path::Name(a_filename_short),a_allocator,a_add_allocatesize));
+					ASSERT(a_cachegroup_id == -1);
 
-					//キャッシュグループＩＤ追加。
-					this->cache.SetCache(t_workitem,a_cachegroup_id);
+					//■キャッシュを使わない。
+					t_workitem.reset(new File_WorkItem(Path::Name(a_filename_short),a_allocator,a_add_allocatesize));
 				}
-			}else{
-				ASSERT(a_cachegroup_id == -1);
-
-				//■キャッシュを使わない。
-				t_workitem.reset(new File_WorkItem(this->lockobject,Path::Name(a_filename_short),a_allocator,a_add_allocatesize));
 			}
 
 			//作業リストに登録。
 			if(t_workitem != nullptr){
+
+				//■排他。(this->worklist[])にアクセス。
+				//■この排他処理から抜けた瞬間にworklistからworkitemが消費されるので参照カウント数が０にならないように注意。
+				AutoLock t_autolock(this->lockobject_worklist);
+
 				for(s32 ii=0;ii<COUNTOF(this->worklist);ii++){
 					if(this->worklist[ii] == nullptr){
 						//作業リストに空きあり。
@@ -282,9 +311,10 @@ namespace NBsys{namespace NFile
 						this->worklist[ii] = t_workitem;
 						this->request_event.Signal();
 
-						return this->worklist[ii];
+						return t_workitem;
 					}
 				}
+
 			}
 
 			ASSERT(0);
@@ -297,8 +327,9 @@ namespace NBsys{namespace NFile
 	*/
 	void File_Thread::CacheClear(s32 a_cachegroup_id)
 	{
-		//■排他。
-		AutoLock t_autolock(this->lockobject);
+		//■排他。(this->cache)にアクセス。
+		AutoLock t_autolock(this->lockobject_cache);
+
 		{
 			this->cache.CacheClear(a_cachegroup_id);
 		}
@@ -309,26 +340,39 @@ namespace NBsys{namespace NFile
 	*/
 	void File_Thread::LeakCheck() const
 	{
-		//■排他。
-		AutoLock t_autolock(this->lockobject);
+		//■排他。(this->cache)にアクセス。
+		AutoLock t_autolock(this->lockobject_cache);
+
 		{
 			this->cache.LeakCheck();
 		}
 	}
 
 
-	/** [ファイルスレッド]Pack_GetInstance
-
-	排他なし。
-
+	/** [ファイルスレッド]Pack_TryCreateFileState。
 	*/
 	#if(BSYS_FILE_PACK_ENABLE)
-	File_Pack& File_Thread::Pack_GetInstance()
+	sharedptr<File_Pack_FileState>& File_Thread::Pack_TryCreateFileState(const STLWString& a_filename)
 	{
-		return *this->pack;
+		//■排他。(this->pack)にアクセス。
+		AutoLock t_autolock(this->lockobject_pack);
+
+		return this->pack->TryCreatePackFileState(a_filename);
 	}
 	#endif
 
+
+	/** [ファイルスレッド]Pack_Read。
+	*/
+	#if(BSYS_FILE_PACK_ENABLE)
+	bool File_Thread::Pack_Read(const sharedptr<File_Pack_FileState>& a_filestate,u8* a_buffer,s64 a_size,s64 a_offset)
+	{
+		//■排他。(this->pack)にアクセス。
+		AutoLock t_autolock(this->lockobject_pack);
+
+		return this->pack->ReadFromFileState(a_filestate,a_buffer,a_size,a_offset);
+	}
+	#endif
 
 }}
 #endif

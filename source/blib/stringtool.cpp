@@ -161,7 +161,7 @@ namespace NBlib
 	void HexCharToInt(const STLString& a_string,s32& a_value)
 	{
 		const char* t_data = a_string.c_str();
-		u32 t_size = a_string.size();
+		u32 t_size = static_cast<u32>(a_string.size());
 
 		u32 t_value = 0;
 
@@ -274,7 +274,7 @@ namespace NBlib
 	{
 		const char* t_string = a_string.c_str();
 		const char* t_prefix = a_prefix.c_str();
-		u32 t_ii_max = a_prefix.size();
+		u32 t_ii_max = static_cast<u32>(a_prefix.size());
 
 		for(u32 ii=0;ii<t_ii_max;ii++){
 			if(a_string[ii] == nullchar){

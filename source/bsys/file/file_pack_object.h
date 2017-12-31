@@ -17,48 +17,46 @@
 #pragma warning(pop)
 
 
+/** include
+*/
+#include "./file_pack_workitem.h"
+#include "./file_allocator.h"
+
+
 /** NBsys::NFile
 */
-#if((BSYS_FILE_ENABLE)&&(BSYS_FILE_PACK_ENABLE))
+#if(BSYS_FILE_ENABLE)
 namespace NBsys{namespace NFile
 {
-	/** File_Pack_FileHandle
+	/** File_Pack_Object
 	*/
-	class File_Pack_FileHandle
+	class File_Pack_Object
 	{
 	private:
 
-		/** ファイルハンドル。
+		/** workitem
 		*/
-		FileHandle filehandle;
-
-		/** データサイズ。
-		*/
-		s64 data_size;
-
-		/** データオフセット。
-		*/
-		s64 data_offset;
+		sharedptr<File_Pack_WorkItem> workitem;
 
 	public:
 
 		/** constructor
 		*/
-		explicit File_Pack_FileHandle(FileHandle& a_filehandle,s64 a_data_size,s64 a_data_offset);
+		File_Pack_Object(s32 a_device_index,const STLWString& a_pack_filename_short,const STLWString& a_pack_connectto_rootpath_short);
 
 		/** destructor
 		*/
-		nonvirtual ~File_Pack_FileHandle();
+		virtual ~File_Pack_Object();
 
 	public:
 
-		/** ファイルサイズ取得。
+		/** 処理中。
 		*/
-		s64 GetSize();
+		bool IsBusy() const;
 
-		/** 読み込み。
+		/** エラーコード取得。
 		*/
-		bool Read(u8* a_buffer,s64 a_size,s64 a_offset);
+		ErrorCode::Id GetErrorCode() const;
 
 	};
 

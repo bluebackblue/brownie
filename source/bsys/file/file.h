@@ -21,6 +21,8 @@
 */
 #include "./file_thread.h"
 #include "./file_pack_makethread.h"
+#include "./file_object.h"
+#include "./file_pack_object.h"
 
 
 /** NBsys::NFile
@@ -66,16 +68,15 @@ namespace NBsys{namespace NFile
 	/** [パック]作成。
 	*/
 	#if(BSYS_FILE_PACK_ENABLE)
-	sharedptr<ThreadTemplate<File_Pack_MakeThread>> Pack_Create(const STLWString& a_rootpath_full,const STLWString& a_pack_filename_full,const sharedptr<File_Allocator>& a_allocator);
+	sharedptr<ThreadTemplate<NBsys::NFile::File_Pack_MakeThread>> Pack_Create(const STLWString& a_rootpath_full,const STLWString& a_pack_filename_full,const sharedptr<File_Allocator>& a_allocator);
 	#endif
 
 
-	/** [パック]ロードリクエスト。
+	/** [パック]アンロードリクエスト。
 	*/
 	#if(BSYS_FILE_PACK_ENABLE)
-	void Pack_LoadRequest(s32 a_device_index,const STLWString& a_pack_filename_short,const STLWString& a_pack_rootpath_short);
+	void Pack_UnLoad(s32 a_device_index,const STLWString& a_pack_filename_short);
 	#endif
-
 
 	/** [パック]読み込み済みチェック。
 	*/

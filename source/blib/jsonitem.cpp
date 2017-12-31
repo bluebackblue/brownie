@@ -1671,7 +1671,7 @@ namespace NBlib
 
 		ASSERT(0);
 
-		return sharedptr<JsonItem>::null();
+		return sharedptr_null<JsonItem>();
 	}
 
 
@@ -1694,13 +1694,13 @@ namespace NBlib
 
 		ASSERT(0);
 
-		return sharedptr<JsonItem>::null();
+		return sharedptr_null<JsonItem>();
 	}
 
 
 	/** [取得]連想リストのアイテムチェック。
 	*/
-	bool JsonItem::IsExistItem(const STLString& a_itemname) const
+	bool JsonItem::IsExistItem(const STLString& a_itemname,ValueType::Id a_valuetype) const
 	{
 		ASSERT(this->valuetype == ValueType::AssociativeArray);
 
@@ -1711,7 +1711,9 @@ namespace NBlib
 		{
 			auto t_it = this->value.associative_array->find(a_itemname);
 			if(t_it != this->value.associative_array->cend()){
-				return true;
+				if(a_valuetype == ValueType::None || t_it->second->GetValueType() == a_valuetype){
+					return true;
+				}
 			}
 		}
 		
@@ -1733,12 +1735,12 @@ namespace NBlib
 		}
 		
 		if(t_index < static_cast<s32>(this->value.index_array->size())){
-			return (*(this->value.index_array))[t_index];
+			return this->value.index_array->at(t_index);
 		}
 		
 		ASSERT(0);
 
-		return sharedptr<JsonItem>::null();
+		return sharedptr_null<JsonItem>();
 	}
 
 
@@ -1756,18 +1758,19 @@ namespace NBlib
 		}
 		
 		if(t_index < static_cast<s32>(this->value.index_array->size())){
-			return (*(this->value.index_array))[t_index];
+			return this->value.index_array->at(t_index);
+			
 		}
 		
 		ASSERT(0);
 
-		return sharedptr<JsonItem>::null();
+		return sharedptr_null<JsonItem>();
 	}
 
 
 	/** [取得]インデックスリストのアイテムチェック。
 	*/
-	bool JsonItem::IsExistItem(s32 a_index)
+	bool JsonItem::IsExistItem(s32 a_index,ValueType::Id a_valuetype)
 	{
 		ASSERT(a_index >= 0);
 		u32 t_index = static_cast<u32>(a_index);
@@ -1779,6 +1782,10 @@ namespace NBlib
 		}
 		
 		if(t_index < static_cast<s32>(this->value.index_array->size())){
+			if(a_valuetype == ValueType::None || this->value.index_array->at(t_index)->GetValueType() == a_valuetype){
+				return true;
+			}
+
 			return true;
 		}
 		

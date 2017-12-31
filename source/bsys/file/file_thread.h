@@ -20,11 +20,10 @@
 /** include
 */
 #include "./file_workitem.h"
-#include "./file_object.h"
 #include "./file_allocator.h"
 #include "./file_cache.h"
 #include "./file_pack.h"
-#include "./file_pack_filehandle.h"
+#include "./file_pack_filestate.h"
 
 
 /** NBsys::NFile
@@ -46,7 +45,23 @@ namespace NBsys{namespace NFile
 
 		/** ロックオブジェクト。
 		*/
-		mutable LockObject lockobject;
+		mutable LockObject lockobject_thread;
+
+		/** ロックオブジェクト。(this->cache)にアクセス。
+		*/
+		mutable LockObject lockobject_cache;
+
+		/** ロックオブジェクト。(this->worklist[])にアクセス。
+		*/
+		mutable LockObject lockobject_worklist;
+
+		/** ロックオブジェクト。(this->packworklist[])にアクセス。
+		*/
+		mutable LockObject lockobject_packworklist;
+
+		/** ロックオブジェクト。(this->pack)にアクセス。
+		*/
+		mutable LockObject lockobject_pack;
 
 		/** 作業リスト。
 		*/
@@ -55,7 +70,7 @@ namespace NBsys{namespace NFile
 		/** パック作業リスト。
 		*/
 		#if(BSYS_FILE_PACK_ENABLE)
-		sharedptr<File_Pack_WorkItem> worklist_pack[1];
+		sharedptr<File_Pack_WorkItem> packworklist[1];
 		#endif
 
 		/** [リクエスト]イベント。
@@ -140,14 +155,16 @@ namespace NBsys{namespace NFile
 		*/
 		void EndRequest();
 
-		/** [メインスレッド]ロックオブジェクトの取得。
-		*/
-		LockObject& GetLockObject();
-
 		/** [メインスレッド][パック]ロードリクエスト。
 		*/
 		#if(BSYS_FILE_PACK_ENABLE)
-		void Pack_LoadRequest(const STLWString& a_pack_filename_short,const STLWString& a_pack_rootpath_short);
+		sharedptr<File_Pack_WorkItem> Pack_LoadRequest(const STLWString& a_pack_filename_short,const STLWString& a_pack_connectto_rootpath_short);
+		#endif
+
+		/** [メインスレッド][パック]アンロード。
+		*/
+		#if(BSYS_FILE_PACK_ENABLE)
+		void Pack_UnLoad(const STLWString& a_pack_filename_short);
 		#endif
 
 		/** [メインスレッド][パック]読み込み済みチェック。
@@ -168,14 +185,15 @@ namespace NBsys{namespace NFile
 		*/
 		void LeakCheck() const;
 
-		/** [ファイルスレッド]Pack_GetInstance。
-
-		排他なし。内部からの呼び出し。
-
+		/** [ファイルスレッド]Pack_TryCreateFileState。
 		*/
 		#if(BSYS_FILE_PACK_ENABLE)
-		File_Pack& Pack_GetInstance();
+		sharedptr<File_Pack_FileState>& Pack_TryCreateFileState(const STLWString& a_filename);
 		#endif
+
+		/** [ファイルスレッド]Pack_CreateFileState。
+		*/
+		bool Pack_Read(const sharedptr<File_Pack_FileState>& a_filestate,u8* a_buffer,s64 a_size,s64 a_offset);
 
 	};
 

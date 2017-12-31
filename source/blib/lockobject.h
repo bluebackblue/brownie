@@ -43,7 +43,7 @@ namespace NBlib
 		*/
 		#if(BLIB_STDMUTEX_ENABLE)
 
-		std::recursive_mutex raw;
+		mutable std::recursive_mutex raw;
 
 		#endif
 
@@ -75,7 +75,7 @@ namespace NBlib
 
 		/** Lock
 		*/
-		void Lock()
+		void Lock() const
 		{
 			#if(BLIB_STDMUTEX_ENABLE)
 
@@ -90,7 +90,7 @@ namespace NBlib
 
 		/** Unlock
 		*/
-		void Unlock()
+		void Unlock() const
 		{
 			#if(BLIB_STDMUTEX_ENABLE)
 
@@ -105,7 +105,7 @@ namespace NBlib
 
 		/** TryLock
 		*/
-		bool TryLock()
+		bool TryLock() const
 		{
 			#if(BLIB_STDMUTEX_ENABLE)
 

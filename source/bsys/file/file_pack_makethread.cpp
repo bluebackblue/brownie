@@ -101,19 +101,21 @@ namespace NBsys{namespace NFile
 				t_worklist.pop_back();
 
 				DirectoryHandle t_directoryhandle;
-				t_directoryhandle.Open(t_workitem.path_full);
-
-				s32 ii_max = t_directoryhandle.GetSize();
-				for(s32 ii=0;ii<ii_max;ii++){
-					DirectoryHandle::DirectoryItem& t_item = t_directoryhandle.GetItem(ii);
-					if(t_item.is_directory == true){
-						//ディレクトリ。
-						t_worklist.push_back(WorkItem(Path::DirAndDir(t_workitem.path_pack_short,t_item.name),Path::DirAndDir(t_directoryhandle.GetFullPath(),t_item.name)));
-					}else{
-						//ファイル。
-						t_filename_pack_short_list.push_back(Path::DirAndName(t_workitem.path_pack_short,t_item.name));
-						t_filename_fullpath_list.push_back(Path::DirAndName(t_directoryhandle.GetFullPath(),t_item.name));
+				if(t_directoryhandle.Open(t_workitem.path_full)){
+					s32 ii_max = t_directoryhandle.GetSize();
+					for(s32 ii=0;ii<ii_max;ii++){
+						DirectoryHandle::DirectoryItem& t_item = t_directoryhandle.GetItem(ii);
+						if(t_item.is_directory == true){
+							//ディレクトリ。
+							t_worklist.push_back(WorkItem(Path::DirAndDir(t_workitem.path_pack_short,t_item.name),Path::DirAndDir(t_directoryhandle.GetFullPath(),t_item.name)));
+						}else{
+							//ファイル。
+							t_filename_pack_short_list.push_back(Path::DirAndName(t_workitem.path_pack_short,t_item.name));
+							t_filename_fullpath_list.push_back(Path::DirAndName(t_directoryhandle.GetFullPath(),t_item.name));
+						}
 					}
+				}else{
+					ASSERT(0);
 				}
 			}
 
@@ -191,8 +193,10 @@ namespace NBsys{namespace NFile
 						}
 
 						//各ファイル名をひとまとめにしたもの。
-						if(t_filehandle_write.Write(reinterpret_cast<u8*>(&t_all_filename[0]),static_cast<s64>(sizeof(wchar) * t_all_filename.size()),t_all_filename_offset) == false){
-							ASSERT(0);
+						if(sizeof(wchar) * t_all_filename.size() > 0){
+							if(t_filehandle_write.Write(reinterpret_cast<u8*>(&t_all_filename[0]),static_cast<s64>(sizeof(wchar) * t_all_filename.size()),t_all_filename_offset) == false){
+								ASSERT(0);
+							}
 						}
 					}
 

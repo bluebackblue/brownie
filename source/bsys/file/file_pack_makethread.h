@@ -24,7 +24,6 @@
 #include "./file_allocator.h"
 #include "./file_cache.h"
 #include "./file_pack.h"
-#include "./file_pack_filehandle.h"
 
 
 /** NBsys::NFile

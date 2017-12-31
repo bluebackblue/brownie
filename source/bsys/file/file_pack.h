@@ -33,13 +33,9 @@ namespace NBsys{namespace NFile
 	{
 	private:
 
-		/** ロックオブジェクト。
-		*/
-		LockObject& lockobject;
-
 		/** パックリスト。
 		*/
-		STLList<sharedptr<File_Pack_WorkItem>>::Type list;
+		STLMap<STLWString,sharedptr<File_Pack_WorkItem>>::Type pack_list;
 
 	private:
 
@@ -55,7 +51,7 @@ namespace NBsys{namespace NFile
 
 		/** constructor
 		*/
-		File_Pack(LockObject& a_lockobject);
+		File_Pack();
 
 		/** destructor
 		*/
@@ -63,7 +59,11 @@ namespace NBsys{namespace NFile
 
 		/** 登録。
 		*/
-		void Resist(const sharedptr<File_Pack_WorkItem>& a_workitem);
+		void Regist(const STLWString& a_pack_filename_short,const sharedptr<File_Pack_WorkItem>& a_workitem);
+
+		/** 解除。
+		*/
+		void UnRegist(const STLWString& a_pack_filename_short);
 
 		/** 読み込み済みパックのチェック。
 		*/
@@ -71,7 +71,11 @@ namespace NBsys{namespace NFile
 
 		/** パックからファイルを開く。
 		*/
-		sharedptr<File_Pack_FileHandle>& CreatePackFileHandle(const STLWString& a_filename);
+		sharedptr<File_Pack_FileState>& TryCreatePackFileState(const STLWString& a_filename);
+
+		/** 読み込み。
+		*/
+		bool ReadFromFileState(const sharedptr<File_Pack_FileState>& a_filestate,u8* a_buffer,s64 a_size,s64 a_offset);
 
 	};
 

@@ -383,7 +383,7 @@ namespace NBlib
 
 		/** [取得]連想リストのアイテムチェック。
 		*/
-		bool IsExistItem(const STLString& a_itemname) const;
+		bool IsExistItem(const STLString& a_itemname,ValueType::Id a_valuetype = ValueType::None) const;
 	
 		/** [取得]インデックスリストのアイテム取得。
 		*/
@@ -395,7 +395,7 @@ namespace NBlib
 
 		/** [取得]インデックスリストのアイテムチェック。
 		*/
-		bool IsExistItem(s32 a_index);
+		bool IsExistItem(s32 a_index,ValueType::Id a_valuetype = ValueType::None);
 	
 		/** [設定]連想リストにアイテム追加。削除。
 		*/

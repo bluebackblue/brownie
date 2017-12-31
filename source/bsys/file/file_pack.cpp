@@ -42,9 +42,7 @@ namespace NBsys{namespace NFile
 {
 	/** constructor
 	*/
-	File_Pack::File_Pack(LockObject& a_lockobject)
-		:
-		lockobject(a_lockobject)
+	File_Pack::File_Pack()
 	{
 	}
 
@@ -58,12 +56,20 @@ namespace NBsys{namespace NFile
 
 	/** 登録。
 	*/
-	void File_Pack::Resist(const sharedptr<File_Pack_WorkItem>& a_workitem)
+	void File_Pack::Regist(const STLWString& a_pack_filename_short,const sharedptr<File_Pack_WorkItem>& a_workitem)
 	{
-		//■排他。
-		AutoLock t_autolock(this->lockobject);
+		this->pack_list.insert(std::make_pair(a_pack_filename_short,a_workitem));
+	}
 
-		this->list.push_back(a_workitem);
+
+	/** 解除。
+	*/
+	void File_Pack::UnRegist(const STLWString& a_pack_filename_short)
+	{
+		auto t_it = std::as_const(this->pack_list).find(a_pack_filename_short);
+		if(t_it != this->pack_list.cend()){
+			this->pack_list.erase(t_it);
+		}
 	}
 
 
@@ -71,38 +77,35 @@ namespace NBsys{namespace NFile
 	*/
 	bool File_Pack::IsExist(const STLWString& a_pack_filename_short)
 	{
-		//■排他。
-		AutoLock t_autolock(this->lockobject);
-
-		auto t_it_end = this->list.cend();
-		for(auto t_it = this->list.cbegin();t_it != t_it_end;++t_it){
-			if((*t_it)->GetPackFileNameShort() == a_pack_filename_short){
-				return true;
-			}
+		auto t_it = std::as_const(this->pack_list).find(a_pack_filename_short);
+		if(t_it != this->pack_list.cend()){
+			return true;
 		}
-
 		return false;
 	}
 
 
 	/** パックからファイルを開く。
 	*/
-	sharedptr<File_Pack_FileHandle>& File_Pack::CreatePackFileHandle(const STLWString& a_filename_short)
+	sharedptr<File_Pack_FileState>& File_Pack::TryCreatePackFileState(const STLWString& a_filename_short)
 	{
-		//■排他。
-		AutoLock t_autolock(this->lockobject);
-
-		auto t_it_end = this->list.end();
-		for(auto t_it = this->list.begin();t_it != t_it_end;++t_it){
-			sharedptr<File_Pack_FileHandle>& t_pack_filehandle = (*t_it)->FindFromFileNameShort(a_filename_short);
+		auto t_it_end = this->pack_list.end();
+		for(auto t_it = this->pack_list.begin();t_it != t_it_end;++t_it){
+			sharedptr<File_Pack_FileState>& t_pack_filehandle = t_it->second->FindFromFileNameShort(a_filename_short);
 			if(t_pack_filehandle != nullptr){
 				return t_pack_filehandle;
 			}
 		}
 
-		return sharedptr<File_Pack_FileHandle>::null();
+		return sharedptr<File_Pack_FileState>::null();
 	}
 
+	/** 読み込み。
+	*/
+	bool File_Pack::ReadFromFileState(const sharedptr<File_Pack_FileState>& a_filestate,u8* a_buffer,s64 a_size,s64 a_offset)
+	{
+		return a_filestate->parent->Read(a_filestate,a_buffer,a_size,a_offset);
+	}
 
 }}
 #endif

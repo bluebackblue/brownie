@@ -21,7 +21,7 @@
 */
 #include "./file_allocator.h"
 #include "./file_thread_decl.h"
-#include "./file_pack_filehandle.h"
+#include "./file_pack_filestate.h"
 #include "./file_convertlock_returntype.h"
 
 
@@ -66,7 +66,9 @@ namespace NBsys{namespace NFile
 
 	private:
 
-		LockObject& lockobject;
+		/** lockobject
+		*/
+		mutable LockObject lockobject;
 
 		/** メインステップ。
 		*/
@@ -76,10 +78,10 @@ namespace NBsys{namespace NFile
 		*/
 		Mode::Id mode;
 
-		/** ファイルハンドル。
+		/** パックファイル内ファイルステータス。
 		*/
 		#if(BSYS_FILE_PACK_ENABLE)
-		sharedptr<File_Pack_FileHandle> pack_filehandle;
+		sharedptr<File_Pack_FileState> pack_filehstate;
 		#endif
 
 		/** ファイルハンドル。
@@ -112,7 +114,7 @@ namespace NBsys{namespace NFile
 
 		/** 処理中。
 		*/
-		bool isbusy;
+		AtomicValue<bool> isbusy;
 
 		/** メモリ確保。
 		*/
@@ -126,7 +128,7 @@ namespace NBsys{namespace NFile
 
 		/** constructor
 		*/
-		File_WorkItem(LockObject& a_lockobject,const STLWString& a_filename_short,const sharedptr<File_Allocator>& a_allocator,s32 a_add_allocatesize);
+		File_WorkItem(const STLWString& a_filename_short,const sharedptr<File_Allocator>& a_allocator,s32 a_add_allocatesize);
 
 		/** destructor
 		*/
