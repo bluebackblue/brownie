@@ -70,7 +70,7 @@ namespace NBsys{namespace NFile
 			t_newitem->AddID(a_cachegroup_id);
 
 			//ワークアイテムをキャッシュに追加。
-			this->map.insert(STLMap<STLWString,sharedptr<File_Cache_Item>>::value_type(a_workitem->GetFileNameShort(),t_newitem));
+			this->map.insert(std::make_pair(a_workitem->GetFileNameShort(),t_newitem));
 		}else{
 			//既存。ＩＤのみ追加。
 			t_it_item->second->AddID(a_cachegroup_id);

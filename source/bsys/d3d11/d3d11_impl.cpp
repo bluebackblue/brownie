@@ -632,7 +632,7 @@ namespace NBsys{namespace ND3d11
 		this->StartBatching(t_actionlist);
 
 		//管理リスト。
-		this->vertexshader_list.insert(STLMap<s32,sharedptr<D3d11_Impl_VertexShader>>::value_type(t_vertexshader_id,t_vertexshader));
+		this->vertexshader_list.insert(std::make_pair(t_vertexshader_id,t_vertexshader));
 
 		return t_vertexshader_id;
 	}
@@ -658,7 +658,7 @@ namespace NBsys{namespace ND3d11
 		this->StartBatching(t_actionlist);
 
 		//管理リスト。
-		this->pixelshader_list.insert(STLMap<s32,sharedptr<D3d11_Impl_PixelShader>>::value_type(t_pixelshader_id,t_pixelshader));
+		this->pixelshader_list.insert(std::make_pair(t_pixelshader_id,t_pixelshader));
 
 		return t_pixelshader_id;
 	}
@@ -688,7 +688,7 @@ namespace NBsys{namespace ND3d11
 		this->StartBatching(t_actionlist);
 
 		//管理リスト。
-		this->vertexbuffer_list.insert(STLMap<s32,sharedptr<D3d11_Impl_VertexBuffer>>::value_type(t_vertexbuffer_id,t_vertexbuffer));
+		this->vertexbuffer_list.insert(std::make_pair(t_vertexbuffer_id,t_vertexbuffer));
 
 		return t_vertexbuffer_id;
 	}
@@ -717,7 +717,7 @@ namespace NBsys{namespace ND3d11
 		this->StartBatching(t_actionlist);
 
 		//管理リスト。
-		this->constantbuffer_list.insert(STLMap<s32,sharedptr<D3d11_Impl_ConstantBuffer>>::value_type(t_constantbuffer_id,t_constantbuffer));
+		this->constantbuffer_list.insert(std::make_pair(t_constantbuffer_id,t_constantbuffer));
 
 		return t_constantbuffer_id;
 	}
@@ -743,7 +743,7 @@ namespace NBsys{namespace ND3d11
 		this->StartBatching(t_actionlist);
 
 		//管理リスト。
-		this->texture_list.insert(STLMap<s32,sharedptr<D3d11_Impl_Texture>>::value_type(t_texture_id,t_texture));
+		this->texture_list.insert(std::make_pair(t_texture_id,t_texture));
 
 		return t_texture_id;
 	}
@@ -769,7 +769,7 @@ namespace NBsys{namespace ND3d11
 		this->StartBatching(t_actionlist);
 
 		//管理リスト。
-		this->blendstate_list.insert(STLMap<s32,sharedptr<D3d11_Impl_BlendState>>::value_type(t_blendstate_id,t_blendstate));
+		this->blendstate_list.insert(std::make_pair(t_blendstate_id,t_blendstate));
 
 		return t_blendstate_id;
 	}
@@ -795,7 +795,7 @@ namespace NBsys{namespace ND3d11
 		this->StartBatching(t_actionlist);
 
 		//管理リスト。
-		this->rasterizerstate_list.insert(STLMap<s32,sharedptr<D3d11_Impl_RasterizerState>>::value_type(t_rasterizerstate_id,t_rasterizerstate));
+		this->rasterizerstate_list.insert(std::make_pair(t_rasterizerstate_id,t_rasterizerstate));
 
 		return t_rasterizerstate_id;
 	}
@@ -822,7 +822,7 @@ namespace NBsys{namespace ND3d11
 		this->StartBatching(t_actionlist);
 
 		//管理リスト。
-		this->depthstencilstate_list.insert(STLMap<s32,sharedptr<D3d11_Impl_DepthStencilState>>::value_type(t_depthstencilstate_id,t_depthstencilstate));
+		this->depthstencilstate_list.insert(std::make_pair(t_depthstencilstate_id,t_depthstencilstate));
 
 		return t_depthstencilstate_id;
 	}
@@ -848,7 +848,7 @@ namespace NBsys{namespace ND3d11
 		this->StartBatching(t_actionlist);
 
 		//管理リスト。
-		this->samplerstate_list.insert(STLMap<s32,sharedptr<D3d11_Impl_SamplerState>>::value_type(t_samplerstate_id,t_samplerstate));
+		this->samplerstate_list.insert(std::make_pair(t_samplerstate_id,t_samplerstate));
 
 		return t_samplerstate_id;
 	}

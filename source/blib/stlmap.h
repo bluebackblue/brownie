@@ -62,18 +62,6 @@ namespace NBlib
 		*/
 		typedef std::map<KEY,T,PR,STLALLOCATOR> Type;
 
-		/** value_type
-		*/
-		typedef typename std::map<KEY,T,PR,STLALLOCATOR>::value_type value_type;
-
-		/** iterator
-		*/
-		typedef typename std::map<KEY,T,PR,STLALLOCATOR>::iterator iterator;
-
-		/** const_iterator
-		*/
-		typedef typename std::map<KEY,T,PR,STLALLOCATOR>::const_iterator const_iterator;
-
 	private:
 
 		/** constructor
@@ -107,18 +95,6 @@ namespace NBlib
 			/** Type
 			*/
 			typedef std::unordered_map<KEY,T,H,KEYEQ,STLALLOCATOR> Type;
-
-			/** value_type
-			*/
-			typedef typename std::unordered_map<KEY,T,H,KEYEQ,STLALLOCATOR>::value_type value_type;
-
-			/** iterator
-			*/
-			typedef typename std::unordered_map<KEY,T,H,KEYEQ,STLALLOCATOR>::iterator iterator;
-
-			/** const_iterator
-			*/
-			typedef typename std::unordered_map<KEY,T,H,KEYEQ,STLALLOCATOR>::const_iterator const_iterator;
 
 		private:
 

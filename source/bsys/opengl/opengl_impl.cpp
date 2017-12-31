@@ -432,7 +432,7 @@ namespace NBsys{namespace NOpengl
 			this->StartBatching(t_actionlist);
 
 			//管理リスト。
-			this->vertexbuffer_list.insert(STLMap<s32,sharedptr<Opengl_Impl_VertexBuffer>>::value_type(t_vertexbuffer_id,t_vertexbuffer));
+			this->vertexbuffer_list.insert(std::make_pair(t_vertexbuffer_id,t_vertexbuffer));
 
 			return t_vertexbuffer_id;
 		}
@@ -549,7 +549,7 @@ namespace NBsys{namespace NOpengl
 			s32 t_texture_id = this->id_maker.MakeID();
 
 			//管理リストに登録。
-			this->texture_list.insert(STLMap<s32,sharedptr<Opengl_Impl_Texture>>::value_type(t_texture_id,t_texture));
+			this->texture_list.insert(std::make_pair(t_texture_id,t_texture));
 
 			return t_texture_id;
 		}
@@ -618,7 +618,7 @@ namespace NBsys{namespace NOpengl
 			s32 t_framebuffer_id = this->id_maker.MakeID();
 
 			//管理リストに登録。
-			this->framebuffer_list.insert(STLMap<s32,sharedptr<Opengl_Impl_FrameBuffer>>::value_type(t_framebuffer_id,t_framebuffer));
+			this->framebuffer_list.insert(std::make_pair(t_framebuffer_id,t_framebuffer));
 
 			return t_framebuffer_id;
 		}

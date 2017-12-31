@@ -1008,7 +1008,7 @@ namespace NBlib
 						t_additem->SetJsonString(a_jsonstring.substr(t_index,t_value_size));
 					}
 
-					t_associativelist->insert(STLMap<STLString,sharedptr<JsonItem>>::value_type(t_name_string,t_additem));
+					t_associativelist->insert(std::make_pair(t_name_string,t_additem));
 
 					t_index += t_value_size;
 				}else{
@@ -1805,9 +1805,9 @@ namespace NBlib
 
 		if(a_item != nullptr){
 			if(a_deepcopy == true){
-				this->value.associative_array->insert(STLMap<STLString,sharedptr<JsonItem>>::value_type(a_itemname,a_item->DeepCopy()));
+				this->value.associative_array->insert(std::make_pair(a_itemname,a_item->DeepCopy()));
 			}else{
-				this->value.associative_array->insert(STLMap<STLString,sharedptr<JsonItem>>::value_type(a_itemname,a_item));
+				this->value.associative_array->insert(std::make_pair(a_itemname,a_item));
 			}
 		}else{
 			this->value.associative_array->erase(a_itemname);

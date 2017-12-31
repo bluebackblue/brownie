@@ -62,7 +62,7 @@ namespace NBsys{namespace NFile
 	{
 		auto t_it = this->cachegroup_id_list.find(a_cachegroup_id);
 		if(t_it == this->cachegroup_id_list.cend()){
-			this->cachegroup_id_list.insert(IDListType::value_type(a_cachegroup_id,true));
+			this->cachegroup_id_list.insert(std::make_pair(a_cachegroup_id,true));
 		}else{
 			t_it->second = true;
 		}

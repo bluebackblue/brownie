@@ -1,5 +1,7 @@
 CALL ..\..\..\setting.bat
 
+@ECHO brownie > log.txt
+
 FOR /F %%D IN (testdefine.txt) DO (
 	FOR /F %%C IN (configuration.txt) DO (
 		FOR /F %%P IN (platform.txt) DO (

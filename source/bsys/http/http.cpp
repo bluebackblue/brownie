@@ -146,7 +146,7 @@ namespace NBsys{namespace NHttp
 			ASSERT(t_offset == t_buffer_size);
 		}
 
-		this->binary_list.insert(STLMap<STLString,sharedptr<Http_BinaryItem>>::value_type(a_name,t_binary_item));
+		this->binary_list.insert(std::make_pair(a_name,t_binary_item));
 	}
 
 
@@ -184,7 +184,7 @@ namespace NBsys{namespace NHttp
 			ASSERT(t_offset == t_buffer_size);
 		}
 
-		this->binary_list.insert(STLMap<STLString,sharedptr<Http_BinaryItem>>::value_type(a_name,t_binary_item));
+		this->binary_list.insert(std::make_pair(a_name,t_binary_item));
 	}
 
 
