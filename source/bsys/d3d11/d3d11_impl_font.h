@@ -411,7 +411,7 @@ namespace NBsys{namespace ND3d11
 					t_y = a_y + a_h - t_string_h;
 				}
 
-				u32 ii_max = t_work_list.size();
+				u32 ii_max = static_cast<u32>(t_work_list.size());
 				for(u32 ii=0;ii<ii_max;ii++){
 					u32 t_font_index = t_work_list[ii];
 					NBsys::NFont::Font_State& t_font_state = this->list[t_font_index].fontstate;

@@ -193,7 +193,9 @@ namespace NBsys{namespace NFile
 
 		/** [ファイルスレッド]Pack_CreateFileState。
 		*/
+		#if(BSYS_FILE_PACK_ENABLE)
 		bool Pack_Read(const sharedptr<File_Pack_FileState>& a_filestate,u8* a_buffer,s64 a_size,s64 a_offset);
+		#endif
 
 	};
 
