@@ -1,4 +1,4 @@
-# brownie library
+# brownie
 C++ library
 
 ## license
