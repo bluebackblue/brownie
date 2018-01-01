@@ -1,7 +1,7 @@
 ﻿
 
 /**
- * Copyright (c) 2016-2017 blueback
+ * Copyright (c) 2016-2018 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -174,6 +174,8 @@ namespace NBsys{namespace NFile
 							//ファイルサイズ取得に失敗。
 							this->errorcode = ErrorCode::File_OpenError;
 							this->mainstep = MainStep::Error;
+							DEEPDEBUG_TAGLOG(BSYS_FILE_DEBUG_ENABLE,L"file_pack_workitem","error : %08x",this->errorcode);
+							break;
 						}
 					}
 				}else{
@@ -187,22 +189,45 @@ namespace NBsys{namespace NFile
 			{
 				//読み込む。
 
+				//ＩＤ。
+				u8 t_id[4] = {0};
+				this->filehandle.Read(reinterpret_cast<u8*>(&t_id),sizeof(t_id),0);
+				if(NMemory::Compare(t_id,"BPAC",sizeof(t_id)) != 0){
+					//ＩＤが違う。
+					this->errorcode = ErrorCode::File_IdError;
+					this->mainstep = MainStep::Error;
+					DEEPDEBUG_TAGLOG(BSYS_FILE_DEBUG_ENABLE,L"file_pack_workitem","error : %08x",this->errorcode);
+					break;
+				}
+
+				//バージョン。
+				u32 t_version = 0;
+				this->filehandle.Read(reinterpret_cast<u8*>(&t_version),sizeof(u32),4);
+				if(t_version != BSYS_FILE_PACK_VERSION){
+					//バージョンが違う。
+					this->errorcode = ErrorCode::File_VersionError;
+					this->mainstep = MainStep::Error;
+					DEEPDEBUG_TAGLOG(BSYS_FILE_DEBUG_ENABLE,L"file_pack_workitem","error : %08x",this->errorcode);
+					break;
+				}
+
 				s64 t_offset = 0;
 
 				//ヘッダーサイズ。
 				u32 t_header_size = 0;
-				this->filehandle.Read(reinterpret_cast<u8*>(&t_header_size),sizeof(u32),0);
+				this->filehandle.Read(reinterpret_cast<u8*>(&t_header_size),sizeof(u32),8);
 				t_offset += sizeof(u32);
+				//TODO:error
 
 				//ヘッダーデータ。
 				sharedptr<u8> t_header(new u8[t_header_size],default_delete<u8[]>());
-				this->filehandle.Read(t_header.get(),t_header_size,0);
+				this->filehandle.Read(t_header.get(),t_header_size,8);
 
 				{
 					//総数。
 					u32 t_all_count = 0;
-					NMemory::Copy(&t_all_count,sizeof(u32),&t_header.get()[t_offset],sizeof(u32));
-					t_offset += sizeof(u32);
+					NMemory::Copy(&t_all_count,sizeof(u32),&t_header.get()[t_offset],sizeof(t_all_count));
+					t_offset += sizeof(t_all_count);
 
 					//各ファイルサイズ。
 					sharedptr<u32> t_file_size(new u32[t_all_count]);
