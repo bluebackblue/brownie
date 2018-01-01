@@ -88,13 +88,6 @@
 
 /** include
 */
-#if(BSYS_ROOTSEARCH_ENABLE)
-#include "./rootsearch/rootsearch.h"
-#endif
-
-
-/** include
-*/
 #if(BSYS_FONT_ENABLE)
 #include "./font/font.h"
 #endif

@@ -102,7 +102,6 @@
 	#define BSYS_MMD_ENABLE									(1)
 	#define BSYS_TEXTURE_ENABLE								(1)
 	#define BSYS_TEXTURE_GDIPLUS_ENABLE						(1)
-	#define BSYS_ROOTSEARCH_ENABLE							(1)
 	#define BSYS_FONT_ENABLE								(1)
 	#define BSYS_PAD_ENABLE									(1)
 	#define BSYS_WINDOWMENU_ENABLE							(1)

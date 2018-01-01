@@ -951,25 +951,6 @@
 
 /*
 	-------------------
-	rootsearch
-
-		TODO:一旦削除予定
-	-------------------
-
-	-------------------
-	BSYS_ROOTSEARCH_ENABLE
-
-		0 : オフ
-		1 : オン
-	-------------------
-*/
-#if !defined(BSYS_ROOTSEARCH_ENABLE)
-	#define BSYS_ROOTSEARCH_ENABLE							(0)
-#endif
-
-
-/*
-	-------------------
 	font
 
 		フォントファイルを制御します。
