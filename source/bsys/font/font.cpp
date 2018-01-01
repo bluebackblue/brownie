@@ -63,7 +63,7 @@ namespace NBsys{namespace NFont
 
 	/** GetImpl
 	*/
-	const sharedptr<Font_Impl>& Font::GetImpl() const
+	sharedptr<Font_Impl>& Font::GetImpl()
 	{
 		return this->impl;
 	}

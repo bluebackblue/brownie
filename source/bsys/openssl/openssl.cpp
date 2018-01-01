@@ -73,18 +73,60 @@ namespace NBsys{namespace NOpenSsl
 	}
 
 
-	/** constructor
+	/** SslCreate
 	*/
-	//OpenSsl::OpenSsl()
-	//{
-	//}
+	s32 SslCreate()
+	{
+		if(s_openssl){
+			return s_openssl->Ssl_Create();
+		}
+		return -1;
+	}
 
 
-	/** destructor
+	/** SslConnect
 	*/
-	//OpenSsl::~OpenSsl()
-	//{
-	//}
+	bool SslConnect(s32 a_id,sharedptr<SocketHandle>& a_sockethandle)
+	{
+		if(s_openssl){
+			return s_openssl->Ssl_Connect(a_id,a_sockethandle);
+		}
+		return false;
+	}
+
+
+	/** SslSend
+	*/
+	bool SslSend(s32 a_id,const u8* a_data,s64 a_size,s64 a_offset)
+	{
+		if(s_openssl){
+			return s_openssl->Ssl_Send(a_id,a_data,a_size,a_offset);
+		}
+		return false;
+	}
+
+
+	/** SslRecv
+	*/
+	s64 SslRecv(s32 a_id,u8* a_data,s64 a_size,s64 a_offset,bool a_complete)
+	{
+		if(s_openssl){
+			return s_openssl->Ssl_Recv(a_id,a_data,a_size,a_offset,a_complete);
+		}
+		return -1;
+	}
+
+
+	/** SslDelete
+	*/
+	void SslDelete(s32 a_id)
+	{
+		if(s_openssl){
+			s_openssl->Ssl_Delete(a_id);
+		}
+	}
+
+
 }}
 #endif
 

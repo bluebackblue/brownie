@@ -38,6 +38,54 @@ namespace NTest
 		sharedptr<NBsys::NWindow::Window> t_window(new NBsys::NWindow::Window());
 		t_window->Create(L"TEST " DEF_TEST_STRING,100,100);
 
+		//Winsock開始。
+		NBsys::NWinsock::StartSystem();
+
+		//SSL開始。
+		NBsys::NOpenSsl::StartSystem();
+
+		{
+			sharedptr<NBsys::NHttp::Http> t_http(new NBsys::NHttp::Http());
+			{
+				t_http->SetHost("127.0.0.1");
+				t_http->SetPort(443);
+				t_http->SetSsl(true);
+				t_http->SetMode(NBsys::NHttp::Http_Mode::Get);
+				t_http->SetUrl("/");
+			}
+
+			sharedptr<RingBuffer<u8,1*1024*1024,true>> t_recvbuffer(new RingBuffer<u8,1*1024*1024,true>());
+
+			t_http->ConnectStart(t_recvbuffer);
+			while(1){
+				 bool t_ret = t_http->ConnectUpdate();
+				 if((t_ret == true)||(t_recvbuffer->GetUseSize()>0)){
+
+					//u8* t_recv_data = t_recvbuffer->GetItemFromUseList(0);
+					//s32 t_recv_size = t_recvbuffer->GetUseSize();
+
+					if(t_http->IsRecvHeader()){
+						//ヘッダー読み込み済み。
+
+						//リングバッファからデータを取得したことにする。
+						t_recvbuffer->AddFree(t_recvbuffer->GetUseSize());
+					}
+				}else{
+					t_http->ConnectEnd();
+					t_http.reset();
+					break;
+				}
+			}
+
+
+		}
+
+		//SSL終了。
+		NBsys::NOpenSsl::EndSystem();
+
+		//Winsock終了。
+		NBsys::NWinsock::EndSystem();
+
 		while(true){
 			//s_window
 			t_window->Update();

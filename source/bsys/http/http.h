@@ -78,6 +78,14 @@ namespace NBsys{namespace NHttp
 		/** mode
 		*/
 		Http_Mode::Id mode;
+
+		/** ssl
+		*/
+		bool ssl;
+
+		/** ssl_id
+		*/
+		s32 ssl_id;
 		
 		/** Url
 		*/
@@ -144,6 +152,10 @@ namespace NBsys{namespace NHttp
 		/** SetMode
 		*/
 		void SetMode(Http_Mode::Id a_mode);
+		
+		/** SetSsl
+		*/
+		void SetSsl(bool a_flag);
 
 		/** SetUrl
 		*/
@@ -185,7 +197,7 @@ namespace NBsys{namespace NHttp
 
 		/** 開始。
 		*/
-		void ConnectStart(sharedptr<RingBufferBase<u8>>& a_recv_buffer);
+		void ConnectStart(sharedptr<RingBufferBase<u8>> a_recv_buffer);
 
 		/** 終了。
 		*/

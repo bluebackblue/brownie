@@ -76,7 +76,7 @@ namespace NBsys{namespace NHttp
 
 		/** 更新。
 		*/
-		bool Update();
+		bool Update(s32& a_ssl_id);
 
 	};
 

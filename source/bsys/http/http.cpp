@@ -22,6 +22,17 @@
 #pragma warning(pop)
 
 
+#if(BSYS_OPENSSL_ENABLE)
+
+	#pragma warning(push)
+	#pragma warning(disable:4464)
+	#include "../openssl/openssl.h"
+	#pragma warning(pop)
+
+#endif
+
+
+
 /** include
 */
 #include "./http.h"
@@ -51,6 +62,8 @@ namespace NBsys{namespace NHttp
 		host(""),
 		port(80),
 		mode(Http_Mode::Get),
+		ssl(false),
+		ssl_id(-1),
 		url(""),
 		boundary_string(NHttp::MakeBoundaryString()),
 		step(Step::None),
@@ -93,6 +106,14 @@ namespace NBsys{namespace NHttp
 	void Http::SetMode(Http_Mode::Id a_mode)
 	{
 		this->mode = a_mode;
+	}
+
+
+	/** SetSsl
+	*/
+	void Http::SetSsl(bool a_flag)
+	{
+		this->ssl = a_flag;
 	}
 
 
@@ -234,11 +255,18 @@ namespace NBsys{namespace NHttp
 
 	/** 開始。
 	*/
-	void Http::ConnectStart(sharedptr<RingBufferBase<u8>>& a_recv_buffer)
+	void Http::ConnectStart(sharedptr<RingBufferBase<u8>> a_recv_buffer)
 	{
 		this->recv_buffer = a_recv_buffer;
 		this->step = Step::Start;
 		this->iserror = false;
+
+		#if(BSYS_OPENSSL_ENABLE)
+		if(this->ssl_id >= 0){
+			NBsys::NOpenSsl::SslDelete(this->ssl_id);
+			this->ssl_id = -1;
+		}
+		#endif
 
 		//ソケット作成。
 		this->socket.reset(new SocketHandle());
@@ -255,6 +283,13 @@ namespace NBsys{namespace NHttp
 	*/
 	void Http::ConnectEnd()
 	{
+		#if(BSYS_OPENSSL_ENABLE)
+		if(this->ssl_id >= 0){
+			NBsys::NOpenSsl::SslDelete(this->ssl_id);
+			this->ssl_id = -1;
+		}
+		#endif
+
 		this->step = Step::None;
 		this->socket.reset();
 		this->iserror = false;
@@ -279,14 +314,14 @@ namespace NBsys{namespace NHttp
 			t_loop = false;
 
 			if(this->send){
-				if(this->send->Update() == true){
+				if(this->send->Update(this->ssl_id) == true){
 					//ループリクエスト。
 					t_loop = true;
 				}
 				this->iserror = this->send->IsError();
 			}
 			if(this->recv){
-				if(this->recv->Update() == true){
+				if(this->recv->Update(this->ssl_id) == true){
 					//ループリクエスト。
 					t_loop = true;
 				}
@@ -367,13 +402,28 @@ namespace NBsys{namespace NHttp
 
 					if(this->socket->OpenTcp()){
 						if(this->socket->ConnectTcp(this->host.c_str(),this->port) == true){
-							this->step = Step::SendWait_StartData;
-							t_loop = true;
+
+							#if(BSYS_OPENSSL_ENABLE)
+							if(this->ssl == true){
+								this->ssl_id = NBsys::NOpenSsl::SslCreate();
+								if(NBsys::NOpenSsl::SslConnect(this->ssl_id,this->socket) == false){
+									//エラー。
+									this->iserror = true;
+								}
+							}
+							#endif
+
+							if(this->iserror == false){
+								this->step = Step::SendWait_StartData;
+								t_loop = true;
+							}
 						}else{
 							//エラー。
 							this->iserror = true;
 						}
 					}else{
+						//Winsockの初期化が行われていない等。
+
 						//エラー。
 						this->iserror = true;
 					}
@@ -412,7 +462,22 @@ namespace NBsys{namespace NHttp
 					if(t_close == true){
 						if(this->socket){
 							if(this->socket->IsOpen()){
+								#if(BSYS_OPENSSL_ENABLE)
+								if(this->ssl_id >= 0){
+									NBsys::NOpenSsl::SslDelete(this->ssl_id);
+									this->ssl_id = -1;
+								}
+								#endif
+
 								this->socket->Close();
+							}
+						}
+
+						//受信済みで未解析データのサイズ。
+						if(this->recv){
+							if(this->recv->GetRecvRingBufferUseSize() > 0){
+								//継続。
+								return true;
 							}
 						}
 

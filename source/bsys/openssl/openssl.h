@@ -34,24 +34,28 @@ namespace NBsys{namespace NOpenSsl
 	void EndSystem();
 
 
-	#if(0)
-		/** 接続。
-		*/
-		bool Connect(Muid& a_muid,sharedptr< SocketHandle >& a_sockethandle);
+	/** SslCreate
+	*/
+	s32 SslCreate();
 
-		/** Send
-		*/
-		bool Send(Muid& a_muid,const u8* a_data,s64 a_size,s64 a_offset);
+	/** SslConnect
+	*/
+	bool SslConnect(s32 a_id,sharedptr<SocketHandle>& a_sockethandle);
 
-		/** Resv
-		*/
-		s64 Recv(Muid& a_muid,u8* a_data,s64 a_size,s64 a_offset,bool a_complete);
 
-		/** Delete
-		*/
-		void Delete(Muid& a_muid);
+	/** SslSend
+	*/
+	bool SslSend(s32 a_id,const u8* a_data,s64 a_size,s64 a_offset);
 
-	#endif
+
+	/** SslRecv
+	*/
+	s64 SslRecv(s32 a_id,u8* a_data,s64 a_size,s64 a_offset,bool a_complete);
+
+
+	/** SslDelete
+	*/
+	void SslDelete(s32 a_id);
 
 
 }}

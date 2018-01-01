@@ -46,7 +46,7 @@ namespace NBsys{namespace NFont
 
 		/** GetImpl
 		*/
-		const sharedptr<Font_Impl>& GetImpl() const;
+		sharedptr<Font_Impl>& GetImpl();
 
 	public:
 

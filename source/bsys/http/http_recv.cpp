@@ -28,6 +28,18 @@
 #include "./http_find.h"
 
 
+#if(BSYS_OPENSSL_ENABLE)
+
+	/** include
+	*/
+	#pragma warning(push)
+	#pragma warning(disable:4464)
+	#include "../openssl/openssl.h"
+	#pragma warning(pop)
+
+#endif
+
+
 /** include
 */
 #pragma warning(push)
@@ -151,7 +163,7 @@ namespace NBsys{namespace NHttp
 
 	/** 更新。
 	*/
-	bool Http_Recv::Update()
+	bool Http_Recv::Update(s32& a_ssl_id)
 	{
 		//u8 t_data[64*1024];
 		s32 t_size = 0;
@@ -180,8 +192,21 @@ namespace NBsys{namespace NHttp
 
 				if(t_need_recv_size > 0){
 					if(this->recvbuffer){
-						t_size = static_cast<s32>(this->socket->Recv(this->recvbuffer.get(),t_need_recv_size,0,false));
+						if(a_ssl_id >= 0){
+							#if(BSYS_OPENSSL_ENABLE)
+							t_size = static_cast<s32>(NBsys::NOpenSsl::SslRecv(a_ssl_id,this->recvbuffer.get(),t_need_recv_size,0,false));
+							#endif
+						}else{
+							t_size = static_cast<s32>(this->socket->Recv(this->recvbuffer.get(),t_need_recv_size,0,false));
+						}
 						if(t_size < 0){
+							#if(BSYS_OPENSSL_ENABLE)
+							if(a_ssl_id >= 0){
+								NBsys::NOpenSsl::SslDelete(a_ssl_id);
+								a_ssl_id = -1;
+							}
+							#endif
+
 							this->socket->Close();
 						}else{
 							if(this->ringbuffer_recv){
@@ -251,7 +276,7 @@ namespace NBsys{namespace NHttp
 
 				s32 t_end_offset = NHttp::FindFromRingBuffer(*this->ringbuffer_recv.get(),'\r','\n');
 				if(t_end_offset >= 0){
-					u8 t_tempbuffer[128];
+					u8 t_tempbuffer[4096];
 					if(t_end_offset < (sizeof(t_tempbuffer) - 2)){
 
 						this->ringbuffer_recv->CopyFromBuffer(t_tempbuffer,t_end_offset + 2);
@@ -323,12 +348,16 @@ namespace NBsys{namespace NHttp
 				}
 
 				//残りのコピーが必要なサイズ。
-				if(t_size_from_continuous >= this->header_content_length - this->copy_chunk_size){
-					t_size_from_continuous = this->header_content_length - this->copy_chunk_size;
+				if(this->header_content_length >= 0){
+					if(t_size_from_continuous >= this->header_content_length - this->copy_chunk_size){
+						t_size_from_continuous = this->header_content_length - this->copy_chunk_size;
+					}
+				}else{
+					//全体サイズ不明。全データコピー。
 				}
 
 				//コピー。
-				if(t_size_from_continuous){
+				if(t_size_from_continuous >= 0){
 					this->ringbuffer_data->CopyToBuffer(this->ringbuffer_recv->GetItemFromUseList(0),t_size_from_continuous);
 					this->ringbuffer_recv->AddFree(t_size_from_continuous);
 					this->copy_chunk_size += t_size_from_continuous;
@@ -338,17 +367,26 @@ namespace NBsys{namespace NHttp
 				this->copy_content_size = this->copy_chunk_size;
 
 				//受信が必要なサイズ。
-				this->need_recv_size = this->header_content_length - (this->copy_chunk_size + this->ringbuffer_recv->GetUseSize());
-				if(this->need_recv_size < 0){
-					this->need_recv_size = 0;
+				if(this->header_content_length > 0){
+					this->need_recv_size = this->header_content_length - (this->copy_chunk_size + this->ringbuffer_recv->GetUseSize());
+					if(this->need_recv_size < 0){
+						this->need_recv_size = 0;
+					}
+				}else{
+					//全体サイズ不明。受信要求。
+					this->need_recv_size = -1;
 				}
 
-				if(this->copy_chunk_size >= this->header_content_length){
-					//チャンクのコピー完了。
-					this->step = Step::Data_ChunkEnd;
-
-					//ループリクエスト。連続処理。
-					return true;
+				if(this->header_content_length > 0){
+					if(this->copy_chunk_size >= this->header_content_length){
+						//チャンクのコピー完了。
+						this->step = Step::Data_ChunkEnd;
+						
+						//ループリクエスト。連続処理。
+						return true;
+					}
+				}else{
+					//全体サイズ不明。切断されるまで。
 				}
 
 				//ループリクエスト。なし。

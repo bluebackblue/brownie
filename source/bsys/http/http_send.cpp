@@ -22,6 +22,18 @@
 #pragma warning(pop)
 
 
+#if(BSYS_OPENSSL_ENABLE)
+
+	/** include
+	*/
+	#pragma warning(push)
+	#pragma warning(disable:4464)
+	#include "../openssl/openssl.h"
+	#pragma warning(pop)
+
+#endif
+
+
 /** include
 */
 #include "./http_send.h"
@@ -93,17 +105,29 @@ namespace NBsys{namespace NHttp
 
 	/** 更新。
 	*/
-	bool Http_Send::Update()
+	bool Http_Send::Update(s32& a_ssl_id)
 	{
 		if(this->socket){
 			if(this->socket->IsOpen()){
 				if(this->buffer_offset < this->buffer_size){
 					s32 t_send_size = this->buffer_size - this->buffer_offset;
-					if(this->socket->Send(this->buffer.get(),this->buffer_offset + t_send_size,this->buffer_offset) == true){
-						this->buffer_offset += t_send_size;
+
+					if(a_ssl_id >= 0){
+						#if(BSYS_OPENSSL_ENABLE)
+						if(NBsys::NOpenSsl::SslSend(a_ssl_id,this->buffer.get(),this->buffer_offset + t_send_size,this->buffer_offset) == true){
+							this->buffer_offset += t_send_size;
+						}else{
+							//エラー。
+							this->iserror = true;
+						}
+						#endif
 					}else{
-						//エラー。
-						this->iserror = true;
+						if(this->socket->Send(this->buffer.get(),this->buffer_offset + t_send_size,this->buffer_offset) == true){
+							this->buffer_offset += t_send_size;
+						}else{
+							//エラー。
+							this->iserror = true;
+						}
 					}
 				}
 			}
