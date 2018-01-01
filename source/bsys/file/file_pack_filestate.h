@@ -26,7 +26,7 @@
 */
 #if((BSYS_FILE_ENABLE)&&(BSYS_FILE_PACK_ENABLE))
 #pragma warning(push)
-#pragma warning(disable:4710)
+#pragma warning(disable:4710 4820 4514)
 namespace NBsys{namespace NFile
 {
 	/** File_Pack_FileState

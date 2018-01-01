@@ -125,9 +125,9 @@ namespace NTest
 			}
 		};
 
-		/** step
+		/** init_step
 		*/
-		s32 step;
+		s32 init_step;
 
 		/** カメラ。
 		*/
@@ -149,9 +149,12 @@ namespace NTest
 		*/
 		sharedptr<NCommon::WindowMenu_Texture> windowmenu_texture;
 
+		/** pac
+		*/
+		sharedptr<NBsys::NFile::File_Pack_Object> pac;
+
 		/** mmd
 		*/
-		s32 mmd_step;
 		sharedptr<STLVector<Mmd_ModelParts>::Type> mmd_model;
 		sharedptr<NBsys::NMmd::Mmd_Pmx> mmd_pmx;
 		sharedptr<NBsys::NMmd::Mmd_Vmd> mmd_vmd;
@@ -170,7 +173,7 @@ namespace NTest
 		*/
 		App()
 			:
-			step(0)
+			init_step(0)
 		{
 			//カメラ。
 			this->camera_position = NBsys::NGeometry::Geometry_Vector3(1.0f,10.0f,-20.0f);
@@ -187,7 +190,6 @@ namespace NTest
 			this->target_to_b.Set(3,0,0);
 
 			{
-				this->mmd_step = 0;
 				//this->mmd_model;
 				//this->mmd_pmx;
 				//this->mmd_vmd;
@@ -214,8 +216,8 @@ namespace NTest
 		*/
 		void Mmd_CreateShader()
 		{
-			sharedptr<NBsys::NFile::File_Object> t_simple_vertex_fx(new NBsys::NFile::File_Object(1,L"simple_vertex.fx",-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
-			sharedptr<NBsys::NFile::File_Object> t_simple_pixel_fx(new NBsys::NFile::File_Object(1,L"simple_pixel.fx",-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
+			sharedptr<NBsys::NFile::File_Object> t_simple_vertex_fx(new NBsys::NFile::File_Object(NCommon::DeviceIndex::Common,L"simple_vertex.fx",-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
+			sharedptr<NBsys::NFile::File_Object> t_simple_pixel_fx(new NBsys::NFile::File_Object(NCommon::DeviceIndex::Common,L"simple_pixel.fx",-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
 
 			this->mmd_asyncresult_vertexshader.Create(false);
 			this->mmd_asyncresult_pixelshader.Create(false);
@@ -248,31 +250,41 @@ namespace NTest
 		*/
 		void Mmd_Load()
 		{
-			STLWString t_pmx_path = L"mmd/アリスあぴミクver1.0/";
-			STLWString t_pmx_name = L"Appearance Miku_Alice.pmx";
+			STLWString t_pmx_path = L"mmd/";
+			STLWString t_pmx_name = L"Tuneちゃん_ハイポリ版Toon_ver.pmx";
 
-			STLWString t_vmd_path = L"mmd/nac_miraikei/";
-			STLWString t_vmd_name = L"nac_miraikei.vmd";
+			//STLWString t_vmd_path = L"mmd/";
+			//STLWString t_vmd_name = L"-.vmd";
 
 			//ＰＭＸ読み込み。
 			{
-				sharedptr<NBsys::NFile::File_Object> t_fileobject_pmx(new NBsys::NFile::File_Object(2,t_pmx_path + t_pmx_name,-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
+				sharedptr<NBsys::NFile::File_Object> t_fileobject_pmx(new NBsys::NFile::File_Object(NCommon::DeviceIndex::TestData,t_pmx_path + t_pmx_name,-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
 				while(t_fileobject_pmx->IsBusy()){
 					ThreadSleep(10);
 				}
-				this->mmd_pmx.reset(new NBsys::NMmd::Mmd_Pmx());
-				this->mmd_pmx->Load(t_fileobject_pmx);
+				if(t_fileobject_pmx->GetErrorCode() == ErrorCode::Success){
+					this->mmd_pmx.reset(new NBsys::NMmd::Mmd_Pmx());
+					this->mmd_pmx->Load(t_fileobject_pmx);
+				}else{
+					ASSERT(0);
+				}
 			}
 
 			//ＶＭＤ読み込み。
+			/*
 			{
-				sharedptr<NBsys::NFile::File_Object> t_fileobject_vmd(new NBsys::NFile::File_Object(2,t_vmd_path + t_vmd_name,-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
+				sharedptr<NBsys::NFile::File_Object> t_fileobject_vmd(new NBsys::NFile::File_Object(NCommon::DeviceIndex::TestData,t_vmd_path + t_vmd_name,-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
 				while(t_fileobject_vmd->IsBusy()){
 					ThreadSleep(10);
 				}
-				this->mmd_vmd.reset(new NBsys::NMmd::Mmd_Vmd());
-				this->mmd_vmd->Load(t_fileobject_vmd);
+				if(t_fileobject_vmd->GetErrorCode() == ErrorCode::Success){
+					this->mmd_vmd.reset(new NBsys::NMmd::Mmd_Vmd());
+					this->mmd_vmd->Load(t_fileobject_vmd);
+				}else{
+					ASSERT(0);
+				}
 			}
+			*/
 
 			this->mmd_vertex = new NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4>();
 			this->mmd_model = new STLVector<Mmd_ModelParts>::Type();
@@ -318,10 +330,9 @@ namespace NTest
 				//テクスチャー読み込み開始。
 				if(t_model_patrs.texture_index >= 0){
 					t_model_patrs.texture_filepath = Path::DirAndName(t_pmx_path,this->mmd_pmx->texturename_list[static_cast<std::size_t>(t_model_patrs.texture_index)]);
-					t_model_patrs.texture_file = new NBsys::NFile::File_Object(2,t_model_patrs.texture_filepath,-1,sharedptr<NBsys::NFile::File_Allocator>(),1);
+					t_model_patrs.texture_file = new NBsys::NFile::File_Object(NCommon::DeviceIndex::TestData,t_model_patrs.texture_filepath,-1,sharedptr<NBsys::NFile::File_Allocator>(),1);
 				}else{
-					t_model_patrs.texture_filepath = Path::DirAndName(L"",L"white.bmp");
-					t_model_patrs.texture_file = new NBsys::NFile::File_Object(2,t_model_patrs.texture_filepath,-1,sharedptr<NBsys::NFile::File_Allocator>(),1);
+					t_model_patrs.texture_file = nullptr;
 				}
 			}
 
@@ -404,23 +415,34 @@ namespace NTest
 		*/
 		virtual bool Initialize_Update()
 		{
-			if(this->mmd_step == 0){
-				this->Mmd_Load();
-					this->mmd_step++;				
-			}else if(this->mmd_step == 1){
-				this->Mmd_CreateShader();
-				this->mmd_step++;
-			}else if(this->mmd_step == 2){
-				if(this->mmd_asyncresult_vertexshader.Get() == true){
-					if(this->mmd_asyncresult_pixelshader.Get() == true){
-						this->mmd_step++;
+			if(this->init_step == 0){
+				//パックファイル読み込み開始。
+				this->pac.reset(new NBsys::NFile::File_Pack_Object(NCommon::DeviceIndex::TestData,L"Tuneちゃん_Toon.pac",L"mmd"));
+				this->init_step++;
+			}else if(this->init_step == 1){
+				if(this->pac->IsBusy() == false){
+					if(this->pac->GetErrorCode() == ErrorCode::Success){
+						this->init_step++;
 					}
 				}
-			}else if(this->mmd_step == 3){
+			}else if(this->init_step == 2){
+				this->Mmd_Load();
+				this->init_step++;				
+			}else if(this->init_step == 3){
+				this->Mmd_CreateShader();
+				this->init_step++;
+			}else if(this->init_step == 4){
+				if(this->mmd_asyncresult_vertexshader.Get() == true){
+					if(this->mmd_asyncresult_pixelshader.Get() == true){
+						this->init_step++;
+					}
+				}
+			}else if(this->init_step == 5){
+				this->init_step = 100;
 				return true;
 			}
 
-			return true;
+			return false;
 		}
 
 		/** 更新。
@@ -433,7 +455,7 @@ namespace NTest
 			this->camera_position.x() = NMath::cos_f(this->camera_time / 10) * 20;
 			this->camera_position.z() = NMath::sin_f(this->camera_time / 10) * 20;
 
-			if(this->step == 0){
+			if(this->init_step == 100){
 				//テクスチャ。
 				this->windowmenu_texture.reset(new NCommon::WindowMenu_Texture(150.0f,150.0f,this->d3d11));
 				NBsys::NWindowMenu::GetSystemInstance()->Add(this->windowmenu_texture);
@@ -442,7 +464,7 @@ namespace NTest
 				this->windowmenu_log.reset(new NCommon::WindowMenu_Log(200.0f,200.0f));
 				NBsys::NWindowMenu::GetSystemInstance()->Add(this->windowmenu_log);
 
-				this->step++;
+				this->init_step++;
 			}
 		}
 

@@ -76,7 +76,7 @@ namespace NTest
 		NBsys::NFile::SetRoot(0,L"./project_test/test" DEF_TEST_STRING);
 
 		//読み込み開始。
-		sharedptr<NBsys::NFile::File_Object> t_fileobject(new NBsys::NFile::File_Object(0,L"test2.json",-1,new File_Allocator,1));
+		sharedptr<NBsys::NFile::File_Object> t_fileobject(new NBsys::NFile::File_Object(NCommon::DeviceIndex::Local,L"test2.json",-1,new File_Allocator,1));
 
 		//読み込み中。
 		while(t_fileobject->IsBusy()){

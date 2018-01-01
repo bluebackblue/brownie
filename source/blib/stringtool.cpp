@@ -124,9 +124,9 @@ namespace NBlib
 						FREEA(t_char);
 						return;
 					}
-				}
 
-				FREEA(t_char);
+					FREEA(t_char);
+				}
 			}
 		}
 		#endif

@@ -39,13 +39,13 @@ namespace NBlib
 			//未初期化。
 			Uninitialized				= 0x80000002,	//未初期化。
 
-			//ロード。
-			Load_Error					= 0x80001000,	// 不明。
-			Load_AccessError			= 0x80001001,	// アクセスエラー。
-			Load_ReadError				= 0x80001002,	// 読み込みエラー。
-			Load_WriteError				= 0x80001003,	// 書き込みエラー。
-			Load_OpenError				= 0x80001004,	// オープンエラー。
-			Load_CancelError			= 0x80001005,	// キャンセルにより中断された。
+			//ファイル。
+			File_Error					= 0x80001000,	// 不明。
+			File_AccessError			= 0x80001001,	// アクセスエラー。
+			File_ReadError				= 0x80001002,	// 読み込みエラー。
+			File_WriteError				= 0x80001003,	// 書き込みエラー。
+			File_OpenError				= 0x80001004,	// オープンエラー。
+			File_CancelError			= 0x80001005,	// キャンセルにより中断された。
 
 			//メモリ。
 			Memory_Error				= 0x80002000,	// 不明。

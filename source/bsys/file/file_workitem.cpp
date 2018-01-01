@@ -280,13 +280,13 @@ namespace NBsys{namespace NFile
 							break;
 						}else{
 							//ファイルサイズ取得に失敗。
-							this->errorcode = ErrorCode::Load_OpenError;
+							this->errorcode = ErrorCode::File_OpenError;
 							this->mainstep = MainStep::Error;
 						}
 					}
 				}else{
 					//ファイルを開くのに失敗。
-					this->errorcode = ErrorCode::Load_OpenError;
+					this->errorcode = ErrorCode::File_OpenError;
 					this->mainstep = MainStep::Error;
 					break;
 				}
@@ -322,7 +322,7 @@ namespace NBsys{namespace NFile
 				{
 					if(a_cancel){
 						//キャンセル。
-						this->errorcode = ErrorCode::Load_CancelError;
+						this->errorcode = ErrorCode::File_CancelError;
 						this->mainstep = MainStep::Error;
 						break;
 					}else if(t_ret_read){
@@ -336,7 +336,7 @@ namespace NBsys{namespace NFile
 						}
 					}else{
 						//読み込みに失敗。
-						this->errorcode = ErrorCode::Load_ReadError;
+						this->errorcode = ErrorCode::File_ReadError;
 						this->mainstep = MainStep::Error;
 						break;
 					}

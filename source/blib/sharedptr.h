@@ -1118,6 +1118,8 @@ namespace NBlib
 #endif
 
 
+#pragma warning(push)
+#pragma warning(disable:4710)
 #if(BLIB_STDSHAREDPTR_ENABLE)
 
 	/** sharedptr_null
@@ -1178,4 +1180,5 @@ namespace NBlib
 
 
 #endif
+#pragma warning(pop)
 

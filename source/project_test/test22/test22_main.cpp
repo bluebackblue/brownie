@@ -187,7 +187,7 @@ namespace NTest
 
 		//ＰＭＸ読み込み。
 		{
-			sharedptr<NBsys::NFile::File_Object> t_fileobject_pmx(new NBsys::NFile::File_Object(2,t_pmx_path + t_pmx_name,-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
+			sharedptr<NBsys::NFile::File_Object> t_fileobject_pmx(new NBsys::NFile::File_Object(NCommon::DeviceIndex::TestData,t_pmx_path + t_pmx_name,-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
 			while(t_fileobject_pmx->IsBusy()){
 				ThreadSleep(10);
 			}
@@ -197,7 +197,7 @@ namespace NTest
 
 		//ＶＭＤ読み込み。
 		{
-			sharedptr<NBsys::NFile::File_Object> t_fileobject_vmd(new NBsys::NFile::File_Object(2,t_vmd_path + t_vmd_name,-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
+			sharedptr<NBsys::NFile::File_Object> t_fileobject_vmd(new NBsys::NFile::File_Object(NCommon::DeviceIndex::TestData,t_vmd_path + t_vmd_name,-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
 			while(t_fileobject_vmd->IsBusy()){
 				ThreadSleep(10);
 			}
@@ -249,10 +249,10 @@ namespace NTest
 			//テクスチャー読み込み開始。
 			if(t_model_patrs.texture_index >= 0){
 				t_model_patrs.texture_filepath = Path::DirAndName(t_pmx_path,s_mmd_pmx->texturename_list[static_cast<std::size_t>(t_model_patrs.texture_index)]);
-				t_model_patrs.texture_file = new NBsys::NFile::File_Object(2,t_model_patrs.texture_filepath,-1,sharedptr<NBsys::NFile::File_Allocator>(),1);
+				t_model_patrs.texture_file = new NBsys::NFile::File_Object(NCommon::DeviceIndex::TestData,t_model_patrs.texture_filepath,-1,sharedptr<NBsys::NFile::File_Allocator>(),1);
 			}else{
 				t_model_patrs.texture_filepath = Path::DirAndName(L"",L"white.bmp");
-				t_model_patrs.texture_file = new NBsys::NFile::File_Object(2,t_model_patrs.texture_filepath,-1,sharedptr<NBsys::NFile::File_Allocator>(),1);
+				t_model_patrs.texture_file = new NBsys::NFile::File_Object(NCommon::DeviceIndex::TestData,t_model_patrs.texture_filepath,-1,sharedptr<NBsys::NFile::File_Allocator>(),1);
 			}
 		}
 
@@ -430,8 +430,8 @@ namespace NTest
 
 				//作成。
 
-				sharedptr<NBsys::NFile::File_Object> t_simple_vertex_fx(	new NBsys::NFile::File_Object(0,L"simple_vertex.fx",	-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
-				sharedptr<NBsys::NFile::File_Object> t_simple_pixel_fx(	new NBsys::NFile::File_Object(0,L"simple_pixel.fx",		-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
+				sharedptr<NBsys::NFile::File_Object> t_simple_vertex_fx(new NBsys::NFile::File_Object(NCommon::DeviceIndex::Local,L"simple_vertex.fx",	-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
+				sharedptr<NBsys::NFile::File_Object> t_simple_pixel_fx(	new NBsys::NFile::File_Object(NCommon::DeviceIndex::Local,L"simple_pixel.fx",		-1,sharedptr<NBsys::NFile::File_Allocator>(),1));
 
 				t_asyncresult_vertexshader.Create(false);
 				t_asyncresult_pixelshader.Create(false);

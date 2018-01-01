@@ -58,4 +58,5 @@
 #include "./directoryhandle.h"
 #include "./path.h"
 #include "./asyncresult.h"
+#include "./malloca.h"
 

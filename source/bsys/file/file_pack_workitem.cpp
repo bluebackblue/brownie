@@ -132,7 +132,7 @@ namespace NBsys{namespace NFile
 		@return : true = 完了 / false = 作業中
 
 	*/
-	bool File_Pack_WorkItem::Update(File_Thread& a_thread,const STLWString& a_rootpath_full)
+	bool File_Pack_WorkItem::Update(File_Thread& /*a_thread*/,const STLWString& a_rootpath_full)
 	{
 		//■排他。
 		AutoLock t_autolock(this->lockobject);
@@ -172,13 +172,13 @@ namespace NBsys{namespace NFile
 							break;
 						}else{
 							//ファイルサイズ取得に失敗。
-							this->errorcode = ErrorCode::Load_OpenError;
+							this->errorcode = ErrorCode::File_OpenError;
 							this->mainstep = MainStep::Error;
 						}
 					}
 				}else{
 					//ファイルを開くのに失敗。
-					this->errorcode = ErrorCode::Load_OpenError;
+					this->errorcode = ErrorCode::File_OpenError;
 					this->mainstep = MainStep::Error;
 					break;
 				}

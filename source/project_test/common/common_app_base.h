@@ -29,6 +29,7 @@
 #include "./common_windowmenu_log.h"
 #include "./common_windowmenu_callback.h"
 #include "./common_autotest.h"
+#include "./common_device_index.h"
 
 
 /** NTest::NCommon
@@ -172,10 +173,11 @@ namespace NTest{namespace NCommon
 		*/
 		virtual void Initialize_File()
 		{
-			NBsys::NFile::StartSystem(3);
-			NBsys::NFile::SetRoot(0,L"./project_test/test" DEF_TEST_STRING);
-			NBsys::NFile::SetRoot(1,L"./project_test/common");
-			NBsys::NFile::SetRoot(2,L"../../sdk");
+			NBsys::NFile::StartSystem(DeviceIndex::Max);
+			NBsys::NFile::SetRoot(DeviceIndex::Local,L"./project_test/test" DEF_TEST_STRING);
+			NBsys::NFile::SetRoot(DeviceIndex::Common,L"./project_test/common");
+			NBsys::NFile::SetRoot(DeviceIndex::Sdk,L"../../sdk");
+			NBsys::NFile::SetRoot(DeviceIndex::TestData,L"../../brownie_testdata/data");
 		}
 
 		/** 削除。ファイル。
