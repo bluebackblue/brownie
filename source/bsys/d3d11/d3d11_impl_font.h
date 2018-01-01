@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 /**
- * Copyright (c) 2016-2017 blueback
+ * Copyright (c) 2016-2018 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -266,12 +266,9 @@ namespace NBsys{namespace ND3d11
 								}
 							}
 
-							#if defined(ROM_DEEPDEBUG)
-							{
-								wchar t_wchar[2] = {t_code,nullwchar};
-								TAGLOG("UpdateFontTexture",L"%s",t_wchar);
-							}
-							#endif
+							wchar t_wchar[2] = {t_code,nullwchar};
+							UNUSED(t_wchar);
+							DEEPDEBUG_TAGLOG(BSYS_D3D11_DEBUG_ENABLE,L"d3d11_impl_font",L"%s",t_wchar);
 
 							//テクスチャーに書き込み。
 							NBsys::NFont::Font_State t_font_state = this->font->GetPixel_R8G8B8A8(this->texture->GetPixel(),t_font_index * (this->texturewidth * this->texturewidth * 4),this->texturewidth,this->texturewidth,t_code);

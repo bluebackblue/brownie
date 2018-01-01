@@ -5,6 +5,8 @@ workspace "brownie"
 configurations
 {
 	"Debug",
+	"DeepDebug",
+	"FullDebug",
 	"Release"
 }
 
@@ -89,6 +91,18 @@ do
 	filter "configurations:Debug"
 	do
 		defines { "ROM_DEVELOP" }
+		symbols "On"
+	end
+
+	filter "configurations:DeepDebug"
+	do
+		defines { "ROM_DEEPDEBUG" }
+		symbols "On"
+	end
+
+	filter "configurations:FullDebug"
+	do
+		defines { "ROM_FULLDEBUG" }
 		symbols "On"
 	end
 

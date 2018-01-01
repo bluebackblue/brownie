@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 /**
- * Copyright (c) 2016-2017 blueback
+ * Copyright (c) 2016-2018 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -39,6 +39,35 @@ namespace NBsys{namespace NFile
 	{
 	private:
 
+		/** SearchItem
+		*/
+		struct SearchItem
+		{
+			/** 相対パス。
+			*/
+			STLWString filename_short;
+
+			/** フルパス。
+			*/
+			STLWString filename_fullpath;
+
+			/** constructor
+			*/
+			SearchItem(const STLWString& a_filename_short,const STLWString& a_filename_fullpath)
+				:
+				filename_short(a_filename_short),
+				filename_fullpath(a_filename_fullpath)
+			{
+			}
+
+			/** destructor
+			*/
+			nonvirtual ~SearchItem()
+			{
+			}
+
+		};
+
 		/** ロックオブジェクト。
 		*/
 		LockObject lockobject;
@@ -46,6 +75,14 @@ namespace NBsys{namespace NFile
 		/** エラーコード。
 		*/
 		ErrorCode::Id errorcode;
+
+		/** SearchDirectory
+		*/
+		bool SearchDirectory(STLVector<SearchItem>::Type& a_result_list,const SearchItem& a_request);
+
+		/** WritePack
+		*/
+		bool WritePack(const STLWString& a_pack_filename_full,const STLVector<SearchItem>::Type& a_search_list);
 
 	public:
 

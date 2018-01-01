@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 /**
- * Copyright (c) 2016-2017 blueback
+ * Copyright (c) 2016-2018 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -69,6 +69,24 @@
 	#define BLIB_GLOBALFIXEDALLOCATOR_BLOCKMAX				(1 * 1024 * 1024)
 #endif
 
+
+/*
+	-------------------
+	スレッドテンプレート
+	-------------------
+
+	-------------------
+	BLIB_THREADTEMPLATE_DEBUG_ENABLE
+
+		0 : オフ
+		1 : オン
+
+		デバッグ機能を制御します。
+	-------------------
+*/
+#if !defined(BLIB_THREADTEMPLATE_DEBUG_ENABLE)
+	#define BLIB_THREADTEMPLATE_DEBUG_ENABLE				(0)
+#endif
 
 /*
 	-------------------
@@ -568,12 +586,27 @@
 	-------------------
 
 	-------------------
+	BSYS_FILE_DEBUG_ENABLE
+
+		0 : オフ
+		1 : オン
+
+		デバッグ機能を制御します。
+	-------------------
+
+	-------------------
 	BSYS_FILE_PACK_ENABLE
 
 		0 : オフ
 		1 : オン
 
 		パックファイルの作成、解析を制御します。
+	-------------------
+
+	-------------------
+	BSYS_FILE_PACK_VERSION
+
+		パックファイルのバーションを設定します。
 	-------------------
 
 	-------------------
@@ -592,8 +625,14 @@
 #if !defined(BSYS_FILE_ENABLE)
 	#define BSYS_FILE_ENABLE								(0)
 #endif
+#if !defined(BSYS_FILE_DEBUG_ENABLE)
+	#define BSYS_FILE_DEBUG_ENABLE							(0)
+#endif
 #if !defined(BSYS_FILE_PACK_ENABLE)
 	#define BSYS_FILE_PACK_ENABLE							(1)
+#endif
+#if !defined(BSYS_FILE_PACK_VERSION)
+	#define BSYS_FILE_PACK_VERSION							(1)
 #endif
 #if !defined(BSYS_FILE_MEMORYCONTAINER)
 	#define BSYS_FILE_MEMORYCONTAINER						(0x01)

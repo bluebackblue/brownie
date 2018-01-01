@@ -1,7 +1,7 @@
 ﻿
 
 /**
- * Copyright (c) 2016-2017 blueback
+ * Copyright (c) 2016-2018 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -122,9 +122,6 @@ namespace NBsys{namespace NFile
 								if(t_workitem_pack->GetErrorCode() == ErrorCode::Success){
 									//パックファイル。ヘッダー読み込み完了。
 									this->pack->Regist(t_workitem_pack->GetPackFileNameShort(),t_workitem_pack);
-								}else{
-									//パックファイル。読み込み失敗。
-									ASSERT(0);
 								}
 								break;
 							}

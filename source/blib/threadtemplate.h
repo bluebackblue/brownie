@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 /**
- * Copyright (c) 2016-2017 blueback
+ * Copyright (c) 2016-2018 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -84,6 +84,10 @@ namespace NBlib
 		*/
 		sharedptr<T> implimentation;
 
+		/** argument
+		*/
+		sharedptr<Argument> argument;
+
 		/** isopen
 		*/
 		AtomicValue<bool> isopen;
@@ -92,10 +96,6 @@ namespace NBlib
 		*/
 		padding64(0,7);
 		padding32(0,3);
-
-		/** argument
-		*/
-		sharedptr<Argument> argument;
 
 	public:
 
@@ -132,8 +132,13 @@ namespace NBlib
 		{
 			if(this->threadhandle == nullptr){
 				if(this->implimentation == nullptr){
+
+					DEEPDEBUG_TAGLOG(BLIB_THREADTEMPLATE_DEBUG_ENABLE,L"threadtemplate",L"new T : start");
+
 					//実装部分作成。
 					this->implimentation.reset(new T());
+
+					DEEPDEBUG_TAGLOG(BLIB_THREADTEMPLATE_DEBUG_ENABLE,L"threadtemplate",L"new T : end");
 
 					//フラグ設定。
 					this->isopen.Store(true);
@@ -143,6 +148,8 @@ namespace NBlib
 					this->argument->me = this;
 					this->argument->threadargument = a_threadargument;
 					this->argument->implimentation = this->implimentation;
+
+					DEEPDEBUG_TAGLOG(BLIB_THREADTEMPLATE_DEBUG_ENABLE,L"threadtemplate",L"ThreadMain : start");
 
 					//スレッド起動。
 					#if(BLIB_STDTHREAD_ENABLE)
@@ -155,7 +162,11 @@ namespace NBlib
 						ASSERT(0);
 					}
 					#endif
+				}else{
+					ASSERT(0);
 				}
+			}else{
+				ASSERT(0);
 			}
 		}
 
@@ -173,9 +184,9 @@ namespace NBlib
 		*/
 		void EndWait()
 		{
-			if(this->threadhandle){
+			DEEPDEBUG_TAGLOG(BLIB_THREADTEMPLATE_DEBUG_ENABLE,L"threadtemplate",L"EndWait : start");
 
-				TAGLOG(L"ThreadTemplate::EndWait","start");
+			if(this->threadhandle){
 				{
 					#if(BLIB_STDTHREAD_ENABLE)
 					{
@@ -187,10 +198,11 @@ namespace NBlib
 					}
 					#endif
 				}
-				TAGLOG(L"ThreadTemplate::EndWait","end");
 			}
 			this->threadhandle.reset();
 			this->implimentation.reset();
+
+			DEEPDEBUG_TAGLOG(BLIB_THREADTEMPLATE_DEBUG_ENABLE,L"threadtemplate",L"EndWait : end");
 		}
 
 		/** ポインタのように振舞う。
@@ -260,19 +272,11 @@ namespace NBlib
 				ASSERT(0);
 			}
 
-			#if defined(ROM_DEEPDEBUG)
-			TAGLOG("ThreadTemplate::ThreadMain","isopen.Store(false) : start");
-			#endif
-
 			if(t_argument->me){
 				t_argument->me->isopen.Store(false);
 			}else{
 				ASSERT(0);
 			}
-
-			#if defined(ROM_DEEPDEBUG)
-			TAGLOG("ThreadTemplate::ThreadMain","isopen.Store(false) : end");
-			#endif
 		}
 
 	};
