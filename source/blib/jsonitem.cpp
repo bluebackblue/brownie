@@ -1990,7 +1990,7 @@ namespace NBlib
 
 					while(t_index < t_max){
 						//１文字取得。
-						u32 t_add = NImpl::GetMojiSize(*this->value.string_data,t_index,true);
+						u32 t_add = NImpl::GetMojiSize(*this->value.string_data,t_index,false);
 						if(t_add == 1){
 							const char* t_add_string = NImpl::CheckEscapeSequence((*(this->value.string_data))[t_index]);
 							if(t_add_string == nullptr){
