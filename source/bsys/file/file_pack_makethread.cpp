@@ -45,6 +45,8 @@ namespace NBsys{namespace NFile
 	/** constructor
 	*/
 	File_Pack_MakeThread::File_Pack_MakeThread()
+		:
+		errorcode(ErrorCode::Success)
 	{
 	}
 
@@ -115,7 +117,11 @@ namespace NBsys{namespace NFile
 						}
 					}
 				}else{
-					ASSERT(0);
+					{
+						AutoLock t_autolock(this->lockobject);
+						this->errorcode = ErrorCode::File_Error;
+						ASSERT(0);
+					}
 				}
 			}
 
@@ -123,11 +129,15 @@ namespace NBsys{namespace NFile
 				FileHandle t_filehandle_write;
 
 				if(t_filehandle_write.WriteOpen(Path::Name(a_threadargument.pack_filename_full)) == false){
+					AutoLock t_autolock(this->lockobject);
+					this->errorcode = ErrorCode::File_Error;
 					ASSERT(0);
 				}else{
 
 					/*
 					------------------------------------------------------------------
+					4 Byte                                    : ＩＤ
+					4 Byte                                    : バージョン
 					4 Byte                                    : ヘッダーサイズ
 					4 Byte                                    : ファイル総数
 					ファイル総数 * 4 Byte                     : 各ファイルサイズ
@@ -138,6 +148,16 @@ namespace NBsys{namespace NFile
 					*/
 
 					s64 t_offset = 0;
+
+					//ＩＤ。
+					s64 t_id_offset = t_offset;
+					u8 t_id[4] = {'B','P','A','C'};
+					t_offset += sizeof(u8[4]);
+
+					//バージョン。
+					s64 t_version_offset = t_offset;
+					u32 t_version = 1;
+					t_offset += sizeof(u32);
 
 					//ヘッダーサイズ。
 					s64 t_header_size_offset = t_offset;
@@ -177,24 +197,46 @@ namespace NBsys{namespace NFile
 					t_header_size = static_cast<u32>(t_offset);
 
 					{
+						//ＩＤ。
+						if(t_filehandle_write.Write(reinterpret_cast<u8*>(&t_id),sizeof(t_id),t_id_offset) == false){
+							AutoLock t_autolock(this->lockobject);
+							this->errorcode = ErrorCode::File_Error;
+							ASSERT(0);
+						}
+
+						//バージョン。
+						if(t_filehandle_write.Write(reinterpret_cast<u8*>(&t_version),sizeof(t_version),t_version_offset) == false){
+							AutoLock t_autolock(this->lockobject);
+							this->errorcode = ErrorCode::File_Error;
+							ASSERT(0);
+						}
+
 						//ヘッダーサイズ。
 						if(t_filehandle_write.Write(reinterpret_cast<u8*>(&t_header_size),sizeof(t_header_size),t_header_size_offset) == false){
+							AutoLock t_autolock(this->lockobject);
+							this->errorcode = ErrorCode::File_Error;
 							ASSERT(0);
 						}
 
 						//総数。
 						if(t_filehandle_write.Write(reinterpret_cast<u8*>(&t_all_count),sizeof(t_all_count),t_all_count_offset) == false){
+							AutoLock t_autolock(this->lockobject);
+							this->errorcode = ErrorCode::File_Error;
 							ASSERT(0);
 						}
 
 						//各ファイル名文字サイズ。
 						if(t_filehandle_write.Write(reinterpret_cast<u8*>(t_filename_length.get()),static_cast<s64>(sizeof(u16) * t_all_count),t_filename_length_offset) == false){
+							AutoLock t_autolock(this->lockobject);
+							this->errorcode = ErrorCode::File_Error;
 							ASSERT(0);
 						}
 
 						//各ファイル名をひとまとめにしたもの。
 						if(sizeof(wchar) * t_all_filename.size() > 0){
 							if(t_filehandle_write.Write(reinterpret_cast<u8*>(&t_all_filename[0]),static_cast<s64>(sizeof(wchar) * t_all_filename.size()),t_all_filename_offset) == false){
+								AutoLock t_autolock(this->lockobject);
+								this->errorcode = ErrorCode::File_Error;
 								ASSERT(0);
 							}
 						}
@@ -214,6 +256,8 @@ namespace NBsys{namespace NFile
 
 							//読み込み。
 							if(t_filehandle_read.Read(t_filedata.get(),t_filesize_read,0) == false){
+								AutoLock t_autolock(this->lockobject);
+								this->errorcode = ErrorCode::File_Error;
 								ASSERT(0);
 							}
 
@@ -221,6 +265,8 @@ namespace NBsys{namespace NFile
 
 							//各データ。
 							if(t_filehandle_write.Write(reinterpret_cast<u8*>(t_filedata.get()),t_filesize_read,t_offset) == false){
+								AutoLock t_autolock(this->lockobject);
+								this->errorcode = ErrorCode::File_Error;
 								ASSERT(0);
 							}
 
@@ -231,6 +277,8 @@ namespace NBsys{namespace NFile
 					{
 						//各ファイルサイズ。
 						if(t_filehandle_write.Write(reinterpret_cast<u8*>(t_file_size.get()),static_cast<s32>(sizeof(u32) * t_all_count),t_file_size_offset) == false){
+							AutoLock t_autolock(this->lockobject);
+							this->errorcode = ErrorCode::File_Error;
 							ASSERT(0);
 						}
 					}

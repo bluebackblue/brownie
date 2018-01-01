@@ -43,6 +43,10 @@ namespace NBsys{namespace NFile
 		*/
 		LockObject lockobject;
 
+		/** エラーコード。
+		*/
+		ErrorCode::Id errorcode;
+
 	public:
 
 		/** constructor
