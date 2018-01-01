@@ -213,6 +213,8 @@ namespace NBsys{namespace NFile
 		//■排他。
 		AutoLock t_autolock(this->lockobject);
 
+		ThreadSleep(0);
+
 		switch(this->mainstep){
 		case MainStep::Open:
 			{
@@ -288,7 +290,7 @@ namespace NBsys{namespace NFile
 					//ファイルを開くのに失敗。
 					this->errorcode = ErrorCode::File_OpenError;
 					this->mainstep = MainStep::Error;
-					break;
+					return false;
 				}
 			}break;
 		case MainStep::Read:
@@ -324,7 +326,7 @@ namespace NBsys{namespace NFile
 						//キャンセル。
 						this->errorcode = ErrorCode::File_CancelError;
 						this->mainstep = MainStep::Error;
-						break;
+						return false;
 					}else if(t_ret_read){
 						//読み込み中。
 						this->data_offset += t_readsize;
@@ -338,7 +340,7 @@ namespace NBsys{namespace NFile
 						//読み込みに失敗。
 						this->errorcode = ErrorCode::File_ReadError;
 						this->mainstep = MainStep::Error;
-						break;
+						return false;
 					}
 				}
 			}break;
@@ -374,8 +376,6 @@ namespace NBsys{namespace NFile
 				ASSERT(0);
 			}break;
 		}
-
-		ThreadSleep(0);
 
 		return false;
 	}

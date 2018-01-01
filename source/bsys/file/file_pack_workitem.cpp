@@ -137,6 +137,8 @@ namespace NBsys{namespace NFile
 		//■排他。
 		AutoLock t_autolock(this->lockobject);
 
+		ThreadSleep(0);
+
 		switch(this->mainstep){
 		case MainStep::Open:
 			{
@@ -191,7 +193,13 @@ namespace NBsys{namespace NFile
 
 				//ＩＤ。
 				u8 t_id[4] = {0};
-				this->filehandle.Read(reinterpret_cast<u8*>(&t_id),sizeof(t_id),0);
+				if(this->filehandle.Read(reinterpret_cast<u8*>(&t_id),sizeof(t_id),0) == false){
+					//読み込み失敗。
+					this->errorcode = ErrorCode::File_ReadError;
+					this->mainstep = MainStep::Error;
+					DEEPDEBUG_TAGLOG(BSYS_FILE_DEBUG_ENABLE,L"file_pack_workitem","error : %08x",this->errorcode);
+					return false;
+				}
 				if(NMemory::Compare(t_id,"BPAC",sizeof(t_id)) != 0){
 					//ＩＤが違う。
 					this->errorcode = ErrorCode::File_IdError;
@@ -202,7 +210,13 @@ namespace NBsys{namespace NFile
 
 				//バージョン。
 				u32 t_version = 0;
-				this->filehandle.Read(reinterpret_cast<u8*>(&t_version),sizeof(u32),4);
+				if(this->filehandle.Read(reinterpret_cast<u8*>(&t_version),sizeof(u32),4) == false){
+					//読み込み失敗。
+					this->errorcode = ErrorCode::File_ReadError;
+					this->mainstep = MainStep::Error;
+					DEEPDEBUG_TAGLOG(BSYS_FILE_DEBUG_ENABLE,L"file_pack_workitem","error : %08x",this->errorcode);
+					return false;
+				}
 				if(t_version != BSYS_FILE_PACK_VERSION){
 					//バージョンが違う。
 					this->errorcode = ErrorCode::File_VersionError;
@@ -215,13 +229,24 @@ namespace NBsys{namespace NFile
 
 				//ヘッダーサイズ。
 				u32 t_header_size = 0;
-				this->filehandle.Read(reinterpret_cast<u8*>(&t_header_size),sizeof(u32),8);
+				if(this->filehandle.Read(reinterpret_cast<u8*>(&t_header_size),sizeof(u32),8) == false){
+					//読み込み失敗。
+					this->errorcode = ErrorCode::File_ReadError;
+					this->mainstep = MainStep::Error;
+					DEEPDEBUG_TAGLOG(BSYS_FILE_DEBUG_ENABLE,L"file_pack_workitem","error : %08x",this->errorcode);
+					return false;
+				}
 				t_offset += sizeof(u32);
-				//TODO:error
 
 				//ヘッダーデータ。
 				sharedptr<u8> t_header(new u8[t_header_size],default_delete<u8[]>());
-				this->filehandle.Read(t_header.get(),t_header_size,8);
+				if(this->filehandle.Read(t_header.get(),t_header_size,8) == false){
+					//読み込み失敗。
+					this->errorcode = ErrorCode::File_ReadError;
+					this->mainstep = MainStep::Error;
+					DEEPDEBUG_TAGLOG(BSYS_FILE_DEBUG_ENABLE,L"file_pack_workitem","error : %08x",this->errorcode);
+					return false;
+				}
 
 				{
 					//総数。
@@ -296,8 +321,6 @@ namespace NBsys{namespace NFile
 				ASSERT(0);
 			}break;
 		}
-
-		ThreadSleep(0);
 
 		return false;
 	}
