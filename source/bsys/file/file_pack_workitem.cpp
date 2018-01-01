@@ -175,14 +175,14 @@ namespace NBsys{namespace NFile
 							this->errorcode = ErrorCode::File_OpenError;
 							this->mainstep = MainStep::Error;
 							DEEPDEBUG_TAGLOG(BSYS_FILE_DEBUG_ENABLE,L"file_pack_workitem","error : %08x",this->errorcode);
-							break;
+							return false;
 						}
 					}
 				}else{
 					//ファイルを開くのに失敗。
 					this->errorcode = ErrorCode::File_OpenError;
 					this->mainstep = MainStep::Error;
-					break;
+					return false;
 				}
 			}break;
 		case MainStep::Read:
@@ -197,7 +197,7 @@ namespace NBsys{namespace NFile
 					this->errorcode = ErrorCode::File_IdError;
 					this->mainstep = MainStep::Error;
 					DEEPDEBUG_TAGLOG(BSYS_FILE_DEBUG_ENABLE,L"file_pack_workitem","error : %08x",this->errorcode);
-					break;
+					return false;
 				}
 
 				//バージョン。
@@ -208,7 +208,7 @@ namespace NBsys{namespace NFile
 					this->errorcode = ErrorCode::File_VersionError;
 					this->mainstep = MainStep::Error;
 					DEEPDEBUG_TAGLOG(BSYS_FILE_DEBUG_ENABLE,L"file_pack_workitem","error : %08x",this->errorcode);
-					break;
+					return false;
 				}
 
 				s64 t_offset = 0;
@@ -247,7 +247,13 @@ namespace NBsys{namespace NFile
 						for(u32 ii=0;ii<t_all_count;ii++){
 							wchar t_buffer[300] = {0};
 							s32 t_length = static_cast<s32>(sizeof(u16) * (t_filename_length.get()[ii]+1));
-							ASSERT(t_length < COUNTOF(t_buffer));
+							if(t_length >= COUNTOF(t_buffer)){
+								//ファイル名が長い。
+								this->errorcode = ErrorCode::File_NameError;
+								this->mainstep = MainStep::Error;
+								DEEPDEBUG_TAGLOG(BSYS_FILE_DEBUG_ENABLE,L"file_pack_workitem","error : %08x",this->errorcode);
+								return false;
+							}
 
 							NMemory::Copy(&t_buffer[0],sizeof(t_buffer),&t_header.get()[t_offset_path],t_length);
 							t_offset_path += sizeof(u16) * (t_filename_length.get()[ii] + 1);

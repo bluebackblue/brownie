@@ -48,6 +48,7 @@ namespace NBlib
 			File_CancelError			= 0x80001005,	// キャンセルにより中断された。
 			File_VersionError			= 0x80001006,	// バージョンエラー。
 			File_IdError				= 0x80001007,	// ＩＤエラー。
+			File_NameError				= 0x80001008,	// 名前エラー。
 
 			//メモリ。
 			Memory_Error				= 0x80002000,	// 不明。
