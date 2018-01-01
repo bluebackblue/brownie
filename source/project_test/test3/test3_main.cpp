@@ -44,12 +44,15 @@ namespace NTest
 		//SSL開始。
 		NBsys::NOpenSsl::StartSystem();
 
+		//SSL終了。
+		NBsys::NOpenSsl::EndSystem();
+
 		{
 			sharedptr<NBsys::NHttp::Http> t_http(new NBsys::NHttp::Http());
 			{
-				t_http->SetHost("127.0.0.1");
-				t_http->SetPort(443);
-				t_http->SetSsl(true);
+				t_http->SetHost("bbbproject.sakura.ne.jp");
+				t_http->SetPort(80);
+				t_http->SetSsl(false);
 				t_http->SetMode(NBsys::NHttp::Http_Mode::Get);
 				t_http->SetUrl("/");
 			}
@@ -79,9 +82,6 @@ namespace NTest
 
 
 		}
-
-		//SSL終了。
-		NBsys::NOpenSsl::EndSystem();
 
 		//Winsock終了。
 		NBsys::NWinsock::EndSystem();
