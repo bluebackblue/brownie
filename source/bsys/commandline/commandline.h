@@ -24,7 +24,7 @@ namespace NBsys{namespace NCommandLine
 {
 	/** コマンドライン文字列をJsonItemに変換する。
 	*/
-	sharedptr< JsonItem > ConvertToJsonItem(s32 a_argc,char* a_argv[]);
+	sharedptr< JsonItem > ConvertToJsonItem(s32 a_argc,char* a_argv[],bool a_is_sjis);
 
 
 }}

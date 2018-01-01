@@ -27,6 +27,13 @@
 #include "./commandline.h"
 
 
+/** include
+*/
+#if defined(PLATFORM_VCWIN)
+	#include <brownie_config/windows_include.h>
+#endif
+
+
 /** warning
 
 4710 : この関数はインライン展開のために選択されましたが、コンパイラはインライン展開を実行しませんでした。
@@ -40,6 +47,49 @@
 #if(BSYS_COMMANDLINE_ENABLE)
 namespace NBsys{namespace NCommandLine
 {
+	/** SjisToWchar
+	*/
+	static STLWString SjisToWchar(const STLString& a_string)
+	{
+		#if defined(PLATFORM_VCWIN)
+		{
+			//コードページ。
+			UINT t_codepage = CP_ACP;
+
+			//処理性能とマッピングのフラグ。
+			DWORD t_flags = 0;
+
+			//入力文字。
+			const char* t_char = a_string.c_str();
+			//入力文字数。終端を含める。
+			s32 t_char_len = static_cast<s32>(a_string.length() + 1);
+
+			//必要配列サイズを受け取る（バイト数ではない）。終端文字含む。
+			s32 t_wchar_use_len = ::MultiByteToWideChar(t_codepage,t_flags,t_char,t_char_len,nullptr,0);
+
+			if(t_wchar_use_len > 0){
+				//出力文字。終端を含む。
+				s32 t_alloca_size = static_cast<s32>(t_wchar_use_len * sizeof(wchar));
+				wchar* t_wchar = reinterpret_cast<wchar*>(MALLOCA(static_cast<std::size_t>(t_alloca_size)));
+
+				if(t_wchar != nullptr){
+					//変換。
+					t_wchar_use_len = ::MultiByteToWideChar(t_codepage,t_flags,t_char,t_char_len,t_wchar,t_alloca_size / static_cast<s32>(sizeof(wchar)));
+					if(static_cast<s32>(t_wchar_use_len * sizeof(wchar)) == t_alloca_size){
+						STLWString t_string = t_wchar;
+						FREEA(t_wchar);
+						return t_string;
+					}
+
+					FREEA(t_wchar);
+				}
+			}
+		}
+		#endif
+
+		return L"";
+	}
+
 	/** JsonItemに変換する。
 
 		パラメータの名前の最初の一文字目はハイフン「-」にする。
@@ -52,7 +102,7 @@ namespace NBsys{namespace NCommandLine
 			"-param3" = "value3"
 
 	*/
-	sharedptr<JsonItem> ConvertToJsonItem(s32 a_argc,char* a_argv[])
+	sharedptr<JsonItem> ConvertToJsonItem(s32 a_argc,char* a_argv[],bool a_is_sjis)
 	{
 		sharedptr<JsonItem> t_jsonitem(new JsonItem());
 		t_jsonitem->SetAssociativeArray();
@@ -75,6 +125,15 @@ namespace NBsys{namespace NCommandLine
 			return t_jsonitem;
 		}
 
+		STLVector<STLString>::Type t_list;
+		for(u32 ii=0;ii<static_cast<u32>(a_argc);ii++){
+			if(a_is_sjis){
+				t_list.push_back(WcharToChar(SjisToWchar(a_argv[ii])));
+			}else{
+				t_list.push_back(STLString(a_argv[ii]));
+			}
+		}
+
 		Step::Id t_step = Step::SearchParam;
 
 		s32 t_offset_paramstart = -1;
@@ -87,12 +146,12 @@ namespace NBsys{namespace NCommandLine
 			switch(t_step){
 			case Step::SearchParam:
 				{
-					if(a_argv[t_offset][0] == '-'){
+					if(t_list.at(static_cast<std::size_t>(t_offset))[0] == '-'){
 						//パラメータ。
 
 						t_offset_paramstart = t_offset;
 
-						if(t_offset+1 >= a_argc){
+						if(t_offset + 1 >= static_cast<s32>(t_list.size())){
 							//終端。
 							t_fix = true;
 						}
@@ -106,7 +165,7 @@ namespace NBsys{namespace NCommandLine
 				}break;
 			case Step::SearchValue:
 				{
-					if(a_argv[t_offset][0] == '-'){
+					if(t_list.at(static_cast<std::size_t>(t_offset))[0] == '-'){
 						//次のパラメータを発見。
 
 						t_fix = true;
@@ -130,12 +189,12 @@ namespace NBsys{namespace NCommandLine
 			if(t_fix == true){
 				STLString t_param_string = "";
 				if(t_offset_paramstart >= 0){
-					t_param_string = reinterpret_cast<char*>(a_argv[t_offset_paramstart]);
+					t_param_string = t_list.at(static_cast<std::size_t>(t_offset_paramstart));
 				}
 
 				sharedptr<JsonItem> t_value_json(new JsonItem());
 				if(t_offset_valuestart >= 0){
-					STLString t_value_string = reinterpret_cast<char*>(a_argv[t_offset_valuestart]);
+					STLString t_value_string = t_list.at(static_cast<std::size_t>(t_offset_valuestart));
 					t_value_json->SetStringData(t_value_string);
 				}else{
 					STLString t_value_string = "";
@@ -155,7 +214,7 @@ namespace NBsys{namespace NCommandLine
 				t_offset++;
 			}
 
-			if(t_offset >= a_argc){
+			if(t_offset >= static_cast<s32>(t_list.size())){
 				break;
 			}
 		}
