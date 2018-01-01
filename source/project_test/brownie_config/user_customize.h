@@ -205,6 +205,14 @@
 	#define BSYS_HTTP_ENABLE								(1)
 	#endif
 
+	#if !defined(BSYS_OPENSSL_ENABLE)
+	#define BSYS_OPENSSL_ENABLE								(1)
+	#endif
+
+	#if !defined(BSYS_OPENSSL_DEBUG_ENABLE)
+	#define BSYS_OPENSSL_DEBUG_ENABLE						(1)
+	#endif
+
 	#if !defined(BSYS_WINSOCK_ENABLE)
 	#define BSYS_WINSOCK_ENABLE								(1)
 	#endif

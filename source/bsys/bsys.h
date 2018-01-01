@@ -127,3 +127,10 @@
 #include "./commandline/commandline.h"
 #endif
 
+
+/** include
+*/
+#if(BSYS_OPENSSL_ENABLE)
+#include "./openssl/openssl.h"
+#endif
+
