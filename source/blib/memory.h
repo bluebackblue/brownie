@@ -60,9 +60,9 @@ namespace NBlib
 
 		/** Compare
 		*/
-		template <typename T> inline void Compare(const void* a_data_1,const void* a_data_2,std::size_t a_size)
+		template <typename T> inline s32 Compare(const void* a_data_1,const void* a_data_2,T a_size)
 		{
-			std::memcmp(a_data_1,a_data_2,static_cast<std::size_t>(a_size));
+			return std::memcmp(a_data_1,a_data_2,static_cast<std::size_t>(a_size));
 		}
 
 
