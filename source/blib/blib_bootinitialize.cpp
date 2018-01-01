@@ -131,6 +131,8 @@ namespace NBlib
 
 		NMath::Initialize();
 
+		std::wcout.imbue(std::locale(""));
+
 		{
 			#if defined(PLATFORM_VCWIN)
 			{
