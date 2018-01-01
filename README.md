@@ -81,4 +81,13 @@ mid-level library
 * DEF_TEST_AUTO (1) 自動テストを実行します。
 * DEF_TEST_INDEX (0) テスト番号を設定します。
 
+## openssl
+このリポジトリにOpenSSLは含まれていません。
+* 使用する場合は「sdk」「sdk_32」「sdk_64」にインクルードファイル、スタティックライブラリを設置してください。
+* https://www.openssl.org/
+* https://github.com/bluebackblue/brownie/blob/master/license/openssl/LICENSE
+
+
+
+
 
