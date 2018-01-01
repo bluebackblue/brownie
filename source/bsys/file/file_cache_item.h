@@ -44,7 +44,7 @@ namespace NBsys{namespace NFile
 
 		/** constructor
 		*/
-		explicit File_Cache_Item(const sharedptr<File_WorkItem>& a_workitem);
+		File_Cache_Item(const sharedptr<File_WorkItem>& a_workitem);
 
 		/** destructor
 		*/

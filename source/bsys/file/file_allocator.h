@@ -32,7 +32,7 @@ namespace NBsys{namespace NFile
 
 		/** constructor
 		*/
-		explicit File_Allocator(){}
+		File_Allocator(){}
 
 		/** destructor
 		*/
@@ -61,7 +61,7 @@ namespace NBsys{namespace NFile
 
 		/** constructor
 		*/
-		explicit File_Alloc_Deleter(sharedptr<File_Allocator>& a_allocator) noexcept
+		File_Alloc_Deleter(const sharedptr<File_Allocator>& a_allocator) noexcept
 			:
 			allocator(a_allocator)
 		{

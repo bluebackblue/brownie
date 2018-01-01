@@ -49,7 +49,7 @@ namespace NBlib
 
 		/** constructor
 		*/
-		explicit AutoLock(LockObject& a_lockobject)
+		AutoLock(LockObject& a_lockobject)
 			:
 			nestvalue(0),
 			lockobject(a_lockobject)
@@ -117,7 +117,7 @@ namespace NBlib
 
 		/** constructor
 		*/
-		explicit AutoUnlock(AutoLock& a_autolock)
+		AutoUnlock(AutoLock& a_autolock)
 			:
 			autolock(a_autolock)
 		{

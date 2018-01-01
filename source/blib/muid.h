@@ -100,7 +100,7 @@ namespace NBlib
 
 		/** constructor.
 		*/
-		explicit Muid(bool a_auto_create)
+		Muid(bool a_auto_create)
 		{
 			if(a_auto_create == true){
 

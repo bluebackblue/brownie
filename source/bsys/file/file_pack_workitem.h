@@ -90,7 +90,7 @@ namespace NBsys{namespace NFile
 
 		/** constructor
 		*/
-		explicit File_Pack_WorkItem(const STLWString& a_pack_filename_short,const STLWString& a_pack_rootpath_short);
+		File_Pack_WorkItem(const STLWString& a_pack_filename_short,const STLWString& a_pack_rootpath_short);
 
 		/** destructor
 		*/

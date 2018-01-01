@@ -65,7 +65,7 @@ namespace NBlib
 		struct Value_StringData
 		{
 			STLString value;
-			explicit Value_StringData(const STLString a_value)
+			Value_StringData(const STLString& a_value)
 				:
 				value(a_value)
 			{
@@ -76,18 +76,12 @@ namespace NBlib
 		*/
 		struct Value_AssociativeArray
 		{
-			explicit Value_AssociativeArray()
-			{
-			}
 		};
 
 		/** インデックス配列。
 		*/
 		struct Value_IndexArray
 		{
-			explicit Value_IndexArray()
-			{
-			}
 		};
 
 		/** 整数。
@@ -143,7 +137,7 @@ namespace NBlib
 		struct Value_BinaryData
 		{
 			sharedptr<STLVector<u8>::Type> value;
-			explicit Value_BinaryData(sharedptr<STLVector<u8>::Type>& a_value)
+			Value_BinaryData(const sharedptr<STLVector<u8>::Type>& a_value)
 				:
 				value(a_value)
 			{

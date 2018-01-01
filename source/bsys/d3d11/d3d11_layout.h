@@ -33,11 +33,25 @@ namespace NBsys{namespace ND3d11
 	*/
 	struct D3d11_Layout
 	{
-		STLString						semantic_name;
-		s32								semantic_index;
-		D3d11_LayoutFormatType::Id		format;
-		s32								input_slot;
-		s32								offset;
+		/** semantic_name
+		*/
+		STLString semantic_name;
+
+		/** semantic_index
+		*/
+		s32 semantic_index;
+
+		/** format
+		*/
+		D3d11_LayoutFormatType::Id format;
+
+		/** input_slot
+		*/
+		s32 input_slot;
+
+		/** offset
+		*/
+		s32 offset;
 
 		/** constructor
 		*/
