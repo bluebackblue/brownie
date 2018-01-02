@@ -205,8 +205,8 @@ namespace NTest
 			s_mmd_vmd->Load(t_fileobject_vmd);
 		}
 
-		s_vertex = new NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4>();
-		s_model = new STLVector<ModelParts>::Type();
+		s_vertex.reset(new NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4>());
+		s_model.reset(new decltype(s_model)::element_type());
 
 		for(u32 ii=0;ii<s_mmd_pmx->parts_list_size;ii++){
 			NBsys::NMmd::Mmd_Pmx_Parts& t_mmd_pmx_parts = s_mmd_pmx->parts_list[ii];

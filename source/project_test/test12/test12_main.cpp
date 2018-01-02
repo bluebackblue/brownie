@@ -286,8 +286,8 @@ namespace NTest
 			}
 			*/
 
-			this->mmd_vertex = new NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4>();
-			this->mmd_model = new STLVector<Mmd_ModelParts>::Type();
+			this->mmd_vertex.reset(new NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4>());
+			this->mmd_model.reset(new decltype(this->mmd_model)::element_type());
 
 			for(u32 ii=0;ii<this->mmd_pmx->parts_list_size;ii++){
 				NBsys::NMmd::Mmd_Pmx_Parts& t_mmd_pmx_parts = this->mmd_pmx->parts_list[ii];

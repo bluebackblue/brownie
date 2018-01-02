@@ -797,7 +797,7 @@ namespace NBlib
 						//不明。
 						ASSERT(0);
 
-						t_indexlist.reset(new STLVector<sharedptr<JsonItem>>::Type());
+						t_indexlist.reset(new decltype(t_indexlist)::element_type());
 						return t_indexlist;
 					}
 				}
@@ -842,7 +842,7 @@ namespace NBlib
 						//不明。
 						ASSERT(0);
 
-						t_indexlist.reset(new STLVector<sharedptr<JsonItem>>::Type());
+						t_indexlist.reset(new decltype(t_indexlist)::element_type());
 						return t_indexlist;
 					}break;
 				}
@@ -870,7 +870,7 @@ namespace NBlib
 				}else{
 					ASSERT(0);
 
-					t_indexlist.reset(new STLVector<sharedptr<JsonItem>>::Type());
+					t_indexlist.reset(new decltype(t_indexlist)::element_type());
 					return t_indexlist;
 				}
 			}
@@ -878,7 +878,7 @@ namespace NBlib
 			//範囲外。
 			ASSERT(0);
 
-			t_indexlist.reset(new STLVector<sharedptr<JsonItem>>::Type());
+			t_indexlist.reset(new decltype(t_indexlist)::element_type());
 			return t_indexlist;
 		}
 
@@ -908,7 +908,7 @@ namespace NBlib
 						//不明。
 						ASSERT(0);
 
-						t_associativelist.reset(new STLMap<STLString,sharedptr<JsonItem>>::Type);
+						t_associativelist.reset(new decltype(t_associativelist)::element_type());
 						return t_associativelist;
 					}
 				}
@@ -924,14 +924,14 @@ namespace NBlib
 						//不明。
 						ASSERT(0);
 
-						t_associativelist.reset(new STLMap<STLString,sharedptr<JsonItem>>::Type);
+						t_associativelist.reset(new decltype(t_associativelist)::element_type());
 						return t_associativelist;
 					}
 				}else{
 					//不明。
 					ASSERT(0);
 
-					t_associativelist.reset(new STLMap<STLString,sharedptr<JsonItem>>::Type);
+					t_associativelist.reset(new decltype(t_associativelist)::element_type());
 					return t_associativelist;
 				}
 			
@@ -942,7 +942,7 @@ namespace NBlib
 					//不明。
 					ASSERT(0);
 
-					t_associativelist.reset(new STLMap<STLString,sharedptr<JsonItem>>::Type);
+					t_associativelist.reset(new decltype(t_associativelist)::element_type());
 					return t_associativelist;
 				}
 			
@@ -986,7 +986,7 @@ namespace NBlib
 						//不明。
 						ASSERT(0);
 
-						t_associativelist.reset(new STLMap<STLString,sharedptr<JsonItem>>::Type);
+						t_associativelist.reset(new decltype(t_associativelist)::element_type());
 						return t_associativelist;
 					}break;
 				}
@@ -1014,7 +1014,7 @@ namespace NBlib
 				}else{
 					ASSERT(0);
 
-					t_associativelist.reset(new STLMap<STLString,sharedptr<JsonItem>>::Type);
+					t_associativelist.reset(new decltype(t_associativelist)::element_type());
 					return t_associativelist;
 				}
 			}
@@ -1022,7 +1022,7 @@ namespace NBlib
 			//範囲外。
 			ASSERT(0);
 
-			t_associativelist.reset(new STLMap<STLString,sharedptr<JsonItem>>::Type);
+			t_associativelist.reset(new decltype(t_associativelist)::element_type());
 			return t_associativelist;
 		}
 
@@ -1051,7 +1051,7 @@ namespace NBlib
 						//不明。
 						ASSERT(0);
 
-						t_binarydata.reset(new STLVector<u8>::Type());
+						t_binarydata.reset(new decltype(t_binarydata)::element_type());
 						return t_binarydata;
 					}
 				}else{
@@ -1086,7 +1086,7 @@ namespace NBlib
 							//不明。
 							ASSERT(0);
 
-							t_binarydata.reset(new STLVector<u8>::Type());
+							t_binarydata.reset(new decltype(t_binarydata)::element_type());
 							return t_binarydata;
 						}break;
 					}
@@ -1122,7 +1122,7 @@ namespace NBlib
 								//不明。
 								ASSERT(0);
 
-								t_binarydata.reset(new STLVector<u8>::Type());
+								t_binarydata.reset(new decltype(t_binarydata)::element_type());
 								return t_binarydata;
 							}break;
 						}
@@ -1134,7 +1134,7 @@ namespace NBlib
 						//不明。
 						ASSERT(0);
 
-						t_binarydata.reset(new STLVector<u8>::Type());
+						t_binarydata.reset(new decltype(t_binarydata)::element_type());
 						return t_binarydata;
 					}
 				}
@@ -1143,7 +1143,7 @@ namespace NBlib
 			//範囲外。
 			ASSERT(0);
 
-			t_binarydata.reset(new STLVector<u8>::Type());
+			t_binarydata.reset(new decltype(t_binarydata)::element_type());
 			return t_binarydata;
 		}
 	}
@@ -1869,7 +1869,7 @@ namespace NBlib
 		this->value.Reset();
 		
 		this->valuetype = ValueType::AssociativeArray;
-		this->value.associative_array.reset(new STLMap<STLString,sharedptr<JsonItem>>::Type());
+		this->value.associative_array.reset(new decltype(this->value.associative_array)::element_type());
 	}
 
 
@@ -1881,7 +1881,7 @@ namespace NBlib
 		this->value.Reset();
 		
 		this->valuetype = ValueType::IndexArray;
-		this->value.index_array.reset(new STLVector<sharedptr<JsonItem>>::Type());
+		this->value.index_array.reset(new decltype(this->value.index_array)::element_type());
 	}
 
 

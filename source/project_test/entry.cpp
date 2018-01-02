@@ -91,7 +91,7 @@ int main(int a_argc,char** a_argv)
 	}
 
 	#if(BSYS_COMMANDLINE_ENABLE)
-	GetEntryParamReference().argument = NBsys::NCommandLine::ConvertToJsonItem(a_argc,a_argv);
+	GetEntryParamReference().argument = NBsys::NCommandLine::ConvertToJsonItem(a_argc,a_argv,true);
 	#else
 	UNUSED(a_argc);
 	UNUSED(a_argv);

@@ -41,6 +41,11 @@ namespace NBsys{namespace NFile
 	public:
 
 		/** constructor
+
+		a_device_index						: デバイスインデックス。
+		a_pack_filename_short				: ルートパスからの相対パスでパックファイルを指定。
+		a_pack_connectto_rootpath_short		: ルートパスからの相対パスで接続先を指定。
+
 		*/
 		File_Pack_Object(s32 a_device_index,const STLWString& a_pack_filename_short,const STLWString& a_pack_connectto_rootpath_short);
 
