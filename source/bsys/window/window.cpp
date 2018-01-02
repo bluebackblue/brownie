@@ -61,6 +61,14 @@ namespace NBsys{namespace NWindow
 	}
 
 
+	/** GetImpl
+	*/
+	const sharedptr<Window_Impl>& Window::GetImpl() const
+	{
+		return this->impl;
+	}
+
+
 	/** destructor
 	*/
 	Window::~Window()

@@ -38,6 +38,22 @@ namespace NTest
 		sharedptr<NBsys::NWindow::Window> t_window(new NBsys::NWindow::Window());
 		t_window->Create(L"TEST " DEF_TEST_STRING,100,100);
 
+		NBsys::NDsound::StartSystem(t_window);
+
+		{
+			
+
+		}
+
+
+
+
+
+
+
+
+		#if(0)
+
 		//Winsock開始。
 		NBsys::NWinsock::StartSystem();
 
@@ -91,6 +107,8 @@ namespace NTest
 		//Winsock終了。
 		NBsys::NWinsock::EndSystem();
 
+		#endif
+
 		while(true){
 			//s_window
 			t_window->Update();
@@ -98,6 +116,9 @@ namespace NTest
 				break;
 			}
 		}
+
+		NBsys::NDsound::EndSystemRequest();
+		NBsys::NDsound::EndSystem();
 
 		//ウィンドウ削除。
 		t_window->Delete();

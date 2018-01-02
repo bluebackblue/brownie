@@ -43,6 +43,10 @@ namespace NBsys{namespace NWindow
 		*/
 		sharedptr<Window_Impl>& GetImpl();
 
+		/** GetImpl
+		*/
+		const sharedptr<Window_Impl>& GetImpl() const;
+
 	public:
 
 		/** constructor

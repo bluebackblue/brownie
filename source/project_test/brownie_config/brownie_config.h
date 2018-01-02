@@ -1114,3 +1114,66 @@
 	#define BSYS_OPENSSL_DEBUG_ENABLE						(0)
 #endif
 
+
+/*
+	-------------------
+	wave
+
+		ＷＡＶＥファイルを制御します。
+	-------------------
+
+	-------------------
+	BSYS_WAVE_ENABLE
+
+		0 : オフ
+		1 : オン
+	-------------------
+
+	-------------------
+	BSYS_WAVE_DEBUG_ENABLE
+
+		0 : オフ
+		1 : オン
+
+		デバッグ機能を制御します。
+	-------------------
+*/
+#if !defined(BSYS_WAVE_ENABLE)
+	#define BSYS_WAVE_ENABLE							(0)
+#endif
+#if !defined(BSYS_WAVE_DEBUG_ENABLE)
+	#define BSYS_WAVE_DEBUG_ENABLE						(0)
+#endif
+
+
+/*
+	-------------------
+	dsound
+
+		DirectSoundを制御します。
+	-------------------
+
+	-------------------
+	BSYS_DSOUND_ENABLE
+
+		0 : オフ
+		1 : オン
+	-------------------
+
+	-------------------
+	BSYS_DSOUND_DEBUG_ENABLE
+
+		0 : オフ
+		1 : オン
+
+		デバッグ機能を制御します。
+	-------------------
+*/
+#if !defined(BSYS_DSOUND_ENABLE)
+	#define BSYS_DSOUND_ENABLE							(0)
+#endif
+#if !defined(BSYS_DSOUND_DEBUG_ENABLE)
+	#define BSYS_DSOUND_DEBUG_ENABLE					(0)
+#endif
+
+

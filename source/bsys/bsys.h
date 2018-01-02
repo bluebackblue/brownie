@@ -134,3 +134,17 @@
 #include "./openssl/openssl.h"
 #endif
 
+
+/** include
+*/
+#if(BSYS_WAVE_ENABLE)
+#include "./wave/wave.h"
+#endif
+
+
+/** include
+*/
+#if(BSYS_DSOUND_ENABLE)
+#include "./dsound/dsound.h"
+#endif
+
