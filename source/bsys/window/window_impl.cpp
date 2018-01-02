@@ -1,7 +1,7 @@
 ﻿
 
 /**
- * Copyright (c) 2016-2017 blueback
+ * Copyright (c) 2016-2018 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -84,7 +84,7 @@ namespace NBsys{namespace NWindow
 
 	/** GetClientWidth
 	*/
-	s32 Window_Impl::GetClientWidth()
+	s32 Window_Impl::GetClientWidth() const
 	{
 		return this->client_width;
 	}
@@ -92,7 +92,7 @@ namespace NBsys{namespace NWindow
 
 	/** GetClientHeight
 	*/
-	s32 Window_Impl::GetClientHeight()
+	s32 Window_Impl::GetClientHeight() const
 	{
 		return this->client_height;
 	}
@@ -100,7 +100,7 @@ namespace NBsys{namespace NWindow
 
 	/** GetMouseX
 	*/
-	s32 Window_Impl::GetMouseX()
+	s32 Window_Impl::GetMouseX() const
 	{
 		return this->mouse_x;
 	}
@@ -108,7 +108,7 @@ namespace NBsys{namespace NWindow
 
 	/** GetMouseY
 	*/
-	s32 Window_Impl::GetMouseY()
+	s32 Window_Impl::GetMouseY() const
 	{
 		return this->mouse_y;
 	}
@@ -215,7 +215,7 @@ namespace NBsys{namespace NWindow
 
 	/** IsEnd
 	*/
-	bool Window_Impl::IsEnd()
+	bool Window_Impl::IsEnd() const
 	{
 		if(this->isopen){
 			return false;
@@ -226,7 +226,7 @@ namespace NBsys{namespace NWindow
 
 	/** IsView
 	*/
-	bool Window_Impl::IsView()
+	bool Window_Impl::IsView() const
 	{
 		return this->isview;
 	}
@@ -234,7 +234,7 @@ namespace NBsys{namespace NWindow
 
 	/** IsActive
 	*/
-	bool Window_Impl::IsActive()
+	bool Window_Impl::IsActive() const
 	{
 		return this->isactive;
 	}
@@ -243,7 +243,7 @@ namespace NBsys{namespace NWindow
 	/** GetHandle
 	*/
 	#if defined(PLATFORM_VCWIN) || defined(PLATFORM_GNUCWIN)
-	HWND Window_Impl::GetHandle()
+	HWND Window_Impl::GetHandle() const
 	{
 		return this->handle;
 	}

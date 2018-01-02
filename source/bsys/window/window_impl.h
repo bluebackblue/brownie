@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 /**
- * Copyright (c) 2016-2017 blueback
+ * Copyright (c) 2016-2018 blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -92,19 +92,19 @@ namespace NBsys{namespace NWindow
 
 		/** GetClientWidth
 		*/
-		s32 GetClientWidth();
+		s32 GetClientWidth() const;
 
 		/** GetClientHeight
 		*/
-		s32 GetClientHeight();
+		s32 GetClientHeight() const;
 
 		/** GetMouseX
 		*/
-		s32 GetMouseX();
+		s32 GetMouseX() const;
 
 		/** GetMouseY
 		*/
-		s32 GetMouseY();
+		s32 GetMouseY() const;
 
 		/** Update
 		*/
@@ -112,15 +112,15 @@ namespace NBsys{namespace NWindow
 
 		/** IsEnd
 		*/
-		bool IsEnd();
+		bool IsEnd() const;
 
 		/** IsView
 		*/
-		bool IsView();
+		bool IsView() const;
 
 		/** IsActive
 		*/
-		bool IsActive();
+		bool IsActive() const;
 
 		/** CallBackProc
 		*/
@@ -131,7 +131,7 @@ namespace NBsys{namespace NWindow
 		/** GetHandle
 		*/
 		#if defined(PLATFORM_VCWIN) || defined(PLATFORM_GNUCWIN)
-		HWND GetHandle();
+		HWND GetHandle() const;
 		#endif
 
 		/** StaticCallBackProc
