@@ -47,7 +47,7 @@ namespace NTest
 		{
 			sharedptr<NBsys::NHttp::Http> t_http(new NBsys::NHttp::Http());
 			{
-				t_http->SetHost("www.youtube.com");
+				t_http->SetHost("127.0.0.1");
 				t_http->SetPort(443);
 				t_http->SetSsl(true);
 				t_http->SetMode(NBsys::NHttp::Http_Mode::Get);
