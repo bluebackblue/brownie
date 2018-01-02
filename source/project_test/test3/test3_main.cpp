@@ -44,15 +44,12 @@ namespace NTest
 		//SSL開始。
 		NBsys::NOpenSsl::StartSystem();
 
-		//SSL終了。
-		NBsys::NOpenSsl::EndSystem();
-
 		{
 			sharedptr<NBsys::NHttp::Http> t_http(new NBsys::NHttp::Http());
 			{
-				t_http->SetHost("bbbproject.sakura.ne.jp");
-				t_http->SetPort(80);
-				t_http->SetSsl(false);
+				t_http->SetHost("www.youtube.com");
+				t_http->SetPort(443);
+				t_http->SetSsl(true);
 				t_http->SetMode(NBsys::NHttp::Http_Mode::Get);
 				t_http->SetUrl("/");
 			}
@@ -63,15 +60,19 @@ namespace NTest
 			while(1){
 				 bool t_ret = t_http->ConnectUpdate();
 				 if((t_ret == true)||(t_recvbuffer->GetUseSize()>0)){
-
-					//u8* t_recv_data = t_recvbuffer->GetItemFromUseList(0);
-					//s32 t_recv_size = t_recvbuffer->GetUseSize();
-
 					if(t_http->IsRecvHeader()){
 						//ヘッダー読み込み済み。
 
-						//リングバッファからデータを取得したことにする。
-						t_recvbuffer->AddFree(t_recvbuffer->GetUseSize());
+						char t_buffer[16] = {0};
+						s32 t_copysize = t_recvbuffer->GetUseSize();
+						if(t_copysize > sizeof(t_buffer) - 1){
+							t_copysize = sizeof(t_buffer) - 1;
+						}
+
+						t_recvbuffer->CopyFromBuffer(reinterpret_cast<u8*>(t_buffer),t_copysize);
+
+						DEBUGLOG("%s",t_buffer);
+						//std::cout << t_buffer << std::endl;
 					}
 				}else{
 					t_http->ConnectEnd();
@@ -79,9 +80,13 @@ namespace NTest
 					break;
 				}
 			}
-
-
 		}
+
+		//スレッド関連ステートの削除。
+		NBsys::NOpenSsl::SslDeleteThreadState();
+
+		//SSL終了。
+		NBsys::NOpenSsl::EndSystem();
 
 		//Winsock終了。
 		NBsys::NWinsock::EndSystem();

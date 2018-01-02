@@ -20,7 +20,9 @@
 /** include
 */
 #if(BSYS_OPENSSL_ENABLE)
+
 	#include <brownie_config/openssl_include.h>
+
 #endif
 
 
@@ -72,6 +74,10 @@ namespace NBsys{namespace NOpenSsl
 		/** Finalize
 		*/
 		void Finalize();
+
+		/** DeleteThreadState
+		*/
+		void DeleteThreadState();
 		
 	public:
 

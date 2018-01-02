@@ -73,6 +73,16 @@ namespace NBsys{namespace NOpenSsl
 	}
 
 
+	/** スレッド関連ステートの削除。
+	*/
+	void SslDeleteThreadState()
+	{
+		if(s_openssl){
+			return s_openssl->DeleteThreadState();
+		}
+	}
+
+
 	/** SslCreate
 	*/
 	s32 SslCreate()

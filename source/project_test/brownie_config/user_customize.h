@@ -127,6 +127,7 @@
 	#define BSYS_OPENSSL_ENABLE								(1)
 	#define BSYS_HTTP_ENABLE								(1)
 	#define BSYS_WINSOCK_ENABLE								(1)
+	#define BSYS_HTTP_DEBUG_ENABLE							(1)
 
 #elif(DEF_TEST_INDEX == 10)
 
@@ -284,7 +285,7 @@
 
 /** メモリリークチェック。
 */
-#if defined(PLATFORM_VCWIN) && (0)
+#if defined(PLATFORM_VCWIN) && (1)
 #if defined(ROM_DEVELOP) || defined(ROM_DEEPDEBUG) || defined(ROM_FULLDEBUG)
 
 	#define _CRTDBG_MAP_ALLOC

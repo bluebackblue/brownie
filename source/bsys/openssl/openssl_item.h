@@ -17,13 +17,6 @@
 #pragma warning(pop)
 
 
-/** include
-*/
-#if(BSYS_OPENSSL_ENABLE)
-	#include <brownie_config/openssl_include.h>
-#endif
-
-
 /** NBsys::NOpenSsl
 */
 #if(BSYS_OPENSSL_ENABLE)

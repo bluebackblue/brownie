@@ -33,10 +33,16 @@ namespace NBsys{namespace NOpenSsl
 	*/
 	void EndSystem();
 
+	
+	/** スレッドに関連付けらたステートを削除します。
+	*/
+	void SslDeleteThreadState();
+
 
 	/** SslCreate
 	*/
 	s32 SslCreate();
+
 
 	/** SslConnect
 	*/

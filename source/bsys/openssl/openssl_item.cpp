@@ -19,9 +19,7 @@
 
 /** include
 */
-#if(BSYS_OPENSSL_ENABLE)
-#include <brownie_config/openssl_lib.h>
-#endif
+#include "./openssl_impl.h"
 
 
 /** include

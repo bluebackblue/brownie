@@ -15,5 +15,7 @@
 #pragma warning(disable:4710 4820 4668)
 #include <openssl/ssl.h>
 #include <openssl/err.h>
+#include <openssl/conf.h>
+#include <openssl/engine.h>
 #pragma warning(pop)
 

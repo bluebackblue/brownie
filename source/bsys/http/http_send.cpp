@@ -112,22 +112,36 @@ namespace NBsys{namespace NHttp
 				if(this->buffer_offset < this->buffer_size){
 					s32 t_send_size = this->buffer_size - this->buffer_offset;
 
+					bool t_ret = false;
+
 					if(a_ssl_id >= 0){
 						#if(BSYS_OPENSSL_ENABLE)
 						if(NBsys::NOpenSsl::SslSend(a_ssl_id,this->buffer.get(),this->buffer_offset + t_send_size,this->buffer_offset) == true){
-							this->buffer_offset += t_send_size;
-						}else{
-							//エラー。
-							this->iserror = true;
+							t_ret = true;
 						}
 						#endif
 					}else{
 						if(this->socket->Send(this->buffer.get(),this->buffer_offset + t_send_size,this->buffer_offset) == true){
-							this->buffer_offset += t_send_size;
-						}else{
-							//エラー。
-							this->iserror = true;
+							t_ret = true;
 						}
+					}
+
+					if(t_ret == true){
+						DEEPDEBUG_TAGLOG(BSYS_HTTP_DEBUG_ENABLE,L"http_recv","send : %d",t_send_size);
+						this->buffer_offset += t_send_size;
+					}else{
+						//エラー。
+						this->iserror = true;
+
+						#if(BSYS_OPENSSL_ENABLE)
+						if(a_ssl_id >= 0){
+							NBsys::NOpenSsl::SslDelete(a_ssl_id);
+							a_ssl_id = -1;
+						}
+						#endif
+
+						this->socket->Close();
+						DEEPDEBUG_TAGLOG(BSYS_HTTP_DEBUG_ENABLE,L"http_recv","close");
 					}
 				}
 			}

@@ -1038,9 +1038,27 @@
 		0 : オフ
 		1 : オン
 	-------------------
+
+	-------------------
+	BSYS_HTTP_DEBUG_ENABLE
+
+		0 : オフ
+		1 : オン
+
+		デバッグ機能を制御します。
+	-------------------
+
+	-------------------
+	BSYS_HTTP_USERAGENT
+
+		USERAGENTを設定します。
+	-------------------
 */
 #if !defined(BSYS_HTTP_ENABLE)
 	#define BSYS_HTTP_ENABLE								(0)
+#endif
+#if !defined(BSYS_HTTP_DEBUG_ENABLE)
+	#define BSYS_HTTP_DEBUG_ENABLE							(0)
 #endif
 #if !defined(BSYS_HTTP_USERAGENT)
 	#define BSYS_HTTP_USERAGENT								BROWNIE_VERSION_STRING

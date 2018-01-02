@@ -208,7 +208,10 @@ namespace NBsys{namespace NHttp
 							#endif
 
 							this->socket->Close();
+							DEEPDEBUG_TAGLOG(BSYS_HTTP_DEBUG_ENABLE,L"http_recv","close");
 						}else{
+							DEEPDEBUG_TAGLOG(BSYS_HTTP_DEBUG_ENABLE,L"http_recv","recv : %d",t_size);
+
 							if(this->ringbuffer_recv){
 								this->ringbuffer_recv->CopyToBuffer(this->recvbuffer.get(),t_size);
 							}
@@ -357,7 +360,7 @@ namespace NBsys{namespace NHttp
 				}
 
 				//コピー。
-				if(t_size_from_continuous >= 0){
+				if(t_size_from_continuous > 0){
 					this->ringbuffer_data->CopyToBuffer(this->ringbuffer_recv->GetItemFromUseList(0),t_size_from_continuous);
 					this->ringbuffer_recv->AddFree(t_size_from_continuous);
 					this->copy_chunk_size += t_size_from_continuous;

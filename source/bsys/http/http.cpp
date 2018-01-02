@@ -257,6 +257,8 @@ namespace NBsys{namespace NHttp
 	*/
 	void Http::ConnectStart(sharedptr<RingBufferBase<u8>> a_recv_buffer)
 	{
+		DEEPDEBUG_TAGLOG(BSYS_HTTP_DEBUG_ENABLE,L"http","ConnectStart");
+
 		this->recv_buffer = a_recv_buffer;
 		this->step = Step::Start;
 		this->iserror = false;
@@ -283,6 +285,8 @@ namespace NBsys{namespace NHttp
 	*/
 	void Http::ConnectEnd()
 	{
+		DEEPDEBUG_TAGLOG(BSYS_HTTP_DEBUG_ENABLE,L"http","ConnectEnd");
+
 		#if(BSYS_OPENSSL_ENABLE)
 		if(this->ssl_id >= 0){
 			NBsys::NOpenSsl::SslDelete(this->ssl_id);
@@ -389,6 +393,7 @@ namespace NBsys{namespace NHttp
 						}
 
 						//送信バッファ設定。
+						DEEPDEBUG_TAGLOG(BSYS_HTTP_DEBUG_ENABLE,L"http","sendrequest %d",t_buffer_size);
 						this->send->Send(this->socket,this->send_buffer,static_cast<s32>(t_buffer_size));
 					}
 
@@ -401,7 +406,10 @@ namespace NBsys{namespace NHttp
 					//接続。
 
 					if(this->socket->OpenTcp()){
+						DEEPDEBUG_TAGLOG(BSYS_HTTP_DEBUG_ENABLE,L"http","OpenTcp");
+
 						if(this->socket->ConnectTcp(this->host.c_str(),this->port) == true){
+							DEEPDEBUG_TAGLOG(BSYS_HTTP_DEBUG_ENABLE,L"http","ConnectTcp : %s : %d",this->host.c_str(),this->port);
 
 							#if(BSYS_OPENSSL_ENABLE)
 							if(this->ssl == true){
@@ -434,6 +442,23 @@ namespace NBsys{namespace NHttp
 						//受信開始。
 						this->recv->StartRecv();
 						this->step = Step::RecvHeader;
+					}else{
+						//送信中。
+					}
+
+					//切断された。
+					bool t_close = false;
+					if(this->socket){
+						if(this->socket->IsOpen() == false){
+							t_close =  true;
+						}
+					}else{
+						t_close = true;
+					}
+
+					if(t_close){
+						//中断終了。
+						return false;
 					}
 				}break;
 			case Step::RecvHeader:
@@ -441,6 +466,21 @@ namespace NBsys{namespace NHttp
 					//ヘッダー受信完了チェック。
 					if(this->recv->IsRecvHeader()){
 						this->step = Step::Recv;
+					}
+
+					//切断された。
+					bool t_close = false;
+					if(this->socket){
+						if(this->socket->IsOpen() == false){
+							t_close =  true;
+						}
+					}else{
+						t_close = true;
+					}
+
+					if(t_close){
+						//中断終了。
+						return false;
 					}
 				}break;
 			case Step::Recv:

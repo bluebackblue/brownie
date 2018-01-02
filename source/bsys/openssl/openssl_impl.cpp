@@ -19,29 +19,6 @@
 
 /** include
 */
-#if(BSYS_OPENSSL_ENABLE)
-
-	#include <brownie_config/windows_include.h>
-
-	//[include]
-	#pragma warning(push)
-	#pragma warning(disable:4710 4711 4514 4820 4668)
-	#include <winsock2.h>
-	#pragma warning(pop)
-
-	//[include]
-	#pragma warning(push)
-	#pragma warning(disable:4710 4711 4514 4820 4668 4365 4574)
-	#include <ws2tcpip.h>
-	#pragma warning(pop)
-
-	#include <brownie_config/openssl_include.h>
-
-#endif
-
-
-/** include
-*/
 #pragma warning(push)
 #pragma warning(disable:4464)
 #include "../blib/sockethandle_impl.h"
@@ -95,7 +72,7 @@ namespace NBsys{namespace NOpenSsl
 		DEEPDEBUG_TAGLOG(BSYS_OPENSSL_DEBUG_ENABLE,L"openssl_impl","SSL_library_init");
 		SSL_library_init();
 
-		DEEPDEBUG_TAGLOG(BSYS_OPENSSL_DEBUG_ENABLE,L"openssl_impl","SSL_CTX_new : SSLv23_client_method");
+		DEEPDEBUG_TAGLOG(BSYS_OPENSSL_DEBUG_ENABLE,L"openssl_impl","SSL_CTX_new(SSLv23_client_method)");
 		this->ctx = SSL_CTX_new(SSLv23_client_method());
 	}
 
@@ -104,12 +81,47 @@ namespace NBsys{namespace NOpenSsl
 	*/
 	void OpenSsl_Impl::Finalize()
 	{
-		DEEPDEBUG_TAGLOG(BSYS_OPENSSL_DEBUG_ENABLE,L"openssl_impl","SSL_library_init");
+		DEEPDEBUG_TAGLOG(BSYS_OPENSSL_DEBUG_ENABLE,L"openssl_impl","SSL_CTX_free");
 		SSL_CTX_free(this->ctx);
 		this->ctx = nullptr;
 
+		//エンジン。
+		DEEPDEBUG_TAGLOG(BSYS_OPENSSL_DEBUG_ENABLE,L"openssl_impl","ENGINE_cleanup");
+		ENGINE_cleanup();
+
+		//モジュール。
+		s32 t_all_flag = 1;
+		DEEPDEBUG_TAGLOG(BSYS_OPENSSL_DEBUG_ENABLE,L"openssl_impl","CONF_modules_unload");
+		CONF_modules_unload(t_all_flag);
+
+		//SSL_load_error_strings
 		DEEPDEBUG_TAGLOG(BSYS_OPENSSL_DEBUG_ENABLE,L"openssl_impl","ERR_free_strings");
 		ERR_free_strings();
+
+		//This function cleans up all "ex_data" state. It mustn't be called under * potential race-conditions.
+		DEEPDEBUG_TAGLOG(BSYS_OPENSSL_DEBUG_ENABLE,L"openssl_impl","CRYPTO_cleanup_all_ex_data");
+		CRYPTO_cleanup_all_ex_data();
+
+		//envelope
+		DEEPDEBUG_TAGLOG(BSYS_OPENSSL_DEBUG_ENABLE,L"openssl_impl","EVP_cleanup");
+		EVP_cleanup();
+
+		//スレッド関連ステート。
+		DEEPDEBUG_TAGLOG(BSYS_OPENSSL_DEBUG_ENABLE,L"openssl_impl","ERR_remove_thread_state");
+		ERR_remove_thread_state(nullptr);
+
+		//SSL_COMP_add_compression_method
+		DEEPDEBUG_TAGLOG(BSYS_OPENSSL_DEBUG_ENABLE,L"openssl_impl","sk_SSL_COMP_free");
+		sk_SSL_COMP_free(SSL_COMP_get_compression_methods());
+	}
+
+
+	/** DeleteThreadState
+	*/
+	void OpenSsl_Impl::DeleteThreadState()
+	{
+		DEEPDEBUG_TAGLOG(BSYS_OPENSSL_DEBUG_ENABLE,L"openssl_impl","ERR_remove_thread_state");
+		ERR_remove_thread_state(nullptr);
 	}
 
 
@@ -144,8 +156,7 @@ namespace NBsys{namespace NOpenSsl
 				//SSL_set_fd
 				s32 t_ret_setfd = SSL_set_fd(t_ssl,static_cast<s32>(a_sockethandle->GetImpl()->GetRawHandle()));
 				if(t_ret_setfd == 0){
-					//ERR_print_errors_fp(stderr);
-					DEEPDEBUG_TAGLOG(BSYS_OPENSSL_DEBUG_ENABLE,L"openssl_impl","error : SSL_set_fd");
+					DEEPDEBUG_TAGLOG(BSYS_OPENSSL_DEBUG_ENABLE,L"openssl_impl","error : SSL_set_fd %d : %s",t_ret_setfd,ERR_reason_error_string(ERR_get_error()));
 					return false;
 				}else{
 					DEEPDEBUG_TAGLOG(BSYS_OPENSSL_DEBUG_ENABLE,L"openssl_impl","SSL_set_fd");
@@ -154,8 +165,7 @@ namespace NBsys{namespace NOpenSsl
 				//SSL_connect
 				s32 t_ret_connect = SSL_connect(t_ssl);
 				if(t_ret_connect != 1){
-					//ERR_print_errors_fp(stderr);
-					DEEPDEBUG_TAGLOG(BSYS_OPENSSL_DEBUG_ENABLE,L"openssl_impl","error : SSL_connect %d",t_ret_connect);
+					DEEPDEBUG_TAGLOG(BSYS_OPENSSL_DEBUG_ENABLE,L"openssl_impl","error : SSL_connect %d : %s",t_ret_connect,ERR_reason_error_string(ERR_get_error()));
 					return false;
 				}else{
 					DEEPDEBUG_TAGLOG(BSYS_OPENSSL_DEBUG_ENABLE,L"openssl_impl","SSL_connect");
@@ -267,6 +277,9 @@ namespace NBsys{namespace NOpenSsl
 
 			SSL* t_ssl = (t_it->second)->GetSsl();
 			if(t_ssl != nullptr){
+				DEEPDEBUG_TAGLOG(BSYS_OPENSSL_DEBUG_ENABLE,L"openssl_impl","SSL_shutdown");
+				SSL_shutdown(t_ssl);
+
 				SSL_free(t_ssl);
 				DEEPDEBUG_TAGLOG(BSYS_OPENSSL_DEBUG_ENABLE,L"openssl_impl","SSL_free");
 			}
@@ -276,6 +289,7 @@ namespace NBsys{namespace NOpenSsl
 			ASSERT(0);
 		}
 	}
+
 
 }}
 #pragma warning(pop)
