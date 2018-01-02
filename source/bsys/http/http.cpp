@@ -500,15 +500,15 @@ namespace NBsys{namespace NHttp
 					}
 
 					if(t_close == true){
+						#if(BSYS_OPENSSL_ENABLE)
+						if(this->ssl_id >= 0){
+							NBsys::NOpenSsl::SslDelete(this->ssl_id);
+							this->ssl_id = -1;
+						}
+						#endif
+
 						if(this->socket){
 							if(this->socket->IsOpen()){
-								#if(BSYS_OPENSSL_ENABLE)
-								if(this->ssl_id >= 0){
-									NBsys::NOpenSsl::SslDelete(this->ssl_id);
-									this->ssl_id = -1;
-								}
-								#endif
-
 								this->socket->Close();
 							}
 						}
