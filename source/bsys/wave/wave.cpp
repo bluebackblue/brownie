@@ -44,10 +44,12 @@ namespace NBsys{namespace NWave
 {
 	/** コンストラクタ。
 	*/
-	Wave::Wave(WaveType::Id a_wavetype,const STLWString& a_name)
+	Wave::Wave(const sharedptr<u8>& a_sample,s32 a_countof_sample,WaveType::Id a_wavetype,const STLWString& a_name)
 		:
+		sample(a_sample),
 		wavetype(a_wavetype),
-		name(a_name)
+		name(a_name),
+		countof_sample(a_countof_sample)
 	{
 	}
 

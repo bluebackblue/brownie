@@ -17,6 +17,11 @@
 #pragma warning(pop)
 
 
+/** include
+*/
+#include "./wave_wav.h"
+
+
 /** NBsys::NWave
 */
 #if(BSYS_WAVE_ENABLE)
@@ -28,6 +33,8 @@ namespace NBsys{namespace NWave
 	{
 		enum Id
 		{
+			None = 0,
+
 			Mono_8_44100,
 			Mono_16_44100,
 			Stereo_8_44100,
@@ -42,6 +49,10 @@ namespace NBsys{namespace NWave
 	{
 	private:
 
+		/** sample
+		*/
+		sharedptr<u8> sample;
+
 		/** wavetype
 		*/
 		WaveType::Id wavetype;
@@ -50,11 +61,15 @@ namespace NBsys{namespace NWave
 		*/
 		STLWString name;
 
+		/** countof_sample
+		*/
+		s32 countof_sample;
+
 	public:
 
 		/** constructor
 		*/
-		Wave(WaveType::Id a_texturetype,const STLWString& a_name);
+		Wave(const sharedptr<u8>& a_sample,s32 a_countof_sample,WaveType::Id a_wavetype,const STLWString& a_name);
 
 		/** destructor
 		*/

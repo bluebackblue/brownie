@@ -130,6 +130,9 @@
 	//#define BSYS_WINSOCK_ENABLE							(1)
 	//#define BSYS_HTTP_DEBUG_ENABLE						(1)
 
+	#define BSYS_FILE_ENABLE								(1)
+	#define BSYS_FILE_PACK_ENABLE							(1)
+
 	#define BSYS_WAVE_ENABLE								(1)
 	#define BSYS_WAVE_DEBUG_ENABLE							(1)
 	#define BSYS_DSOUND_ENABLE								(1)
@@ -291,7 +294,7 @@
 
 /** メモリリークチェック。
 */
-#if defined(PLATFORM_VCWIN) && (1)
+#if defined(PLATFORM_VCWIN) && (0)
 #if defined(ROM_DEVELOP) || defined(ROM_DEEPDEBUG) || defined(ROM_FULLDEBUG)
 
 	#define _CRTDBG_MAP_ALLOC

@@ -59,7 +59,8 @@ namespace NBsys{namespace NDsound
 			{
 				HRESULT t_ret = ::CoInitializeEx(WIN_NULL,COINIT_MULTITHREADED);
 				if(FAILED(t_ret)){
-					ASSERT(0);
+					DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
+					return;
 				}
 			}
 
@@ -97,9 +98,12 @@ namespace NBsys{namespace NDsound
 
 		//解放。
 		{
-			//TODO:
+			if(this->dsound_impl){
+				this->dsound_impl->Delete();
+			}
+			this->dsound_impl.reset();
 
-			CoUninitialize();
+			::CoUninitialize();
 		}
 	}
 
