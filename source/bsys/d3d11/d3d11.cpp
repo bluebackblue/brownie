@@ -92,7 +92,7 @@ namespace NBsys{namespace ND3d11
 	}
 
 
-	/** CreateTextureIdList
+	/** テクスチャーＩＤを列挙したリストを作成する。
 	*/
 	void D3d11::CreateTextureIdList(STLVector<s32>::Type& a_list)
 	{

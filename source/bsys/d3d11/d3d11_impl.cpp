@@ -34,12 +34,6 @@
 */
 #include "./d3d11_impl.h"
 #include "./d3d11_impl_font.h"
-
-
-
-
-/** include
-*/
 #include "./d3d11_impl_actionbatching_vertexshader_create.h"
 #include "./d3d11_impl_actionbatching_pixelshader_create.h"
 #include "./d3d11_impl_actionbatching_vertexbuffer_create.h"
@@ -141,7 +135,7 @@ namespace NBsys{namespace ND3d11
 	}
 
 
-	/** CreateTextureIdList
+	/** テクスチャーＩＤを列挙したリストを作成する。
 	*/
 	void D3d11_Impl::CreateTextureIdList(STLVector<s32>::Type& a_list)
 	{
@@ -629,10 +623,11 @@ namespace NBsys{namespace ND3d11
 		{
 			t_actionlist->Add(new D3d11_Impl_ActionBatching_VertexShader_Create(*this,t_vertexshader,a_asyncresult));
 		}
-		this->StartBatching(t_actionlist);
 
 		//管理リスト。
 		this->vertexshader_list.insert(std::make_pair(t_vertexshader_id,t_vertexshader));
+
+		this->StartBatching(t_actionlist);
 
 		return t_vertexshader_id;
 	}
@@ -655,11 +650,11 @@ namespace NBsys{namespace ND3d11
 		{
 			t_actionlist->Add(new D3d11_Impl_ActionBatching_PixelShader_Create(*this,t_pixelshader,a_asyncresult));
 		}
-		this->StartBatching(t_actionlist);
 
 		//管理リスト。
 		this->pixelshader_list.insert(std::make_pair(t_pixelshader_id,t_pixelshader));
 
+		this->StartBatching(t_actionlist);
 		return t_pixelshader_id;
 	}
 
@@ -685,11 +680,11 @@ namespace NBsys{namespace ND3d11
 		{
 			t_actionlist->Add(new D3d11_Impl_ActionBatching_VertexBuffer_Create(*this,t_vertexbuffer));
 		}
-		this->StartBatching(t_actionlist);
 
 		//管理リスト。
 		this->vertexbuffer_list.insert(std::make_pair(t_vertexbuffer_id,t_vertexbuffer));
 
+		this->StartBatching(t_actionlist);
 		return t_vertexbuffer_id;
 	}
 
@@ -714,11 +709,11 @@ namespace NBsys{namespace ND3d11
 		{
 			t_actionlist->Add(new D3d11_Impl_ActionBatching_ConstantBuffer_Create(*this,t_constantbuffer));
 		}
-		this->StartBatching(t_actionlist);
 
 		//管理リスト。
 		this->constantbuffer_list.insert(std::make_pair(t_constantbuffer_id,t_constantbuffer));
 
+		this->StartBatching(t_actionlist);
 		return t_constantbuffer_id;
 	}
 
@@ -740,11 +735,11 @@ namespace NBsys{namespace ND3d11
 		{ 
 			t_actionlist->Add(new D3d11_Impl_ActionBatching_Texture_Create(*this,t_texture,a_write_flag));
 		}
-		this->StartBatching(t_actionlist);
 
 		//管理リスト。
 		this->texture_list.insert(std::make_pair(t_texture_id,t_texture));
 
+		this->StartBatching(t_actionlist);
 		return t_texture_id;
 	}
 
@@ -766,11 +761,11 @@ namespace NBsys{namespace ND3d11
 		{
 			t_actionlist->Add(new D3d11_Impl_ActionBatching_BlendState_Create(*this,t_blendstate));
 		}
-		this->StartBatching(t_actionlist);
 
 		//管理リスト。
 		this->blendstate_list.insert(std::make_pair(t_blendstate_id,t_blendstate));
 
+		this->StartBatching(t_actionlist);
 		return t_blendstate_id;
 	}
 
@@ -792,11 +787,11 @@ namespace NBsys{namespace ND3d11
 		{
 			t_actionlist->Add(new D3d11_Impl_ActionBatching_RasterizerState_Create(*this,t_rasterizerstate));
 		}
-		this->StartBatching(t_actionlist);
 
 		//管理リスト。
 		this->rasterizerstate_list.insert(std::make_pair(t_rasterizerstate_id,t_rasterizerstate));
 
+		this->StartBatching(t_actionlist);
 		return t_rasterizerstate_id;
 	}
 
@@ -819,11 +814,11 @@ namespace NBsys{namespace ND3d11
 		{
 			t_actionlist->Add(new D3d11_Impl_ActionBatching_DepthStencilState_Create(*this,t_depthstencilstate));
 		}
-		this->StartBatching(t_actionlist);
 
 		//管理リスト。
 		this->depthstencilstate_list.insert(std::make_pair(t_depthstencilstate_id,t_depthstencilstate));
 
+		this->StartBatching(t_actionlist);
 		return t_depthstencilstate_id;
 	}
 
@@ -845,11 +840,11 @@ namespace NBsys{namespace ND3d11
 		{
 			t_actionlist->Add(new D3d11_Impl_ActionBatching_SamplerState_Create(*this,t_samplerstate));
 		}
-		this->StartBatching(t_actionlist);
 
 		//管理リスト。
 		this->samplerstate_list.insert(std::make_pair(t_samplerstate_id,t_samplerstate));
 
+		this->StartBatching(t_actionlist);
 		return t_samplerstate_id;
 	}
 
@@ -1107,6 +1102,10 @@ namespace NBsys{namespace ND3d11
 			if(FAILED(t_result)){
 				a_texture->texture2d.reset();
 			}
+
+			//TODO:a_texture->texture2d_width = x
+			//TODO:a_texture->texture2d_height = x
+			//TODO:a_texture->texture2d_pitch = x
 		}
 
 		{

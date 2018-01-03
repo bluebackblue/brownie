@@ -59,7 +59,7 @@ namespace NBsys{namespace ND3d11
 
 		/** constructor
 		*/
-		D3d11_Impl_ActionBatching_Texture_Create(D3d11_Impl& a_d3d11_impl,sharedptr<D3d11_Impl_Texture>& a_texture,bool a_write_flag)
+		D3d11_Impl_ActionBatching_Texture_Create(D3d11_Impl& a_d3d11_impl,sharedptr<D3d11_Impl_Texture>& a_texture,bool a_write_flag)	//TODO:const
 			:
 			d3d11_impl(a_d3d11_impl),
 			texture(a_texture),

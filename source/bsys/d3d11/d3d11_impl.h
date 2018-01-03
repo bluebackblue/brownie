@@ -218,7 +218,7 @@ namespace NBsys{namespace ND3d11
 		*/
 		bool IsExistTexture(s32 a_texture_id);
 
-		/** CreateTextureIdList
+		/** テクスチャーＩＤを列挙したリストを作成する。
 		*/
 		void CreateTextureIdList(STLVector<s32>::Type& a_list);
 
