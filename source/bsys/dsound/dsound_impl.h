@@ -33,8 +33,15 @@
 */
 #pragma warning(push)
 #pragma warning(disable:4464)
+#include "../wave/wave.h"
 #include "../window/window.h"
+#include "../actionbatching/actionbatching.h"
 #pragma warning(pop)
+
+
+/** include
+*/
+#include "./dsound_impl_type.h"
 
 
 /** NBsys::NDsound
@@ -61,6 +68,18 @@ namespace NBsys{namespace NDsound
 		/** soundlistener
 		*/
 		sharedptr<IDirectSound3DListener8> soundlistener;
+
+		/** id_maker
+		*/
+		IDMaker id_maker;
+
+		/** アクションバッチング。
+		*/
+		NBsys::NActionBatching::ActionBatching actionbatching;
+
+		/** soundbuffer_list
+		*/
+		STLMap<s32,sharedptr<Dsound_Impl_SoundBuffer>>::Type soundbuffer_list;
 
 	public:
 
@@ -104,7 +123,7 @@ namespace NBsys{namespace NDsound
 			*/
 			ThreadArgument()
 				:
-				threadname("file_thread"),
+				threadname("dsound_thread"),
 				stacksize(64 * 1024),
 				priority(0)
 			{
@@ -115,7 +134,6 @@ namespace NBsys{namespace NDsound
 			nonvirtual ~ThreadArgument()
 			{
 			}
-
 		};
 
 	public:
@@ -131,6 +149,42 @@ namespace NBsys{namespace NDsound
 		/** デフォルト設定。
 		*/
 		void SetListenerParam_Default();
+
+		/** GetDirectSound
+		*/
+		sharedptr<IDirectSound8>& GetDirectSound();
+
+		/** GetDirectSound
+		*/
+		const sharedptr<IDirectSound8>& GetDirectSound() const;
+
+		/** リクエスト登録。
+		*/
+		void StartBatching(sharedptr<NBsys::NActionBatching::ActionBatching_ActionList>& a_actionlist);
+
+		/** リクエスト処理。
+		*/
+		void Player_Main();
+
+	public:
+
+		/** サウンドバッファ作成。
+		*/
+		s32 CreateSoundBuffer(const sharedptr<NBsys::NWave::Wave>& a_wave);
+
+		/** 再生。
+		*/
+		void Play(s32 a_id);
+
+	public:
+
+		/** Player_CreateSoundBuffer
+		*/
+		void Player_CreateSoundBuffer(sharedptr<Dsound_Impl_SoundBuffer>& a_soundbuffer);
+
+		/** Player_Play
+		*/
+		void Player_Play(s32 a_id);
 
 	};
 

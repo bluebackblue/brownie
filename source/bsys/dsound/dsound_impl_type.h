@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 /**
  * Copyright (c) 2016-2018 blueback
@@ -19,6 +19,18 @@
 
 /** include
 */
+#if(BSYS_DSOUND_ENABLE)
+
+	#pragma warning(push)
+	#pragma warning(disable:4464)
+	#include <brownie_config/dsound_include.h>
+	#pragma warning(pop)
+
+#endif
+
+
+/** include
+*/
 #pragma warning(push)
 #pragma warning(disable:4464)
 #include "../wave/wave.h"
@@ -30,38 +42,29 @@
 */
 #if(BSYS_DSOUND_ENABLE)
 #pragma warning(push)
-#pragma warning(disable:4710 4820)
+#pragma warning(disable:4710)
 namespace NBsys{namespace NDsound
 {
-	/** システムの開始。
+	/** Dsound_Impl_SoundBuffer
 	*/
-	void StartSystem(const sharedptr<NBsys::NWindow::Window>& a_window);
+	struct Dsound_Impl_SoundBuffer
+	{
+		/** soundbuffer
+		*/
+		sharedptr<IDirectSoundBuffer> soundbuffer;
 
+		/** soundbuffer_size
+		*/
+		s32 soundbuffer_size;
 
-	/** システムの終了リクエスト。
-	*/
-	void EndSystemRequest();
+		/** wave
+		*/
+		sharedptr<NBsys::NWave::Wave> wave;
 
-
-	/** システムの終了。
-	*/
-	void EndSystem();
-
-
-	/** 更新。
-	*/
-	void Update();
-
-
-	/** サウンドバッファ作成。
-	*/
-	s32 CreateSoundBuffer(const sharedptr<NBsys::NWave::Wave>& a_wave);
-
-
-	/** 再生。
-	*/
-	void Play(s32 a_id);
-
+		/** soundbuffer_3d
+		*/
+		//sharedptr<IDirectSound3DBuffer> soundbuffer_3d;
+	};
 
 }}
 #pragma warning(pop)

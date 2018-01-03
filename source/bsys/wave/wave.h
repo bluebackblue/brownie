@@ -77,9 +77,21 @@ namespace NBsys{namespace NWave
 
 	public:
 
-		/** WaveType
+		/** GetSample
+		*/
+		sharedptr<u8> GetSample();
+
+		/** GetSample
+		*/
+		const sharedptr<u8> GetSample() const;
+
+		/** GetWaveType
 		*/
 		WaveType::Id GetWaveType() const;
+
+		/** GetCountOfSample
+		*/
+		s32 GetCountOfSample() const;
 
 	};
 

@@ -429,10 +429,11 @@ namespace NBsys{namespace NOpengl
 			{
 				t_actionlist->Add(new Opengl_Impl_ActionBatching_VertexBuffer_Create(*this,t_vertexbuffer));
 			}
-			this->StartBatching(t_actionlist);
 
 			//管理リスト。
 			this->vertexbuffer_list.insert(std::make_pair(t_vertexbuffer_id,t_vertexbuffer));
+
+			this->StartBatching(t_actionlist);
 
 			return t_vertexbuffer_id;
 		}
@@ -454,10 +455,11 @@ namespace NBsys{namespace NOpengl
 			{
 				t_actionlist->Add(new Opengl_Impl_ActionBatching_VertexBuffer_Delete(*this,t_vertexbuffer));
 			}
-			this->StartBatching(t_actionlist);
 
 			//管理リスト。
 			this->vertexbuffer_list.erase(t_it);
+
+			this->StartBatching(t_actionlist);
 		}
 	}
 
@@ -492,10 +494,11 @@ namespace NBsys{namespace NOpengl
 			{
 				t_actionlist->Add(new Opengl_Impl_ActionBatching_Shader_Delete(*this,t_shaderstate));
 			}
-			this->StartBatching(t_actionlist);
 
 			//管理リスト。
 			this->shaderstate_list[static_cast<std::size_t>(a_shaderid)].reset();
+
+			this->StartBatching(t_actionlist);
 		}
 	}
 
@@ -543,13 +546,14 @@ namespace NBsys{namespace NOpengl
 			{
 				t_batching->Add(new Opengl_Impl_ActionBatching_CreateTexture(*this,t_texture));
 			}
-			this->StartBatching(t_batching);
 
 			//テクスチャーＩＤ作成。
 			s32 t_texture_id = this->id_maker.MakeID();
 
 			//管理リストに登録。
 			this->texture_list.insert(std::make_pair(t_texture_id,t_texture));
+
+			this->StartBatching(t_batching);
 
 			return t_texture_id;
 		}
@@ -571,10 +575,11 @@ namespace NBsys{namespace NOpengl
 			{
 				t_batching->Add(new Opengl_Impl_ActionBatching_DeleteTexture(*this,t_texture));
 			}
-			this->StartBatching(t_batching);
 
 			//管理リストから解除。
 			this->texture_list.erase(t_it);
+
+			this->StartBatching(t_batching);
 		}
 	}
 
@@ -612,13 +617,14 @@ namespace NBsys{namespace NOpengl
 			{
 				t_batching->Add(new Opengl_Impl_ActionBatching_CreateFrameBuffer(*this,t_framebuffer));
 			}
-			this->StartBatching(t_batching);
 
 			//フレームバッファＩＤ作成。
 			s32 t_framebuffer_id = this->id_maker.MakeID();
 
 			//管理リストに登録。
 			this->framebuffer_list.insert(std::make_pair(t_framebuffer_id,t_framebuffer));
+
+			this->StartBatching(t_batching);
 
 			return t_framebuffer_id;
 		}

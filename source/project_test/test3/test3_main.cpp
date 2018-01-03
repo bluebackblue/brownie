@@ -46,7 +46,7 @@ namespace NTest
 		NBsys::NDsound::StartSystem(t_window);
 
 		//パック読み込み。
-		sharedptr<NBsys::NFile::File_Pack_Object> t_pack(new NBsys::NFile::File_Pack_Object(0,L"data/秋山裕和.pac",L"sound"));
+		sharedptr<NBsys::NFile::File_Pack_Object> t_pack(new NBsys::NFile::File_Pack_Object(0,L"data/秋山裕和n77.pac",L"sound"));
 		while(t_pack->IsBusy()){
 			ThreadSleep(1);
 		}
@@ -71,11 +71,11 @@ namespace NTest
 		//ＷＡＶファイル解析。
 		sharedptr<NBsys::NWave::Wave> t_wav = NBsys::NWave::CreateWave_Wav(t_wav_file->GetLoadData(),static_cast<s32>(t_wav_file->GetLoadSize()),L"n77");
 
+		s32 t_id = NBsys::NDsound::CreateSoundBuffer(t_wav);
 
 
 
-
-		
+		s32 t_time = 0;
 
 
 		while(true){
@@ -84,6 +84,15 @@ namespace NTest
 			if(t_window->IsEnd() == true){
 				break;
 			}
+
+			NBsys::NDsound::Update();
+
+			if(t_time % 1000 == 0){
+				NBsys::NDsound::Play(t_id);
+			}
+
+			ThreadSleep(20);
+			t_time++;
 		}
 
 		NBsys::NDsound::EndSystemRequest();

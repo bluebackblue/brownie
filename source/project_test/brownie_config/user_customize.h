@@ -130,6 +130,10 @@
 	//#define BSYS_WINSOCK_ENABLE							(1)
 	//#define BSYS_HTTP_DEBUG_ENABLE						(1)
 
+	#define BSYS_GEOMETRY_ENABLE							(1)
+
+	#define BSYS_ACTIONBATCHING_ENABLE						(1)
+
 	#define BSYS_FILE_ENABLE								(1)
 	#define BSYS_FILE_PACK_ENABLE							(1)
 

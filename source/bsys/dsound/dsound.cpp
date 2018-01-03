@@ -21,6 +21,7 @@
 */
 #pragma warning(push)
 #pragma warning(disable:4464)
+#include "../wave/wave.h"
 #include "../window/window.h"
 #include "../window/window_impl.h"
 #pragma warning(pop)
@@ -42,6 +43,7 @@ namespace NBsys{namespace NDsound
 	*/
 	sharedptr<ThreadTemplate<Dsound_Thread>> s_thread;
 
+
 	/** システムの開始。
 	*/
 	void StartSystem(const sharedptr<NBsys::NWindow::Window>& a_window)
@@ -55,7 +57,7 @@ namespace NBsys{namespace NDsound
 			s_thread.reset(new ThreadTemplate<Dsound_Thread>());
 			s_thread->Start(t_threadargument);
 		}else{
-			ASSERT(0);
+			DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
 		}
 	}
 
@@ -67,7 +69,7 @@ namespace NBsys{namespace NDsound
 		if(s_thread){
 			s_thread->get()->EndRequest();
 		}else{
-			ASSERT(0);
+			DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
 		}
 	}
 
@@ -77,6 +79,43 @@ namespace NBsys{namespace NDsound
 	void EndSystem()
 	{
 		s_thread.reset();
+	}
+
+
+	/** 更新。
+	*/
+	void Update()
+	{
+		if(s_thread){
+			s_thread->get()->Update();
+		}else{
+			DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
+		}
+	}
+
+
+	/** サウンドバッファ作成。
+	*/
+	s32 CreateSoundBuffer(const sharedptr<NBsys::NWave::Wave>& a_wave)
+	{
+		if(s_thread){
+			return s_thread->get()->CreateSoundBuffer(a_wave);
+		}else{
+			DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
+			return -1;
+		}
+	}
+
+
+	/** 再生。
+	*/
+	void Play(s32 a_id)
+	{
+		if(s_thread){
+			s_thread->get()->Play(a_id);
+		}else{
+			DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
+		}
 	}
 
 

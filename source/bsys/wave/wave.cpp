@@ -61,11 +61,35 @@ namespace NBsys{namespace NWave
 	}
 
 
+	/** GetSample
+	*/
+	sharedptr<u8> Wave::GetSample()
+	{
+		return this->sample;
+	}
+
+
+	/** GetSample
+	*/
+	const sharedptr<u8> Wave::GetSample() const
+	{
+		return this->sample;
+	}
+
+
 	/** WaveType
 	*/
 	WaveType::Id Wave::GetWaveType() const
 	{
 		return this->wavetype;
+	}
+
+
+	/** GetCountOfSample
+	*/
+	s32 Wave::GetCountOfSample() const
+	{
+		return this->countof_sample;
 	}
 
 

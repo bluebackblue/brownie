@@ -25,7 +25,7 @@
 
 /** include
 */
-#include "./dsound_impl.h"
+#include "./dsound_impl_decl.h"
 
 
 /** NBsys::NDsound
@@ -125,6 +125,19 @@ namespace NBsys{namespace NDsound
 		*/
 		void EndRequest();
 
+	public:
+
+		/** 更新。
+		*/
+		void Update();
+
+		/** サウンドバッファ作成。
+		*/
+		s32 CreateSoundBuffer(const sharedptr<NBsys::NWave::Wave>& a_wave);
+
+		/** 再生。
+		*/
+		void Play(s32 a_id);
 
 	};
 
