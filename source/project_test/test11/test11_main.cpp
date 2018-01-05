@@ -60,11 +60,34 @@ namespace NTest
 		NBsys::NGeometry::Geometry_Vector3 target_to_a;
 		NBsys::NGeometry::Geometry_Vector3 target_to_b;
 
+		/** pack_file
+		*/
+		sharedptr<NBsys::NFile::File_Pack_Object> pack_file;
+
+		/** wave_file
+		*/
+		sharedptr<NBsys::NFile::File_Object> wave_file;
+
+		/** wave
+		*/
+		sharedptr<NBsys::NWave::Wave> wave;
+
+		/** soundbuffer_id
+		*/
+		s32 soundbuffer_id;
+
+		/** step
+		*/
+		s32 step;
+
 	public:
 
 		/** constructor
 		*/
 		App()
+			:
+			soundbuffer_id(-1),
+			step(0)
 		{
 			//カメラ。
 			this->camera_position = NBsys::NGeometry::Geometry_Vector3(1.0f,10.0f,-20.0f);
@@ -89,6 +112,40 @@ namespace NTest
 
 	public:
 
+		/**
+		*/
+		void Play()
+		{
+			if(this->soundbuffer_id >= 0){
+				NBsys::NDsound::Play(this->soundbuffer_id,true,false,true);
+			}
+		}
+
+		/** 初期化更新。
+		*/
+		virtual bool Initialize_Update()
+		{
+			//テクスチャ。
+			if(this->windowmenu_texture == nullptr){
+				this->windowmenu_texture.reset(new NCommon::WindowMenu_Texture(150.0f,150.0f,this->d3d11));
+				NBsys::NWindowMenu::GetSystemInstance()->Add(this->windowmenu_texture);
+			}
+
+			//ログ。
+			if(this->windowmenu_log == nullptr){
+				this->windowmenu_log.reset(new NCommon::WindowMenu_Log(200.0f,200.0f));
+				NBsys::NWindowMenu::GetSystemInstance()->Add(this->windowmenu_log);
+			}
+
+			//ボタンリスト。
+			if(this->windowmenu_buttonlist == nullptr){
+				this->windowmenu_buttonlist.reset(new NCommon::WindowMenu_ButtonList(300.0f,300.0f,this->d3d11));
+				NBsys::NWindowMenu::GetSystemInstance()->Add(this->windowmenu_buttonlist);
+			}
+
+			return true;
+		}
+
 		/** 更新。
 		*/
 		virtual void Update(f32 a_delta)
@@ -98,6 +155,37 @@ namespace NTest
 			//カメラ回転。
 			this->camera_position.Set_X(NMath::cos_f(this->camera_time / 10) * 20);
 			this->camera_position.Set_Y(NMath::sin_f(this->camera_time / 10) * 20);
+
+			if(this->step == 0){
+				this->pack_file.reset(new NBsys::NFile::File_Pack_Object(NCommon::DeviceIndex::TestData,L"秋山裕和n77.pac",L"sound"));
+				this->step++;
+			}else if(this->step == 1){
+				if(this->pack_file->IsBusy() == false){
+					ASSERT(this->pack_file->GetErrorCode() == ErrorCode::Success);
+					this->step++;
+				}
+			}else if(this->step == 2){
+				this->wave_file.reset(new NBsys::NFile::File_Object(NCommon::DeviceIndex::TestData,L"sound/n77.wav",-1,nullptr,0));
+				this->step++;
+			}else if(this->step == 3){
+				if(this->wave_file->IsBusy() == false){
+					this->wave = NBsys::NWave::CreateWave_Wav(this->wave_file->GetLoadData(),static_cast<s32>(this->wave_file->GetLoadSize()),L"n77");
+					this->windowmenu_buttonlist->AddButton(L"PLAY",std::bind(&App::Play,this));
+					this->step++;
+				}
+			}else if(this->step == 4){
+
+				//TODO
+				if(this->soundbuffer_id < 0){
+					this->soundbuffer_id = NBsys::NDsound::CreateSoundBuffer(this->wave,false);
+				}
+
+			}
+
+
+
+			//this->step = 0;
+				
 		}
 
 		/** 描画命令呼び出し。
@@ -128,6 +216,29 @@ namespace NTest
 				//ライン描画。
 				this->drawline->Render(t_view * t_projection);
 			}
+
+			//２Ｄ描画。
+			{
+				//クリア。
+				this->d3d11->Render_ClearDepthStencilView();
+
+				//深度ステンシル。チェックなし。書き込みなし。
+				this->d3d11->Render_SetDepthStencilState(this->depthstencilstate_check_off_write_off_id);
+
+				//文字描画。
+				{
+					//描画。
+					this->render2d->Render();
+				}
+
+				//ウィンドウメニュー。
+				{
+					NBsys::NWindowMenu::GetSystemInstance()->Draw();
+
+					//描画。
+					this->render2d->Render();
+				}
+			}
 		}
 	};
 
@@ -139,7 +250,7 @@ namespace NTest
 		sharedptr<App> t_app(new App());
 		t_app->Initialize();
 		t_app->Main();
-		t_app->Delete();
+		t_app->Finalize();
 		return;
 	}
 

@@ -73,6 +73,10 @@ namespace NBsys{namespace NDsound
 		*/
 		IDMaker id_maker;
 
+		/** アクションバッチング。ロックオブジェクト。
+		*/
+		LockObject actionbatching_lockobject;
+
 		/** アクションバッチング。
 		*/
 		NBsys::NActionBatching::ActionBatching actionbatching;
@@ -100,41 +104,6 @@ namespace NBsys{namespace NDsound
 		/** コピー禁止。
 		*/
 		void operator =(const Dsound_Impl& a_this) = delete;
-
-	public:
-
-		/** 引数。
-		*/
-		struct ThreadArgument
-		{
-			/** threadname
-			*/
-			STLString threadname;
-
-			/** stacksize
-			*/
-			size_t stacksize;
-
-			/** priority
-			*/
-			s32 priority;
-
-			/** constructor
-			*/
-			ThreadArgument()
-				:
-				threadname("dsound_thread"),
-				stacksize(64 * 1024),
-				priority(0)
-			{
-			}
-
-			/** destructor
-			*/
-			nonvirtual ~ThreadArgument()
-			{
-			}
-		};
 
 	public:
 
@@ -168,13 +137,17 @@ namespace NBsys{namespace NDsound
 
 	public:
 
-		/** サウンドバッファ作成。
+		/** [複数スレッドから]サウンドバッファ作成。
 		*/
-		s32 CreateSoundBuffer(const sharedptr<NBsys::NWave::Wave>& a_wave);
+		s32 CreateSoundBuffer(const sharedptr<NBsys::NWave::Wave>& a_wave,bool a_is_3d);
 
-		/** 再生。
+		/** [複数スレッドから]サウンドバッファ削除。
 		*/
-		void Play(s32 a_id);
+		void DeleteSoundBuffer(s32 a_id);
+
+		/** [複数スレッドから]再生。
+		*/
+		s32 Play(s32 a_id,bool a_duplicate,bool a_loop,bool a_auto_delete);
 
 	public:
 
@@ -182,9 +155,17 @@ namespace NBsys{namespace NDsound
 		*/
 		void Player_CreateSoundBuffer(sharedptr<Dsound_Impl_SoundBuffer>& a_soundbuffer);
 
+		/** Player_DeleteSoundBuffer
+		*/
+		void Player_DeleteSoundBuffer(s32 a_id);
+
 		/** Player_Play
 		*/
-		void Player_Play(s32 a_id);
+		void Player_Play(s32 a_id,s32 a_duplicate_id,bool a_loop,bool a_auto_delete);
+
+		/** Player_AutoDelete
+		*/
+		bool Player_AutoDelete(s32 a_id);
 
 	};
 

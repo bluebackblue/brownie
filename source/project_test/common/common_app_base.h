@@ -27,6 +27,7 @@
 #include "./common_debug_callback.h"
 #include "./common_windowmenu_texture.h"
 #include "./common_windowmenu_log.h"
+#include "./common_windowmenu_buttonlist.h"
 #include "./common_windowmenu_callback.h"
 #include "./common_autotest.h"
 #include "./common_device_index.h"
@@ -103,6 +104,12 @@ namespace NTest{namespace NCommon
 		sharedptr<NCommon::WindowMenu_Log> windowmenu_log;
 		#endif
 
+		/** windowmenu_buttonlist
+		*/
+		#if(BSYS_WINDOWMENU_ENABLE)
+		sharedptr<NCommon::WindowMenu_ButtonList> windowmenu_buttonlist;
+		#endif
+
 		/** 初期化ステップ。
 		*/
 		s32 initialize_step;
@@ -150,6 +157,7 @@ namespace NTest{namespace NCommon
 			#if(BSYS_WINDOWMENU_ENABLE)
 			windowmenu_texture(),
 			windowmenu_log(),
+			windowmenu_buttonlist(),
 			#endif
 
 			initialize_step(0),
@@ -182,7 +190,7 @@ namespace NTest{namespace NCommon
 
 		/** 削除。ファイル。
 		*/
-		virtual void Delete_File()
+		virtual void Finalize_File()
 		{
 			NBsys::NFile::EndSystemRequest();
 			NBsys::NFile::EndWaitSystem();
@@ -210,13 +218,28 @@ namespace NTest{namespace NCommon
 
 		/** 削除。パッド。
 		*/
-		virtual void Delete_Pad()
+		virtual void Finalize_Pad()
 		{
 			#if(BSYS_PAD_ENABLE)
 			{
 				NBsys::NPad::EndSystem();
 			}
 			#endif
+		}
+
+		/** 初期化。DirectSound。
+		*/
+		virtual void Initialize_Dsound()
+		{
+			NBsys::NDsound::StartSystem(this->window);
+		}
+
+		/** 削除。DirectSound。
+		*/
+		virtual void Finalize_Dsound()
+		{
+			NBsys::NDsound::EndSystemRequest();
+			NBsys::NDsound::EndSystem();
 		}
 
 		/** 初期化。ウィンドウメニュー。
@@ -232,7 +255,7 @@ namespace NTest{namespace NCommon
 
 		/** 削除。
 		*/
-		virtual void Delete_WindowMenu()
+		virtual void Finalize_WindowMenu()
 		{
 			#if(BSYS_WINDOWMENU_ENABLE)
 			{
@@ -240,7 +263,6 @@ namespace NTest{namespace NCommon
 			}
 			#endif
 		}
-
 
 		/** 初期化。通信。
 		*/
@@ -255,7 +277,7 @@ namespace NTest{namespace NCommon
 
 		/** 削除。通信。
 		*/
-		virtual void Delete_Winsock()
+		virtual void Finalize_Winsock()
 		{
 			#if(BSYS_WINSOCK_ENABLE)
 			NBsys::NWinsock::EndSystem();
@@ -276,7 +298,7 @@ namespace NTest{namespace NCommon
 
 		/** 削除。ウィンドウ。
 		*/
-		virtual void Delete_Window()
+		virtual void Finalize_Window()
 		{
 			this->window->Delete();
 			this->window.reset();
@@ -292,7 +314,7 @@ namespace NTest{namespace NCommon
 
 		/** 削除。d3d11
 		*/
-		virtual void Delete_D3d11()
+		virtual void Finalize_D3d11()
 		{
 			this->d3d11->Render_Delete();
 			this->d3d11.reset();
@@ -307,7 +329,7 @@ namespace NTest{namespace NCommon
 
 		/** 削除。ライン描画。
 		*/
-		virtual void Delete_DrawLine()
+		virtual void Finalize_DrawLine()
 		{
 			this->drawline.reset();
 		}
@@ -321,7 +343,7 @@ namespace NTest{namespace NCommon
 
 		/** 削除。２Ｄ描画。
 		*/
-		virtual void Delete_Render2D()
+		virtual void Finalize_Render2D()
 		{
 			this->render2d.reset();
 		}
@@ -335,7 +357,7 @@ namespace NTest{namespace NCommon
 
 		/** 削除。マテリアル。レクト描画。
 		*/
-		virtual void Delete_Material_DrawRect()
+		virtual void Finalize_Material_DrawRect()
 		{
 			this->material_drawrect.reset();
 		}
@@ -351,7 +373,7 @@ namespace NTest{namespace NCommon
 
 		/** 削除。マテリアル。フォント描画。
 		*/
-		virtual void Delete_Material_DrawFont()
+		virtual void Finalize_Material_DrawFont()
 		{
 			#if(BSYS_FONT_ENABLE)
 			this->material_drawfont.reset();
@@ -371,6 +393,7 @@ namespace NTest{namespace NCommon
 			this->Initialize_Window();
 			this->Initialize_D3d11();
 			this->Initialize_Pad();
+			this->Initialize_Dsound();
 
 			this->Initialize_DrawLine();
 
@@ -389,21 +412,22 @@ namespace NTest{namespace NCommon
 
 		/** 削除。
 		*/
-		void Delete()
+		void Finalize()
 		{
-			this->Delete_WindowMenu();
+			this->Finalize_WindowMenu();
 
-			this->Delete_Material_DrawFont();
-			this->Delete_Material_DrawRect();
-			this->Delete_Render2D();
+			this->Finalize_Material_DrawFont();
+			this->Finalize_Material_DrawRect();
+			this->Finalize_Render2D();
 
-			this->Delete_DrawLine();
+			this->Finalize_DrawLine();
 
-			this->Delete_Pad();
-			this->Delete_D3d11();
-			this->Delete_Window();
-			this->Delete_File();
-			this->Delete_Winsock();
+			this->Finalize_Dsound();
+			this->Finalize_Pad();
+			this->Finalize_D3d11();
+			this->Finalize_Window();
+			this->Finalize_File();
+			this->Finalize_Winsock();
 		}
 
 		/** 初期化更新。
@@ -451,7 +475,7 @@ namespace NTest{namespace NCommon
 				{
 					u64 t_pcounter_now = PerformanceCounter::GetPerformanceCounter();
 					u64 t_pcounter_sec = PerformanceCounter::GetPerformanceSecCounter();
-					t_delta = static_cast<float>(t_pcounter_now - t_pcounter) / t_pcounter_sec;
+					float t_delta = static_cast<float>(t_pcounter_now - t_pcounter) / t_pcounter_sec;
 					if(t_delta <= 0.0f){
 						continue;
 					}
@@ -588,6 +612,9 @@ namespace NTest{namespace NCommon
 					}
 					#endif
 				}
+
+				//サウンド命令呼び出し開始。
+				NBsys::NDsound::Update();
 				
 				//描画命令呼び出し。
 				{

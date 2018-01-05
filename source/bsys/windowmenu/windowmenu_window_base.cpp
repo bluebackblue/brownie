@@ -143,6 +143,33 @@ namespace NBsys{namespace NWindowMenu
 	}
 
 
+	/** 子を探す。
+	*/
+	const sharedptr<WindowMenu_Window_Base>& WindowMenu_Window_Base::FindChild(const STLString& a_name) const
+	{
+		auto t_it_end = this->child_list.cend();
+
+		auto t_it = std::find_if(this->child_list.cbegin(),t_it_end,
+			[&](const sharedptr<WindowMenu_Window_Base> a_item){
+				return (a_item->name == a_name);
+			}
+		);
+
+		if(t_it != t_it_end){
+			return *t_it;
+		}
+
+		for(auto t_it = this->child_list.cbegin();t_it != t_it_end;++t_it){
+			decltype(auto) t_find = t_it->get()->FindChild(a_name);
+			if(t_find != nullptr){
+				return t_find;
+			}
+		}
+
+		return sharedptr_null<WindowMenu_Window_Base>();
+	}
+
+
 	/** IsRange
 	*/
 	bool WindowMenu_Window_Base::IsRange(f32 a_x,f32 a_y)

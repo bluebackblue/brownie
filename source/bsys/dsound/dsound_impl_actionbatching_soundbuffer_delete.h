@@ -37,9 +37,9 @@
 #pragma warning(disable:4710 4820)
 namespace NBsys{namespace NDsound
 {
-	/** 再生。
+	/** テクスチャー作成。
 	*/
-	class Dsound_Impl_ActionBatching_Play : public NBsys::NActionBatching::ActionBatching_ActionItem_Base
+	class Dsound_Impl_ActionBatching_SoundBuffer_Delete : public NBsys::NActionBatching::ActionBatching_ActionItem_Base
 	{
 	private:
 
@@ -51,35 +51,20 @@ namespace NBsys{namespace NDsound
 		*/
 		s32 id;
 
-		/** duplicate_id
-		*/
-		s32 duplicate_id;
-
-		/** loop
-		*/
-		bool loop;
-
-		/** auto_delete
-		*/
-		bool auto_delete;
-
 	public:
 
 		/** constructor
 		*/
-		Dsound_Impl_ActionBatching_Play(Dsound_Impl& a_dsound_impl,s32 a_id,s32 a_duplicate_id,bool a_loop,bool a_auto_delete)
+		Dsound_Impl_ActionBatching_SoundBuffer_Delete(Dsound_Impl& a_dsound_impl,s32 a_id)
 			:
 			dsound_impl(a_dsound_impl),
-			id(a_id),
-			duplicate_id(a_duplicate_id),
-			loop(a_loop),
-			auto_delete(a_auto_delete)
+			id(a_id)
 		{
 		}
 
 		/** destructor
 		*/
-		virtual ~Dsound_Impl_ActionBatching_Play()
+		virtual ~Dsound_Impl_ActionBatching_SoundBuffer_Delete()
 		{
 		}
 
@@ -87,11 +72,11 @@ namespace NBsys{namespace NDsound
 
 		/** copy constructor禁止。
 		*/
-		Dsound_Impl_ActionBatching_Play(const Dsound_Impl_ActionBatching_Play& a_this) = delete;
+		Dsound_Impl_ActionBatching_SoundBuffer_Delete(const Dsound_Impl_ActionBatching_SoundBuffer_Delete& a_this) = delete;
 
 		/** コピー禁止。
 		*/
-		void operator =(const Dsound_Impl_ActionBatching_Play& a_this) = delete;
+		void operator =(const Dsound_Impl_ActionBatching_SoundBuffer_Delete& a_this) = delete;
 
 	public:
 
@@ -109,10 +94,8 @@ namespace NBsys{namespace NDsound
 				//中断。
 			}
 
-			//Player_Play
-			this->dsound_impl.Player_Play(this->id,this->duplicate_id,this->loop,this->auto_delete);
-
-			//TOOD:a_auto_delete
+			//Player_DeleteSoundBuffer
+			this->dsound_impl.Player_DeleteSoundBuffer(this->id);
 
 			//成功。
 			return 1;

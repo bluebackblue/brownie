@@ -55,12 +55,17 @@ namespace NBsys{namespace NDsound
 
 	/** サウンドバッファ作成。
 	*/
-	s32 CreateSoundBuffer(const sharedptr<NBsys::NWave::Wave>& a_wave);
+	s32 CreateSoundBuffer(const sharedptr<NBsys::NWave::Wave>& a_wave,bool a_is_3d);
+
+
+	/** サウンドバッファ削除。
+	*/
+	void DeleteSoundBuffer(s32 a_id);
 
 
 	/** 再生。
 	*/
-	void Play(s32 a_id);
+	s32 Play(s32 a_id,bool a_duplicate,bool a_loop,bool a_auto_delete);
 
 
 }}

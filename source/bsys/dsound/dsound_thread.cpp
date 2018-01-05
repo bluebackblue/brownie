@@ -37,7 +37,7 @@ namespace NBsys{namespace NDsound
 		endrequest(false),
 		lockobject(),
 		request_event(true),
-		dsound_impl(nullptr)
+		dsound_impl()
 	{
 	}
 
@@ -55,26 +55,17 @@ namespace NBsys{namespace NDsound
 
 		//MemoryContainer t_memorycontainer(BSYS_DSOUND_MEMORYCONTAINER);
 
-		//初期化。
+		//CoInitializeEx
 		{
-			{
-				HRESULT t_ret = ::CoInitializeEx(nullptr,COINIT_MULTITHREADED);
-				if(FAILED(t_ret)){
-					DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
-					return;
-				}
-			}
-
-			{
-				//■排他処理。
-				AutoLock t_autolock(this->lockobject);
-
-				this->dsound_impl.reset(new Dsound_Impl());
-				if(this->dsound_impl->Create(a_threadargument.window) == false){
-					DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
-				}
+			HRESULT t_ret_co = ::CoInitializeEx(nullptr,COINIT_MULTITHREADED);
+			if(FAILED(t_ret_co)){
+				DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
+				return;
 			}
 		}
+
+		//作成。
+		this->dsound_impl.Create(a_threadargument.window);
 
 		while(1){
 
@@ -89,33 +80,20 @@ namespace NBsys{namespace NDsound
 			this->request_event.Clear();
 
 			//リクエスト処理。
-			{
-				//■排他処理。
-				AutoLock t_autolock(this->lockobject);
-
-				this->dsound_impl->Player_Main();
-			}
+			this->dsound_impl.Player_Main();
 
 			//終了チェック。
 			if(this->endrequest.Load()){
 				break;
 			}
+
 		}
 
-		//解放。
-		{
-			{
-				//■排他処理。
-				AutoLock t_autolock(this->lockobject);
+		//削除。
+		this->dsound_impl.Delete();
 
-				if(this->dsound_impl){
-					this->dsound_impl->Delete();
-				}
-				this->dsound_impl.reset();
-			}
-
-			::CoUninitialize();
-		}
+		//CoUninitialize
+		::CoUninitialize();
 	}
 
 
@@ -136,32 +114,27 @@ namespace NBsys{namespace NDsound
 	}
 
 
-	/** サウンドバッファ作成。
+	/** [複数スレッドから]サウンドバッファ作成。
 	*/
-	s32 Dsound_Thread::CreateSoundBuffer(const sharedptr<NBsys::NWave::Wave>& a_wave)
+	s32 Dsound_Thread::CreateSoundBuffer(const sharedptr<NBsys::NWave::Wave>& a_wave,bool a_is_3d)
 	{
-		//■排他処理。
-		AutoLock t_autolock(this->lockobject);
-
-		if(this->dsound_impl){
-			return this->dsound_impl->CreateSoundBuffer(a_wave);
-		}else{
-			DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
-			return -1;
-		}
+		return this->dsound_impl.CreateSoundBuffer(a_wave,a_is_3d);
 	}
 
 
-	/** 再生。
+	/** [複数スレッドから]サウンドバッファ削除。
 	*/
-	void Dsound_Thread::Play(s32 a_id)
+	void Dsound_Thread::DeleteSoundBuffer(s32 a_id)
 	{
-		//■排他処理。
-		AutoLock t_autolock(this->lockobject);
+		this->dsound_impl.DeleteSoundBuffer(a_id);
+	}
 
-		if(this->dsound_impl){
-			return this->dsound_impl->Play(a_id);
-		}
+
+	/** [複数スレッドから]再生。
+	*/
+	s32 Dsound_Thread::Play(s32 a_id,bool a_duplicate,bool a_loop,bool a_auto_delete)
+	{
+		return this->dsound_impl.Play(a_id,a_duplicate,a_loop,a_auto_delete);
 	}
 
 

@@ -61,9 +61,17 @@ namespace NBsys{namespace NDsound
 		*/
 		sharedptr<NBsys::NWave::Wave> wave;
 
+		/** is_3d
+		*/
+		bool is_3d;
+
+		/** is_duplicate
+		*/
+		bool is_duplicate;
+
 		/** soundbuffer_3d
 		*/
-		//sharedptr<IDirectSound3DBuffer> soundbuffer_3d;
+		sharedptr<IDirectSound3DBuffer> soundbuffer_3d;
 	};
 
 }}

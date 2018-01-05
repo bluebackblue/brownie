@@ -96,10 +96,10 @@ namespace NBsys{namespace NDsound
 
 	/** サウンドバッファ作成。
 	*/
-	s32 CreateSoundBuffer(const sharedptr<NBsys::NWave::Wave>& a_wave)
+	s32 CreateSoundBuffer(const sharedptr<NBsys::NWave::Wave>& a_wave,bool a_is_3d)
 	{
 		if(s_thread){
-			return s_thread->get()->CreateSoundBuffer(a_wave);
+			return s_thread->get()->CreateSoundBuffer(a_wave,a_is_3d);
 		}else{
 			DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
 			return -1;
@@ -107,14 +107,27 @@ namespace NBsys{namespace NDsound
 	}
 
 
-	/** 再生。
+	/** サウンドバッファ削除。
 	*/
-	void Play(s32 a_id)
+	void DeleteSoundBuffer(s32 a_id)
 	{
 		if(s_thread){
-			s_thread->get()->Play(a_id);
+			s_thread->get()->DeleteSoundBuffer(a_id);
 		}else{
 			DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
+		}
+	}
+
+
+	/** 再生。
+	*/
+	s32 Play(s32 a_id,bool a_duplicate,bool a_loop,bool a_auto_delete)
+	{
+		if(s_thread){
+			return s_thread->get()->Play(a_id,a_duplicate,a_loop,a_auto_delete);
+		}else{
+			DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
+			return -1;
 		}
 	}
 

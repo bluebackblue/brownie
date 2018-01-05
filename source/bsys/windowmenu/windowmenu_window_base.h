@@ -177,6 +177,10 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		void RemoveChild(sharedptr<WindowMenu_Window_Base> a_window);
 
+		/** 子を探す。
+		*/
+		const sharedptr<WindowMenu_Window_Base>& FindChild(const STLString& a_name) const;
+
 		/** IsRange
 		*/
 		bool IsRange(f32 a_x,f32 a_y);

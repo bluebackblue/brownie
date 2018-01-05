@@ -71,14 +71,22 @@ namespace NTest
 		//ＷＡＶファイル解析。
 		sharedptr<NBsys::NWave::Wave> t_wav = NBsys::NWave::CreateWave_Wav(t_wav_file->GetLoadData(),static_cast<s32>(t_wav_file->GetLoadSize()),L"n77");
 
-		s32 t_id = NBsys::NDsound::CreateSoundBuffer(t_wav);
-
-
+		s32 t_id = NBsys::NDsound::CreateSoundBuffer(t_wav,false);
 
 		s32 t_time = 0;
 
-
+		u64 t_pcounter = PerformanceCounter::GetPerformanceCounter();
 		while(true){
+			{
+				u64 t_pcounter_now = PerformanceCounter::GetPerformanceCounter();
+				u64 t_pcounter_sec = PerformanceCounter::GetPerformanceSecCounter();
+				float t_delta = static_cast<float>(t_pcounter_now - t_pcounter) / t_pcounter_sec;
+				if(t_delta <= 1.0f / 60){
+					continue;
+				}
+				t_pcounter = t_pcounter_now;
+			}
+
 			//s_window
 			t_window->Update();
 			if(t_window->IsEnd() == true){
@@ -87,12 +95,19 @@ namespace NTest
 
 			NBsys::NDsound::Update();
 
-			if(t_time % 1000 == 0){
-				NBsys::NDsound::Play(t_id);
-			}
+			if(t_time % (60 * 3) == 0){
+				
 
-			ThreadSleep(20);
+
+				NBsys::NDsound::Play(t_id,true,false,true);
+				t_time = 0;
+			}
 			t_time++;
+		}
+
+		{
+			NBsys::NDsound::DeleteSoundBuffer(t_id);
+			NBsys::NDsound::Update();
 		}
 
 		NBsys::NDsound::EndSystemRequest();
