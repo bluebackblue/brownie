@@ -83,11 +83,15 @@ mid-level library
 
 ## openssl
 このリポジトリにOpenSSLは含まれていません。
+* 動作確認バージョン「openssl-1.0.2n」
 * 使用する場合は「sdk」「sdk_32」「sdk_64」にインクルードファイル、スタティックライブラリを設置してください。
 * https://www.openssl.org/
 * https://github.com/bluebackblue/brownie/blob/master/license/openssl/LICENSE
 
-
-
-
+## oggvorbis
+このリポジトリにOggVorbisは含まれていません。
+* 動作確認バージョン「libogg-1.3.3」「libvorbis-1.3.5」
+* 使用する場合は「sdk」「sdk_32」「sdk_64」にインクルードファイル、スタティックライブラリを設置してください。
+* https://www.xiph.org/
+* https://github.com/bluebackblue/brownie/tree/master/license/oggvorbis
 
