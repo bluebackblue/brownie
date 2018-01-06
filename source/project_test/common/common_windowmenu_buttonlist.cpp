@@ -144,7 +144,7 @@ namespace NTest{namespace NCommon
 		{
 			NBsys::NWindowMenu::WindowMenu_Window_Button::InitItem t_inititem;
 			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;
-			t_inititem.size.SetH(100);
+			t_inititem.size.SetH(32);
 			t_button->Initialize(t_inititem);
 			{
 				t_button->color_normal = NBsys::NColor::Color_F(0.3f,0.3f,0.3f,1.0f);

@@ -475,7 +475,7 @@ namespace NTest{namespace NCommon
 				{
 					u64 t_pcounter_now = PerformanceCounter::GetPerformanceCounter();
 					u64 t_pcounter_sec = PerformanceCounter::GetPerformanceSecCounter();
-					float t_delta = static_cast<float>(t_pcounter_now - t_pcounter) / t_pcounter_sec;
+					t_delta = static_cast<float>(t_pcounter_now - t_pcounter) / t_pcounter_sec;
 					if(t_delta <= 0.0f){
 						continue;
 					}
@@ -644,6 +644,27 @@ namespace NTest{namespace NCommon
 				this->d3d11->Render_Present();
 
 			}
+		}
+
+		/** キャプチャー。
+		*/
+		void Capture()
+		{
+			#if((BSYS_TEXTURE_ENABLE)&&(BSYS_D3D11_ENABLE)&&(BSYS_TEXTURE_GDIPLUS_ENABLE))
+
+			sharedptr<NBsys::NTexture::Texture> t_capture_texture = this->d3d11->Render_ScreenShot();
+
+			std::tuple<sharedptr<u8>,s32> t_jpg_data = NBsys::NTexture::EncodeToJpg(t_capture_texture);
+
+			FileHandle t_output;
+			t_output.WriteOpen(L"./output.jpg");
+
+			t_output.Write(std::get<0>(t_jpg_data).get(),std::get<1>(t_jpg_data),0);
+
+			t_output.Close();
+
+			#endif
+
 		}
 	};
 

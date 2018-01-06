@@ -164,6 +164,8 @@
 	#define BSYS_WAVE_ENABLE								(1)
 	#define BSYS_WAVE_DEBUG_ENABLE							(1)
 
+	#define BSYS_TEXTURE_GDIPLUS_ENABLE						(1)
+
 #elif(DEF_TEST_INDEX == 12)
 
 	#define DEF_TEST_STRING									L"12"
