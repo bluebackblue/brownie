@@ -42,37 +42,6 @@ namespace NTest
 		sharedptr<NBsys::NWindow::Window> t_window(new NBsys::NWindow::Window());
 		t_window->Create(L"TEST " DEF_TEST_STRING,100,100);
 
-		//DirectSound。
-		NBsys::NDsound::StartSystem(t_window);
-
-		//パック読み込み。
-		sharedptr<NBsys::NFile::File_Pack_Object> t_pack(new NBsys::NFile::File_Pack_Object(0,L"data/秋山裕和n77.pac",L"sound"));
-		while(t_pack->IsBusy()){
-			ThreadSleep(1);
-		}
-
-		if(t_pack->GetErrorCode() == ErrorCode::Success){
-		}else{
-			ASSERT(0);
-		}
-
-		//ＷＡＶファイル読み込み。
-		sharedptr<NBsys::NFile::File_Object> t_wav_file(new NBsys::NFile::File_Object(0,L"sound/n77.wav",-1,nullptr,0));
-
-		while(t_wav_file->IsBusy()){
-			ThreadSleep(1);
-		}
-
-		if(t_wav_file->GetErrorCode() == ErrorCode::Success){
-		}else{
-			ASSERT(0);
-		}
-
-		//ＷＡＶファイル解析。
-		sharedptr<NBsys::NWave::Wave> t_wav = NBsys::NWave::CreateWave_Wav(t_wav_file->GetLoadData(),static_cast<s32>(t_wav_file->GetLoadSize()),L"n77");
-
-		s32 t_id = NBsys::NDsound::CreateSoundBuffer(t_wav,false);
-
 		s32 t_time = 0;
 
 		u64 t_pcounter = PerformanceCounter::GetPerformanceCounter();
@@ -109,9 +78,6 @@ namespace NTest
 			NBsys::NDsound::DeleteSoundBuffer(t_id);
 			NBsys::NDsound::Update();
 		}
-
-		NBsys::NDsound::EndSystemRequest();
-		NBsys::NDsound::EndSystem();
 
 		//ウィンドウ削除。
 		t_window->Delete();

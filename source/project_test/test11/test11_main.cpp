@@ -112,7 +112,26 @@ namespace NTest
 
 	public:
 
-		/**
+		/** Load
+		*/
+		void Load()
+		{
+			if(this->soundbuffer_id < 0){
+				this->soundbuffer_id = NBsys::NDsound::CreateSoundBuffer(this->wave,false);
+			}
+		}
+
+		/** UnLoad
+		*/
+		void UnLoad()
+		{
+			if(this->soundbuffer_id >= 0){
+				NBsys::NDsound::DeleteSoundBuffer(this->soundbuffer_id);
+				this->soundbuffer_id = -1;
+			}
+		}
+
+		/** Play
 		*/
 		void Play()
 		{
@@ -170,22 +189,15 @@ namespace NTest
 			}else if(this->step == 3){
 				if(this->wave_file->IsBusy() == false){
 					this->wave = NBsys::NWave::CreateWave_Wav(this->wave_file->GetLoadData(),static_cast<s32>(this->wave_file->GetLoadSize()),L"n77");
-					this->windowmenu_buttonlist->AddButton(L"PLAY",std::bind(&App::Play,this));
+
+					this->windowmenu_buttonlist->AddButton(L"Capture",std::bind(&App::Capture,this));
+					this->windowmenu_buttonlist->AddButton(L"Load",std::bind(&App::Load,this));
+					this->windowmenu_buttonlist->AddButton(L"UnLoad",std::bind(&App::UnLoad,this));
+					this->windowmenu_buttonlist->AddButton(L"Play",std::bind(&App::Play,this));
 					this->step++;
 				}
 			}else if(this->step == 4){
-
-				//TODO
-				if(this->soundbuffer_id < 0){
-					this->soundbuffer_id = NBsys::NDsound::CreateSoundBuffer(this->wave,false);
-				}
-
 			}
-
-
-
-			//this->step = 0;
-				
 		}
 
 		/** 描画命令呼び出し。
