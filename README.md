@@ -93,5 +93,5 @@ mid-level library
 * 動作確認バージョン「libogg-1.3.3」「libvorbis-1.3.5」
 * 使用する場合は「sdk」「sdk_32」「sdk_64」にインクルードファイル、スタティックライブラリを設置してください。
 * https://www.xiph.org/
-* https://github.com/bluebackblue/brownie/tree/master/license/oggvorbis
+* https://github.com/bluebackblue/brownie/blob/master/license/oggvorbis/COPYING
 
