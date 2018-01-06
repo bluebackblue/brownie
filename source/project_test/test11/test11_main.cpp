@@ -184,11 +184,13 @@ namespace NTest
 					this->step++;
 				}
 			}else if(this->step == 2){
-				this->wave_file.reset(new NBsys::NFile::File_Object(NCommon::DeviceIndex::TestData,L"sound/n77.wav",-1,nullptr,0));
+				//this->wave_file.reset(new NBsys::NFile::File_Object(NCommon::DeviceIndex::TestData,L"sound/n77.wav",-1,nullptr,0));
+				this->wave_file.reset(new NBsys::NFile::File_Object(NCommon::DeviceIndex::TestData,L"sound/n77.ogg",-1,nullptr,0));
 				this->step++;
 			}else if(this->step == 3){
 				if(this->wave_file->IsBusy() == false){
-					this->wave = NBsys::NWave::CreateWave_Wav(this->wave_file->GetLoadData(),static_cast<s32>(this->wave_file->GetLoadSize()),L"n77");
+					//this->wave = NBsys::NWave::CreateWave_Wav(this->wave_file->GetLoadData(),static_cast<s32>(this->wave_file->GetLoadSize()),L"n77_wav");
+					this->wave = NBsys::NWave::CreateWave_Ogg(this->wave_file->GetLoadData(),static_cast<s32>(this->wave_file->GetLoadSize()),L"n77_ogg");
 
 					this->windowmenu_buttonlist->AddButton(L"Capture",std::bind(&App::Capture,this));
 					this->windowmenu_buttonlist->AddButton(L"Load",std::bind(&App::Load,this));

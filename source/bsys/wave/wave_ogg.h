@@ -27,11 +27,6 @@
 #if(BSYS_WAVE_ENABLE)
 namespace NBsys{namespace NWave
 {
-	/** CreateWave_Wav
-	*/
-	sharedptr<Wave> CreateWave_Wav(const sharedptr<u8>& a_data,s32 a_size,const STLWString& a_name);
-
-	
 	/** CreateWave_FromOgg
 	*/
 	sharedptr<Wave> CreateWave_Ogg(const sharedptr<u8>& a_data,s32 a_size,const STLWString& a_name);

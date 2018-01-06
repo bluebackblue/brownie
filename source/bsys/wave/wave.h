@@ -20,6 +20,7 @@
 /** include
 */
 #include "./wave_wav.h"
+#include "./wave_ogg.h"
 
 
 /** NBsys::NWave
