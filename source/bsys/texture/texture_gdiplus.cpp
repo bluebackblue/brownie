@@ -22,12 +22,6 @@
 #pragma warning(pop)
 
 
-/** include
-*/
-#include "./texture_gdiplus.h"
-#include "./texture.h"
-
-
 /** lib
 */
 #if(BSYS_TEXTURE_GDIPLUS_ENABLE)
@@ -40,6 +34,12 @@
 #if(BSYS_TEXTURE_GDIPLUS_ENABLE)
 	#include <brownie_config/texture_gdiplus_include.h>
 #endif
+
+
+/** include
+*/
+#include "./texture_gdiplus.h"
+#include "./texture.h"
 
 
 /** include
