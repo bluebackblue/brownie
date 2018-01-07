@@ -35,16 +35,38 @@ namespace NBlib
 
 		/** constructor
 		*/
-		Position2DType()
+		Position2DType() noexcept
 			:
 			x(static_cast<T>(0)),
 			y(static_cast<T>(0))
 		{
 		}
 
+		/** move constructor
+
+		Position2DType<s32> t_temp{};
+		Position2DType<s32> t_4(std::move(t_temp));
+
+		*/
+		Position2DType(Position2DType&& a_instance_rr)
+			:
+			x(a_instance_rr.x),
+			y(a_instance_rr.y)
+		{
+		}
+
+		/** copy constructor
+		*/
+		Position2DType(const Position2DType<T>& a_instance) noexcept
+			:
+			x(a_instance.x),
+			y(a_instance.y)
+		{
+		}
+
 		/** constructor
 		*/
-		Position2DType(T a_x,T a_y)
+		Position2DType(T a_x,T a_y) noexcept
 			:
 			x(a_x),
 			y(a_y)
@@ -64,7 +86,105 @@ namespace NBlib
 			this->x = a_x;
 			this->y = a_y;
 		}
+
+		/** t_1 = Position2DType<s32>();
+		*/
+		Position2DType<T>& operator =(Position2DType<T>&& a_instance_rr)
+		{
+			this->x = a_instance_rr.x;
+			this->y = a_instance_rr.y;
+			return *this;
+		}
+
+		/** t_1 = t_2;
+		*/
+		Position2DType<T>& operator =(const Position2DType<T>& a_right)
+		{
+			this->x = a_right.x;
+			this->y = a_right.y;
+			return *this;
+		}
+
+		/** t_1 = +t_2;
+		*/
+		Position2DType<T> operator +() const
+		{
+			return *this;
+		}
+
+		/** t_1 = -t_2;
+		*/
+		Position2DType<T> operator -() const
+		{
+			return Position2DType<T>(-this->x,-this->y);
+		}
+
+		/** t_1 += t_2;
+		*/
+		Position2DType<T>& operator +=(const Position2DType<T>& a_right)
+		{
+			this->x += a_right.x;
+			this->y += a_right.y;
+			return *this;
+		}
+
+		/** t_1 -= t_2;
+		*/
+		Position2DType<T>& operator -=(const Position2DType<T>& a_right)
+		{
+			this->x -= a_right.x;
+			this->y -= a_right.y;
+			return *this;
+		}
+
+		/** t_1 *= t_2;
+		*/
+		Position2DType<T>& operator *=(const Position2DType<T>& a_right)
+		{
+			this->x *= a_right.x;
+			this->y *= a_right.y;
+			return *this;
+		}
+
+		/** t_1 /= t_2;
+		*/
+		Position2DType<T>& operator /=(const Position2DType<T>& a_right)
+		{
+			this->x /= a_right.x;
+			this->y /= a_right.y;
+			return *this;
+		}
+
 	};
+
+
+	/** t_1 = t_2 + t_3;
+	*/
+	template <typename T> Position2DType<T> operator +(const Position2DType<T>& a_left,const Position2DType<T>& a_right)
+	{
+		return Position2DType<T>(a_left) += a_right;
+	}
+
+	/** t_1 = t_2 - t_3;
+	*/
+	template <typename T> Position2DType<T> operator -(const Position2DType<T>& a_left,const Position2DType<T>& a_right)
+	{
+		return Position2DType<T>(a_left) -= a_right;
+	}
+
+	/** t_1 = t_2 * t_3;
+	*/
+	template <typename T> Position2DType<T> operator *(const Position2DType<T>& a_left,const Position2DType<T>& a_right)
+	{
+		return Position2DType<T>(a_left) *= a_right;
+	}
+
+	/** t_1 = t_2 / t_3;
+	*/
+	template <typename T> Position2DType<T> operator /(const Position2DType<T>& a_left,const Position2DType<T>& a_right)
+	{
+		return Position2DType<T>(a_left) /= a_right;
+	}
 
 
 }
