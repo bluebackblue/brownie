@@ -76,6 +76,10 @@ namespace NTest
 		*/
 		s32 soundbuffer_id;
 
+		/** soundbuffer_lastplay_id
+		*/
+		s32 soundbuffer_lastplay_id;
+
 		/** step
 		*/
 		s32 step;
@@ -87,6 +91,7 @@ namespace NTest
 		App()
 			:
 			soundbuffer_id(-1),
+			soundbuffer_lastplay_id(-1),
 			step(0)
 		{
 			//カメラ。
@@ -136,7 +141,7 @@ namespace NTest
 		void Play()
 		{
 			if(this->soundbuffer_id >= 0){
-				NBsys::NDsound::Play(this->soundbuffer_id,true,false,true);
+				this->soundbuffer_lastplay_id = NBsys::NDsound::Play(this->soundbuffer_id,true,false,true);
 			}
 		}
 
@@ -184,12 +189,10 @@ namespace NTest
 					this->step++;
 				}
 			}else if(this->step == 2){
-				//this->wave_file.reset(new NBsys::NFile::File_Object(NCommon::DeviceIndex::TestData,L"sound/n77.wav",-1,nullptr,0));
 				this->wave_file.reset(new NBsys::NFile::File_Object(NCommon::DeviceIndex::TestData,L"sound/n77.ogg",-1,nullptr,0));
 				this->step++;
 			}else if(this->step == 3){
 				if(this->wave_file->IsBusy() == false){
-					//this->wave = NBsys::NWave::CreateWave_Wav(this->wave_file->GetLoadData(),static_cast<s32>(this->wave_file->GetLoadSize()),L"n77_wav");
 					this->wave = NBsys::NWave::CreateWave_Ogg(this->wave_file->GetLoadData(),static_cast<s32>(this->wave_file->GetLoadSize()),L"n77_ogg");
 
 					this->windowmenu_buttonlist->AddButton(L"Capture",std::bind(&App::Capture,this));
@@ -199,6 +202,31 @@ namespace NTest
 					this->step++;
 				}
 			}else if(this->step == 4){
+
+				//最後に再生されたサウンドバッファのチェック。
+				if(this->soundbuffer_lastplay_id >= 0){
+					if(NBsys::NDsound::IsPlay(this->soundbuffer_lastplay_id) == true){
+						{
+							sharedptr<NCommon::Render2D_Item_Font> t_font(new NCommon::Render2D_Item_Font(99999));
+							t_font->x = 0.0f;
+							t_font->y = 50.0f;
+							t_font->w = 0.0f;
+							t_font->h = 0.0f;
+							t_font->clip = false;
+							t_font->size = 16.0f;
+							t_font->fonttexture_type = NBsys::ND3d11::D3d11_FontTextureType::SFont;
+							t_font->color = NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f);
+							t_font->alignment_x = -1;
+							t_font->alignment_y = -1;
+							t_font->string = L"Play Now";
+
+							this->render2d->Draw(t_font);
+						}
+					}else{
+						this->soundbuffer_lastplay_id = -1;
+					}
+				}
+
 			}
 		}
 

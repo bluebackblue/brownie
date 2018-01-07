@@ -387,7 +387,7 @@ namespace NBsys{namespace NDsound
 
 			sharedptr<Dsound_Impl_SoundBuffer> t_soundbuffer = new Dsound_Impl_SoundBuffer();
 			{
-				t_soundbuffer->playstate = Dsound_Impl_SoundBuffer::PlayState::Stop;
+				t_soundbuffer->playstate = Dsound_Impl_SoundBuffer::PlayState::Play;	//再生開始。
 				//t_soundbuffer->soundbuffer;
 				t_soundbuffer->soundbuffer_size = -1;
 				t_soundbuffer->wave = t_it->second->wave;
@@ -421,7 +421,12 @@ namespace NBsys{namespace NDsound
 			return false;
 		}
 
-		return true;
+		if(t_it->second->playstate == Dsound_Impl_SoundBuffer::PlayState::Play){
+			//再生中。
+			return true;
+		}
+
+		return false;
 	}
 
 
