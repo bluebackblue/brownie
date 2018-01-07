@@ -41,7 +41,7 @@
 
 /** include
 */
-#include "./dsound_impl_type.h"
+#include "./dsound_impl_soundbuffer.h"
 
 
 /** NBsys::NDsound
@@ -148,6 +148,10 @@ namespace NBsys{namespace NDsound
 		/** [複数スレッドから]再生。
 		*/
 		s32 Play(s32 a_id,bool a_duplicate,bool a_loop,bool a_auto_delete);
+
+		/** [複数スレッドから]再生中チェック。
+		*/
+		bool IsPlay(s32 a_id);
 
 	public:
 

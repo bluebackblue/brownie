@@ -132,6 +132,19 @@ namespace NBsys{namespace NDsound
 	}
 
 
+	/** 再生中チェック。
+	*/
+	bool IsPlay(s32 a_id)
+	{
+		if(s_thread){
+			return s_thread->get()->IsPlay(a_id);
+		}else{
+			DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
+			return false;
+		}
+	}
+
+
 }}
 #pragma warning(pop)
 #endif

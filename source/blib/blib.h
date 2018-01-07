@@ -59,4 +59,7 @@
 #include "./path.h"
 #include "./asyncresult.h"
 #include "./malloca.h"
+#include "./recttype.h"
+#include "./positiontype.h"
+#include "./sizetype.h"
 

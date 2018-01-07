@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 /**
  * Copyright (c) 2016-2018 blueback
@@ -49,6 +49,35 @@ namespace NBsys{namespace NDsound
 	*/
 	struct Dsound_Impl_SoundBuffer
 	{
+		/** NorifyEventType
+		*/
+		struct NorifyEventType
+		{
+			enum Id
+			{
+				PlayStart = 0,
+				PlayEnd,
+
+				Max,
+			};
+		};
+
+		/** 再生ステータス。
+		*/
+		struct PlayState
+		{
+			enum Id
+			{
+				Stop = 0,
+				Play,
+				Pause,
+			};
+		};
+
+		/** playstate
+		*/
+		PlayState::Id playstate;
+
 		/** soundbuffer
 		*/
 		sharedptr<IDirectSoundBuffer> soundbuffer;
@@ -72,6 +101,18 @@ namespace NBsys{namespace NDsound
 		/** soundbuffer_3d
 		*/
 		sharedptr<IDirectSound3DBuffer> soundbuffer_3d;
+
+		/** soundnotify_event
+		*/
+		STLVector<DSBPOSITIONNOTIFY>::Type soundnotify_event;
+
+		/** constructor
+		*/
+		Dsound_Impl_SoundBuffer();
+
+		/** destructor
+		*/
+		nonvirtual ~Dsound_Impl_SoundBuffer();
 	};
 
 }}

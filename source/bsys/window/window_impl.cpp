@@ -49,8 +49,7 @@ namespace NBsys{namespace NWindow
 		#if defined(PLATFORM_VCWIN) || defined(PLATFORM_GNUCWIN)
 		handle(WIN_NULL),
 		#endif
-		mouse_x(0),
-		mouse_y(0),
+		mouse(),
 		isview(false),
 		isactive(false),
 		isopen(false),
@@ -98,19 +97,19 @@ namespace NBsys{namespace NWindow
 	}
 
 
-	/** GetMouseX
+	/** GetMouse
 	*/
-	s32 Window_Impl::GetMouseX() const
+	Position2DType<s32> Window_Impl::GetMouse() const
 	{
-		return this->mouse_x;
-	}
+		POINT t_pos;
+		if(::GetCursorPos(&t_pos) == TRUE){
+			if(::ScreenToClient(this->handle,&t_pos)){
+				this->mouse.x = static_cast<s32>(t_pos.x);
+				this->mouse.y = static_cast<s32>(t_pos.y);
+			}
+		}
 
-
-	/** GetMouseY
-	*/
-	s32 Window_Impl::GetMouseY() const
-	{
-		return this->mouse_y;
+		return this->mouse;
 	}
 
 
@@ -163,8 +162,7 @@ namespace NBsys{namespace NWindow
 
 			::ShowWindow(t_handle,SW_SHOW);
 
-			this->mouse_x = 0;
-			this->mouse_y = 0;
+			this->mouse.Set(0,0);
 			this->isview = true;
 			this->isactive = false;
 			this->handle = t_handle;
@@ -300,8 +298,8 @@ namespace NBsys{namespace NWindow
 			}break;
 		case WM_MOUSEMOVE:
 			{
-				this->mouse_x = static_cast<s32>(static_cast<f32>(LOWORD(a_lparam)));
-				this->mouse_y = static_cast<s32>(static_cast<f32>(HIWORD(a_lparam)));
+				//this->mouse.x = static_cast<s32>(static_cast<f32>(LOWORD(a_lparam)));
+				//this->mouse.y = static_cast<s32>(static_cast<f32>(HIWORD(a_lparam)));
 			}break;
 		case WM_MOUSEWHEEL:
 			{

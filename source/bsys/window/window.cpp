@@ -116,19 +116,11 @@ namespace NBsys{namespace NWindow
 	}
 
 
-	/** GetMouseX
+	/** GetMouse
 	*/
-	s32 Window::GetMouseX()
+	Position2DType<s32> Window::GetMouse()
 	{
-		return this->impl->GetMouseX();
-	}
-
-
-	/** GetMouseY
-	*/
-	s32 Window::GetMouseY()
-	{
-		return this->impl->GetMouseY();
+		return this->impl->GetMouse();
 	}
 
 

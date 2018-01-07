@@ -138,6 +138,13 @@ namespace NBsys{namespace NDsound
 	}
 
 
+	/** 再生中チェック。
+	*/
+	bool Dsound_Thread::IsPlay(s32 a_id)
+	{
+		return this->dsound_impl.IsPlay(a_id);
+	}
+
 }}
 #pragma warning(pop)
 #endif

@@ -45,8 +45,7 @@ namespace NBsys{namespace NWindow
 
 		/** mouse
 		*/
-		s32 mouse_x;
-		s32 mouse_y;
+		mutable Position2DType<s32> mouse;
 		bool isview;
 		bool isactive;
 
@@ -98,13 +97,9 @@ namespace NBsys{namespace NWindow
 		*/
 		s32 GetClientHeight() const;
 
-		/** GetMouseX
+		/** GetMouse
 		*/
-		s32 GetMouseX() const;
-
-		/** GetMouseY
-		*/
-		s32 GetMouseY() const;
+		Position2DType<s32> GetMouse() const;
 
 		/** Update
 		*/

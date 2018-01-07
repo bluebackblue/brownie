@@ -28,6 +28,7 @@
 /** include
 */
 #include "./dsound_impl.h"
+#include "./dsound_impl_soundbuffer.h"
 
 
 /** NBsys::NDsound

@@ -143,6 +143,10 @@ namespace NBsys{namespace NDsound
 		*/
 		s32 Play(s32 a_id,bool a_duplicate,bool a_loop,bool a_auto_delete);
 
+		/** 再生中チェック。
+		*/
+		bool IsPlay(s32 a_id);
+
 	};
 
 

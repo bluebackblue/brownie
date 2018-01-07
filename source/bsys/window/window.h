@@ -81,13 +81,9 @@ namespace NBsys{namespace NWindow
 		*/
 		s32 GetClientHeight();
 
-		/** GetMouseX
+		/** GetMouse
 		*/
-		s32 GetMouseX();
-
-		/** GetMouseY
-		*/
-		s32 GetMouseY();
+		Position2DType<s32> GetMouse();
 
 		/** 更新。
 		*/
