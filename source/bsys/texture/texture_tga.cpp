@@ -193,7 +193,8 @@ namespace NBsys{namespace NTexture
 			}
 		}
 
-		sharedptr<Texture> t_texture(new Texture(t_pixel,t_header->h_w,t_header->h_h,t_header->h_w * 4,TextureType::R8G8B8A8,a_name));
+		Size2DType<s32> t_size(static_cast<s32>(t_header->h_w),static_cast<s32>(t_header->h_h));
+		sharedptr<Texture> t_texture(new Texture(t_pixel,t_size,t_header->h_w * 4,TextureType::R8G8B8A8,a_name));
 
 		return t_texture;
 	}

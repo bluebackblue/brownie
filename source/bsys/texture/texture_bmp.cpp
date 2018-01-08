@@ -117,14 +117,14 @@ namespace NBsys{namespace NTexture
 		sharedptr<u8> t_pixel(new u8[t_width * t_height * 4],default_delete<u8[]>());
 		u32* t_dst = reinterpret_cast<u32*>(t_pixel.get());
 
-		for(u32 yy=0;yy<static_cast<s32>(t_height);yy++){
-			for(u32 xx=0;xx<static_cast<s32>(t_width);xx++){
+		for(u32 yy=0;yy<t_height;yy++){
+			for(u32 xx=0;xx<t_width;xx++){
 				u32 t_index = t_width * yy + xx;
 				t_dst[t_index] = 0xFF000000 | (static_cast<u32>(t_src[t_index*3+0]))<<16 | (static_cast<u32>(t_src[t_index*3+1]))<<8 | t_src[t_index*3+2]; 
 			}
 		}
 
-		sharedptr<Texture> t_texture(new Texture(t_pixel,static_cast<s32>(t_width),static_cast<s32>(t_height),static_cast<s32>(t_width * 4),TextureType::R8G8B8A8,a_name));
+		sharedptr<Texture> t_texture(new Texture(t_pixel,Size2DType<s32>(static_cast<s32>(t_width),static_cast<s32>(t_height)),static_cast<s32>(t_width * 4),TextureType::R8G8B8A8,a_name));
 
 		return t_texture;
 	}

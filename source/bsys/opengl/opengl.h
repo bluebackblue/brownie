@@ -178,7 +178,7 @@ namespace NBsys{namespace NOpengl
 
 		/** Render_ViewPort。
 		*/
-		void Render_ViewPort(f32 a_x,f32 a_y,f32 a_width,f32 a_height);
+		void Render_ViewPort(const Rect2DType_R<f32>& a_rect);
 
 		/** Render_SetUniformParameter。
 		*/

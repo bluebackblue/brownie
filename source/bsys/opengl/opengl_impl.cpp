@@ -1311,18 +1311,18 @@ namespace NBsys{namespace NOpengl
 
 	/** Render_ViewPort。
 	*/
-	void Opengl_Impl::Render_ViewPort(f32 a_x,f32 a_y,f32 a_width,f32 a_height)
+	void Opengl_Impl::Render_ViewPort(const Rect2DType_R<f32>& a_rect)
 	{
 		//AutoLock t_autolock(this->lockobject);
 
 		{
 			#if(BSYS_OPENGL_DEBUG_ENABLE)
 			{
-				TAGLOG("gl","glViewport : %d : %d : %d : %d",static_cast<s32>(a_x),static_cast<s32>(a_y),static_cast<s32>(a_width),static_cast<s32>(a_height));
+				TAGLOG("gl","glViewport : %d : %d : %d : %d",static_cast<s32>(a_rect.xx),static_cast<s32>(a_rect.yy),static_cast<s32>(a_rect.ww),static_cast<s32>(a_rect.hh));
 			}
 			#endif
 
-			glViewport(static_cast<s32>(a_x),static_cast<s32>(a_y),static_cast<s32>(a_width),static_cast<s32>(a_height));
+			glViewport(static_cast<s32>(a_rect.xx),static_cast<s32>(a_rect.yy),static_cast<s32>(a_rect.ww),static_cast<s32>(a_rect.hh));
 		}
 	}
 

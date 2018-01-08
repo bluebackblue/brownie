@@ -44,11 +44,10 @@ namespace NBsys{namespace NTexture
 {
 	/** コンストラクタ。
 	*/
-	Texture::Texture(const sharedptr<u8>& a_pixel,s32 a_width,s32 a_height,s32 a_pitch,TextureType::Id a_texturetype,const STLWString& a_name)
+	Texture::Texture(const sharedptr<u8>& a_pixel,const Size2DType<s32>& a_size,s32 a_pitch,TextureType::Id a_texturetype,const STLWString& a_name)
 		:
 		pixel(a_pixel),
-		width(a_width),
-		height(a_height),
+		size(a_size),
 		pitch(a_pitch),
 		texturetype(a_texturetype),
 		name(a_name)
@@ -79,19 +78,11 @@ namespace NBsys{namespace NTexture
 	}
 
 
-	/** GetWidth
+	/** GetSize
 	*/
-	s32 Texture::GetWidth() const
+	const Size2DType<s32>& Texture::GetSize() const
 	{
-		return this->width;
-	}
-
-
-	/** GetHeight
-	*/
-	s32 Texture::GetHeight() const
-	{
-		return this->height;
+		return this->size;
 	}
 
 
@@ -113,10 +104,10 @@ namespace NBsys{namespace NTexture
 
 	/** ２の乗数の幅を計算する。
 	*/
-	s32 CalcJustWidth(s32 a_width)
+	s32 CalcJustSize(s32 a_size)
 	{
 		//幅が２の何乗か。
-		f32 t_width = NBlib::NMath::log2_f(static_cast<f32>(a_width));
+		f32 t_width = NBlib::NMath::log2_f(static_cast<f32>(a_size));
 		
 		//小数点切り上げ。
 		t_width = NBlib::NMath::ceil_f(t_width);

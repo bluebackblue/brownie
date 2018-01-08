@@ -56,7 +56,7 @@ namespace NBsys{namespace ND3d11
 		list(),
 		maplist()
 	{
-		this->texturewidth = NTexture::CalcJustWidth(a_texture_width);
+		this->texturewidth = NTexture::CalcJustSize(a_texture_width);
 
 		s32 t_drawtypemax = 0;
 
@@ -84,14 +84,13 @@ namespace NBsys{namespace ND3d11
 			}break;
 		}
 
-		this->textureheight = NTexture::CalcJustWidth(this->texturewidth * t_drawtypemax);
+		this->textureheight = NTexture::CalcJustSize(this->texturewidth * t_drawtypemax);
 
 		sharedptr<u8> t_pixel(new u8[static_cast<u32>(this->texturewidth * this->textureheight * 4)]);
 
 		this->texture.reset(new NBsys::NTexture::Texture(
 			t_pixel,
-			this->texturewidth,
-			this->textureheight,
+			Size2DType<s32>(this->texturewidth,this->textureheight),
 			this->texturewidth * 4,
 			NBsys::NTexture::TextureType::R8G8B8A8,
 			a_name

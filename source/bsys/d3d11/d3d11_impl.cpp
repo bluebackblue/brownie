@@ -1054,8 +1054,8 @@ namespace NBsys{namespace ND3d11
 		{
 			D3D11_TEXTURE2D_DESC t_desc = {0};
 			{
-				t_desc.Width = static_cast<UINT>(a_texture->texture->GetWidth());
-				t_desc.Height = static_cast<UINT>(a_texture->texture->GetHeight());
+				t_desc.Width = static_cast<UINT>(a_texture->texture->GetSize().ww);
+				t_desc.Height = static_cast<UINT>(a_texture->texture->GetSize().hh);
 				t_desc.MipLevels = 1;
 				t_desc.ArraySize = 1;
 				t_desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -1443,8 +1443,7 @@ namespace NBsys{namespace ND3d11
 						t_screenshot.reset(
 							new NBsys::NTexture::Texture(
 								new u8[t_size],
-								static_cast<s32>(t_desc_backbuffer.Width),
-								static_cast<s32>(t_desc_backbuffer.Height),
+								Size2DType<s32>(static_cast<s32>(t_desc_backbuffer.Width),static_cast<s32>(t_desc_backbuffer.Height)),
 								static_cast<s32>(t_mapped_resource.RowPitch),
 								NBsys::NTexture::TextureType::R8G8B8A8,
 								L"screenshot"
@@ -1474,18 +1473,18 @@ namespace NBsys{namespace ND3d11
 
 	/** Render_ViewPort。
 	*/
-	void D3d11_Impl::Render_ViewPort(f32 a_x,f32 a_y,f32 a_width,f32 a_height)
+	void D3d11_Impl::Render_ViewPort(const Rect2DType_R<f32>& a_rect)
 	{
 		if(this->devicecontext){
 
 			D3D11_VIEWPORT t_viewport;
 			{
-				t_viewport.Width = a_width;
-				t_viewport.Height = a_height;
+				t_viewport.Width = a_rect.ww;
+				t_viewport.Height = a_rect.hh;
 				t_viewport.MinDepth = 0.0f;
 				t_viewport.MaxDepth = 1.0f;
-				t_viewport.TopLeftX = a_x;
-				t_viewport.TopLeftY = a_y;
+				t_viewport.TopLeftX = a_rect.xx;
+				t_viewport.TopLeftY = a_rect.yy;
 			}
 
 			this->devicecontext->RSSetViewports(1,&t_viewport);

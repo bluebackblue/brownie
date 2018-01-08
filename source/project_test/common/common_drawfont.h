@@ -387,27 +387,20 @@ namespace NTest{namespace NCommon
 			const Render2D_Item_Font* t_instence_start = dynamic_cast<const Render2D_Item_Font*>(a_it_start->get());
 			ASSERT(t_instence_start != nullptr);
 
-			f32 t_viewport_offset_x = 0.0f;
-			f32 t_viewport_offset_y = 0.0f;
-			f32 t_viewport_w = this->d3d11->GetSize().ww;
-			f32 t_viewport_h = this->d3d11->GetSize().hh;
+			Rect2DType_R<f32> t_viewport(0.0f,0.0f,this->d3d11->GetSize().ww,this->d3d11->GetSize().hh);
+
+			//f32 t_viewport_offset_x = 0.0f;
+			//f32 t_viewport_offset_y = 0.0f;
+			//f32 t_viewport_w = ;
+			//f32 t_viewport_h = ;
 
 			if(t_instence_start->clip == true){
 				//クリップ処理あり。
-
-				t_viewport_offset_x = t_instence_start->x;
-				t_viewport_offset_y = t_instence_start->y;
-				t_viewport_w = t_instence_start->w;
-				t_viewport_h = t_instence_start->h;
+				t_viewport.Set(t_instence_start->x,t_instence_start->y,t_instence_start->w,t_instence_start->h);
 			}
 
 			//ビューポート。
-			this->d3d11->Render_ViewPort(
-				t_viewport_offset_x,
-				t_viewport_offset_y,
-				t_viewport_w,
-				t_viewport_h
-			);
+			this->d3d11->Render_ViewPort(t_viewport);
 
 			//バーテックスクリア。
 			this->vertex->ClearVertex();
@@ -431,8 +424,8 @@ namespace NTest{namespace NCommon
 					t_fonttexture_type,
 					t_instence->string,
 					this->vertex,
-					t_instence->x - t_viewport_offset_x,
-					t_instence->y - t_viewport_offset_y,
+					t_instence->x - t_viewport.xx,
+					t_instence->y - t_viewport.yy,
 					t_instence->w,
 					t_instence->h,
 					t_instence->alignment_x,
@@ -446,7 +439,7 @@ namespace NTest{namespace NCommon
 
 			if(this->vertex->GetVertexCountOf(0) > 0){
 				NBsys::NGeometry::Geometry_Matrix_44 t_view_projection;
-				t_view_projection.Set_OrthographicProjectionMatrix(0,static_cast<f32>(t_viewport_w),0,static_cast<f32>(t_viewport_h),0.0f,1.0f);
+				t_view_projection.Set_OrthographicProjectionMatrix(0,t_viewport.ww,0,t_viewport.hh,0.0f,1.0f);
 
 				//シェーダー。
 				this->d3d11->Render_VSSetShader(this->vertexshader_id);

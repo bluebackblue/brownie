@@ -108,7 +108,7 @@ namespace NBsys{namespace NTexture
 		if(t_bitmap->GetLastStatus() == Gdiplus::Ok){
 			s32 t_tex_width = static_cast<s32>(t_bitmap->GetWidth());
 			s32 t_tex_height = static_cast<s32>(t_bitmap->GetHeight());
-			s32 t_tex_pitch = NTexture::CalcJustWidth(t_tex_width) * 4;
+			s32 t_tex_pitch = NTexture::CalcJustSize(t_tex_width) * 4;
 
 			Gdiplus::BitmapData t_bitmap_data;
 			Gdiplus::Rect t_rect(0,0,t_tex_width,t_tex_height);
@@ -117,11 +117,11 @@ namespace NBsys{namespace NTexture
 
 				sharedptr<u8> t_to_pixel(new u8[static_cast<std::size_t>(t_tex_height * t_tex_pitch)],default_delete<u8[]>());
 			
-				for(s32 yy=0;yy<t_tex_height;yy++){
+				for(u32 yy=0;yy<t_tex_height;yy++){
 					const u8* t_from = reinterpret_cast<const u8*>(t_bitmap_data.Scan0) + yy * t_bitmap_data.Stride;
 					u8* t_to = t_to_pixel.get() + yy * t_tex_pitch ;
 
-					for(s32 xx=0;xx<t_tex_width;xx++){
+					for(u32 xx=0;xx<t_tex_width;xx++){
 
 						t_to[0] = t_from[2];	//R
 						t_to[1] = t_from[1];	//G
@@ -135,7 +135,8 @@ namespace NBsys{namespace NTexture
 
 				t_bitmap->UnlockBits(&t_bitmap_data);
 
-				t_to_texture.reset(new Texture(t_to_pixel,t_tex_width,t_tex_height,t_tex_pitch,TextureType::R8G8B8A8,a_name));
+				Size2DType<s32> t_size(t_tex_width,t_tex_height);
+				t_to_texture.reset(new Texture(t_to_pixel,t_size,t_tex_pitch,TextureType::R8G8B8A8,a_name));
 			}
 		}
 
@@ -195,7 +196,7 @@ namespace NBsys{namespace NTexture
 		}
 
 		//グローバルメモリ。
-		sharedptr<Texture_Impl_GlobalMemory> t_globalmemory(new Texture_Impl_GlobalMemory(a_texture->GetPitch() * a_texture->GetHeight()));
+		sharedptr<Texture_Impl_GlobalMemory> t_globalmemory(new Texture_Impl_GlobalMemory(a_texture->GetPitch() * a_texture->GetSize().hh));
 		if(t_globalmemory->IsEnable() == false){
 			return std::tuple<sharedptr<u8>,s32>(nullptr,0);
 		}
@@ -215,20 +216,19 @@ namespace NBsys{namespace NTexture
 			//サイズをゼロに設定。
 			t_stream->SetSizeZero();
 
-			s32 t_width = a_texture->GetWidth();
-			s32 t_height = a_texture->GetHeight();
-			Gdiplus::Bitmap t_bitmap(t_width,t_height);
+			Size2DType<u32> t_size = static_cast<Size2DType<u32>>(a_texture->GetSize());
+			Gdiplus::Bitmap t_bitmap(t_size.ww,t_size.hh);
 
 			{
-				Gdiplus::Rect t_rect(0,0,t_width,t_height);
+				Gdiplus::Rect t_rect(0,0,t_size.ww,t_size.hh);
 				Gdiplus::BitmapData t_bitmap_data;
 				Gdiplus::Status t_status = t_bitmap.LockBits(&t_rect,Gdiplus::ImageLockModeRead,PixelFormat32bppARGB,&t_bitmap_data);
 				if(t_status == Gdiplus::Status::Ok){
 
-					for(s32 yy=0;yy<t_height;yy++){
+					for(u32 yy=0;yy<t_size.hh;yy++){
 						u8* t_to = reinterpret_cast<u8*>(t_bitmap_data.Scan0) + yy * t_bitmap_data.Stride;
 						const u8* t_from = a_texture->GetPixel().get() + yy * a_texture->GetPitch();
-						for(s32 xx=0;xx<t_width;xx++){
+						for(u32 xx=0;xx<t_size.ww;xx++){
 							t_to[2] = t_from[0];	//R
 							t_to[1] = t_from[1];	//G
 							t_to[0] = t_from[2];	//B

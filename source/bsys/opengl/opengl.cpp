@@ -254,9 +254,9 @@ namespace NBsys{namespace NOpengl
 
 	/** Render_ViewPort。
 	*/
-	void Opengl::Render_ViewPort(f32 a_x,f32 a_y,f32 a_width,f32 a_height)
+	void Opengl::Render_ViewPort(const Rect2DType_R<f32>& a_rect)
 	{
-		this->impl->Render_ViewPort(a_x,a_y,a_width,a_height);
+		this->impl->Render_ViewPort(a_rect);
 	}
 
 

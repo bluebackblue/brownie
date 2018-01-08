@@ -51,13 +51,9 @@ namespace NBsys{namespace NTexture
 		*/
 		sharedptr<u8> pixel;
 
-		/** width
+		/** size
 		*/
-		s32 width;
-
-		/** height
-		*/
-		s32 height;
+		Size2DType<s32> size;
 
 		/** pitch
 		*/
@@ -75,7 +71,7 @@ namespace NBsys{namespace NTexture
 
 		/** constructor
 		*/
-		Texture(const sharedptr<u8>& a_pixel,s32 a_width,s32 a_height,s32 a_pitch,TextureType::Id a_texturetype,const STLWString& a_name);
+		Texture(const sharedptr<u8>& a_pixel,const Size2DType<s32>& a_size,s32 a_pitch,TextureType::Id a_texturetype,const STLWString& a_name);
 
 		/** destructor
 		*/
@@ -91,13 +87,9 @@ namespace NBsys{namespace NTexture
 		*/
 		const sharedptr<u8>& GetPixel() const;
 
-		/** GetWidth
+		/** GetSize
 		*/
-		s32 GetWidth() const;
-
-		/** GetHeight
-		*/
-		s32 GetHeight() const;
+		const Size2DType<s32>& GetSize() const;
 
 		/** TextureType
 		*/
@@ -112,7 +104,7 @@ namespace NBsys{namespace NTexture
 
 	/** ２の乗数の幅を計算する。
 	*/
-	s32 CalcJustWidth(s32 a_width);
+	s32 CalcJustSize(s32 a_size);
 
 
 	/** CreateTexture

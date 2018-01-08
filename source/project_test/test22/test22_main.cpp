@@ -506,17 +506,17 @@ namespace NTest
 
 						#if(USE_FOVE)
 						if(t_left_right_index == 0){
-							s_d3d11->Render_ViewPort(0.0f,0.0f,s_fovehmd->GetSingleEyeResolution().x,s_fovehmd->GetSingleEyeResolution().y);
+							s_d3d11->Render_ViewPort(RectType2D_R<f32>(0.0f,0.0f,s_fovehmd->GetSingleEyeResolution().x,s_fovehmd->GetSingleEyeResolution().y));
 							t_view_projection = s_fovehmd->GetLeftViewProjection(t_near,t_far,t_camera_position);
 						}else{
-							s_d3d11->Render_ViewPort(s_fovehmd->GetSingleEyeResolution().x,0.0f,s_fovehmd->GetSingleEyeResolution().x,s_fovehmd->GetSingleEyeResolution().y);
+							s_d3d11->Render_ViewPort(RectType2D_R<f32>(s_fovehmd->GetSingleEyeResolution().x,0.0f,s_fovehmd->GetSingleEyeResolution().x,s_fovehmd->GetSingleEyeResolution().y));
 							t_view_projection = s_fovehmd->GetRightViewProjection(t_near,t_far,t_camera_position);
 						}
 						#endif
 					}
 					#else
 					{
-						s_d3d11->Render_ViewPort(0.0f,0.0f,static_cast<f32>(s_width),static_cast<f32>(s_height));
+						s_d3d11->Render_ViewPort(RectType2D_R<f32>(0.0f,0.0f,s_width,s_height));
 
 						//t_camera_target
 						NBsys::NGeometry::Geometry_Vector3 t_camera_target(0.0f,10.0f,0.0f);

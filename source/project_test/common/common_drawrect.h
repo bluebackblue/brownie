@@ -293,7 +293,7 @@ namespace NTest{namespace NCommon
 		void RenderCall(STLList<sharedptr<Render2D_Item_Base>>::const_iterator a_it_start,STLList<sharedptr<Render2D_Item_Base>>::const_iterator a_it_end)
 		{
 			//ビューポート。
-			this->d3d11->Render_ViewPort(0.0f,0.0f,this->d3d11->GetSize().ww,this->d3d11->GetSize().hh);
+			this->d3d11->Render_ViewPort(Rect2DType_R<f32>(0.0f,0.0f,this->d3d11->GetSize().ww,this->d3d11->GetSize().hh));
 
 			//バーテックスクリア。
 			this->vertex->ClearVertex();

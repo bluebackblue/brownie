@@ -634,7 +634,7 @@ namespace NTest{namespace NCommon
 					this->d3d11->Render_Main();
 
 					//ビューポート。
-					this->d3d11->Render_ViewPort(0.0f,0.0f,this->size.ww,this->size.hh);
+					this->d3d11->Render_ViewPort(Rect2DType_R<f32>(0.0f,0.0f,this->size.ww,this->size.hh));
 
 					//深度ステンシルクリア。
 					this->d3d11->Render_ClearDepthStencilView();
