@@ -42,7 +42,7 @@ namespace NBsys{namespace NGeometry
 
 		/** destructor
 		*/
-		nonvirtual inline ~Geometry_Plane();
+		inline nonvirtual ~Geometry_Plane();
 
 	public:
 

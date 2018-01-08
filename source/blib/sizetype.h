@@ -139,10 +139,10 @@ namespace NBlib
 
 		/** t_1 = 2;
 		*/
-		Size2DType<T>& operator =(const T& a_right_valuet)
+		Size2DType<T>& operator =(const T& a_right_value)
 		{
-			this->ww = a_right_valuet;
-			this->hh = a_right_valuet;
+			this->ww = a_right_value;
+			this->hh = a_right_value;
 			return *this;
 		}
 

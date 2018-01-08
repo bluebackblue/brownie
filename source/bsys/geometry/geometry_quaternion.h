@@ -45,12 +45,33 @@ namespace NBsys{namespace NGeometry
 		/** raw
 		*/
 		inline f32& x();
+
+		/** y
+		*/
 		inline f32& y();
+
+		/** z
+		*/
 		inline f32& z();
+
+		/** w
+		*/
 		inline f32& w();
+
+		/** x
+		*/
 		inline const f32& x() const;
+
+		/** y
+		*/
 		inline const f32& y() const;
+
+		/** z
+		*/
 		inline const f32& z() const;
+
+		/** w
+		*/
 		inline const f32& w() const;
 
 		/** constructor
@@ -79,7 +100,7 @@ namespace NBsys{namespace NGeometry
 
 		/** destructor
 		*/
-		nonvirtual inline ~Geometry_Quaternion();
+		inline nonvirtual ~Geometry_Quaternion();
 
 		/** Set_Normalize
 		*/

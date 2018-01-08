@@ -165,7 +165,7 @@ namespace NBlib
 
 		/** t_1 = 2;
 		*/
-		Rect2DType_R<T>& operator =(const T& a_right_valuet)
+		Rect2DType_R<T>& operator =(const T& a_right_value)
 		{
 			this->xx = a_right_value;
 			this->yy = a_right_value;
@@ -495,7 +495,7 @@ namespace NBlib
 
 		/** t_1 = 2;
 		*/
-		Rect2DType_A<T>& operator =(const T& a_right_valuet)
+		Rect2DType_A<T>& operator =(const T& a_right_value)
 		{
 			this->xx = a_right_value;
 			this->yy = a_right_value;

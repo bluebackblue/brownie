@@ -30,8 +30,8 @@ namespace NBsys{namespace NGeometry
 		*/
 		struct Vector
 		{
-			f32 x;
-			f32 y;
+			f32 xx;
+			f32 yy;
 		}v;
 
 		/** vector
@@ -48,9 +48,9 @@ namespace NBsys{namespace NGeometry
 		*/
 		struct Vector
 		{
-			f32 x;
-			f32 y;
-			f32 z;
+			f32 xx;
+			f32 yy;
+			f32 zz;
 		}v;
 
 		/** vector
@@ -67,10 +67,10 @@ namespace NBsys{namespace NGeometry
 		*/
 		struct Vector
 		{
-			f32 x;
-			f32 y;
-			f32 z;
-			f32 w;
+			f32 xx;
+			f32 yy;
+			f32 zz;
+			f32 ww;
 		}v;
 
 		/** vector

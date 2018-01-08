@@ -43,7 +43,7 @@ namespace NBsys{namespace NGeometry
 
 		/** destructor
 		*/
-		nonvirtual inline ~Geometry_Frustum();
+		inline nonvirtual ~Geometry_Frustum();
 
 	public:
 

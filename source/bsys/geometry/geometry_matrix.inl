@@ -569,9 +569,9 @@ namespace NBsys{namespace NGeometry
 	{
 		Geometry_Matrix_44 t_temp = Geometry_Identity();
 		{
-			t_temp.tr_x() = a_vector.raw.v.x;
-			t_temp.tr_y() = a_vector.raw.v.y;
-			t_temp.tr_z() = a_vector.raw.v.z;
+			t_temp.tr_x() = a_vector.x();
+			t_temp.tr_y() = a_vector.y();
+			t_temp.tr_z() = a_vector.z();
 		}
 
 		return t_temp;
