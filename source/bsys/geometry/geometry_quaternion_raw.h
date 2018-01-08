@@ -28,10 +28,10 @@ namespace NBsys{namespace NGeometry
 	{
 		struct Quaternion
 		{
-			f32 x;
-			f32 y;
-			f32 z;
-			f32 w;
+			f32 xx;
+			f32 yy;
+			f32 zz;
+			f32 ww;
 		}q;
 
 		f32 quaternion[4];

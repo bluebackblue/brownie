@@ -79,7 +79,7 @@ namespace NBsys{namespace NGeometry
 
 		/** constructor
 		*/
-		inline Geometry_Matrix_44();
+		inline Geometry_Matrix_44() noexcept;
 
 		/** constructor
 		*/
@@ -88,23 +88,79 @@ namespace NBsys{namespace NGeometry
 			f32 a_ay_x,f32 a_ay_y,f32 a_ay_z,f32 a_ay_w,
 			f32 a_az_x,f32 a_az_y,f32 a_az_z,f32 a_az_w,
 			f32 a_tr_x,f32 a_tr_y,f32 a_tr_z,f32 a_tr_w
-		);
+		) noexcept;
 
 		/** constructor
 		*/
-		inline Geometry_Matrix_44(const Geometry_Identity_Type& /*a_identity*/);
+		inline Geometry_Matrix_44(const Geometry_Identity_Type& /*a_identity*/) noexcept;
 
 		/** constructor
 		*/
-		inline Geometry_Matrix_44(const Geometry_Quaternion& a_quaternion);
+		inline Geometry_Matrix_44(const Geometry_Quaternion& a_quaternion) noexcept;
 
 		/** constructor
 		*/
-		inline Geometry_Matrix_44(const f32* a_m);
+		inline Geometry_Matrix_44(const f32* a_m) noexcept;
+
+		/** constructor
+		*/
+		inline Geometry_Matrix_44(const Geometry_Matrix_44& a_matrix) noexcept;
 
 		/** destructor
 		*/
-		inline ~Geometry_Matrix_44();
+		inline nonvirtual ~Geometry_Matrix_44();
+
+		/** t_1 = NBsys::NGeometry::Geometry_Identity();
+		*/
+		inline Geometry_Matrix_44& operator =(const Geometry_Identity_Type& /*a_identity*/);
+
+		/** t_1 = t_2;
+		*/
+		inline Geometry_Matrix_44& operator =(const Geometry_Matrix_44& a_right);
+
+		/** t_1 = +t_2;
+		*/
+		inline Geometry_Matrix_44 operator +() const;
+
+		/** t_1 = -t_2;
+		*/
+		inline Geometry_Matrix_44 operator -() const;
+
+		/** t_1 += t_2;
+		*/
+		inline Geometry_Matrix_44& operator +=(const Geometry_Matrix_44& a_right);
+
+		/** t_1 -= t_2;
+		*/
+		inline Geometry_Matrix_44& operator -=(const Geometry_Matrix_44& a_right);
+
+		/** t_1 *= t_2;
+		*/
+		inline Geometry_Matrix_44& operator *=(const Geometry_Matrix_44& a_right);
+
+		/** t_1 /= t_2;
+		*/
+		inline Geometry_Matrix_44& operator /=(const Geometry_Matrix_44& a_right) = delete;
+
+		/** t_1 = 2;
+		*/
+		inline Geometry_Matrix_44& operator =(f32 a_right_value);
+
+		/** t_1 += 2;
+		*/
+		inline Geometry_Matrix_44& operator +=(f32 a_right_value);
+
+		/** t_1 -= 2;
+		*/
+		inline Geometry_Matrix_44& operator -=(f32 a_right_value);
+
+		/** t_1 *= 2;
+		*/
+		inline Geometry_Matrix_44& operator *=(f32 a_right_value);
+
+		/** t_1 /= 2;
+		*/
+		inline Geometry_Matrix_44& operator /=(f32 a_right_value);
 
 		/** [static]Identity。
 		*/
@@ -270,36 +326,73 @@ namespace NBsys{namespace NGeometry
 		/** [設定]ビューポート、
 		*/
 		inline void Set_ViewPortMatrix(const Size2DType<f32>& a_size);
-
-		/** [設定]単位型。
-		*/
-		inline Geometry_Matrix_44& operator =(const Geometry_Identity_Type& /*a_identity*/);
-
-		/** [設定]乗算。
-		*/
-		inline Geometry_Matrix_44& operator *=(const Geometry_Matrix_44& a_matrix);
-
-		/** [作成]乗算。
-		*/
-		inline Geometry_Matrix_44 operator *(const Geometry_Matrix_44& a_matrix) const;
-
-		/** [設定]乗算。
-		*/
-		inline Geometry_Matrix_44& operator *=(f32 a_value);
-
-		/** [作成]乗算。
-		*/
-		inline Geometry_Matrix_44 operator *(f32 a_value);
-
-		/** [設定]加算。
-		*/
-		inline Geometry_Matrix_44& operator +=(const Geometry_Matrix_44& a_matrix);
-
-		/** [作成]加算。
-		*/
-		inline Geometry_Matrix_44 operator +(const Geometry_Matrix_44& a_matrix) const;
 	};
 
+
+	/** t_1 = t_2 + t_3;
+	*/
+	inline Geometry_Matrix_44 operator +(const Geometry_Matrix_44& a_left,const Geometry_Matrix_44& a_right)
+	{
+		return Geometry_Matrix_44(a_left) += a_right;
+	}
+
+
+	/** t_1 = t_2 - t_3;
+	*/
+	inline Geometry_Matrix_44 operator -(const Geometry_Matrix_44& a_left,const Geometry_Matrix_44& a_right)
+	{
+		return Geometry_Matrix_44(a_left) -= a_right;
+	}
+
+
+	/** t_1 = t_2 * t_3;
+	*/
+	inline Geometry_Matrix_44 operator *(const Geometry_Matrix_44& a_left,const Geometry_Matrix_44& a_right)
+	{
+		return Geometry_Matrix_44(a_left) *= a_right;
+	}
+
+
+	/** t_1 = t_2 / t_3;
+	*/
+	#if(0)
+	inline Geometry_Matrix_44 operator /(const Geometry_Matrix_44& a_left,const Geometry_Matrix_44& a_right)
+	{
+		return Geometry_Matrix_44(a_left) /= a_right;
+	}
+	#endif
+
+
+	/** t_1 = t_2 + 2;
+	*/
+	inline Geometry_Matrix_44 operator +(const Geometry_Matrix_44& a_left,f32 a_right_value)
+	{
+		return Geometry_Matrix_44(a_left) += a_right_value;
+	}
+
+
+	/** t_1 = t_2 - 2;
+	*/
+	inline Geometry_Matrix_44 operator -(const Geometry_Matrix_44& a_left,f32 a_right_value)
+	{
+		return Geometry_Matrix_44(a_left) -= a_right_value;
+	}
+
+
+	/** t_1 = t_2 * 2;
+	*/
+	inline Geometry_Matrix_44 operator *(const Geometry_Matrix_44& a_left,f32 a_right_value)
+	{
+		return Geometry_Matrix_44(a_left) *= a_right_value;
+	}
+
+
+	/** t_1 = t_2 / 2;
+	*/
+	inline Geometry_Matrix_44 operator /(const Geometry_Matrix_44& a_left,f32 a_right_value)
+	{
+		return Geometry_Matrix_44(a_left) /= a_right_value;
+	}
 
 }}
 #endif
