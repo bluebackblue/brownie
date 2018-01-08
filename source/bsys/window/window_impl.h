@@ -53,15 +53,13 @@ namespace NBsys{namespace NWindow
 		*/
 		bool isopen;
 
-		/** default
+		/** default_size
 		*/
-		s32 default_width;
-		s32 default_height;
+		Size2DType<f32> default_size;
 
-		/** client
+		/** client_size
 		*/
-		s32 client_width;
-		s32 client_height;
+		Size2DType<f32> client_size;
 
 	public:
 
@@ -77,25 +75,21 @@ namespace NBsys{namespace NWindow
 
 		/** GetDesktopSize
 		*/
-		static std::tuple<s32,s32> GetDesktopSize();
+		static Size2DType<f32> GetDesktopSize();
 
 	public:
 
 		/** Create
 		*/
-		void Create(const STLWString& a_title,s32 a_width,s32 a_height);
+		void Create(const STLWString& a_title,const Size2DType<f32>& a_size);
 
 		/** Delete
 		*/
 		void Delete();
 
-		/** GetClientWidth
+		/** GetClientSize
 		*/
-		s32 GetClientWidth() const;
-
-		/** GetClientHeight
-		*/
-		s32 GetClientHeight() const;
+		const Size2DType<f32>& GetClientSize() const;
 
 		/** GetMouse
 		*/

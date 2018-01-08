@@ -293,7 +293,7 @@ namespace NTest{namespace NCommon
 		void RenderCall(STLList<sharedptr<Render2D_Item_Base>>::const_iterator a_it_start,STLList<sharedptr<Render2D_Item_Base>>::const_iterator a_it_end)
 		{
 			//ビューポート。
-			this->d3d11->Render_ViewPort(0.0f,0.0f,static_cast<f32>(this->d3d11->GetWidth()),static_cast<f32>(this->d3d11->GetHeight()));
+			this->d3d11->Render_ViewPort(0.0f,0.0f,this->d3d11->GetSize().ww,this->d3d11->GetSize().hh);
 
 			//バーテックスクリア。
 			this->vertex->ClearVertex();
@@ -389,7 +389,7 @@ namespace NTest{namespace NCommon
 
 			if(this->vertex->GetVertexCountOf(0) > 0){
 				NBsys::NGeometry::Geometry_Matrix_44 t_view_projection;
-				t_view_projection.Set_OrthographicProjectionMatrix(0,static_cast<f32>(this->d3d11->GetWidth()),0,static_cast<f32>(this->d3d11->GetHeight()),0.0f,1.0f);
+				t_view_projection.Set_OrthographicProjectionMatrix(0,this->d3d11->GetSize().ww,0,this->d3d11->GetSize().hh,0.0f,1.0f);
 
 				//シェーダー。
 				this->d3d11->Render_VSSetShader(this->vertexshader_id);

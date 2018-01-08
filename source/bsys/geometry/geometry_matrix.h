@@ -257,7 +257,7 @@ namespace NBsys{namespace NGeometry
 
 		/** [設定]プロジェクション。透視投影。
 		*/
-		inline void Set_PerspectiveProjectionMatrix(f32 a_width,f32 a_height,f32 a_fov_deg,f32 a_near,f32 a_far);
+		inline void Set_PerspectiveProjectionMatrix(const Size2DType<f32>& a_size,f32 a_fov_deg,f32 a_near,f32 a_far);
 
 		/** [設定]プロジェクション。正射影。
 		*/
@@ -269,7 +269,7 @@ namespace NBsys{namespace NGeometry
 
 		/** [設定]ビューポート、
 		*/
-		inline void Set_ViewPortMatrix(f32 a_width,f32 a_height);
+		inline void Set_ViewPortMatrix(const Size2DType<f32>& a_size);
 
 		/** [設定]単位型。
 		*/

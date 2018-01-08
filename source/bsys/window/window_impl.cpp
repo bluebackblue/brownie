@@ -53,10 +53,8 @@ namespace NBsys{namespace NWindow
 		isview(false),
 		isactive(false),
 		isopen(false),
-		default_width(0),
-		default_height(0),
-		client_width(0),
-		client_height(0)
+		default_size(0),
+		client_size(0)
 	{
 	}
 
@@ -71,29 +69,21 @@ namespace NBsys{namespace NWindow
 
 	/** [static]GetDesktopSize
 	*/
-	std::tuple<s32,s32> Window_Impl::GetDesktopSize()
+	Size2DType<f32> Window_Impl::GetDesktopSize()
 	{
 		RECT t_rect;
 		HWND t_hwnd_desktop = ::GetDesktopWindow();
 		::GetWindowRect(t_hwnd_desktop, &t_rect);
 
-		return std::tuple<s32,s32>(t_rect.right - t_rect.left,t_rect.bottom - t_rect.top);
+		return Size2DType<f32>(static_cast<f32>(t_rect.right - t_rect.left),static_cast<f32>(t_rect.bottom - t_rect.top));
 	}
 
 
 	/** GetClientWidth
 	*/
-	s32 Window_Impl::GetClientWidth() const
+	const Size2DType<f32>& Window_Impl::GetClientSize() const
 	{
-		return this->client_width;
-	}
-
-
-	/** GetClientHeight
-	*/
-	s32 Window_Impl::GetClientHeight() const
-	{
-		return this->client_height;
+		return this->client_size;
 	}
 
 
@@ -115,18 +105,22 @@ namespace NBsys{namespace NWindow
 
 	/** Create
 	*/
-	void Window_Impl::Create(const STLWString& a_title,s32 a_width,s32 a_height)
+	void Window_Impl::Create(const STLWString& a_title,const Size2DType<f32>& a_size)
 	{
 		#if defined(PLATFORM_VCWIN) || defined(PLATFORM_GNUCWIN)
 
 		HINSTANCE t_instance = ::GetModuleHandle(WIN_NULL);
 
-		this->default_width = a_width;
-		this->default_height = a_height;
-		this->client_width = a_width;
-		this->client_height = a_height;
+		this->default_size = a_size;
+		this->client_size = a_size;
 
-		RECT t_rect = { 0, 0, a_width, a_height };
+		RECT t_rect = {
+			0,
+			0,
+			static_cast<s32>(a_size.ww),
+			static_cast<s32>(a_size.hh)
+		};
+
 		::AdjustWindowRect(&t_rect,WS_OVERLAPPEDWINDOW,FALSE);
 
 		const wchar* t_classname = L"brownie window class";
@@ -288,8 +282,8 @@ namespace NBsys{namespace NWindow
 				if((a_wparam == SIZE_MINIMIZED)||(a_wparam == SIZE_MAXHIDE)){
 					this->isview  = false;
 				}else{
-					this->client_width = static_cast<s32>(LOWORD(a_lparam));
-					this->client_height = static_cast<s32>(HIWORD(a_lparam));
+					this->client_size.ww = static_cast<f32>(LOWORD(a_lparam));
+					this->client_size.hh = static_cast<f32>(HIWORD(a_lparam));
 					this->isview  = true;
 				}
 			}break;

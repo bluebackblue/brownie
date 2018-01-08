@@ -290,7 +290,7 @@ namespace NBsys{namespace NWindowMenu
 		if(this->calc_w_fix == false){
 			if(this->size.type_w == WindowMenu_SizeType::Fix){
 				//固定。
-				this->calc_w = this->size.w;
+				this->calc_w = this->size.size.ww;
 				this->calc_w_fix = true;
 			}else if(this->size.type_w == WindowMenu_SizeType::StretchParent){
 				//■親のサイズに合わせる。
@@ -393,7 +393,7 @@ namespace NBsys{namespace NWindowMenu
 		if(this->calc_h_fix == false){
 			if(this->size.type_h == WindowMenu_SizeType::Fix){
 				//固定。
-				this->calc_h = this->size.h;
+				this->calc_h = this->size.size.hh;
 				this->calc_h_fix = true;
 			}else if(this->size.type_h == WindowMenu_SizeType::StretchParent){
 				//■親のサイズに合わせる。

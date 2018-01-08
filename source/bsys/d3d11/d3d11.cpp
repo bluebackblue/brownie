@@ -68,19 +68,11 @@ namespace NBsys{namespace ND3d11
 	}
 
 
-	/** GetWidth
+	/** GetSize
 	*/
-	s32 D3d11::GetWidth()
+	const Size2DType<f32>& D3d11::GetSize()
 	{
-		return this->impl->GetWidth();
-	}
-
-
-	/** GetHeight
-	*/
-	s32 D3d11::GetHeight()
-	{
-		return this->impl->GetHeight();
+		return this->impl->GetSize();
 	}
 
 
@@ -174,9 +166,9 @@ namespace NBsys{namespace ND3d11
 
 	/** Render_Create
 	*/
-	void D3d11::Render_Create(sharedptr<NWindow::Window>& a_window,s32 a_width,s32 a_height)
+	void D3d11::Render_Create(sharedptr<NWindow::Window>& a_window,const Size2DType<f32>& a_size)
 	{
-		return this->impl->Render_Create(a_window,a_width,a_height);
+		return this->impl->Render_Create(a_window,a_size);
 	}
 
 
@@ -206,7 +198,7 @@ namespace NBsys{namespace ND3d11
 
 	/** Render_ViewPort。
 	*/
-	void D3d11::Render_ViewPort(f32 a_x,f32 a_y,f32 a_width,f32 a_height)
+	void D3d11::Render_ViewPort(f32 a_x,f32 a_y,f32 a_width,f32 a_height)	//TODO:Rect2DType_A
 	{
 		this->impl->Render_ViewPort(a_x,a_y,a_width,a_height);
 	}

@@ -78,7 +78,7 @@ namespace NBsys{namespace NWindow
 
 	/** [static]GetDesktopSize
 	*/
-	std::tuple<s32,s32> Window::GetDesktopSize()
+	Size2DType<f32> Window::GetDesktopSize()
 	{
 		return Window_Impl::GetDesktopSize();
 	}
@@ -86,9 +86,9 @@ namespace NBsys{namespace NWindow
 
 	/** 作成。
 	*/
-	void Window::Create(const STLWString& a_title,s32 a_width,s32 a_height)
+	void Window::Create(const STLWString& a_title,const Size2DType<f32>& a_size)
 	{
-		this->impl->Create(a_title,a_width,a_height);
+		this->impl->Create(a_title,a_size);
 	}
 
 
@@ -100,19 +100,11 @@ namespace NBsys{namespace NWindow
 	}
 
 
-	/** GetClientWidth
+	/** GetClientSize
 	*/
-	s32 Window::GetClientWidth()
+	const Size2DType<f32>& Window::GetClientSize()
 	{
-		return this->impl->GetClientWidth();
-	}
-
-
-	/** GetClientHeight
-	*/
-	s32 Window::GetClientHeight()
-	{
-		return this->impl->GetClientHeight();
+		return this->impl->GetClientSize();
 	}
 
 

@@ -66,13 +66,9 @@ namespace NTest{namespace NCommon
 		sharedptr<AutoTest> autotest;
 		#endif
 
-		/** width
+		/** size
 		*/
-		s32 width;
-
-		/** height
-		*/
-		s32 height;
+		Size2DType<f32> size;
 
 		/** drawline
 		*/
@@ -144,8 +140,7 @@ namespace NTest{namespace NCommon
 			#if(DEF_TEST_AUTO)
 			autotest(),
 			#endif
-			width(800),
-			height(600),
+			size(800.0,600.0f),
 			drawline(),
 			render2d(),
 			material_drawrect(),
@@ -288,12 +283,11 @@ namespace NTest{namespace NCommon
 		*/
 		virtual void Initialize_Window()
 		{
-			std::tuple<s32,s32> t_size = NBsys::NWindow::Window::GetDesktopSize();
-			this->width = std::get<0>(t_size);
-			this->height = std::get<1>(t_size);
+			//
+			this->size = NBsys::NWindow::Window::GetDesktopSize();
 
 			this->window.reset(new NBsys::NWindow::Window());
-			this->window->Create(L"TEST " DEF_TEST_STRING,this->width,this->height);
+			this->window->Create(L"TEST " DEF_TEST_STRING,this->size);
 		}
 
 		/** 削除。ウィンドウ。
@@ -309,7 +303,7 @@ namespace NTest{namespace NCommon
 		virtual void Initialize_D3d11()
 		{
 			this->d3d11.reset(new NBsys::ND3d11::D3d11());
-			this->d3d11->Render_Create(this->window,this->width,this->height);
+			this->d3d11->Render_Create(this->window,this->size);
 		}
 
 		/** 削除。d3d11
@@ -578,8 +572,19 @@ namespace NTest{namespace NCommon
 							const NBsys::NPad::TouchValue& t_mouse_l = NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->GetTouchValue(NBsys::NPad::Pad_Virtual::TouchType::MOUSEL);
 
 							//文字列作成。
-							wchar t_buffer[64];
-							STLWString t_string = VASTRING(t_buffer,sizeof(t_buffer),L"%d : (%d %d)",static_cast<s32>(1.0f / t_delta),static_cast<s32>(t_mouse_l.pos.xx),static_cast<s32>(t_mouse_l.pos.yy));
+							STLWString t_string;
+							{
+								wchar t_buffer[64];
+								s32 t_fps = static_cast<s32>(1.0f / t_delta);
+								s32 t_mouse_x = static_cast<s32>(t_mouse_l.pos.xx);
+								s32 t_mouse_y =static_cast<s32>(t_mouse_l.pos.yy);
+
+								Size2DType<f32> t_window_size = this->window->GetClientSize();
+								s32 t_window_w = static_cast<s32>(t_window_size.ww);
+								s32 t_window_h = static_cast<s32>(t_window_size.hh);
+
+								t_string = VASTRING(t_buffer,sizeof(t_buffer),L"%d : (%d %d) : (%d %d)",t_fps,t_mouse_x,t_mouse_y,t_window_w,t_window_h);
+							}
 
 							//描画登録。
 							{
@@ -629,7 +634,7 @@ namespace NTest{namespace NCommon
 					this->d3d11->Render_Main();
 
 					//ビューポート。
-					this->d3d11->Render_ViewPort(0.0f,0.0f,static_cast<f32>(this->width),static_cast<f32>(this->height));
+					this->d3d11->Render_ViewPort(0.0f,0.0f,this->size.ww,this->size.hh);
 
 					//深度ステンシルクリア。
 					this->d3d11->Render_ClearDepthStencilView();

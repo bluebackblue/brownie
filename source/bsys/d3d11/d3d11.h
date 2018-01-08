@@ -73,13 +73,9 @@ namespace NBsys{namespace ND3d11
 
 	public:
 
-		/** GetWidth
+		/** GetSize
 		*/
-		s32 GetWidth();
-
-		/** GetHeight
-		*/
-		s32 GetHeight();
+		const Size2DType<f32>& GetSize();
 
 		/** IsExistTexture
 		*/
@@ -131,7 +127,7 @@ namespace NBsys{namespace ND3d11
 
 		/** 作成。
 		*/
-		void Render_Create(sharedptr<NWindow::Window>& a_window,s32 a_width,s32 a_height);
+		void Render_Create(sharedptr<NWindow::Window>& a_window,const Size2DType<f32>& a_size);
 
 		/** 削除。
 		*/

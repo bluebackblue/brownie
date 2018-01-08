@@ -101,67 +101,29 @@ namespace NBsys{namespace NWindowMenu
 	};
 
 
-	/** オフセット。
-	*/
-	struct WindowMenu_Offset	//TODO:いらない？
-	{
-		/** pos
-		*/
-		Position2DType<f32> pos;
-
-		/** constructor
-		*/
-		WindowMenu_Offset()
-			:
-			pos(0.0f)
-		{
-		}
-
-		/** constructor
-		*/
-		WindowMenu_Offset(const Position2DType<f32>& a_pos)
-			:
-			pos(a_pos)
-		{
-		}
-
-		/** destructor
-		*/
-		nonvirtual ~WindowMenu_Offset()
-		{
-		}
-
-		/** Set
-		*/
-		void Set(const Position2DType<f32>& a_pos)
-		{
-			this->pos = a_pos;
-		}
-	};
-
-
 	/** サイズ。
 	*/
 	struct WindowMenu_Size
 	{
-		/** w
+		/** type_w
 		*/
 		WindowMenu_SizeType::Id type_w;
-		f32 w;
-
-		/** h
+		
+		/** type_h
 		*/
 		WindowMenu_SizeType::Id type_h;
-		f32 h;
+
+		/** size
+		*/
+		Size2DType<f32> size;
 
 		/** constructor
 		*/
 		WindowMenu_Size()
 			:
 			type_w(WindowMenu_SizeType::StretchParent),
-			w(0.0f),
 			type_h(WindowMenu_SizeType::StretchParent),
-			h(0.0f)
+			size(0.0f)
 		{
 		}
 
@@ -170,9 +132,8 @@ namespace NBsys{namespace NWindowMenu
 		WindowMenu_Size(f32 a_w,f32 a_h)
 			:
 			type_w(WindowMenu_SizeType::StretchParent),
-			w(a_w),
 			type_h(WindowMenu_SizeType::StretchParent),
-			h(a_h)
+			size(a_w,a_h)
 		{
 		}
 
@@ -181,9 +142,8 @@ namespace NBsys{namespace NWindowMenu
 		WindowMenu_Size(WindowMenu_SizeType::Id a_type_w,f32 a_w,WindowMenu_SizeType::Id a_type_h,f32 a_h)
 			:
 			type_w(a_type_w),
-			w(a_w),
 			type_h(a_type_h),
-			h(a_h)
+			size(a_w,a_h)
 		{
 		}
 
@@ -198,7 +158,7 @@ namespace NBsys{namespace NWindowMenu
 		void SetW(f32 a_w)
 		{
 			this->type_w = WindowMenu_SizeType::Fix;
-			this->w = a_w;
+			this->size.ww = a_w;
 		}
 
 		/** SetH
@@ -206,7 +166,7 @@ namespace NBsys{namespace NWindowMenu
 		void SetH(f32 a_h)
 		{
 			this->type_h = WindowMenu_SizeType::Fix;
-			this->h = a_h;
+			this->size.hh = a_h;
 		}
 
 		/** SetW_StretchParent
@@ -214,7 +174,7 @@ namespace NBsys{namespace NWindowMenu
 		void SetW_StretchParent()
 		{
 			this->type_w = WindowMenu_SizeType::StretchParent;
-			this->w = 0.0f;
+			this->size.ww = 0.0f;
 		}
 
 		/** SetH_StretchParent
@@ -222,7 +182,7 @@ namespace NBsys{namespace NWindowMenu
 		void SetH_StretchParent()
 		{
 			this->type_h = WindowMenu_SizeType::StretchParent;
-			this->h = 0.0f;
+			this->size.hh = 0.0f;
 		}
 
 		/** SetW_StretchChild
@@ -230,7 +190,7 @@ namespace NBsys{namespace NWindowMenu
 		void SetW_StretchChild()
 		{
 			this->type_w = WindowMenu_SizeType::StretchChild;
-			this->w = 0.0f;
+			this->size.ww = 0.0f;
 		}
 
 		/** SetH_StretchChild
@@ -238,7 +198,7 @@ namespace NBsys{namespace NWindowMenu
 		void SetH_StretchChild()
 		{
 			this->type_h = WindowMenu_SizeType::StretchChild;
-			this->h = 0.0f;
+			this->size.hh = 0.0f;
 		}
 	};
 

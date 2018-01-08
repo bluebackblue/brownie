@@ -1254,9 +1254,9 @@ namespace NBsys{namespace NGeometry
 
 	/** [設定]プロジェクション。透視投影。
 	*/
-	inline void Geometry_Matrix_44::Set_PerspectiveProjectionMatrix(f32 a_width,f32 a_height,f32 a_fov_deg,f32 a_near,f32 a_far)
+	inline void Geometry_Matrix_44::Set_PerspectiveProjectionMatrix(const Size2DType<f32>& a_size,f32 a_fov_deg,f32 a_near,f32 a_far)
 	{
-		f32 t_aspect = a_width / a_height;
+		f32 t_aspect = a_size.ww / a_size.hh;
 		f32 t_fov_radian =  BLIB_MATH_DEG_TO_RAD(a_fov_deg);
 		f32 t_scale = 1.0f / NMath::tan_f(t_fov_radian / 2);
 		f32 t_w = t_scale/t_aspect;
@@ -1467,13 +1467,14 @@ namespace NBsys{namespace NGeometry
 
 	/** [設定]ビューポート、
 	*/
-	inline void Geometry_Matrix_44::Set_ViewPortMatrix(f32 a_width,f32 a_height)
+	inline void Geometry_Matrix_44::Set_ViewPortMatrix(const Size2DType<f32>& a_size)
 	{
 		this->Set(
-			a_width/2,  0.0f,        0.0f,  0.0f,
-			0.0f,      -a_height/2,  0.0f,  0.0f,
-			0.0f,       0.0f,        1.0f,  0.0f,
-			a_width/2,  a_height/2,  0.0f,  1.0f
+			//------------//------------//------------//------------
+			a_size.ww/2,  0.0f,         0.0f,         0.0f,
+			0.0f,        -a_size.hh/2,  0.0f,         0.0f,
+			0.0f,         0.0f,         1.0f,         0.0f,
+			a_size.ww/2,  a_size.hh/2,  0.0f,         1.0f
 		);
 	}
 

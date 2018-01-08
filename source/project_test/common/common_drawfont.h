@@ -389,8 +389,8 @@ namespace NTest{namespace NCommon
 
 			f32 t_viewport_offset_x = 0.0f;
 			f32 t_viewport_offset_y = 0.0f;
-			f32 t_viewport_w = static_cast<f32>(this->d3d11->GetWidth());
-			f32 t_viewport_h = static_cast<f32>(this->d3d11->GetHeight());
+			f32 t_viewport_w = this->d3d11->GetSize().ww;
+			f32 t_viewport_h = this->d3d11->GetSize().hh;
 
 			if(t_instence_start->clip == true){
 				//クリップ処理あり。

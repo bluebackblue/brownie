@@ -61,25 +61,21 @@ namespace NBsys{namespace NWindow
 
 		/** [static]GetDesktopSize
 		*/
-		static std::tuple<s32,s32> GetDesktopSize();
+		static Size2DType<f32> GetDesktopSize();
 
 	public:
 
 		/** 作成。
 		*/
-		void Create(const STLWString& a_title,s32 a_width,s32 a_height);
+		void Create(const STLWString& a_title,const Size2DType<f32>& a_size);
 
 		/** 削除。
 		*/
 		void Delete();
 
-		/** GetClientWidth
+		/** GetClientSize
 		*/
-		s32 GetClientWidth();
-
-		/** GetClientHeight
-		*/
-		s32 GetClientHeight();
+		const Size2DType<f32>& GetClientSize();
 
 		/** GetMouse
 		*/

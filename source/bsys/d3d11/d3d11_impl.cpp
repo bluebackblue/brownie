@@ -69,8 +69,7 @@ namespace NBsys{namespace ND3d11
 	*/
 	D3d11_Impl::D3d11_Impl()
 		:
-		width(),
-		height(),
+		size(0.0f),
 		testpresent_mode(false),
 		id_maker(),
 		actionbatching_lockobject(),
@@ -107,19 +106,11 @@ namespace NBsys{namespace ND3d11
 	}
 
 
-	/** GetWidth
+	/** GetSize
 	*/
-	s32 D3d11_Impl::GetWidth()
+	const Size2DType<f32>& D3d11_Impl::GetSize()
 	{
-		return this->width;
-	}
-
-
-	/** GetHeight
-	*/
-	s32 D3d11_Impl::GetHeight()
-	{
-		return this->height;
+		return this->size;
 	}
 
 
@@ -150,10 +141,9 @@ namespace NBsys{namespace ND3d11
 
 	/** Render_Create
 	*/
-	void D3d11_Impl::Render_Create(sharedptr<NWindow::Window>& a_window,s32 a_width,s32 a_height)
+	void D3d11_Impl::Render_Create(sharedptr<NWindow::Window>& a_window,const Size2DType<f32>& a_size)
 	{
-		this->width = a_width;
-		this->height = a_height;
+		this->size = a_size;
 
 		D3D_FEATURE_LEVEL t_featurelevel_list[] = {D3D_FEATURE_LEVEL_11_0};
 
@@ -167,12 +157,12 @@ namespace NBsys{namespace ND3d11
 
 				//バックバッファーの表示モードを表す。
 				t_swapchain_desc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-				t_swapchain_desc.BufferDesc.Height = static_cast<UINT>(this->height);
+				t_swapchain_desc.BufferDesc.Height = static_cast<UINT>(this->size.hh);
 				t_swapchain_desc.BufferDesc.RefreshRate.Denominator = 60;
 				t_swapchain_desc.BufferDesc.RefreshRate.Numerator = 1;
 				t_swapchain_desc.BufferDesc.Scaling;
 				t_swapchain_desc.BufferDesc.ScanlineOrdering;
-				t_swapchain_desc.BufferDesc.Width = static_cast<UINT>(this->width);
+				t_swapchain_desc.BufferDesc.Width = static_cast<UINT>(this->size.ww);
 
 				//バックバッファーのサーフェス使用法およびCPUアクセス オプションを表すDXGI_USAGE 列挙型のメンバーです。
 				//バック バッファーは、シェーダー入力またはレンダー ターゲット出力に使用することができます。
@@ -287,8 +277,8 @@ namespace NBsys{namespace ND3d11
 			if(this->device){
 				D3D11_TEXTURE2D_DESC t_desc = {0};
 				{
-					t_desc.Width = static_cast<UINT>(this->width);
-					t_desc.Height = static_cast<UINT>(this->height);
+					t_desc.Width = static_cast<UINT>(this->size.ww);
+					t_desc.Height = static_cast<UINT>(this->size.hh);
 					t_desc.MipLevels = 1;
 					t_desc.ArraySize = 1;
 					t_desc.Format = t_format_depthstencil_texture;
