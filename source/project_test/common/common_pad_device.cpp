@@ -100,14 +100,8 @@ namespace NTest{namespace NCommon
 	void Pad_Device::DeviceUpdate()
 	{
 		this->mouse_pos = this->window->GetImpl()->GetMouse();
-
-		//TODO:this->mouse_pos *= this->d3d11->GetSize();
-		this->mouse_pos.xx *= this->d3d11->GetSize().ww;
-		this->mouse_pos.yy *= this->d3d11->GetSize().hh;
-		
-		//TODO:this->mouse_pos /= this->window->GetImpl()->GetClientSize();
-		this->mouse_pos.xx /= this->window->GetImpl()->GetClientSize().ww;
-		this->mouse_pos.yy /= this->window->GetImpl()->GetClientSize().hh;
+		this->mouse_pos.Mul(this->d3d11->GetSize().ww,this->d3d11->GetSize().hh);
+		this->mouse_pos.Div(this->window->GetImpl()->GetClientSize().ww,this->window->GetImpl()->GetClientSize().hh);
 
 		this->mouse_l = false;
 		#if defined(PLATFORM_VCWIN)

@@ -186,7 +186,7 @@ namespace NBlib
 		*/
 		template <typename T2> explicit operator Size2DType<T2>() const noexcept
 		{
-			return Size2DType<T2>(static_cast<T2>(this->xx),static_cast<T2>(this->yy));
+			return Size2DType<T2>(static_cast<T2>(this->ww),static_cast<T2>(this->hh));
 		}
 
 		/** Set
@@ -203,6 +203,38 @@ namespace NBlib
 		{
 			this->ww = a_ww;
 			this->hh = a_hh;
+		}
+
+		/** 加算。
+		*/
+		void Add(const T& a_ww,const T& a_hh)
+		{
+			this->ww += a_ww;
+			this->hh += a_hh;
+		}
+
+		/** 減算。
+		*/
+		void Sub(const T& a_ww,const T& a_hh)
+		{
+			this->ww -= a_ww;
+			this->hh -= a_hh;
+		}
+
+		/** 乗算。
+		*/
+		void Mul(const T& a_ww,const T& a_hh)
+		{
+			this->ww *= a_ww;
+			this->hh *= a_hh;
+		}
+
+		/** 除算。
+		*/
+		void Div(const T& a_ww,const T& a_hh)
+		{
+			this->ww /= a_ww;
+			this->hh /= a_hh;
 		}
 	};
 

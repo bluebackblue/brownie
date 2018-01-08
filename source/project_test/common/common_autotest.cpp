@@ -113,7 +113,7 @@ namespace NTest{namespace NCommon
 			//テスト番号。
 			{
 				char t_buffer[16];
-				STLString t_index_string = VASTRING(t_buffer,sizeof(t_buffer),"%d",DEF_TEST_INDEX);	//TODO:
+				STLString t_index_string = VASTRING(t_buffer,sizeof(t_buffer),"%d",DEF_TEST_INDEX);
 				this->send_http->AddPostContent("index",t_index_string);
 			}
 

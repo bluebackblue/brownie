@@ -204,6 +204,38 @@ namespace NBlib
 			this->xx = a_xx;
 			this->yy = a_yy;
 		}
+
+		/** 加算。
+		*/
+		void Add(const T& a_xx,const T& a_yy)
+		{
+			this->xx += a_xx;
+			this->yy += a_yy;
+		}
+
+		/** 減算。
+		*/
+		void Sub(const T& a_xx,const T& a_yy)
+		{
+			this->xx -= a_xx;
+			this->yy -= a_yy;
+		}
+
+		/** 乗算。
+		*/
+		void Mul(const T& a_xx,const T& a_yy)
+		{
+			this->xx *= a_xx;
+			this->yy *= a_yy;
+		}
+
+		/** 除算。
+		*/
+		void Div(const T& a_xx,const T& a_yy)
+		{
+			this->xx /= a_xx;
+			this->yy /= a_yy;
+		}
 	};
 
 

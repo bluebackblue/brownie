@@ -1093,6 +1093,7 @@ namespace NBsys{namespace ND3d11
 				a_texture->texture2d.reset();
 			}
 
+			//実際に作成された情報の収集。
 			//TODO:a_texture->texture2d_width = x
 			//TODO:a_texture->texture2d_height = x
 			//TODO:a_texture->texture2d_pitch = x

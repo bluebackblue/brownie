@@ -239,10 +239,50 @@ namespace NBlib
 		*/
 		void Set(const T& a_xx,const T& a_yy,const T& a_ww,const T& a_hh)
 		{
-			this->xx = a_x;
-			this->yy = a_y;
-			this->ww = a_w;
-			this->hh = a_h;
+			this->xx = a_xx;
+			this->yy = a_yy;
+			this->ww = a_ww;
+			this->hh = a_hh;
+		}
+
+		/** 加算。
+		*/
+		void Add(const T& a_xx,const T& a_yy,const T& a_ww,const T& a_hh)
+		{
+			this->xx += a_xx;
+			this->yy += a_yy;
+			this->ww += a_ww;
+			this->hh += a_hh;
+		}
+
+		/** 減算。
+		*/
+		void Sub(const T& a_xx,const T& a_yy,const T& a_ww,const T& a_hh)
+		{
+			this->xx -= a_xx;
+			this->yy -= a_yy;
+			this->ww -= a_ww;
+			this->hh -= a_hh;
+		}
+
+		/** 乗算。
+		*/
+		void Mul(const T& a_xx,const T& a_yy,const T& a_ww,const T& a_hh)
+		{
+			this->xx *= a_xx;
+			this->yy *= a_yy;
+			this->ww *= a_ww;
+			this->hh *= a_hh;
+		}
+
+		/** 除算。
+		*/
+		void Div(const T& a_xx,const T& a_yy,const T& a_ww,const T& a_hh)
+		{
+			this->xx /= a_xx;
+			this->yy /= a_yy;
+			this->ww /= a_ww;
+			this->hh /= a_hh;
 		}
 	};
 
@@ -533,6 +573,47 @@ namespace NBlib
 			this->y1 = a_y1;
 			this->x2 = a_x2;
 			this->y2 = a_y2;
+		}
+
+
+		/** 加算。
+		*/
+		void Add(const T& a_x1,const T& a_y1,const T& a_x2,const T& a_y2)
+		{
+			this->x1 += a_x1;
+			this->y1 += a_y1;
+			this->x2 += a_x2;
+			this->y2 += a_y2;
+		}
+
+		/** 減算。
+		*/
+		void Sub(const T& a_x1,const T& a_y1,const T& a_x2,const T& a_y2)
+		{
+			this->x1 -= a_x1;
+			this->y1 -= a_y1;
+			this->x2 -= a_x2;
+			this->y2 -= a_y2;
+		}
+
+		/** 乗算。
+		*/
+		void Mul(const T& a_x1,const T& a_y1,const T& a_x2,const T& a_y2)
+		{
+			this->x1 *= a_x1;
+			this->y1 *= a_y1;
+			this->x2 *= a_x2;
+			this->y2 *= a_y2;
+		}
+
+		/** 除算。
+		*/
+		void Div(const T& a_x1,const T& a_y1,const T& a_x2,const T& a_y2)
+		{
+			this->x1 /= a_x1;
+			this->y1 /= a_y1;
+			this->x2 /= a_x2;
+			this->y2 /= a_y2;
 		}
 	};
 
