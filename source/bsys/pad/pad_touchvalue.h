@@ -28,36 +28,37 @@ namespace NBsys{namespace NPad
 	*/
 	struct TouchValue
 	{
-		f32		x;
-		f32		y;
-		bool	flag;
+		/** pos
+		*/
+		Position2DType<f32> pos;
+
+		/** flag
+		*/
+		bool flag;
 
 		/** constructor
 		*/
 		TouchValue()
 			:
-			x(0.0f),
-			y(0.0f),
+			pos(0.0f),
 			flag(false)
 		{
 		}
 
 		/** constructor
 		*/
-		TouchValue(f32 a_x,f32 a_y,bool a_flag)
+		TouchValue(const Position2DType<f32>& a_pos,bool a_flag)
 			:
-			x(a_x),
-			y(a_y),
+			pos(a_pos),
 			flag(a_flag)
 		{
 		}
 
 		/** Set
 		*/
-		void Set(f32 a_x,f32 a_y,bool a_flag)
+		void Set(const Position2DType<f32>& a_pos,bool a_flag)
 		{
-			this->x = a_x;
-			this->y = a_y;
+			this->pos = a_pos;
 			this->flag = a_flag;
 		}
 
@@ -65,7 +66,7 @@ namespace NBsys{namespace NPad
 		*/
 		static TouchValue& Zero()
 		{
-			static TouchValue s_zero(0.0f,0.0f,false);
+			static TouchValue s_zero;
 			return s_zero;
 		}
 	};

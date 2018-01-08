@@ -103,31 +103,25 @@ namespace NBsys{namespace NWindowMenu
 
 	/** オフセット。
 	*/
-	struct WindowMenu_Offset
+	struct WindowMenu_Offset	//TODO:いらない？
 	{
-		/** x
+		/** pos
 		*/
-		f32 x;
-
-		/** y
-		*/
-		f32 y;
+		Position2DType<f32> pos;
 
 		/** constructor
 		*/
 		WindowMenu_Offset()
 			:
-			x(0.0f),
-			y(0.0f)
+			pos(0.0f)
 		{
 		}
 
 		/** constructor
 		*/
-		WindowMenu_Offset(f32 a_x,f32 a_y)
+		WindowMenu_Offset(const Position2DType<f32>& a_pos)
 			:
-			x(a_x),
-			y(a_y)
+			pos(a_pos)
 		{
 		}
 
@@ -139,10 +133,9 @@ namespace NBsys{namespace NWindowMenu
 
 		/** Set
 		*/
-		void Set(f32 a_x,f32 a_y)
+		void Set(const Position2DType<f32>& a_pos)
 		{
-			this->x = a_x;
-			this->y = a_y;
+			this->pos = a_pos;
 		}
 	};
 

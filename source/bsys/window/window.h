@@ -83,7 +83,7 @@ namespace NBsys{namespace NWindow
 
 		/** GetMouse
 		*/
-		Position2DType<s32> GetMouse();
+		Position2DType<f32> GetMouse();
 
 		/** 更新。
 		*/

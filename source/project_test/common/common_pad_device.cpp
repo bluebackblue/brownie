@@ -83,8 +83,7 @@ namespace NTest{namespace NCommon
 		:
 		window(a_window),
 		d3d11(a_d3d11),
-		mouse_x(0.0f),
-		mouse_y(0.0f),
+		mouse_pos{},
 		mouse_l(false),
 		mouse_r(false)
 	{
@@ -100,9 +99,9 @@ namespace NTest{namespace NCommon
 	*/
 	void Pad_Device::DeviceUpdate()
 	{
-		Position2DType<s32> t_mouse = this->window->GetImpl()->GetMouse();
-		this->mouse_x = t_mouse.x * static_cast<f32>(this->d3d11->GetWidth()) / this->window->GetImpl()->GetClientWidth();
-		this->mouse_y = t_mouse.y * static_cast<f32>(this->d3d11->GetHeight()) / this->window->GetImpl()->GetClientHeight();
+		this->mouse_pos = this->window->GetImpl()->GetMouse();
+		this->mouse_pos *= static_cast<f32>(this->d3d11->GetWidth());
+		this->mouse_pos /= static_cast<f32>(this->window->GetImpl()->GetClientWidth());
 
 		this->mouse_l = false;
 		#if defined(PLATFORM_VCWIN)
@@ -173,13 +172,13 @@ namespace NTest{namespace NCommon
 			{
 				//mouse l
 
-				return NBsys::NPad::TouchValue(this->mouse_x,this->mouse_y,this->mouse_l);
+				return NBsys::NPad::TouchValue(this->mouse_pos,this->mouse_l);
 			}break;
 		case NBsys::NPad::Pad_Device_Base::TouchType::DeviceTouch_2:
 			{
 				//mouse r
 
-				return NBsys::NPad::TouchValue(this->mouse_x,this->mouse_y,this->mouse_r);
+				return NBsys::NPad::TouchValue(this->mouse_pos,this->mouse_r);
 			}break;
 		case NBsys::NPad::Pad_Device_Base::TouchType::DeviceTouch_3:
 		case NBsys::NPad::Pad_Device_Base::TouchType::DeviceTouch_4:

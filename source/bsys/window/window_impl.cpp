@@ -99,13 +99,13 @@ namespace NBsys{namespace NWindow
 
 	/** GetMouse
 	*/
-	Position2DType<s32> Window_Impl::GetMouse() const
+	Position2DType<f32> Window_Impl::GetMouse() const
 	{
 		POINT t_pos;
 		if(::GetCursorPos(&t_pos) == TRUE){
 			if(::ScreenToClient(this->handle,&t_pos)){
-				this->mouse.x = static_cast<s32>(t_pos.x);
-				this->mouse.y = static_cast<s32>(t_pos.y);
+				this->mouse.xx = static_cast<f32>(t_pos.x);
+				this->mouse.yy = static_cast<f32>(t_pos.y);
 			}
 		}
 

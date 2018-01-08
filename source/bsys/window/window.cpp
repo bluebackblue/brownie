@@ -118,7 +118,7 @@ namespace NBsys{namespace NWindow
 
 	/** GetMouse
 	*/
-	Position2DType<s32> Window::GetMouse()
+	Position2DType<f32> Window::GetMouse()
 	{
 		return this->impl->GetMouse();
 	}

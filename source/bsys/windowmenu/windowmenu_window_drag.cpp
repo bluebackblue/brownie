@@ -49,10 +49,8 @@ namespace NBsys{namespace NWindowMenu
 		:
 		WindowMenu_Window_Base(a_name,WindowMenu_WindowType::Drag),
 		drag_flag(false),
-		start_x(0.0f),
-		start_y(0.0f),
-		old_x(0.0f),
-		old_y(0.0f)
+		start_pos(0.0f),
+		old_pos(0.0f)
 	{
 	}
 
@@ -74,16 +72,13 @@ namespace NBsys{namespace NWindowMenu
 			*/
 			this->drag_flag = false;
 
-
 			/** start
 			*/
-			this->start_x = 0.0f;
-			this->start_y = 0.0f;
+			this->start_pos = 0.0f;
 
 			/** old
 			*/
-			this->old_x = 0.0f;
-			this->old_y = 0.0f;
+			this->old_pos = 0.0f;
 		}
 	}
 
@@ -96,10 +91,8 @@ namespace NBsys{namespace NWindowMenu
 			//ドラッグ開始。
 			if(this->parent){
 				this->drag_flag = true;
-				this->start_x = a_mouse.x;
-				this->start_y = a_mouse.y;
-				this->old_x = this->parent->offset.x;
-				this->old_y = this->parent->offset.y;
+				this->start_pos = a_mouse.pos;
+				this->old_pos = this->parent->offset;
 			}
 		}
 
@@ -117,9 +110,7 @@ namespace NBsys{namespace NWindowMenu
 			if(t_mouse.on_l){
 				//ドラッグ中。
 				if(this->parent){
-					this->parent->offset.x = this->old_x + (t_mouse.x - this->start_x);
-					this->parent->offset.y = this->old_y + (t_mouse.y - this->start_y);
-					
+					this->parent->offset = this->old_pos + (t_mouse.pos - this->start_pos);
 					this->parent->CallBack_CalcRectClear(this->calc_it,this->calc_child_index);
 					this->parent->CalcRect();
 				}

@@ -28,20 +28,38 @@ namespace NBlib
 	*/
 	template <typename T> struct Size2DType
 	{
-		/** w
+		/** ww
 		*/
-		T w;
+		T ww;
 
 		/** h
 		*/
-		T h;
+		T hh;
 
 		/** constructor
 		*/
 		Size2DType() noexcept
 			:
-			w(static_cast<T>(0)),
-			h(static_cast<T>(0))
+			ww(static_cast<T>(0)),
+			hh(static_cast<T>(0))
+		{
+		}
+
+		/** constructor
+		*/
+		explicit Size2DType(const T& a_value) noexcept
+			:
+			ww(a_value),
+			hh(a_value)
+		{
+		}
+
+		/** constructor
+		*/
+		explicit Size2DType(const T& a_ww,const T& a_hh) noexcept
+			:
+			ww(a_ww),
+			hh(a_hh)
 		{
 		}
 
@@ -49,17 +67,8 @@ namespace NBlib
 		*/
 		Size2DType(const Size2DType<T>& a_instance) noexcept
 			:
-			w(a_instance.w),
-			h(a_instance.h)
-		{
-		}
-
-		/** constructor
-		*/
-		Size2DType(T a_w,T a_h) noexcept
-			:
-			w(a_w),
-			h(a_h)
+			ww(a_instance.ww),
+			hh(a_instance.hh)
 		{
 		}
 
@@ -73,8 +82,8 @@ namespace NBlib
 		*/
 		Size2DType<T>& operator =(const Size2DType<T>& a_right)
 		{
-			this->w = a_right.w;
-			this->h = a_right.h;
+			this->ww = a_right.ww;
+			this->hh = a_right.hh;
 			return *this;
 		}
 
@@ -89,15 +98,15 @@ namespace NBlib
 		*/
 		Size2DType<T> operator -() const
 		{
-			return Size2DType<T>(-this->w,-this->h);
+			return Size2DType<T>(-this->ww,-this->hh);
 		}
 
 		/** t_1 += t_2;
 		*/
 		Size2DType<T>& operator +=(const Size2DType<T>& a_right)
 		{
-			this->w += a_right.w;
-			this->h += a_right.h;
+			this->ww += a_right.ww;
+			this->hh += a_right.hh;
 			return *this;
 		}
 
@@ -105,8 +114,8 @@ namespace NBlib
 		*/
 		Size2DType<T>& operator -=(const Size2DType<T>& a_right)
 		{
-			this->w -= a_right.h;
-			this->h -= a_right.h;
+			this->ww -= a_right.ww;
+			this->hh -= a_right.hh;
 			return *this;
 		}
 
@@ -114,8 +123,8 @@ namespace NBlib
 		*/
 		Size2DType<T>& operator *=(const Size2DType<T>& a_right)
 		{
-			this->w *= a_right.h;
-			this->w *= a_right.h;
+			this->ww *= a_right.ww;
+			this->hh *= a_right.hh;
 			return *this;
 		}
 
@@ -123,8 +132,17 @@ namespace NBlib
 		*/
 		Size2DType<T>& operator /=(const Size2DType<T>& a_right)
 		{
-			this->w /= a_right.h;
-			this->w /= a_right.h;
+			this->ww /= a_right.ww;
+			this->hh /= a_right.hh;
+			return *this;
+		}
+
+		/** t_1 = 2;
+		*/
+		Size2DType<T>& operator =(const T& a_right_valuet)
+		{
+			this->ww = a_right_valuet;
+			this->hh = a_right_valuet;
 			return *this;
 		}
 
@@ -132,8 +150,8 @@ namespace NBlib
 		*/
 		Size2DType<T>& operator +=(const T& a_right_value)
 		{
-			this->w += a_right_value;
-			this->h += a_right_value;
+			this->ww += a_right_value;
+			this->hh += a_right_value;
 			return *this;
 		}
 
@@ -141,8 +159,8 @@ namespace NBlib
 		*/
 		Size2DType<T>& operator -=(const T& a_right_value)
 		{
-			this->w -= a_right_value;
-			this->h -= a_right_value;
+			this->ww -= a_right_value;
+			this->hh -= a_right_value;
 			return *this;
 		}
 
@@ -150,8 +168,8 @@ namespace NBlib
 		*/
 		Size2DType<T>& operator *=(const T& a_right_value)
 		{
-			this->w *= a_right_value;
-			this->w *= a_right_value;
+			this->ww *= a_right_value;
+			this->hh *= a_right_value;
 			return *this;
 		}
 
@@ -159,17 +177,32 @@ namespace NBlib
 		*/
 		Size2DType<T>& operator /=(const T& a_right_value)
 		{
-			this->w /= a_right_value;
-			this->h /= a_right_value;
+			this->ww /= a_right_value;
+			this->hh /= a_right_value;
 			return *this;
+		}
+
+		/** キャスト。
+		*/
+		template <typename T2> explicit operator Size2DType<T2>() const noexcept
+		{
+			return Size2DType<T2>(static_cast<T2>(this->xx),static_cast<T2>(this->yy));
 		}
 
 		/** Set
 		*/
-		void Set(T a_w,T a_h)
+		void Set(const T& a_value)
 		{
-			this->w = a_w;
-			this->h = a_h;
+			this->ww = a_value;
+			this->hh = a_value;
+		}
+
+		/** Set
+		*/
+		void Set(const T& a_ww,const T& a_hh)
+		{
+			this->ww = a_ww;
+			this->hh = a_hh;
 		}
 	};
 

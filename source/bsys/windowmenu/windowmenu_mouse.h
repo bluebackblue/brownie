@@ -28,13 +28,9 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	struct WindowMenu_Mouse
 	{
-		/** x
+		/** pos
 		*/
-		f32 x;
-
-		/** y
-		*/
-		f32 y;
+		Position2DType<f32> pos;
 
 		/** on_l
 		*/

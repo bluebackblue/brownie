@@ -172,9 +172,9 @@ namespace NBsys{namespace NWindowMenu
 
 	/** IsRange
 	*/
-	bool WindowMenu_Window_Base::IsRange(f32 a_x,f32 a_y)
+	bool WindowMenu_Window_Base::IsRange(const Position2DType<f32> a_pos)
 	{
-		if((this->calc_x < a_x)&&(a_x < this->calc_x + this->calc_w)&&(this->calc_y < a_y)&&(a_y < this->calc_y + this->calc_h)){
+		if((this->calc_x < a_pos.xx)&&(a_pos.xx < this->calc_x + this->calc_w)&&(this->calc_y < a_pos.yy)&&(a_pos.yy < this->calc_y + this->calc_h)){
 			return true;
 		}
 		return false;
@@ -209,7 +209,7 @@ namespace NBsys{namespace NWindowMenu
 
 					this->parent->CalcX(a_from_sizetype);
 
-					this->calc_x = this->parent->calc_x + this->offset.x;
+					this->calc_x = this->parent->calc_x + this->offset.xx;
 					this->calc_x_fix = true;
 				}else if(this->parent->mode == WindowMenu_Mode::Horizontal){
 					//横積み。
@@ -219,7 +219,7 @@ namespace NBsys{namespace NWindowMenu
 
 						this->parent->CalcX(a_from_sizetype);
 
-						this->calc_x = this->parent->calc_x + this->offset.x;
+						this->calc_x = this->parent->calc_x + this->offset.xx;
 						this->calc_x_fix = true;
 					}else{
 						auto t_it_before = std::prev(this->calc_it);
@@ -227,13 +227,13 @@ namespace NBsys{namespace NWindowMenu
 
 						t_before->CalcX(a_from_sizetype);
 
-						this->calc_x = t_before->calc_x + t_before->calc_w + this->offset.x;
+						this->calc_x = t_before->calc_x + t_before->calc_w + this->offset.xx;
 						this->calc_x_fix = true;
 					}
 				}
 			}else{
 				//ルート。
-				this->calc_x = this->offset.x;
+				this->calc_x = this->offset.xx;
 				this->calc_x_fix = true;
 			}
 		}
@@ -252,7 +252,7 @@ namespace NBsys{namespace NWindowMenu
 
 					this->parent->CalcY(a_from_sizetype);
 
-					this->calc_y = this->parent->calc_y + this->offset.y;
+					this->calc_y = this->parent->calc_y + this->offset.yy;
 					this->calc_y_fix = true;
 				}else if(this->parent->mode == WindowMenu_Mode::Vertical){
 					//縦積み。
@@ -262,7 +262,7 @@ namespace NBsys{namespace NWindowMenu
 
 						this->parent->CalcY(a_from_sizetype);
 
-						this->calc_y = this->parent->calc_y + this->offset.y;
+						this->calc_y = this->parent->calc_y + this->offset.yy;
 						this->calc_y_fix = true;
 					}else{
 						auto t_it_before = std::prev(this->calc_it);
@@ -270,13 +270,13 @@ namespace NBsys{namespace NWindowMenu
 
 						t_before->CalcY(a_from_sizetype);
 
-						this->calc_y = t_before->calc_y + t_before->calc_h + this->offset.y;
+						this->calc_y = t_before->calc_y + t_before->calc_h + this->offset.yy;
 						this->calc_y_fix = true;
 					}
 				}
 			}else{
 				//ルート。
-				this->calc_y = this->offset.y;
+				this->calc_y = this->offset.yy;
 				this->calc_y_fix = true;
 			}
 		}
@@ -324,7 +324,7 @@ namespace NBsys{namespace NWindowMenu
 							t_stretch_count++;
 						}else{
 							t_parent_child->CalcW(WindowMenu_SizeType::StretchParent);
-							t_total += t_parent_child->offset.x + t_parent_child->calc_w;
+							t_total += t_parent_child->offset.xx + t_parent_child->calc_w;
 						}
 					}
 
@@ -359,7 +359,7 @@ namespace NBsys{namespace NWindowMenu
 
 						t_child->CalcW(WindowMenu_SizeType::StretchChild);
 
-						f32 t_offset_r = t_child->offset.x + t_child->calc_w;
+						f32 t_offset_r = t_child->offset.xx + t_child->calc_w;
 						if(t_temp < t_offset_r){
 							t_temp = t_offset_r;
 						}
@@ -376,7 +376,7 @@ namespace NBsys{namespace NWindowMenu
 
 						t_child->CalcW(WindowMenu_SizeType::StretchChild);
 
-						t_temp += t_child->offset.x + t_child->calc_w;
+						t_temp += t_child->offset.xx + t_child->calc_w;
 					}
 					this->calc_w = t_temp;
 					this->calc_w_fix = true;
@@ -427,7 +427,7 @@ namespace NBsys{namespace NWindowMenu
 							t_stretch_count++;
 						}else{
 							t_parent_child->CalcH(WindowMenu_SizeType::StretchParent);
-							t_total += t_parent_child->offset.y + t_parent_child->calc_h;
+							t_total += t_parent_child->offset.yy + t_parent_child->calc_h;
 						}
 					}
 
@@ -462,7 +462,7 @@ namespace NBsys{namespace NWindowMenu
 
 						t_child->CalcH(WindowMenu_SizeType::StretchChild);
 
-						f32 t_offset_d =t_child->offset.y + t_child->calc_h;
+						f32 t_offset_d =t_child->offset.yy + t_child->calc_h;
 						if(t_temp < t_offset_d){
 							t_temp = t_offset_d;
 						}
@@ -479,7 +479,7 @@ namespace NBsys{namespace NWindowMenu
 
 						t_child->CalcH(WindowMenu_SizeType::StretchChild);
 
-						t_temp += t_child->offset.y + t_child->calc_h;
+						t_temp += t_child->offset.yy + t_child->calc_h;
 					}
 					this->calc_h = t_temp;
 					this->calc_h_fix = true;
@@ -493,7 +493,7 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	bool WindowMenu_Window_Base::System_MouseUpdate(WindowMenu_Mouse& a_mouse)
 	{
-		if((this->outrange_mouseevent)||(this->IsRange(a_mouse.x,a_mouse.y))){
+		if((this->outrange_mouseevent)||(this->IsRange(a_mouse.pos))){
 			//範囲内。
 
 			//子から処理。

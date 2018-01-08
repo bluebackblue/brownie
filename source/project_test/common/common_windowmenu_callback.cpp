@@ -86,15 +86,14 @@ namespace NTest{namespace NCommon
 
 	/** GetMouseProcType
 	*/
-	void WindowMenu_Callback::GetMouse_Callback(f32& a_x,f32& a_y,bool& a_l_on,bool& a_r_on,bool& a_l_down,bool& a_r_down,bool& a_l_up,bool& a_r_up)
+	void WindowMenu_Callback::GetMouse_Callback(Position2DType<f32>& a_pos,bool& a_l_on,bool& a_r_on,bool& a_l_down,bool& a_r_down,bool& a_l_up,bool& a_r_up)
 	{
 		NBsys::NPad::Pad_Virtual* t_pad_virtual_ptr = NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1).get();
 
 		const NBsys::NPad::TouchValue& t_mouse_l = t_pad_virtual_ptr->GetTouchValue(NBsys::NPad::Pad_Virtual::TouchType::MOUSEL);
 		const NBsys::NPad::TouchValue& t_mouse_r = t_pad_virtual_ptr->GetTouchValue(NBsys::NPad::Pad_Virtual::TouchType::MOUSER);
 
-		a_x = t_mouse_l.x;
-		a_y = t_mouse_l.y;
+		a_pos = t_mouse_l.pos;
 
 		a_l_on = t_mouse_l.flag;
 		a_r_on = t_mouse_r.flag;

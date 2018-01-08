@@ -28,20 +28,38 @@ namespace NBlib
 	*/
 	template <typename T> struct Position2DType
 	{
-		/** x
+		/** xx
 		*/
-		T x;
+		T xx;
 
-		/** y
+		/** yy
 		*/
-		T y;
+		T yy;
 
 		/** constructor
 		*/
 		Position2DType() noexcept
 			:
-			x(static_cast<T>(0)),
-			y(static_cast<T>(0))
+			xx(static_cast<T>(0)),
+			yy(static_cast<T>(0))
+		{
+		}
+
+		/** constructor
+		*/
+		explicit Position2DType(const T& a_value) noexcept
+			:
+			xx(a_value),
+			yy(a_value)
+		{
+		}
+
+		/** constructor
+		*/
+		explicit Position2DType(const T& a_xx,const T& a_yy) noexcept
+			:
+			xx(a_xx),
+			yy(a_yy)
 		{
 		}
 
@@ -49,17 +67,8 @@ namespace NBlib
 		*/
 		Position2DType(const Position2DType<T>& a_instance) noexcept
 			:
-			x(a_instance.x),
-			y(a_instance.y)
-		{
-		}
-
-		/** constructor
-		*/
-		Position2DType(T a_x,T a_y) noexcept
-			:
-			x(a_x),
-			y(a_y)
+			xx(a_instance.xx),
+			yy(a_instance.yy)
 		{
 		}
 
@@ -73,8 +82,8 @@ namespace NBlib
 		*/
 		Position2DType<T>& operator =(const Position2DType<T>& a_right)
 		{
-			this->x = a_right.x;
-			this->y = a_right.y;
+			this->xx = a_right.xx;
+			this->yy = a_right.yy;
 			return *this;
 		}
 
@@ -96,8 +105,8 @@ namespace NBlib
 		*/
 		Position2DType<T>& operator +=(const Position2DType<T>& a_right)
 		{
-			this->x += a_right.x;
-			this->y += a_right.y;
+			this->xx += a_right.xx;
+			this->yy += a_right.yy;
 			return *this;
 		}
 
@@ -105,8 +114,8 @@ namespace NBlib
 		*/
 		Position2DType<T>& operator -=(const Position2DType<T>& a_right)
 		{
-			this->x -= a_right.x;
-			this->y -= a_right.y;
+			this->xx -= a_right.xx;
+			this->yy -= a_right.yy;
 			return *this;
 		}
 
@@ -114,8 +123,8 @@ namespace NBlib
 		*/
 		Position2DType<T>& operator *=(const Position2DType<T>& a_right)
 		{
-			this->x *= a_right.x;
-			this->y *= a_right.y;
+			this->xx *= a_right.xx;
+			this->yy *= a_right.yy;
 			return *this;
 		}
 
@@ -123,8 +132,17 @@ namespace NBlib
 		*/
 		Position2DType<T>& operator /=(const Position2DType<T>& a_right)
 		{
-			this->x /= a_right.x;
-			this->y /= a_right.y;
+			this->xx /= a_right.xx;
+			this->yy /= a_right.yy;
+			return *this;
+		}
+
+		/** t_1 = 2;
+		*/
+		Position2DType<T>& operator =(const T& a_right_value)
+		{
+			this->xx = a_right_value;
+			this->yy = a_right_value;
 			return *this;
 		}
 
@@ -132,8 +150,8 @@ namespace NBlib
 		*/
 		Position2DType<T>& operator +=(const T& a_right_value)
 		{
-			this->x += a_right_value;
-			this->y += a_right_value;
+			this->xx += a_right_value;
+			this->yy += a_right_value;
 			return *this;
 		}
 
@@ -141,8 +159,8 @@ namespace NBlib
 		*/
 		Position2DType<T>& operator -=(const T& a_right_value)
 		{
-			this->x -= a_right_value;
-			this->y -= a_right_value;
+			this->xx -= a_right_value;
+			this->yy -= a_right_value;
 			return *this;
 		}
 
@@ -150,8 +168,8 @@ namespace NBlib
 		*/
 		Position2DType<T>& operator *=(const T& a_right_value)
 		{
-			this->x *= a_right_value;
-			this->y *= a_right_value;
+			this->xx *= a_right_value;
+			this->yy *= a_right_value;
 			return *this;
 		}
 
@@ -159,17 +177,32 @@ namespace NBlib
 		*/
 		Position2DType<T>& operator /=(const T& a_right_value)
 		{
-			this->x /= a_right_value;
-			this->y /= a_right_value;
+			this->xx /= a_right_value;
+			this->yy /= a_right_value;
 			return *this;
+		}
+
+		/** キャスト。
+		*/
+		template <typename T2> explicit operator Position2DType<T2>() const noexcept
+		{
+			return Position2DType<T2>(static_cast<T2>(this->xx),static_cast<T2>(this->yy));
 		}
 
 		/** Set
 		*/
-		void Set(T a_x,T a_y)
+		void Set(const T& a_value)
 		{
-			this->x = a_x;
-			this->y = a_y;
+			this->xx = a_value;
+			this->yy = a_value;
+		}
+
+		/** Set
+		*/
+		void Set(const T& a_xx,const T& a_yy)
+		{
+			this->xx = a_xx;
+			this->yy = a_yy;
 		}
 	};
 

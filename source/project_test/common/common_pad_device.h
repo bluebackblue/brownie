@@ -52,13 +52,9 @@ namespace NTest{namespace NCommon
 		*/
 		sharedptr<NBsys::ND3d11::D3d11> d3d11;
 
-		/** mouse_x
+		/** mouse_pos
 		*/
-		f32 mouse_x;
-
-		/** mouse_y
-		*/
-		f32 mouse_y;
+		Position2DType<f32> mouse_pos;
 
 		/** mouse_l
 		*/

@@ -86,7 +86,7 @@ namespace NBsys{namespace NWindowMenu
 		}
 
 		//マウスの値取得。
-		GetSystemInstance()->callback->GetMouse_Callback(this->mouse.x,this->mouse.y,this->mouse.on_l,this->mouse.on_r,this->mouse.down_l,this->mouse.down_r,this->mouse.up_l,this->mouse.up_r);
+		GetSystemInstance()->callback->GetMouse_Callback(this->mouse.pos,this->mouse.on_l,this->mouse.on_r,this->mouse.down_l,this->mouse.down_r,this->mouse.up_l,this->mouse.up_r);
 
 		{
 			auto t_it_begin = this->list.cbegin();

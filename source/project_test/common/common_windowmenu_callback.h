@@ -69,7 +69,7 @@ namespace NTest{namespace NCommon
 
 		/** GetMouse_Callback
 		*/
-		virtual void GetMouse_Callback(f32& a_x,f32& a_y,bool& a_l_on,bool& a_r_on,bool& a_l_down,bool& a_r_down,bool& a_l_up,bool& a_r_up);
+		virtual void GetMouse_Callback(Position2DType<f32>& a_pos,bool& a_l_on,bool& a_r_on,bool& a_l_down,bool& a_r_down,bool& a_l_up,bool& a_r_up);
 
 	};
 

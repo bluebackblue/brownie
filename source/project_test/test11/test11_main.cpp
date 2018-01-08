@@ -289,6 +289,96 @@ namespace NTest
 	*/
 	void Test_Main()
 	{
+		{
+			Size2DType<s32> t_1(1,1);
+			Size2DType<s32> t_2(2,2);
+			
+			t_1 = t_2;
+		}
+
+		{
+			Size2DType<s32> t_1(1,1);
+			Size2DType<s32> t_2(2,2);
+
+			t_1 = +t_2;
+		}
+
+		{
+			Size2DType<s32> t_1(1,1);
+			Size2DType<s32> t_2(2,2);
+
+			t_1 = -t_2;
+		}
+
+		{
+			Size2DType<s32> t_1(1,1);
+			Size2DType<s32> t_2(2,2);
+
+			t_1 += t_2;
+			t_1 += 2;
+		}
+
+		{
+			Size2DType<s32> t_1(1,1);
+			Size2DType<s32> t_2(2,2);
+
+			t_1 -= t_2;
+			t_1 -= 2;
+		}
+
+		{
+			Size2DType<s32> t_1(1,1);
+			Size2DType<s32> t_2(2,2);
+
+			t_1 *= t_2;
+			t_1 *= 2;
+		}
+
+		{
+			Size2DType<s32> t_1(1,1);
+			Size2DType<s32> t_2(2,2);
+
+			t_1 /= t_2;
+			t_1 /= 2;
+		}
+
+		{
+			Size2DType<s32> t_1(1,1);
+			Size2DType<s32> t_2(2,2);
+			Size2DType<s32> t_3(3,3);
+
+			t_1 = t_2 + t_3;
+			t_1 = t_2 + 2;
+		}
+
+		{
+			Size2DType<s32> t_1(1,1);
+			Size2DType<s32> t_2(2,2);
+			Size2DType<s32> t_3(3,3);
+
+			t_1 = t_2 - t_3;
+			t_1 = t_2 - 2;
+		}
+
+
+		{
+			Size2DType<s32> t_1(1,1);
+			Size2DType<s32> t_2(2,2);
+			Size2DType<s32> t_3(3,3);
+
+			t_1 = t_2 * t_3;
+			t_1 = t_2 * 2;
+		}
+
+		{
+			Size2DType<s32> t_1(1,1);
+			Size2DType<s32> t_2(2,2);
+			Size2DType<s32> t_3(3,3);
+
+			t_1 = t_2 / t_3;
+			t_1 = t_2 / 2;
+		}
+
 		sharedptr<App> t_app(new App());
 		t_app->Initialize();
 		t_app->Main();

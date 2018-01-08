@@ -28,41 +28,63 @@ namespace NBlib
 	*/
 	template <typename T> struct Rect2DType_R
 	{
-		/** x
+		/** xx
 		*/
-		T x;
+		T xx;
 
-		/** y
+		/** yy
 		*/
-		T y;
+		T yy;
 
-		/** w
+		/** ww
 		*/
-		T w;
+		T ww;
 
-		/** h
+		/** hh
 		*/
-		T h;
+		T hh;
 
 		/** constructor
 		*/
-		Rect2DType_R()
+		Rect2DType_R() noexcept
 			:
-			x(static_cast<T>(0)),
-			y(static_cast<T>(0)),
-			w(static_cast<T>(0)),
-			h(static_cast<T>(0))
+			xx(static_cast<T>(0)),
+			yy(static_cast<T>(0)),
+			ww(static_cast<T>(0)),
+			hh(static_cast<T>(0))
 		{
 		}
 
 		/** constructor
 		*/
-		Rect2DType_R(T a_x,T a_y,T a_w,T a_h)
+		explicit Rect2DType_R(const T& a_value) noexcept
 			:
-			x(a_x),
-			y(a_y),
-			w(a_w),
-			h(a_h)
+			xx(a_value),
+			yy(a_value),
+			ww(a_value),
+			hh(a_value)
+		{
+		}
+
+		/** constructor
+		*/
+		explicit Rect2DType_R(const T& a_xx,const T& a_yy,const T& a_ww,const T& a_hh) noexcept
+			:
+			xx(a_xx),
+			yy(a_yy),
+			ww(a_ww),
+			hh(a_hh)
+		{
+		}
+
+		/** copy constructor
+		*/
+		Rect2DType_R(const Rect2DType_R<T>& a_instance) noexcept
+			:
+			xx(a_instance.xx),
+			yy(a_instance.yy),
+			ww(a_instance.ww),
+			hh(a_instance.hh)
 		{
 		}
 
@@ -72,16 +94,221 @@ namespace NBlib
 		{
 		}
 
+		/** t_1 = t_2;
+		*/
+		Rect2DType_R<T>& operator =(const Rect2DType_R<T>& a_right)
+		{
+			this->xx = a_right.xx;
+			this->yy = a_right.yy;
+			this->ww = a_right.ww;
+			this->hh = a_right.hh;
+			return *this;
+		}
+
+		/** t_1 = +t_2;
+		*/
+		Rect2DType_R<T> operator +() const
+		{
+			return *this;
+		}
+
+		/** t_1 = -t_2;
+		*/
+		Rect2DType_R<T> operator -() const
+		{
+			return Rect2DType_R<T>(-this->xx,-this->yy,-this->ww,-this->hh);
+		}
+
+		/** t_1 += t_2;
+		*/
+		Rect2DType_R<T>& operator +=(const Rect2DType_R<T>& a_right)
+		{
+			this->xx += a_right.xx;
+			this->yy += a_right.yy;
+			this->ww += a_right.ww;
+			this->hh += a_right.hh;
+			return *this;
+		}
+
+		/** t_1 -= t_2;
+		*/
+		Rect2DType_R<T>& operator -=(const Rect2DType_R<T>& a_right)
+		{
+			this->xx -= a_right.xx;
+			this->yy -= a_right.yy;
+			this->ww -= a_right.ww;
+			this->hh -= a_right.hh;
+			return *this;
+		}
+
+		/** t_1 *= t_2;
+		*/
+		Rect2DType_R<T>& operator *=(const Rect2DType_R<T>& a_right)
+		{
+			this->xx *= a_right.xx;
+			this->yy *= a_right.yy;
+			this->ww *= a_right.ww;
+			this->hh *= a_right.hh;
+			return *this;
+		}
+
+		/** t_1 /= t_2;
+		*/
+		Rect2DType_R<T>& operator /=(const Rect2DType_R<T>& a_right)
+		{
+			this->xx /= a_right.xx;
+			this->yy /= a_right.yy;
+			this->ww /= a_right.ww;
+			this->hh /= a_right.hh;
+			return *this;
+		}
+
+		/** t_1 = 2;
+		*/
+		Rect2DType_R<T>& operator =(const T& a_right_valuet)
+		{
+			this->xx = a_right_value;
+			this->yy = a_right_value;
+			this->ww = a_right_value;
+			this->hh = a_right_value;
+			return *this;
+		}
+
+		/** t_1 += 2;
+		*/
+		Rect2DType_R<T>& operator +=(const T& a_right_value)
+		{
+			this->xx += a_right_value;
+			this->yy += a_right_value;
+			this->ww += a_right_value;
+			this->hh += a_right_value;
+			return *this;
+		}
+
+		/** t_1 -= 2;
+		*/
+		Rect2DType_R<T>& operator -=(const T& a_right_value)
+		{
+			this->xx -= a_right_value;
+			this->yy -= a_right_value;
+			this->ww -= a_right_value;
+			this->hh -= a_right_value;
+			return *this;
+		}
+
+		/** t_1 *= 2;
+		*/
+		Rect2DType_R<T>& operator *=(const T& a_right_value)
+		{
+			this->xx *= a_right_value;
+			this->yy *= a_right_value;
+			this->ww *= a_right_value;
+			this->hh *= a_right_value;
+			return *this;
+		}
+
+		/** t_1 /= 2;
+		*/
+		Rect2DType_R<T>& operator /=(const T& a_right_value)
+		{
+			this->xx /= a_right_value;
+			this->yy /= a_right_value;
+			this->ww /= a_right_value;
+			this->hh /= a_right_value;
+			return *this;
+		}
+
+		/** キャスト。
+		*/
+		template <typename T2> explicit operator Rect2DType_R<T2>() const noexcept
+		{
+			return Rect2DType_R<T2>(static_cast<T2>(this->xx),static_cast<T2>(this->yy));
+		}
+
 		/** Set
 		*/
-		void Set(T a_x,T a_y,T a_w,T a_h)
+		void Set(const T& a_value)
 		{
-			this->x = a_x;
-			this->y = a_y;
-			this->w = a_w;
-			this->h = a_h;
+			this->xx = a_value;
+			this->yy = a_value;
+			this->ww = a_value;
+			this->hh = a_value;
+		}
+
+		/** Set
+		*/
+		void Set(const T& a_xx,const T& a_yy,const T& a_ww,const T& a_hh)
+		{
+			this->xx = a_x;
+			this->yy = a_y;
+			this->ww = a_w;
+			this->hh = a_h;
 		}
 	};
+
+
+	/** t_1 = t_2 + t_3;
+	*/
+	template <typename T> Rect2DType_R<T> operator +(const Rect2DType_R<T>& a_left,const Rect2DType_R<T>& a_right)
+	{
+		return Rect2DType_R<T>(a_left) += a_right;
+	}
+
+
+	/** t_1 = t_2 - t_3;
+	*/
+	template <typename T> Rect2DType_R<T> operator -(const Rect2DType_R<T>& a_left,const Rect2DType_R<T>& a_right)
+	{
+		return Rect2DType_R<T>(a_left) -= a_right;
+	}
+
+
+	/** t_1 = t_2 * t_3;
+	*/
+	template <typename T> Rect2DType_R<T> operator *(const Rect2DType_R<T>& a_left,const Rect2DType_R<T>& a_right)
+	{
+		return Rect2DType_R<T>(a_left) *= a_right;
+	}
+
+
+	/** t_1 = t_2 / t_3;
+	*/
+	template <typename T> Rect2DType_R<T> operator /(const Rect2DType_R<T>& a_left,const Rect2DType_R<T>& a_right)
+	{
+		return Rect2DType_R<T>(a_left) /= a_right;
+	}
+
+
+	/** t_1 = t_2 + 2;
+	*/
+	template <typename T> Rect2DType_R<T> operator +(const Rect2DType_R<T>& a_left,const T& a_right_value)
+	{
+		return Rect2DType_R<T>(a_left) += a_right_value;
+	}
+
+
+	/** t_1 = t_2 - 2;
+	*/
+	template <typename T> Rect2DType_R<T> operator -(const Rect2DType_R<T>& a_left,const T& a_right_value)
+	{
+		return Rect2DType_R<T>(a_left) -= a_right_value;
+	}
+
+
+	/** t_1 = t_2 * 2;
+	*/
+	template <typename T> Rect2DType_R<T> operator *(const Rect2DType_R<T>& a_left,const T& a_right_value)
+	{
+		return Rect2DType_R<T>(a_left) *= a_right_value;
+	}
+
+
+	/** t_1 = t_2 / 2;
+	*/
+	template <typename T> Rect2DType_R<T> operator /(const Rect2DType_R<T>& a_left,const T& a_right_value)
+	{
+		return Rect2DType_R<T>(a_left) /= a_right_value;
+	}
 
 
 	/** Rect2DType_A
@@ -91,60 +318,287 @@ namespace NBlib
 	*/
 	template <typename T> struct Rect2DType_A
 	{
-		/** x1
+		/** x
 		*/
 		T x1;
 
-		/** y1
+		/** y
 		*/
 		T y1;
 
-		/** x2
+		/** w
 		*/
 		T x2;
 
-		/** y2
+		/** h
 		*/
 		T y2;
 
 		/** constructor
 		*/
-		Rect2DType_A()
+		Rect2DType_A() noexcept
 			:
-			x(static_cast<T>(0)),
-			y(static_cast<T>(0)),
-			w(static_cast<T>(0)),
-			h(static_cast<T>(0))
+			x1(static_cast<T>(0)),
+			y1(static_cast<T>(0)),
+			x2(static_cast<T>(0)),
+			y2(static_cast<T>(0))
 		{
 		}
 
 		/** constructor
 		*/
-		Rect2DType_A(T a_x1,T a_y1,T a_x2,T a_y2)
+		explicit Rect2DType_A(const T& a_value) noexcept
+			:
+			x1(a_value),
+			y1(a_value),
+			x2(a_value),
+			y2(a_value)
+		{
+		}
+
+		/** constructor
+		*/
+		explicit Rect2DType_A(const T& a_x1,const T& a_y1,const T& a_x2,const T& a_y2) noexcept
 			:
 			x1(a_x1),
 			y1(a_y1),
 			x2(a_x2),
-			x2(a_y2)
+			y2(a_y2)
 		{
 		}
-		
+
+		/** copy constructor
+		*/
+		Rect2DType_A(const Rect2DType_A<T>& a_instance) noexcept
+			:
+			x1(a_instance.x1),
+			y1(a_instance.y1),
+			x2(a_instance.x2),
+			y2(a_instance.y2)
+		{
+		}
+
 		/** destructor
 		*/
 		nonvirtual ~Rect2DType_A()
 		{
 		}
 
+		/** t_1 = t_2;
+		*/
+		Rect2DType_A<T>& operator =(const Rect2DType_A<T>& a_right)
+		{
+			this->x1 = a_right.x1;
+			this->y1 = a_right.y1;
+			this->x2 = a_right.x2;
+			this->y2 = a_right.y2;
+			return *this;
+		}
+
+		/** t_1 = +t_2;
+		*/
+		Rect2DType_A<T> operator +() const
+		{
+			return *this;
+		}
+
+		/** t_1 = -t_2;
+		*/
+		Rect2DType_A<T> operator -() const
+		{
+			return Rect2DType_A<T>(-this->x1,-this->y1,-this->x2,-this->y2);
+		}
+
+		/** t_1 += t_2;
+		*/
+		Rect2DType_A<T>& operator +=(const Rect2DType_A<T>& a_right)
+		{
+			this->x1 += a_right.x1;
+			this->y1 += a_right.y1;
+			this->x2 += a_right.x2;
+			this->y2 += a_right.y2;
+			return *this;
+		}
+
+		/** t_1 -= t_2;
+		*/
+		Rect2DType_A<T>& operator -=(const Rect2DType_A<T>& a_right)
+		{
+			this->x1 -= a_right.x1;
+			this->y1 -= a_right.y1;
+			this->x2 -= a_right.x2;
+			this->y2 -= a_right.y2;
+			return *this;
+		}
+
+		/** t_1 *= t_2;
+		*/
+		Rect2DType_A<T>& operator *=(const Rect2DType_A<T>& a_right)
+		{
+			this->x1 *= a_right.x1;
+			this->y1 *= a_right.y1;
+			this->x2 *= a_right.x2;
+			this->y2 *= a_right.y2;
+			return *this;
+		}
+
+		/** t_1 /= t_2;
+		*/
+		Rect2DType_A<T>& operator /=(const Rect2DType_A<T>& a_right)
+		{
+			this->x1 /= a_right.x1;
+			this->y1 /= a_right.y1;
+			this->x2 /= a_right.x2;
+			this->y2 /= a_right.y2;
+			return *this;
+		}
+
+		/** t_1 = 2;
+		*/
+		Rect2DType_A<T>& operator =(const T& a_right_valuet)
+		{
+			this->xx = a_right_value;
+			this->yy = a_right_value;
+			this->ww = a_right_value;
+			this->hh = a_right_value;
+			return *this;
+		}
+
+		/** t_1 += 2;
+		*/
+		Rect2DType_A<T>& operator +=(const T& a_right_value)
+		{
+			this->x1 += a_right_value;
+			this->y1 += a_right_value;
+			this->x2 += a_right_value;
+			this->y2 += a_right_value;
+			return *this;
+		}
+
+		/** t_1 -= 2;
+		*/
+		Rect2DType_A<T>& operator -=(const T& a_right_value)
+		{
+			this->x1 -= a_right_value;
+			this->y1 -= a_right_value;
+			this->x2 -= a_right_value;
+			this->y2 -= a_right_value;
+			return *this;
+		}
+
+		/** t_1 *= 2;
+		*/
+		Rect2DType_A<T>& operator *=(const T& a_right_value)
+		{
+			this->x1 *= a_right_value;
+			this->y1 *= a_right_value;
+			this->x2 *= a_right_value;
+			this->y2 *= a_right_value;
+			return *this;
+		}
+
+		/** t_1 /= 2;
+		*/
+		Rect2DType_A<T>& operator /=(const T& a_right_value)
+		{
+			this->x1 /= a_right_value;
+			this->y1 /= a_right_value;
+			this->x2 /= a_right_value;
+			this->y2 /= a_right_value;
+			return *this;
+		}
+
+		/** キャスト。
+		*/
+		template <typename T2> explicit operator Rect2DType_A<T2>() const noexcept
+		{
+			return Rect2DType_A<T2>(static_cast<T2>(this->xx),static_cast<T2>(this->yy));
+		}
+
 		/** Set
 		*/
-		void Set(T a_x1,T a_y1,T a_x2,T a_y2)
+		void Set(const T& a_value)
+		{
+			this->x1 = a_value;
+			this->y1 = a_value;
+			this->x2 = a_value;
+			this->y2 = a_value;
+		}
+
+		/** Set
+		*/
+		void Set(const T& a_x1,const T& a_y1,const T& a_x2,const T& a_y2)
 		{
 			this->x1 = a_x1;
 			this->y1 = a_y1;
 			this->x2 = a_x2;
-			this->x2 = a_y2;
+			this->y2 = a_y2;
 		}
 	};
+
+
+	/** t_1 = t_2 + t_3;
+	*/
+	template <typename T> Rect2DType_A<T> operator +(const Rect2DType_A<T>& a_left,const Rect2DType_A<T>& a_right)
+	{
+		return Rect2DType_A<T>(a_left) += a_right;
+	}
+
+
+	/** t_1 = t_2 - t_3;
+	*/
+	template <typename T> Rect2DType_A<T> operator -(const Rect2DType_A<T>& a_left,const Rect2DType_A<T>& a_right)
+	{
+		return Rect2DType_A<T>(a_left) -= a_right;
+	}
+
+
+	/** t_1 = t_2 * t_3;
+	*/
+	template <typename T> Rect2DType_A<T> operator *(const Rect2DType_A<T>& a_left,const Rect2DType_A<T>& a_right)
+	{
+		return Rect2DType_A<T>(a_left) *= a_right;
+	}
+
+
+	/** t_1 = t_2 / t_3;
+	*/
+	template <typename T> Rect2DType_A<T> operator /(const Rect2DType_A<T>& a_left,const Rect2DType_A<T>& a_right)
+	{
+		return Rect2DType_A<T>(a_left) /= a_right;
+	}
+
+
+	/** t_1 = t_2 + 2;
+	*/
+	template <typename T> Rect2DType_A<T> operator +(const Rect2DType_A<T>& a_left,const T& a_right_value)
+	{
+		return Rect2DType_A<T>(a_left) += a_right_value;
+	}
+
+
+	/** t_1 = t_2 - 2;
+	*/
+	template <typename T> Rect2DType_A<T> operator -(const Rect2DType_A<T>& a_left,const T& a_right_value)
+	{
+		return Rect2DType_A<T>(a_left) -= a_right_value;
+	}
+
+
+	/** t_1 = t_2 * 2;
+	*/
+	template <typename T> Rect2DType_A<T> operator *(const Rect2DType_A<T>& a_left,const T& a_right_value)
+	{
+		return Rect2DType_A<T>(a_left) *= a_right_value;
+	}
+
+
+	/** t_1 = t_2 / 2;
+	*/
+	template <typename T> Rect2DType_A<T> operator /(const Rect2DType_A<T>& a_left,const T& a_right_value)
+	{
+		return Rect2DType_A<T>(a_left) /= a_right_value;
+	}
 
 
 }

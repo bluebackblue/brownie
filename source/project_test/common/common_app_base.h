@@ -573,8 +573,15 @@ namespace NTest{namespace NCommon
 					{
 						//FPS。
 						if(this->render2d){
-							STLWString t_string(ToWString(static_cast<s32>(1.0f / t_delta)).c_str());
 
+							//マウスの位置取得。
+							const NBsys::NPad::TouchValue& t_mouse_l = NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->GetTouchValue(NBsys::NPad::Pad_Virtual::TouchType::MOUSEL);
+
+							//文字列作成。
+							wchar t_buffer[64];
+							STLWString t_string = VASTRING(t_buffer,sizeof(t_buffer),L"%d : (%d %d)",static_cast<s32>(1.0f / t_delta),static_cast<s32>(t_mouse_l.pos.xx),static_cast<s32>(t_mouse_l.pos.yy));
+
+							//描画登録。
 							{
 								sharedptr<NCommon::Render2D_Item_Font> t_font(new NCommon::Render2D_Item_Font(99999));
 								t_font->x = 0.0f;

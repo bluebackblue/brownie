@@ -58,7 +58,7 @@ namespace NBsys{namespace NWindowMenu
 
 			/** offset
 			*/
-			WindowMenu_Offset offset;
+			Position2DType<f32> offset;
 			
 			/** size
 			*/
@@ -113,7 +113,7 @@ namespace NBsys{namespace NWindowMenu
 
 		/** [設定値]自分の位置。
 		*/
-		WindowMenu_Offset offset;
+		Position2DType<f32> offset;
 
 		/** [設定値]自分のサイズ。
 		*/
@@ -133,7 +133,7 @@ namespace NBsys{namespace NWindowMenu
 		bool calc_y_fix;
 		bool calc_w_fix;
 		bool calc_h_fix;
-		f32 calc_x;
+		f32 calc_x;		//TODO:Rect2DType_R
 		f32 calc_y;
 		f32 calc_w;
 		f32 calc_h;
@@ -183,7 +183,7 @@ namespace NBsys{namespace NWindowMenu
 
 		/** IsRange
 		*/
-		bool IsRange(f32 a_x,f32 a_y);
+		bool IsRange(const Position2DType<f32> a_pos);
 
 		/** サイズ計算。
 		*/

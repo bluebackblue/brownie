@@ -40,15 +40,13 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		bool drag_flag;
 
-		/** start
+		/** start_pos
 		*/
-		f32 start_x;
-		f32 start_y;
+		Position2DType<f32> start_pos;
 
-		/** old
+		/** old_pos
 		*/
-		f32 old_x;
-		f32 old_y;
+		Position2DType<f32> old_pos;
 
 	public:
 

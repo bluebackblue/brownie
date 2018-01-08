@@ -66,7 +66,7 @@ namespace NBsys{namespace NPad
 			this->analog[ii] = 0.0f;
 		}
 		for(int ii=0;ii<COUNTOF(this->touch);ii++){
-			this->touch[ii].Set(0.0f,0.0f,false);
+			this->touch[ii].Set(Position2DType<f32>(),false);
 		}
 		for(int ii=0;ii<COUNTOF(this->touch_flag_old);ii++){
 			this->touch_flag_old[ii] = false;
@@ -266,7 +266,7 @@ namespace NBsys{namespace NPad
 			{
 				auto t_it_end = this->list_touch.cend();
 				for(auto t_it = this->list_touch.cbegin();t_it!=t_it_end;++t_it){
-					this->touch[t_it->virtual_touch].Set(0.0f,0.0f,false);
+					this->touch[t_it->virtual_touch].Set(Position2DType<f32>(),false);
 				}
 			}
 

@@ -120,7 +120,7 @@ namespace NBsys{namespace NWindowMenu
 			WindowMenu_Mouse& t_mouse = GetSystemInstance()->GetMouse();
 			if(t_mouse.up_l){
 				this->push_flag = false;
-				if(this->IsRange(t_mouse.x,t_mouse.y)){
+				if(this->IsRange(t_mouse.pos)){
 					//プッシュ確定。
 					if(this->action){
 						this->action();
@@ -135,7 +135,7 @@ namespace NBsys{namespace NWindowMenu
 			WindowMenu_Mouse& t_mouse = GetSystemInstance()->GetMouse();
 
 			//マウスがボタンの上。
-			this->on_flag = this->IsRange(t_mouse.x,t_mouse.y);
+			this->on_flag = this->IsRange(t_mouse.pos);
 		}
 	}
 
