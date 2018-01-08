@@ -19,8 +19,6 @@
 
 /** include
 */
-#include "./geometry_identity.h"
-#include "./geometry_vector_raw.h"
 #include "./geometry_vertex_2.h"
 #include "./geometry_vertex_3.h"
 #include "./geometry_vertex_4.h"

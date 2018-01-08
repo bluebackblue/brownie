@@ -166,6 +166,70 @@ namespace NBsys{namespace NGeometry
 	};
 
 
+	/** t_1 = t_2 + t_3;
+	*/
+	inline Geometry_Vector2 operator +(const Geometry_Vector2& a_left,const Geometry_Vector2& a_right)
+	{
+		return Geometry_Vector2(a_left) += a_right;
+	}
+
+
+	/** t_1 = t_2 - t_3;
+	*/
+	inline Geometry_Vector2 operator -(const Geometry_Vector2& a_left,const Geometry_Vector2& a_right)
+	{
+		return Geometry_Vector2(a_left) -= a_right;
+	}
+
+
+	/** t_1 = t_2 * t_3;
+	*/
+	inline Geometry_Vector2 operator *(const Geometry_Vector2& a_left,const Geometry_Vector2& a_right)
+	{
+		return Geometry_Vector2(a_left) *= a_right;
+	}
+
+
+	/** t_1 = t_2 / t_3;
+	*/
+	inline Geometry_Vector2 operator /(const Geometry_Vector2& a_left,const Geometry_Vector2& a_right)
+	{
+		return Geometry_Vector2(a_left) /= a_right;
+	}
+
+
+	/** t_1 = t_2 + 2;
+	*/
+	inline Geometry_Vector2 operator +(const Geometry_Vector2& a_left,f32 a_right_value)
+	{
+		return Geometry_Vector2(a_left) += a_right_value;
+	}
+
+
+	/** t_1 = t_2 - 2;
+	*/
+	inline Geometry_Vector2 operator -(const Geometry_Vector2& a_left,f32 a_right_value)
+	{
+		return Geometry_Vector2(a_left) -= a_right_value;
+	}
+
+
+	/** t_1 = t_2 * 2;
+	*/
+	inline Geometry_Vector2 operator *(const Geometry_Vector2& a_left,f32 a_right_value)
+	{
+		return Geometry_Vector2(a_left) *= a_right_value;
+	}
+
+
+	/** t_1 = t_2 / 2;
+	*/
+	inline Geometry_Vector2 operator /(const Geometry_Vector2& a_left,f32 a_right_value)
+	{
+		return Geometry_Vector2(a_left) /= a_right_value;
+	}
+
+
 }}
 #endif
 
