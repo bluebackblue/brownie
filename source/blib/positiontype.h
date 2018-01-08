@@ -22,6 +22,9 @@
 namespace NBlib
 {
 	/** Position2DType
+
+	x y
+
 	*/
 	template <typename T> struct Position2DType
 	{
@@ -125,6 +128,42 @@ namespace NBlib
 			return *this;
 		}
 
+		/** t_1 += 2;
+		*/
+		Position2DType<T>& operator +=(const T& a_right_value)
+		{
+			this->x += a_right_value;
+			this->y += a_right_value;
+			return *this;
+		}
+
+		/** t_1 -= 2;
+		*/
+		Position2DType<T>& operator -=(const T& a_right_value)
+		{
+			this->x -= a_right_value;
+			this->y -= a_right_value;
+			return *this;
+		}
+
+		/** t_1 *= 2;
+		*/
+		Position2DType<T>& operator *=(const T& a_right_value)
+		{
+			this->x *= a_right_value;
+			this->y *= a_right_value;
+			return *this;
+		}
+
+		/** t_1 /= 2;
+		*/
+		Position2DType<T>& operator /=(const T& a_right_value)
+		{
+			this->x /= a_right_value;
+			this->y /= a_right_value;
+			return *this;
+		}
+
 		/** Set
 		*/
 		void Set(T a_x,T a_y)
@@ -132,7 +171,6 @@ namespace NBlib
 			this->x = a_x;
 			this->y = a_y;
 		}
-
 	};
 
 
@@ -143,12 +181,14 @@ namespace NBlib
 		return Position2DType<T>(a_left) += a_right;
 	}
 
+
 	/** t_1 = t_2 - t_3;
 	*/
 	template <typename T> Position2DType<T> operator -(const Position2DType<T>& a_left,const Position2DType<T>& a_right)
 	{
 		return Position2DType<T>(a_left) -= a_right;
 	}
+
 
 	/** t_1 = t_2 * t_3;
 	*/
@@ -157,11 +197,44 @@ namespace NBlib
 		return Position2DType<T>(a_left) *= a_right;
 	}
 
+
 	/** t_1 = t_2 / t_3;
 	*/
 	template <typename T> Position2DType<T> operator /(const Position2DType<T>& a_left,const Position2DType<T>& a_right)
 	{
 		return Position2DType<T>(a_left) /= a_right;
+	}
+
+
+	/** t_1 = t_2 + 2;
+	*/
+	template <typename T> Position2DType<T> operator +(const Position2DType<T>& a_left,const T& a_right_value)
+	{
+		return Position2DType<T>(a_left) += a_right_value;
+	}
+
+
+	/** t_1 = t_2 - 2;
+	*/
+	template <typename T> Position2DType<T> operator -(const Position2DType<T>& a_left,const T& a_right_value)
+	{
+		return Position2DType<T>(a_left) -= a_right_value;
+	}
+
+
+	/** t_1 = t_2 * 2;
+	*/
+	template <typename T> Position2DType<T> operator *(const Position2DType<T>& a_left,const T& a_right_value)
+	{
+		return Position2DType<T>(a_left) *= a_right_value;
+	}
+
+
+	/** t_1 = t_2 / 2;
+	*/
+	template <typename T> Position2DType<T> operator /(const Position2DType<T>& a_left,const T& a_right_value)
+	{
+		return Position2DType<T>(a_left) /= a_right_value;
 	}
 
 
