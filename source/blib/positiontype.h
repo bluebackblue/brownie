@@ -42,19 +42,6 @@ namespace NBlib
 		{
 		}
 
-		/** move constructor
-
-		Position2DType<s32> t_temp{};
-		Position2DType<s32> t_4(std::move(t_temp));
-
-		*/
-		Position2DType(Position2DType&& a_instance_rr)
-			:
-			x(a_instance_rr.x),
-			y(a_instance_rr.y)
-		{
-		}
-
 		/** copy constructor
 		*/
 		Position2DType(const Position2DType<T>& a_instance) noexcept
@@ -77,23 +64,6 @@ namespace NBlib
 		*/
 		nonvirtual ~Position2DType()
 		{
-		}
-
-		/** Set
-		*/
-		void Set(T a_x,T a_y)
-		{
-			this->x = a_x;
-			this->y = a_y;
-		}
-
-		/** t_1 = Position2DType<s32>();
-		*/
-		Position2DType<T>& operator =(Position2DType<T>&& a_instance_rr)
-		{
-			this->x = a_instance_rr.x;
-			this->y = a_instance_rr.y;
-			return *this;
 		}
 
 		/** t_1 = t_2;
@@ -153,6 +123,14 @@ namespace NBlib
 			this->x /= a_right.x;
 			this->y /= a_right.y;
 			return *this;
+		}
+
+		/** Set
+		*/
+		void Set(T a_x,T a_y)
+		{
+			this->x = a_x;
+			this->y = a_y;
 		}
 
 	};
