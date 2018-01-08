@@ -205,7 +205,7 @@ namespace NBsys{namespace NGeometry
 
 		/** [設定]平行移動。
 		*/
-		inline void Set_Translate(f32 a_x,f32 a_y,f32 a_z);
+		inline void Set_Translate(f32 a_xx,f32 a_yy,f32 a_zz);
 
 		/** [設定]平行移動。
 		*/
@@ -213,7 +213,7 @@ namespace NBsys{namespace NGeometry
 
 		/** [static][作成]平行移動。
 		*/
-		static inline Geometry_Matrix_44 Make_Translate(f32 a_x,f32 a_y,f32 a_z);
+		static inline Geometry_Matrix_44 Make_Translate(f32 a_xx,f32 a_yy,f32 a_zz);
 
 		/** [static][作成]平行移動。
 		*/
@@ -229,7 +229,7 @@ namespace NBsys{namespace NGeometry
 
 		/** [設定]スケール。
 		*/
-		inline void Calc_Scale(f32 a_x,f32 a_y,f32 a_z);
+		inline void Calc_Scale(f32 a_xx,f32 a_yy,f32 a_zz);
 
 		/** [設定]スケール。
 		*/

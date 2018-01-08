@@ -827,11 +827,11 @@ namespace NBsys{namespace NGeometry
 
 	/** [設定]平行移動。
 	*/
-	inline void Geometry_Matrix_44::Set_Translate(f32 a_x,f32 a_y,f32 a_z)
+	inline void Geometry_Matrix_44::Set_Translate(f32 a_xx,f32 a_yy,f32 a_zz)
 	{
-		this->raw.m.tr_x = a_x;
-		this->raw.m.tr_y = a_y;
-		this->raw.m.tr_z = a_z;
+		this->raw.m.tr_x = a_xx;
+		this->raw.m.tr_y = a_yy;
+		this->raw.m.tr_z = a_zz;
 	}
 
 
@@ -847,13 +847,13 @@ namespace NBsys{namespace NGeometry
 
 	/** [static][作成]平行移動。
 	*/
-	inline Geometry_Matrix_44 Geometry_Matrix_44::Make_Translate(f32 a_x,f32 a_y,f32 a_z)
+	inline Geometry_Matrix_44 Geometry_Matrix_44::Make_Translate(f32 a_xx,f32 a_yy,f32 a_zz)
 	{
 		return Geometry_Matrix_44(
 			1.0f,  0.0f,  0.0f,  0.0f,
 			0.0f,  1.0f,  0.0f,  0.0f,
 			0.0f,  0.0f,  1.0f,  0.0f,
-			a_x,   a_y,   a_z,   1.0f
+			a_xx,  a_yy,  a_zz,  1.0f
 		);
 	}
 
@@ -898,7 +898,7 @@ namespace NBsys{namespace NGeometry
 
 	/** [設定]スケール。
 	*/
-	inline void Geometry_Matrix_44::Calc_Scale(f32 a_x,f32 a_y,f32 a_z)
+	inline void Geometry_Matrix_44::Calc_Scale(f32 a_xx,f32 a_yy,f32 a_zz)
 	{
 		Geometry_Vector3 t_axis_x = this->Make_AxisX();
 		Geometry_Vector3 t_axis_y = this->Make_AxisY();
@@ -908,9 +908,9 @@ namespace NBsys{namespace NGeometry
 		t_axis_y.Set_Normalize();
 		t_axis_z.Set_Normalize();
 
-		this->Set_AxisX(t_axis_x * a_x);
-		this->Set_AxisY(t_axis_y * a_y);
-		this->Set_AxisZ(t_axis_z * a_z);
+		this->Set_AxisX(t_axis_x * a_xx);
+		this->Set_AxisY(t_axis_y * a_yy);
+		this->Set_AxisZ(t_axis_z * a_zz);
 	}
 
 
@@ -918,7 +918,7 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline void Geometry_Matrix_44::Calc_Scale(const Geometry_Vector3& a_vector)
 	{
-		this->Calc_Scale(a_vector.x(),a_vector.y(),a_vector.z());
+		this->Calc_Scale(a_vector.raw.v.xx,a_vector.raw.v.yy,a_vector.raw.v.zz);
 	}
 
 
@@ -1179,19 +1179,19 @@ namespace NBsys{namespace NGeometry
 
 		Geometry_Vector3 t_vector = a_vector.Make_Normalize();
 
-		this->raw.m.ax_x = t_1_cos * t_vector.x() * t_vector.x() + t_cos;
-		this->raw.m.ax_y = t_vector.x() * t_vector.y() * t_1_cos - t_vector.z() * t_sin;
-		this->raw.m.ax_z = t_vector.x() * t_vector.z() * t_1_cos + t_vector.y() * t_sin;
+		this->raw.m.ax_x = t_1_cos * t_vector.raw.v.xx * t_vector.raw.v.xx + t_cos;
+		this->raw.m.ax_y = t_vector.raw.v.xx * t_vector.raw.v.yy * t_1_cos - t_vector.raw.v.zz * t_sin;
+		this->raw.m.ax_z = t_vector.raw.v.xx * t_vector.raw.v.zz * t_1_cos + t_vector.raw.v.yy * t_sin;
 		this->raw.m.ax_w = 0.0f;
 
-		this->raw.m.ay_x = t_vector.x() * t_vector.y() * t_1_cos + t_vector.z() * t_sin;
-		this->raw.m.ay_y = t_1_cos * t_vector.y() * t_vector.y() + t_cos;
-		this->raw.m.ay_z = t_vector.y() * t_vector.z() * t_1_cos - t_vector.x() * t_sin;
+		this->raw.m.ay_x = t_vector.raw.v.xx * t_vector.raw.v.yy * t_1_cos + t_vector.raw.v.zz * t_sin;
+		this->raw.m.ay_y = t_1_cos * t_vector.raw.v.yy * t_vector.raw.v.yy + t_cos;
+		this->raw.m.ay_z = t_vector.raw.v.yy * t_vector.raw.v.zz * t_1_cos - t_vector.raw.v.xx * t_sin;
 		this->raw.m.ay_w = 0.0f;
 
-		this->raw.m.az_x = t_vector.x() * t_vector.z() * t_1_cos - t_vector.y() * t_sin;
-		this->raw.m.az_y = t_vector.y() * t_vector.z() * t_1_cos + t_vector.x() * t_sin;
-		this->raw.m.az_z = t_1_cos * t_vector.z() * t_vector.z() + t_cos;
+		this->raw.m.az_x = t_vector.raw.v.xx * t_vector.raw.v.zz * t_1_cos - t_vector.raw.v.yy * t_sin;
+		this->raw.m.az_y = t_vector.raw.v.yy * t_vector.raw.v.zz * t_1_cos + t_vector.raw.v.xx * t_sin;
+		this->raw.m.az_z = t_1_cos * t_vector.raw.v.zz * t_vector.raw.v.zz + t_cos;
 		this->raw.m.az_w = 0.0f;
 
 		this->raw.m.tr_x = 0.0f;
@@ -1375,19 +1375,19 @@ namespace NBsys{namespace NGeometry
 		t_y.Set_Normalize();
 
 		{
-			this->raw.m.ax_x = t_x.x();
-			this->raw.m.ax_y = t_x.y();
-			this->raw.m.ax_z = t_x.z();
+			this->raw.m.ax_x = t_x.raw.v.xx;
+			this->raw.m.ax_y = t_x.raw.v.yy;
+			this->raw.m.ax_z = t_x.raw.v.zz;
 			this->raw.m.ax_w = 0.0f;
 
-			this->raw.m.ay_x = t_y.x();
-			this->raw.m.ay_y = t_y.y();
-			this->raw.m.ay_z = t_y.z();
+			this->raw.m.ay_x = t_y.raw.v.xx;
+			this->raw.m.ay_y = t_y.raw.v.yy;
+			this->raw.m.ay_z = t_y.raw.v.zz;
 			this->raw.m.ay_w = 0.0f;
 
-			this->raw.m.az_x = t_z.x();
-			this->raw.m.az_y = t_z.y();
-			this->raw.m.az_z = t_z.z();
+			this->raw.m.az_x = t_z.raw.v.xx;
+			this->raw.m.az_y = t_z.raw.v.yy;
+			this->raw.m.az_z = t_z.raw.v.zz;
 			this->raw.m.az_w = 0.0f;
 
 			this->raw.m.tr_x = 0.0f;
@@ -1416,19 +1416,19 @@ namespace NBsys{namespace NGeometry
 		t_z.Set_Normalize();
 
 		{
-			this->raw.m.ax_x = t_x.x();
-			this->raw.m.ax_y = t_x.y();
-			this->raw.m.ax_z = t_x.z();
+			this->raw.m.ax_x = t_x.raw.v.xx;
+			this->raw.m.ax_y = t_x.raw.v.yy;
+			this->raw.m.ax_z = t_x.raw.v.zz;
 			this->raw.m.ax_w = 0.0f;
 
-			this->raw.m.ay_x = t_y.x();
-			this->raw.m.ay_y = t_y.y();
-			this->raw.m.ay_z = t_y.z();
+			this->raw.m.ay_x = t_y.raw.v.xx;
+			this->raw.m.ay_y = t_y.raw.v.yy;
+			this->raw.m.ay_z = t_y.raw.v.zz;
 			this->raw.m.ay_w = 0.0f;
 
-			this->raw.m.az_x = t_z.x();
-			this->raw.m.az_y = t_z.y();
-			this->raw.m.az_z = t_z.z();
+			this->raw.m.az_x = t_z.raw.v.xx;
+			this->raw.m.az_y = t_z.raw.v.yy;
+			this->raw.m.az_z = t_z.raw.v.zz;
 			this->raw.m.az_w = 0.0f;
 
 			this->raw.m.tr_x = 0.0f;
@@ -1449,12 +1449,12 @@ namespace NBsys{namespace NGeometry
 			if(t_tr > 0.0f){
 
 				f32 t_s = NMath::sqrt_f(t_tr + 1.0f);
-				t_temp_quaternion.w() = t_s * 0.5f;
+				t_temp_quaternion.raw.q.ww = t_s * 0.5f;
 				t_s = 0.5f / t_s;
 
-				t_temp_quaternion.x() = (this->raw.m.az_y - this->raw.m.ay_z) * t_s;
-				t_temp_quaternion.y() = (this->raw.m.ax_z - this->raw.m.az_x) * t_s;
-				t_temp_quaternion.z() = (this->raw.m.ay_x - this->raw.m.ax_y) * t_s;
+				t_temp_quaternion.raw.q.xx = (this->raw.m.az_y - this->raw.m.ay_z) * t_s;
+				t_temp_quaternion.raw.q.yy = (this->raw.m.ax_z - this->raw.m.az_x) * t_s;
+				t_temp_quaternion.raw.q.zz = (this->raw.m.ay_x - this->raw.m.ax_y) * t_s;
 
 			}else{
 
@@ -1481,13 +1481,13 @@ namespace NBsys{namespace NGeometry
 					t_s = 0.5f / t_s;
 				}
 
-				t_temp_quaternion.w() = (this->raw.matrix[kk][jj] - this->raw.matrix[jj][kk]) * t_s;
+				t_temp_quaternion.raw.q.ww = (this->raw.matrix[kk][jj] - this->raw.matrix[jj][kk]) * t_s;
 				t_temp[jj] = (this->raw.matrix[ii][jj] + this->raw.matrix[jj][ii]) * t_s;
 				t_temp[kk] = (this->raw.matrix[ii][kk] + this->raw.matrix[kk][ii]) * t_s;
 
-				t_temp_quaternion.x() = t_temp[0];
-				t_temp_quaternion.y() = t_temp[1];
-				t_temp_quaternion.z() = t_temp[2];
+				t_temp_quaternion.raw.q.xx = t_temp[0];
+				t_temp_quaternion.raw.q.yy = t_temp[1];
+				t_temp_quaternion.raw.q.zz = t_temp[2];
 			}
 		}
 		return t_temp_quaternion;
@@ -1507,19 +1507,19 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline void Geometry_Matrix_44::Set_Quaternion(const Geometry_Quaternion& a_quaternion)
 	{
-		f32 t_s = 2.0f / ((a_quaternion.x() * a_quaternion.x()) + (a_quaternion.y() * a_quaternion.y()) + (a_quaternion.z() * a_quaternion.z()) + (a_quaternion.w() * a_quaternion.w()));
+		f32 t_s = 2.0f / ((a_quaternion.raw.q.xx * a_quaternion.raw.q.xx) + (a_quaternion.raw.q.yy * a_quaternion.raw.q.yy) + (a_quaternion.raw.q.zz * a_quaternion.raw.q.zz) + (a_quaternion.raw.q.ww * a_quaternion.raw.q.ww));
 
-		f32 t_wx = a_quaternion.w() * a_quaternion.x() * t_s;
-		f32 t_wy = a_quaternion.w() * a_quaternion.y() * t_s;
-		f32 t_wz = a_quaternion.w() * a_quaternion.z() * t_s;
+		f32 t_wx = a_quaternion.raw.q.ww * a_quaternion.raw.q.xx * t_s;
+		f32 t_wy = a_quaternion.raw.q.ww * a_quaternion.raw.q.yy * t_s;
+		f32 t_wz = a_quaternion.raw.q.ww * a_quaternion.raw.q.zz * t_s;
 
-		f32 t_xx = a_quaternion.x() * a_quaternion.x() * t_s;
-		f32 t_xy = a_quaternion.x() * a_quaternion.y() * t_s;
-		f32 t_xz = a_quaternion.x() * a_quaternion.z() * t_s;
+		f32 t_xx = a_quaternion.raw.q.xx * a_quaternion.raw.q.xx * t_s;
+		f32 t_xy = a_quaternion.raw.q.xx * a_quaternion.raw.q.yy * t_s;
+		f32 t_xz = a_quaternion.raw.q.xx * a_quaternion.raw.q.zz * t_s;
 
-		f32 t_yy = a_quaternion.y() * a_quaternion.y() * t_s;
-		f32 t_yz = a_quaternion.y() * a_quaternion.z() * t_s;
-		f32 t_zz = a_quaternion.z() * a_quaternion.z() * t_s;
+		f32 t_yy = a_quaternion.raw.q.yy * a_quaternion.raw.q.yy * t_s;
+		f32 t_yz = a_quaternion.raw.q.yy * a_quaternion.raw.q.zz * t_s;
+		f32 t_zz = a_quaternion.raw.q.zz * a_quaternion.raw.q.zz * t_s;
 
 		this->raw.m.ax_x = 1.0f - (t_yy + t_zz);
 		this->raw.m.ax_y = t_xy - t_wz;
