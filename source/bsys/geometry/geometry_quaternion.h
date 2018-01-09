@@ -92,7 +92,7 @@ namespace NBsys{namespace NGeometry
 
 		/** constructor
 		*/
-		inline Geometry_Quaternion(f32 a_x,f32 a_y,f32 a_z,f32 a_w);
+		inline Geometry_Quaternion(f32 a_xx,f32 a_yy,f32 a_zz,f32 a_ww);
 
 		/** constructor
 		*/

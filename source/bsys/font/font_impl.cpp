@@ -99,7 +99,7 @@ namespace NBsys{namespace NFont
 
 	/** GetPixel_R8G8B8A8
 	*/
-	Font_State Font_Impl::GetPixel_R8G8B8A8(sharedptr<u8>& a_dest_data,s32 a_offset,s32 a_dest_width,s32 a_dest_height,wchar a_code)
+	Font_State Font_Impl::GetPixel_R8G8B8A8(sharedptr<u8>& a_dest_data,s32 a_byte_offset,const Size2DType<s32>& a_dest_size,wchar a_code)
 	{
 		Font_State t_font_state;
 
@@ -155,8 +155,8 @@ namespace NBsys{namespace NFont
 
 			//ピクセル。
 			{
-				u8* t_dest_data = &a_dest_data.get()[a_offset];
-				NMemory::Set(t_dest_data,0x00,a_dest_width * a_dest_height * 4);
+				u8* t_dest_data = &a_dest_data.get()[a_byte_offset];
+				NMemory::Set(t_dest_data,0x00,a_dest_size.ww * a_dest_size.hh * 4);
 
 				s32 t_buffer_alignment = static_cast<u16>(t_font_state.black_box_x + 3) & 0xFFFC;
 
@@ -167,16 +167,16 @@ namespace NBsys{namespace NFont
 					yy_max = 0;
 				}
 
-				if(xx_max >= a_dest_width){
-					xx_max = a_dest_width;
+				if(xx_max >= a_dest_size.ww){
+					xx_max = a_dest_size.ww;
 				}
-				if(yy_max >= a_dest_height){
-					yy_max = a_dest_height;
+				if(yy_max >= a_dest_size.hh){
+					yy_max = a_dest_size.hh;
 				}
 
 				for(s32 xx=0;xx<xx_max;xx++){
 					for(s32 yy=0;yy<yy_max;yy++){
-						s32 t_dest_offset = xx * 4 + yy * 4 * a_dest_width;
+						s32 t_dest_offset = xx * 4 + yy * 4 * a_dest_size.ww;
 						s32 t_buffer_offset = xx + yy * t_buffer_alignment;
 
 						u8 t_alpha = t_buffer[t_buffer_offset];

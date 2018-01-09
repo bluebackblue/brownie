@@ -151,17 +151,17 @@ namespace NBsys{namespace NGeometry
 
 	/** constructor
 	*/
-	inline Geometry_Quaternion::Geometry_Quaternion(f32 a_x,f32 a_y,f32 a_z,f32 a_w)
+	inline Geometry_Quaternion::Geometry_Quaternion(f32 a_xx,f32 a_yy,f32 a_zz,f32 a_ww)
 	{
-		ASSERT(NMath::is_nan(a_x) == false);
-		ASSERT(NMath::is_nan(a_y) == false);
-		ASSERT(NMath::is_nan(a_z) == false);
-		ASSERT(NMath::is_nan(a_w) == false);
+		ASSERT(NMath::is_nan(a_xx) == false);
+		ASSERT(NMath::is_nan(a_yy) == false);
+		ASSERT(NMath::is_nan(a_zz) == false);
+		ASSERT(NMath::is_nan(a_ww) == false);
 
-		this->raw.q.xx = a_x;
-		this->raw.q.yy = a_y;
-		this->raw.q.zz = a_z;
-		this->raw.q.ww = a_w;
+		this->raw.q.xx = a_xx;
+		this->raw.q.yy = a_yy;
+		this->raw.q.zz = a_zz;
+		this->raw.q.ww = a_ww;
 	}
 
 

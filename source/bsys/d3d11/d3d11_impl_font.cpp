@@ -49,8 +49,7 @@ namespace NBsys{namespace ND3d11
 		d3d11_impl(a_opengl_impl),
 		font(a_font),
 		fonttexture_type(a_fonttexture_type),
-		//texturewidth,
-		//textureheight,
+		//texture_size,
 		//texture,
 		//textureid,
 		list(),
@@ -185,7 +184,12 @@ namespace NBsys{namespace ND3d11
 						DEEPDEBUG_TAGLOG(BSYS_D3D11_DEBUG_ENABLE,L"d3d11_impl_font",L"%s",t_wchar);
 
 						//テクスチャーに書き込み。
-						NBsys::NFont::Font_State t_font_state = this->font->GetPixel_R8G8B8A8(this->texture->GetPixel(),t_font_index * (this->texture_size.ww * this->texture_size.ww * 4),this->texture_size.ww,this->texture_size.ww,t_code);
+						NBsys::NFont::Font_State t_font_state = this->font->GetPixel_R8G8B8A8(
+							this->texture->GetPixel(),
+							t_font_index * (this->texture_size.ww * this->texture_size.ww * 4),
+							Size2DType<s32>(this->texture_size.ww,this->texture_size.ww),
+							t_code
+						);
 						t_change = true;
 
 						//登録。

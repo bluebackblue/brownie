@@ -70,10 +70,10 @@ namespace NBsys{namespace NGeometry
 
 	/** constructor
 	*/
-	inline Geometry_Vector2::Geometry_Vector2(f32 a_x,f32 a_y) noexcept
+	inline Geometry_Vector2::Geometry_Vector2(f32 a_xx,f32 a_yy) noexcept
 	{
-		this->raw.v.xx = a_x;
-		this->raw.v.yy = a_y;
+		this->raw.v.xx = a_xx;
+		this->raw.v.yy = a_yy;
 	}
 
 
@@ -256,10 +256,10 @@ namespace NBsys{namespace NGeometry
 
 	/** [設定]。
 	*/
-	inline Geometry_Vector2& Geometry_Vector2::Set(f32 a_x,f32 a_y)
+	inline Geometry_Vector2& Geometry_Vector2::Set(f32 a_xx,f32 a_yy)
 	{
-		this->raw.v.xx = a_x;
-		this->raw.v.yy = a_y;
+		this->raw.v.xx = a_xx;
+		this->raw.v.yy = a_yy;
 
 		return *this;
 	}
@@ -267,9 +267,9 @@ namespace NBsys{namespace NGeometry
 
 	/** [設定]。
 	*/
-	inline Geometry_Vector2& Geometry_Vector2::Set_X(f32 a_x)
+	inline Geometry_Vector2& Geometry_Vector2::Set_X(f32 a_xx)
 	{
-		this->raw.v.xx = a_x;
+		this->raw.v.xx = a_xx;
 
 		return *this;
 	}
@@ -277,9 +277,9 @@ namespace NBsys{namespace NGeometry
 
 	/** [設定]。
 	*/
-	inline Geometry_Vector2& Geometry_Vector2::Set_Y(f32 a_y)
+	inline Geometry_Vector2& Geometry_Vector2::Set_Y(f32 a_yy)
 	{
-		this->raw.v.yy = a_y;
+		this->raw.v.yy = a_yy;
 
 		return *this;
 	}

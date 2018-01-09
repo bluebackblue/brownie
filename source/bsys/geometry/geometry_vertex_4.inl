@@ -102,12 +102,12 @@ namespace NBsys{namespace NGeometry
 
 	/** constructor
 	*/
-	inline Geometry_Vector4::Geometry_Vector4(f32 a_x,f32 a_y,f32 a_z,f32 a_w) noexcept
+	inline Geometry_Vector4::Geometry_Vector4(f32 a_xx,f32 a_yy,f32 a_zz,f32 a_ww) noexcept
 	{
-		this->raw.v.xx = a_x;
-		this->raw.v.yy = a_y;
-		this->raw.v.zz = a_z;
-		this->raw.v.ww = a_w;
+		this->raw.v.xx = a_xx;
+		this->raw.v.yy = a_yy;
+		this->raw.v.zz = a_zz;
+		this->raw.v.ww = a_ww;
 	}
 
 
@@ -307,12 +307,12 @@ namespace NBsys{namespace NGeometry
 
 	/** [設定]。
 	*/
-	inline Geometry_Vector4& Geometry_Vector4::Set(f32 a_x,f32 a_y,f32 a_z,f32 a_w)
+	inline Geometry_Vector4& Geometry_Vector4::Set(f32 a_xx,f32 a_yy,f32 a_zz,f32 a_ww)
 	{
-		this->raw.v.xx = a_x;
-		this->raw.v.yy = a_y;
-		this->raw.v.zz = a_z;
-		this->raw.v.ww = a_w;
+		this->raw.v.xx = a_xx;
+		this->raw.v.yy = a_yy;
+		this->raw.v.zz = a_zz;
+		this->raw.v.ww = a_ww;
 
 		return *this;
 	}
@@ -320,9 +320,9 @@ namespace NBsys{namespace NGeometry
 
 	/** [設定]。
 	*/
-	inline Geometry_Vector4& Geometry_Vector4::Set_X(f32 a_x)
+	inline Geometry_Vector4& Geometry_Vector4::Set_X(f32 a_xx)
 	{
-		this->raw.v.xx = a_x;
+		this->raw.v.xx = a_xx;
 
 		return *this;
 	}
@@ -330,9 +330,9 @@ namespace NBsys{namespace NGeometry
 
 	/** [設定]。
 	*/
-	inline Geometry_Vector4& Geometry_Vector4::Set_Y(f32 a_y)
+	inline Geometry_Vector4& Geometry_Vector4::Set_Y(f32 a_yy)
 	{
-		this->raw.v.yy = a_y;
+		this->raw.v.yy = a_yy;
 
 		return *this;
 	}
@@ -340,9 +340,9 @@ namespace NBsys{namespace NGeometry
 
 	/** [設定]。
 	*/
-	inline Geometry_Vector4& Geometry_Vector4::Set_Z(f32 a_z)
+	inline Geometry_Vector4& Geometry_Vector4::Set_Z(f32 a_zz)
 	{
-		this->raw.v.zz = a_z;
+		this->raw.v.zz = a_zz;
 
 		return *this;
 	}
@@ -350,9 +350,9 @@ namespace NBsys{namespace NGeometry
 
 	/** [設定]。
 	*/
-	inline Geometry_Vector4& Geometry_Vector4::Set_W(f32 a_w)
+	inline Geometry_Vector4& Geometry_Vector4::Set_W(f32 a_ww)
 	{
-		this->raw.v.ww = a_w;
+		this->raw.v.ww = a_ww;
 
 		return *this;
 	}

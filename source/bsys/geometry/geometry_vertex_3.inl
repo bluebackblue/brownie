@@ -86,11 +86,11 @@ namespace NBsys{namespace NGeometry
 
 	/** constructor
 	*/
-	inline Geometry_Vector3::Geometry_Vector3(f32 a_x,f32 a_y,f32 a_z) noexcept
+	inline Geometry_Vector3::Geometry_Vector3(f32 a_xx,f32 a_yy,f32 a_zz) noexcept
 	{
-		this->raw.v.xx = a_x;
-		this->raw.v.yy = a_y;
-		this->raw.v.zz = a_z;
+		this->raw.v.xx = a_xx;
+		this->raw.v.yy = a_yy;
+		this->raw.v.zz = a_zz;
 	}
 
 
@@ -287,11 +287,31 @@ namespace NBsys{namespace NGeometry
 
 	/** [設定]。
 	*/
-	inline Geometry_Vector3& Geometry_Vector3::Set(f32 a_x,f32 a_y,f32 a_z)
+	inline Geometry_Vector3& Geometry_Vector3::Set(f32 a_xx,f32 a_yy,f32 a_zz)
 	{
-		this->raw.v.xx = a_x;
+		this->raw.v.xx = a_xx;
+		this->raw.v.yy = a_yy;
+		this->raw.v.zz = a_zz;
+
+		return *this;
+	}
+
+
+	/** [設定]。
+	*/
+	inline Geometry_Vector3& Geometry_Vector3::Set_X(f32 a_xx)
+	{
+		this->raw.v.xx = a_xx;
+
+		return *this;
+	}
+
+
+	/** [設定]。
+	*/
+	inline Geometry_Vector3& Geometry_Vector3::Set_Y(f32 a_yy)
+	{
 		this->raw.v.yy = a_y;
-		this->raw.v.zz = a_z;
 
 		return *this;
 	}
@@ -299,27 +319,7 @@ namespace NBsys{namespace NGeometry
 
 	/** [設定]。
 	*/
-	inline Geometry_Vector3& Geometry_Vector3::Set_X(f32 a_x)
-	{
-		this->raw.v.xx = a_x;
-
-		return *this;
-	}
-
-
-	/** [設定]。
-	*/
-	inline Geometry_Vector3& Geometry_Vector3::Set_Y(f32 a_y)
-	{
-		this->raw.v.yy = a_y;
-
-		return *this;
-	}
-
-
-	/** [設定]。
-	*/
-	inline Geometry_Vector3& Geometry_Vector3::Set_Z(f32 a_z)
+	inline Geometry_Vector3& Geometry_Vector3::Set_Z(f32 a_zz)
 	{
 		this->raw.v.zz = a_z;
 

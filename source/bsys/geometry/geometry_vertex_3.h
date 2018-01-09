@@ -66,7 +66,7 @@ namespace NBsys{namespace NGeometry
 
 		/** constructor
 		*/
-		inline Geometry_Vector3(f32 a_x,f32 a_y,f32 a_z) noexcept;
+		inline Geometry_Vector3(f32 a_xx,f32 a_yy,f32 a_zz) noexcept;
 
 		/** constructor
 		*/
@@ -146,19 +146,19 @@ namespace NBsys{namespace NGeometry
 
 		/** [設定]。
 		*/
-		inline Geometry_Vector3& Set(f32 a_x,f32 a_y,f32 a_z);
+		inline Geometry_Vector3& Set(f32 a_xx,f32 a_yy,f32 a_zz);
 
 		/** [設定]。
 		*/
-		inline Geometry_Vector3& Set_X(f32 a_x);
+		inline Geometry_Vector3& Set_X(f32 a_xx);
 
 		/** [設定]。
 		*/
-		inline Geometry_Vector3& Set_Y(f32 a_y);
+		inline Geometry_Vector3& Set_Y(f32 a_yy);
 
 		/** [設定]。
 		*/
-		inline Geometry_Vector3& Set_Z(f32 a_z);
+		inline Geometry_Vector3& Set_Z(f32 a_zz);
 
 		/** [設定]。
 		*/

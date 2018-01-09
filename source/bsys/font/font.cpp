@@ -71,9 +71,9 @@ namespace NBsys{namespace NFont
 
 	/** GetPixel_R8G8B8A8
 	*/
-	Font_State Font::GetPixel_R8G8B8A8(sharedptr<u8>& a_dest_data,s32 a_offset,s32 a_dest_width,s32 a_dest_height,wchar a_code)
+	Font_State Font::GetPixel_R8G8B8A8(sharedptr<u8>& a_dest_data,s32 a_byte_offset,const Size2DType<s32>& a_dest_size,wchar a_code)
 	{
-		return this->impl->GetPixel_R8G8B8A8(a_dest_data,a_offset,a_dest_width,a_dest_height,a_code);
+		return this->impl->GetPixel_R8G8B8A8(a_dest_data,a_byte_offset,a_dest_size,a_code);
 	}
 
 
