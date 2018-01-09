@@ -26,6 +26,11 @@
 #pragma warning(pop)
 
 
+/** include
+*/
+#include "./dsound_streamcallback_base.h"
+
+
 /** NBsys::NDsound
 */
 #if(BSYS_DSOUND_ENABLE)
@@ -61,6 +66,16 @@ namespace NBsys{namespace NDsound
 	/** サウンドバッファ削除。
 	*/
 	void DeleteSoundBuffer(s32 a_id);
+
+
+	/** ストリーミングサウンドバッファ作成。
+	*/
+	s32 CreateStreamSoundBuffer(const sharedptr<NBsys::NDsound::Dsound_StreamCallback_Base>& a_stream_callback);
+
+
+	/** ストリーミングサウンドバッファ作成。
+	*/
+	void DeleteStreamSoundBuffer(s32 a_id);
 
 
 	/** 再生。

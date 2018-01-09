@@ -38,6 +38,86 @@
 #if(DEF_TEST_INDEX == 11)
 namespace NTest
 {
+	class OggStream : public NBsys::NDsound::Dsound_StreamCallback_Base
+	{
+	private:
+
+		/** lockobject
+		*/
+		LockObject lockobject;
+
+		/** ogg_file
+		*/
+		sharedptr<NBsys::NFile::File_Object> ogg_file;
+
+		/** wave
+		*/
+		sharedptr<NBsys::NWave::Wave> wave;
+
+		/** seek
+		*/
+		s32 seek;
+
+	public:
+
+		/** constructor
+		*/
+		OggStream(const sharedptr<NBsys::NFile::File_Object>& a_ogg_file)
+			:
+			ogg_file(a_ogg_file),
+			seek(0)
+		{
+		}
+
+		/** destructor
+		*/
+		virtual ~OggStream()
+		{
+		}
+
+	public:
+
+		/** 初期化待ち。
+		*/
+		virtual bool IsInitialize()
+		{
+			AutoLock t_autolock(this->lockobject);
+
+			this->wave = NBsys::NWave::CreateWave_Ogg(this->ogg_file->GetLoadData(),static_cast<s32>(this->ogg_file->GetLoadSize()),L"ogg");
+			return true;
+		}
+
+		/** コールバック。
+		*/
+		virtual void Callback_Proc(u8* a_data,s32 a_need_size)
+		{
+			AutoLock t_autolock(this->lockobject);
+
+			if(this->wave->GetWaveType() == NBsys::NWave::WaveType::Stereo_16_44100){
+				s32 t_buffersize = this->wave->GetCountOfSample() * 2 * 16 / 8;
+			}
+
+			s32 t_copy_size = 0;
+			while(t_copy_size < a_need_size){
+				s32 t_continuous_size = this->wave->GetSampleSize() - this->seek;
+				if(t_continuous_size > a_need_size){
+					t_continuous_size = a_need_size;
+				}
+
+				if(t_continuous_size > 0){
+					NMemory::Copy(a_data,a_need_size,&this->wave->GetSample().get()[this->seek],t_continuous_size);
+					this->seek += t_continuous_size;
+					t_copy_size += t_continuous_size;
+				}else{
+					this->seek = 0;
+				}
+			}
+		}
+
+	};
+
+
+
 	/** App
 	*/
 	class App : public NCommon::App_Base
@@ -64,13 +144,13 @@ namespace NTest
 		*/
 		sharedptr<NBsys::NFile::File_Pack_Object> pack_file;
 
-		/** wave_file
+		/** ogg_file
 		*/
-		sharedptr<NBsys::NFile::File_Object> wave_file;
+		sharedptr<NBsys::NFile::File_Object> ogg_file;
 
 		/** wave
 		*/
-		sharedptr<NBsys::NWave::Wave> wave;
+		//sharedptr<NBsys::NWave::Wave> wave;
 
 		/** soundbuffer_id
 		*/
@@ -122,7 +202,9 @@ namespace NTest
 		void Load()
 		{
 			if(this->soundbuffer_id < 0){
-				this->soundbuffer_id = NBsys::NDsound::CreateSoundBuffer(this->wave,false);
+				//this->soundbuffer_id = NBsys::NDsound::CreateSoundBuffer(this->wave,false);
+
+				this->soundbuffer_id = NBsys::NDsound::CreateStreamSoundBuffer(new OggStream(this->ogg_file));
 			}
 		}
 
@@ -189,11 +271,11 @@ namespace NTest
 					this->step++;
 				}
 			}else if(this->step == 2){
-				this->wave_file.reset(new NBsys::NFile::File_Object(NCommon::DeviceIndex::TestData,L"sound/n77.ogg",-1,nullptr,0));
+				this->ogg_file.reset(new NBsys::NFile::File_Object(NCommon::DeviceIndex::TestData,L"sound/n77.ogg",-1,nullptr,0));
 				this->step++;
 			}else if(this->step == 3){
-				if(this->wave_file->IsBusy() == false){
-					this->wave = NBsys::NWave::CreateWave_Ogg(this->wave_file->GetLoadData(),static_cast<s32>(this->wave_file->GetLoadSize()),L"n77_ogg");
+				if(this->ogg_file->IsBusy() == false){
+					//this->wave = NBsys::NWave::CreateWave_Ogg(this->ogg_file->GetLoadData(),static_cast<s32>(this->ogg_file->GetLoadSize()),L"n77_ogg");
 
 					this->windowmenu_buttonlist->AddButton(L"Capture",std::bind(&App::Capture,this));
 					this->windowmenu_buttonlist->AddButton(L"Load",std::bind(&App::Load,this));

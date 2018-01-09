@@ -38,6 +38,11 @@
 #pragma warning(pop)
 
 
+/** include
+*/
+#include "./dsound_streamcallback_base.h"
+
+
 /** NBsys::NDsound
 */
 #if(BSYS_DSOUND_ENABLE)
@@ -105,6 +110,10 @@ namespace NBsys{namespace NDsound
 		/** soundnotify_event
 		*/
 		STLVector<DSBPOSITIONNOTIFY>::Type soundnotify_event;
+
+		/** stream_callback
+		*/
+		sharedptr<NBsys::NDsound::Dsound_StreamCallback_Base> stream_callback;
 
 		/** constructor
 		*/

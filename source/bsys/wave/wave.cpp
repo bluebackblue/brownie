@@ -44,9 +44,10 @@ namespace NBsys{namespace NWave
 {
 	/** コンストラクタ。
 	*/
-	Wave::Wave(const sharedptr<u8>& a_sample,s32 a_countof_sample,WaveType::Id a_wavetype,const STLWString& a_name)
+	Wave::Wave(const sharedptr<u8>& a_sample,s32 a_sample_size,s32 a_countof_sample,WaveType::Id a_wavetype,const STLWString& a_name)
 		:
 		sample(a_sample),
+		sample_size(a_sample_size),
 		wavetype(a_wavetype),
 		name(a_name),
 		countof_sample(a_countof_sample)
@@ -74,6 +75,14 @@ namespace NBsys{namespace NWave
 	const sharedptr<u8> Wave::GetSample() const
 	{
 		return this->sample;
+	}
+
+
+	/** GetSampleSize
+	*/
+	s32 Wave::GetSampleSize() const
+	{
+		return this->sample_size;
 	}
 
 

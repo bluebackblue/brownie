@@ -130,6 +130,22 @@ namespace NBsys{namespace NDsound
 	}
 
 
+	/** ストリーミングサウンドバッファ作成。
+	*/
+	s32 Dsound_Thread::CreateStreamSoundBuffer(const sharedptr<NBsys::NDsound::Dsound_StreamCallback_Base>& a_stream_callback)
+	{
+		return this->dsound_impl.CreateStreamSoundBuffer(a_stream_callback);
+	}
+
+
+	/** ストリーミングサウンドバッファ作成。
+	*/
+	void Dsound_Thread::DeleteStreamSoundBuffer(s32 a_id)
+	{
+		this->dsound_impl.DeleteStreamSoundBuffer(a_id);
+	}
+
+
 	/** [複数スレッドから]再生。
 	*/
 	s32 Dsound_Thread::Play(s32 a_id,bool a_duplicate,bool a_loop,bool a_auto_delete)

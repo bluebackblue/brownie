@@ -55,6 +55,30 @@ namespace NBsys{namespace NDsound
 	*/
 	class Dsound_Impl
 	{
+	public:
+
+		/** ResultType
+		*/
+		struct ResultType
+		{
+			/** Id
+			*/
+			enum Id
+			{
+				/** 成功。
+				*/
+				Success = 0,
+
+				/** 失敗。
+				*/
+				Failed,
+
+				/** 処理中。
+				*/
+				Busy,
+			};
+		};
+
 	private:
 
 		/** directsound
@@ -145,6 +169,14 @@ namespace NBsys{namespace NDsound
 		*/
 		void DeleteSoundBuffer(s32 a_id);
 
+		/** ストリーミングサウンドバッファ作成。
+		*/
+		s32 CreateStreamSoundBuffer(const sharedptr<NBsys::NDsound::Dsound_StreamCallback_Base>& a_stream_callback);
+
+		/** ストリーミングサウンドバッファ作成。
+		*/
+		void DeleteStreamSoundBuffer(s32 a_id);
+
 		/** [複数スレッドから]再生。
 		*/
 		s32 Play(s32 a_id,bool a_duplicate,bool a_loop,bool a_auto_delete);
@@ -165,11 +197,15 @@ namespace NBsys{namespace NDsound
 
 		/** Player_Play
 		*/
-		void Player_Play(s32 a_id,s32 a_duplicate_id,bool a_loop,bool a_auto_delete);
+		Dsound_Impl::ResultType::Id Player_Play(s32 a_id,s32 a_duplicate_id,bool a_loop,bool a_auto_delete);
 
 		/** Player_AutoDelete
 		*/
 		bool Player_AutoDelete(s32 a_id);
+
+		/** Player_StreamPlay
+		*/
+		bool Player_StreamPlay(s32 a_id);
 
 	};
 

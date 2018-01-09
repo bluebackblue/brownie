@@ -139,6 +139,14 @@ namespace NBsys{namespace NDsound
 		*/
 		void DeleteSoundBuffer(s32 a_id);
 
+		/** ストリーミングサウンドバッファ作成。
+		*/
+		s32 CreateStreamSoundBuffer(const sharedptr<NBsys::NDsound::Dsound_StreamCallback_Base>& a_stream_callback);
+
+		/** ストリーミングサウンドバッファ作成。
+		*/
+		void DeleteStreamSoundBuffer(s32 a_id);
+
 		/** 再生。
 		*/
 		s32 Play(s32 a_id,bool a_duplicate,bool a_loop,bool a_auto_delete);

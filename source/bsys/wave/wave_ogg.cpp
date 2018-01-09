@@ -285,6 +285,11 @@ namespace NBsys{namespace NWave
 
 				int current_section = 0;
 				int t_ret_size = ::ov_read(&t_virtual_filehandle,reinterpret_cast<char*>(&t_sample.get()[t_offset]),t_req_size,0,2,1,&current_section);
+
+				if(current_section != 0){
+					DEEPDEBUG_ASSERT(BSYS_WAVE_DEBUG_ENABLE,0);
+				}
+
 				if(t_ret_size > 0){
 					t_offset += t_ret_size;
 				}else{
@@ -298,7 +303,7 @@ namespace NBsys{namespace NWave
 			::ov_clear(&t_virtual_filehandle);
 		}
 
-		sharedptr<Wave> t_wave(new Wave(t_sample,t_countof_sample,t_wavetype,a_name));
+		sharedptr<Wave> t_wave(new Wave(t_sample,t_buffer_size,t_countof_sample,t_wavetype,a_name));
 		return t_wave;
 	}
 

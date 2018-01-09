@@ -54,6 +54,10 @@ namespace NBsys{namespace NWave
 		*/
 		sharedptr<u8> sample;
 
+		/** sample_size
+		*/
+		s32 sample_size;
+
 		/** wavetype
 		*/
 		WaveType::Id wavetype;
@@ -70,7 +74,7 @@ namespace NBsys{namespace NWave
 
 		/** constructor
 		*/
-		Wave(const sharedptr<u8>& a_sample,s32 a_countof_sample,WaveType::Id a_wavetype,const STLWString& a_name);
+		Wave(const sharedptr<u8>& a_sample,s32 a_sample_size,s32 a_countof_sample,WaveType::Id a_wavetype,const STLWString& a_name);
 
 		/** destructor
 		*/
@@ -81,6 +85,10 @@ namespace NBsys{namespace NWave
 		/** GetSample
 		*/
 		sharedptr<u8> GetSample();
+
+		/** GetSampleSize
+		*/
+		s32 GetSampleSize() const;
 
 		/** GetSample
 		*/

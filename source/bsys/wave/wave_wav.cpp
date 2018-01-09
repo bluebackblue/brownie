@@ -220,7 +220,7 @@ namespace NBsys{namespace NWave
 		sharedptr<u8> t_sample(new u8[t_buffer_size],default_delete<u8[]>());
 
 		NMemory::Copy(t_sample.get(),t_buffer_size,&t_chunk_data->h_data[0],t_buffer_size);
-		sharedptr<Wave> t_wave(new Wave(t_sample,t_countof_sample,t_wavetype,a_name));
+		sharedptr<Wave> t_wave(new Wave(t_sample,t_buffer_size,t_countof_sample,t_wavetype,a_name));
 
 		return t_wave;
 	}
