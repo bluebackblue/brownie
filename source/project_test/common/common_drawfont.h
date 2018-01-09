@@ -415,8 +415,7 @@ namespace NTest{namespace NCommon
 					t_viewrect,
 					t_instence->alignment,
 					0.0f,
-					t_instence->size,
-					t_instence->size,
+					Size2DType<f32>(t_instence->size,t_instence->size),
 					t_instence->color
 				);
 			}

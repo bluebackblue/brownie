@@ -155,6 +155,7 @@
 	#define DEF_TEST_STRING									L"11"
 
 	#define BSYS_D3D11_ENABLE								(1)
+	#define BSYS_D3D11_DEBUG_ENABLE							(1)
 
 	#define BSYS_WINDOWMENU_ENABLE							(1)
 

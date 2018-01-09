@@ -1094,9 +1094,11 @@ namespace NBsys{namespace ND3d11
 			}
 
 			//実際に作成された情報の収集。
-			//TODO:a_texture->texture2d_width = x
-			//TODO:a_texture->texture2d_height = x
-			//TODO:a_texture->texture2d_pitch = x
+			if(a_texture->texture2d){
+				D3D11_TEXTURE2D_DESC t_desc_texture2d = {0};
+				a_texture->texture2d->GetDesc(&t_desc_texture2d);
+				DEEPDEBUG_TAGLOG(BSYS_D3D11_DEBUG_ENABLE,L"d3d11_impl","name = %ls w = %d h = %d",a_texture->texture->GetName().c_str(),t_desc_texture2d.Width,t_desc_texture2d.Height);
+			}
 		}
 
 		{
@@ -1342,10 +1344,10 @@ namespace NBsys{namespace ND3d11
 	/** Render_MakeFontVertex
 	*/
 	#if(BSYS_FONT_ENABLE)
-	void D3d11_Impl::Render_MakeFontVertex(D3d11_FontTextureType::Id a_fonttexture_type,const STLWString& a_string,sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4>>& a_vertex,const Rect2DType_R<f32>& a_viewrect,NBsys::NFont::Font_Alignment::Id a_alignment,f32 a_z,f32 a_view_size_w,f32 a_view_size_h,const NBsys::NColor::Color_F& a_color)
+	void D3d11_Impl::Render_MakeFontVertex(D3d11_FontTextureType::Id a_fonttexture_type,const STLWString& a_string,sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4>>& a_vertex,const Rect2DType_R<f32>& a_viewrect,NBsys::NFont::Font_Alignment::Id a_alignment,f32 a_z,const Size2DType<f32>& a_view_size,const NBsys::NColor::Color_F& a_color)
 	{
 		if(this->font_list[a_fonttexture_type] != nullptr){
-			this->font_list[a_fonttexture_type]->MakeFontVertex(a_string,a_vertex,a_viewrect,a_alignment,a_z,a_view_size_w,a_view_size_h,a_color);
+			this->font_list[a_fonttexture_type]->MakeFontVertex(a_string,a_vertex,a_viewrect,a_alignment,a_z,a_view_size,a_color);
 		}
 	}
 	#endif

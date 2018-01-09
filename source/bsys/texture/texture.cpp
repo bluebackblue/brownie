@@ -102,6 +102,14 @@ namespace NBsys{namespace NTexture
 	}
 
 
+	/** GetName
+	*/
+	const STLWString& Texture::GetName() const
+	{
+		return this->name;
+	}
+
+
 	/** ２の乗数の幅を計算する。
 	*/
 	s32 CalcJustSize(s32 a_size)

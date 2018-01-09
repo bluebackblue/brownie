@@ -271,9 +271,9 @@ namespace NBsys{namespace ND3d11
 	/** Render_MakeFontVertex
 	*/
 	#if(BSYS_FONT_ENABLE)
-	void D3d11::Render_MakeFontVertex(D3d11_FontTextureType::Id a_fonttexture_type,const STLWString& a_string,sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4>>& a_vertex,const Rect2DType_R<f32>& a_viewrect,NBsys::NFont::Font_Alignment::Id a_alignment,f32 a_z,f32 a_view_size_w,f32 a_view_size_h,const NBsys::NColor::Color_F& a_color)
+	void D3d11::Render_MakeFontVertex(D3d11_FontTextureType::Id a_fonttexture_type,const STLWString& a_string,sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4>>& a_vertex,const Rect2DType_R<f32>& a_viewrect,NBsys::NFont::Font_Alignment::Id a_alignment,f32 a_z,const Size2DType<f32>& a_view_size,const NBsys::NColor::Color_F& a_color)
 	{
-		this->impl->Render_MakeFontVertex(a_fonttexture_type,a_string,a_vertex,a_viewrect,a_alignment,a_z,a_view_size_w,a_view_size_h,a_color);
+		this->impl->Render_MakeFontVertex(a_fonttexture_type,a_string,a_vertex,a_viewrect,a_alignment,a_z,a_view_size,a_color);
 	}
 	#endif
 

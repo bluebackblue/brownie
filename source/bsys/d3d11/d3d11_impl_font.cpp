@@ -282,18 +282,17 @@ namespace NBsys{namespace ND3d11
 	a_rect			: アライメント用文字領域の指定。
 	a_alignment		: アライメント。
 	a_z				: バーテックスZ値。
-	a_view_size_w	: 
-	a_view_size_h	: 
-	a_color			: 
+	a_view_size		: サイズ。
+	a_color			: 色
 
 	*/
-	void D3d11_Impl_Font::MakeFontVertex(const STLWString& a_string,sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4>>& a_vertex,const Rect2DType_R<f32>& a_viewrect,NBsys::NFont::Font_Alignment::Id a_alignment,f32 a_z,f32 a_view_size_w,f32 a_view_size_h,const NBsys::NColor::Color_F& a_color)
+	void D3d11_Impl_Font::MakeFontVertex(const STLWString& a_string,sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4>>& a_vertex,const Rect2DType_R<f32>& a_viewrect,NBsys::NFont::Font_Alignment::Id a_alignment,f32 a_z,const Size2DType<f32>& a_view_size,const NBsys::NColor::Color_F& a_color)
 	{
-		f32 t_scale_w = a_view_size_w / static_cast<f32>(this->texture_size.ww);
-		f32 t_scale_h = a_view_size_h / static_cast<f32>(this->texture_size.ww);
+		f32 t_scale_w = a_view_size.ww / static_cast<f32>(this->texture_size.ww);
+		f32 t_scale_h = a_view_size.hh / static_cast<f32>(this->texture_size.ww);
 
 		f32 t_string_w = 0.0f;
-		f32 t_string_h = a_view_size_h;
+		f32 t_string_h = a_view_size.hh;
 
 		STLVector<u32>::Type t_work_list;
 		{

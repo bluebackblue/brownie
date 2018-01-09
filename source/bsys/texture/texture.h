@@ -99,6 +99,10 @@ namespace NBsys{namespace NTexture
 		*/
 		s32 GetPitch() const;
 
+		/** GetName
+		*/
+		const STLWString& GetName() const;
+
 	};
 
 
