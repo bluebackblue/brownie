@@ -194,7 +194,7 @@ namespace NBsys{namespace NDsound
 		if(this->directsound != nullptr){
 			DSBUFFERDESC t_desc = {0};
 			{
-				t_desc.dwSize = sizeof(DSBUFFERDESC); 
+				t_desc.dwSize = sizeof(t_desc); 
 				t_desc.dwFlags = DSBCAPS_PRIMARYBUFFER | DSBCAPS_CTRL3D;
 				t_desc.dwBufferBytes = 0; 
 				t_desc.lpwfxFormat = nullptr;
@@ -512,7 +512,7 @@ namespace NBsys{namespace NDsound
 			t_pcm_wave_format = NImpl::CreatePcmWaveFormat(NBsys::NWave::WaveType::Stereo_16_44100);	//TODO:固定。
 
 			//soundbuffer_size
-			a_soundbuffer->soundbuffer_size = 2 * 2 * 44100;	//Stereo_16_44100 1秒 = 2 * 2 * 44100。
+			a_soundbuffer->soundbuffer_size = 2 * 2 * 44100;	//Stereo_16_44100 2秒 = 2 * 2 * 44100 * 2。
 		}else{
 			//全コピー。
 
@@ -523,22 +523,61 @@ namespace NBsys{namespace NDsound
 			a_soundbuffer->soundbuffer_size = t_pcm_wave_format.wf.nBlockAlign * a_soundbuffer->wave->GetCountOfSample();
 		}
 
-		//DSBCAPS_CTRLFX
 		DSBUFFERDESC t_desc = {0};
 		{
 			t_desc.dwSize = sizeof(t_desc);
 
-			t_desc.dwFlags = DSBCAPS_GETCURRENTPOSITION2 | DSBCAPS_STATIC | DSBCAPS_GLOBALFOCUS;
+			t_desc.dwFlags = 0;
 
-			t_desc.dwFlags |= (DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLFREQUENCY);
+			/** 正確な再生カーソル位置を取得する。
+			*/
+			t_desc.dwFlags |= DSBCAPS_GETCURRENTPOSITION2;
 
-			t_desc.dwFlags |= (DSBCAPS_CTRLPOSITIONNOTIFY);
+			/** オンボードハードウェアメモリをなるべく利用する。
+			*/
+			t_desc.dwFlags |= DSBCAPS_STATIC;
+
+			/** アプリケーションがバックグラウンドでも音をミュートしない。
+			*/
+			t_desc.dwFlags |= DSBCAPS_GLOBALFOCUS;
+
+			/** ボリューム操作を使用する。
+			*/
+			t_desc.dwFlags |= DSBCAPS_CTRLVOLUME;
+			
+			/** 周波数操作を使用する。
+			*/
+			t_desc.dwFlags |= DSBCAPS_CTRLFREQUENCY;
+
+			/** 通知機能を使用する。
+			*/
+			t_desc.dwFlags |= DSBCAPS_CTRLPOSITIONNOTIFY;
+
 
 			if(a_soundbuffer->is_3d == true){
+
+				/** ３Ｄ再生機能を使用すｋる。
+				*/
 				t_desc.dwFlags |= DSBCAPS_CTRL3D;
+
+				/** 最大距離で無音になる。ソフトウェアバッファのみ。
+				*/
+				#if(0)
+				t_desc.dwFlags |= DSBCAPS_MUTE3DATMAXDISTANCE;
+				#endif
+
 			}else{
+
+				/** パン操作を使用する。
+				*/
 				t_desc.dwFlags |= DSBCAPS_CTRLPAN;
 			}
+
+			/** エフェクト操作を使用する。
+			*/
+			#if(0)
+			t_desc.dwFlags |= DSBCAPS_CTRLFX;
+			#endif
 
 			t_desc.dwBufferBytes = a_soundbuffer->soundbuffer_size;
 			t_desc.lpwfxFormat = (LPWAVEFORMATEX)&t_pcm_wave_format;
@@ -701,60 +740,62 @@ namespace NBsys{namespace NDsound
 				}			
 			}
 
-			//通知設定。
+			t_it = t_it_duplicate;
+			t_id = a_duplicate_id;
+		}
+
+		//通知設定。
+		{
+			DEEPDEBUG_TAGLOG(BSYS_DSOUND_DEBUG_ENABLE,L"dsound_impl","IID_IDirectSoundNotify");
+
+			STLVector<DSBPOSITIONNOTIFY>::Type t_soundnotify_event_list;
 			{
-				DEEPDEBUG_TAGLOG(BSYS_DSOUND_DEBUG_ENABLE,L"dsound_impl","IID_IDirectSoundNotify");
+				t_it->second->soundnotify_event.resize(Dsound_Impl_SoundBuffer::NorifyEventType::Max);
 
-				STLVector<DSBPOSITIONNOTIFY>::Type t_soundnotify_event_list;
+				//バッファの真ん中を通過。
 				{
-					t_it_duplicate->second->soundnotify_event.resize(Dsound_Impl_SoundBuffer::NorifyEventType::Max);
+					u32 t_index = Dsound_Impl_SoundBuffer::NorifyEventType::HalfPoint;
 
-					//再生開始イベント。
-					{
-						u32 t_index = Dsound_Impl_SoundBuffer::NorifyEventType::PlayStart;
+					if(t_it->second->stream_callback){
+						//ストリーミング再生。
 
-						if(0){
-							t_it_duplicate->second->soundnotify_event[t_index].dwOffset = 0;
-							t_it_duplicate->second->soundnotify_event[t_index].hEventNotify = ::CreateEvent(NULL,FALSE,FALSE,NULL);
-							t_soundnotify_event_list.push_back(t_it_duplicate->second->soundnotify_event[t_index]);
-						}else{
-							t_it_duplicate->second->soundnotify_event[t_index].dwOffset = -1;
-							t_it_duplicate->second->soundnotify_event[t_index].hEventNotify = WIN_NULL;
-						}
-					}
-
-					//再生終了イベント。
-					{
-						u32 t_index = Dsound_Impl_SoundBuffer::NorifyEventType::PlayEnd;
-
-						t_it_duplicate->second->soundnotify_event[t_index].dwOffset =  t_it_duplicate->second->soundbuffer_size;
-						t_it_duplicate->second->soundnotify_event[t_index].hEventNotify = ::CreateEvent(NULL,FALSE,FALSE,NULL);
-						t_soundnotify_event_list.push_back(t_it_duplicate->second->soundnotify_event[t_index]);
+						t_it->second->soundnotify_event[t_index].dwOffset = t_it->second->soundbuffer_size / 2;
+						t_it->second->soundnotify_event[t_index].hEventNotify = ::CreateEvent(NULL,FALSE,FALSE,NULL);
+						t_soundnotify_event_list.push_back(t_it->second->soundnotify_event[t_index]);
+					}else{
+						t_it->second->soundnotify_event[t_index].dwOffset = -1;
+						t_it->second->soundnotify_event[t_index].hEventNotify = WIN_NULL;
 					}
 				}
 
-				if(t_soundnotify_event_list.size() > 0){
-					sharedptr<IDirectSoundNotify> t_soundnotify;
+				//バッファの最後を通過。
+				{
+					u32 t_index = Dsound_Impl_SoundBuffer::NorifyEventType::EndPoint;
 
-					IDirectSoundNotify* t_raw = nullptr;
-					HRESULT t_ret = t_it_duplicate->second->soundbuffer->QueryInterface(IID_IDirectSoundNotify,(LPVOID*)(&t_raw));
-					if(t_raw != nullptr){
-						t_soundnotify.reset(t_raw,release_delete<IDirectSoundNotify>());
-					}
-					if(FAILED(t_ret)){
-						DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
-						t_soundnotify.reset();
-						return Dsound_Impl::ResultType::Failed;
-					}
-					if(t_soundnotify){
-						t_soundnotify->SetNotificationPositions(t_soundnotify_event_list.size(),&t_soundnotify_event_list.at(0));
-						t_soundnotify.reset();
-					}
+					t_it->second->soundnotify_event[t_index].dwOffset =  t_it->second->soundbuffer_size - 1;
+					t_it->second->soundnotify_event[t_index].hEventNotify = ::CreateEvent(NULL,FALSE,FALSE,NULL);
+					t_soundnotify_event_list.push_back(t_it->second->soundnotify_event[t_index]);
 				}
 			}
 
-			t_it = t_it_duplicate;
-			t_id = a_duplicate_id;
+			if(t_soundnotify_event_list.size() > 0){
+				sharedptr<IDirectSoundNotify> t_soundnotify;
+
+				IDirectSoundNotify* t_raw = nullptr;
+				HRESULT t_ret = t_it->second->soundbuffer->QueryInterface(IID_IDirectSoundNotify,(LPVOID*)(&t_raw));
+				if(t_raw != nullptr){
+					t_soundnotify.reset(t_raw,release_delete<IDirectSoundNotify>());
+				}
+				if(FAILED(t_ret)){
+					DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
+					t_soundnotify.reset();
+					return Dsound_Impl::ResultType::Failed;
+				}
+				if(t_soundnotify){
+					t_soundnotify->SetNotificationPositions(t_soundnotify_event_list.size(),&t_soundnotify_event_list.at(0));
+					t_soundnotify.reset();
+				}
+			}
 		}
 
 		//Stop
@@ -787,7 +828,7 @@ namespace NBsys{namespace NDsound
 				}
 			}else{
 				DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
-				return Dsound_Impl::ResultType::Failed;;
+				return Dsound_Impl::ResultType::Failed;
 			}
 
 			//ループ再生。
@@ -844,13 +885,13 @@ namespace NBsys{namespace NDsound
 			return true;
 		}
 
-		if(t_it->second->soundnotify_event[Dsound_Impl_SoundBuffer::NorifyEventType::PlayEnd].hEventNotify == WIN_NULL){
+		if(t_it->second->soundnotify_event[Dsound_Impl_SoundBuffer::NorifyEventType::EndPoint].hEventNotify == WIN_NULL){
 			DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
 			return true;
 		}
 
 		//再生の開始を確認。
-		if(::WaitForSingleObject(t_it->second->soundnotify_event[Dsound_Impl_SoundBuffer::NorifyEventType::PlayEnd].hEventNotify,0) == WAIT_OBJECT_0){
+		if(::WaitForSingleObject(t_it->second->soundnotify_event[Dsound_Impl_SoundBuffer::NorifyEventType::EndPoint].hEventNotify,0) == WAIT_OBJECT_0){
 			//削除。
 			this->Player_DeleteSoundBuffer(a_id);
 
@@ -872,23 +913,25 @@ namespace NBsys{namespace NDsound
 			return true;
 		}
 
-		/*
-		if(t_it->second->soundnotify_event[Dsound_Impl_SoundBuffer::NorifyEventType::PlayEnd].hEventNotify == WIN_NULL){
+		if(t_it->second->soundnotify_event[Dsound_Impl_SoundBuffer::NorifyEventType::HalfPoint].hEventNotify == WIN_NULL){
 			DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
 			return true;
 		}
-		*/
 
-		//再生の開始を確認。
-		/*
-		if(::WaitForSingleObject(t_it->second->soundnotify_event[Dsound_Impl_SoundBuffer::NorifyEventType::PlayEnd].hEventNotify,0) == WAIT_OBJECT_0){
-			//削除。
-			this->Player_DeleteSoundBuffer(a_id);
-
-			//完了。
+		if(t_it->second->soundnotify_event[Dsound_Impl_SoundBuffer::NorifyEventType::EndPoint].hEventNotify == WIN_NULL){
+			DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
 			return true;
 		}
-		*/
+
+		//再生の開始を確認。
+		if(::WaitForSingleObject(t_it->second->soundnotify_event[Dsound_Impl_SoundBuffer::NorifyEventType::HalfPoint].hEventNotify,0) == WAIT_OBJECT_0){
+			TAGLOG(L"dsound_impl","half point");
+		}
+
+		if(::WaitForSingleObject(t_it->second->soundnotify_event[Dsound_Impl_SoundBuffer::NorifyEventType::EndPoint].hEventNotify,0) == WAIT_OBJECT_0){
+			TAGLOG(L"dsound_impl","end point");
+		}
+
 
 		//継続。
 		return false;

@@ -60,8 +60,13 @@ namespace NBsys{namespace NDsound
 		{
 			enum Id
 			{
-				PlayStart = 0,
-				PlayEnd,
+				/** バッファの真ん中を通過。
+				*/
+				HalfPoint,
+
+				/** バッファの最後を通過。
+				*/
+				EndPoint,
 
 				Max,
 			};
