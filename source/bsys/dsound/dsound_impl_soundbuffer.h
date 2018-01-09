@@ -108,6 +108,10 @@ namespace NBsys{namespace NDsound
 		*/
 		bool is_duplicate;
 
+		/** is_stream
+		*/
+		bool is_stream;
+
 		/** soundbuffer_3d
 		*/
 		sharedptr<IDirectSound3DBuffer> soundbuffer_3d;
@@ -120,6 +124,10 @@ namespace NBsys{namespace NDsound
 		*/
 		sharedptr<NBsys::NDsound::Dsound_StreamCallback_Base> stream_callback;
 
+		/** stream_buffer
+		*/
+		sharedptr<RingBufferBase<u8>> stream_buffer;
+
 		/** constructor
 		*/
 		Dsound_Impl_SoundBuffer();
@@ -127,6 +135,10 @@ namespace NBsys{namespace NDsound
 		/** destructor
 		*/
 		nonvirtual ~Dsound_Impl_SoundBuffer();
+
+		/** ストリーミング再生コールバックの呼び出し。
+		*/
+		bool StreamCallback(s32 a_copyto_offset,s32 a_need_size);
 	};
 
 }}

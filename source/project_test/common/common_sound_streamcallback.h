@@ -65,31 +65,36 @@ namespace NTest{namespace NCommon
 
 	public:
 
-		/** 初期化待ち。
+		/** タイプ取得。
 		*/
-		virtual bool IsInitialize()
+		virtual NBsys::NWave::WaveType::Id Callback_GetWaveType()
 		{
 			AutoLock t_autolock(this->lockobject);
 
 			this->wave = NBsys::NWave::CreateWave_Ogg(this->ogg_file->GetLoadData(),static_cast<s32>(this->ogg_file->GetLoadSize()),L"ogg");
-			return true;
+
+			return this->wave->GetWaveType();
 		}
 
-		/** コールバック。
+		/** データ取得。
 		*/
-		virtual void Callback_Proc(u8* a_data,s32 a_need_size)
+		virtual void Callback_GetData(RingBufferBase<u8>& a_buffer,s32 a_need_size)
 		{
 			AutoLock t_autolock(this->lockobject);
 
 			s32 t_copy_size = 0;
+
 			while(t_copy_size < a_need_size){
 				s32 t_continuous_size = this->wave->GetSampleSize() - this->seek;
+
 				if(t_continuous_size > a_need_size){
 					t_continuous_size = a_need_size;
 				}
 
 				if(t_continuous_size > 0){
-					NMemory::Copy(a_data,a_need_size,&this->wave->GetSample().get()[this->seek],t_continuous_size);
+
+					a_buffer.CopyToBuffer(&this->wave->GetSample().get()[this->seek],t_continuous_size);
+					
 					this->seek += t_continuous_size;
 					t_copy_size += t_continuous_size;
 				}else{

@@ -55,30 +55,6 @@ namespace NBsys{namespace NDsound
 	*/
 	class Dsound_Impl
 	{
-	public:
-
-		/** ResultType
-		*/
-		struct ResultType
-		{
-			/** Id
-			*/
-			enum Id
-			{
-				/** 成功。
-				*/
-				Success = 0,
-
-				/** 失敗。
-				*/
-				Failed,
-
-				/** 処理中。
-				*/
-				Busy,
-			};
-		};
-
 	private:
 
 		/** directsound
@@ -189,7 +165,7 @@ namespace NBsys{namespace NDsound
 
 		/** Player_CreateSoundBuffer
 		*/
-		void Player_CreateSoundBuffer(sharedptr<Dsound_Impl_SoundBuffer>& a_soundbuffer);
+		void Player_CreateSoundBuffer(s32 a_id);
 
 		/** Player_DeleteSoundBuffer
 		*/
@@ -197,7 +173,7 @@ namespace NBsys{namespace NDsound
 
 		/** Player_Play
 		*/
-		Dsound_Impl::ResultType::Id Player_Play(s32 a_id,s32 a_duplicate_id,bool a_loop,bool a_auto_delete);
+		void Player_Play(s32 a_id,s32 a_duplicate_id,bool a_loop,bool a_auto_delete);
 
 		/** Player_AutoDelete
 		*/

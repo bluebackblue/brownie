@@ -110,14 +110,9 @@ namespace NBsys{namespace NDsound
 			}
 
 			//Player_Play
-			Dsound_Impl::ResultType::Id t_result = this->dsound_impl.Player_Play(this->id,this->duplicate_id,this->loop,this->auto_delete);
-			if(t_result == Dsound_Impl::ResultType::Busy){
-				//処理中。
-				a_delta -= 1.0f;
-				return false;
-			}
+			this->dsound_impl.Player_Play(this->id,this->duplicate_id,this->loop,this->auto_delete);
 
-			//成功or失敗。
+			//成功。
 			return 1;
 		}
 

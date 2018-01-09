@@ -48,18 +48,18 @@ namespace NBsys{namespace NDsound
 		*/
 		Dsound_Impl& dsound_impl;
 
-		/** SoundBuffer
+		/** id
 		*/
-		sharedptr<Dsound_Impl_SoundBuffer> soundbuffer;
+		s32 id;
 
 	public:
 
 		/** constructor
 		*/
-		Dsound_Impl_ActionBatching_SoundBuffer_Create(Dsound_Impl& a_dsound_impl,const sharedptr<Dsound_Impl_SoundBuffer>& a_soundbuffer)
+		Dsound_Impl_ActionBatching_SoundBuffer_Create(Dsound_Impl& a_dsound_impl,s32 a_id)
 			:
 			dsound_impl(a_dsound_impl),
-			soundbuffer(a_soundbuffer)
+			id(a_id)
 		{
 		}
 
@@ -96,7 +96,7 @@ namespace NBsys{namespace NDsound
 			}
 
 			//Player_CreateSoundBuffer
-			this->dsound_impl.Player_CreateSoundBuffer(this->soundbuffer);
+			this->dsound_impl.Player_CreateSoundBuffer(this->id);
 
 			//成功。
 			return 1;

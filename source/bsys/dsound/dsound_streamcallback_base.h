@@ -44,18 +44,15 @@ namespace NBsys{namespace NDsound
 
 	public:
 
-		/** 初期化待ち。
+		/** タイプ取得。
 		*/
-		virtual bool IsInitialize() = 0;
+		virtual NBsys::NWave::WaveType::Id Callback_GetWaveType() = 0;
 
-		/** コールバック。
+		/** データ取得。
 		*/
-		virtual void Callback_Proc(u8* a_data,s32 a_need_size) = 0;
+		virtual void Callback_GetData(RingBufferBase<u8>& a_buffer,s32 a_need_size) = 0;
 
 	};
-
-
-
 
 
 }}
