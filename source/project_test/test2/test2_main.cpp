@@ -25,6 +25,11 @@
 #pragma warning(disable:4710)
 
 
+/** include
+*/
+#include "../common/common_device_index.h"
+
+
 /** NTest
 */
 #if(DEF_TEST_INDEX == 2)

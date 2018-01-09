@@ -226,15 +226,23 @@ namespace NTest{namespace NCommon
 		*/
 		virtual void Initialize_Dsound()
 		{
-			NBsys::NDsound::StartSystem(this->window);
+			#if(BSYS_DSOUND_ENABLE)
+			{
+				NBsys::NDsound::StartSystem(this->window);
+			}
+			#endif
 		}
 
 		/** 削除。DirectSound。
 		*/
 		virtual void Finalize_Dsound()
 		{
-			NBsys::NDsound::EndSystemRequest();
-			NBsys::NDsound::EndSystem();
+			#if(BSYS_DSOUND_ENABLE)
+			{
+				NBsys::NDsound::EndSystemRequest();
+				NBsys::NDsound::EndSystem();
+			}
+			#endif
 		}
 
 		/** 初期化。ウィンドウメニュー。
@@ -622,8 +630,12 @@ namespace NTest{namespace NCommon
 				}
 
 				//サウンド命令呼び出し開始。
-				NBsys::NDsound::Update();
-				
+				#if(BSYS_DSOUND_ENABLE)
+				{
+					NBsys::NDsound::Update();
+				}
+				#endif
+
 				//描画命令呼び出し。
 				{
 					//リクエスト処理。

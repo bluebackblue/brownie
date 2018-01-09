@@ -481,7 +481,7 @@ namespace NTest
 			//３Ｄ描画。
 			{
 				//プロジェクション。
-				t_projection.Set_PerspectiveProjectionMatrix(static_cast<f32>(this->width),static_cast<f32>(this->height),this->camera_fov_deg,this->camera_near,this->camera_far);
+				t_projection.Set_PerspectiveProjectionMatrix(this->size,this->camera_fov_deg,this->camera_near,this->camera_far);
 
 				//ビュー。
 				t_view.Set_ViewMatrix(this->camera_target,this->camera_position,this->camera_up);

@@ -109,6 +109,7 @@
 	#define BSYS_HTTP_ENABLE								(1)
 	#define BSYS_HTTP_USERAGENT								BROWNIE_VERSION_STRING
 	#define BSYS_COMMANDLINE_ENABLE							(1)
+	#define BSYS_DSOUND_ENABLE								(1)
 
 #elif(DEF_TEST_INDEX == 1)
 
@@ -125,22 +126,22 @@
 
 	#define BSYS_WINDOW_ENABLE								(1)
 
-	//#define BSYS_OPENSSL_ENABLE							(1)
-	//#define BSYS_HTTP_ENABLE								(1)
-	//#define BSYS_WINSOCK_ENABLE							(1)
-	//#define BSYS_HTTP_DEBUG_ENABLE						(1)
+	#define BSYS_OPENSSL_ENABLE								(1)
+	#define BSYS_HTTP_ENABLE								(1)
+	#define BSYS_WINSOCK_ENABLE								(1)
+	#define BSYS_HTTP_DEBUG_ENABLE							(1)
 
-	#define BSYS_GEOMETRY_ENABLE							(1)
+	//#define BSYS_GEOMETRY_ENABLE							(1)
 
-	#define BSYS_ACTIONBATCHING_ENABLE						(1)
+	//#define BSYS_ACTIONBATCHING_ENABLE					(1)
 
 	#define BSYS_FILE_ENABLE								(1)
 	#define BSYS_FILE_PACK_ENABLE							(1)
 
-	#define BSYS_WAVE_ENABLE								(1)
-	#define BSYS_WAVE_DEBUG_ENABLE							(1)
-	#define BSYS_DSOUND_ENABLE								(1)
-	#define BSYS_DSOUND_DEBUG_ENABLE						(1)
+	//#define BSYS_WAVE_ENABLE								(1)
+	//#define BSYS_WAVE_DEBUG_ENABLE						(1)
+	//#define BSYS_DSOUND_ENABLE							(1)
+	//#define BSYS_DSOUND_DEBUG_ENABLE						(1)
 
 #elif(DEF_TEST_INDEX == 10)
 
@@ -312,8 +313,13 @@
 
 	#define _CRTDBG_MAP_ALLOC
 	#include <crtdbg.h>
-	#define custom_new new(_NORMAL_BLOCK,__FILE__,__LINE__)
-	#define new custom_new
+
+	#if(0)
+
+		#define custom_new new(_NORMAL_BLOCK,__FILE__,__LINE__)
+		#define new custom_new
+	
+	#endif
 
 #endif
 #endif

@@ -181,7 +181,7 @@ namespace NBsys{namespace ND3d11
 
 						wchar t_wchar[2] = {t_code,nullwchar};
 						UNUSED(t_wchar);
-						DEEPDEBUG_TAGLOG(BSYS_D3D11_DEBUG_ENABLE,L"d3d11_impl_font",L"%s",t_wchar);
+						FULLDEBUG_TAGLOG(BSYS_D3D11_DEBUG_ENABLE,L"d3d11_impl_font",L"%s",t_wchar);
 
 						//テクスチャーに書き込み。
 						NBsys::NFont::Font_State t_font_state = this->font->GetPixel_R8G8B8A8(

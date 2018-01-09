@@ -34,60 +34,9 @@ namespace NTest
 	*/
 	void Test_Main()
 	{
-		//ファイル。
-		NBsys::NFile::StartSystem(1);
-		NBsys::NFile::SetRoot(0,L"../../brownie_testdata");
-
 		//ウィンドウ作成。
 		sharedptr<NBsys::NWindow::Window> t_window(new NBsys::NWindow::Window());
-		t_window->Create(L"TEST " DEF_TEST_STRING,100,100);
-
-		s32 t_time = 0;
-
-		u64 t_pcounter = PerformanceCounter::GetPerformanceCounter();
-		while(true){
-			{
-				u64 t_pcounter_now = PerformanceCounter::GetPerformanceCounter();
-				u64 t_pcounter_sec = PerformanceCounter::GetPerformanceSecCounter();
-				float t_delta = static_cast<float>(t_pcounter_now - t_pcounter) / t_pcounter_sec;
-				if(t_delta <= 1.0f / 60){
-					continue;
-				}
-				t_pcounter = t_pcounter_now;
-			}
-
-			//s_window
-			t_window->Update();
-			if(t_window->IsEnd() == true){
-				break;
-			}
-
-			NBsys::NDsound::Update();
-
-			if(t_time % (60 * 3) == 0){
-				
-
-
-				NBsys::NDsound::Play(t_id,true,false,true);
-				t_time = 0;
-			}
-			t_time++;
-		}
-
-		{
-			NBsys::NDsound::DeleteSoundBuffer(t_id);
-			NBsys::NDsound::Update();
-		}
-
-		//ウィンドウ削除。
-		t_window->Delete();
-		t_window.reset();
-
-		//ファイル。
-		NBsys::NFile::EndSystemRequest();
-		NBsys::NFile::EndWaitSystem();
-
-		#if(0)
+		t_window->Create(L"TEST " DEF_TEST_STRING,Size2DType<f32>(100.0f,100.0f));
 
 		//Winsock開始。
 		NBsys::NWinsock::StartSystem();
@@ -141,8 +90,6 @@ namespace NTest
 
 		//Winsock終了。
 		NBsys::NWinsock::EndSystem();
-
-		#endif
 
 		return;
 	}
