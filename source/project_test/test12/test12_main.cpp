@@ -536,7 +536,7 @@ namespace NTest
 		sharedptr<App> t_app(new App());
 		t_app->Initialize();
 		t_app->Main();
-		t_app->Delete();
+		t_app->Finalize();
 		return;
 	}
 
