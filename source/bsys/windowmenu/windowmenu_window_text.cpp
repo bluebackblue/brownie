@@ -92,7 +92,7 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	bool WindowMenu_Window_Text::CallBack_Draw(s32 a_z_sort)
 	{
-		if((this->calc_w >= 0.0f)&&(this->calc_h >= 0.0f)){
+		if((this->calc_rect.ww >= 0.0f)&&(this->calc_rect.hh >= 0.0f)){
 
 			f32 t_offset_x = 0.0f;
 			f32 t_offset_y = 0.0f;
@@ -102,12 +102,7 @@ namespace NBsys{namespace NWindowMenu
 			if(this->string.size() > 0){
 				GetSystemInstance()->GetCallback()->DrawFont_Callback(
 					a_z_sort + this->z_sort + 1,
-					Rect2DType_R<f32>(
-						this->calc_x + t_offset_x,
-						this->calc_y + t_offset_y,
-						this->calc_w,
-						this->calc_h
-					),
+					this->calc_rect + Rect2DType_R<f32>(t_offset_x,t_offset_y,0.0f,0.0f),
 					this->clip,
 					t_font_size,
 					t_font_texture_index,

@@ -143,7 +143,7 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	bool WindowMenu_Window_CloseButton::CallBack_Draw(s32 a_z_sort)
 	{
-		if((this->calc_w >= 0.0f)&&(this->calc_h >= 0.0f)){
+		if((this->calc_rect.ww >= 0.0f)&&(this->calc_rect.hh >= 0.0f)){
 
 			s32 t_color_index = 0;
 
@@ -161,14 +161,10 @@ namespace NBsys{namespace NWindowMenu
 				t_color_index = 1;
 			}
 
-			Rect2DType_R<f32> t_calc_rect(this->calc_x,this->calc_y,this->calc_w,this->calc_h);
-
 			{
-				Rect2DType_R<f32> t_space_rect(this->space,this->space,-this->space*2,-this->space*2);
-
 				GetSystemInstance()->GetCallback()->DrawRect_Callback(
 					a_z_sort + this->z_sort,
-					t_calc_rect + t_space_rect,
+					this->calc_rect + Rect2DType_R<f32>(this->space,this->space,-this->space*2,-this->space*2),
 					-1,
 					*t_color_list[t_color_index]
 				);
@@ -176,12 +172,10 @@ namespace NBsys{namespace NWindowMenu
 
 			//×ボタンをフォントで表現。
 			{
-				Rect2DType_R<f32> t_offset_rect(this->to_callback_font_offset_x,this->to_callback_font_offset_y,0,0);
-
 				//L"x"
 				GetSystemInstance()->GetCallback()->DrawFont_Callback(
 					a_z_sort + this->z_sort + 1,
-					t_calc_rect + t_offset_rect,
+					this->calc_rect + Rect2DType_R<f32>(this->to_callback_font_offset_x,this->to_callback_font_offset_y,0,0),
 					false,
 					this->to_callback_font_view_size,
 					this->to_callback_fonttexture_type,

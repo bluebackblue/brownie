@@ -95,15 +95,10 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	bool WindowMenu_Window_Plate::CallBack_Draw(s32 a_z_sort)
 	{
-		if((this->calc_w >= 0.0f)&&(this->calc_h >= 0.0f)){
+		if((this->calc_rect.ww >= 0.0f)&&(this->calc_rect.hh >= 0.0f)){
 			GetSystemInstance()->GetCallback()->DrawRect_Callback(
 				a_z_sort + this->z_sort,
-				Rect2DType_R<f32>(
-					this->calc_x,
-					this->calc_y,
-					this->calc_w,
-					this->calc_h
-				),
+				this->calc_rect,
 				this->texture_id,
 				this->color
 			);

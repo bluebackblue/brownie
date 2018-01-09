@@ -64,10 +64,7 @@ namespace NBsys{namespace NWindowMenu
 		calc_y_fix(false),
 		calc_w_fix(false),
 		calc_h_fix(false),
-		calc_x(0.0f),
-		calc_y(0.0f),
-		calc_w(0.0f),
-		calc_h(0.0f),
+		calc_rect(0.0f),
 		calc_child_index(-1),
 		calc_it(STLList<sharedptr<WindowMenu_Window_Base>>::iterator())
 	{
@@ -96,10 +93,7 @@ namespace NBsys{namespace NWindowMenu
 		this->calc_y_fix = false;
 		this->calc_w_fix = false;
 		this->calc_h_fix = false;
-		this->calc_x = 0.0f;
-		this->calc_y = 0.0f;
-		this->calc_w = 0.0f;
-		this->calc_h = 0.0f;
+		this->calc_rect.Set(0.0f);
 
 		this->calc_child_index = -1;
 		this->calc_it = STLList<sharedptr<WindowMenu_Window_Base>>::iterator();
@@ -174,7 +168,7 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	bool WindowMenu_Window_Base::IsRange(const Position2DType<f32> a_pos)
 	{
-		if((this->calc_x < a_pos.xx)&&(a_pos.xx < this->calc_x + this->calc_w)&&(this->calc_y < a_pos.yy)&&(a_pos.yy < this->calc_y + this->calc_h)){
+		if((this->calc_rect.xx < a_pos.xx)&&(a_pos.xx < this->calc_rect.xx + this->calc_rect.ww)&&(this->calc_rect.yy < a_pos.yy)&&(a_pos.yy < this->calc_rect.yy + this->calc_rect.hh)){
 			return true;
 		}
 		return false;
@@ -209,7 +203,7 @@ namespace NBsys{namespace NWindowMenu
 
 					this->parent->CalcX(a_from_sizetype);
 
-					this->calc_x = this->parent->calc_x + this->offset.xx;
+					this->calc_rect.xx = this->parent->calc_rect.xx + this->offset.xx;
 					this->calc_x_fix = true;
 				}else if(this->parent->mode == WindowMenu_Mode::Horizontal){
 					//横積み。
@@ -219,7 +213,7 @@ namespace NBsys{namespace NWindowMenu
 
 						this->parent->CalcX(a_from_sizetype);
 
-						this->calc_x = this->parent->calc_x + this->offset.xx;
+						this->calc_rect.xx = this->parent->calc_rect.xx + this->offset.xx;
 						this->calc_x_fix = true;
 					}else{
 						auto t_it_before = std::prev(this->calc_it);
@@ -227,13 +221,13 @@ namespace NBsys{namespace NWindowMenu
 
 						t_before->CalcX(a_from_sizetype);
 
-						this->calc_x = t_before->calc_x + t_before->calc_w + this->offset.xx;
+						this->calc_rect.xx = t_before->calc_rect.xx + t_before->calc_rect.ww + this->offset.xx;
 						this->calc_x_fix = true;
 					}
 				}
 			}else{
 				//ルート。
-				this->calc_x = this->offset.xx;
+				this->calc_rect.xx = this->offset.xx;
 				this->calc_x_fix = true;
 			}
 		}
@@ -252,7 +246,7 @@ namespace NBsys{namespace NWindowMenu
 
 					this->parent->CalcY(a_from_sizetype);
 
-					this->calc_y = this->parent->calc_y + this->offset.yy;
+					this->calc_rect.yy = this->parent->calc_rect.yy + this->offset.yy;
 					this->calc_y_fix = true;
 				}else if(this->parent->mode == WindowMenu_Mode::Vertical){
 					//縦積み。
@@ -262,7 +256,7 @@ namespace NBsys{namespace NWindowMenu
 
 						this->parent->CalcY(a_from_sizetype);
 
-						this->calc_y = this->parent->calc_y + this->offset.yy;
+						this->calc_rect.yy = this->parent->calc_rect.yy + this->offset.yy;
 						this->calc_y_fix = true;
 					}else{
 						auto t_it_before = std::prev(this->calc_it);
@@ -270,13 +264,13 @@ namespace NBsys{namespace NWindowMenu
 
 						t_before->CalcY(a_from_sizetype);
 
-						this->calc_y = t_before->calc_y + t_before->calc_h + this->offset.yy;
+						this->calc_rect.yy = t_before->calc_rect.yy + t_before->calc_rect.hh + this->offset.yy;
 						this->calc_y_fix = true;
 					}
 				}
 			}else{
 				//ルート。
-				this->calc_y = this->offset.yy;
+				this->calc_rect.yy = this->offset.yy;
 				this->calc_y_fix = true;
 			}
 		}
@@ -290,7 +284,7 @@ namespace NBsys{namespace NWindowMenu
 		if(this->calc_w_fix == false){
 			if(this->size.type_w == WindowMenu_SizeType::Fix){
 				//固定。
-				this->calc_w = this->size.size.ww;
+				this->calc_rect.ww = this->size.size.ww;
 				this->calc_w_fix = true;
 			}else if(this->size.type_w == WindowMenu_SizeType::StretchParent){
 				//■親のサイズに合わせる。
@@ -298,7 +292,7 @@ namespace NBsys{namespace NWindowMenu
 				if((a_from_sizetype == WindowMenu_SizeType::Fix)||(a_from_sizetype == WindowMenu_SizeType::StretchParent)){
 				}else{
 					ASSERT(0);
-					this->calc_w = 0.0f;
+					this->calc_rect.ww = 0.0f;
 					this->calc_w_fix = true;
 					return;
 				}
@@ -309,7 +303,7 @@ namespace NBsys{namespace NWindowMenu
 
 					this->parent->CalcW(WindowMenu_SizeType::StretchParent);
 
-					this->calc_w = this->parent->calc_w;
+					this->calc_rect.ww = this->parent->calc_rect.ww;
 					this->calc_w_fix = true;
 				}else if(this->parent->mode == WindowMenu_Mode::Horizontal){
 					//横積み。
@@ -324,7 +318,7 @@ namespace NBsys{namespace NWindowMenu
 							t_stretch_count++;
 						}else{
 							t_parent_child->CalcW(WindowMenu_SizeType::StretchParent);
-							t_total += t_parent_child->offset.xx + t_parent_child->calc_w;
+							t_total += t_parent_child->offset.xx + t_parent_child->calc_rect.ww;
 						}
 					}
 
@@ -334,7 +328,7 @@ namespace NBsys{namespace NWindowMenu
 						t_stretch_count = 1;
 					}
 
-					this->calc_w = (this->parent->calc_w - t_total) / t_stretch_count;
+					this->calc_rect.ww = (this->parent->calc_rect.ww - t_total) / t_stretch_count;
 					this->calc_w_fix = true;
 				}
 			}else if(this->size.type_w == WindowMenu_SizeType::StretchChild){
@@ -343,7 +337,7 @@ namespace NBsys{namespace NWindowMenu
 				if((a_from_sizetype == WindowMenu_SizeType::Fix)||(a_from_sizetype == WindowMenu_SizeType::StretchChild)){
 				}else{
 					ASSERT(0);
-					this->calc_w = 0.0f;
+					this->calc_rect.ww = 0.0f;
 					this->calc_w_fix = true;
 					return;
 				}
@@ -359,12 +353,12 @@ namespace NBsys{namespace NWindowMenu
 
 						t_child->CalcW(WindowMenu_SizeType::StretchChild);
 
-						f32 t_offset_r = t_child->offset.xx + t_child->calc_w;
+						f32 t_offset_r = t_child->offset.xx + t_child->calc_rect.ww;
 						if(t_temp < t_offset_r){
 							t_temp = t_offset_r;
 						}
 					}
-					this->calc_w = t_temp;
+					this->calc_rect.ww = t_temp;
 					this->calc_w_fix = true;
 				}else if(this->mode == WindowMenu_Mode::Horizontal){
 					//横積み。
@@ -376,9 +370,9 @@ namespace NBsys{namespace NWindowMenu
 
 						t_child->CalcW(WindowMenu_SizeType::StretchChild);
 
-						t_temp += t_child->offset.xx + t_child->calc_w;
+						t_temp += t_child->offset.xx + t_child->calc_rect.ww;
 					}
-					this->calc_w = t_temp;
+					this->calc_rect.ww = t_temp;
 					this->calc_w_fix = true;
 				}
 			}
@@ -393,7 +387,7 @@ namespace NBsys{namespace NWindowMenu
 		if(this->calc_h_fix == false){
 			if(this->size.type_h == WindowMenu_SizeType::Fix){
 				//固定。
-				this->calc_h = this->size.size.hh;
+				this->calc_rect.hh = this->size.size.hh;
 				this->calc_h_fix = true;
 			}else if(this->size.type_h == WindowMenu_SizeType::StretchParent){
 				//■親のサイズに合わせる。
@@ -401,7 +395,7 @@ namespace NBsys{namespace NWindowMenu
 				if((a_from_sizetype == WindowMenu_SizeType::Fix)||(a_from_sizetype == WindowMenu_SizeType::StretchParent)){
 				}else{
 					ASSERT(0);
-					this->calc_h = 0.0f;
+					this->calc_rect.hh = 0.0f;
 					this->calc_h_fix = true;
 					return;
 				}
@@ -412,7 +406,7 @@ namespace NBsys{namespace NWindowMenu
 
 					this->parent->CalcH(WindowMenu_SizeType::StretchParent);
 
-					this->calc_h = this->parent->calc_h;
+					this->calc_rect.hh = this->parent->calc_rect.hh;
 					this->calc_h_fix = true;
 				}else if(this->parent->mode == WindowMenu_Mode::Vertical){
 					//縦積み。
@@ -427,7 +421,7 @@ namespace NBsys{namespace NWindowMenu
 							t_stretch_count++;
 						}else{
 							t_parent_child->CalcH(WindowMenu_SizeType::StretchParent);
-							t_total += t_parent_child->offset.yy + t_parent_child->calc_h;
+							t_total += t_parent_child->offset.yy + t_parent_child->calc_rect.hh;
 						}
 					}
 
@@ -437,7 +431,7 @@ namespace NBsys{namespace NWindowMenu
 						t_stretch_count = 1;
 					}
 
-					this->calc_h = (this->parent->calc_h - t_total) / t_stretch_count;
+					this->calc_rect.hh = (this->parent->calc_rect.hh - t_total) / t_stretch_count;
 					this->calc_h_fix = true;
 				}
 			}else if(this->size.type_h == WindowMenu_SizeType::StretchChild){
@@ -446,7 +440,7 @@ namespace NBsys{namespace NWindowMenu
 				if((a_from_sizetype == WindowMenu_SizeType::Fix)||(a_from_sizetype == WindowMenu_SizeType::StretchChild)){
 				}else{
 					ASSERT(0);
-					this->calc_h = 0.0f;
+					this->calc_rect.hh = 0.0f;
 					this->calc_h_fix = true;
 					return;
 				}
@@ -462,12 +456,12 @@ namespace NBsys{namespace NWindowMenu
 
 						t_child->CalcH(WindowMenu_SizeType::StretchChild);
 
-						f32 t_offset_d =t_child->offset.yy + t_child->calc_h;
+						f32 t_offset_d =t_child->offset.yy + t_child->calc_rect.hh;
 						if(t_temp < t_offset_d){
 							t_temp = t_offset_d;
 						}
 					}
-					this->calc_h = t_temp;
+					this->calc_rect.hh = t_temp;
 					this->calc_h_fix = true;
 				}else if(this->mode == WindowMenu_Mode::Vertical){
 					//縦積み。
@@ -479,9 +473,9 @@ namespace NBsys{namespace NWindowMenu
 
 						t_child->CalcH(WindowMenu_SizeType::StretchChild);
 
-						t_temp += t_child->offset.yy + t_child->calc_h;
+						t_temp += t_child->offset.yy + t_child->calc_rect.hh;
 					}
-					this->calc_h = t_temp;
+					this->calc_rect.hh = t_temp;
 					this->calc_h_fix = true;
 				}
 			}

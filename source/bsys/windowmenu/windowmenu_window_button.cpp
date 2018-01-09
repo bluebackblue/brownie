@@ -144,7 +144,7 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	bool WindowMenu_Window_Button::CallBack_Draw(s32 a_z_sort)
 	{
-		if((this->calc_w >= 0.0f)&&(this->calc_h >= 0.0f)){
+		if((this->calc_rect.ww >= 0.0f)&&(this->calc_rect.hh >= 0.0f)){
 
 			s32 t_color_index = 0;
 
@@ -164,12 +164,7 @@ namespace NBsys{namespace NWindowMenu
 
 			GetSystemInstance()->GetCallback()->DrawRect_Callback(
 				a_z_sort + this->z_sort,
-				Rect2DType_R<f32>(
-					this->calc_x + 1,
-					this->calc_y + 1,
-					this->calc_w - 2,
-					this->calc_h - 2
-				),
+				this->calc_rect + Rect2DType_R<f32>(1.0f,1.0f,-2.0f,-2.0f),
 				-1,
 				*t_color_list[t_color_index]
 			);
@@ -181,12 +176,7 @@ namespace NBsys{namespace NWindowMenu
 				if(this->string.size() > 0){
 					GetSystemInstance()->GetCallback()->DrawFont_Callback(
 						a_z_sort + this->z_sort + 1,
-						Rect2DType_R<f32>(
-							this->calc_x,
-							this->calc_y,
-							this->calc_w,
-							this->calc_h
-						),
+						this->calc_rect,
 						true,
 						t_font_size,
 						t_font_texture_index,
