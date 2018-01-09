@@ -841,7 +841,6 @@ namespace NBsys{namespace NDsound
 	{
 		auto t_it = this->soundbuffer_list.find(a_id);
 		if(t_it == this->soundbuffer_list.end()){
-			DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
 			return true;
 		}
 
@@ -870,7 +869,6 @@ namespace NBsys{namespace NDsound
 	{
 		auto t_it = this->soundbuffer_list.find(a_id);
 		if(t_it == this->soundbuffer_list.end()){
-			DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
 			return true;
 		}
 

@@ -31,6 +31,7 @@
 #include "./common_windowmenu_callback.h"
 #include "./common_autotest.h"
 #include "./common_device_index.h"
+#include "./common_sound_streamcallback.h"
 
 
 /** NTest::NCommon
