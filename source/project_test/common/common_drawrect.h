@@ -316,8 +316,8 @@ namespace NTest{namespace NCommon
 
 				//00
 				{
-					t_vector.pos_xx = t_instence->x;
-					t_vector.pos_yy = t_instence->y;
+					t_vector.pos_xx = t_instence->rect.xx;
+					t_vector.pos_yy = t_instence->rect.yy;
 					t_vector.pos_zz = 0.0f;
 
 					t_vector.uv_xx = 0.0f;
@@ -328,8 +328,8 @@ namespace NTest{namespace NCommon
 
 				//10
 				{
-					t_vector.pos_xx = t_instence->x + t_instence->w;
-					t_vector.pos_yy = t_instence->y;
+					t_vector.pos_xx = t_instence->rect.xx + t_instence->rect.ww;
+					t_vector.pos_yy = t_instence->rect.yy;
 					t_vector.pos_zz = 0.0f;
 
 					t_vector.uv_xx = 1.0f;
@@ -340,8 +340,8 @@ namespace NTest{namespace NCommon
 
 				//01
 				{
-					t_vector.pos_xx = t_instence->x;
-					t_vector.pos_yy = t_instence->y + t_instence->h;
+					t_vector.pos_xx = t_instence->rect.xx;
+					t_vector.pos_yy = t_instence->rect.yy + t_instence->rect.hh;
 					t_vector.pos_zz = 0.0f;
 
 					t_vector.uv_xx = 0.0f;
@@ -352,8 +352,8 @@ namespace NTest{namespace NCommon
 
 				//01
 				{
-					t_vector.pos_xx = t_instence->x;
-					t_vector.pos_yy = t_instence->y + t_instence->h;
+					t_vector.pos_xx = t_instence->rect.xx;
+					t_vector.pos_yy = t_instence->rect.yy + t_instence->rect.hh;
 					t_vector.pos_zz = 0.0f;
 
 					t_vector.uv_xx = 0.0f;
@@ -364,8 +364,8 @@ namespace NTest{namespace NCommon
 
 				//10
 				{
-					t_vector.pos_xx = t_instence->x + t_instence->w;
-					t_vector.pos_yy = t_instence->y;
+					t_vector.pos_xx = t_instence->rect.xx + t_instence->rect.ww;
+					t_vector.pos_yy = t_instence->rect.yy;
 					t_vector.pos_zz = 0.0f;
 
 					t_vector.uv_xx = 1.0f;
@@ -376,8 +376,8 @@ namespace NTest{namespace NCommon
 
 				//11
 				{
-					t_vector.pos_xx = t_instence->x + t_instence->w;
-					t_vector.pos_yy = t_instence->y + t_instence->h;
+					t_vector.pos_xx = t_instence->rect.xx + t_instence->rect.ww;
+					t_vector.pos_yy = t_instence->rect.yy + t_instence->rect.hh;
 					t_vector.pos_zz = 0.0f;
 
 					t_vector.uv_xx = 1.0f;

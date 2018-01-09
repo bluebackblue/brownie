@@ -20,6 +20,7 @@
 /** include
 */
 #include "./font_state.h"
+#include "./font_alignment.h"
 
 
 /** NBsys::NFont

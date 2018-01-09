@@ -37,15 +37,12 @@ namespace NTest{namespace NCommon
 {
 	/** DrawFontProcType
 	*/
-	void WindowMenu_Callback::DrawFont_Callback(s32 a_z_sort,f32 a_x,f32 a_y,f32 a_w,f32 a_h,bool a_clip,f32 a_size,s32 a_fonttexture_type,const NBsys::NColor::Color_F& a_color,const STLWString& a_string,s32 a_alignment_x,s32 a_alignment_y)
+	void WindowMenu_Callback::DrawFont_Callback(s32 a_z_sort,const Rect2DType_R<f32>& a_rect,bool a_clip,f32 a_size,s32 a_fonttexture_type,const NBsys::NColor::Color_F& a_color,const STLWString& a_string,NBsys::NFont::Font_Alignment::Id a_alignment)
 	{
 		sharedptr<Render2D_Item_Font> t_item = new Render2D_Item_Font(a_z_sort);
 
 		{
-			t_item->x = a_x;
-			t_item->y = a_y;
-			t_item->w = a_w;
-			t_item->h = a_h;
+			t_item->rect = a_rect;
 
 			t_item->clip = a_clip;
 
@@ -55,8 +52,7 @@ namespace NTest{namespace NCommon
 
 			t_item->color = a_color;
 
-			t_item->alignment_x = a_alignment_x;
-			t_item->alignment_y = a_alignment_y;
+			t_item->alignment = a_alignment;
 
 			t_item->string = a_string;
 		}
@@ -66,15 +62,12 @@ namespace NTest{namespace NCommon
 
 	/** DrawRectProcType
 	*/
-	void WindowMenu_Callback::DrawRect_Callback(s32 a_z_sort,f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_texture_id,const NBsys::NColor::Color_F& a_color)
+	void WindowMenu_Callback::DrawRect_Callback(s32 a_z_sort,const Rect2DType_R<f32>& a_rect,s32 a_texture_id,const NBsys::NColor::Color_F& a_color)
 	{
 		sharedptr<Render2D_Item_Rect> t_item = new Render2D_Item_Rect(a_z_sort);
 
 		{
-			t_item->x = a_x;
-			t_item->y = a_y;
-			t_item->w = a_w;
-			t_item->h = a_h;
+			t_item->rect = a_rect;
 
 			t_item->texture_id = a_texture_id;
 

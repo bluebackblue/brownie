@@ -80,12 +80,9 @@ namespace NTest{namespace NCommon
 	{
 	public:
 
-		/** xywh
+		/** rect
 		*/
-		f32 x;
-		f32 y;
-		f32 w;
-		f32 h;
+		Rect2DType_R<f32> rect;
 
 		/** texture_id
 		*/
@@ -102,10 +99,7 @@ namespace NTest{namespace NCommon
 		Render2D_Item_Rect(s32 a_z_sort)
 			:
 			Render2D_Item_Base(a_z_sort,Render2D_ItemType::Rect),
-			x(0.0f),
-			y(0.0f),
-			w(0.0f),
-			h(0.0f),
+			rect(0.0f),
 			texture_id(-1),
 			color(1.0f,1.0f,1.0f,1.0f)
 		{
@@ -127,12 +121,9 @@ namespace NTest{namespace NCommon
 	{
 	public:
 
-		/** xywh
+		/** rect
 		*/
-		f32 x;
-		f32 y;
-		f32 w;
-		f32 h;
+		Rect2DType_R<f32> rect;
 
 		/** clip
 		*/
@@ -150,13 +141,9 @@ namespace NTest{namespace NCommon
 		*/
 		NBsys::NColor::Color_F color;
 
-		/** alignment_x
+		/** alignment
 		*/
-		s32 alignment_x;
-
-		/** alignment_y
-		*/
-		s32 alignment_y;
+		NBsys::NFont::Font_Alignment::Id alignment;
 
 		/** string
 		*/
@@ -168,16 +155,12 @@ namespace NTest{namespace NCommon
 		Render2D_Item_Font(s32 a_z_sort)
 			:
 			Render2D_Item_Base(a_z_sort,Render2D_ItemType::Font),
-			x(0.0f),
-			y(0.0f),
-			w(0.0f),
-			h(0.0f),
+			rect(0.0f),
 			clip(false),
 			size(0),
 			fonttexture_type(NBsys::ND3d11::D3d11_FontTextureType::SFont),
 			color(1.0f,1.0f,1.0f,1.0f),
-			alignment_x(0),
-			alignment_y(0),
+			alignment(NBsys::NFont::Font_Alignment::Center_VCenter),
 			string(L"")
 		{
 		}

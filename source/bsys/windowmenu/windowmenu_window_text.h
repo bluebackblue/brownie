@@ -48,13 +48,9 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		bool clip;
 
-		/** alignment_x
+		/** alignment
 		*/
-		s32 alignment_x;
-
-		/** alignment_y
-		*/
-		s32 alignment_y;
+		NBsys::NFont::Font_Alignment::Id alignment;
 
 	public:
 

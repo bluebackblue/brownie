@@ -326,19 +326,14 @@ namespace NTest{namespace NCommon
 		*/
 		virtual void Render(STLList<sharedptr<Render2D_Item_Base>>::const_iterator a_it_start,STLList<sharedptr<Render2D_Item_Base>>::const_iterator a_it_end)
 		{
-			auto t_clip_value = [](bool a_clip,f32 a_value) -> f32{
+			auto t_clip_proc = [](bool a_clip,Rect2DType_R<f32> a_rect) -> Rect2DType_R<f32>{
 				if(a_clip){
-					if(a_value >= 0.0f){
-						return a_value;
-					}
+					return a_rect;
 				}
-				return -1.0f;
+				return Rect2DType_R<f32>(-1.0f,-1.0f,-1.0f,-1.0f);
 			};
 
-			f32 t_current_clip_x = -1.0f;
-			f32 t_current_clip_y = -1.0f;
-			f32 t_current_clip_w = -1.0f;
-			f32 t_current_clip_h = -1.0f;
+			Rect2DType_R<f32> t_current_clip(-1.0f,-1.0f,-1.0f,-1.0f);
 
 			auto t_it = a_it_start;
 			auto t_it_renderstart = t_it;
@@ -346,28 +341,24 @@ namespace NTest{namespace NCommon
 				const Render2D_Item_Font* t_instence = dynamic_cast<const Render2D_Item_Font*>(t_it->get());
 				ASSERT(t_instence != nullptr);
 
-				t_current_clip_x = t_clip_value(t_instence->clip,t_instence->x);
-				t_current_clip_y = t_clip_value(t_instence->clip,t_instence->y);
-				t_current_clip_w = t_clip_value(t_instence->clip,t_instence->w);
-				t_current_clip_h = t_clip_value(t_instence->clip,t_instence->h);
+				t_current_clip = t_clip_proc(t_instence->clip,t_instence->rect);
 			}
 
 			while(t_it != a_it_end){
 				const Render2D_Item_Font* t_instence = dynamic_cast<const Render2D_Item_Font*>(t_it->get());
 				ASSERT(t_instence != nullptr);
 
+				Rect2DType_R<f32> t_instance_rect = t_clip_proc(t_instence->clip,t_instence->rect);
+
 				if(
-					(t_clip_value(t_instence->clip,t_instence->x) != t_current_clip_x)||
-					(t_clip_value(t_instence->clip,t_instence->y) != t_current_clip_y)||
-					(t_clip_value(t_instence->clip,t_instence->w) != t_current_clip_w)||
-					(t_clip_value(t_instence->clip,t_instence->h) != t_current_clip_h)
+					(t_instance_rect.xx != t_current_clip.xx)||
+					(t_instance_rect.yy != t_current_clip.yy)||
+					(t_instance_rect.ww != t_current_clip.ww)||
+					(t_instance_rect.hh != t_current_clip.hh)
 				){
 					this->RenderCall(t_it_renderstart,t_it);
 
-					t_current_clip_x = t_clip_value(t_instence->clip,t_instence->x);
-					t_current_clip_y = t_clip_value(t_instence->clip,t_instence->y);
-					t_current_clip_w = t_clip_value(t_instence->clip,t_instence->w);
-					t_current_clip_h = t_clip_value(t_instence->clip,t_instence->h);
+					t_current_clip = t_instance_rect;
 
 					t_it_renderstart = t_it;
 				}
@@ -389,14 +380,9 @@ namespace NTest{namespace NCommon
 
 			Rect2DType_R<f32> t_viewport(0.0f,0.0f,this->d3d11->GetSize().ww,this->d3d11->GetSize().hh);
 
-			//f32 t_viewport_offset_x = 0.0f;
-			//f32 t_viewport_offset_y = 0.0f;
-			//f32 t_viewport_w = ;
-			//f32 t_viewport_h = ;
-
 			if(t_instence_start->clip == true){
 				//クリップ処理あり。
-				t_viewport.Set(t_instence_start->x,t_instence_start->y,t_instence_start->w,t_instence_start->h);
+				t_viewport = t_instence_start->rect;
 			}
 
 			//ビューポート。
@@ -419,17 +405,15 @@ namespace NTest{namespace NCommon
 				//フォントテクスチャー更新。
 				this->d3d11->Render_PreUpdateFontTexture(t_fonttexture_type,t_instence->string);
 
+				Rect2DType_R<f32> t_viewrect = t_instence->rect - Rect2DType_R<f32>(t_viewport.xx,t_viewport.yy,0.0f,0.0f);
+
 				//バーテックス作成。
 				this->d3d11->Render_MakeFontVertex(
 					t_fonttexture_type,
 					t_instence->string,
 					this->vertex,
-					t_instence->x - t_viewport.xx,
-					t_instence->y - t_viewport.yy,
-					t_instence->w,
-					t_instence->h,
-					t_instence->alignment_x,
-					t_instence->alignment_y,
+					t_viewrect,
+					t_instence->alignment,
 					0.0f,
 					t_instence->size,
 					t_instence->size,

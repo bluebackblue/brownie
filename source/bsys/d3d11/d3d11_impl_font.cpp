@@ -56,7 +56,7 @@ namespace NBsys{namespace ND3d11
 		list(),
 		maplist()
 	{
-		this->texturewidth = NTexture::CalcJustSize(a_texture_width);
+		this->texture_size.ww = NTexture::CalcJustSize(a_texture_width);
 
 		s32 t_drawtypemax = 0;
 
@@ -84,14 +84,14 @@ namespace NBsys{namespace ND3d11
 			}break;
 		}
 
-		this->textureheight = NTexture::CalcJustSize(this->texturewidth * t_drawtypemax);
+		this->texture_size.hh = NTexture::CalcJustSize(this->texture_size.ww * t_drawtypemax);
 
-		sharedptr<u8> t_pixel(new u8[static_cast<u32>(this->texturewidth * this->textureheight * 4)]);
+		sharedptr<u8> t_pixel(new u8[static_cast<u32>(this->texture_size.ww * this->texture_size.hh * 4)]);
 
 		this->texture.reset(new NBsys::NTexture::Texture(
 			t_pixel,
-			Size2DType<s32>(this->texturewidth,this->textureheight),
-			this->texturewidth * 4,
+			Size2DType<s32>(this->texture_size.ww,this->texture_size.hh),
+			this->texture_size.ww * 4,
 			NBsys::NTexture::TextureType::R8G8B8A8,
 			a_name
 			)
@@ -185,7 +185,7 @@ namespace NBsys{namespace ND3d11
 						DEEPDEBUG_TAGLOG(BSYS_D3D11_DEBUG_ENABLE,L"d3d11_impl_font",L"%s",t_wchar);
 
 						//テクスチャーに書き込み。
-						NBsys::NFont::Font_State t_font_state = this->font->GetPixel_R8G8B8A8(this->texture->GetPixel(),t_font_index * (this->texturewidth * this->texturewidth * 4),this->texturewidth,this->texturewidth,t_code);
+						NBsys::NFont::Font_State t_font_state = this->font->GetPixel_R8G8B8A8(this->texture->GetPixel(),t_font_index * (this->texture_size.ww * this->texture_size.ww * 4),this->texture_size.ww,this->texture_size.ww,t_code);
 						t_change = true;
 
 						//登録。
@@ -243,19 +243,19 @@ namespace NBsys{namespace ND3d11
 			HRESULT t_result = this->d3d11_impl.GetDeviceContext()->Map(t_texture->texture2d.get(),0,D3D11_MAP_WRITE_DISCARD,0,&t_mapped_resource);
 
 			if(SUCCEEDED(t_result)){
-				s32 t_from_pitch = this->texturewidth * 4;
+				s32 t_from_pitch = this->texture_size.ww * 4;
 				if(static_cast<s32>(t_mapped_resource.RowPitch) == t_from_pitch){
-					u8* t_to = &reinterpret_cast<u8*>(t_mapped_resource.pData)[t_change_min * this->texturewidth * t_mapped_resource.RowPitch];
-					u8* t_from = &this->texture->GetPixel().get()[t_change_min * this->texturewidth * t_from_pitch];
+					u8* t_to = &reinterpret_cast<u8*>(t_mapped_resource.pData)[t_change_min * this->texture_size.ww * t_mapped_resource.RowPitch];
+					u8* t_from = &this->texture->GetPixel().get()[t_change_min * this->texture_size.ww * t_from_pitch];
 
-					s32 t_size = (t_change_max - t_change_min + 1) * this->texturewidth * t_from_pitch;
+					s32 t_size = (t_change_max - t_change_min + 1) * this->texture_size.ww * t_from_pitch;
 					NMemory::Copy(t_to,t_size,t_from,t_size);
 				}else{
 					for(s32 ii=t_change_min;ii<=t_change_max;ii++){
-						u32 t_blocksize_to = static_cast<u32>(ii * t_mapped_resource.RowPitch * this->texturewidth);
-						u32 t_blocksize_from = static_cast<u32>(ii * t_from_pitch * this->texturewidth);
+						u32 t_blocksize_to = static_cast<u32>(ii * t_mapped_resource.RowPitch * this->texture_size.ww);
+						u32 t_blocksize_from = static_cast<u32>(ii * t_from_pitch * this->texture_size.ww);
 
-						for(s32 yy=0;yy<this->texturewidth;yy++){
+						for(s32 yy=0;yy<this->texture_size.ww;yy++){
 							u8* t_to = &reinterpret_cast<u8*>(t_mapped_resource.pData)[yy * t_mapped_resource.RowPitch + t_blocksize_to];
 							u8* t_from = &this->texture->GetPixel().get()[yy * t_from_pitch + t_blocksize_from];
 
@@ -272,11 +272,21 @@ namespace NBsys{namespace ND3d11
 
 		
 	/** MakeFontVertex
+
+	a_string		: 文字列。
+	a_vertex		: 出力先バーテックス。
+	a_rect			: アライメント用文字領域の指定。
+	a_alignment		: アライメント。
+	a_z				: バーテックスZ値。
+	a_view_size_w	: 
+	a_view_size_h	: 
+	a_color			: 
+
 	*/
-	void D3d11_Impl_Font::MakeFontVertex(const STLWString& a_string,sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4>>& a_vertex,f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_alignment_x,s32 a_alignment_y,f32 a_z,f32 a_view_size_w,f32 a_view_size_h,const NBsys::NColor::Color_F& a_color)
+	void D3d11_Impl_Font::MakeFontVertex(const STLWString& a_string,sharedptr<NBsys::NVertex::Vertex<NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4>>& a_vertex,const Rect2DType_R<f32>& a_viewrect,NBsys::NFont::Font_Alignment::Id a_alignment,f32 a_z,f32 a_view_size_w,f32 a_view_size_h,const NBsys::NColor::Color_F& a_color)
 	{
-		f32 t_scale_w = a_view_size_w / static_cast<f32>(this->texturewidth);
-		f32 t_scale_h = a_view_size_h / static_cast<f32>(this->texturewidth);
+		f32 t_scale_w = a_view_size_w / static_cast<f32>(this->texture_size.ww);
+		f32 t_scale_h = a_view_size_h / static_cast<f32>(this->texture_size.ww);
 
 		f32 t_string_w = 0.0f;
 		f32 t_string_h = a_view_size_h;
@@ -301,27 +311,49 @@ namespace NBsys{namespace ND3d11
 		}
 
 		{
-			f32 t_x = a_x;
-			f32 t_y = a_y;
+			f32 t_x = a_viewrect.xx;
+			f32 t_y = a_viewrect.yy;
 
-			if(a_alignment_x < 0){
-				//左寄せ。
-			}else if(a_alignment_x == 0){
-				//中寄。
-				t_x = a_x + (a_w - t_string_w) / 2;
-			}else{
-				//右寄せ。
-				t_x = a_x + a_w - t_string_w;
+			switch(a_alignment){
+			case NBsys::NFont::Font_Alignment::Center_Top:
+			case NBsys::NFont::Font_Alignment::Center_VCenter:
+			case NBsys::NFont::Font_Alignment::Center_Bottom:
+				{
+					//中。
+					t_x = a_viewrect.xx + (a_viewrect.ww - t_string_w) / 2;
+				}break;
+			case NBsys::NFont::Font_Alignment::Right_Top:
+			case NBsys::NFont::Font_Alignment::Right_VCenter:
+			case NBsys::NFont::Font_Alignment::Right_Bottom:
+				{
+					//右。
+					t_x = a_viewrect.xx + a_viewrect.ww - t_string_w;
+				}break;
+			default:
+				{
+					//左。
+				}break;
 			}
-				
-			if(a_alignment_y < 0){
-				//左寄せ。
-			}else if(a_alignment_y == 0){
-				//中寄。
-				t_y = a_y + (a_h - t_string_h) / 2;
-			}else{
-				//右寄せ。
-				t_y = a_y + a_h - t_string_h;
+
+			switch(a_alignment){
+			case NBsys::NFont::Font_Alignment::Left_VCenter:
+			case NBsys::NFont::Font_Alignment::Center_VCenter:
+			case NBsys::NFont::Font_Alignment::Right_VCenter:
+				{
+					//中。
+					t_y = a_viewrect.yy + (a_viewrect.hh - t_string_h) / 2;
+				}break;
+			case NBsys::NFont::Font_Alignment::Left_Bottom:
+			case NBsys::NFont::Font_Alignment::Center_Bottom:
+			case NBsys::NFont::Font_Alignment::Right_Bottom:
+				{
+					//下。
+					t_y = a_viewrect.yy + a_viewrect.hh - t_string_h;
+				}break;
+			default:
+				{
+					//上。
+				}break;
 			}
 
 			u32 ii_max = static_cast<u32>(t_work_list.size());
@@ -330,7 +362,7 @@ namespace NBsys{namespace ND3d11
 				NBsys::NFont::Font_State& t_font_state = this->list[t_font_index].fontstate;
 
 				{
-					f32 t_cell_y_rate = static_cast<f32>(this->texturewidth) / this->textureheight;
+					f32 t_cell_y_rate = static_cast<f32>(this->texture_size.ww) / this->texture_size.hh;
 
 					f32 t_uv_x0 = 0.0f;
 					f32 t_uv_x1 = 1.0f;
@@ -348,8 +380,8 @@ namespace NBsys{namespace ND3d11
 						t_rect_y0 = static_cast<f32>(t_temp_y);
 					}
 
-					f32 t_rect_x1 = t_rect_x0 + (this->texturewidth) * t_scale_w;
-					f32 t_rect_y1 = t_rect_y0 + (this->texturewidth) * t_scale_h;
+					f32 t_rect_x1 = t_rect_x0 + (this->texture_size.ww) * t_scale_w;
+					f32 t_rect_y1 = t_rect_y0 + (this->texture_size.ww) * t_scale_h;
 
 					NBsys::NVertex::Vertex_Data_Pos3Uv2Color4TextureIndex4 t_vertex;
 					t_vertex.color_rr = a_color.r();

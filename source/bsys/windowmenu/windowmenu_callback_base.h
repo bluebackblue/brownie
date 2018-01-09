@@ -22,6 +22,7 @@
 #pragma warning(push)
 #pragma warning(disable:4464)
 #include "../color/color.h"
+#include "../font/font.h"
 #pragma warning(pop)
 
 
@@ -54,11 +55,11 @@ namespace NBsys{namespace NWindowMenu
 
 		/** DrawFontProcType
 		*/
-		virtual void DrawFont_Callback(s32 a_z_sort,f32 a_x,f32 a_y,f32 a_w,f32 a_h,bool a_clip,f32 a_size,s32 a_fonttexture_type,const NBsys::NColor::Color_F& a_color,const STLWString& a_string,s32 a_alignment_x,s32 a_alignment_y) = 0;
+		virtual void DrawFont_Callback(s32 a_z_sort,const Rect2DType_R<f32>& a_rect,bool a_clip,f32 a_size,s32 a_fonttexture_type,const NBsys::NColor::Color_F& a_color,const STLWString& a_string,NBsys::NFont::Font_Alignment::Id a_alignment) = 0;
 
 		/** DrawRectProcType
 		*/
-		virtual void DrawRect_Callback(s32 a_z_sort,f32 a_x,f32 a_y,f32 a_w,f32 a_h,s32 a_texture_id,const NBsys::NColor::Color_F& a_color) = 0;
+		virtual void DrawRect_Callback(s32 a_z_sort,const Rect2DType_R<f32>& a_rect,s32 a_texture_id,const NBsys::NColor::Color_F& a_color) = 0;
 
 		/** GetMouseProcType
 		*/

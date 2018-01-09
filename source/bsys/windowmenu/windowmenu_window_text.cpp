@@ -59,8 +59,7 @@ namespace NBsys{namespace NWindowMenu
 		color(1.0f,1.0f,1.0f,1.0f),
 		string(L""),
 		clip(true),
-		alignment_x(-1),
-		alignment_y(0)
+		alignment(NBsys::NFont::Font_Alignment::Left_VCenter)
 	{
 	}
 
@@ -103,17 +102,19 @@ namespace NBsys{namespace NWindowMenu
 			if(this->string.size() > 0){
 				GetSystemInstance()->GetCallback()->DrawFont_Callback(
 					a_z_sort + this->z_sort + 1,
-					this->calc_x + t_offset_x,
-					this->calc_y + t_offset_y,
-					this->calc_w,
-					this->calc_h,
+					Rect2DType_R<f32>(
+						this->calc_x + t_offset_x,
+						this->calc_y + t_offset_y,
+						this->calc_w,
+						this->calc_h
+					),
 					this->clip,
 					t_font_size,
 					t_font_texture_index,
 					this->color,
 					this->string,
-					this->alignment_x,
-					this->alignment_y);
+					this->alignment
+				);
 			}
 		}
 

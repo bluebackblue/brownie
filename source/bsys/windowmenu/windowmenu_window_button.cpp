@@ -162,7 +162,17 @@ namespace NBsys{namespace NWindowMenu
 				t_color_index = 1;
 			}
 
-			GetSystemInstance()->GetCallback()->DrawRect_Callback(a_z_sort + this->z_sort,this->calc_x + 1,this->calc_y + 1,this->calc_w - 2,this->calc_h - 2,-1,*t_color_list[t_color_index]);
+			GetSystemInstance()->GetCallback()->DrawRect_Callback(
+				a_z_sort + this->z_sort,
+				Rect2DType_R<f32>(
+					this->calc_x + 1,
+					this->calc_y + 1,
+					this->calc_w - 2,
+					this->calc_h - 2
+				),
+				-1,
+				*t_color_list[t_color_index]
+			);
 
 			{
 				f32 t_font_size = 16.0f;
@@ -171,17 +181,18 @@ namespace NBsys{namespace NWindowMenu
 				if(this->string.size() > 0){
 					GetSystemInstance()->GetCallback()->DrawFont_Callback(
 						a_z_sort + this->z_sort + 1,
-						this->calc_x,
-						this->calc_y,
-						this->calc_w,
-						this->calc_h,
+						Rect2DType_R<f32>(
+							this->calc_x,
+							this->calc_y,
+							this->calc_w,
+							this->calc_h
+						),
 						true,
 						t_font_size,
 						t_font_texture_index,
 						t_font_color,
 						this->string,
-						0,
-						0
+						NBsys::NFont::Font_Alignment::Center_VCenter
 					);
 				}
 			}

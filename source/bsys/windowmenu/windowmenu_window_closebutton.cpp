@@ -161,24 +161,33 @@ namespace NBsys{namespace NWindowMenu
 				t_color_index = 1;
 			}
 
-			GetSystemInstance()->GetCallback()->DrawRect_Callback(a_z_sort + this->z_sort,this->calc_x + this->space,this->calc_y + this->space,this->calc_w - this->space * 2,this->calc_h - this->space * 2,-1,*t_color_list[t_color_index]);
+			Rect2DType_R<f32> t_calc_rect(this->calc_x,this->calc_y,this->calc_w,this->calc_h);
+
+			{
+				Rect2DType_R<f32> t_space_rect(this->space,this->space,-this->space*2,-this->space*2);
+
+				GetSystemInstance()->GetCallback()->DrawRect_Callback(
+					a_z_sort + this->z_sort,
+					t_calc_rect + t_space_rect,
+					-1,
+					*t_color_list[t_color_index]
+				);
+			}
 
 			//×ボタンをフォントで表現。
 			{
+				Rect2DType_R<f32> t_offset_rect(this->to_callback_font_offset_x,this->to_callback_font_offset_y,0,0);
+
 				//L"x"
 				GetSystemInstance()->GetCallback()->DrawFont_Callback(
 					a_z_sort + this->z_sort + 1,
-					this->calc_x + this->to_callback_font_offset_x,
-					this->calc_y + this->to_callback_font_offset_y,
-					this->calc_w,
-					this->calc_h,
+					t_calc_rect + t_offset_rect,
 					false,
 					this->to_callback_font_view_size,
 					this->to_callback_fonttexture_type,
 					t_font_color,
 					L"×",
-					0,
-					0
+					NBsys::NFont::Font_Alignment::Center_VCenter
 				);
 			}
 		}

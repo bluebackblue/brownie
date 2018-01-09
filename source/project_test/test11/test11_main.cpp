@@ -208,16 +208,12 @@ namespace NTest
 					if(NBsys::NDsound::IsPlay(this->soundbuffer_lastplay_id) == true){
 						{
 							sharedptr<NCommon::Render2D_Item_Font> t_font(new NCommon::Render2D_Item_Font(99999));
-							t_font->x = 0.0f;
-							t_font->y = 50.0f;
-							t_font->w = 0.0f;
-							t_font->h = 0.0f;
+							t_font->rect.Set(0.0f,50.0f,0.0f,0.0f);
 							t_font->clip = false;
 							t_font->size = 16.0f;
 							t_font->fonttexture_type = NBsys::ND3d11::D3d11_FontTextureType::SFont;
 							t_font->color = NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f);
-							t_font->alignment_x = -1;
-							t_font->alignment_y = -1;
+							t_font->alignment = NBsys::NFont::Font_Alignment::Left_Top;
 							t_font->string = L"Play Now";
 
 							this->render2d->Draw(t_font);
