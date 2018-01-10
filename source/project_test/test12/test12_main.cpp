@@ -250,7 +250,7 @@ namespace NTest
 		*/
 		void Mmd_Load()
 		{
-			STLWString t_pmx_path = L"mmd/MMD/";
+			STLWString t_pmx_path = L"mmd/";
 			STLWString t_pmx_name = L"Alicia_solid.pmx";
 
 			//STLWString t_vmd_path = L"mmd/";
@@ -334,9 +334,9 @@ namespace NTest
 					s32 t_offset = static_cast<s32>(t_model_patrs.texture_filepath.size() - 4);
 					if(t_offset >= 0){
 						//std::transform(t_model_patrs.texture_filepath.begin(),t_model_patrs.texture_filepath.end(),t_model_patrs.texture_filepath.begin(),::tolower);
-						if(t_model_patrs.texture_filepath.substr(static_cast<u32>(t_offset),4) == L".tga"){
-							t_model_patrs.texture_filepath = t_model_patrs.texture_filepath.substr(0,t_model_patrs.texture_filepath.size() - 4) + L".bmp";
-						}
+						//if(t_model_patrs.texture_filepath.substr(static_cast<u32>(t_offset),4) == L".tga" ){
+						t_model_patrs.texture_filepath = t_model_patrs.texture_filepath.substr(0,t_model_patrs.texture_filepath.size() - 4) + L".png";
+						//}
 					}
 
 					t_model_patrs.texture_file = new NBsys::NFile::File_Object(NCommon::DeviceIndex::TestData,t_model_patrs.texture_filepath,-1,sharedptr<NBsys::NFile::File_Allocator>(),1);
