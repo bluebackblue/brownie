@@ -177,11 +177,11 @@ namespace NTest{namespace NCommon
 		*/
 		virtual void Initialize_File()
 		{
-			NBsys::NFile::StartSystem(DeviceIndex::Max);
-			NBsys::NFile::SetRoot(DeviceIndex::Local,L"./project_test/test" DEF_TEST_STRING);
-			NBsys::NFile::SetRoot(DeviceIndex::Common,L"./project_test/common");
-			NBsys::NFile::SetRoot(DeviceIndex::Sdk,L"../../sdk");
-			NBsys::NFile::SetRoot(DeviceIndex::TestData,L"../../brownie_testdata/data");
+			NBsys::NFile::StartSystem(NCommon::DeviceIndex::Max);
+			NBsys::NFile::SetRoot(NCommon::DeviceIndex::Local,L"./project_test/test" DEF_TEST_STRING);
+			NBsys::NFile::SetRoot(NCommon::DeviceIndex::Common,L"./project_test/common");
+			NBsys::NFile::SetRoot(NCommon::DeviceIndex::Sdk,L"../../sdk");
+			NBsys::NFile::SetRoot(NCommon::DeviceIndex::TestData,L"../../brownie_testdata/data");
 		}
 
 		/** 削除。ファイル。

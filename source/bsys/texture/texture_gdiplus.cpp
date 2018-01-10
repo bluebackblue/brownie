@@ -105,7 +105,9 @@ namespace NBsys{namespace NTexture
 
 		sharedptr<Texture> t_to_texture;
 
-		if(t_bitmap->GetLastStatus() == Gdiplus::Ok){
+		Gdiplus::Status t_state = t_bitmap->GetLastStatus();
+
+		if(t_state == Gdiplus::Ok){
 			u32 t_tex_width = static_cast<u32>(t_bitmap->GetWidth());
 			u32 t_tex_height = static_cast<u32>(t_bitmap->GetHeight());
 			s32 t_tex_pitch = NTexture::CalcJustSize(t_tex_width) * 4;
@@ -138,6 +140,8 @@ namespace NBsys{namespace NTexture
 				Size2DType<s32> t_size(t_tex_width,t_tex_height);
 				t_to_texture.reset(new Texture(t_to_pixel,t_size,t_tex_pitch,TextureType::R8G8B8A8,a_name));
 			}
+		}else{
+			//ASSERT(0);
 		}
 
 		t_bitmap.reset();

@@ -130,11 +130,17 @@ namespace NBsys{namespace NTexture
 	*/
 	sharedptr<Texture> CreateTexture(const sharedptr<u8>& a_data,s32 a_size,const STLWString& a_name)
 	{
+		sharedptr<Texture> t_ret;
+
 		#if(BSYS_TEXTURE_GDIPLUS_ENABLE)
 		{
-			return CreateTexture_GdiPlus(a_data,a_size,a_name);
+			t_ret = CreateTexture_GdiPlus(a_data,a_size,a_name);
+			if(t_ret){
+				return t_ret;
+			}
 		}
-		#else
+		#endif
+
 		{
 			STLWString t_filetype_string = L"";
 
@@ -153,7 +159,6 @@ namespace NBsys{namespace NTexture
 
 			return nullptr;
 		}
-		#endif
 	}
 
 

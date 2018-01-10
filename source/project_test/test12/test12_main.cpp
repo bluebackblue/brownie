@@ -250,8 +250,8 @@ namespace NTest
 		*/
 		void Mmd_Load()
 		{
-			STLWString t_pmx_path = L"mmd/";
-			STLWString t_pmx_name = L"Tuneちゃん_ハイポリ版Toon_ver.pmx";
+			STLWString t_pmx_path = L"mmd/MMD/";
+			STLWString t_pmx_name = L"Alicia_solid.pmx";
 
 			//STLWString t_vmd_path = L"mmd/";
 			//STLWString t_vmd_name = L"-.vmd";
@@ -330,6 +330,15 @@ namespace NTest
 				//テクスチャー読み込み開始。
 				if(t_model_patrs.texture_index >= 0){
 					t_model_patrs.texture_filepath = Path::DirAndName(t_pmx_path,this->mmd_pmx->texturename_list[static_cast<std::size_t>(t_model_patrs.texture_index)]);
+
+					s32 t_offset = static_cast<s32>(t_model_patrs.texture_filepath.size() - 4);
+					if(t_offset >= 0){
+						//std::transform(t_model_patrs.texture_filepath.begin(),t_model_patrs.texture_filepath.end(),t_model_patrs.texture_filepath.begin(),::tolower);
+						if(t_model_patrs.texture_filepath.substr(static_cast<u32>(t_offset),4) == L".tga"){
+							t_model_patrs.texture_filepath = t_model_patrs.texture_filepath.substr(0,t_model_patrs.texture_filepath.size() - 4) + L".bmp";
+						}
+					}
+
 					t_model_patrs.texture_file = new NBsys::NFile::File_Object(NCommon::DeviceIndex::TestData,t_model_patrs.texture_filepath,-1,sharedptr<NBsys::NFile::File_Allocator>(),1);
 				}else{
 					t_model_patrs.texture_file = nullptr;
@@ -417,7 +426,7 @@ namespace NTest
 		{
 			if(this->init_step == 0){
 				//パックファイル読み込み開始。
-				this->pac.reset(new NBsys::NFile::File_Pack_Object(NCommon::DeviceIndex::TestData,L"Tuneちゃん_Toon.pac",L"mmd"));
+				this->pac.reset(new NBsys::NFile::File_Pack_Object(NCommon::DeviceIndex::TestData,L"alicia.pac",L"mmd"));
 				this->init_step++;
 			}else if(this->init_step == 1){
 				if(this->pac->IsBusy() == false){

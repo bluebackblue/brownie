@@ -17,6 +17,14 @@
 #pragma warning(pop)
 
 
+/** include
+*/
+#pragma warning(push)
+#pragma warning(disable:4464)
+#include "../common/common_app_base.h"
+#pragma warning(pop)
+
+
 /** warning
 
 4710 : この関数はインライン展開のために選択されましたが、コンパイラはインライン展開を実行しませんでした。
@@ -333,10 +341,11 @@ namespace NTest
 	*/
 	void Test_Main()
 	{
-		NBsys::NFile::StartSystem(3);
-		NBsys::NFile::SetRoot(0,L"./project_test/test" DEF_TEST_STRING);
-		NBsys::NFile::SetRoot(1,L"./project_test/common");
-		NBsys::NFile::SetRoot(2,L"../../sdk/mmd");
+		NBsys::NFile::StartSystem(NCommon::DeviceIndex::Max);
+		NBsys::NFile::SetRoot(NCommon::DeviceIndex::Local,L"./project_test/test" DEF_TEST_STRING);
+		NBsys::NFile::SetRoot(NCommon::DeviceIndex::Common,L"./project_test/common");
+		NBsys::NFile::SetRoot(NCommon::DeviceIndex::Sdk,L"../../sdk");
+		NBsys::NFile::SetRoot(NCommon::DeviceIndex::TestData,L"../../brownie_testdata/data");
 
 		#if(USE_FOVE)
 		s_fovehmd.reset(new NBsys::NFovehmd::Fovehmd());
@@ -360,8 +369,8 @@ namespace NTest
 		s_window->Create(L"TEST " DEF_TEST_STRING,static_cast<s32>(s_fovehmd->GetSingleEyeResolution().x * 2)/3,static_cast<s32>(s_fovehmd->GetSingleEyeResolution().y)/3);
 		s_d3d11->Render_Create(s_window,static_cast<s32>(s_fovehmd->GetSingleEyeResolution().x * 2),static_cast<s32>(s_fovehmd->GetSingleEyeResolution().y));
 		#else
-		s_window->Create(L"TEST " DEF_TEST_STRING,s_width,s_height);
-		s_d3d11->Render_Create(s_window,s_width,s_height);
+		s_window->Create(L"TEST " DEF_TEST_STRING,Size2DType<f32>(static_cast<f32>(s_width),static_cast<f32>(s_height)));
+		s_d3d11->Render_Create(s_window,Size2DType<f32>(s_width,s_height));
 		#endif
 
 		//ブレンドステータス。
@@ -516,7 +525,7 @@ namespace NTest
 					}
 					#else
 					{
-						s_d3d11->Render_ViewPort(RectType2D_R<f32>(0.0f,0.0f,s_width,s_height));
+						s_d3d11->Render_ViewPort(Rect2DType_R<f32>(0.0f,0.0f,s_width,s_height));
 
 						//t_camera_target
 						NBsys::NGeometry::Geometry_Vector3 t_camera_target(0.0f,10.0f,0.0f);
@@ -540,7 +549,7 @@ namespace NTest
 						#if(USE_FOVE)
 						t_projection.Set_PerspectiveProjectionMatrix(s_fovehmd->GetSingleEyeResolution().x * 2,s_fovehmd->GetSingleEyeResolution().y,t_fov_deg,t_near,t_far);
 						#else
-						t_projection.Set_PerspectiveProjectionMatrix(static_cast<f32>(s_width),static_cast<f32>(s_height),t_fov_deg,t_near,t_far);
+						t_projection.Set_PerspectiveProjectionMatrix(Size2DType<f32>(s_width,s_height),t_fov_deg,t_near,t_far);
 						#endif
 
 						NBsys::NGeometry::Geometry_Matrix_44 t_view;

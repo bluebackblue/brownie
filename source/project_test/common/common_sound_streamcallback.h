@@ -19,7 +19,7 @@
 
 /** NTest::NCommon
 */
-#if(BSYS_D3D11_ENABLE)
+#if(BSYS_DSOUND_ENABLE)
 #pragma warning(push)
 #pragma warning(disable:4514 4710 4820)
 namespace NTest{namespace NCommon
