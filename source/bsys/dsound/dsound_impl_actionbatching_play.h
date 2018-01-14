@@ -55,25 +55,15 @@ namespace NBsys{namespace NDsound
 		*/
 		s32 duplicate_id;
 
-		/** loop
-		*/
-		bool loop;
-
-		/** auto_delete
-		*/
-		bool auto_delete;
-
 	public:
 
 		/** constructor
 		*/
-		Dsound_Impl_ActionBatching_Play(Dsound_Impl& a_dsound_impl,s32 a_id,s32 a_duplicate_id,bool a_loop,bool a_auto_delete)
+		Dsound_Impl_ActionBatching_Play(Dsound_Impl& a_dsound_impl,s32 a_id,s32 a_duplicate_id)
 			:
 			dsound_impl(a_dsound_impl),
 			id(a_id),
-			duplicate_id(a_duplicate_id),
-			loop(a_loop),
-			auto_delete(a_auto_delete)
+			duplicate_id(a_duplicate_id)
 		{
 		}
 
@@ -110,7 +100,7 @@ namespace NBsys{namespace NDsound
 			}
 
 			//Player_Play
-			this->dsound_impl.Player_Play(this->id,this->duplicate_id,this->loop,this->auto_delete);
+			this->dsound_impl.Player_Play(this->id,this->duplicate_id);
 
 			//成功。
 			return 1;

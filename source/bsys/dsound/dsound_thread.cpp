@@ -148,9 +148,9 @@ namespace NBsys{namespace NDsound
 
 	/** [複数スレッドから]再生。
 	*/
-	s32 Dsound_Thread::Play(s32 a_id,bool a_duplicate,bool a_loop,bool a_auto_delete)
+	s32 Dsound_Thread::Play(s32 a_id,bool a_duplicate,bool a_is_loop,bool a_auto_delete)
 	{
-		return this->dsound_impl.Play(a_id,a_duplicate,a_loop,a_auto_delete);
+		return this->dsound_impl.Play(a_id,a_duplicate,a_is_loop,a_auto_delete);
 	}
 
 

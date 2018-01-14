@@ -104,9 +104,17 @@ namespace NBsys{namespace NDsound
 		*/
 		bool is_3d;
 
+		/** is_loop
+		*/
+		bool is_loop;
+
 		/** is_duplicate
 		*/
 		bool is_duplicate;
+
+		/** is_autodelete
+		*/
+		bool is_autodelete;
 
 		/** is_stream
 		*/
@@ -138,7 +146,11 @@ namespace NBsys{namespace NDsound
 
 		/** ストリーミング再生コールバックの呼び出し。
 		*/
-		bool StreamCallback(s32 a_copyto_offset,s32 a_need_size);
+		void StreamCallback(s32 a_copyto_offset,s32 a_need_size,bool a_is_loop);
+
+		/** CreateNotify
+		*/
+		void CreateNotify();
 	};
 
 }}

@@ -19,6 +19,7 @@
 
 /** include
 */
+#include "./wave_stream.h"
 #include "./wave_wav.h"
 #include "./wave_ogg.h"
 

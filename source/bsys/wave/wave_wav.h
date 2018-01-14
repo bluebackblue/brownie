@@ -31,11 +31,6 @@ namespace NBsys{namespace NWave
 	*/
 	sharedptr<Wave> CreateWave_Wav(const sharedptr<u8>& a_wav_data,s32 a_wav_size,const STLWString& a_name);
 
-	
-	/** CreateWave_FromOgg
-	*/
-	sharedptr<Wave> CreateWave_Ogg(const sharedptr<u8>& a_ogg_data,s32 a_ogg_size,const STLWString& a_name);
-
 
 }}
 #endif

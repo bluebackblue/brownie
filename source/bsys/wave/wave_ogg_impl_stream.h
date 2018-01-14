@@ -37,7 +37,7 @@ namespace NBsys{namespace NWave
 {
 	/** Wave_Ogg_Impl_Stream
 	*/
-	class Wave_Ogg_Impl_Stream
+	class Wave_Ogg_Impl_Stream : public Wave_Stream
 	{
 	public:
 
@@ -94,10 +94,6 @@ namespace NBsys{namespace NWave
 		*/
 		s32 rate;
 
-		/** wavetype
-		*/
-		WaveType::Id wavetype;
-
 	public:
 
 		/** constructor
@@ -108,6 +104,26 @@ namespace NBsys{namespace NWave
 		*/
 		virtual ~Wave_Ogg_Impl_Stream();
 
+	public:
+
+		/** チャンネル数取得。
+		*/
+		virtual s32 GetChannel();
+
+		/** 量子化ビット数取得。
+		*/
+		virtual s32 GetBit();
+
+		/** レート取得。
+		*/
+		virtual s32 GetRate();
+
+		/** ストリーム。
+		*/
+		virtual bool Stream(RingBufferBase<u8>& a_buffer,bool a_is_loop);
+
+	public:
+
 		/** 作成。
 		*/
 		void Create(const sharedptr<u8>& a_ogg_data,s32 a_ogg_size);
@@ -116,32 +132,9 @@ namespace NBsys{namespace NWave
 		*/
 		void Delete();
 
-		/** GetWaveType
-		*/
-		WaveType::Id GetWaveType();
-
 		/** GetCountOfSample
 		*/
 		s32 GetCountOfSample();
-
-		/** GetChannel
-		*/
-		s32 GetChannel();
-
-		/** GetBit
-		*/
-		s32 GetBit();
-
-		/** GetRate
-		*/
-		s32 GetRate();
-
-		/** Stream
-
-			a_seek < 0 : 自動シーク。
-
-		*/
-		bool Stream(RingBufferBase<u8>& a_buffer,bool a_loop);
 
 	};
 

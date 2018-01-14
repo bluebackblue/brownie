@@ -118,7 +118,7 @@ namespace NTest
 		void Load()
 		{
 			if(this->soundbuffer_id < 0){
-				this->soundbuffer_id = NBsys::NDsound::CreateStreamSoundBuffer(new NCommon::SoundStreamCallback(this->ogg_file));
+				this->soundbuffer_id = NBsys::NDsound::CreateStreamSoundBuffer(new NCommon::SoundStreamCallback_Ogg(this->ogg_file));
 			}
 		}
 

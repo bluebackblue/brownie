@@ -35,9 +35,7 @@ namespace NBsys{namespace NWave
 
 	/** CreateStream_Ogg
 	*/
-	#if(0)
 	sharedptr<Wave_Stream> CreateStream_Ogg(const sharedptr<u8>& a_ogg_data,s32 a_ogg_size);
-	#endif
 
 
 }}

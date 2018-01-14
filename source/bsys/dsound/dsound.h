@@ -80,7 +80,7 @@ namespace NBsys{namespace NDsound
 
 	/** 再生。
 	*/
-	s32 Play(s32 a_id,bool a_duplicate,bool a_loop,bool a_auto_delete);
+	s32 Play(s32 a_id,bool a_duplicate,bool a_is_loop,bool a_auto_delete);
 
 	
 	/** 再生中チェック。

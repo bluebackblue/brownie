@@ -17,12 +17,6 @@
 #pragma warning(pop)
 
 
-/** include
-*/
-#include "./wave_wav.h"
-#include "./wave_ogg.h"
-
-
 /** NBsys::NWave
 */
 #if(BSYS_WAVE_ENABLE)
@@ -48,7 +42,22 @@ namespace NBsys{namespace NWave
 
 	public:
 
-		
+		/** チャンネル数取得。
+		*/
+		virtual s32 GetChannel() = 0;
+
+		/** 量子化ビット数取得。
+		*/
+		virtual s32 GetBit() = 0;
+
+		/** レート取得。
+		*/
+		virtual s32 GetRate() = 0;
+
+		/** ストリーム。
+		*/
+		virtual bool Stream(RingBufferBase<u8>& a_buffer,bool a_is_loop) = 0;
+
 	};
 
 

@@ -37,9 +37,9 @@
 #pragma warning(disable:4710 4820)
 namespace NBsys{namespace NDsound
 {
-	/** 自動削除。
+	/** 再生中。
 	*/
-	class Dsound_Impl_ActionBatching_AutoDelete : public NBsys::NActionBatching::ActionBatching_ActionItem_Base
+	class Dsound_Impl_ActionBatching_PlayNow : public NBsys::NActionBatching::ActionBatching_ActionItem_Base
 	{
 	private:
 
@@ -55,7 +55,7 @@ namespace NBsys{namespace NDsound
 
 		/** constructor
 		*/
-		Dsound_Impl_ActionBatching_AutoDelete(Dsound_Impl& a_dsound_impl,s32 a_id)
+		Dsound_Impl_ActionBatching_PlayNow(Dsound_Impl& a_dsound_impl,s32 a_id)
 			:
 			dsound_impl(a_dsound_impl),
 			id(a_id)
@@ -64,7 +64,7 @@ namespace NBsys{namespace NDsound
 
 		/** destructor
 		*/
-		virtual ~Dsound_Impl_ActionBatching_AutoDelete()
+		virtual ~Dsound_Impl_ActionBatching_PlayNow()
 		{
 		}
 
@@ -72,11 +72,11 @@ namespace NBsys{namespace NDsound
 
 		/** copy constructor禁止。
 		*/
-		Dsound_Impl_ActionBatching_AutoDelete(const Dsound_Impl_ActionBatching_AutoDelete& a_this) = delete;
+		Dsound_Impl_ActionBatching_PlayNow(const Dsound_Impl_ActionBatching_PlayNow& a_this) = delete;
 
 		/** コピー禁止。
 		*/
-		void operator =(const Dsound_Impl_ActionBatching_AutoDelete& a_this) = delete;
+		void operator =(const Dsound_Impl_ActionBatching_PlayNow& a_this) = delete;
 
 	public:
 
@@ -94,8 +94,8 @@ namespace NBsys{namespace NDsound
 				//中断。
 			}
 
-			//Player_AutoDelete
-			bool t_ret = this->dsound_impl.Player_AutoDelete(this->id);
+			//Player_PlayNow
+			bool t_ret = this->dsound_impl.Player_PlayNow(this->id);
 			if(t_ret == true){
 				//成功。
 				return 1;

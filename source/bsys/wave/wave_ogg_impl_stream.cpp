@@ -178,8 +178,7 @@ namespace NBsys{namespace NWave
 		//virtual_filehandle(),
 		countof_sample(0),
 		channel(0),
-		bit(0),
-		wavetype(WaveType::None)
+		bit(0)
 	{
 	}
 
@@ -189,6 +188,99 @@ namespace NBsys{namespace NWave
 	Wave_Ogg_Impl_Stream::~Wave_Ogg_Impl_Stream()
 	{
 		this->Delete();
+	}
+
+
+	/** GetChannel
+	*/
+	s32 Wave_Ogg_Impl_Stream::GetChannel()
+	{
+		return this->channel;
+	}
+
+
+	/** GetBit
+	*/
+	s32 Wave_Ogg_Impl_Stream::GetBit()
+	{
+		return this->bit;
+	}
+
+	
+	/** GetRate
+	*/
+	s32 Wave_Ogg_Impl_Stream::GetRate()
+	{
+		return this->rate;
+	}
+
+
+	/** ストリーム。
+	*/
+	bool Wave_Ogg_Impl_Stream::Stream(RingBufferBase<u8>& a_buffer,bool a_is_loop)
+	{
+		sharedptr<char> t_temp;
+
+		static const s32 BUFFER_SIZE = 16 * 1024;
+
+		char* t_buffer = reinterpret_cast<char*>(a_buffer.GetItemFromFreeList(0));
+		s32 t_buffer_size = a_buffer.GetContinuousFreeSize();
+		if(t_buffer_size <= BUFFER_SIZE){
+
+			if(a_buffer.GetFreeSize() < BUFFER_SIZE){
+				//継続。空き容量不足。
+				DEEPDEBUG_ASSERT(BSYS_WAVE_DEBUG_ENABLE,0);
+				return true;
+			}
+
+			t_buffer_size = BUFFER_SIZE;
+			t_buffer = new char[BUFFER_SIZE];
+			t_temp.reset(t_buffer);
+		}
+
+		s32 t_endian = 0;
+		s32 t_word_size = this->bit / 8;
+		s32 t_sgned = 1;
+		int t_current_section = 0;
+		long t_ret_size = ::ov_read(&this->virtual_filehandle,t_buffer,t_buffer_size,t_endian,t_word_size,t_sgned,&t_current_section);
+		if(t_ret_size < 0){
+			//エラー中断終了。
+			DEEPDEBUG_ASSERT(BSYS_WAVE_DEBUG_ENABLE,0);
+			return false;
+		}else if(t_ret_size == 0){
+			if(a_is_loop == true){
+
+				if(::ov_pcm_seek(&this->virtual_filehandle,0) != 0){
+					//エラー中断。
+					DEEPDEBUG_ASSERT(BSYS_WAVE_DEBUG_ENABLE,0);
+					return false;
+				}
+
+				//継続。
+				return true;
+			}
+
+			//完了。
+			return false;
+		}else{
+			//s32 t_seek = ::ov_pcm_tell(&this->virtual_filehandle);
+
+			if(t_temp){
+				a_buffer.CopyToBuffer(reinterpret_cast<u8*>(t_temp.get()),t_ret_size);
+				t_temp.reset();
+			}else{
+				a_buffer.AddUse(t_ret_size);
+			}
+		}
+
+		if(t_current_section != 0){
+			//エラー中断終了。
+			DEEPDEBUG_ASSERT(BSYS_WAVE_DEBUG_ENABLE,0);
+			return false;
+		}
+
+		//継続。
+		return true;
 	}
 
 
@@ -242,6 +334,7 @@ namespace NBsys{namespace NWave
 			}break;
 		default:
 			{
+				this->virtual_filehandle_enable = true;
 				DEEPDEBUG_TAGLOG(BSYS_WAVE_DEBUG_ENABLE,L"wave_ogg_impl_stream","ok");
 			}break;
 		}
@@ -249,51 +342,15 @@ namespace NBsys{namespace NWave
 		//ov_pcm_total
 		this->countof_sample = static_cast<s32>(::ov_pcm_total(&this->virtual_filehandle,-1));
 
-		//bit
+		//量子化ビット数。
 		this->bit = 16;
 
 		//ov_info
 		vorbis_info* t_info = ::ov_info(&this->virtual_filehandle,-1);
 
-		this->wavetype = WaveType::None;
-		{
-			this->channel = t_info->channels;
-			this->rate = t_info->rate;
-
-			if(this->channel == 1){
-				//モノラル。
-				if(this->rate == 44100){
-					//44.1kHz。
-					if(this->bit == 8){
-						//8bit。
-						this->wavetype = WaveType::Mono_8_44100;
-					}else if(this->bit == 16){
-						//16bit。
-						this->wavetype = WaveType::Mono_16_44100;
-					}else{
-						DEEPDEBUG_ASSERT(BSYS_WAVE_DEBUG_ENABLE,0);
-					}
-				}else{
-					DEEPDEBUG_ASSERT(BSYS_WAVE_DEBUG_ENABLE,0);
-				}
-			}else if(this->channel == 2){
-				//ステレオ。
-				if(this->rate == 44100){
-					//44.1kHz。
-					if(this->bit == 8){
-						//8bit。
-						this->wavetype = WaveType::Stereo_8_44100;
-					}else if(this->bit == 16){
-						//16bit。
-						this->wavetype = WaveType::Stereo_16_44100;
-					}else{
-						DEEPDEBUG_ASSERT(BSYS_WAVE_DEBUG_ENABLE,0);
-					}
-				}else{
-					DEEPDEBUG_ASSERT(BSYS_WAVE_DEBUG_ENABLE,0);
-				}
-			}
-		}
+		//チャンネル。
+		this->channel = t_info->channels;
+		this->rate = t_info->rate;
 	}
 	
 
@@ -308,112 +365,11 @@ namespace NBsys{namespace NWave
 	}
 
 
-	/** GetWaveType
-	*/
-	WaveType::Id Wave_Ogg_Impl_Stream::GetWaveType()
-	{
-		return this->wavetype;
-	}
-
-
 	/** GetCountOfSample
 	*/
 	s32 Wave_Ogg_Impl_Stream::GetCountOfSample()
 	{
 		return this->countof_sample;
-	}
-
-
-	/** GetChannel
-	*/
-	s32 Wave_Ogg_Impl_Stream::GetChannel()
-	{
-		return this->channel;
-	}
-
-
-	/** GetBit
-	*/
-	s32 Wave_Ogg_Impl_Stream::GetBit()
-	{
-		return this->bit;
-	}
-
-	
-	/** GetRate
-	*/
-	s32 Wave_Ogg_Impl_Stream::GetRate()
-	{
-		return this->rate;
-	}
-
-
-	/** ストリーム。
-
-		a_seek < 0 : 自動シーク。
-
-	*/
-	bool Wave_Ogg_Impl_Stream::Stream(RingBufferBase<u8>& a_buffer,bool a_loop)
-	{
-		sharedptr<char> t_temp;
-
-		char* t_buffer = reinterpret_cast<char*>(a_buffer.GetItemFromFreeList(0));
-		s32 t_buffer_size = a_buffer.GetContinuousFreeSize();
-		if(t_buffer_size <= 1024 * 16){
-
-			if(a_buffer.GetFreeSize() < 1024 * 16){
-				//継続。空き容量不足。
-				return true;
-			}
-
-			t_buffer_size = 1024 * 16;
-			t_buffer = new char[1024 * 16];
-			t_temp.reset(t_buffer);
-		}
-
-		s32 t_endian = 0;
-		s32 t_word_size = this->bit / 8;
-		s32 t_sgned = 1;
-		int t_current_section = 0;
-		long t_ret_size = ::ov_read(&this->virtual_filehandle,t_buffer,t_buffer_size,t_endian,t_word_size,t_sgned,&t_current_section);
-		if(t_ret_size < 0){
-			//エラー中断終了。
-			DEEPDEBUG_ASSERT(BSYS_WAVE_DEBUG_ENABLE,0);
-			return false;
-		}else if(t_ret_size == 0){
-			if(a_loop == true){
-
-				if(::ov_pcm_seek(&this->virtual_filehandle,0) != 0){
-					//エラー中断。
-					DEEPDEBUG_ASSERT(BSYS_WAVE_DEBUG_ENABLE,0);
-					return false;
-				}
-
-				//継続。
-				return true;
-			}
-
-			//完了。
-			return false;
-		}else{
-			//s32 t_seek = ::ov_pcm_tell(&this->virtual_filehandle);
-
-			if(t_temp){
-				a_buffer.CopyToBuffer(reinterpret_cast<u8*>(t_temp.get()),t_ret_size);
-				t_temp.reset();
-			}else{
-				a_buffer.AddUse(t_ret_size);
-			}
-		}
-
-		if(t_current_section != 0){
-			//エラー中断終了。
-			DEEPDEBUG_ASSERT(BSYS_WAVE_DEBUG_ENABLE,0);
-			return false;
-		}
-
-		//継続。
-		return true;
 	}
 
 

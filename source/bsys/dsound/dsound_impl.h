@@ -155,7 +155,7 @@ namespace NBsys{namespace NDsound
 
 		/** [複数スレッドから]再生。
 		*/
-		s32 Play(s32 a_id,bool a_duplicate,bool a_loop,bool a_auto_delete);
+		s32 Play(s32 a_id,bool a_duplicate,bool a_is_loop,bool a_auto_delete);
 
 		/** [複数スレッドから]再生中チェック。
 		*/
@@ -173,15 +173,11 @@ namespace NBsys{namespace NDsound
 
 		/** Player_Play
 		*/
-		void Player_Play(s32 a_id,s32 a_duplicate_id,bool a_loop,bool a_auto_delete);
+		void Player_Play(s32 a_id,s32 a_duplicate_id);
 
-		/** Player_AutoDelete
+		/** Player_PlayNow
 		*/
-		bool Player_AutoDelete(s32 a_id);
-
-		/** Player_StreamPlay
-		*/
-		bool Player_StreamPlay(s32 a_id);
+		bool Player_PlayNow(s32 a_id);
 
 	};
 

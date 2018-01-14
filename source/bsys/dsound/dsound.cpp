@@ -146,10 +146,10 @@ namespace NBsys{namespace NDsound
 
 	/** 再生。
 	*/
-	s32 Play(s32 a_id,bool a_duplicate,bool a_loop,bool a_auto_delete)
+	s32 Play(s32 a_id,bool a_duplicate,bool a_is_loop,bool a_auto_delete)
 	{
 		if(s_thread){
-			return s_thread->get()->Play(a_id,a_duplicate,a_loop,a_auto_delete);
+			return s_thread->get()->Play(a_id,a_duplicate,a_is_loop,a_auto_delete);
 		}else{
 			DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
 			return -1;
