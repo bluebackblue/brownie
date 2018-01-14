@@ -19,8 +19,8 @@
 
 /** include
 */
-#include "./wave_decl.h"
-#include "./wave_stream.h"
+#include "./wave_wav.h"
+#include "./wave_ogg.h"
 
 
 /** NBsys::NWave
@@ -28,16 +28,28 @@
 #if(BSYS_WAVE_ENABLE)
 namespace NBsys{namespace NWave
 {
-	/** CreateWave_FromOgg
+	/** Wave_Stream
 	*/
-	sharedptr<Wave> CreateWave_Ogg(const sharedptr<u8>& a_ogg_data,s32 a_ogg_size,const STLWString& a_name);
+	class Wave_Stream
+	{
+	public:
+		
+		/** constructor
+		*/
+		Wave_Stream()
+		{
+		}
 
+		/** destructor
+		*/
+		virtual ~Wave_Stream()
+		{
+		}
 
-	/** CreateStream_Ogg
-	*/
-	#if(0)
-	sharedptr<Wave_Stream> CreateStream_Ogg(const sharedptr<u8>& a_ogg_data,s32 a_ogg_size);
-	#endif
+	public:
+
+		
+	};
 
 
 }}

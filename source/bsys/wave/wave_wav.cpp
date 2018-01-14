@@ -131,10 +131,13 @@ namespace NBsys{namespace NWave
 
 
 	/** CreateWave_Wav
+
+	//TODO:a_wav_sizeチェック。
+
 	*/
-	sharedptr<Wave> CreateWave_Wav(const sharedptr<u8>& a_data,s32 a_size,const STLWString& a_name)
+	sharedptr<Wave> CreateWave_Wav(const sharedptr<u8>& a_wav_data,s32 /*a_wav_size*/,const STLWString& a_name)
 	{
-		const HEADER_WAV* t_header = reinterpret_cast<const HEADER_WAV*>(a_data.get());
+		const HEADER_WAV* t_header = reinterpret_cast<const HEADER_WAV*>(a_wav_data.get());
 
 		if(NMemory::Compare(t_header->h_wave,"WAVE",4) != 0){
 			DEEPDEBUG_ASSERT(BSYS_WAVE_DEBUG_ENABLE,0);
