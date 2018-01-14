@@ -442,6 +442,12 @@ namespace NBsys{namespace NDsound
 		if(t_it->second->is_stream == true){
 			//ストリーミング再生。
 			t_it->second->playstate = Dsound_Impl_SoundBuffer::PlayState::Play;
+
+			t_it->second->is_loop = a_is_loop;
+
+			t_it->second->is_autodelete = a_auto_delete;
+
+			//ストリーミング再生では「a_duplicate」は無効。
 		}else{
 			//複製ＩＤ。
 			if(a_duplicate){
@@ -458,7 +464,7 @@ namespace NBsys{namespace NDsound
 					t_soundbuffer->is_3d = t_it->second->is_3d;
 					t_soundbuffer->is_loop = a_is_loop;
 					t_soundbuffer->is_duplicate = true;
-					t_soundbuffer->is_autodelete = a_auto_delete;	//自動削除は複製ＩＤのみ。
+					t_soundbuffer->is_autodelete = a_auto_delete;
 					t_soundbuffer->is_stream = false;
 					t_soundbuffer->have_playnow = false;
 					//t_soundbuffer->soundbuffer_3d;
@@ -862,14 +868,14 @@ namespace NBsys{namespace NDsound
 							UNUSED(t_ret_stop);
 						}
 
+						//完了。
+						t_it->second->playstate = Dsound_Impl_SoundBuffer::PlayState::Stop;
+						t_it->second->have_playnow = false;
+
 						if(t_it->second->is_autodelete){
 							//削除。
 							this->Player_DeleteSoundBuffer(a_id);
 						}
-
-						//完了。
-						t_it->second->playstate = Dsound_Impl_SoundBuffer::PlayState::Stop;
-						t_it->second->have_playnow = false;
 						return true;
 					}
 
@@ -896,14 +902,14 @@ namespace NBsys{namespace NDsound
 						UNUSED(t_ret_stop);
 					}
 
+					//完了。
+					t_it->second->playstate = Dsound_Impl_SoundBuffer::PlayState::Stop;
+					t_it->second->have_playnow = false;
+
 					if(t_it->second->is_autodelete){
 						//削除。
 						this->Player_DeleteSoundBuffer(a_id);
 					}
-
-					//完了。
-					t_it->second->playstate = Dsound_Impl_SoundBuffer::PlayState::Stop;
-					t_it->second->have_playnow = false;
 					return true;
 				}
 			}

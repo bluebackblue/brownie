@@ -137,7 +137,13 @@ namespace NTest
 		void Play()
 		{
 			if(this->soundbuffer_id >= 0){
-				this->soundbuffer_lastplay_id = NBsys::NDsound::Play(this->soundbuffer_id,true,false,true);
+				this->soundbuffer_lastplay_id = this->soundbuffer_id;
+
+				//複製再生。
+				//this->soundbuffer_lastplay_id = NBsys::NDsound::Play(this->soundbuffer_id,true,false,true);
+
+				//ストリーミング再生。
+				NBsys::NDsound::Play(this->soundbuffer_id,false,false,true);
 			}
 		}
 
