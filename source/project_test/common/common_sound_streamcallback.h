@@ -98,6 +98,14 @@ namespace NTest{namespace NCommon
 			return t_wavetype;
 		}
 
+		/** 再生。
+		*/
+		virtual void Callback_Play()
+		{
+			this->stream->SeekStart();
+			this->playend = false;
+		}
+
 		/** データ取得。
 		*/
 		virtual void Callback_GetData(RingBufferBase<u8>& a_buffer,s32 a_need_size,bool a_is_loop)

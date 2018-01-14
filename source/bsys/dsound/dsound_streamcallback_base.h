@@ -48,6 +48,10 @@ namespace NBsys{namespace NDsound
 		*/
 		virtual NBsys::NWave::WaveType::Id Callback_Initialize() = 0;
 
+		/** 再生。
+		*/
+		virtual void Callback_Play() = 0;
+
 		/** データ取得。
 		*/
 		virtual void Callback_GetData(RingBufferBase<u8>& a_buffer,s32 a_need_size,bool a_is_loop) = 0;

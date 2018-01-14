@@ -44,10 +44,17 @@ namespace NBsys{namespace NDsound
 	sharedptr<ThreadTemplate<Dsound_Thread>> s_thread;
 
 
+	/** s_lockobject
+	*/
+	LockObject s_lockobject;
+
+
 	/** システムの開始。
 	*/
 	void StartSystem(const sharedptr<NBsys::NWindow::Window>& a_window)
 	{
+		AutoLock t_autolock(s_lockobject);
+	
 		if(s_thread == nullptr){
 			Dsound_Thread::ThreadArgument t_threadargument;
 			{
@@ -66,6 +73,8 @@ namespace NBsys{namespace NDsound
 	*/
 	void EndSystemRequest()
 	{
+		AutoLock t_autolock(s_lockobject);
+
 		if(s_thread){
 			s_thread->get()->EndRequest();
 		}else{
@@ -78,6 +87,8 @@ namespace NBsys{namespace NDsound
 	*/
 	void EndSystem()
 	{
+		AutoLock t_autolock(s_lockobject);
+
 		s_thread.reset();
 	}
 
@@ -86,6 +97,8 @@ namespace NBsys{namespace NDsound
 	*/
 	void Update()
 	{
+		AutoLock t_autolock(s_lockobject);
+
 		if(s_thread){
 			s_thread->get()->Update();
 		}else{
@@ -98,6 +111,8 @@ namespace NBsys{namespace NDsound
 	*/
 	s32 CreateSoundBuffer(const sharedptr<NBsys::NWave::Wave>& a_wave,bool a_is_3d)
 	{
+		AutoLock t_autolock(s_lockobject);
+
 		if(s_thread){
 			return s_thread->get()->CreateSoundBuffer(a_wave,a_is_3d);
 		}else{
@@ -111,6 +126,8 @@ namespace NBsys{namespace NDsound
 	*/
 	void DeleteSoundBuffer(s32 a_id)
 	{
+		AutoLock t_autolock(s_lockobject);
+
 		if(s_thread){
 			s_thread->get()->DeleteSoundBuffer(a_id);
 		}else{
@@ -123,6 +140,8 @@ namespace NBsys{namespace NDsound
 	*/
 	s32 CreateStreamSoundBuffer(const sharedptr<NBsys::NDsound::Dsound_StreamCallback_Base>& a_stream_callback)
 	{
+		AutoLock t_autolock(s_lockobject);
+
 		if(s_thread){
 			return s_thread->get()->CreateStreamSoundBuffer(a_stream_callback);
 		}else{
@@ -136,6 +155,8 @@ namespace NBsys{namespace NDsound
 	*/
 	void DeleteStreamSoundBuffer(s32 a_id)
 	{
+		AutoLock t_autolock(s_lockobject);
+
 		if(s_thread){
 			s_thread->get()->DeleteStreamSoundBuffer(a_id);
 		}else{
@@ -148,6 +169,8 @@ namespace NBsys{namespace NDsound
 	*/
 	s32 Play(s32 a_id,bool a_duplicate,bool a_is_loop,bool a_auto_delete)
 	{
+		AutoLock t_autolock(s_lockobject);
+
 		if(s_thread){
 			return s_thread->get()->Play(a_id,a_duplicate,a_is_loop,a_auto_delete);
 		}else{
@@ -161,6 +184,8 @@ namespace NBsys{namespace NDsound
 	*/
 	bool IsPlay(s32 a_id)
 	{
+		AutoLock t_autolock(s_lockobject);
+
 		if(s_thread){
 			return s_thread->get()->IsPlay(a_id);
 		}else{

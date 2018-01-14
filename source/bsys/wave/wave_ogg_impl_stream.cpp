@@ -215,6 +215,20 @@ namespace NBsys{namespace NWave
 	}
 
 
+	/** シーク。
+	*/
+	void Wave_Ogg_Impl_Stream::SeekStart()
+	{
+		if(this->virtual_filehandle_enable){
+			if(::ov_pcm_seek(&this->virtual_filehandle,0) != 0){
+				DEEPDEBUG_ASSERT(BSYS_WAVE_DEBUG_ENABLE,0);
+			}
+		}else{
+			DEEPDEBUG_ASSERT(BSYS_WAVE_DEBUG_ENABLE,0);
+		}
+	}
+
+
 	/** ストリーム。
 	*/
 	bool Wave_Ogg_Impl_Stream::Stream(RingBufferBase<u8>& a_buffer,bool a_is_loop)

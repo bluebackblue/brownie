@@ -120,6 +120,10 @@ namespace NBsys{namespace NDsound
 		*/
 		bool is_stream;
 
+		/** have_playnow
+		*/
+		bool have_playnow;
+
 		/** soundbuffer_3d
 		*/
 		sharedptr<IDirectSound3DBuffer> soundbuffer_3d;

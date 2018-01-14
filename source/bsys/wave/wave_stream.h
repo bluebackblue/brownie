@@ -54,6 +54,10 @@ namespace NBsys{namespace NWave
 		*/
 		virtual s32 GetRate() = 0;
 
+		/** シーク。
+		*/
+		virtual void SeekStart() = 0;
+
 		/** ストリーム。
 		*/
 		virtual bool Stream(RingBufferBase<u8>& a_buffer,bool a_is_loop) = 0;

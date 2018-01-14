@@ -41,11 +41,101 @@
 #pragma warning(disable:4514 4710)
 namespace NTest{namespace NCommon
 {
+	/** App_Base_Thread
+	*/
+	class App_Base_Thread
+	{
+	private:
+
+		/** endrequest
+		*/
+		AtomicValue<bool> endrequest;
+
+	public:
+
+		/** constructor
+		*/
+		App_Base_Thread()
+			:
+			endrequest(false)
+		{
+		}
+
+		/** destructor
+		*/
+		~App_Base_Thread()
+		{
+		}
+
+	public:
+
+		/** 引数。
+		*/
+		struct ThreadArgument
+		{
+			/** threadname
+			*/
+			STLString threadname;
+
+			/** stacksize
+			*/
+			size_t stacksize;
+
+			/** priority
+			*/
+			s32 priority;
+
+			/** constructor
+			*/
+			ThreadArgument()
+				:
+				threadname("App_Base_Thread"),
+				stacksize(64 * 1024),
+				priority(0)
+			{
+			}
+
+			/** destructor
+			*/
+			nonvirtual ~ThreadArgument()
+			{
+			}
+		};
+
+		/** スレッドメイン。
+		*/
+		void ThreadMain(ThreadArgument& a_threadargument)
+		{
+			while(1){
+				ThreadSleep(1000 / 60);
+
+				NBsys::NDsound::Update();
+
+				//終了チェック。
+				if(this->endrequest.Load()){
+					break;
+				}
+			}
+		}
+
+		/** [メインスレッド]終了リクエスト。
+		*/
+		void EndRequest()
+		{
+			this->endrequest.Store(true);
+		}
+	};
+
+
 	/** App_Base
 	*/
 	class App_Base
 	{
 	public:
+
+		/** s_instance
+		*/
+		sharedptr<ThreadTemplate<App_Base_Thread>> thread;
 
 		/** window
 		*/
@@ -410,6 +500,14 @@ namespace NTest{namespace NCommon
 			this->autotest->d3d11 = this->d3d11;
 			#endif
 
+			{
+				App_Base_Thread::ThreadArgument t_threadargument;
+				{
+				}
+				this->thread.reset(new ThreadTemplate<App_Base_Thread>());
+				this->thread->Start(t_threadargument);
+			}
+
 			this->initialize_step = 0;
 		}
 
@@ -417,6 +515,12 @@ namespace NTest{namespace NCommon
 		*/
 		void Finalize()
 		{
+			{
+				this->thread->get()->EndRequest();
+				this->thread->EndWait();
+				this->thread.reset();
+			}
+
 			this->Finalize_WindowMenu();
 
 			this->Finalize_Material_DrawFont();

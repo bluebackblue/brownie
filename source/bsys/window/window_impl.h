@@ -51,7 +51,7 @@ namespace NBsys{namespace NWindow
 
 		/** isopen
 		*/
-		bool isopen;
+		AtomicValue<bool> isopen;
 
 		/** default_size
 		*/

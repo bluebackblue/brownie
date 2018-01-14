@@ -160,7 +160,7 @@ namespace NBsys{namespace NWindow
 			this->isview = true;
 			this->isactive = false;
 			this->handle = t_handle;
-			this->isopen = true;
+			this->isopen.Store(true);
 		}else{
 			ASSERT(0);
 		}
@@ -209,7 +209,7 @@ namespace NBsys{namespace NWindow
 	*/
 	bool Window_Impl::IsEnd() const
 	{
-		if(this->isopen){
+		if(this->isopen.Load()){
 			return false;
 		}
 		return true;
@@ -261,7 +261,7 @@ namespace NBsys{namespace NWindow
 				}
 
 				this->handle = WIN_NULL;
-				this->isopen = false;
+				this->isopen.Store(false);
 
 				return ::DefWindowProc(a_hwnd,a_msg,a_wparam,a_lparam);
 			}
