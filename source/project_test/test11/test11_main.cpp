@@ -187,6 +187,8 @@ namespace NTest
 			if(this->soundbuffer_id_se9 < 0){
 				this->soundbuffer_id_se9 = NBsys::NDsound::CreateSoundBuffer(this->wave_se9,false);
 			}
+
+			ThreadSleep(16);
 		}
 
 		/** UnLoad

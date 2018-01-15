@@ -41,6 +41,11 @@
 #pragma warning(disable:4514 4710)
 namespace NTest{namespace NCommon
 {
+	/** App_Base
+	*/
+	class App_Base;
+
+
 	/** App_Base_Thread
 	*/
 	class App_Base_Thread
@@ -51,13 +56,18 @@ namespace NTest{namespace NCommon
 		*/
 		AtomicValue<bool> endrequest;
 
+		/** loop_time
+		*/
+		AtomicValue<f32> loop_time;
+
 	public:
 
 		/** constructor
 		*/
 		App_Base_Thread()
 			:
-			endrequest(false)
+			endrequest(false),
+			loop_time(0.0f)
 		{
 		}
 
@@ -85,13 +95,18 @@ namespace NTest{namespace NCommon
 			*/
 			s32 priority;
 
+			/** app
+			*/
+			App_Base* app;
+
 			/** constructor
 			*/
 			ThreadArgument()
 				:
 				threadname("App_Base_Thread"),
 				stacksize(64 * 1024),
-				priority(0)
+				priority(0),
+				app(nullptr)
 			{
 			}
 
@@ -104,26 +119,23 @@ namespace NTest{namespace NCommon
 
 		/** スレッドメイン。
 		*/
-		void ThreadMain(ThreadArgument& a_threadargument)
-		{
-			while(1){
-				ThreadSleep(1000 / 60);
+		void ThreadMain(ThreadArgument& a_threadargument);
 
-				NBsys::NDsound::Update();
-
-				//終了チェック。
-				if(this->endrequest.Load()){
-					break;
-				}
-			}
-		}
-
-		/** [メインスレッド]終了リクエスト。
+		/** 終了リクエスト。
 		*/
 		void EndRequest()
 		{
 			this->endrequest.Store(true);
 		}
+
+		/** ループタイム。
+		*/
+		f32 GetLoopTime()
+		{
+			return this->loop_time.Load();
+
+		}
+
 	};
 
 
@@ -145,6 +157,10 @@ namespace NTest{namespace NCommon
 		*/
 		sharedptr<NBsys::ND3d11::D3d11> d3d11;
 
+		/** pcounter
+		*/
+		u64 pcounter;
+
 		/** pad_device
 		*/
 		#if(BSYS_PAD_ENABLE)
@@ -155,6 +171,7 @@ namespace NTest{namespace NCommon
 		*/
 		#if(DEF_TEST_AUTO)
 		sharedptr<AutoTest> autotest;
+		f32 t_autotime;
 		#endif
 
 		/** size
@@ -228,8 +245,10 @@ namespace NTest{namespace NCommon
 			:
 			window(),
 			d3d11(),
+			pcounter(0),
 			#if(DEF_TEST_AUTO)
 			autotest(),
+			autotime(0.0f),
 			#endif
 			size(800.0,600.0f),
 			drawline(),
@@ -500,14 +519,6 @@ namespace NTest{namespace NCommon
 			this->autotest->d3d11 = this->d3d11;
 			#endif
 
-			{
-				App_Base_Thread::ThreadArgument t_threadargument;
-				{
-				}
-				this->thread.reset(new ThreadTemplate<App_Base_Thread>());
-				this->thread->Start(t_threadargument);
-			}
-
 			this->initialize_step = 0;
 		}
 
@@ -515,12 +526,6 @@ namespace NTest{namespace NCommon
 		*/
 		void Finalize()
 		{
-			{
-				this->thread->get()->EndRequest();
-				this->thread->EndWait();
-				this->thread.reset();
-			}
-
 			this->Finalize_WindowMenu();
 
 			this->Finalize_Material_DrawFont();
@@ -559,16 +564,235 @@ namespace NTest{namespace NCommon
 		{
 		}
 
+		/** ループ。
+		*/
+		void Loop()
+		{
+			//パフォーマンスカウンター。
+			float t_delta = 0.0f;
+			{
+				u64 t_pcounter_now = PerformanceCounter::GetPerformanceCounter();
+				u64 t_pcounter_sec = PerformanceCounter::GetPerformanceSecCounter();
+				t_delta = static_cast<float>(t_pcounter_now - this->pcounter) / t_pcounter_sec;
+				if(t_delta <= 0.0f){
+					return;
+				}
+				this->pcounter = t_pcounter_now;
+			}
+
+			bool t_initialize_update = true;
+
+			if(this->initialize_step == 0){
+				bool t_next = true;
+
+				if(this->drawline){
+					this->drawline->Initialize_Update();
+					if(this->drawline->IsInitialized() == false){
+						t_next = false;
+					}
+				}
+
+				#if(BSYS_FONT_ENABLE)
+				if(this->material_drawfont){
+					this->material_drawfont->Initialize_Update();
+					if(this->material_drawfont->IsInitialized() == false){
+						t_next = false;
+					}
+				}
+				#endif
+
+				if(this->material_drawrect){
+					this->material_drawrect->Initialize_Update();
+					if(this->material_drawrect->IsInitialized() == false){
+						t_next = false;
+					}
+				}
+
+				if(this->Initialize_Update() == false){
+					t_next = false;
+				}
+
+				if(t_next == true){
+
+					this->render2d->SetMaterial(NCommon::Render2D_ItemType::Rect,this->material_drawrect);
+
+					#if(BSYS_FONT_ENABLE)
+					this->render2d->SetMaterial(NCommon::Render2D_ItemType::Font,this->material_drawfont);
+					#endif
+
+					this->initialize_step++;
+				}
+			}else if(this->initialize_step == 1){
+
+				//ラスタライザ。ステート。
+				this->rasterizerstate_cull_back_id = this->d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::Back);
+				this->rasterizerstate_cull_none_id = this->d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::None);
+
+				//ブレンド。ステート。
+				this->blendstate_on_id = this->d3d11->CreateBlendState(true);
+				this->blendstate_off_id = this->d3d11->CreateBlendState(false);
+
+				//デプスステンシル。ステート。
+				this->depthstencilstate_check_on_write_on_id = this->d3d11->CreateDepthStencilState(true,true);
+				this->depthstencilstate_check_off_write_off_id = this->d3d11->CreateDepthStencilState(false,false);
+
+				//サンプラ。ステート。
+				{
+					NBsys::ND3d11::D3d11_Sampler t_sampler;
+					{
+						t_sampler.textureaddrestype_u = NBsys::ND3d11::D3d11_TextureAddressType::Clamp;
+						t_sampler.textureaddrestype_v = NBsys::ND3d11::D3d11_TextureAddressType::Clamp;
+						t_sampler.textureaddrestype_w = NBsys::ND3d11::D3d11_TextureAddressType::Clamp;
+						t_sampler.filtertype = NBsys::ND3d11::D3d11_FilterType::MIN_MAG_MIP_POINT;
+					}
+					this->samplerstate_point_id = this->d3d11->CreateSamplerState(t_sampler);
+				}
+
+				this->initialize_step++;
+			}else{
+				//初期化完了。
+				t_initialize_update = false;
+			}
+
+			//更新。
+			if(t_initialize_update){
+			}else{
+
+				//パッド。
+				#if(BSYS_PAD_ENABLE)
+				NBsys::NPad::Update(true);
+				#endif
+
+				//ウィンドウメニュー。
+				#if(BSYS_WINDOWMENU_ENABLE)
+				NBsys::NWindowMenu::GetSystemInstance()->Update();
+				#endif
+
+				{
+					//FPS。
+					if(this->render2d){
+
+						//マウスの位置取得。
+						const NBsys::NPad::TouchValue& t_mouse_l = NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->GetTouchValue(NBsys::NPad::Pad_Virtual::TouchType::MOUSEL);
+
+						//許容値の何倍か。
+						f32 t_loop_time = this->thread->get()->GetLoopTime() / (1.0f/60.0f);
+
+						//文字列作成。
+						STLWString t_string;
+						{
+							wchar t_buffer[64];
+							s32 t_fps = static_cast<s32>(1.0f / t_delta);
+							s32 t_mouse_x = static_cast<s32>(t_mouse_l.pos.xx);
+							s32 t_mouse_y =static_cast<s32>(t_mouse_l.pos.yy);
+
+							Size2DType<f32> t_window_size = this->window->GetClientSize();
+							s32 t_window_w = static_cast<s32>(t_window_size.ww);
+							s32 t_window_h = static_cast<s32>(t_window_size.hh);
+
+							//許容値の何％か。
+							s32 t_loop = static_cast<s32>(t_loop_time * 100);
+
+							t_string = VASTRING(t_buffer,sizeof(t_buffer),L"%d : %d : (%d %d) : (%d %d)",t_fps,t_loop,t_mouse_x,t_mouse_y,t_window_w,t_window_h);
+						}
+
+						//描画登録。
+						{
+							sharedptr<NCommon::Render2D_Item_Font> t_font(new NCommon::Render2D_Item_Font(99999));
+							t_font->rect.Set(0.0f);
+							t_font->clip = false;
+							t_font->size = 16.0f;
+							t_font->fonttexture_type = NBsys::ND3d11::D3d11_FontTextureType::SFont;
+
+							f32 t_red = t_loop_time;
+							if(t_red >= 0.5f){
+								t_font->color = NBsys::NColor::Color_F(1.0f,0.0f,0.0f,1.0f);
+							}else{
+								t_font->color = NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f);
+							}
+							
+							t_font->alignment = NBsys::NFont::Font_Alignment::Left_Top;
+							t_font->string = t_string;
+
+							this->render2d->Draw(t_font);
+						}
+					}
+
+					this->Update(t_delta);
+				}
+
+				//キャプチャー開始。
+				#if(DEF_TEST_AUTO)
+				this->autotime += t_delta;
+				if(this->autotime >= 3.0f){
+					if(this->autotest->action_start == false){
+						this->autotest->action_start = true;
+						this->autotest->capture_step = 0;
+					}
+				}
+
+				if(this->autotest->action_end == true){
+					//終了。
+					break;
+				}
+				#endif
+			}
+
+			//サウンド命令呼び出し開始。
+			#if(BSYS_DSOUND_ENABLE)
+			{
+				NBsys::NDsound::Update();
+			}
+			#endif
+
+			//描画命令呼び出し。
+			{
+				//リクエスト処理。
+				this->d3d11->Render_Main();
+
+				//ビューポート。
+				this->d3d11->Render_ViewPort(Rect2DType_R<f32>(0.0f,0.0f,this->size.ww,this->size.hh));
+
+				//深度ステンシルクリア。
+				this->d3d11->Render_ClearDepthStencilView();
+
+				//クリア。
+				this->d3d11->Render_ClearRenderTargetView(NBsys::NColor::Color_F(0.3f,0.3f,0.8f,1.0f));
+
+				//描画命令呼び出し。
+				if(t_initialize_update){
+				}else{
+					this->Render();
+				}
+			}
+
+			#if(DEF_TEST_AUTO)
+			this->autotest->Update();
+			#endif
+		}
+
+		/** Loop_Sync
+		*/
+		void Loop_Sync()
+		{
+			this->d3d11->Render_Present();
+		}
+
 		/** メイン。
 		*/
 		void Main()
 		{
 			//パフォーマンスカウンター。
-			u64 t_pcounter = PerformanceCounter::GetPerformanceCounter();
+			this->pcounter = PerformanceCounter::GetPerformanceCounter();
 
-			#if(DEF_TEST_AUTO)
-			f32 t_autotime = 0.0f;
-			#endif
+			{
+				App_Base_Thread::ThreadArgument t_threadargument;
+				{
+					t_threadargument.app = this;
+				}
+				this->thread.reset(new ThreadTemplate<App_Base_Thread>());
+				this->thread->Start(t_threadargument);
+			}
 
 			while(true){
 
@@ -577,198 +801,16 @@ namespace NTest{namespace NCommon
 					break;
 				}
 
-				//パフォーマンスカウンター。
-				float t_delta = 0.0f;
-				{
-					u64 t_pcounter_now = PerformanceCounter::GetPerformanceCounter();
-					u64 t_pcounter_sec = PerformanceCounter::GetPerformanceSecCounter();
-					t_delta = static_cast<float>(t_pcounter_now - t_pcounter) / t_pcounter_sec;
-					if(t_delta <= 0.0f){
-						continue;
-					}
-					t_pcounter = t_pcounter_now;
-				}
-
-				bool t_initialize_update = true;
-
-				if(this->initialize_step == 0){
-					bool t_next = true;
-
-					if(this->drawline){
-						this->drawline->Initialize_Update();
-						if(this->drawline->IsInitialized() == false){
-							t_next = false;
-						}
-					}
-
-					#if(BSYS_FONT_ENABLE)
-					if(this->material_drawfont){
-						this->material_drawfont->Initialize_Update();
-						if(this->material_drawfont->IsInitialized() == false){
-							t_next = false;
-						}
-					}
-					#endif
-
-					if(this->material_drawrect){
-						this->material_drawrect->Initialize_Update();
-						if(this->material_drawrect->IsInitialized() == false){
-							t_next = false;
-						}
-					}
-
-					if(this->Initialize_Update() == false){
-						t_next = false;
-					}
-
-					if(t_next == true){
-
-						this->render2d->SetMaterial(NCommon::Render2D_ItemType::Rect,this->material_drawrect);
-
-						#if(BSYS_FONT_ENABLE)
-						this->render2d->SetMaterial(NCommon::Render2D_ItemType::Font,this->material_drawfont);
-						#endif
-
-						this->initialize_step++;
-					}
-				}else if(this->initialize_step == 1){
-
-					//ラスタライザ。ステート。
-					this->rasterizerstate_cull_back_id = this->d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::Back);
-					this->rasterizerstate_cull_none_id = this->d3d11->CreateRasterizerState(NBsys::ND3d11::D3d11_CullType::None);
-
-					//ブレンド。ステート。
-					this->blendstate_on_id = this->d3d11->CreateBlendState(true);
-					this->blendstate_off_id = this->d3d11->CreateBlendState(false);
-
-					//デプスステンシル。ステート。
-					this->depthstencilstate_check_on_write_on_id = this->d3d11->CreateDepthStencilState(true,true);
-					this->depthstencilstate_check_off_write_off_id = this->d3d11->CreateDepthStencilState(false,false);
-
-					//サンプラ。ステート。
-					{
-						NBsys::ND3d11::D3d11_Sampler t_sampler;
-						{
-							t_sampler.textureaddrestype_u = NBsys::ND3d11::D3d11_TextureAddressType::Clamp;
-							t_sampler.textureaddrestype_v = NBsys::ND3d11::D3d11_TextureAddressType::Clamp;
-							t_sampler.textureaddrestype_w = NBsys::ND3d11::D3d11_TextureAddressType::Clamp;
-							t_sampler.filtertype = NBsys::ND3d11::D3d11_FilterType::MIN_MAG_MIP_POINT;
-						}
-						this->samplerstate_point_id = this->d3d11->CreateSamplerState(t_sampler);
-					}
-
-					this->initialize_step++;
-				}else{
-					//初期化完了。
-					t_initialize_update = false;
-				}
-
-				//更新。
-				if(t_initialize_update){
-				}else{
-
-					//パッド。
-					#if(BSYS_PAD_ENABLE)
-					NBsys::NPad::Update(true);
-					#endif
-
-					//ウィンドウメニュー。
-					#if(BSYS_WINDOWMENU_ENABLE)
-					NBsys::NWindowMenu::GetSystemInstance()->Update();
-					#endif
-
-					{
-						//FPS。
-						if(this->render2d){
-
-							//マウスの位置取得。
-							const NBsys::NPad::TouchValue& t_mouse_l = NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->GetTouchValue(NBsys::NPad::Pad_Virtual::TouchType::MOUSEL);
-
-							//文字列作成。
-							STLWString t_string;
-							{
-								wchar t_buffer[64];
-								s32 t_fps = static_cast<s32>(1.0f / t_delta);
-								s32 t_mouse_x = static_cast<s32>(t_mouse_l.pos.xx);
-								s32 t_mouse_y =static_cast<s32>(t_mouse_l.pos.yy);
-
-								Size2DType<f32> t_window_size = this->window->GetClientSize();
-								s32 t_window_w = static_cast<s32>(t_window_size.ww);
-								s32 t_window_h = static_cast<s32>(t_window_size.hh);
-
-								t_string = VASTRING(t_buffer,sizeof(t_buffer),L"%d : (%d %d) : (%d %d)",t_fps,t_mouse_x,t_mouse_y,t_window_w,t_window_h);
-							}
-
-							//描画登録。
-							{
-								sharedptr<NCommon::Render2D_Item_Font> t_font(new NCommon::Render2D_Item_Font(99999));
-								t_font->rect.Set(0.0f);
-								t_font->clip = false;
-								t_font->size = 16.0f;
-								t_font->fonttexture_type = NBsys::ND3d11::D3d11_FontTextureType::SFont;
-								t_font->color = NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f);
-								t_font->alignment = NBsys::NFont::Font_Alignment::Left_Top;
-								t_font->string = t_string;
-
-								this->render2d->Draw(t_font);
-							}
-						}
-
-						this->Update(t_delta);
-					}
-
-					//キャプチャー開始。
-					#if(DEF_TEST_AUTO)
-					t_autotime += t_delta;
-					if(t_autotime >= 3.0f){
-						if(this->autotest->action_start == false){
-							this->autotest->action_start = true;
-							this->autotest->capture_step = 0;
-						}
-					}
-
-					if(this->autotest->action_end == true){
-						//終了。
-						break;
-					}
-					#endif
-				}
-
-				//サウンド命令呼び出し開始。
-				#if(BSYS_DSOUND_ENABLE)
-				{
-					NBsys::NDsound::Update();
-				}
-				#endif
-
-				//描画命令呼び出し。
-				{
-					//リクエスト処理。
-					this->d3d11->Render_Main();
-
-					//ビューポート。
-					this->d3d11->Render_ViewPort(Rect2DType_R<f32>(0.0f,0.0f,this->size.ww,this->size.hh));
-
-					//深度ステンシルクリア。
-					this->d3d11->Render_ClearDepthStencilView();
-
-					//クリア。
-					this->d3d11->Render_ClearRenderTargetView(NBsys::NColor::Color_F(0.3f,0.3f,0.8f,1.0f));
-
-					//描画命令呼び出し。
-					if(t_initialize_update){
-					}else{
-						this->Render();
-					}
-				}
-
-				#if(DEF_TEST_AUTO)
-				this->autotest->Update();
-				#endif
-
-				this->d3d11->Render_Present();
+				ThreadSleep(1000/60);
 
 			}
+
+			{
+				this->thread->get()->EndRequest();
+				this->thread->EndWait();
+				this->thread.reset();
+			}
+
 		}
 
 		/** キャプチャー。
@@ -792,6 +834,36 @@ namespace NTest{namespace NCommon
 
 		}
 	};
+
+
+	/** メインスレッド。
+	*/
+	inline void App_Base_Thread::ThreadMain(ThreadArgument& a_threadargument)
+	{
+		while(1){
+			ThreadSleep(0);
+
+			{
+				s64 t_counter = PerformanceCounter::GetPerformanceCounter();
+				{
+					a_threadargument.app->Loop();
+				}
+				f32 t_counter_len = static_cast<f32>(PerformanceCounter::GetPerformanceCounter() - t_counter);
+				t_counter_len /= PerformanceCounter::GetPerformanceSecCounter();
+				this->loop_time.Store(t_counter_len);
+			}
+
+			{
+				a_threadargument.app->Loop_Sync();
+			}
+
+			//終了チェック。
+			if(this->endrequest.Load()){
+				break;
+			}
+		}
+	}
+
 
 }}
 #pragma warning(pop)
