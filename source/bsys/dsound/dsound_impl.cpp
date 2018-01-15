@@ -64,65 +64,6 @@
 #pragma warning(disable:4710 4820)
 namespace NBsys{namespace NDsound
 {
-	/** NImpl
-	*/
-	namespace NImpl
-	{
-		/** CreatePcmWaveFormat
-		*/
-		static PCMWAVEFORMAT CreatePcmWaveFormat(NBsys::NWave::WaveType::Id a_wavetype)
-		{
-			PCMWAVEFORMAT t_format = {0};
-			{
-				switch(a_wavetype){
-				case NBsys::NWave::WaveType::Mono_8_44100:
-					{
-						t_format.wf.wFormatTag = WAVE_FORMAT_PCM;
-						t_format.wf.nChannels = 1;
-						t_format.wf.nSamplesPerSec = 44100;
-						t_format.wf.nAvgBytesPerSec = 1 * 1 * 44100;
-						t_format.wf.nBlockAlign = 1 * 1;
-						t_format.wBitsPerSample = 8;
-					}break;
-				case NBsys::NWave::WaveType::Mono_16_44100:
-					{
-						t_format.wf.wFormatTag = WAVE_FORMAT_PCM;
-						t_format.wf.nChannels = 1;
-						t_format.wf.nSamplesPerSec = 44100;
-						t_format.wf.nAvgBytesPerSec = 1 * 2 * 44100;
-						t_format.wf.nBlockAlign = 1 * 2;
-						t_format.wBitsPerSample = 16;
-					}break;
-				case NBsys::NWave::WaveType::Stereo_8_44100:
-					{
-						t_format.wf.wFormatTag = WAVE_FORMAT_PCM;
-						t_format.wf.nChannels = 2;
-						t_format.wf.nSamplesPerSec = 44100;
-						t_format.wf.nAvgBytesPerSec = 2 * 1 * 44100;
-						t_format.wf.nBlockAlign = 2 * 1;
-						t_format.wBitsPerSample = 8;
-					}break;
-				case NBsys::NWave::WaveType::Stereo_16_44100:
-					{
-						t_format.wf.wFormatTag = WAVE_FORMAT_PCM;
-						t_format.wf.nChannels = 2;
-						t_format.wf.nSamplesPerSec = 44100;
-						t_format.wf.nAvgBytesPerSec = 2 * 2 * 44100;
-						t_format.wf.nBlockAlign = 2 * 2;
-						t_format.wBitsPerSample = 16;
-					}break;
-				default:
-					{
-						DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
-					}break;
-				}
-			}
-
-			return t_format;
-		}
-	}
-
-
 	/** constructor
 	*/
 	Dsound_Impl::Dsound_Impl()
@@ -133,6 +74,7 @@ namespace NBsys{namespace NDsound
 		id_maker(),
 		actionbatching_lockobject(),
 		actionbatching(),
+		soundbuffer_list_lockobject(),
 		soundbuffer_list()
 	{
 	}
@@ -241,7 +183,10 @@ namespace NBsys{namespace NDsound
 	*/
 	void Dsound_Impl::Delete()
 	{
-		this->soundbuffer_list.clear();
+		{
+			AutoLock t_autolock(this->soundbuffer_list_lockobject);
+			this->soundbuffer_list.clear();
+		}
 
 		this->soundlistener.reset();
 		this->soundbuffer_primary.reset();
@@ -327,25 +272,14 @@ namespace NBsys{namespace NDsound
 		//ＩＤ。
 		s32 t_soundbuffer_id = this->id_maker.MakeID();
 
-		//■親サウンドバッファ。
 		sharedptr<Dsound_Impl_SoundBuffer> t_soundbuffer = new Dsound_Impl_SoundBuffer();
-		{
-			t_soundbuffer->playstate = Dsound_Impl_SoundBuffer::PlayState::Stop;
-			//t_soundbuffer->soundbuffer;
-			t_soundbuffer->soundbuffer_size = -1;
-			t_soundbuffer->wave = a_wave;
-			t_soundbuffer->is_3d = a_is_3d;
-			t_soundbuffer->is_loop = false;
-			t_soundbuffer->is_duplicate = false;
-			t_soundbuffer->is_autodelete = false;
-			//t_soundbuffer->soundbuffer_3d;
-			//t_soundbuffer->soundnotify_event;
-			//t_soundbuffer->stream_callback;
-			//t_soundbuffer->stream_buffer;
-		}
+		t_soundbuffer->Create_FromWave(a_wave,a_is_3d);
 
 		//管理リスト。
-		this->soundbuffer_list.insert(std::make_pair(t_soundbuffer_id,t_soundbuffer));
+		{
+			AutoLock t_autolock(this->soundbuffer_list_lockobject);
+			this->soundbuffer_list.insert(std::make_pair(t_soundbuffer_id,t_soundbuffer));
+		}
 
 		//プレイヤーコマンド。
 		sharedptr<NBsys::NActionBatching::ActionBatching_ActionList> t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
@@ -373,32 +307,19 @@ namespace NBsys{namespace NDsound
 
 	/** ストリーミングサウンドバッファ作成。
 	*/
-	s32 Dsound_Impl::CreateStreamSoundBuffer(const sharedptr<NBsys::NDsound::Dsound_StreamCallback_Base>& a_stream_callback)
+	s32 Dsound_Impl::CreateStreamSoundBuffer(const sharedptr<NBsys::NDsound::Dsound_StreamCallback_Base>& a_stream_callback,bool a_is_3d)
 	{
 		//ＩＤ。
 		s32 t_soundbuffer_id = this->id_maker.MakeID();
 
-		//■ストリーミングサウンドバッファ。
 		sharedptr<Dsound_Impl_SoundBuffer> t_soundbuffer = new Dsound_Impl_SoundBuffer();
-		{
-			t_soundbuffer->playstate = Dsound_Impl_SoundBuffer::PlayState::Stop;
-			//t_soundbuffer->soundbuffer;
-			t_soundbuffer->soundbuffer_size = -1;
-			//t_soundbuffer->wave = a_wave;
-			t_soundbuffer->is_3d = false;
-			t_soundbuffer->is_loop = false;
-			t_soundbuffer->is_duplicate = false;
-			t_soundbuffer->is_autodelete = false;
-			t_soundbuffer->is_stream = true;
-			t_soundbuffer->have_playnow = false;
-			//t_soundbuffer->soundbuffer_3d;
-			//t_soundbuffer->soundnotify_event;
-			t_soundbuffer->stream_callback = a_stream_callback;
-			//t_soundbuffer->stream_buffer;
-		}
+		t_soundbuffer->Create_FromStream(a_stream_callback,a_is_3d);
 
 		//管理リスト。
-		this->soundbuffer_list.insert(std::make_pair(t_soundbuffer_id,t_soundbuffer));
+		{
+			AutoLock t_autolock(this->soundbuffer_list_lockobject);
+			this->soundbuffer_list.insert(std::make_pair(t_soundbuffer_id,t_soundbuffer));
+		}
 
 		//プレイヤーコマンド。
 		sharedptr<NBsys::NActionBatching::ActionBatching_ActionList> t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
@@ -428,61 +349,61 @@ namespace NBsys{namespace NDsound
 	*/
 	s32  Dsound_Impl::Play(s32 a_id,bool a_duplicate,bool a_is_loop,bool a_auto_delete)
 	{
-		auto t_it = this->soundbuffer_list.find(a_id);
-		if(t_it == this->soundbuffer_list.end()){
+		sharedptr<Dsound_Impl_SoundBuffer> t_soundbuffer;
+		{
+			AutoLock t_autolock(this->soundbuffer_list_lockobject);
+			auto t_it = this->soundbuffer_list.find(a_id);
+			if(t_it != this->soundbuffer_list.end()){
+				t_soundbuffer = t_it->second;
+			}
+		}
+
+		if(t_soundbuffer == nullptr){
 			DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
 			return -1;
 		}
 
-		//プレイヤーコマンド。
-		sharedptr<NBsys::NActionBatching::ActionBatching_ActionList> t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
-
 		s32 t_duplicate_id = -1;
 
-		if(t_it->second->is_stream == true){
+		if(t_soundbuffer->IsStream() == true){
 			//ストリーミング再生。
-			t_it->second->playstate = Dsound_Impl_SoundBuffer::PlayState::Play;
+			t_soundbuffer->SetState_PlayState(Dsound_Impl_SoundBuffer::PlayState::Play);
+			t_soundbuffer->SetState_LoopFlag(a_is_loop);
 
-			t_it->second->is_loop = a_is_loop;
-
-			t_it->second->is_autodelete = a_auto_delete;
-
-			//ストリーミング再生では「a_duplicate」は無効。
+			DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,a_auto_delete == false);
 		}else{
 			//複製ＩＤ。
 			if(a_duplicate){
 				//ＩＤ。
 				t_duplicate_id = this->id_maker.MakeID();
 
-				//■複製サウンドバッファ。
-				sharedptr<Dsound_Impl_SoundBuffer> t_soundbuffer = new Dsound_Impl_SoundBuffer();
-				{
-					t_soundbuffer->playstate = Dsound_Impl_SoundBuffer::PlayState::Play;
-					//t_soundbuffer->soundbuffer;
-					t_soundbuffer->soundbuffer_size = -1;
-					t_soundbuffer->wave = t_it->second->wave;
-					t_soundbuffer->is_3d = t_it->second->is_3d;
-					t_soundbuffer->is_loop = a_is_loop;
-					t_soundbuffer->is_duplicate = true;
-					t_soundbuffer->is_autodelete = a_auto_delete;
-					t_soundbuffer->is_stream = false;
-					t_soundbuffer->have_playnow = false;
-					//t_soundbuffer->soundbuffer_3d;
-					//t_soundbuffer->soundnotify_event;
-					//t_soundbuffer->stream_callback;
-					//t_soundbuffer->stream_buffer;
-				}
+				sharedptr<Dsound_Impl_SoundBuffer> t_soundbuffer_duplicate = new Dsound_Impl_SoundBuffer();
+				t_soundbuffer_duplicate->Create_FromSoundbuffer(t_soundbuffer,a_auto_delete);
+				
+				t_soundbuffer_duplicate->SetState_PlayState(Dsound_Impl_SoundBuffer::PlayState::Play);
+				t_soundbuffer->SetState_LoopFlag(a_is_loop);
 
 				//管理リスト。
-				this->soundbuffer_list.insert(std::make_pair(t_duplicate_id,t_soundbuffer));
+				{
+					AutoLock t_autolock(this->soundbuffer_list_lockobject);
+					this->soundbuffer_list.insert(std::make_pair(t_duplicate_id,t_soundbuffer_duplicate));
+				}
 			}
 		}
 
+		//プレイヤーコマンド。
 		{
-			t_actionlist->Add(new Dsound_Impl_ActionBatching_Play(*this,a_id,t_duplicate_id));
+			sharedptr<NBsys::NActionBatching::ActionBatching_ActionList> t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
+			{
+				t_actionlist->Add(new Dsound_Impl_ActionBatching_Play(*this,a_id,t_duplicate_id));
+			}
+			this->StartBatching(t_actionlist);
 		}
 
-		this->StartBatching(t_actionlist);
+		//ワンショット再生の場合は外部から操作できないほうが安全。
+		if(a_auto_delete){
+			return -1;
+		}
 
 		return t_duplicate_id;
 	}
@@ -492,18 +413,49 @@ namespace NBsys{namespace NDsound
 	*/
 	bool Dsound_Impl::IsPlay(s32 a_id)
 	{
-		auto t_it = this->soundbuffer_list.find(a_id);
-		if(t_it == this->soundbuffer_list.end()){
+		sharedptr<Dsound_Impl_SoundBuffer> t_soundbuffer;
+		{
+			AutoLock t_autolock(this->soundbuffer_list_lockobject);
+			auto t_it = this->soundbuffer_list.find(a_id);
+			if(t_it != this->soundbuffer_list.end()){
+				t_soundbuffer = t_it->second;
+			}
+		}
+
+		if(t_soundbuffer == nullptr){
 			//削除済み。
 			return false;
 		}
 
-		if(t_it->second->playstate == Dsound_Impl_SoundBuffer::PlayState::Play){
+		if(t_soundbuffer->GetState_PlayState() == Dsound_Impl_SoundBuffer::PlayState::Play){
 			//再生中。
 			return true;
 		}
 
+		//停止中。
 		return false;
+	}
+
+
+	/** [複数スレッドから]有効チェック。
+	*/
+	bool Dsound_Impl::IsExist(s32 a_id)
+	{
+		sharedptr<Dsound_Impl_SoundBuffer> t_soundbuffer;
+		{
+			AutoLock t_autolock(this->soundbuffer_list_lockobject);
+			auto t_it = this->soundbuffer_list.find(a_id);
+			if(t_it != this->soundbuffer_list.end()){
+				t_soundbuffer = t_it->second;
+			}
+		}
+
+		if(t_soundbuffer == nullptr){
+			//削除済み。
+			return false;
+		}
+
+		return true;
 	}
 
 
@@ -511,8 +463,16 @@ namespace NBsys{namespace NDsound
 	*/
 	void Dsound_Impl::Player_CreateSoundBuffer(s32 a_id)
 	{
-		auto t_it = this->soundbuffer_list.find(a_id);
-		if(t_it == this->soundbuffer_list.end()){
+		sharedptr<Dsound_Impl_SoundBuffer> t_soundbuffer;
+		{
+			AutoLock t_autolock(this->soundbuffer_list_lockobject);
+			auto t_it = this->soundbuffer_list.find(a_id);
+			if(t_it != this->soundbuffer_list.end()){
+				t_soundbuffer = t_it->second;
+			}
+		}
+
+		if(t_soundbuffer == nullptr){
 			//削除済み。
 			return;
 		}
@@ -522,156 +482,13 @@ namespace NBsys{namespace NDsound
 			return;
 		}
 
-		//t_pcm_wave_format
-		PCMWAVEFORMAT t_pcm_wave_format = {0};
-
-		if(t_it->second->is_stream == true){
-			//ストリーミング再生。
-
-			NBsys::NWave::WaveType::Id t_wavetype = t_it->second->stream_callback->Callback_Initialize();
-			
-			//t_pcm_wave_format
-			t_pcm_wave_format = NImpl::CreatePcmWaveFormat(t_wavetype);
-
-			//soundbuffer_size
-			t_it->second->soundbuffer_size = 44100 * 2 * 2;
-
-			//stream_buffer
-			t_it->second->stream_buffer.reset(new RingBuffer<u8,44100 * 2 * 2 * 2,true>());
-
-		}else{
-			//全コピー。
-
-			//t_pcm_wave_format
-			t_pcm_wave_format = NImpl::CreatePcmWaveFormat(t_it->second->wave->GetWaveType());
-
-			//soundbuffer_size
-			t_it->second->soundbuffer_size = t_pcm_wave_format.wf.nBlockAlign * t_it->second->wave->GetCountOfSample();
-		}
-
-		DSBUFFERDESC t_desc = {0};
-		{
-			t_desc.dwSize = sizeof(t_desc);
-
-			t_desc.dwFlags = 0;
-
-			/** 正確な再生カーソル位置を取得する。
-			*/
-			t_desc.dwFlags |= DSBCAPS_GETCURRENTPOSITION2;
-
-			/** オンボードハードウェアメモリをなるべく利用する。
-			*/
-			t_desc.dwFlags |= DSBCAPS_STATIC;
-
-			/** アプリケーションがバックグラウンドでも音をミュートしない。
-			*/
-			t_desc.dwFlags |= DSBCAPS_GLOBALFOCUS;
-
-			/** ボリューム操作を使用する。
-			*/
-			t_desc.dwFlags |= DSBCAPS_CTRLVOLUME;
-			
-			/** 周波数操作を使用する。
-			*/
-			t_desc.dwFlags |= DSBCAPS_CTRLFREQUENCY;
-
-			/** 通知機能を使用する。
-			*/
-			t_desc.dwFlags |= DSBCAPS_CTRLPOSITIONNOTIFY;
-
-
-			if(t_it->second->is_3d == true){
-
-				/** ３Ｄ再生機能を使用すｋる。
-				*/
-				t_desc.dwFlags |= DSBCAPS_CTRL3D;
-
-				/** 最大距離で無音になる。ソフトウェアバッファのみ。
-				*/
-				#if(0)
-				t_desc.dwFlags |= DSBCAPS_MUTE3DATMAXDISTANCE;
-				#endif
-
-			}else{
-
-				/** パン操作を使用する。
-				*/
-				t_desc.dwFlags |= DSBCAPS_CTRLPAN;
-			}
-
-			/** エフェクト操作を使用する。
-			*/
-			#if(0)
-			t_desc.dwFlags |= DSBCAPS_CTRLFX;
-			#endif
-
-			t_desc.dwBufferBytes = t_it->second->soundbuffer_size;
-			t_desc.lpwfxFormat = (LPWAVEFORMATEX)&t_pcm_wave_format;
-		}
-
-		{
-			DEEPDEBUG_TAGLOG(BSYS_DSOUND_DEBUG_ENABLE,L"dsound_impl","CreateSoundBuffer");
-
-			IDirectSoundBuffer* t_raw = nullptr;
-			HRESULT t_ret = this->directsound->CreateSoundBuffer(&t_desc,&t_raw,WIN_NULL);
-			if(t_raw != nullptr){
-				t_it->second->soundbuffer.reset(t_raw,release_delete<IDirectSoundBuffer>());
-			}
-			if(FAILED(t_ret)){
-				DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
-				t_it->second->soundbuffer.reset();
-				return;
-			}
-		}
-
-		if(t_it->second->soundbuffer == nullptr){
-			DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
-			return;
-		}
-
-		if(t_it->second->is_3d == true){
-
-			DEEPDEBUG_TAGLOG(BSYS_DSOUND_DEBUG_ENABLE,L"dsound_impl","IID_IDirectSound3DBuffer");
-
-			IDirectSound3DBuffer* t_raw = nullptr;
-			HRESULT t_ret = t_it->second->soundbuffer->QueryInterface(IID_IDirectSound3DBuffer,reinterpret_cast<LPVOID*>(&t_raw));
-			if(t_raw != nullptr){
-				t_it->second->soundbuffer_3d.reset(t_raw,release_delete<IDirectSound3DBuffer>());
-			}
-			if(FAILED(t_ret)){
-				DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
-				t_it->second->soundbuffer_3d = nullptr;
-				return;
-			}			
-		}
+		t_soundbuffer->CreateSoundBuffer(this->directsound);
 
 		//通知設定。
-		t_it->second->CreateNotify();
+		t_soundbuffer->CreateNotify();
 
-		{
-			u8* t_data = nullptr;
-			DWORD t_size = 0;
-
-			HRESULT t_ret_lock = t_it->second->soundbuffer->Lock(0,t_it->second->soundbuffer_size,(void**)&t_data,&t_size,WIN_NULL,WIN_NULL,0);
-			if(SUCCEEDED(t_ret_lock)){
-				if((t_data != nullptr)&&(t_size > 0)){
-					if(t_it->second->is_stream == true){
-						//ストリーミング再生。
-						NMemory::Set(t_data,0,t_it->second->soundbuffer_size);
-					}else{
-						NMemory::Copy(t_data,t_size,t_it->second->wave->GetSample().get(),t_it->second->soundbuffer_size);
-					}
-				}
-				HRESULT t_ret_unlock = t_it->second->soundbuffer->Unlock(t_data,t_size,WIN_NULL,0);
-				if(FAILED(t_ret_unlock)){
-					DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
-					return;
-				}
-			}else{
-				DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
-				return;
-			}
-		}
+		//サウンドバッファーの初期化。
+		t_soundbuffer->InitializeSoundBuffer();
 	}
 
 
@@ -679,22 +496,23 @@ namespace NBsys{namespace NDsound
 	*/
 	void Dsound_Impl::Player_DeleteSoundBuffer(s32 a_id)
 	{
-		DEEPDEBUG_TAGLOG(BSYS_DSOUND_DEBUG_ENABLE,L"dsound_impl","Player_DeleteSoundBuffer");
+		sharedptr<Dsound_Impl_SoundBuffer> t_soundbuffer;
+		{
+			AutoLock t_autolock(this->soundbuffer_list_lockobject);
+			auto t_it = this->soundbuffer_list.find(a_id);
+			if(t_it != this->soundbuffer_list.end()){
+				t_soundbuffer = t_it->second;
+				this->soundbuffer_list.erase(t_it);
+			}
+		}
 
-		auto t_it = this->soundbuffer_list.find(a_id);
-		if(t_it == this->soundbuffer_list.end()){
-			DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
+		if(t_soundbuffer == nullptr){
+			//削除済み。
 			return;
 		}
 
 		//停止。
-		if(t_it->second->soundbuffer){
-			HRESULT t_ret_stop = t_it->second->soundbuffer->Stop();
-			DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,SUCCEEDED(t_ret_stop));
-			UNUSED(t_ret_stop);
-		}
-
-		this->soundbuffer_list.erase(t_it);
+		t_soundbuffer->Soundbuffer_Stop();
 	}
 
 
@@ -702,110 +520,81 @@ namespace NBsys{namespace NDsound
 	*/
 	void Dsound_Impl::Player_Play(s32 a_id,s32 a_duplicate_id)
 	{
-		if(this->directsound == nullptr){
-			DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,SUCCEEDED(0));
+		sharedptr<Dsound_Impl_SoundBuffer> t_soundbuffer;
+		sharedptr<Dsound_Impl_SoundBuffer> t_soundbuffer_duplicate;
+		{
+			AutoLock t_autolock(this->soundbuffer_list_lockobject);
+			{
+				auto t_it = this->soundbuffer_list.find(a_id);
+				if(t_it != this->soundbuffer_list.end()){
+					t_soundbuffer = t_it->second;
+				}
+			}
+			if(a_duplicate_id >= 0){
+				auto t_it = this->soundbuffer_list.find(a_duplicate_id);
+				if(t_it != this->soundbuffer_list.end()){
+					t_soundbuffer_duplicate = t_it->second;
+				}
+			}
+		}
+
+		if(t_soundbuffer == nullptr){
+			//削除済み。
 			return;
+		}
+
+		if(a_duplicate_id >= 0){
+			if(t_soundbuffer_duplicate == nullptr){
+				//削除済み。
+				return;
+			}
 		}
 
 		s32 t_id = a_id;
 
-		auto t_it = this->soundbuffer_list.find(t_id);
-		if(t_it == this->soundbuffer_list.end()){
-			DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
-			return;
-		}
-
-		if(t_it->second->soundbuffer == nullptr){
-			DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
-			return;
-		}
-
 		//複製。
 		if(a_duplicate_id >= 0){
-
-			auto t_it_duplicate = this->soundbuffer_list.find(a_duplicate_id);
-			if(t_it_duplicate == this->soundbuffer_list.end()){
-				DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
-				return;
-			}
-
-			//DuplicateSoundBuffer
-			{
-				DEEPDEBUG_TAGLOG(BSYS_DSOUND_DEBUG_ENABLE,L"dsound_impl","DuplicateSoundBuffer");
-
-				IDirectSoundBuffer* t_raw = nullptr;
-				HRESULT t_ret_duplicate = this->directsound->DuplicateSoundBuffer(t_it->second->soundbuffer.get(),&t_raw);
-				if(t_raw != nullptr){
-					t_it_duplicate->second->soundbuffer.reset(t_raw,release_delete<IDirectSoundBuffer>());
-				}
-				if(FAILED(t_ret_duplicate)){
-					DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
-					t_it_duplicate->second->soundbuffer.reset();
-					return;
-				}
-			}
-
-			//IID_IDirectSound3DBuffer
-			if(t_it_duplicate->second->is_3d){
-				DEEPDEBUG_TAGLOG(BSYS_DSOUND_DEBUG_ENABLE,L"dsound_impl","IID_IDirectSound3DBuffer");
-
-				IDirectSound3DBuffer* t_raw = nullptr;
-				HRESULT t_ret = this->directsound->QueryInterface(IID_IDirectSound3DBuffer,reinterpret_cast<LPVOID*>(&t_raw));
-				if(t_raw != nullptr){
-					t_it_duplicate->second->soundbuffer_3d.reset(t_raw,release_delete<IDirectSound3DBuffer>());
-				}
-				if(FAILED(t_ret)){
-					DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
-					t_it_duplicate->second->soundbuffer_3d.reset();
-					return;
-				}			
-			}
+		
+			//複製。
+			t_soundbuffer_duplicate->DuplicateSoundBuffer(this->directsound,t_soundbuffer);
 
 			//通知設定。
-			t_it_duplicate->second->CreateNotify();
+			t_soundbuffer_duplicate->CreateNotify();
 
-			t_it = t_it_duplicate;
+			t_soundbuffer = t_soundbuffer_duplicate;
 			t_id = a_duplicate_id;
+
 		}
 
-		//Stop
-		HRESULT t_ret_stop = t_it->second->soundbuffer->Stop();
-		DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,SUCCEEDED(t_ret_stop));
-		UNUSED(t_ret_stop);
+		//停止。
+		t_soundbuffer->Soundbuffer_Stop();
 
-		//再生位置をバイト数で指定。
-		HRESULT t_ret_position = t_it->second->soundbuffer->SetCurrentPosition(0);
-		DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,SUCCEEDED(t_ret_position));
-		UNUSED(t_ret_position);
+		//位置設定。
+		t_soundbuffer->Soundbuffer_SetPosition(0);
 
 		//フラグ。
-		DWORD t_flag = 0;
+		bool t_loop;
 		
-		if(t_it->second->is_stream == true){
+		if(t_soundbuffer->IsStream() == true){
 			//ストリーミング再生。
 
-			t_it->second->stream_callback->Callback_Play();
-			t_it->second->StreamCallback(0,t_it->second->soundbuffer_size,t_it->second->is_loop);
+			t_soundbuffer->StreamCallback_Play();
+			t_soundbuffer->StreamCallback_GetData(0,t_soundbuffer->GetSoundBufferSize(),t_soundbuffer->GetState_LoopFlag());
 
 			//ループ再生。
-			t_flag |= DSBPLAY_LOOPING;
+			t_loop = true;
 		}
 
-		if(t_it->second->is_loop){
-			t_flag |= DSBPLAY_LOOPING;
+		if(t_soundbuffer->GetState_LoopFlag() == true){
+			t_loop = true;
 		}
 
 		//再生。
-		{
-			DEEPDEBUG_TAGLOG(BSYS_DSOUND_DEBUG_ENABLE,L"dsound_impl","Play");
+		DEEPDEBUG_TAGLOG(BSYS_DSOUND_DEBUG_ENABLE,L"dsound_impl","Play");
+		t_soundbuffer->Soundbuffer_Play(t_loop);
 
-			HRESULT t_ret_play = t_it->second->soundbuffer->Play(0,0,t_flag);
-			DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,SUCCEEDED(t_ret_play));
-			UNUSED(t_ret_play);
-		}
-
-		if(t_it->second->have_playnow == false){
-			t_it->second->have_playnow = true;
+		if(t_soundbuffer->GetState_PlayNow() == false){
+			t_soundbuffer->SetStaet_PlayNow(true);
 
 			//プレイヤーコマンド。
 			sharedptr<NBsys::NActionBatching::ActionBatching_ActionList> t_actionlist = new NBsys::NActionBatching::ActionBatching_ActionList();
@@ -813,7 +602,6 @@ namespace NBsys{namespace NDsound
 				t_actionlist->Add(new Dsound_Impl_ActionBatching_PlayNow(*this,t_id));
 			}
 			this->StartBatching(t_actionlist);
-
 		}
 
 		return;
@@ -824,94 +612,69 @@ namespace NBsys{namespace NDsound
 	*/
 	bool Dsound_Impl::Player_PlayNow(s32 a_id)
 	{
-		auto t_it = this->soundbuffer_list.find(a_id);
-		if(t_it == this->soundbuffer_list.end()){
+		sharedptr<Dsound_Impl_SoundBuffer> t_soundbuffer;
+		{
+			AutoLock t_autolock(this->soundbuffer_list_lockobject);
+			auto t_it = this->soundbuffer_list.find(a_id);
+			if(t_it != this->soundbuffer_list.end()){
+				t_soundbuffer = t_it->second;
+			}
+		}
+
+		if(t_soundbuffer == nullptr){
 			//削除済み。
 			return true;
 		}
 
-		if(t_it->second->is_stream == true){
+		if(t_soundbuffer->IsStream() == true){
 			//ストリーミング再生。
 
-			if(t_it->second->playstate == Dsound_Impl_SoundBuffer::PlayState::Play){
-				//通知チェックは再生中のみ。
+			s32 t_copy_to_offset = t_soundbuffer->CheckNotify_Stream();
+			if(t_copy_to_offset >= 0){
 
-				s32 t_copy_to_offset = -1;
-
-				//再生の開始を確認。
-				if(t_it->second->soundnotify_event[Dsound_Impl_SoundBuffer::NorifyEventType::HalfPoint].hEventNotify != WIN_NULL){
-					if(::WaitForSingleObject(t_it->second->soundnotify_event[Dsound_Impl_SoundBuffer::NorifyEventType::HalfPoint].hEventNotify,0) == WAIT_OBJECT_0){
-						TAGLOG(L"dsound_impl","half point");
-						t_copy_to_offset = 0;
-					}
-				}else{
-					DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
-				}
-
-				if(t_it->second->soundnotify_event[Dsound_Impl_SoundBuffer::NorifyEventType::EndPoint].hEventNotify != WIN_NULL){
-					if(::WaitForSingleObject(t_it->second->soundnotify_event[Dsound_Impl_SoundBuffer::NorifyEventType::EndPoint].hEventNotify,0) == WAIT_OBJECT_0){
-						TAGLOG(L"dsound_impl","end point");
-						t_copy_to_offset = t_it->second->soundbuffer_size / 2;
-					}
-				}else{
-					DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
-				}
-
-				if(t_copy_to_offset >= 0){
-
-					if(t_it->second->stream_callback->Callback_IsPlayEnd() == true){
+				if(t_soundbuffer->GetState_LoopFlag() == false){
+					if(t_soundbuffer->StreamCallback_IsPlayEnd() == true){
 
 						//停止。
-						if(t_it->second->soundbuffer){
-							HRESULT t_ret_stop = t_it->second->soundbuffer->Stop();
-							DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,SUCCEEDED(t_ret_stop));
-							UNUSED(t_ret_stop);
-						}
+						t_soundbuffer->Soundbuffer_Stop();
 
 						//完了。
-						t_it->second->playstate = Dsound_Impl_SoundBuffer::PlayState::Stop;
-						t_it->second->have_playnow = false;
+						t_soundbuffer->SetState_PlayState(Dsound_Impl_SoundBuffer::PlayState::Stop);
+						t_soundbuffer->SetStaet_PlayNow(false);
 
-						if(t_it->second->is_autodelete){
+						if(t_soundbuffer->IsAutoDelete()){
 							//削除。
 							this->Player_DeleteSoundBuffer(a_id);
 						}
 						return true;
 					}
-
-					t_it->second->StreamCallback(t_copy_to_offset,t_it->second->soundbuffer_size / 2,t_it->second->is_loop);
 				}
+
+				t_soundbuffer->StreamCallback_GetData(t_copy_to_offset,t_soundbuffer->GetSoundBufferSize() / 2,t_soundbuffer->GetState_LoopFlag());
 			}
 
 		}else{
+		
+			bool t_notify = t_soundbuffer->CheckNotify_Wave();
+			if(t_notify == true){
 
-			if(t_it->second->playstate == Dsound_Impl_SoundBuffer::PlayState::Play){
-				//通知チェックは再生中のみ。
-
-				if(t_it->second->soundnotify_event[Dsound_Impl_SoundBuffer::NorifyEventType::EndPoint].hEventNotify == WIN_NULL){
-					DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
-				}
-
-				//再生の開始を確認。
-				if(::WaitForSingleObject(t_it->second->soundnotify_event[Dsound_Impl_SoundBuffer::NorifyEventType::EndPoint].hEventNotify,0) == WAIT_OBJECT_0){
+				if(t_soundbuffer->GetState_LoopFlag() == false){
 
 					//停止。
-					if(t_it->second->soundbuffer){
-						HRESULT t_ret_stop = t_it->second->soundbuffer->Stop();
-						DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,SUCCEEDED(t_ret_stop));
-						UNUSED(t_ret_stop);
-					}
+					t_soundbuffer->Soundbuffer_Stop();
 
 					//完了。
-					t_it->second->playstate = Dsound_Impl_SoundBuffer::PlayState::Stop;
-					t_it->second->have_playnow = false;
+					t_soundbuffer->SetState_PlayState(Dsound_Impl_SoundBuffer::PlayState::Stop);
+					t_soundbuffer->SetStaet_PlayNow(false);
 
-					if(t_it->second->is_autodelete){
+					if(t_soundbuffer->IsAutoDelete()){
 						//削除。
 						this->Player_DeleteSoundBuffer(a_id);
 					}
 					return true;
+
 				}
+
 			}
 
 		}

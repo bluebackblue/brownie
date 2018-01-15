@@ -45,15 +45,17 @@ namespace NBsys{namespace NWave
 		*/
 		struct DataType
 		{
-			const u8* data;
+			/** データ。
+			*/
+			const u8* ogg_data;
 		
 			/** サイズ。
 			*/
-			s32 size;
+			s64 ogg_size;
 
 			/** 現在位置。
 			*/
-			s32 offset;
+			s64 ogg_offset;
 		};
 
 	private:
@@ -68,7 +70,7 @@ namespace NBsys{namespace NWave
 
 		/** ogg_size
 		*/
-		s32 ogg_size;
+		s64 ogg_size;
 
 		/** 仮想ハンドル。
 		*/
@@ -130,7 +132,7 @@ namespace NBsys{namespace NWave
 
 		/** 作成。
 		*/
-		void Create(const sharedptr<u8>& a_ogg_data,s32 a_ogg_size);
+		void Create(const sharedptr<u8>& a_ogg_data,s64 a_ogg_size);
 
 		/** 削除。
 		*/

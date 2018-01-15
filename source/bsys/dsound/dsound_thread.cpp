@@ -132,9 +132,9 @@ namespace NBsys{namespace NDsound
 
 	/** ストリーミングサウンドバッファ作成。
 	*/
-	s32 Dsound_Thread::CreateStreamSoundBuffer(const sharedptr<NBsys::NDsound::Dsound_StreamCallback_Base>& a_stream_callback)
+	s32 Dsound_Thread::CreateStreamSoundBuffer(const sharedptr<NBsys::NDsound::Dsound_StreamCallback_Base>& a_stream_callback,bool a_is_3d)
 	{
-		return this->dsound_impl.CreateStreamSoundBuffer(a_stream_callback);
+		return this->dsound_impl.CreateStreamSoundBuffer(a_stream_callback,a_is_3d);
 	}
 
 
@@ -159,6 +159,14 @@ namespace NBsys{namespace NDsound
 	bool Dsound_Thread::IsPlay(s32 a_id)
 	{
 		return this->dsound_impl.IsPlay(a_id);
+	}
+
+
+	/** 有効チェック。
+	*/
+	bool Dsound_Thread::IsExist(s32 a_id)
+	{
+		return this->dsound_impl.IsExist(a_id);
 	}
 
 }}

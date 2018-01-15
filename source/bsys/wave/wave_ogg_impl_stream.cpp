@@ -71,33 +71,28 @@ namespace NBsys{namespace NWave
 		{
 			Wave_Ogg_Impl_Stream::DataType* t_data = reinterpret_cast<Wave_Ogg_Impl_Stream::DataType*>(a_datasource);
 
-			if(t_data == nullptr){
-				ASSERT(0);
-				return -1;
-			}
-
-			if((t_data->offset >= t_data->size)||(t_data->offset == -1)){
-				return 0;
-			}
-
-			if(static_cast<s32>(t_data->offset + a_size * a_nmemb) >= t_data->size){
-				int t_copy_size = (t_data->size - t_data->offset);
-				NMemory::Copy(a_ptr,t_copy_size,&t_data->data[t_data->offset],t_copy_size);
+			if(t_data != nullptr){
 				
-				int t_ret_size = static_cast<s32>(t_copy_size / a_size);
-				t_data->offset = t_data->size;
+				s64 t_copy_size = a_nmemb * a_size;
 
-				return t_ret_size;
+				if(t_data->ogg_offset + t_copy_size >= t_data->ogg_size){
+					t_copy_size = t_data->ogg_size - t_data->ogg_offset;
+				}
+
+				NMemory::Copy(a_ptr,t_copy_size,&t_data->ogg_data[t_data->ogg_offset],t_copy_size);
+
+				t_data->ogg_offset += t_copy_size;
+
+				DEEPDEBUG_TAGLOG(BSYS_WAVE_DEBUG_ENABLE,L"wave_ogg_impl_stream","CallBack_Read : %d",t_copy_size);
+
+				s64 t_ret_size = t_copy_size / a_size;
+
+				return static_cast<std::size_t>(t_ret_size);
+
 			}
 
-			int t_copy_size = static_cast<s32>(a_nmemb * a_size);
-			NMemory::Copy(a_ptr,t_copy_size,&t_data->data[t_data->offset],t_copy_size);
-
-			DEEPDEBUG_TAGLOG(BSYS_WAVE_DEBUG_ENABLE,L"wave_ogg_impl_stream","copy_size = %d",t_copy_size);
-
-			t_data->offset += t_copy_size;
-
-			return a_nmemb;
+			DEEPDEBUG_ASSERT(BSYS_WAVE_DEBUG_ENABLE,0);
+			return 0;
 		}
 
 
@@ -107,48 +102,48 @@ namespace NBsys{namespace NWave
 		{
 			Wave_Ogg_Impl_Stream::DataType* t_data = reinterpret_cast<Wave_Ogg_Impl_Stream::DataType*>(a_datasource);
 
-			if((t_data == nullptr)||(t_data->offset<0)){
-				return -1;
-			}
+			if(t_data != nullptr){
 
-			if(a_offset < 0){
-				t_data->offset = -1;
-				return -1;
-			}
+				switch(a_whence){
+				case SEEK_SET:
+					{
+						t_data->ogg_offset = a_offset;
+					}break;
+				case SEEK_CUR:
+					{
+						t_data->ogg_offset = t_data->ogg_offset + a_offset;
+					}break;
+				case SEEK_END:
+					{
+						t_data->ogg_offset = t_data->ogg_size + a_offset;
+					}break;
+				default:
+					{
+						t_data->ogg_offset = -1;
+					}break;
+				}
 
-			int t_new_offset;
-			switch(a_whence){
-			case SEEK_SET:
-				{
-					t_new_offset = static_cast<s32>(a_offset);
-				}break;
-			case SEEK_CUR:
-				{
-					t_new_offset = static_cast<s32>(t_data->offset + a_offset);
-				}break;
-			case SEEK_END:
-				{
-					t_new_offset = static_cast<s32>(t_data->size + a_offset);
-				}break;
-			default:
-				{
-					return -1;
+				if((0<=t_data->ogg_offset)&&(t_data->ogg_offset<=t_data->ogg_size)){
+					return 0;
 				}
 			}
-			if(t_new_offset < 0){
-				return -1;
-			}
 
-			t_data->offset = t_new_offset;
-
-			return 0;
+			DEEPDEBUG_ASSERT(BSYS_WAVE_DEBUG_ENABLE,0);
+			return OV_FALSE;
 		}
 
 
 		/** CallBack_Close
 		*/
-		static int CallBack_Close(void* /*a_datasource*/)
+		static int CallBack_Close(void* a_datasource)
 		{
+			Wave_Ogg_Impl_Stream::DataType* t_data = reinterpret_cast<Wave_Ogg_Impl_Stream::DataType*>(a_datasource);
+
+			if(t_data != nullptr){
+			}else{
+				DEEPDEBUG_ASSERT(BSYS_WAVE_DEBUG_ENABLE,0);
+			}
+
 			return 0;
 		}
 
@@ -159,11 +154,12 @@ namespace NBsys{namespace NWave
 		{
 			Wave_Ogg_Impl_Stream::DataType* t_data = reinterpret_cast<Wave_Ogg_Impl_Stream::DataType*>(a_datasource);
 
-			if(t_data == nullptr){
-				return -1;
+			if(t_data != nullptr){
+				return static_cast<long>(t_data->ogg_offset);
 			}
 
-			return t_data->offset;
+			DEEPDEBUG_ASSERT(BSYS_WAVE_DEBUG_ENABLE,0);
+			return OV_FALSE;
 		}
 	}
 
@@ -219,8 +215,10 @@ namespace NBsys{namespace NWave
 	*/
 	void Wave_Ogg_Impl_Stream::SeekStart()
 	{
-		if(this->virtual_filehandle_enable){
-			if(::ov_pcm_seek(&this->virtual_filehandle,0) != 0){
+		if(this->virtual_filehandle_enable == true){
+			int t_ret = ::ov_pcm_seek(&this->virtual_filehandle,0);
+			if(t_ret != 0){
+				DEEPDEBUG_TAGLOG(BSYS_WAVE_DEBUG_ENABLE,L"wave_ogg_impl_stream","ov_pcm_seek : %d",t_ret);
 				DEEPDEBUG_ASSERT(BSYS_WAVE_DEBUG_ENABLE,0);
 			}
 		}else{
@@ -300,7 +298,7 @@ namespace NBsys{namespace NWave
 
 	/** 作成。
 	*/
-	void Wave_Ogg_Impl_Stream::Create(const sharedptr<u8>& a_ogg_data,s32 a_ogg_size)
+	void Wave_Ogg_Impl_Stream::Create(const sharedptr<u8>& a_ogg_data,s64 a_ogg_size)
 	{
 		//コールバック関数を指定。
 		ov_callbacks t_callback;
@@ -313,44 +311,18 @@ namespace NBsys{namespace NWave
 
 		//データを指定。
 		{
-			this->data.data = a_ogg_data.get();
-			this->data.size = a_ogg_size;
-			this->data.offset = 0;
+			this->data.ogg_data = a_ogg_data.get();
+			this->data.ogg_size = a_ogg_size;
+			this->data.ogg_offset = 0;
 		}
 
 		//仮想ファイルハンドル作成。
 		int t_ret = ::ov_open_callbacks(&this->data,&this->virtual_filehandle,NULL,0,t_callback);
-		switch(t_ret){
-		case OV_EREAD:
-			{
-				DEEPDEBUG_TAGLOG(BSYS_WAVE_DEBUG_ENABLE,L"wave_ogg_impl_stream","OV_EREAD");
-				DEEPDEBUG_ASSERT(BSYS_WAVE_DEBUG_ENABLE,0);
-			}break;
-		case OV_ENOTVORBIS:
-			{
-				DEEPDEBUG_TAGLOG(BSYS_WAVE_DEBUG_ENABLE,L"wave_ogg_impl_stream","OV_ENOTVORBIS");
-				DEEPDEBUG_ASSERT(BSYS_WAVE_DEBUG_ENABLE,0);
-			}break;
-		case OV_EVERSION:
-			{
-				DEEPDEBUG_TAGLOG(BSYS_WAVE_DEBUG_ENABLE,L"wave_ogg_impl_stream","OV_EVERSION");
-				DEEPDEBUG_ASSERT(BSYS_WAVE_DEBUG_ENABLE,0);
-			}break;
-		case OV_EBADHEADER:
-			{
-				DEEPDEBUG_TAGLOG(BSYS_WAVE_DEBUG_ENABLE,L"wave_ogg_impl_stream","OV_EBADHEADER");
-				DEEPDEBUG_ASSERT(BSYS_WAVE_DEBUG_ENABLE,0);
-			}break;
-		case OV_EFAULT:
-			{
-				DEEPDEBUG_TAGLOG(BSYS_WAVE_DEBUG_ENABLE,L"wave_ogg_impl_stream","OV_EFAULT");
-				DEEPDEBUG_ASSERT(BSYS_WAVE_DEBUG_ENABLE,0);
-			}break;
-		default:
-			{
-				this->virtual_filehandle_enable = true;
-				DEEPDEBUG_TAGLOG(BSYS_WAVE_DEBUG_ENABLE,L"wave_ogg_impl_stream","ok");
-			}break;
+		if(t_ret == 0){
+			this->virtual_filehandle_enable = true;
+		}else{
+			DEEPDEBUG_TAGLOG(BSYS_WAVE_DEBUG_ENABLE,L"wave_ogg_impl_stream","ov_open_callbacks : %d",t_ret);
+			DEEPDEBUG_ASSERT(BSYS_WAVE_DEBUG_ENABLE,0);
 		}
 
 		//ov_pcm_total

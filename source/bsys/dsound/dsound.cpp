@@ -138,12 +138,12 @@ namespace NBsys{namespace NDsound
 
 	/** ストリーミングサウンドバッファ作成。
 	*/
-	s32 CreateStreamSoundBuffer(const sharedptr<NBsys::NDsound::Dsound_StreamCallback_Base>& a_stream_callback)
+	s32 CreateStreamSoundBuffer(const sharedptr<NBsys::NDsound::Dsound_StreamCallback_Base>& a_stream_callback,bool a_is_3d)
 	{
 		AutoLock t_autolock(s_lockobject);
 
 		if(s_thread){
-			return s_thread->get()->CreateStreamSoundBuffer(a_stream_callback);
+			return s_thread->get()->CreateStreamSoundBuffer(a_stream_callback,a_is_3d);
 		}else{
 			DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
 			return -1;
@@ -167,15 +167,29 @@ namespace NBsys{namespace NDsound
 
 	/** 再生。
 	*/
-	s32 Play(s32 a_id,bool a_duplicate,bool a_is_loop,bool a_auto_delete)
+	s32 Play(s32 a_id,bool a_duplicate,bool a_is_loop)
 	{
 		AutoLock t_autolock(s_lockobject);
 
 		if(s_thread){
-			return s_thread->get()->Play(a_id,a_duplicate,a_is_loop,a_auto_delete);
+			return s_thread->get()->Play(a_id,a_duplicate,a_is_loop,false);
 		}else{
 			DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
 			return -1;
+		}
+	}
+
+
+	/** 単発再生。
+	*/
+	void OnceShotPlay(s32 a_id)
+	{
+		AutoLock t_autolock(s_lockobject);
+
+		if(s_thread){
+			s_thread->get()->Play(a_id,true,false,true);
+		}else{
+			DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
 		}
 	}
 
@@ -194,6 +208,20 @@ namespace NBsys{namespace NDsound
 		}
 	}
 
+
+	/** 有効チェック。
+	*/
+	bool IsExist(s32 a_id)
+	{
+		AutoLock t_autolock(s_lockobject);
+
+		if(s_thread){
+			return s_thread->get()->IsExist(a_id);
+		}else{
+			DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
+			return false;
+		}
+	}
 
 }}
 #pragma warning(pop)

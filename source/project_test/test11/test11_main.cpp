@@ -118,7 +118,7 @@ namespace NTest
 		void Load()
 		{
 			if(this->soundbuffer_id < 0){
-				this->soundbuffer_id = NBsys::NDsound::CreateStreamSoundBuffer(new NCommon::SoundStreamCallback_Ogg(this->ogg_file));
+				this->soundbuffer_id = NBsys::NDsound::CreateStreamSoundBuffer(new NCommon::SoundStreamCallback_Ogg(this->ogg_file),false);
 			}
 		}
 
@@ -143,7 +143,7 @@ namespace NTest
 				//this->soundbuffer_lastplay_id = NBsys::NDsound::Play(this->soundbuffer_id,true,false,true);
 
 				//ストリーミング再生。
-				NBsys::NDsound::Play(this->soundbuffer_id,false,false,true);
+				this->soundbuffer_lastplay_id = NBsys::NDsound::Play(this->soundbuffer_id,false,false);
 			}
 		}
 
