@@ -573,7 +573,7 @@ namespace NBsys{namespace NDsound
 		t_soundbuffer->Soundbuffer_SetPosition(0);
 
 		//フラグ。
-		bool t_loop;
+		bool t_loop = false;
 		
 		if(t_soundbuffer->IsStream() == true){
 			//ストリーミング再生。

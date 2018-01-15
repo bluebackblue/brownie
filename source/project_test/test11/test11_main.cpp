@@ -60,17 +60,48 @@ namespace NTest
 		NBsys::NGeometry::Geometry_Vector3 target_to_a;
 		NBsys::NGeometry::Geometry_Vector3 target_to_b;
 
-		/** pack_file
+		/** pack
 		*/
-		sharedptr<NBsys::NFile::File_Pack_Object> pack_file;
+		sharedptr<NBsys::NFile::File_Pack_Object> pack_1;
+		sharedptr<NBsys::NFile::File_Pack_Object> pack_2;
 
-		/** ogg_file
+		/** file
 		*/
-		sharedptr<NBsys::NFile::File_Object> ogg_file;
+		sharedptr<NBsys::NFile::File_Object> file_bgm;
+		sharedptr<NBsys::NFile::File_Object> file_se1;
+		sharedptr<NBsys::NFile::File_Object> file_se2;
+		sharedptr<NBsys::NFile::File_Object> file_se3;
+		sharedptr<NBsys::NFile::File_Object> file_se4;
+		sharedptr<NBsys::NFile::File_Object> file_se5;
+		sharedptr<NBsys::NFile::File_Object> file_se6;
+		sharedptr<NBsys::NFile::File_Object> file_se7;
+		sharedptr<NBsys::NFile::File_Object> file_se8;
+		sharedptr<NBsys::NFile::File_Object> file_se9;
+
+		/** wave
+		*/
+		sharedptr<NBsys::NWave::Wave> wave_se1;
+		sharedptr<NBsys::NWave::Wave> wave_se2;
+		sharedptr<NBsys::NWave::Wave> wave_se3;
+		sharedptr<NBsys::NWave::Wave> wave_se4;
+		sharedptr<NBsys::NWave::Wave> wave_se5;
+		sharedptr<NBsys::NWave::Wave> wave_se6;
+		sharedptr<NBsys::NWave::Wave> wave_se7;
+		sharedptr<NBsys::NWave::Wave> wave_se8;
+		sharedptr<NBsys::NWave::Wave> wave_se9;
 
 		/** soundbuffer_id
 		*/
-		s32 soundbuffer_id;
+		s32 soundbuffer_id_bgm;
+		s32 soundbuffer_id_se1;
+		s32 soundbuffer_id_se2;
+		s32 soundbuffer_id_se3;
+		s32 soundbuffer_id_se4;
+		s32 soundbuffer_id_se5;
+		s32 soundbuffer_id_se6;
+		s32 soundbuffer_id_se7;
+		s32 soundbuffer_id_se8;
+		s32 soundbuffer_id_se9;
 
 		/** soundbuffer_lastplay_id
 		*/
@@ -86,7 +117,16 @@ namespace NTest
 		*/
 		App()
 			:
-			soundbuffer_id(-1),
+			soundbuffer_id_bgm(-1),
+			soundbuffer_id_se1(-1),
+			soundbuffer_id_se2(-1),
+			soundbuffer_id_se3(-1),
+			soundbuffer_id_se4(-1),
+			soundbuffer_id_se5(-1),
+			soundbuffer_id_se6(-1),
+			soundbuffer_id_se7(-1),
+			soundbuffer_id_se8(-1),
+			soundbuffer_id_se9(-1),
 			soundbuffer_lastplay_id(-1),
 			step(0)
 		{
@@ -117,8 +157,35 @@ namespace NTest
 		*/
 		void Load()
 		{
-			if(this->soundbuffer_id < 0){
-				this->soundbuffer_id = NBsys::NDsound::CreateStreamSoundBuffer(new NCommon::SoundStreamCallback_Ogg(this->ogg_file),false);
+			if(this->soundbuffer_id_bgm < 0){
+				this->soundbuffer_id_bgm = NBsys::NDsound::CreateStreamSoundBuffer(new NCommon::SoundStreamCallback_Ogg(this->file_bgm),false);
+			}
+			if(this->soundbuffer_id_se1 < 0){
+				this->soundbuffer_id_se1 = NBsys::NDsound::CreateSoundBuffer(this->wave_se1,false);
+			}
+			if(this->soundbuffer_id_se2 < 0){
+				this->soundbuffer_id_se2 = NBsys::NDsound::CreateSoundBuffer(this->wave_se2,false);
+			}
+			if(this->soundbuffer_id_se3 < 0){
+				this->soundbuffer_id_se3 = NBsys::NDsound::CreateSoundBuffer(this->wave_se3,false);
+			}
+			if(this->soundbuffer_id_se4 < 0){
+				this->soundbuffer_id_se4 = NBsys::NDsound::CreateSoundBuffer(this->wave_se4,false);
+			}
+			if(this->soundbuffer_id_se5 < 0){
+				this->soundbuffer_id_se5 = NBsys::NDsound::CreateSoundBuffer(this->wave_se5,false);
+			}
+			if(this->soundbuffer_id_se6 < 0){
+				this->soundbuffer_id_se6 = NBsys::NDsound::CreateSoundBuffer(this->wave_se6,false);
+			}
+			if(this->soundbuffer_id_se7 < 0){
+				this->soundbuffer_id_se7 = NBsys::NDsound::CreateSoundBuffer(this->wave_se7,false);
+			}
+			if(this->soundbuffer_id_se8 < 0){
+				this->soundbuffer_id_se8 = NBsys::NDsound::CreateSoundBuffer(this->wave_se8,false);
+			}
+			if(this->soundbuffer_id_se9 < 0){
+				this->soundbuffer_id_se9 = NBsys::NDsound::CreateSoundBuffer(this->wave_se9,false);
 			}
 		}
 
@@ -126,9 +193,45 @@ namespace NTest
 		*/
 		void UnLoad()
 		{
-			if(this->soundbuffer_id >= 0){
-				NBsys::NDsound::DeleteSoundBuffer(this->soundbuffer_id);
-				this->soundbuffer_id = -1;
+			if(this->soundbuffer_id_bgm >= 0){
+				NBsys::NDsound::DeleteSoundBuffer(this->soundbuffer_id_bgm);
+				this->soundbuffer_id_bgm = -1;
+			}
+			if(this->soundbuffer_id_se1 >= 0){
+				NBsys::NDsound::DeleteSoundBuffer(this->soundbuffer_id_se1);
+				this->soundbuffer_id_se1 = -1;
+			}
+			if(this->soundbuffer_id_se2 >= 0){
+				NBsys::NDsound::DeleteSoundBuffer(this->soundbuffer_id_se2);
+				this->soundbuffer_id_se2 = -1;
+			}
+			if(this->soundbuffer_id_se3 >= 0){
+				NBsys::NDsound::DeleteSoundBuffer(this->soundbuffer_id_se3);
+				this->soundbuffer_id_se3 = -1;
+			}
+			if(this->soundbuffer_id_se4 >= 0){
+				NBsys::NDsound::DeleteSoundBuffer(this->soundbuffer_id_se4);
+				this->soundbuffer_id_se4 = -1;
+			}
+			if(this->soundbuffer_id_se5 >= 0){
+				NBsys::NDsound::DeleteSoundBuffer(this->soundbuffer_id_se5);
+				this->soundbuffer_id_se5 = -1;
+			}
+			if(this->soundbuffer_id_se6 >= 0){
+				NBsys::NDsound::DeleteSoundBuffer(this->soundbuffer_id_se6);
+				this->soundbuffer_id_se6 = -1;
+			}
+			if(this->soundbuffer_id_se7 >= 0){
+				NBsys::NDsound::DeleteSoundBuffer(this->soundbuffer_id_se7);
+				this->soundbuffer_id_se7 = -1;
+			}
+			if(this->soundbuffer_id_se8 >= 0){
+				NBsys::NDsound::DeleteSoundBuffer(this->soundbuffer_id_se8);
+				this->soundbuffer_id_se8 = -1;
+			}
+			if(this->soundbuffer_id_se9 >= 0){
+				NBsys::NDsound::DeleteSoundBuffer(this->soundbuffer_id_se9);
+				this->soundbuffer_id_se9 = -1;
 			}
 		}
 
@@ -136,14 +239,16 @@ namespace NTest
 		*/
 		void Play()
 		{
-			if(this->soundbuffer_id >= 0){
-				this->soundbuffer_lastplay_id = this->soundbuffer_id;
-
-				//複製再生。
-				//this->soundbuffer_lastplay_id = NBsys::NDsound::Play(this->soundbuffer_id,true,false,true);
-
-				//ストリーミング再生。
-				this->soundbuffer_lastplay_id = NBsys::NDsound::Play(this->soundbuffer_id,false,false);
+			switch(GlobalRand_Get().Get(9)){
+			case 0:if(this->soundbuffer_id_se1 >= 0){NBsys::NDsound::OnceShotPlay(this->soundbuffer_id_se1);}break;
+			case 1:if(this->soundbuffer_id_se2 >= 0){NBsys::NDsound::OnceShotPlay(this->soundbuffer_id_se2);}break;
+			case 2:if(this->soundbuffer_id_se3 >= 0){NBsys::NDsound::OnceShotPlay(this->soundbuffer_id_se3);}break;
+			case 3:if(this->soundbuffer_id_se4 >= 0){NBsys::NDsound::OnceShotPlay(this->soundbuffer_id_se4);}break;
+			case 4:if(this->soundbuffer_id_se5 >= 0){NBsys::NDsound::OnceShotPlay(this->soundbuffer_id_se5);}break;
+			case 5:if(this->soundbuffer_id_se6 >= 0){NBsys::NDsound::OnceShotPlay(this->soundbuffer_id_se6);}break;
+			case 6:if(this->soundbuffer_id_se7 >= 0){NBsys::NDsound::OnceShotPlay(this->soundbuffer_id_se7);}break;
+			case 7:if(this->soundbuffer_id_se8 >= 0){NBsys::NDsound::OnceShotPlay(this->soundbuffer_id_se8);}break;
+			case 8:if(this->soundbuffer_id_se9 >= 0){NBsys::NDsound::OnceShotPlay(this->soundbuffer_id_se9);}break;
 			}
 		}
 
@@ -183,19 +288,53 @@ namespace NTest
 			this->camera_position.Set_Y(NMath::sin_f(this->camera_time / 10) * 20);
 
 			if(this->step == 0){
-				this->pack_file.reset(new NBsys::NFile::File_Pack_Object(NCommon::DeviceIndex::TestData,L"秋山裕和n77.pac",L"sound"));
+				this->pack_1.reset(new NBsys::NFile::File_Pack_Object(NCommon::DeviceIndex::TestData,L"秋山裕和n77.pac",L"sound"));
+				this->pack_2.reset(new NBsys::NFile::File_Pack_Object(NCommon::DeviceIndex::TestData,L"秋山裕和se.pac",L"sound"));
 				this->step++;
 			}else if(this->step == 1){
-				if(this->pack_file->IsBusy() == false){
-					ASSERT(this->pack_file->GetErrorCode() == ErrorCode::Success);
+				if(this->pack_1->IsBusy() == true){
+				}else if(this->pack_2->IsBusy() == true){
+				}else{
+					ASSERT(this->pack_1->GetErrorCode() == ErrorCode::Success);
+					ASSERT(this->pack_2->GetErrorCode() == ErrorCode::Success);
+					this->pack_1.reset();
+					this->pack_2.reset();
+
 					this->step++;
 				}
 			}else if(this->step == 2){
-				this->ogg_file.reset(new NBsys::NFile::File_Object(NCommon::DeviceIndex::TestData,L"sound/n77.ogg",-1,nullptr,0));
+				this->file_bgm.reset(new NBsys::NFile::File_Object(NCommon::DeviceIndex::TestData,L"sound/n77.ogg",-1,nullptr,0));
+				this->file_se1.reset(new NBsys::NFile::File_Object(NCommon::DeviceIndex::TestData,L"sound/se1.ogg",-1,nullptr,0));
+				this->file_se2.reset(new NBsys::NFile::File_Object(NCommon::DeviceIndex::TestData,L"sound/se2.ogg",-1,nullptr,0));
+				this->file_se3.reset(new NBsys::NFile::File_Object(NCommon::DeviceIndex::TestData,L"sound/se3.ogg",-1,nullptr,0));
+				this->file_se4.reset(new NBsys::NFile::File_Object(NCommon::DeviceIndex::TestData,L"sound/se4.ogg",-1,nullptr,0));
+				this->file_se5.reset(new NBsys::NFile::File_Object(NCommon::DeviceIndex::TestData,L"sound/se5.ogg",-1,nullptr,0));
+				this->file_se6.reset(new NBsys::NFile::File_Object(NCommon::DeviceIndex::TestData,L"sound/se6.ogg",-1,nullptr,0));
+				this->file_se7.reset(new NBsys::NFile::File_Object(NCommon::DeviceIndex::TestData,L"sound/se7.ogg",-1,nullptr,0));
+				this->file_se8.reset(new NBsys::NFile::File_Object(NCommon::DeviceIndex::TestData,L"sound/se8.ogg",-1,nullptr,0));
+				this->file_se9.reset(new NBsys::NFile::File_Object(NCommon::DeviceIndex::TestData,L"sound/se9.ogg",-1,nullptr,0));
 				this->step++;
 			}else if(this->step == 3){
-				if(this->ogg_file->IsBusy() == false){
-					//this->wave = NBsys::NWave::CreateWave_Ogg(this->ogg_file->GetLoadData(),static_cast<s32>(this->ogg_file->GetLoadSize()),L"n77_ogg");
+				if(this->file_bgm->IsBusy() == true){
+				}else if(this->file_se1->IsBusy() == true){
+				}else if(this->file_se2->IsBusy() == true){
+				}else if(this->file_se3->IsBusy() == true){
+				}else if(this->file_se4->IsBusy() == true){
+				}else if(this->file_se5->IsBusy() == true){
+				}else if(this->file_se6->IsBusy() == true){
+				}else if(this->file_se7->IsBusy() == true){
+				}else if(this->file_se8->IsBusy() == true){
+				}else if(this->file_se9->IsBusy() == true){
+				}else{
+					this->wave_se1 = NBsys::NWave::CreateWave_Ogg(this->file_se1->GetLoadData(),static_cast<s32>(this->file_se1->GetLoadSize()),L"se1");
+					this->wave_se2 = NBsys::NWave::CreateWave_Ogg(this->file_se2->GetLoadData(),static_cast<s32>(this->file_se2->GetLoadSize()),L"se2");
+					this->wave_se3 = NBsys::NWave::CreateWave_Ogg(this->file_se3->GetLoadData(),static_cast<s32>(this->file_se3->GetLoadSize()),L"se3");
+					this->wave_se4 = NBsys::NWave::CreateWave_Ogg(this->file_se4->GetLoadData(),static_cast<s32>(this->file_se4->GetLoadSize()),L"se4");
+					this->wave_se5 = NBsys::NWave::CreateWave_Ogg(this->file_se5->GetLoadData(),static_cast<s32>(this->file_se5->GetLoadSize()),L"se5");
+					this->wave_se6 = NBsys::NWave::CreateWave_Ogg(this->file_se6->GetLoadData(),static_cast<s32>(this->file_se6->GetLoadSize()),L"se6");
+					this->wave_se7 = NBsys::NWave::CreateWave_Ogg(this->file_se7->GetLoadData(),static_cast<s32>(this->file_se7->GetLoadSize()),L"se7");
+					this->wave_se8 = NBsys::NWave::CreateWave_Ogg(this->file_se8->GetLoadData(),static_cast<s32>(this->file_se8->GetLoadSize()),L"se8");
+					this->wave_se9 = NBsys::NWave::CreateWave_Ogg(this->file_se9->GetLoadData(),static_cast<s32>(this->file_se9->GetLoadSize()),L"se9");
 
 					this->windowmenu_buttonlist->AddButton(L"Capture",std::bind(&App::Capture,this));
 					this->windowmenu_buttonlist->AddButton(L"Load",std::bind(&App::Load,this));
