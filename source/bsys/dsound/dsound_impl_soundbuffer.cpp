@@ -425,7 +425,7 @@ namespace NBsys{namespace NDsound
 				return;
 			}
 			if(t_soundnotify){
-				t_soundnotify->SetNotificationPositions(t_soundnotify_event_list.size(),&t_soundnotify_event_list.at(0));
+				t_soundnotify->SetNotificationPositions(static_cast<DWORD>(t_soundnotify_event_list.size()),&t_soundnotify_event_list.at(0));
 				t_soundnotify.reset();
 			}
 		}
