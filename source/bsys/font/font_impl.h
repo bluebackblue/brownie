@@ -70,6 +70,14 @@ namespace NBsys{namespace NFont
 		*/
 		STLWString font_name;
 
+		/** buffer_size
+		*/
+		s32 buffer_size;
+
+		/** buffer
+		*/
+		sharedptr<u8> buffer;
+
 	public:
 
 		/** constructor

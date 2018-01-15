@@ -70,7 +70,7 @@ namespace NBsys{namespace NFile
 		/** パック作業リスト。
 		*/
 		#if(BSYS_FILE_PACK_ENABLE)
-		sharedptr<File_Pack_WorkItem> packworklist[1];
+		sharedptr<File_Pack_WorkItem> packworklist[4];
 		#endif
 
 		/** [リクエスト]イベント。

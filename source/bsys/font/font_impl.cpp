@@ -53,7 +53,10 @@ namespace NBsys{namespace NFont
 		#endif
 
 		font_size(a_font_size),
-		font_name(a_font_name)
+		font_name(a_font_name),
+
+		buffer_size(0),
+		buffer(nullptr)
 	{
 		#if defined(PLATFORM_VCWIN)
 		{
@@ -107,8 +110,7 @@ namespace NBsys{namespace NFont
 		{
 			GLYPHMETRICS t_glyphmetrics = {0};
 			TEXTMETRICW t_text_metric = {0};
-			DWORD t_buffer_size = 0;
-			u8 t_buffer[256*256*4];
+			s32 t_buffer_size = 0;
 			{
 				::SelectObject(this->hdc,this->font_handle);
 
@@ -124,8 +126,12 @@ namespace NBsys{namespace NFont
 						{0,0,},
 						{0,1,}
 					};
-					t_buffer_size = ::GetGlyphOutlineW(this->hdc,t_code,GGO_GRAY8_BITMAP,&t_glyphmetrics,0,WIN_NULL,&t_mat2);
-					ASSERT(t_buffer_size <= sizeof(t_buffer));
+					t_buffer_size = static_cast<s32>(::GetGlyphOutlineW(this->hdc,t_code,GGO_GRAY8_BITMAP,&t_glyphmetrics,0,WIN_NULL,&t_mat2));
+					if(t_buffer_size >= this->buffer_size){
+						this->buffer_size = (((t_buffer_size << 8) + 1) >> 8);
+						this->buffer.reset(new u8[this->buffer_size]);
+					}
+					ASSERT(t_buffer_size <= this->buffer_size);
 				}
 
 				//データ取得。
@@ -136,7 +142,7 @@ namespace NBsys{namespace NFont
 						{0,0,},
 						{0,1,}
 					};
-					::GetGlyphOutlineW(this->hdc,t_code,GGO_GRAY8_BITMAP,&t_glyphmetrics,t_buffer_size,(LPVOID)&t_buffer[0],&t_mat2);
+					::GetGlyphOutlineW(this->hdc,t_code,GGO_GRAY8_BITMAP,&t_glyphmetrics,t_buffer_size,(LPVOID)this->buffer.get(),&t_mat2);
 				}
 			}
 
@@ -173,6 +179,8 @@ namespace NBsys{namespace NFont
 				if(yy_max >= a_dest_size.hh){
 					yy_max = a_dest_size.hh;
 				}
+
+				u8* t_buffer = this->buffer.get();
 
 				for(s32 xx=0;xx<xx_max;xx++){
 					for(s32 yy=0;yy<yy_max;yy++){

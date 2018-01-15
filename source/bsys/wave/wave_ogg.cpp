@@ -63,7 +63,7 @@ namespace NBsys{namespace NWave
 	{
 		sharedptr<Wave> t_wave;
 
-		RingBuffer<u8,16 * 1024,true> t_ringbuffer;
+		sharedptr<RingBufferBase<u8>> t_ringbuffer(new RingBuffer<u8,16*1024,true>());
 
 		Wave_Ogg_Impl_Stream t_stream;
 		t_stream.Create(a_ogg_data,a_ogg_size);
@@ -96,9 +96,9 @@ namespace NBsys{namespace NWave
 
 			t_wave.reset(new Wave(t_data,t_size,t_count_of_sample,t_wavetype,a_name));
 
-			while(t_stream.Stream(t_ringbuffer,false) == true){
-				s32 t_use_size = t_ringbuffer.GetUseSize();
-				t_ringbuffer.CopyFromBuffer(&t_data.get()[t_offset],t_use_size);
+			while(t_stream.Stream(*t_ringbuffer,false) == true){
+				s32 t_use_size = t_ringbuffer->GetUseSize();
+				t_ringbuffer->CopyFromBuffer(&t_data.get()[t_offset],t_use_size);
 				t_offset += t_use_size;
 			}
 		}

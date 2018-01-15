@@ -239,7 +239,7 @@ namespace NTest
 		*/
 		void Play()
 		{
-			switch(GlobalRand_Get().Get(9)){
+			switch(GlobalRand_Get().Get(30)){
 			case 0:if(this->soundbuffer_id_se1 >= 0){NBsys::NDsound::OnceShotPlay(this->soundbuffer_id_se1);}break;
 			case 1:if(this->soundbuffer_id_se2 >= 0){NBsys::NDsound::OnceShotPlay(this->soundbuffer_id_se2);}break;
 			case 2:if(this->soundbuffer_id_se3 >= 0){NBsys::NDsound::OnceShotPlay(this->soundbuffer_id_se3);}break;
@@ -363,6 +363,8 @@ namespace NTest
 						this->soundbuffer_lastplay_id = -1;
 					}
 				}
+
+				this->Play();
 
 			}
 		}

@@ -170,6 +170,16 @@ namespace NBsys{namespace NWave
 			}
 		}
 
+		if(t_chunk_fmt == nullptr){
+			DEEPDEBUG_ASSERT(BSYS_WAVE_DEBUG_ENABLE,0);
+			return nullptr;
+		}
+
+		if(t_chunk_data == nullptr){
+			DEEPDEBUG_ASSERT(BSYS_WAVE_DEBUG_ENABLE,0);
+			return nullptr;
+		}
+
 		WaveType::Id t_wavetype = WaveType::None;
 
 		DEEPDEBUG_ASSERT(BSYS_WAVE_DEBUG_ENABLE,t_chunk_fmt->h_avg_bytes_per_sec == t_chunk_fmt->h_samples_per_sec * t_chunk_fmt->h_channels * t_chunk_fmt->h_bits_per_sample / 8);
