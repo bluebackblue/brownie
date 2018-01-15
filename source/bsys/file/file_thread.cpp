@@ -201,7 +201,7 @@ namespace NBsys{namespace NFile
 			sharedptr<File_Pack_WorkItem> t_workitem_pack(new File_Pack_WorkItem(Path::Name(a_pack_filename_short),Path::Dir(a_pack_connectto_rootpath_short)));
 
 			//作業リストに登録。
-			{
+			while(1){
 				//■排他。(this->packworklist[])にアクセス。
 				//■この排他処理から抜けた瞬間にworklistからworkitemが消費されるので参照カウント数が０にならないように注意。
 				AutoLock t_autolock(this->lockobject_packworklist);
@@ -297,19 +297,23 @@ namespace NBsys{namespace NFile
 			//作業リストに登録。
 			if(t_workitem != nullptr){
 
-				//■排他。(this->worklist[])にアクセス。
-				//■この排他処理から抜けた瞬間にworklistからworkitemが消費されるので参照カウント数が０にならないように注意。
-				AutoLock t_autolock(this->lockobject_worklist);
+				while(1){
 
-				for(s32 ii=0;ii<COUNTOF(this->worklist);ii++){
-					if(this->worklist[ii] == nullptr){
-						//作業リストに空きあり。
+					//■排他。(this->worklist[])にアクセス。
+					//■この排他処理から抜けた瞬間にworklistからworkitemが消費されるので参照カウント数が０にならないように注意。
+					AutoLock t_autolock(this->lockobject_worklist);
 
-						this->worklist[ii] = t_workitem;
-						this->request_event.Signal();
+					for(s32 ii=0;ii<COUNTOF(this->worklist);ii++){
+						if(this->worklist[ii] == nullptr){
+							//作業リストに空きあり。
 
-						return t_workitem;
+							this->worklist[ii] = t_workitem;
+							this->request_event.Signal();
+
+							return t_workitem;
+						}
 					}
+
 				}
 
 			}
