@@ -192,19 +192,35 @@ namespace NBsys{namespace NWindowMenu
 
 		/** サイズ計算。
 		*/
-		void CalcX(WindowMenu_SizeType::Id a_from_sizetype);
+		void CalcX();
 
 		/** サイズ計算。
 		*/
-		void CalcY(WindowMenu_SizeType::Id a_from_sizetype);
+		void CalcY();
 
 		/** サイズ計算。
 		*/
-		void CalcW(WindowMenu_SizeType::Id a_from_sizetype);
+		void CalcW_Fix();
 
 		/** サイズ計算。
 		*/
-		void CalcH(WindowMenu_SizeType::Id a_from_sizetype);
+		void CalcH_Fix();
+
+		/** サイズ計算。
+		*/
+		void CalcW_StretchChild();
+
+		/** サイズ計算。
+		*/
+		void CalcH_StretchChild();
+
+		/** サイズ計算。
+		*/
+		void CalcW_StretchParent();
+
+		/** サイズ計算。
+		*/
+		void CalcH_StretchParent();
 
 	public:
 

@@ -185,304 +185,36 @@ namespace NBsys{namespace NWindowMenu
 				WindowMenu_Window_Base* t_target = *t_it;
 
 				if(t_target->calc_x_fix == false){
-					if(t_target->parent == nullptr){
-						//ルート。
-						t_target->calc_rect.xx = t_target->offset.xx;
-						t_target->calc_x_fix = true;
-					}else{
-						if((t_target->parent->mode == WindowMenu_Mode::Free)||(t_target->parent->mode == WindowMenu_Mode::Vertical)){
-							//Ｘとは関係ない。
-							if(t_target->parent->calc_x_fix == true){
-								t_target->calc_rect.xx = t_target->parent->calc_rect.xx + t_target->offset.xx;
-								t_target->calc_x_fix = true;
-							}else{
-								//親のＸ計算待ち。
-							}
-						}else{
-							//Ｘ方向の積み。
-							if(t_target->calc_child_index == 0){
-								//一番左。
-								if(t_target->parent->calc_x_fix == true){
-									t_target->calc_rect.xx = t_target->parent->calc_rect.xx + t_target->offset.xx;
-									t_target->calc_x_fix = true;
-								}else{
-									//親の計算待ち。
-								}
-							}else{
-								auto t_it_prev = std::prev(t_target->calc_it);
-								WindowMenu_Window_Base* t_prev = t_it_prev->get();
-								if((t_prev->calc_x_fix == true)&&(t_prev->calc_w_fix == true)){
-									t_target->calc_rect.xx = t_prev->calc_rect.xx + t_prev->calc_rect.ww + t_target->offset.xx;
-									t_target->calc_x_fix = true;
-								}else{
-									//一つ左計算待ち。
-								}
-							}
-						}
-					}
+					t_target->CalcX();
 				}
 
 				if(t_target->calc_y_fix == false){
-					if(t_target->parent == nullptr){
-						//ルート。
-						t_target->calc_rect.yy = t_target->offset.yy;
-						t_target->calc_y_fix = true;
-					}else{
-						if((t_target->parent->mode == WindowMenu_Mode::Free)||(t_target->parent->mode == WindowMenu_Mode::Horizontal)){
-							//Ｙとは関係ない。
-							if(t_target->parent->calc_y_fix == true){
-								t_target->calc_rect.yy = t_target->parent->calc_rect.yy + t_target->offset.yy;
-								t_target->calc_y_fix = true;
-							}else{
-								//親のＸ計算待ち。
-							}
-						}else{
-							//Ｙ方向の積み。
-							if(t_target->calc_child_index == 0){
-								//一番上。
-								if(t_target->parent->calc_y_fix == true){
-									t_target->calc_rect.yy = t_target->parent->calc_rect.yy + t_target->offset.yy;
-									t_target->calc_y_fix = true;
-								}else{
-									//親の計算待ち。
-								}
-							}else{
-								auto t_it_prev = std::prev(t_target->calc_it);
-								WindowMenu_Window_Base* t_prev = t_it_prev->get();
-								if((t_prev->calc_y_fix == true)&&(t_prev->calc_h_fix == true)){
-									t_target->calc_rect.yy = t_prev->calc_rect.yy + t_prev->calc_rect.hh + t_target->offset.yy;
-									t_target->calc_y_fix = true;
-								}else{
-									//一つ上計算待ち。
-								}
-							}
-						}
-					}
+					t_target->CalcY();
 				}
 
 				if(t_target->calc_w_fix == false){
 					if(t_target->size.type_w == WindowMenu_SizeType::Fix){
 						//固定。
-						t_target->calc_rect.ww = t_target->size.size.ww;
-						t_target->calc_w_fix = true;
+						t_target->CalcW_Fix();
 					}else if(t_target->size.type_w == WindowMenu_SizeType::StretchChild){
 						//子に合わせる。
-
-						if((t_target->mode == WindowMenu_Mode::Free)||(t_target->mode == WindowMenu_Mode::Vertical)){
-							//Ｘとは関係ない。
-
-							//子の一番右を探す。
-							bool t_calc = true;
-							f32 t_offset_xx = 0.0f;
-							auto t_it_end = t_target->child_list.end();
-							for(auto t_it = t_target->child_list.begin();(t_it != t_it_end)&&(t_calc == true);++t_it){
-								WindowMenu_Window_Base* t_child = t_it->get();
-								if((t_child->calc_x_fix == true)&&(t_child->calc_w_fix == true)){
-									f32 t_temp = t_child->calc_rect.xx + t_child->calc_rect.ww;
-									if(t_offset_xx < t_temp){
-										t_offset_xx = t_temp;
-									}
-								}else{
-									//子の計算待ち。
-									t_calc = false;
-								}
-							}
-							if(t_calc == true){
-								if(t_target->calc_x_fix == true){
-									t_target->calc_rect.ww = t_offset_xx - t_target->calc_rect.xx;
-									t_target->calc_w_fix = true;
-								}
-							}else{
-								//子の計算待ち。
-							}
-						}else{
-							//Ｘ方向の積み。
-
-							auto t_it_last = get_last_iterator(t_target->child_list);
-							if(t_it_last == t_target->child_list.end()){
-								//子がいない。
-								t_target->calc_rect.ww = 0.0f;
-								t_target->calc_w_fix = true;
-							}else{
-								WindowMenu_Window_Base* t_last = t_it_last->get();
-
-								if((t_target->calc_x_fix == true)&&(t_last->calc_x_fix == true)&&(t_last->calc_w_fix == true)){
-									t_target->calc_rect.ww = t_last->calc_rect.xx + t_last->calc_rect.ww - t_target->calc_rect.xx;
-									t_target->calc_w_fix = true;
-								}else{
-									//一番端の計算待ち。
-								}
-							}
-						}
+						t_target->CalcW_StretchChild();
 					}else if(t_target->size.type_w == WindowMenu_SizeType::StretchParent){
 						//親に合わせる。
-
-						if(t_target->parent == nullptr){
-							t_target->calc_rect.ww = 0.0f;
-							t_target->calc_w_fix =  true;
-						}else if((t_target->parent->mode == WindowMenu_Mode::Free)||(t_target->parent->mode == WindowMenu_Mode::Vertical)){
-							//Ｘとは関係ない。
-
-							if(t_target->parent->calc_w_fix == true){
-								t_target->calc_rect.ww = t_target->parent->calc_rect.ww;
-								t_target->calc_w_fix = true;
-							}else{
-								//親の計算待ち。
-							}
-						}else{
-							//Ｘ方向の積み。
-
-							if(t_target->parent->calc_w_fix == true){
-
-								s32 t_stretch_count = 0;
-								f32 t_total_ww = 0.0f;
-								bool t_calc = true;
-
-								auto t_it_end = t_target->parent->child_list.end();
-								for(auto t_it = t_target->parent->child_list.begin();((t_it != t_it_end)&&(t_calc == true));++t_it){
-									WindowMenu_Window_Base* t_parent_child = t_it->get();
-
-									if(t_parent_child->size.type_w == WindowMenu_SizeType::StretchParent){
-										//親に合わせるを数える。
-										t_stretch_count++;
-									}else{
-										if(t_parent_child->calc_w_fix == true){
-											t_total_ww += t_parent_child->offset.xx + t_parent_child->calc_rect.ww;
-										}else{
-											//親の子の計算待ち。
-											t_calc = false;
-										}
-									}
-								}
-
-								if(t_stretch_count < 1){
-									t_stretch_count = 1;
-								}
-
-								if(t_calc == true){
-									t_target->calc_rect.ww = (t_target->parent->calc_rect.ww - t_total_ww) / t_stretch_count;
-									t_target->calc_w_fix = true;
-								}else{
-									//親の子の計算待ち。
-								}
-
-							}else{
-								//親の計算待ち。
-							}
-						}
+						t_target->CalcW_StretchParent();
 					}
 				}
 
 				if(t_target->calc_h_fix == false){
 					if(t_target->size.type_h == WindowMenu_SizeType::Fix){
 						//固定。
-						t_target->calc_rect.hh = t_target->size.size.hh;
-						t_target->calc_h_fix = true;
+						t_target->CalcH_Fix();
 					}else if(t_target->size.type_h == WindowMenu_SizeType::StretchChild){
 						//子に合わせる。
-
-						if((t_target->mode == WindowMenu_Mode::Free)||(t_target->mode == WindowMenu_Mode::Horizontal)){
-							//Ｙとは関係ない。
-
-							//子の一番右を探す。
-							bool t_calc = true;
-							f32 t_offset_yy = 0.0f;
-							auto t_it_end = t_target->child_list.end();
-							for(auto t_it = t_target->child_list.begin();(t_it != t_it_end)&&(t_calc == true);++t_it){
-								WindowMenu_Window_Base* t_child = t_it->get();
-								if((t_child->calc_x_fix == true)&&(t_child->calc_h_fix == true)){
-									f32 t_temp = t_child->calc_rect.yy + t_child->calc_rect.hh;
-									if(t_offset_yy < t_temp){
-										t_offset_yy = t_temp;
-									}
-								}else{
-									//子の計算待ち。
-									t_calc = false;
-								}
-							}
-							if(t_calc == true){
-								if(t_target->calc_x_fix == true){
-									t_target->calc_rect.hh = t_offset_yy - t_target->calc_rect.yy;
-									t_target->calc_h_fix = true;
-								}
-							}else{
-								//子の計算待ち。
-							}
-						}else{
-							//Ｘ方向の積み。
-
-							auto t_it_last = get_last_iterator(t_target->child_list);
-							if(t_it_last == t_target->child_list.end()){
-								//子がいない。
-								t_target->calc_rect.hh = 0.0f;
-								t_target->calc_h_fix = true;
-							}else{
-								WindowMenu_Window_Base* t_last = t_it_last->get();
-
-								if((t_target->calc_x_fix == true)&&(t_last->calc_x_fix == true)&&(t_last->calc_h_fix == true)){
-									t_target->calc_rect.hh = t_last->calc_rect.yy + t_last->calc_rect.hh - t_target->calc_rect.yy;
-									t_target->calc_h_fix = true;
-								}else{
-									//一番端の計算待ち。
-								}
-							}
-						}
+						t_target->CalcH_StretchChild();
 					}else if(t_target->size.type_h == WindowMenu_SizeType::StretchParent){
 						//親に合わせる。
-
-						if(t_target->parent == nullptr){
-							t_target->calc_rect.hh = 0.0f;
-							t_target->calc_h_fix =  true;
-						}else if((t_target->parent->mode == WindowMenu_Mode::Free)||(t_target->parent->mode == WindowMenu_Mode::Horizontal)){
-							//Ｙとは関係ない。
-
-							if(t_target->parent->calc_h_fix == true){
-								t_target->calc_rect.hh = t_target->parent->calc_rect.hh;
-								t_target->calc_h_fix = true;
-							}else{
-								//親の計算待ち。
-							}
-						}else{
-							//Ｙ方向の積み。
-
-							if(t_target->parent->calc_h_fix == true){
-
-								s32 t_stretch_count = 0;
-								f32 t_total_hh = 0.0f;
-								bool t_calc = true;
-
-								auto t_it_end = t_target->parent->child_list.end();
-								for(auto t_it = t_target->parent->child_list.begin();((t_it != t_it_end)&&(t_calc == true));++t_it){
-									WindowMenu_Window_Base* t_parent_child = t_it->get();
-
-									if(t_parent_child->size.type_h == WindowMenu_SizeType::StretchParent){
-										//親に合わせるを数える。
-										t_stretch_count++;
-									}else{
-										if(t_parent_child->calc_h_fix == true){
-											t_total_hh += t_parent_child->offset.yy + t_parent_child->calc_rect.hh;
-										}else{
-											//親の子の計算待ち。
-											t_calc = false;
-										}
-									}
-								}
-
-								if(t_stretch_count < 1){
-									t_stretch_count = 1;
-								}
-
-								if(t_calc == true){
-									t_target->calc_rect.hh = (t_target->parent->calc_rect.hh - t_total_hh) / t_stretch_count;
-									t_target->calc_h_fix = true;
-								}else{
-									//親の子の計算待ち。
-								}
-
-							}else{
-								//親の計算待ち。
-							}
-						}
+						t_target->CalcH_StretchParent();
 					}
 				}
 
@@ -491,11 +223,9 @@ namespace NBsys{namespace NWindowMenu
 				}else{
 					++t_it;
 				}
-
 			}
 		}
 	}
-
 
 
 	/** サイズ計算。
@@ -513,29 +243,333 @@ namespace NBsys{namespace NWindowMenu
 
 	/** サイズ計算。
 	*/
-	void WindowMenu_Window_Base::CalcX(WindowMenu_SizeType::Id a_from_sizetype)
+	void WindowMenu_Window_Base::CalcX()
 	{
+		if(this->parent == nullptr){
+			//ルート。
+			this->calc_rect.xx = this->offset.xx;
+			this->calc_x_fix = true;
+		}else{
+			if(this->parent->mode == WindowMenu_Mode::Horizontal){
+				//累積。
+				if(this->calc_child_index == 0){
+					//累積の一番最初。
+					if(this->parent->calc_x_fix == true){
+						this->calc_rect.xx = this->parent->calc_rect.xx + this->offset.xx;
+						this->calc_x_fix = true;
+					}else{
+						//親の計算待ち。
+					}
+				}else{
+					auto t_it_prev = std::prev(this->calc_it);
+					WindowMenu_Window_Base* t_prev = t_it_prev->get();
+					if((t_prev->calc_x_fix == true)&&(t_prev->calc_w_fix == true)){
+						this->calc_rect.xx = t_prev->calc_rect.xx + t_prev->calc_rect.ww + this->offset.xx;
+						this->calc_x_fix = true;
+					}else{
+						//一つ前の計算待ち。
+					}
+				}
+			}else{
+				//親の位置と自分のオフセット。
+				if(this->parent->calc_x_fix == true){
+					this->calc_rect.xx = this->parent->calc_rect.xx + this->offset.xx;
+					this->calc_x_fix = true;
+				}else{
+					//親の計算待ち。
+				}
+			}
+		}
 	}
 
 
 	/** サイズ計算。
 	*/
-	void WindowMenu_Window_Base::CalcY(WindowMenu_SizeType::Id a_from_sizetype)
+	void WindowMenu_Window_Base::CalcY()
 	{
+		if(this->parent == nullptr){
+			//ルート。
+			this->calc_rect.yy = this->offset.yy;
+			this->calc_y_fix = true;
+		}else{
+			if(this->parent->mode == WindowMenu_Mode::Vertical){
+				//累積。
+				if(this->calc_child_index == 0){
+					//累積の一番最初。
+					if(this->parent->calc_y_fix == true){
+						this->calc_rect.yy = this->parent->calc_rect.yy + this->offset.yy;
+						this->calc_y_fix = true;
+					}else{
+						//親の計算待ち。
+					}
+				}else{
+					auto t_it_prev = std::prev(this->calc_it);
+					WindowMenu_Window_Base* t_prev = t_it_prev->get();
+					if((t_prev->calc_y_fix == true)&&(t_prev->calc_h_fix == true)){
+						this->calc_rect.yy = t_prev->calc_rect.yy + t_prev->calc_rect.hh + this->offset.yy;
+						this->calc_y_fix = true;
+					}else{
+						//一つ前の計算待ち。
+					}
+				}
+			}else{
+				//親の位置と自分のオフセット。
+				if(this->parent->calc_y_fix == true){
+					this->calc_rect.yy = this->parent->calc_rect.yy + this->offset.yy;
+					this->calc_y_fix = true;
+				}else{
+					//親の計算待ち。
+				}
+			}
+		}
 	}
 
 
 	/** サイズ計算。
 	*/
-	void WindowMenu_Window_Base::CalcW(WindowMenu_SizeType::Id a_from_sizetype)
+	void WindowMenu_Window_Base::CalcW_Fix()
 	{
+		//固定。
+		this->calc_rect.ww = this->size.size.ww;
+		this->calc_w_fix = true;
 	}
 
 
 	/** サイズ計算。
 	*/
-	void WindowMenu_Window_Base::CalcH(WindowMenu_SizeType::Id a_from_sizetype)
+	void WindowMenu_Window_Base::CalcH_Fix()
 	{
+		//固定。
+		this->calc_rect.hh = this->size.size.hh;
+		this->calc_h_fix = true;
+	}
+
+
+	/** サイズ計算。
+	*/
+	void WindowMenu_Window_Base::CalcW_StretchChild()
+	{
+		//子に合わせる。
+
+		if(this->mode == WindowMenu_Mode::Horizontal){
+			//累積。
+
+			auto t_it_last = get_last_iterator(this->child_list);
+			if(t_it_last == this->child_list.end()){
+				//子がいない。
+				this->calc_rect.ww = 0.0f;
+				this->calc_w_fix = true;
+			}else{
+				WindowMenu_Window_Base* t_last = t_it_last->get();
+				if((this->calc_x_fix == true)&&(t_last->calc_x_fix == true)&&(t_last->calc_w_fix == true)){
+					this->calc_rect.ww = t_last->calc_rect.xx + t_last->calc_rect.ww - this->calc_rect.xx;
+					this->calc_w_fix = true;
+				}else{
+					//最後の計算待ち。
+				}
+			}
+		}else{
+			//子の端を検索。
+
+			bool t_calc = true;
+			f32 t_offset_xx = 0.0f;
+			auto t_it_end = this->child_list.end();
+			for(auto t_it = this->child_list.begin();(t_it != t_it_end)&&(t_calc == true);++t_it){
+				WindowMenu_Window_Base* t_child = t_it->get();
+				if((t_child->calc_x_fix == true)&&(t_child->calc_w_fix == true)){
+					f32 t_temp = t_child->calc_rect.xx + t_child->calc_rect.ww;
+					if(t_offset_xx < t_temp){
+						t_offset_xx = t_temp;
+					}
+				}else{
+					//子の計算待ち。
+					t_calc = false;
+				}
+			}
+			if(t_calc == true){
+				if(this->calc_x_fix == true){
+					this->calc_rect.ww = t_offset_xx - this->calc_rect.xx;
+					this->calc_w_fix = true;
+				}
+			}else{
+				//子の計算待ち。
+			}
+		}
+	}
+
+
+	/** サイズ計算。
+	*/
+	void WindowMenu_Window_Base::CalcH_StretchChild()
+	{
+		//子に合わせる。
+
+		if(this->mode == WindowMenu_Mode::Vertical){
+			//累積。
+
+			auto t_it_last = get_last_iterator(this->child_list);
+			if(t_it_last == this->child_list.end()){
+				//子がいない。
+				this->calc_rect.hh = 0.0f;
+				this->calc_h_fix = true;
+			}else{
+				WindowMenu_Window_Base* t_last = t_it_last->get();
+				if((this->calc_x_fix == true)&&(t_last->calc_x_fix == true)&&(t_last->calc_h_fix == true)){
+					this->calc_rect.hh = t_last->calc_rect.yy + t_last->calc_rect.hh - this->calc_rect.yy;
+					this->calc_h_fix = true;
+				}else{
+					//最後の計算待ち。
+				}
+			}
+		}else{
+			//子の端を検索。
+
+			bool t_calc = true;
+			f32 t_offset_yy = 0.0f;
+			auto t_it_end = this->child_list.end();
+			for(auto t_it = this->child_list.begin();(t_it != t_it_end)&&(t_calc == true);++t_it){
+				WindowMenu_Window_Base* t_child = t_it->get();
+				if((t_child->calc_x_fix == true)&&(t_child->calc_h_fix == true)){
+					f32 t_temp = t_child->calc_rect.yy + t_child->calc_rect.hh;
+					if(t_offset_yy < t_temp){
+						t_offset_yy = t_temp;
+					}
+				}else{
+					//子の計算待ち。
+					t_calc = false;
+				}
+			}
+			if(t_calc == true){
+				if(this->calc_x_fix == true){
+					this->calc_rect.hh = t_offset_yy - this->calc_rect.yy;
+					this->calc_h_fix = true;
+				}
+			}else{
+				//子の計算待ち。
+			}
+		}
+	}
+
+
+	/** サイズ計算。
+	*/
+	void WindowMenu_Window_Base::CalcW_StretchParent()
+	{
+		//親に合わせる。
+
+		if(this->parent == nullptr){
+			//親がいない。
+
+			this->calc_rect.ww = 0.0f;
+			this->calc_w_fix =  true;
+		}else if(this->parent->mode == WindowMenu_Mode::Horizontal){
+			//自分が累積メンバー。
+
+			if(this->parent->calc_w_fix == true){
+				s32 t_stretch_count = 0;
+				f32 t_total_ww = 0.0f;
+				bool t_calc = true;
+
+				auto t_it_end = this->parent->child_list.end();
+				for(auto t_it = this->parent->child_list.begin();((t_it != t_it_end)&&(t_calc == true));++t_it){
+					WindowMenu_Window_Base* t_parent_child = t_it->get();
+
+					if(t_parent_child->size.type_w == WindowMenu_SizeType::StretchParent){
+						//親に合わせるを数える。
+						t_stretch_count++;
+					}else{
+						if(t_parent_child->calc_w_fix == true){
+							t_total_ww += t_parent_child->offset.xx + t_parent_child->calc_rect.ww;
+						}else{
+							//親の子の計算待ち。
+							t_calc = false;
+						}
+					}
+				}
+
+				if(t_stretch_count < 1){
+					t_stretch_count = 1;
+				}
+
+				if(t_calc == true){
+					this->calc_rect.ww = (this->parent->calc_rect.ww - t_total_ww) / t_stretch_count;
+					this->calc_w_fix = true;
+				}else{
+					//親の子の計算待ち。
+				}
+			}else{
+				//親の計算待ち。
+			}
+		}else{
+			//親に合わせる。
+
+			if(this->parent->calc_w_fix == true){
+				this->calc_rect.ww = this->parent->calc_rect.ww - this->offset.xx;
+				this->calc_w_fix = true;
+			}else{
+				//親の計算待ち。
+			}
+		}
+	}
+
+
+	/** サイズ計算。
+	*/
+	void WindowMenu_Window_Base::CalcH_StretchParent()
+	{
+		if(this->parent == nullptr){
+			//親がいない。
+
+			this->calc_rect.hh = 0.0f;
+			this->calc_h_fix =  true;
+		}else if(this->parent->mode == WindowMenu_Mode::Vertical){
+			//自分が累積メンバー。
+
+			if(this->parent->calc_h_fix == true){
+				s32 t_stretch_count = 0;
+				f32 t_total_hh = 0.0f;
+				bool t_calc = true;
+
+				auto t_it_end = this->parent->child_list.end();
+				for(auto t_it = this->parent->child_list.begin();((t_it != t_it_end)&&(t_calc == true));++t_it){
+					WindowMenu_Window_Base* t_parent_child = t_it->get();
+
+					if(t_parent_child->size.type_h == WindowMenu_SizeType::StretchParent){
+						//親に合わせるを数える。
+						t_stretch_count++;
+					}else{
+						if(t_parent_child->calc_h_fix == true){
+							t_total_hh += t_parent_child->offset.yy + t_parent_child->calc_rect.hh;
+						}else{
+							//親の子の計算待ち。
+							t_calc = false;
+						}
+					}
+				}
+
+				if(t_stretch_count < 1){
+					t_stretch_count = 1;
+				}
+
+				if(t_calc == true){
+					this->calc_rect.hh = (this->parent->calc_rect.hh - t_total_hh) / t_stretch_count;
+					this->calc_h_fix = true;
+				}else{
+					//親の子の計算待ち。
+				}
+			}else{
+				//親の計算待ち。
+			}
+		}else{
+			//親に合わせる。
+
+			if(this->parent->calc_h_fix == true){
+				this->calc_rect.hh = this->parent->calc_rect.hh - this->offset.yy;
+				this->calc_h_fix = true;
+			}else{
+				//親の計算待ち。
+			}
+		}
 	}
 
 
