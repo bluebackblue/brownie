@@ -89,6 +89,7 @@ namespace NBsys{namespace NWindowMenu
 		if((this->outrange_mouseevent)||(this->IsRange(a_mouse.pos))){
 			//範囲内。
 
+			//■先に自分のマウスチェックを行う。
 			bool t_ret = this->CallBack_InRangeMouseUpdate(a_mouse);
 			if(t_ret == true){
 				//マウス操作を親に伝えない。
@@ -114,17 +115,26 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	bool WindowMenu_Window_Resize::CallBack_InRangeMouseUpdate(WindowMenu_Mouse& a_mouse)
 	{
-		if(a_mouse.down_l){
-			//ドラッグ開始。
-			if(this->parent){
-				this->drag_flag = true;
-				this->start_pos = a_mouse.pos;
-				this->old_pos = this->parent->offset;
+		if(this->parent){
+			f32 t_x = this->calc_rect.xx + this->calc_rect.ww - a_mouse.pos.xx;
+			f32 t_y = this->calc_rect.yy + this->calc_rect.hh - a_mouse.pos.yy;
+			if(t_x * t_x + t_y * t_y < 100.0f){
+				if(a_mouse.down_l){
+					//ドラッグ開始。
+
+					//右下。
+					this->drag_flag = true;
+					this->start_pos = a_mouse.pos;
+					this->old_pos = this->parent->offset;
+				}
+
+				//マウス操作を親に伝えない。
+				return true;
 			}
 		}
 
-		//マウス操作を親に伝えない。
-		return true;
+		//マウス操作を親に伝える。
+		return false;
 	}
 
 
@@ -139,8 +149,10 @@ namespace NBsys{namespace NWindowMenu
 				if(this->parent){
 					if(this->parent->size.type_w == WindowMenu_SizeType::Fix){
 						this->parent->size.SetW(t_mouse.pos.xx - this->parent->offset.xx);
-						//this->parent->CallBack_CalcRectClear(this->calc_it,this->calc_child_index);
-						//this->parent->CalcRect();
+						GetSystemInstance()->SetChangeRect();
+					}
+					if(this->parent->size.type_h == WindowMenu_SizeType::Fix){
+						this->parent->size.SetH(t_mouse.pos.yy - this->parent->offset.yy);
 						GetSystemInstance()->SetChangeRect();
 					}
 				}
