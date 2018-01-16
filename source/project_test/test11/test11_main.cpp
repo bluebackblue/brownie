@@ -242,15 +242,15 @@ namespace NTest
 		void Play()
 		{
 			switch(GlobalRand_Get().Get(30)){
-			case 0:if(this->soundbuffer_id_se1 >= 0){NBsys::NDsound::OnceShotPlay(this->soundbuffer_id_se1);}break;
-			case 1:if(this->soundbuffer_id_se2 >= 0){NBsys::NDsound::OnceShotPlay(this->soundbuffer_id_se2);}break;
-			case 2:if(this->soundbuffer_id_se3 >= 0){NBsys::NDsound::OnceShotPlay(this->soundbuffer_id_se3);}break;
-			case 3:if(this->soundbuffer_id_se4 >= 0){NBsys::NDsound::OnceShotPlay(this->soundbuffer_id_se4);}break;
-			case 4:if(this->soundbuffer_id_se5 >= 0){NBsys::NDsound::OnceShotPlay(this->soundbuffer_id_se5);}break;
-			case 5:if(this->soundbuffer_id_se6 >= 0){NBsys::NDsound::OnceShotPlay(this->soundbuffer_id_se6);}break;
-			case 6:if(this->soundbuffer_id_se7 >= 0){NBsys::NDsound::OnceShotPlay(this->soundbuffer_id_se7);}break;
-			case 7:if(this->soundbuffer_id_se8 >= 0){NBsys::NDsound::OnceShotPlay(this->soundbuffer_id_se8);}break;
-			case 8:if(this->soundbuffer_id_se9 >= 0){NBsys::NDsound::OnceShotPlay(this->soundbuffer_id_se9);}break;
+			case 0:if(this->soundbuffer_id_se1 >= 0){NBsys::NDsound::OnceShotPlay(this->soundbuffer_id_se1);}DEBUGLOG("play se1\n");break;
+			case 1:if(this->soundbuffer_id_se2 >= 0){NBsys::NDsound::OnceShotPlay(this->soundbuffer_id_se2);}DEBUGLOG("play se2\n");break;
+			case 2:if(this->soundbuffer_id_se3 >= 0){NBsys::NDsound::OnceShotPlay(this->soundbuffer_id_se3);}DEBUGLOG("play se3\n");break;
+			case 3:if(this->soundbuffer_id_se4 >= 0){NBsys::NDsound::OnceShotPlay(this->soundbuffer_id_se4);}DEBUGLOG("play se4\n");break;
+			case 4:if(this->soundbuffer_id_se5 >= 0){NBsys::NDsound::OnceShotPlay(this->soundbuffer_id_se5);}DEBUGLOG("play se5\n");break;
+			case 5:if(this->soundbuffer_id_se6 >= 0){NBsys::NDsound::OnceShotPlay(this->soundbuffer_id_se6);}DEBUGLOG("play se6\n");break;
+			case 6:if(this->soundbuffer_id_se7 >= 0){NBsys::NDsound::OnceShotPlay(this->soundbuffer_id_se7);}DEBUGLOG("play se7\n");break;
+			case 7:if(this->soundbuffer_id_se8 >= 0){NBsys::NDsound::OnceShotPlay(this->soundbuffer_id_se8);}DEBUGLOG("play se8\n");break;
+			case 8:if(this->soundbuffer_id_se9 >= 0){NBsys::NDsound::OnceShotPlay(this->soundbuffer_id_se9);}DEBUGLOG("play se9\n");break;
 			}
 		}
 

@@ -25,7 +25,7 @@
 /** include
 */
 #include "./windowmenu.h"
-#include "./windowmenu_window_drag.h"
+#include "./windowmenu_window_resize.h"
 
 
 /** warning
@@ -45,7 +45,7 @@ namespace NBsys{namespace NWindowMenu
 {
 	/** constructor
 	*/
-	WindowMenu_Window_Drag::WindowMenu_Window_Drag(const STLString& a_name)
+	WindowMenu_Window_Resize::WindowMenu_Window_Resize(const STLString& a_name)
 		:
 		WindowMenu_Window_Base(a_name,WindowMenu_WindowType::Drag),
 		drag_flag(false),
@@ -57,14 +57,14 @@ namespace NBsys{namespace NWindowMenu
 
 	/** destructor
 	*/
-	WindowMenu_Window_Drag::~WindowMenu_Window_Drag()
+	WindowMenu_Window_Resize::~WindowMenu_Window_Resize()
 	{
 	}
 
 
 	/** Initialize
 	*/
-	void WindowMenu_Window_Drag::Initialize(const WindowMenu_Window_Base::InitItem& a_inititem)
+	void WindowMenu_Window_Resize::Initialize(const WindowMenu_Window_Base::InitItem& a_inititem)
 	{
 		WindowMenu_Window_Base::Initialize(a_inititem);
 		{
@@ -82,10 +82,37 @@ namespace NBsys{namespace NWindowMenu
 		}
 	}
 
+	/** システムからのマウス再起処理。
+	*/
+	bool WindowMenu_Window_Resize::System_MouseUpdate(WindowMenu_Mouse& a_mouse)
+	{
+		if((this->outrange_mouseevent)||(this->IsRange(a_mouse.pos))){
+			//範囲内。
+
+			bool t_ret = this->CallBack_InRangeMouseUpdate(a_mouse);
+			if(t_ret == true){
+				//マウス操作を親に伝えない。
+				return true;
+			}
+
+			//子から処理。
+			auto t_it_end = this->child_list.end();
+			for(auto t_it = this->child_list.begin();t_it != t_it_end;++t_it){
+				bool t_ret = (*t_it)->System_MouseUpdate(a_mouse);
+				if(t_ret == true){
+					//マウス操作を親に伝えない。
+					return true;
+				}
+			}
+		}
+
+		//範囲外。
+		return false;
+	}
 
 	/** マウス処理。
 	*/
-	bool WindowMenu_Window_Drag::CallBack_InRangeMouseUpdate(WindowMenu_Mouse& a_mouse)
+	bool WindowMenu_Window_Resize::CallBack_InRangeMouseUpdate(WindowMenu_Mouse& a_mouse)
 	{
 		if(a_mouse.down_l){
 			//ドラッグ開始。
@@ -103,19 +130,19 @@ namespace NBsys{namespace NWindowMenu
 
 	/** 更新処理。
 	*/
-	void WindowMenu_Window_Drag::CallBack_Update()
+	void WindowMenu_Window_Resize::CallBack_Update()
 	{
 		if(this->drag_flag == true){
 			WindowMenu_Mouse& t_mouse = GetSystemInstance()->GetMouse();
 			if(t_mouse.on_l){
 				//ドラッグ中。
 				if(this->parent){
-					this->parent->offset = this->old_pos + (t_mouse.pos - this->start_pos);
-					this->parent->CallBack_CalcRectClear(this->calc_it,this->calc_child_index);
-
-					STLList<WindowMenu_Window_Base*>::Type t_work;
-					this->parent->CalcRect(t_work);
-					this->parent->Calc(t_work);
+					if(this->parent->size.type_w == WindowMenu_SizeType::Fix){
+						this->parent->size.SetW(t_mouse.pos.xx - this->parent->offset.xx);
+						//this->parent->CallBack_CalcRectClear(this->calc_it,this->calc_child_index);
+						//this->parent->CalcRect();
+						GetSystemInstance()->SetChangeRect();
+					}
 				}
 			}else{
 				//ドラッグ終了。

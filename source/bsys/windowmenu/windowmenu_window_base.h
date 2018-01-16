@@ -184,7 +184,11 @@ namespace NBsys{namespace NWindowMenu
 
 		/** サイズ計算。
 		*/
-		void CalcRect();
+		void Calc(STLList<WindowMenu_Window_Base*>::Type& a_work);
+
+		/** サイズ計算。
+		*/
+		void CalcRect(STLList<WindowMenu_Window_Base*>::Type& a_work);
 
 		/** サイズ計算。
 		*/

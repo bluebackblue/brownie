@@ -194,7 +194,10 @@ namespace NBsys{namespace NWindowMenu
 
 					if(t_instance->enable == true){
 						//有効時のみ呼び出すコールバック。
-						t_instance->CalcRect();
+
+						STLList<WindowMenu_Window_Base*>::Type t_work;
+						t_instance->CalcRect(t_work);
+						t_instance->Calc(t_work);
 					}
 				}
 			}
@@ -224,7 +227,10 @@ namespace NBsys{namespace NWindowMenu
 
 					if(t_instance->enable == true){
 						//有効時のみ呼び出すコールバック。
-						t_instance->CalcRect();
+
+						STLList<WindowMenu_Window_Base*>::Type t_work;
+						t_instance->CalcRect(t_work);
+						t_instance->Calc(t_work);
 					}
 				}
 			}

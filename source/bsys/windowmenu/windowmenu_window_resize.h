@@ -1,0 +1,83 @@
+﻿#pragma once
+
+/**
+ * Copyright (c) 2016-2017 blueback
+ * Released under the MIT License
+ * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
+ * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
+ * @brief デバッグメニュー。
+*/
+
+
+/** include
+*/
+#pragma warning(push)
+#pragma warning(disable:4464)
+#include "../types/types.h"
+#pragma warning(pop)
+
+
+/** include
+*/
+#include "./windowmenu.h"
+#include "./windowmenu_window_base.h"
+
+
+/** NBsys::NWindowMenu
+*/
+#if(BSYS_WINDOWMENU_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4820)
+namespace NBsys{namespace NWindowMenu
+{
+	/** リサイズ。
+	*/
+	class WindowMenu_Window_Resize : public WindowMenu_Window_Base
+	{
+	public:
+
+		/** drag_flag
+		*/
+		bool drag_flag;
+
+		/** start_pos
+		*/
+		Position2DType<f32> start_pos;
+
+		/** old_pos
+		*/
+		Position2DType<f32> old_pos;
+
+	public:
+
+		/** constructor
+		*/
+		WindowMenu_Window_Resize(const STLString& a_name);
+
+		/** destructor
+		*/
+		virtual ~WindowMenu_Window_Resize();
+
+		/** Initialize
+		*/
+		void Initialize(const WindowMenu_Window_Base::InitItem& a_inititem);
+
+		/** システムからのマウス再起処理。
+		*/
+		virtual bool System_MouseUpdate(WindowMenu_Mouse& a_mouse);
+
+		/** マウス処理。
+		*/
+		virtual bool CallBack_InRangeMouseUpdate(WindowMenu_Mouse& a_mouse);
+
+		/** 更新処理。
+		*/
+		virtual void CallBack_Update();
+
+	};
+
+
+}}
+#pragma warning(pop)
+#endif
+

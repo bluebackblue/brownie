@@ -71,12 +71,14 @@ namespace NTest{namespace NCommon
 			}
 		}
 
-		/** ウィンドウ。
-		*/
+		//ウィンドウ。
 		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Window> t_window = this->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Window>("window");
 
+		//ウィンドウ -> サイズ変更。
+		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Resize> t_window_resize = t_window->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Resize>("resize");
+
 		//ウィンドウ -> ボディー背景。
-		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Plate> t_bodybg = t_window->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Plate>("");
+		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Plate> t_bodybg = t_window_resize->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Plate>("");
 
 		//ウィンドウ -> ボディー背景　-> ログテキスト。
 		for(s32 ii=0;ii<COUNTOF(this->window_logtext);ii++){
@@ -89,7 +91,7 @@ namespace NTest{namespace NCommon
 			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Vertical;	//縦積み。
 			t_inititem.offset.Set(a_offset_x,a_offset_y);
 			t_inititem.size.SetW(300.0f);
-			t_inititem.size.SetH_StretchChild();
+			t_inititem.size.SetH(150.0f);
 			t_window->Initialize(t_inititem);
 			{
 				t_window->window_title_text->string = L"ログ";
@@ -105,11 +107,22 @@ namespace NTest{namespace NCommon
 			}
 		}
 
+		//ウィンドウ -> サイズ変更。
+		{
+			NBsys::NWindowMenu::WindowMenu_Window_Resize::InitItem t_inititem;
+			t_window_resize->Initialize(t_inititem);
+			{
+				t_window_resize->outrange_mouseevent = true;
+				t_window_resize->size.SetH_StretchParent();
+				t_window_resize->size.SetW_StretchParent();
+			}
+		}
+
 		//ウィンドウ -> ボディー背景。
 		{
 			NBsys::NWindowMenu::WindowMenu_Window_Plate::InitItem t_inititem;
 			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Vertical;	//縦積み。
-			t_inititem.size.SetH_StretchChild();
+			t_inititem.size.SetH_StretchParent();
 
 			t_bodybg->Initialize(t_inititem);
 			{

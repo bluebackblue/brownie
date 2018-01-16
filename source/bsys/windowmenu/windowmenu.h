@@ -38,6 +38,7 @@
 #include "./windowmenu_window_text.h"
 #include "./windowmenu_window_button.h"
 #include "./windowmenu_window_window.h"
+#include "./windowmenu_window_resize.h"
 
 
 /** NBsys::NWindowMenu
