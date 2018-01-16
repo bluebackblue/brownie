@@ -1536,7 +1536,15 @@ namespace NBsys{namespace ND3d11
 			if(this->swapchain){
 				HRESULT t_result = this->swapchain->Present(static_cast<UINT>(a_sync_interval),0);
 
-				if(t_result == DXGI_STATUS_OCCLUDED){
+				if(t_result == DXGI_ERROR_DEVICE_REMOVED){
+					
+					/*
+					ビデオ カードがシステムから物理的に取り外されているか、ビデオ カードのドライバー アップグレードが行われています。
+					アプリケーションはデバイスを破棄し、再作成する必要があります。
+					ID3D10Device::GetDeviceRemovedReason を呼び出すと、この問題のデバッグに役立つ情報を参照できます。
+					*/
+
+				}else if(t_result == DXGI_STATUS_OCCLUDED){
 
 					/*
 					ターゲット ウィンドウ (または IDXGIOutput) が、z オーダーに基づいて別のウィンドウによってオクルードされています。

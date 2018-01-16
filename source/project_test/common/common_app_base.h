@@ -56,18 +56,13 @@ namespace NTest{namespace NCommon
 		*/
 		AtomicValue<bool> endrequest;
 
-		/** loop_time
-		*/
-		AtomicValue<f32> loop_time;
-
 	public:
 
 		/** constructor
 		*/
 		App_Base_Thread()
 			:
-			endrequest(false),
-			loop_time(0.0f)
+			endrequest(false)
 		{
 		}
 
@@ -128,14 +123,6 @@ namespace NTest{namespace NCommon
 			this->endrequest.Store(true);
 		}
 
-		/** ループタイム。
-		*/
-		f32 GetLoopTime()
-		{
-			return this->loop_time.Load();
-
-		}
-
 	};
 
 
@@ -160,6 +147,10 @@ namespace NTest{namespace NCommon
 		/** pcounter
 		*/
 		u64 pcounter;
+
+		/** loop_time
+		*/
+		AtomicValue<f32> loop_time;
 
 		/** pad_device
 		*/
@@ -246,6 +237,7 @@ namespace NTest{namespace NCommon
 			window(),
 			d3d11(),
 			pcounter(0),
+			loop_time(0.0f),
 			#if(DEF_TEST_AUTO)
 			autotest(),
 			autotime(0.0f),
@@ -676,7 +668,7 @@ namespace NTest{namespace NCommon
 						const NBsys::NPad::TouchValue& t_mouse_l = NBsys::NPad::GetVirtualPad(NCommon::Pad_Device::Type::Pad1)->GetTouchValue(NBsys::NPad::Pad_Virtual::TouchType::MOUSEL);
 
 						//許容値の何倍か。
-						f32 t_loop_time = this->thread->get()->GetLoopTime() / (1.0f/60.0f);
+						f32 t_loop_time = this->loop_time.Load() / (1.0f/60.0f);
 
 						//文字列作成。
 						STLWString t_string;
@@ -801,7 +793,19 @@ namespace NTest{namespace NCommon
 					break;
 				}
 
-				ThreadSleep(1000/60);
+				{
+					s64 t_counter = PerformanceCounter::GetPerformanceCounter();
+					{
+						this->Loop();
+					}
+					f32 t_counter_len = static_cast<f32>(PerformanceCounter::GetPerformanceCounter() - t_counter);
+					t_counter_len /= PerformanceCounter::GetPerformanceSecCounter();
+					this->loop_time.Store(t_counter_len);
+				}
+
+				{
+					this->Loop_Sync();
+				}
 
 			}
 
@@ -843,6 +847,7 @@ namespace NTest{namespace NCommon
 		while(1){
 			ThreadSleep(0);
 
+			/*
 			{
 				s64 t_counter = PerformanceCounter::GetPerformanceCounter();
 				{
@@ -856,6 +861,7 @@ namespace NTest{namespace NCommon
 			{
 				a_threadargument.app->Loop_Sync();
 			}
+			*/
 
 			//終了チェック。
 			if(this->endrequest.Load()){

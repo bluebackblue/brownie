@@ -51,7 +51,7 @@ namespace NBsys{namespace NDsound
 	*/
 	void Dsound_Thread::ThreadMain(Dsound_Thread::ThreadArgument& a_threadargument)
 	{
-		bool t_request = false;
+		//bool t_request = false;
 
 		//MemoryContainer t_memorycontainer(BSYS_DSOUND_MEMORYCONTAINER);
 
@@ -70,11 +70,12 @@ namespace NBsys{namespace NDsound
 		while(1){
 
 			//リクエスト待ち。
-			if(t_request == false){
-				this->request_event.Wait();
-			}else{
-				t_request = false;
-			}
+			//if(t_request == false){
+			//	this->request_event.Wait();
+			//}else{
+			//	t_request = false;
+			//}
+			ThreadSleep(1000/120);
 
 			//リクエスト受付開始。
 			this->request_event.Clear();
