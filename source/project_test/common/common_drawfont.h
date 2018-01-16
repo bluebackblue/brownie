@@ -467,8 +467,6 @@ namespace NTest{namespace NCommon
 
 				//描画。
 				this->d3d11->Render_Draw(this->vertex->GetVertexCountOf(0),0);
-
-
 			}
 		}
 	};

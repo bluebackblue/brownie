@@ -58,7 +58,7 @@ namespace NBsys{namespace NWindowMenu
 		WindowMenu_Window_Base(a_name,WindowMenu_WindowType::Text),
 		color(1.0f,1.0f,1.0f,1.0f),
 		string(L""),
-		clip(true),
+		clip(false),
 		alignment(NBsys::NFont::Font_Alignment::Left_VCenter)
 	{
 	}

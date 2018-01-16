@@ -177,7 +177,7 @@ namespace NBsys{namespace NWindowMenu
 					GetSystemInstance()->GetCallback()->DrawFont_Callback(
 						a_z_sort + this->z_sort + 1,
 						this->calc_rect,
-						true,
+						false,
 						t_font_size,
 						t_font_texture_index,
 						t_font_color,

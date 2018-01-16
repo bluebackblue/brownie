@@ -125,6 +125,7 @@ namespace NTest{namespace NCommon
 			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//横積み。
 			t_inititem.size.SetH(16);
 			this->window_logtext[ii]->Initialize(t_inititem);
+			this->window_logtext[ii]->clip = true;
 		}
 	}
 
