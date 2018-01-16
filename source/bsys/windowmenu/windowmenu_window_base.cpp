@@ -330,6 +330,48 @@ namespace NBsys{namespace NWindowMenu
 	void WindowMenu_Window_Base::CalcW_Fix()
 	{
 		//固定。
+
+		if(this->parent){
+			if(this->parent->mode == WindowMenu_Mode::Horizontal){
+				//自分が累積メンバー。
+				if(this->parent->size.type_w != WindowMenu_SizeType::StretchChild){
+					//自分のサイズが親のサイズに影響しない。
+				
+					bool t_have_streach = false;
+					auto t_it_end = this->parent->child_list.end();
+					for(auto t_it = this->parent->child_list.begin();((t_it != t_it_end)&&(t_have_streach == false));++t_it){
+						WindowMenu_Window_Base* t_parent_child = t_it->get();
+						if(t_parent_child->size.type_w == WindowMenu_SizeType::StretchParent){
+							t_have_streach = true;
+						}
+					}
+
+					if(t_have_streach == true){
+						//自分の所属する累積メンバーにストレッチが存在する場合ははみ出ない。
+					}else{
+						//はみ出た分をクリッピング。
+						if((this->parent->calc_x_fix == true)&&(this->parent->calc_w_fix = true)&&(this->calc_x_fix == true)){
+							f32 t_max = this->parent->calc_rect.xx + this->parent->calc_rect.ww - this->calc_rect.xx;
+							if(t_max <= 0.0f){
+								t_max = 0.0f;
+							}
+							if(this->size.size.ww > t_max){
+								this->calc_rect.ww = t_max;
+								this->calc_w_fix = true;
+							}else{
+								this->calc_rect.ww = this->size.size.ww;
+								this->calc_w_fix = true;
+							}
+							return;
+						}else{
+							//親の計算待ち。
+							return;
+						}
+					}
+				}
+			}
+		}
+
 		this->calc_rect.ww = this->size.size.ww;
 		this->calc_w_fix = true;
 	}
@@ -340,6 +382,48 @@ namespace NBsys{namespace NWindowMenu
 	void WindowMenu_Window_Base::CalcH_Fix()
 	{
 		//固定。
+
+		if(this->parent){
+			if(this->parent->mode == WindowMenu_Mode::Vertical){
+				//自分が累積メンバー。
+				if(this->parent->size.type_h != WindowMenu_SizeType::StretchChild){
+					//自分のサイズが親のサイズに影響しない。
+
+					bool t_have_streach = false;
+					auto t_it_end = this->parent->child_list.end();
+					for(auto t_it = this->parent->child_list.begin();((t_it != t_it_end)&&(t_have_streach == false));++t_it){
+						WindowMenu_Window_Base* t_parent_child = t_it->get();
+						if(t_parent_child->size.type_h == WindowMenu_SizeType::StretchParent){
+							t_have_streach = true;
+						}
+					}
+
+					if(t_have_streach == true){
+						//自分の所属する累積メンバーにストレッチが存在する場合ははみ出ない。
+					}else{
+						//はみ出た分をクリッピング。
+						if((this->parent->calc_y_fix == true)&&(this->parent->calc_h_fix = true)&&(this->calc_y_fix == true)){
+							f32 t_max = this->parent->calc_rect.yy + this->parent->calc_rect.hh - this->calc_rect.yy;
+							if(t_max <= 0.0f){
+								t_max = 0.0f;
+							}
+							if(this->size.size.hh > t_max){
+								this->calc_rect.hh = t_max;
+								this->calc_h_fix = true;
+							}else{
+								this->calc_rect.hh = this->size.size.hh;
+								this->calc_h_fix = true;
+							}
+							return;
+						}else{
+							//親の計算待ち。
+							return;
+						}
+					}
+				}
+			}
+		}
+
 		this->calc_rect.hh = this->size.size.hh;
 		this->calc_h_fix = true;
 	}
