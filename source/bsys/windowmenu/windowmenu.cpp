@@ -94,7 +94,9 @@ namespace NBsys{namespace NWindowMenu
 			if(t_it_begin != t_it_end){
 				//マウス更新。
 				{
-					auto t_it_movetolast = t_it_end;
+					bool t_mousefix = false;
+
+					auto t_it_current = t_it_end;
 					auto t_it = t_it_end;
 			
 					for(;;){
@@ -103,21 +105,14 @@ namespace NBsys{namespace NWindowMenu
 						WindowMenu_Window_Base* t_instance = t_it->get();
 
 						if(t_instance->enable == true){
-							
 							//有効時のみ呼び出すコールバック。
-							bool t_ret = t_instance->System_MouseUpdate(this->mouse);
-							if(t_ret == true){
-								//マウス操作を次に伝えない。
-
-								//最後尾へ移動。
-								if(this->mouse.down_l || this->mouse.down_r){
-									auto t_it_last = get_last_const_iterator(this->list);
-									if(t_it != t_it_last){
-										t_it_movetolast = t_it;
-									}
+							
+							t_instance->System_MouseUpdate(this->mouse,t_mousefix);
+							
+							if(t_mousefix == true){
+								if(t_it_current == t_it_end){
+									t_it_current = t_it;
 								}
-
-								break;
 							}
 						}
 						
@@ -127,15 +122,17 @@ namespace NBsys{namespace NWindowMenu
 					}
 
 					//最後尾へ移動。
-					if(t_it_movetolast != t_it_end){
-						sharedptr<WindowMenu_Window_Base> t_active = *t_it_movetolast;
-						
-						this->list.erase(t_it_movetolast);
-						this->list.push_back(t_active);
-
-						//アクティブ変更チェック。
-						this->changeactive_check = true;
-
+					if(this->mouse.down_l || this->mouse.down_r){
+						if(t_it_current != t_it_end){
+							if(get_last_const_iterator(this->list) != t_it_current){
+								sharedptr<WindowMenu_Window_Base> t_current = *t_it_current;
+								this->list.erase(t_it_current);
+								this->list.push_back(t_current);
+								
+								//アクティブ変更チェック。
+								this->changeactive_check = true;
+							}
+						}
 					}
 				}
 

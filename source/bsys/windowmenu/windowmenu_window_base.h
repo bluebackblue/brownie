@@ -225,8 +225,11 @@ namespace NBsys{namespace NWindowMenu
 	public:
 
 		/** システムからのマウス再起処理。
+
+		a_mousefix	: true = マウスは処理済み。
+
 		*/
-		virtual bool System_MouseUpdate(WindowMenu_Mouse& a_mouse);
+		virtual void System_MouseUpdate(WindowMenu_Mouse& a_mouse,bool& a_mousefix);
 
 		/** システムからの更新処理。
 		*/
@@ -241,8 +244,11 @@ namespace NBsys{namespace NWindowMenu
 		virtual void System_ChangeActive(bool a_active);
 
 		/** マウス処理。
+
+		a_mousefix	: true = マウスは処理済み。
+
 		*/
-		virtual bool CallBack_InRangeMouseUpdate(WindowMenu_Mouse& a_mouse);
+		virtual void CallBack_MouseUpdate(WindowMenu_Mouse& a_mouse,bool& a_mousefix);
 
 		/** 更新処理。
 		*/

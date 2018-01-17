@@ -110,11 +110,23 @@ namespace NBsys{namespace NWindowMenu
 
 
 	/** マウス処理。
+
+	a_mousefix	: true = マウスは処理済み。
+
 	*/
-	bool WindowMenu_Window_Plate::CallBack_InRangeMouseUpdate(WindowMenu_Mouse& /*a_mouse*/)
+	void WindowMenu_Window_Plate::CallBack_MouseUpdate(WindowMenu_Mouse& a_mouse,bool& a_mousefix)
 	{
-		//マウス操作を親に伝えない。
-		return this->mouseblock;
+		if(a_mousefix == false){
+			if(this->mouseblock){
+				if(this->IsRange(a_mouse.pos)){
+
+					//マウス処理。
+					a_mousefix = true;
+
+					return;
+				}
+			}
+		}
 	}
 
 

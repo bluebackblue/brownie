@@ -84,20 +84,34 @@ namespace NBsys{namespace NWindowMenu
 
 
 	/** マウス処理。
+
+	a_mousefix	: true = マウスは処理済み。
+
 	*/
-	bool WindowMenu_Window_Drag::CallBack_InRangeMouseUpdate(WindowMenu_Mouse& a_mouse)
+	void WindowMenu_Window_Drag::CallBack_MouseUpdate(WindowMenu_Mouse& a_mouse,bool& a_mousefix)
 	{
-		if(a_mouse.down_l){
-			//ドラッグ開始。
-			if(this->parent){
-				this->drag_flag = true;
-				this->start_pos = a_mouse.pos;
-				this->old_pos = this->parent->offset;
+		if(a_mousefix == false){
+			if(this->IsRange(a_mouse.pos)){
+
+				//マウス処理。
+				a_mousefix = true;
+
+				//マウスが範囲内。
+				//this->on_flag = true;
+
+				//ドラッグ開始。
+				if(a_mouse.down_l && this->parent){
+					this->drag_flag = true;
+					this->start_pos = a_mouse.pos;
+					this->old_pos = this->parent->offset;
+				}
+
+				return;
 			}
 		}
 
-		//マウス操作を親に伝えない。
-		return true;
+		//マウスが範囲外。
+		//this->on_flag = false;
 	}
 
 

@@ -659,30 +659,16 @@ namespace NBsys{namespace NWindowMenu
 
 	/** システムからのマウス再起処理。
 	*/
-	bool WindowMenu_Window_Base::System_MouseUpdate(WindowMenu_Mouse& a_mouse)
+	void WindowMenu_Window_Base::System_MouseUpdate(WindowMenu_Mouse& a_mouse,bool& a_mousefix)
 	{
-		if((this->outrange_mouseevent)||(this->IsRange(a_mouse.pos))){
-			//範囲内。
-
-			//子から処理。
-			auto t_it_end = this->child_list.end();
-			for(auto t_it = this->child_list.begin();t_it != t_it_end;++t_it){
-				bool t_ret = (*t_it)->System_MouseUpdate(a_mouse);
-				if(t_ret == true){
-					//マウス操作を親に伝えない。
-					return true;
-				}
-			}
-
-			bool t_ret = this->CallBack_InRangeMouseUpdate(a_mouse);
-			if(t_ret == true){
-				//マウス操作を親に伝えない。
-				return true;
-			}
+		//子から処理。
+		auto t_it_end = this->child_list.end();
+		for(auto t_it = this->child_list.begin();t_it != t_it_end;++t_it){
+			(*t_it)->System_MouseUpdate(a_mouse,a_mousefix);
 		}
 
-		//範囲外。
-		return false;
+		//自分の処理。
+		this->CallBack_MouseUpdate(a_mouse,a_mousefix);
 	}
 
 
@@ -728,11 +714,12 @@ namespace NBsys{namespace NWindowMenu
 
 
 	/** マウス処理。
+
+	a_mousefix	: true = マウスは処理済み。
+
 	*/
-	bool WindowMenu_Window_Base::CallBack_InRangeMouseUpdate(WindowMenu_Mouse& /*a_mouse*/)
+	void WindowMenu_Window_Base::CallBack_MouseUpdate(WindowMenu_Mouse& /*a_mouse*/,bool& a_mousefix)
 	{
-		//マウス操作を親に伝える。
-		return false;
 	}
 
 

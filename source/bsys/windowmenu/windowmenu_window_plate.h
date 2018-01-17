@@ -67,8 +67,11 @@ namespace NBsys{namespace NWindowMenu
 		virtual bool CallBack_Draw(s32 a_z_sort);
 
 		/** マウス処理。
+
+		a_mousefix	: true = マウスは処理済み。
+
 		*/
-		virtual bool CallBack_InRangeMouseUpdate(WindowMenu_Mouse& a_mouse);
+		virtual void CallBack_MouseUpdate(WindowMenu_Mouse& a_mouse,bool& a_mousefix);
 
 	};
 
