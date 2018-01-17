@@ -119,10 +119,6 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		WindowMenu_Size size;
 
-		/** 範囲外のマウスイベント通知。
-		*/
-		bool outrange_mouseevent;
-
 		/** 描画する。
 		*/
 		bool draw_enable;

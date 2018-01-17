@@ -67,7 +67,6 @@ namespace NTest{namespace NCommon
 			t_inititem.size.SetH(0.0f);
 			this->Initialize(t_inititem);
 			{
-				this->outrange_mouseevent = true;
 			}
 		}
 
@@ -77,10 +76,10 @@ namespace NTest{namespace NCommon
 		//ウィンドウ -> サイズ変更。
 		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Resize> t_window_resize = t_window->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Resize>("resize");
 
-		//ウィンドウ -> ボディー背景。
+		//ウィンドウ -> サイズ変更 -> ボディー背景。
 		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Plate> t_bodybg = t_window_resize->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Plate>("");
 
-		//ウィンドウ -> ボディー背景　-> ログテキスト。
+		//ウィンドウ -> サイズ変更 -> ボディー背景　-> ログテキスト。
 		for(s32 ii=0;ii<COUNTOF(this->window_logtext);ii++){
 			this->window_logtext[ii] = t_bodybg->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Text>("");
 		}
@@ -110,20 +109,19 @@ namespace NTest{namespace NCommon
 		//ウィンドウ -> サイズ変更。
 		{
 			NBsys::NWindowMenu::WindowMenu_Window_Resize::InitItem t_inititem;
+			t_inititem.size.SetW_StretchParent();
+			t_inititem.size.SetH_StretchParent();
 			t_window_resize->Initialize(t_inititem);
 			{
-				t_window_resize->outrange_mouseevent = true;
-				t_window_resize->size.SetH_StretchParent();
-				t_window_resize->size.SetW_StretchParent();
 			}
 		}
 
-		//ウィンドウ -> ボディー背景。
+		//ウィンドウ -> サイズ変更 -> ボディー背景。
 		{
 			NBsys::NWindowMenu::WindowMenu_Window_Plate::InitItem t_inititem;
 			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Vertical;	//縦積み。
+			t_inititem.size.SetW_StretchParent();
 			t_inititem.size.SetH_StretchParent();
-
 			t_bodybg->Initialize(t_inititem);
 			{
 				t_bodybg->color = NBsys::NColor::Color_F(0.1f,0.1f,0.1f,1.0f);
@@ -132,10 +130,11 @@ namespace NTest{namespace NCommon
 			}
 		}
 
-		//ウィンドウ -> ボディー背景　-> ログテキスト。
+		//ウィンドウ -> サイズ変更 -> ボディー背景　-> ログテキスト。
 		for(s32 ii=0;ii<COUNTOF(this->window_logtext);ii++){
 			NBsys::NWindowMenu::WindowMenu_Window_Text::InitItem t_inititem;
 			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//横積み。
+			t_inititem.size.SetW_StretchParent();
 			t_inititem.size.SetH(16);
 			this->window_logtext[ii]->Initialize(t_inititem);
 			this->window_logtext[ii]->clip = true;

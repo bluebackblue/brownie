@@ -58,7 +58,6 @@ namespace NBsys{namespace NWindowMenu
 		mode(WindowMenu_Mode::Free),
 		offset(),
 		size(),
-		outrange_mouseevent(false),
 		draw_enable(true),
 		calc_x_fix(false),
 		calc_y_fix(false),
@@ -87,7 +86,6 @@ namespace NBsys{namespace NWindowMenu
 		this->mode = a_inititem.mode;
 		this->offset = a_inititem.offset;
 		this->size = a_inititem.size;
-		this->outrange_mouseevent = false;
 		this->draw_enable = true;
 		this->calc_x_fix = false;
 		this->calc_y_fix = false;

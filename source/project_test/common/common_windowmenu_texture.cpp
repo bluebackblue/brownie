@@ -54,30 +54,31 @@ namespace NTest{namespace NCommon
 			t_inititem.size.SetH(0.0f);
 			this->Initialize(t_inititem);
 			{
-				this->outrange_mouseevent = true;
 			}
 		}
 
-		/** ウィンドウ。
-		*/
+		//ウィンドウ。
 		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Window> t_window = this->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Window>("window");
 
-		//ウィンドウ -> ボディー背景。
+		//ウィンドウ -> サイズ変更。
+		//sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Resize> t_window_resize = t_window->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Resize>("resize");
+
+		//ウィンドウ -> サイズ変更 -> ボディー背景。
 		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Plate> t_bodybg = t_window->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Plate>("bodybg");
 
-		//ウィンドウ -> ボディー背景 -> コントロール。
+		//ウィンドウ -> サイズ変更 -> ボディー背景 -> コントロール。
 		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Area> t_control = t_bodybg->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Area>("control");
 
-		//ウィンドウ -> ボディー背景 -> コントロール -> ボタンエリア。
+		//ウィンドウ -> サイズ変更 -> ボディー背景 -> コントロール -> ボタンエリア。
 		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Area> t_buttonarea = t_control->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Area>("buttonarea");
 
-		//ウィンドウ -> ボディー背景 -> コントロール -> ボタンエリア -> 左ボタン。
+		//ウィンドウ -> サイズ変更 -> ボディー背景 -> コントロール -> ボタンエリア -> 左ボタン。
 		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Button> t_lbutton = t_buttonarea->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Button>("lbutton");
 
-		//ウィンドウ -> ボディー背景 -> コントロール -> ボタンエリア -> 右ボタン。
+		//ウィンドウ -> サイズ変更 -> ボディー背景 -> コントロール -> ボタンエリア -> 右ボタン。
 		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Button> t_rbutton = t_buttonarea->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Button>("rbutton");
 
-		//ウィンドウ -> ボディー背景 -> テクスチャー。
+		//ウィンドウ -> サイズ変更 -> ボディー背景 -> テクスチャー。
 		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Plate> t_texture = t_bodybg->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Plate>("texture");
 
 		//ウィンドウ。
@@ -86,7 +87,7 @@ namespace NTest{namespace NCommon
 			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Vertical;	//縦積み。
 			t_inititem.offset.Set(a_offset_x,a_offset_y);
 			t_inititem.size.SetW(400.0f);
-			t_inititem.size.SetH_StretchChild();
+			t_inititem.size.SetH(400.0f);
 			t_window->Initialize(t_inititem);
 			{
 				t_window->window_title_text->string = L"テクスチャー";
@@ -102,7 +103,19 @@ namespace NTest{namespace NCommon
 			}
 		}
 
-		//ウィンドウ -> ボディー背景。
+		//ウィンドウ -> サイズ変更。
+		/*
+		{
+			NBsys::NWindowMenu::WindowMenu_Window_Resize::InitItem t_inititem;
+			t_window_resize->Initialize(t_inititem);
+			{
+				t_window_resize->size.SetH_StretchParent();
+				t_window_resize->size.SetW_StretchParent();
+			}
+		}
+		*/
+
+		//ウィンドウ -> サイズ変更 -> ボディー背景。
 		{
 			NBsys::NWindowMenu::WindowMenu_Window_Plate::InitItem t_inititem;
 			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Vertical;	//縦積み。
@@ -115,7 +128,7 @@ namespace NTest{namespace NCommon
 			}
 		}
 
-		//ウィンドウ -> ボディー背景 -> コントロール。
+		//ウィンドウ -> サイズ変更 -> ボディー背景 -> コントロール。
 		{
 			NBsys::NWindowMenu::WindowMenu_Window_Area::InitItem t_inititem;
 			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Vertical;	//縦積み。
@@ -123,14 +136,14 @@ namespace NTest{namespace NCommon
 			t_control->Initialize(t_inititem);
 		}
 
-		//ウィンドウ -> ボディー背景 -> コントロール -> ボタンエリア。
+		//ウィンドウ -> サイズ変更 -> ボディー背景 -> コントロール -> ボタンエリア。
 		{
 			NBsys::NWindowMenu::WindowMenu_Window_Area::InitItem t_inititem;
 			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//横積み。
 			t_buttonarea->Initialize(t_inititem);
 		}
 
-		//ウィンドウ -> ボディー背景 -> コントロール -> ボタンエリア -> 左ボタン。
+		//ウィンドウ -> サイズ変更 -> ボディー背景 -> コントロール -> ボタンエリア -> 左ボタン。
 		{
 			NBsys::NWindowMenu::WindowMenu_Window_Button::InitItem t_inititem;
 			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//横積み。
@@ -144,7 +157,7 @@ namespace NTest{namespace NCommon
 			}
 		}
 
-		//ウィンドウ -> ボディー背景 -> コントロール -> ボタンエリア -> 右ボタン。
+		//ウィンドウ -> サイズ変更 -> ボディー背景 -> コントロール -> ボタンエリア -> 右ボタン。
 		{
 			NBsys::NWindowMenu::WindowMenu_Window_Button::InitItem t_inititem;
 			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//横積み。
@@ -158,7 +171,7 @@ namespace NTest{namespace NCommon
 			}
 		}
 
-		//ウィンドウ -> ボディー背景 -> テクスチャー。
+		//ウィンドウ -> サイズ変更 -> ボディー背景 -> テクスチャー。
 		{
 			NBsys::NWindowMenu::WindowMenu_Window_Plate::InitItem t_inititem;
 			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;	//横積み。
