@@ -79,10 +79,6 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		virtual void CallBack_MouseUpdate(WindowMenu_Mouse& a_mouse,bool& a_mousefix);
 
-		/** 更新処理。
-		*/
-		virtual void CallBack_Update();
-
 		/** 描画処理。
 		*/
 		virtual bool CallBack_Draw(s32 a_z_sort);

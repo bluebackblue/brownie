@@ -109,7 +109,7 @@ namespace NBsys{namespace NWindowMenu
 		if(this->drag_flag == true){
 			//ドラッグ中。
 
-			if(a_mouse.on_l == true && this->parent != nullptr){
+			if((a_mouse.on_l == true)&&(this->parent != nullptr)){
 				//追従。
 				if(this->parent->size.type_w == WindowMenu_SizeType::Fix){
 					f32 t_w = a_mouse.pos.xx - this->parent->offset.xx;
@@ -136,15 +136,12 @@ namespace NBsys{namespace NWindowMenu
 		if(a_mousefix == false){
 			f32 t_x = this->calc_rect.xx + this->calc_rect.ww - a_mouse.pos.xx;
 			f32 t_y = this->calc_rect.yy + this->calc_rect.hh - a_mouse.pos.yy;
-			if(t_x * t_x + t_y * t_y < 100.0f){
+			if((t_x * t_x) + (t_y * t_y) < 100.0f){
 				//マウス処理。
 				a_mousefix = true;
 
-				//マウスが範囲内。
-				//this->on_flag = true;
-
 				//ドラッグ開始。
-				if(this->drag_flag == false && a_mouse.down_l == true && this->parent != nullptr){
+				if((this->drag_flag == false)&&(a_mouse.down_l == true)&&(this->parent != nullptr)){
 					this->drag_flag = true;
 					this->start_pos = a_mouse.pos;
 					this->old_pos = this->parent->offset;
@@ -153,17 +150,6 @@ namespace NBsys{namespace NWindowMenu
 				return;
 			}
 		}
-
-		//マウスが範囲外。
-		//this->on_flag = false;
-	}
-
-
-	/** 更新処理。
-	*/
-	void WindowMenu_Window_Resize::CallBack_Update()
-	{
-		//TODO:
 	}
 
 

@@ -102,49 +102,43 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	void WindowMenu_Window_Button::CallBack_MouseUpdate(WindowMenu_Mouse& a_mouse,bool& a_mousefix)
 	{
+		if(this->push_flag == true){
+			//プッシュ中。
+
+			if(a_mouse.on_l == true){
+				//監視。
+			}else{
+				//プッシュ終了。
+				this->push_flag = false;
+
+				//アクション。
+				if(this->IsRange(a_mouse.pos)){
+					if(this->action){
+						this->action();
+					}
+				}
+			}
+		}
+
 		if(a_mousefix == false){
 			if(this->IsRange(a_mouse.pos)){
-
 				//マウス処理。
 				a_mousefix = true;
 
-				//マウスが範囲内。
-				this->on_flag = true;
+				//プッシュ開始。
+				if((this->push_flag == false)&&(a_mouse.down_l == true)){
+					this->push_flag = true;
+				}
+
+				//マウスが乗っている。
+				this->on_flag =  true;
 
 				return;
 			}
 		}
 
-		//マウスが範囲外。
+		//マウスが乗っていない。
 		this->on_flag = false;
-	}
-
-
-	/** 更新処理。
-	*/
-	void WindowMenu_Window_Button::CallBack_Update()
-	{
-		if(this->push_flag == true){
-			WindowMenu_Mouse& t_mouse = GetSystemInstance()->GetMouse();
-			if(t_mouse.up_l){
-				this->push_flag = false;
-				if(this->IsRange(t_mouse.pos)){
-					//プッシュ確定。
-					if(this->action){
-						this->action();
-					}
-				}else{
-					//プッシュキャンセル。
-				}
-			}
-		}
-
-		if(this->on_flag == true){
-			WindowMenu_Mouse& t_mouse = GetSystemInstance()->GetMouse();
-
-			//マウスがボタンの上。
-			this->on_flag = this->IsRange(t_mouse.pos);
-		}
 	}
 
 
