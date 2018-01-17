@@ -92,6 +92,14 @@ namespace NBsys{namespace ND3d11
 	}
 
 
+	/** テクスチャー取得。
+	*/
+	sharedptr<NBsys::NTexture::Texture>& D3d11::GetTextureState(s32 a_texture_id)
+	{
+		return this->impl->GetTextureState(a_texture_id);
+	}
+
+
 	/** CreateVertexShader
 	*/
 	s32 D3d11::CreateVertexShader(AsyncResult<bool>& a_asyncresult,sharedptr<NBsys::NFile::File_Object>& a_fileobject,sharedptr<STLVector<NBsys::ND3d11::D3d11_Layout>::Type>& a_layout)

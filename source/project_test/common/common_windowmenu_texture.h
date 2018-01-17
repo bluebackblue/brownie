@@ -38,6 +38,14 @@ namespace NTest{namespace NCommon
 		*/
 		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Plate> window_texture;
 
+		/** name_text
+		*/
+		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Text> name_text;
+
+		/** size_text
+		*/
+		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Text> size_text;
+
 		/** d3d11
 		*/
 		sharedptr<NBsys::ND3d11::D3d11> d3d11;

@@ -85,6 +85,10 @@ namespace NBsys{namespace ND3d11
 		*/
 		void CreateTextureIdList(STLVector<s32>::Type& a_list);
 
+		/** テクスチャー取得。
+		*/
+		sharedptr<NBsys::NTexture::Texture>& GetTextureState(s32 a_texture_id);
+
 	public:
 
 		/** CreateVertexShader

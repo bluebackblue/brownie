@@ -139,6 +139,21 @@ namespace NBsys{namespace ND3d11
 	}
 
 
+	/** テクスチャー取得。
+	*/
+	sharedptr<NBsys::NTexture::Texture>& D3d11_Impl::GetTextureState(s32 a_texture_id)
+	{
+		auto t_it = this->texture_list.find(a_texture_id);
+		if(t_it != this->texture_list.cend()){
+			if(t_it->second != nullptr){
+				return t_it->second->texture;
+			}
+		}
+
+		return sharedptr_null<NBsys::NTexture::Texture>();
+	}
+
+
 	/** Render_Create
 	*/
 	void D3d11_Impl::Render_Create(sharedptr<NWindow::Window>& a_window,const Size2DType<f32>& a_size)
