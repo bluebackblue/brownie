@@ -311,7 +311,7 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Vector3& Geometry_Vector3::Set_Y(f32 a_yy)
 	{
-		this->raw.v.yy = a_y;
+		this->raw.v.yy = a_yy;
 
 		return *this;
 	}
@@ -321,7 +321,7 @@ namespace NBsys{namespace NGeometry
 	*/
 	inline Geometry_Vector3& Geometry_Vector3::Set_Z(f32 a_zz)
 	{
-		this->raw.v.zz = a_z;
+		this->raw.v.zz = a_zz;
 
 		return *this;
 	}
