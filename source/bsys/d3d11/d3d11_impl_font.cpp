@@ -244,32 +244,36 @@ namespace NBsys{namespace ND3d11
 		sharedptr<D3d11_Impl_Texture>& t_texture = this->d3d11_impl.GetTexture(this->textureid);
 		if(t_texture){
 			D3D11_MAPPED_SUBRESOURCE t_mapped_resource;
-			HRESULT t_result = this->d3d11_impl.GetDeviceContext()->Map(t_texture->texture2d.get(),0,D3D11_MAP_WRITE_DISCARD,0,&t_mapped_resource);
 
-			if(SUCCEEDED(t_result)){
-				s32 t_from_pitch = this->texture_size.ww * 4;
-				if(static_cast<s32>(t_mapped_resource.RowPitch) == t_from_pitch){
-					u8* t_to = &reinterpret_cast<u8*>(t_mapped_resource.pData)[t_change_min * this->texture_size.ww * t_mapped_resource.RowPitch];
-					u8* t_from = &this->texture->GetPixel().get()[t_change_min * this->texture_size.ww * t_from_pitch];
+			sharedptr<ID3D11DeviceContext>& t_devicecontext = this->d3d11_impl.GetDeviceContext();
+			if(t_devicecontext != nullptr){
+				HRESULT t_result = t_devicecontext->Map(t_texture->texture2d.get(),0,D3D11_MAP_WRITE_DISCARD,0,&t_mapped_resource);
 
-					s32 t_size = (t_change_max - t_change_min + 1) * this->texture_size.ww * t_from_pitch;
-					NMemory::Copy(t_to,t_size,t_from,t_size);
-				}else{
-					for(s32 ii=t_change_min;ii<=t_change_max;ii++){
-						u32 t_blocksize_to = static_cast<u32>(ii * t_mapped_resource.RowPitch * this->texture_size.ww);
-						u32 t_blocksize_from = static_cast<u32>(ii * t_from_pitch * this->texture_size.ww);
+				if(SUCCEEDED(t_result)){
+					s32 t_from_pitch = this->texture_size.ww * 4;
+					if(static_cast<s32>(t_mapped_resource.RowPitch) == t_from_pitch){
+						u8* t_to = &reinterpret_cast<u8*>(t_mapped_resource.pData)[t_change_min * this->texture_size.ww * t_mapped_resource.RowPitch];
+						u8* t_from = &this->texture->GetPixel().get()[t_change_min * this->texture_size.ww * t_from_pitch];
 
-						for(s32 yy=0;yy<this->texture_size.ww;yy++){
-							u8* t_to = &reinterpret_cast<u8*>(t_mapped_resource.pData)[yy * t_mapped_resource.RowPitch + t_blocksize_to];
-							u8* t_from = &this->texture->GetPixel().get()[yy * t_from_pitch + t_blocksize_from];
+						s32 t_size = (t_change_max - t_change_min + 1) * this->texture_size.ww * t_from_pitch;
+						NMemory::Copy(t_to,t_size,t_from,t_size);
+					}else{
+						for(s32 ii=t_change_min;ii<=t_change_max;ii++){
+							u32 t_blocksize_to = static_cast<u32>(ii * t_mapped_resource.RowPitch * this->texture_size.ww);
+							u32 t_blocksize_from = static_cast<u32>(ii * t_from_pitch * this->texture_size.ww);
 
-							s32 t_size = t_from_pitch;
-							NMemory::Copy(t_to,t_size,t_from,t_size);
+							for(s32 yy=0;yy<this->texture_size.ww;yy++){
+								u8* t_to = &reinterpret_cast<u8*>(t_mapped_resource.pData)[yy * t_mapped_resource.RowPitch + t_blocksize_to];
+								u8* t_from = &this->texture->GetPixel().get()[yy * t_from_pitch + t_blocksize_from];
+
+								s32 t_size = t_from_pitch;
+								NMemory::Copy(t_to,t_size,t_from,t_size);
+							}
 						}
 					}
-				}
 
-				this->d3d11_impl.GetDeviceContext()->Unmap(t_texture->texture2d.get(),0);
+					t_devicecontext->Unmap(t_texture->texture2d.get(),0);
+				}
 			}
 		}
 	}

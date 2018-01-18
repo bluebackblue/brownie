@@ -160,6 +160,77 @@ namespace NBsys{namespace ND3d11
 	{
 		this->size = a_size;
 
+		STLVector<DXGI_MODE_DESC>::Type t_list;
+		sharedptr<IDXGIAdapter> t_adapter;
+		sharedptr<IDXGIFactory> t_factory;
+		sharedptr<IDXGIOutput> t_output;
+		{
+			{
+				IDXGIFactory* t_raw = nullptr;
+				HRESULT t_ret = ::CreateDXGIFactory(__uuidof(IDXGIFactory),(void**)(&t_raw));
+				if(t_raw != nullptr){
+					t_factory.reset(t_raw,release_delete<IDXGIFactory>());
+				}
+				if(FAILED(t_ret)){
+					DEEPDEBUG_ASSERT(BSYS_D3D11_DEBUG_ENABLE,0);
+					t_factory.reset();
+				}
+			}
+
+			if(t_factory != nullptr){
+				IDXGIAdapter* t_raw = nullptr;
+				HRESULT t_ret = t_factory->EnumAdapters(0,&t_raw);
+				if(t_raw != nullptr){
+					t_adapter.reset(t_raw,release_delete<IDXGIAdapter>());
+				}
+				if(FAILED(t_ret)){
+					DEEPDEBUG_ASSERT(BSYS_D3D11_DEBUG_ENABLE,0);
+					t_adapter.reset();
+				}
+			}
+
+			if(t_adapter != nullptr){
+				IDXGIOutput* t_raw = nullptr;
+				HRESULT t_ret = t_adapter->EnumOutputs(0,&t_raw);
+				if(t_raw != nullptr){
+					t_output.reset(t_raw,release_delete<IDXGIOutput>());
+				}
+				if(FAILED(t_ret)){
+					DEEPDEBUG_ASSERT(BSYS_D3D11_DEBUG_ENABLE,0);
+					t_output.reset();
+				}
+			}
+
+			UINT t_max = 0;
+			if(t_output != nullptr){
+				HRESULT t_ret = t_output->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM,0,&t_max,NULL);
+				if(FAILED(t_ret)){
+					t_max = 0;
+				}
+			}
+			
+			if((t_max > 0)&&(t_output != nullptr)){
+				t_list.resize(t_max);
+				HRESULT t_ret = t_output->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM,0,&t_max,&t_list.at(0));
+				if(FAILED(t_ret)){
+					t_max = 0;
+					t_list.clear();
+				}
+			}
+		}
+
+		DXGI_MODE_DESC t_select_desc = {0};
+		t_select_desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+		t_select_desc.Height = static_cast<UINT>(this->size.hh);
+		t_select_desc.RefreshRate.Denominator = 60;
+		t_select_desc.RefreshRate.Numerator = 1;
+		t_select_desc.Scaling;
+		t_select_desc.ScanlineOrdering;
+		t_select_desc.Width = static_cast<UINT>(this->size.ww);
+		if(t_list.size() > 0){
+			t_select_desc = t_list[t_list.size() - 1];
+		}
+
 		D3D_FEATURE_LEVEL t_featurelevel_list[] = {D3D_FEATURE_LEVEL_11_0};
 
 		HWND t_hwnd = a_window->GetImpl()->GetHandle();
@@ -171,13 +242,7 @@ namespace NBsys{namespace ND3d11
 				t_swapchain_desc.BufferCount = 3;
 
 				//バックバッファーの表示モードを表す。
-				t_swapchain_desc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-				t_swapchain_desc.BufferDesc.Height = static_cast<UINT>(this->size.hh);
-				t_swapchain_desc.BufferDesc.RefreshRate.Denominator = 60;
-				t_swapchain_desc.BufferDesc.RefreshRate.Numerator = 1;
-				t_swapchain_desc.BufferDesc.Scaling;
-				t_swapchain_desc.BufferDesc.ScanlineOrdering;
-				t_swapchain_desc.BufferDesc.Width = static_cast<UINT>(this->size.ww);
+				t_swapchain_desc.BufferDesc = t_select_desc;
 
 				//バックバッファーのサーフェス使用法およびCPUアクセス オプションを表すDXGI_USAGE 列挙型のメンバーです。
 				//バック バッファーは、シェーダー入力またはレンダー ターゲット出力に使用することができます。
@@ -208,15 +273,16 @@ namespace NBsys{namespace ND3d11
 				IDXGISwapChain* t_raw_swapchain = nullptr;
 				ID3D11Device* t_raw_device = nullptr;
 				ID3D11DeviceContext* t_raw_devicecontext = nullptr;
+				UINT t_flag = 0;
+				#if defined(ROM_DEVELOP) || defined(ROM_DEEPDEBUG) || defined(ROM_FULLDEBUG)
+				t_flag |= D3D11_CREATE_DEVICE_DEBUG;
+				#endif
+
 				const HRESULT t_result = ::D3D11CreateDeviceAndSwapChain(
 					WIN_NULL,
 					D3D_DRIVER_TYPE_HARDWARE,
 					WIN_NULL,
-					#if defined(ROM_DEVELOP) || defined(ROM_DEEPDEBUG) || defined(ROM_FULLDEBUG)
-					D3D11_CREATE_DEVICE_DEBUG,
-					#else
-					0,
-					#endif
+					t_flag,
 					t_featurelevel_list,
 					COUNTOF(t_featurelevel_list),
 					D3D11_SDK_VERSION,
@@ -902,50 +968,54 @@ namespace NBsys{namespace ND3d11
 
 		/** ID3D11VertexShader
 		*/
-		if(t_blob){
-			ID3D11VertexShader* t_raw = nullptr;
-			HRESULT t_result = this->device->CreateVertexShader(t_blob->GetBufferPointer(),t_blob->GetBufferSize(),nullptr,&t_raw);
-			if(t_raw != nullptr){
-				a_vertexshader->vertexshader.reset(t_raw,release_delete<ID3D11VertexShader>());
-			}
-			if(FAILED(t_result)){
-				a_vertexshader->vertexshader.reset();
+		if(t_blob != nullptr){
+			if(this->device != nullptr){
+				ID3D11VertexShader* t_raw = nullptr;
+				HRESULT t_result = this->device->CreateVertexShader(t_blob->GetBufferPointer(),t_blob->GetBufferSize(),nullptr,&t_raw);
+				if(t_raw != nullptr){
+					a_vertexshader->vertexshader.reset(t_raw,release_delete<ID3D11VertexShader>());
+				}
+				if(FAILED(t_result)){
+					a_vertexshader->vertexshader.reset();
+				}
 			}
 		}
 
 		/** ID3D11InputLayout
 		*/
-		if(t_blob){
-			u32 t_layout_size = static_cast<u32>(a_vertexshader->layout->size());
-			D3D11_INPUT_ELEMENT_DESC* t_layout_data = new D3D11_INPUT_ELEMENT_DESC[t_layout_size];
-			sharedptr<D3D11_INPUT_ELEMENT_DESC> t_layout(t_layout_data,default_delete<D3D11_INPUT_ELEMENT_DESC[]>());
-			{
-				 for(u32 ii=0;ii<t_layout_size;ii++){
-					t_layout_data[ii].SemanticName			= a_vertexshader->layout->at(ii).semantic_name.c_str();
-					t_layout_data[ii].SemanticIndex			= static_cast<UINT>(a_vertexshader->layout->at(ii).semantic_index);
-					t_layout_data[ii].InputSlot				= static_cast<UINT>(a_vertexshader->layout->at(ii).input_slot);
-					t_layout_data[ii].AlignedByteOffset		= static_cast<UINT>(a_vertexshader->layout->at(ii).offset);
-					t_layout_data[ii].InputSlotClass		= D3D11_INPUT_PER_VERTEX_DATA;
-					t_layout_data[ii].InstanceDataStepRate	= 0;
+		if(t_blob != nullptr){
+			if(this->device != nullptr){
+				u32 t_layout_size = static_cast<u32>(a_vertexshader->layout->size());
+				D3D11_INPUT_ELEMENT_DESC* t_layout_data = new D3D11_INPUT_ELEMENT_DESC[t_layout_size];
+				sharedptr<D3D11_INPUT_ELEMENT_DESC> t_layout(t_layout_data,default_delete<D3D11_INPUT_ELEMENT_DESC[]>());
+				{
+					 for(u32 ii=0;ii<t_layout_size;ii++){
+						t_layout_data[ii].SemanticName			= a_vertexshader->layout->at(ii).semantic_name.c_str();
+						t_layout_data[ii].SemanticIndex			= static_cast<UINT>(a_vertexshader->layout->at(ii).semantic_index);
+						t_layout_data[ii].InputSlot				= static_cast<UINT>(a_vertexshader->layout->at(ii).input_slot);
+						t_layout_data[ii].AlignedByteOffset		= static_cast<UINT>(a_vertexshader->layout->at(ii).offset);
+						t_layout_data[ii].InputSlotClass		= D3D11_INPUT_PER_VERTEX_DATA;
+						t_layout_data[ii].InstanceDataStepRate	= 0;
 
-					switch(a_vertexshader->layout->at(ii).format){
-					case D3d11_LayoutFormatType::R32G32B32_FLOAT:		t_layout_data[ii].Format = DXGI_FORMAT_R32G32B32_FLOAT;		break;
-					case D3d11_LayoutFormatType::R32G32B32A32_FLOAT:	t_layout_data[ii].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;	break;
-					case D3d11_LayoutFormatType::R32G32_FLOAT:			t_layout_data[ii].Format = DXGI_FORMAT_R32G32_FLOAT;		break;
-					case D3d11_LayoutFormatType::R8G8B8A8_UINT:			t_layout_data[ii].Format = DXGI_FORMAT_R8G8B8A8_UINT;		break;
-					case D3d11_LayoutFormatType::R8_UINT:				t_layout_data[ii].Format = DXGI_FORMAT_R8_UINT;				break;
-					default:ASSERT(0);break;
-					}
-				 }
-			}
+						switch(a_vertexshader->layout->at(ii).format){
+						case D3d11_LayoutFormatType::R32G32B32_FLOAT:		t_layout_data[ii].Format = DXGI_FORMAT_R32G32B32_FLOAT;		break;
+						case D3d11_LayoutFormatType::R32G32B32A32_FLOAT:	t_layout_data[ii].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;	break;
+						case D3d11_LayoutFormatType::R32G32_FLOAT:			t_layout_data[ii].Format = DXGI_FORMAT_R32G32_FLOAT;		break;
+						case D3d11_LayoutFormatType::R8G8B8A8_UINT:			t_layout_data[ii].Format = DXGI_FORMAT_R8G8B8A8_UINT;		break;
+						case D3d11_LayoutFormatType::R8_UINT:				t_layout_data[ii].Format = DXGI_FORMAT_R8_UINT;				break;
+						default:ASSERT(0);break;
+						}
+					 }
+				}
 
-			ID3D11InputLayout* t_raw = nullptr;
-			HRESULT t_result = this->device->CreateInputLayout(t_layout_data,static_cast<UINT>(t_layout_size),t_blob->GetBufferPointer(),t_blob->GetBufferSize(),&t_raw);
-			if(t_raw != nullptr){
-				a_vertexshader->inputlayout.reset(t_raw,release_delete<ID3D11InputLayout>());
-			}
-			if(FAILED(t_result)){
-				a_vertexshader->inputlayout.reset();
+				ID3D11InputLayout* t_raw = nullptr;
+				HRESULT t_result = this->device->CreateInputLayout(t_layout_data,static_cast<UINT>(t_layout_size),t_blob->GetBufferPointer(),t_blob->GetBufferSize(),&t_raw);
+				if(t_raw != nullptr){
+					a_vertexshader->inputlayout.reset(t_raw,release_delete<ID3D11InputLayout>());
+				}
+				if(FAILED(t_result)){
+					a_vertexshader->inputlayout.reset();
+				}
 			}
 		}
 	}
@@ -993,14 +1063,16 @@ namespace NBsys{namespace ND3d11
 			t_blob_error.reset();
 		}
 
-		if(t_blob){
-			ID3D11PixelShader* t_raw = nullptr;
-			HRESULT t_result = this->device->CreatePixelShader(t_blob->GetBufferPointer(),t_blob->GetBufferSize(),nullptr,&t_raw);
-			if(t_raw != nullptr){
-				a_pixelshader->pixelshader.reset(t_raw,release_delete<ID3D11PixelShader>());
-			}
-			if(FAILED(t_result)){
-				a_pixelshader->pixelshader.reset();
+		if(t_blob != nullptr){
+			if(this->device != nullptr){
+				ID3D11PixelShader* t_raw = nullptr;
+				HRESULT t_result = this->device->CreatePixelShader(t_blob->GetBufferPointer(),t_blob->GetBufferSize(),nullptr,&t_raw);
+				if(t_raw != nullptr){
+					a_pixelshader->pixelshader.reset(t_raw,release_delete<ID3D11PixelShader>());
+				}
+				if(FAILED(t_result)){
+					a_pixelshader->pixelshader.reset();
+				}
 			}
 		}
 	}
@@ -1010,31 +1082,33 @@ namespace NBsys{namespace ND3d11
 	*/
 	void D3d11_Impl::Render_CreateVertexBuffer(sharedptr<D3d11_Impl_VertexBuffer>& a_vertexbuffer)
 	{
-		D3D11_BUFFER_DESC t_desc = {0};
-		{
-			t_desc.Usage = D3D11_USAGE_DEFAULT;
-			t_desc.ByteWidth = static_cast<UINT>(a_vertexbuffer->countofvertex * a_vertexbuffer->stridebyte);
-			t_desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-			t_desc.CPUAccessFlags = 0;
+		if(this->device != nullptr){
+			D3D11_BUFFER_DESC t_desc = {0};
+			{
+				t_desc.Usage = D3D11_USAGE_DEFAULT;
+				t_desc.ByteWidth = static_cast<UINT>(a_vertexbuffer->countofvertex * a_vertexbuffer->stridebyte);
+				t_desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+				t_desc.CPUAccessFlags = 0;
 
-			if(a_vertexbuffer->write_flag){
-				t_desc.CPUAccessFlags |= D3D11_CPU_ACCESS_WRITE;
-				t_desc.Usage = D3D11_USAGE_DYNAMIC;
+				if(a_vertexbuffer->write_flag){
+					t_desc.CPUAccessFlags |= D3D11_CPU_ACCESS_WRITE;
+					t_desc.Usage = D3D11_USAGE_DYNAMIC;
+				}
 			}
-		}
 
-		D3D11_SUBRESOURCE_DATA t_subresource_data = {0};
-		{
-			t_subresource_data.pSysMem = a_vertexbuffer->data;
-		}
+			D3D11_SUBRESOURCE_DATA t_subresource_data = {0};
+			{
+				t_subresource_data.pSysMem = a_vertexbuffer->data;
+			}
 
-		ID3D11Buffer* t_raw;
-		HRESULT t_result = this->device->CreateBuffer(&t_desc,&t_subresource_data,&t_raw);
-		if(t_raw != nullptr){
-			a_vertexbuffer->buffer.reset(t_raw,release_delete<ID3D11Buffer>());
-		}
-		if(FAILED(t_result)){
-			a_vertexbuffer->buffer.reset();
+			ID3D11Buffer* t_raw;
+			HRESULT t_result = this->device->CreateBuffer(&t_desc,&t_subresource_data,&t_raw);
+			if(t_raw != nullptr){
+				a_vertexbuffer->buffer.reset(t_raw,release_delete<ID3D11Buffer>());
+			}
+			if(FAILED(t_result)){
+				a_vertexbuffer->buffer.reset();
+			}
 		}
 	}
 
@@ -1043,21 +1117,23 @@ namespace NBsys{namespace ND3d11
 	*/
 	void D3d11_Impl::Render_CreateConstantBuffer(sharedptr<D3d11_Impl_ConstantBuffer>& a_constantbuffer)
 	{
-		D3D11_BUFFER_DESC t_desc = {0};
-		{
-			t_desc.Usage = D3D11_USAGE_DEFAULT;
-			t_desc.ByteWidth = static_cast<UINT>(a_constantbuffer->size);
-			t_desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-			t_desc.CPUAccessFlags = 0;
-		}
+		if(this->device != nullptr){
+			D3D11_BUFFER_DESC t_desc = {0};
+			{
+				t_desc.Usage = D3D11_USAGE_DEFAULT;
+				t_desc.ByteWidth = static_cast<UINT>(a_constantbuffer->size);
+				t_desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+				t_desc.CPUAccessFlags = 0;
+			}
 
-		ID3D11Buffer* t_raw = nullptr;
-		HRESULT t_result = this->device->CreateBuffer(&t_desc,nullptr,&t_raw);
-		if(t_raw != nullptr){
-			a_constantbuffer->buffer.reset(t_raw,release_delete<ID3D11Buffer>());
-		}
-		if(FAILED(t_result)){
-			a_constantbuffer->buffer.reset();
+			ID3D11Buffer* t_raw = nullptr;
+			HRESULT t_result = this->device->CreateBuffer(&t_desc,nullptr,&t_raw);
+			if(t_raw != nullptr){
+				a_constantbuffer->buffer.reset(t_raw,release_delete<ID3D11Buffer>());
+			}
+			if(FAILED(t_result)){
+				a_constantbuffer->buffer.reset();
+			}
 		}
 	}
 
@@ -1099,13 +1175,15 @@ namespace NBsys{namespace ND3d11
 				t_data.SysMemSlicePitch = 0;
 			}
 
-			ID3D11Texture2D* t_raw = nullptr;
-			HRESULT t_result = this->device->CreateTexture2D(&t_desc,&t_data,&t_raw);
-			if(t_raw != nullptr){
-				a_texture->texture2d.reset(t_raw,release_delete<ID3D11Texture2D>());
-			}
-			if(FAILED(t_result)){
-				a_texture->texture2d.reset();
+			if(this->device != nullptr){
+				ID3D11Texture2D* t_raw = nullptr;
+				HRESULT t_result = this->device->CreateTexture2D(&t_desc,&t_data,&t_raw);
+				if(t_raw != nullptr){
+					a_texture->texture2d.reset(t_raw,release_delete<ID3D11Texture2D>());
+				}
+				if(FAILED(t_result)){
+					a_texture->texture2d.reset();
+				}
 			}
 
 			//実際に作成された情報の収集。
@@ -1116,7 +1194,7 @@ namespace NBsys{namespace ND3d11
 			}
 		}
 
-		{
+		if(this->device != nullptr){
 			D3D11_SHADER_RESOURCE_VIEW_DESC t_desc;
 			{
 				NMemory::ZeroClear(t_desc);
@@ -1141,45 +1219,49 @@ namespace NBsys{namespace ND3d11
 	*/
 	void D3d11_Impl::Render_CreateBlendState(sharedptr<D3d11_Impl_BlendState>& a_blendstate)
 	{
-		D3D11_BLEND_DESC t_desc = {0};
-		{
-			if(a_blendstate->alpha_blend == true){
-				//アルファブレンド。
-				t_desc.AlphaToCoverageEnable = FALSE;
-				t_desc.IndependentBlendEnable = FALSE;
-				for(s32 ii=0;ii<COUNTOF(t_desc.RenderTarget);ii++){
-					t_desc.RenderTarget[ii].BlendEnable = TRUE;
-					t_desc.RenderTarget[ii].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
-					t_desc.RenderTarget[ii].BlendOp = D3D11_BLEND_OP_ADD;
-					t_desc.RenderTarget[ii].BlendOpAlpha = D3D11_BLEND_OP_ADD;
-					t_desc.RenderTarget[ii].SrcBlend = D3D11_BLEND_SRC_ALPHA;
-					t_desc.RenderTarget[ii].SrcBlendAlpha = D3D11_BLEND_ONE;
-					t_desc.RenderTarget[ii].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
-					t_desc.RenderTarget[ii].DestBlendAlpha = D3D11_BLEND_ZERO;
-				}
-			}else{
-				t_desc.AlphaToCoverageEnable = FALSE;
-				t_desc.IndependentBlendEnable = FALSE;
-				for(s32 ii=0;ii<COUNTOF(t_desc.RenderTarget);ii++){
-					t_desc.RenderTarget[ii].BlendEnable = TRUE;
-					t_desc.RenderTarget[ii].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
-					t_desc.RenderTarget[ii].BlendOp = D3D11_BLEND_OP_ADD;
-					t_desc.RenderTarget[ii].BlendOpAlpha = D3D11_BLEND_OP_ADD;
-					t_desc.RenderTarget[ii].SrcBlend = D3D11_BLEND_ONE;
-					t_desc.RenderTarget[ii].SrcBlendAlpha = D3D11_BLEND_ONE;
-					t_desc.RenderTarget[ii].DestBlend = D3D11_BLEND_ZERO;
-					t_desc.RenderTarget[ii].DestBlendAlpha = D3D11_BLEND_ZERO;
+		if(this->device != nullptr){
+			D3D11_BLEND_DESC t_desc = {0};
+			{
+				if(a_blendstate->alpha_blend == true){
+					//アルファブレンド。
+					t_desc.AlphaToCoverageEnable = FALSE;
+					t_desc.IndependentBlendEnable = FALSE;
+					for(s32 ii=0;ii<COUNTOF(t_desc.RenderTarget);ii++){
+						t_desc.RenderTarget[ii].BlendEnable = TRUE;
+						t_desc.RenderTarget[ii].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+						t_desc.RenderTarget[ii].BlendOp = D3D11_BLEND_OP_ADD;
+						t_desc.RenderTarget[ii].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+						t_desc.RenderTarget[ii].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+						t_desc.RenderTarget[ii].SrcBlendAlpha = D3D11_BLEND_ONE;
+						t_desc.RenderTarget[ii].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+						t_desc.RenderTarget[ii].DestBlendAlpha = D3D11_BLEND_ZERO;
+					}
+				}else{
+					t_desc.AlphaToCoverageEnable = FALSE;
+					t_desc.IndependentBlendEnable = FALSE;
+					for(s32 ii=0;ii<COUNTOF(t_desc.RenderTarget);ii++){
+						t_desc.RenderTarget[ii].BlendEnable = TRUE;
+						t_desc.RenderTarget[ii].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+						t_desc.RenderTarget[ii].BlendOp = D3D11_BLEND_OP_ADD;
+						t_desc.RenderTarget[ii].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+						t_desc.RenderTarget[ii].SrcBlend = D3D11_BLEND_ONE;
+						t_desc.RenderTarget[ii].SrcBlendAlpha = D3D11_BLEND_ONE;
+						t_desc.RenderTarget[ii].DestBlend = D3D11_BLEND_ZERO;
+						t_desc.RenderTarget[ii].DestBlendAlpha = D3D11_BLEND_ZERO;
+					}
 				}
 			}
-		}
 
-		ID3D11BlendState* t_raw = nullptr;
-		HRESULT t_result = this->device->CreateBlendState(&t_desc,&t_raw);
-		if(t_raw != nullptr){
-			a_blendstate->blendstate.reset(t_raw,release_delete<ID3D11BlendState>());
-		}
-		if(FAILED(t_result)){
-			a_blendstate->blendstate.reset();
+			if(this->device != nullptr){
+				ID3D11BlendState* t_raw = nullptr;
+				HRESULT t_result = this->device->CreateBlendState(&t_desc,&t_raw);
+				if(t_raw != nullptr){
+					a_blendstate->blendstate.reset(t_raw,release_delete<ID3D11BlendState>());
+				}
+				if(FAILED(t_result)){
+					a_blendstate->blendstate.reset();
+				}
+			}
 		}
 	}
 
@@ -1188,29 +1270,31 @@ namespace NBsys{namespace ND3d11
 	*/
 	void D3d11_Impl::Render_CreateRasterizerState(sharedptr<D3d11_Impl_RasterizerState>& a_rasterizerstate)
 	{
-		D3D11_RASTERIZER_DESC t_desc;
-		{
-			NMemory::ZeroClear(t_desc);
-			t_desc.FillMode = D3D11_FILL_SOLID;
-			t_desc.DepthClipEnable = FALSE;
-			t_desc.MultisampleEnable = FALSE;
-			t_desc.DepthBiasClamp = 0;
-			t_desc.SlopeScaledDepthBias = 0;
+		if(this->device != nullptr){
+			D3D11_RASTERIZER_DESC t_desc;
+			{
+				NMemory::ZeroClear(t_desc);
+				t_desc.FillMode = D3D11_FILL_SOLID;
+				t_desc.DepthClipEnable = FALSE;
+				t_desc.MultisampleEnable = FALSE;
+				t_desc.DepthBiasClamp = 0;
+				t_desc.SlopeScaledDepthBias = 0;
 
-			switch(a_rasterizerstate->culltype){
-			case D3d11_CullType::None:		t_desc.CullMode = D3D11_CULL_NONE;		break;
-			case D3d11_CullType::Front:		t_desc.CullMode = D3D11_CULL_FRONT;		break;
-			case D3d11_CullType::Back:		t_desc.CullMode = D3D11_CULL_BACK;		break;
+				switch(a_rasterizerstate->culltype){
+				case D3d11_CullType::None:		t_desc.CullMode = D3D11_CULL_NONE;		break;
+				case D3d11_CullType::Front:		t_desc.CullMode = D3D11_CULL_FRONT;		break;
+				case D3d11_CullType::Back:		t_desc.CullMode = D3D11_CULL_BACK;		break;
+				}
 			}
-		}
 
-		ID3D11RasterizerState* t_raw = nullptr;
-		HRESULT t_result = this->device->CreateRasterizerState(&t_desc,&t_raw);
-		if(t_raw != nullptr){
-			a_rasterizerstate->rasterizerstate.reset(t_raw,release_delete<ID3D11RasterizerState>());
-		}
-		if(FAILED(t_result)){
-			a_rasterizerstate->rasterizerstate.reset();
+			ID3D11RasterizerState* t_raw = nullptr;
+			HRESULT t_result = this->device->CreateRasterizerState(&t_desc,&t_raw);
+			if(t_raw != nullptr){
+				a_rasterizerstate->rasterizerstate.reset(t_raw,release_delete<ID3D11RasterizerState>());
+			}
+			if(FAILED(t_result)){
+				a_rasterizerstate->rasterizerstate.reset();
+			}
 		}
 	}
 
@@ -1219,35 +1303,37 @@ namespace NBsys{namespace ND3d11
 	*/
 	void D3d11_Impl::Render_CreateDepthStencilState(sharedptr<D3d11_Impl_DepthStencilState>& a_depthstencilstate)
 	{
-		D3D11_DEPTH_STENCIL_DESC t_desc = {0};
-		{
-			if(a_depthstencilstate->depthtest_flag){
-				//深度テストを使用する。
-				t_desc.DepthEnable = TRUE;
-			}else{
-				//深度テストを使用しない。
-				t_desc.DepthEnable = FALSE;
+		if(this->device != nullptr){
+			D3D11_DEPTH_STENCIL_DESC t_desc = {0};
+			{
+				if(a_depthstencilstate->depthtest_flag){
+					//深度テストを使用する。
+					t_desc.DepthEnable = TRUE;
+				}else{
+					//深度テストを使用しない。
+					t_desc.DepthEnable = FALSE;
+				}
+
+				if(a_depthstencilstate->depthwrie_flag){
+					//深度ステンシル バッファーへの書き込みをオンにします。
+					t_desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+				}else{
+					//深度ステンシル バッファーへの書き込みをオフにします。
+					t_desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+				}
+
+				//ソース データが対象データよりも小さい場合、比較に合格します。
+				t_desc.DepthFunc = D3D11_COMPARISON_LESS;
 			}
 
-			if(a_depthstencilstate->depthwrie_flag){
-				//深度ステンシル バッファーへの書き込みをオンにします。
-				t_desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
-			}else{
-				//深度ステンシル バッファーへの書き込みをオフにします。
-				t_desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+			ID3D11DepthStencilState* t_raw = nullptr;
+			HRESULT t_result = this->device->CreateDepthStencilState(&t_desc,&t_raw);
+			if(t_raw != nullptr){
+				a_depthstencilstate->depthstencilstate.reset(t_raw,release_delete<ID3D11DepthStencilState>());
 			}
-
-			//ソース データが対象データよりも小さい場合、比較に合格します。
-			t_desc.DepthFunc = D3D11_COMPARISON_LESS;
-		}
-
-		ID3D11DepthStencilState* t_raw = nullptr;
-		HRESULT t_result = this->device->CreateDepthStencilState(&t_desc,&t_raw);
-		if(t_raw != nullptr){
-			a_depthstencilstate->depthstencilstate.reset(t_raw,release_delete<ID3D11DepthStencilState>());
-		}
-		if(FAILED(t_result)){
-			a_depthstencilstate->depthstencilstate.reset();
+			if(FAILED(t_result)){
+				a_depthstencilstate->depthstencilstate.reset();
+			}
 		}
 	}
 
@@ -1256,54 +1342,56 @@ namespace NBsys{namespace ND3d11
 	*/
 	void D3d11_Impl::Render_CreateSamplerState(sharedptr<D3d11_Impl_SamplerState>& a_samplerstate)
 	{
-		D3D11_SAMPLER_DESC t_desc;
-		{
-			NMemory::ZeroClear(t_desc);
-			t_desc.ComparisonFunc = D3D11_COMPARISON_NEVER;
-			t_desc.MinLOD = 0;
-			t_desc.MaxLOD = D3D11_FLOAT32_MAX;
+		if(this->device != nullptr){
+			D3D11_SAMPLER_DESC t_desc;
+			{
+				NMemory::ZeroClear(t_desc);
+				t_desc.ComparisonFunc = D3D11_COMPARISON_NEVER;
+				t_desc.MinLOD = 0;
+				t_desc.MaxLOD = D3D11_FLOAT32_MAX;
 
-			switch(a_samplerstate->sampler.textureaddrestype_u){
-			case D3d11_TextureAddressType::Wrap:			t_desc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;			break;
-			case D3d11_TextureAddressType::Mirror:			t_desc.AddressU = D3D11_TEXTURE_ADDRESS_MIRROR;			break;
-			case D3d11_TextureAddressType::Clamp:			t_desc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;			break;
-			case D3d11_TextureAddressType::Border:			t_desc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;			break;
-			case D3d11_TextureAddressType::Mirror_Once:		t_desc.AddressU = D3D11_TEXTURE_ADDRESS_MIRROR_ONCE;	break;
-			default:ASSERT(0);break;
+				switch(a_samplerstate->sampler.textureaddrestype_u){
+				case D3d11_TextureAddressType::Wrap:			t_desc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;			break;
+				case D3d11_TextureAddressType::Mirror:			t_desc.AddressU = D3D11_TEXTURE_ADDRESS_MIRROR;			break;
+				case D3d11_TextureAddressType::Clamp:			t_desc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;			break;
+				case D3d11_TextureAddressType::Border:			t_desc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;			break;
+				case D3d11_TextureAddressType::Mirror_Once:		t_desc.AddressU = D3D11_TEXTURE_ADDRESS_MIRROR_ONCE;	break;
+				default:ASSERT(0);break;
+				}
+
+				switch(a_samplerstate->sampler.textureaddrestype_v){
+				case D3d11_TextureAddressType::Wrap:			t_desc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;			break;
+				case D3d11_TextureAddressType::Mirror:			t_desc.AddressV = D3D11_TEXTURE_ADDRESS_MIRROR;			break;
+				case D3d11_TextureAddressType::Clamp:			t_desc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;			break;
+				case D3d11_TextureAddressType::Border:			t_desc.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;			break;
+				case D3d11_TextureAddressType::Mirror_Once:		t_desc.AddressV = D3D11_TEXTURE_ADDRESS_MIRROR_ONCE;	break;
+				default:ASSERT(0);break;
+				}
+
+				switch(a_samplerstate->sampler.textureaddrestype_w){
+				case D3d11_TextureAddressType::Wrap:			t_desc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;			break;
+				case D3d11_TextureAddressType::Mirror:			t_desc.AddressW = D3D11_TEXTURE_ADDRESS_MIRROR;			break;
+				case D3d11_TextureAddressType::Clamp:			t_desc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;			break;
+				case D3d11_TextureAddressType::Border:			t_desc.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;			break;
+				case D3d11_TextureAddressType::Mirror_Once:		t_desc.AddressW = D3D11_TEXTURE_ADDRESS_MIRROR_ONCE;	break;
+				default:ASSERT(0);break;
+				}
+
+				switch(a_samplerstate->sampler.filtertype){
+				case D3d11_FilterType::MIN_MAG_MIP_POINT:		t_desc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;			break;
+				case D3d11_FilterType::MIN_MAG_MIP_LINEAR:		t_desc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;		break;
+				default:ASSERT(0);break;
+				}
 			}
 
-			switch(a_samplerstate->sampler.textureaddrestype_v){
-			case D3d11_TextureAddressType::Wrap:			t_desc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;			break;
-			case D3d11_TextureAddressType::Mirror:			t_desc.AddressV = D3D11_TEXTURE_ADDRESS_MIRROR;			break;
-			case D3d11_TextureAddressType::Clamp:			t_desc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;			break;
-			case D3d11_TextureAddressType::Border:			t_desc.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;			break;
-			case D3d11_TextureAddressType::Mirror_Once:		t_desc.AddressV = D3D11_TEXTURE_ADDRESS_MIRROR_ONCE;	break;
-			default:ASSERT(0);break;
+			ID3D11SamplerState* t_raw = nullptr;
+			HRESULT t_result = this->device->CreateSamplerState(&t_desc,&t_raw);
+			if(t_raw != nullptr){
+				a_samplerstate->samplerstate.reset(t_raw,release_delete<ID3D11SamplerState>());
 			}
-
-			switch(a_samplerstate->sampler.textureaddrestype_w){
-			case D3d11_TextureAddressType::Wrap:			t_desc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;			break;
-			case D3d11_TextureAddressType::Mirror:			t_desc.AddressW = D3D11_TEXTURE_ADDRESS_MIRROR;			break;
-			case D3d11_TextureAddressType::Clamp:			t_desc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;			break;
-			case D3d11_TextureAddressType::Border:			t_desc.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;			break;
-			case D3d11_TextureAddressType::Mirror_Once:		t_desc.AddressW = D3D11_TEXTURE_ADDRESS_MIRROR_ONCE;	break;
-			default:ASSERT(0);break;
+			if(FAILED(t_result)){
+				a_samplerstate->samplerstate.reset();
 			}
-
-			switch(a_samplerstate->sampler.filtertype){
-			case D3d11_FilterType::MIN_MAG_MIP_POINT:		t_desc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;			break;
-			case D3d11_FilterType::MIN_MAG_MIP_LINEAR:		t_desc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;		break;
-			default:ASSERT(0);break;
-			}
-		}
-
-		ID3D11SamplerState* t_raw = nullptr;
-		HRESULT t_result = this->device->CreateSamplerState(&t_desc,&t_raw);
-		if(t_raw != nullptr){
-			a_samplerstate->samplerstate.reset(t_raw,release_delete<ID3D11SamplerState>());
-		}
-		if(FAILED(t_result)){
-			a_samplerstate->samplerstate.reset();
 		}
 	}
 
@@ -1598,7 +1686,7 @@ namespace NBsys{namespace ND3d11
 	{
 		if(a_constantbuffer_id >= 0){
 			sharedptr<D3d11_Impl_ConstantBuffer>& t_constantbuffer = this->GetConstantBuffer(a_constantbuffer_id);
-			if(t_constantbuffer){
+			if((t_constantbuffer != nullptr)&&(this->devicecontext != nullptr)){
 
 				this->devicecontext->UpdateSubresource(t_constantbuffer->buffer.get(),0,nullptr,a_data,0,0);
 
@@ -1616,13 +1704,11 @@ namespace NBsys{namespace ND3d11
 	{
 		if(a_vertexshader_id >= 0){
 			sharedptr<D3d11_Impl_VertexShader>& t_vertexshader = this->GetVertexShader(a_vertexshader_id);
-			if(t_vertexshader){
-				if(this->devicecontext){
-					this->devicecontext->IASetInputLayout(t_vertexshader->inputlayout.get());
-					this->devicecontext->VSSetShader(t_vertexshader->vertexshader.get(),nullptr,0);
+			if((t_vertexshader != nullptr)&&(this->devicecontext != nullptr)){
+				this->devicecontext->IASetInputLayout(t_vertexshader->inputlayout.get());
+				this->devicecontext->VSSetShader(t_vertexshader->vertexshader.get(),nullptr,0);
 
-					return;
-				}
+				return;
 			}
 		}
 
@@ -1636,12 +1722,10 @@ namespace NBsys{namespace ND3d11
 	{
 		if(a_pixelshader_id >= 0){
 			sharedptr<D3d11_Impl_PixelShader>& t_pixelshader = this->GetPixelShader(a_pixelshader_id);
-			if(t_pixelshader){
-				if(this->devicecontext){
-					this->devicecontext->PSSetShader(t_pixelshader->pixelshader.get(),nullptr,0);
+			if((t_pixelshader != nullptr)&& (this->devicecontext != nullptr)){
+				this->devicecontext->PSSetShader(t_pixelshader->pixelshader.get(),nullptr,0);
 
-					return;
-				}
+				return;
 			}
 		}
 
@@ -1654,11 +1738,9 @@ namespace NBsys{namespace ND3d11
 	void D3d11_Impl::Render_Draw(s32 a_count_of_vertex,s32 a_start_of_vertex)
 	{
 		if(this->devicecontext){
-			if(this->devicecontext){
-				this->devicecontext->Draw(static_cast<UINT>(a_count_of_vertex),static_cast<UINT>(a_start_of_vertex));
+			this->devicecontext->Draw(static_cast<UINT>(a_count_of_vertex),static_cast<UINT>(a_start_of_vertex));
 			
-				return;
-			}
+			return;
 		}
 
 		ASSERT(0);
@@ -1671,18 +1753,15 @@ namespace NBsys{namespace ND3d11
 	{
 		if(a_constantbuffer_id >= 0){
 			sharedptr<D3d11_Impl_ConstantBuffer>& t_constantbuffer = this->GetConstantBuffer(a_constantbuffer_id);
-			if(t_constantbuffer){
-				if(this->devicecontext){
+			if((t_constantbuffer != nullptr)&&(this->devicecontext != nullptr)){
+				ID3D11Buffer* t_list[] = 
+				{
+					t_constantbuffer->buffer.get()
+				};
 
-					ID3D11Buffer* t_list[] = 
-					{
-						t_constantbuffer->buffer.get()
-					};
+				this->devicecontext->VSSetConstantBuffers(static_cast<UINT>(t_constantbuffer->register_b_index),COUNTOF(t_list),t_list);
 
-					this->devicecontext->VSSetConstantBuffers(static_cast<UINT>(t_constantbuffer->register_b_index),COUNTOF(t_list),t_list);
-
-					return;
-				}
+				return;
 			}
 		}
 
@@ -1696,17 +1775,15 @@ namespace NBsys{namespace ND3d11
 	{
 		if(a_constantbuffer_id >= 0){
 			sharedptr<D3d11_Impl_ConstantBuffer>& t_constantbuffer = this->GetConstantBuffer(a_constantbuffer_id);
-			if(t_constantbuffer){
-				if(this->devicecontext){
-					ID3D11Buffer* t_list[] = 
-					{
-						t_constantbuffer->buffer.get()
-					};
+			if((t_constantbuffer != nullptr)&&(this->devicecontext != nullptr)){
+				ID3D11Buffer* t_list[] = 
+				{
+					t_constantbuffer->buffer.get()
+				};
 
-					this->devicecontext->PSSetConstantBuffers(static_cast<UINT>(t_constantbuffer->register_b_index),COUNTOF(t_list),t_list);
+				this->devicecontext->PSSetConstantBuffers(static_cast<UINT>(t_constantbuffer->register_b_index),COUNTOF(t_list),t_list);
 
-					return;
-				}
+				return;
 			}
 		}
 
@@ -1720,20 +1797,18 @@ namespace NBsys{namespace ND3d11
 	{
 		if(a_vertexbuffer_id >= 0){
 			sharedptr<D3d11_Impl_VertexBuffer>& t_vertexbuffer = this->GetVertexBuffer(a_vertexbuffer_id);
-			if(t_vertexbuffer){
-				if(this->devicecontext){
-					ID3D11Buffer* t_list[] = {
-						t_vertexbuffer->buffer.get(),
-					};
+			if((t_vertexbuffer != nullptr)&&(this->devicecontext != nullptr)){
+				ID3D11Buffer* t_list[] = {
+					t_vertexbuffer->buffer.get(),
+				};
 					
-					UINT t_stride = static_cast<UINT>(t_vertexbuffer->stridebyte);
+				UINT t_stride = static_cast<UINT>(t_vertexbuffer->stridebyte);
 					
-					UINT t_offset = static_cast<UINT>(t_vertexbuffer->offset);
+				UINT t_offset = static_cast<UINT>(t_vertexbuffer->offset);
 
-					this->devicecontext->IASetVertexBuffers(0,COUNTOF(t_list),t_list,&t_stride,&t_offset);
+				this->devicecontext->IASetVertexBuffers(0,COUNTOF(t_list),t_list,&t_stride,&t_offset);
 
-					return;
-				}
+				return;
 			}
 		}
 
@@ -1747,18 +1822,16 @@ namespace NBsys{namespace ND3d11
 	{
 		if(a_vertexbuffer_id >= 0){
 			sharedptr<D3d11_Impl_VertexBuffer>& t_vertexbuffer = this->GetVertexBuffer(a_vertexbuffer_id);
-			if(t_vertexbuffer){
-				if(this->devicecontext){
-					D3D11_MAPPED_SUBRESOURCE t_mapped_resource;
+			if((t_vertexbuffer != nullptr)&&(this->devicecontext != nullptr)){
+				D3D11_MAPPED_SUBRESOURCE t_mapped_resource;
 
-					HRESULT t_result = this->devicecontext->Map(t_vertexbuffer->buffer.get(),0,D3D11_MAP_WRITE_DISCARD,0,&t_mapped_resource);
-					if(SUCCEEDED(t_result)){
+				HRESULT t_result = this->devicecontext->Map(t_vertexbuffer->buffer.get(),0,D3D11_MAP_WRITE_DISCARD,0,&t_mapped_resource);
+				if(SUCCEEDED(t_result)){
 
-						s32 t_size = t_vertexbuffer->stridebyte * t_vertexbuffer->countofvertex;
-						NMemory::Copy(t_mapped_resource.pData,t_size,a_data,a_size);
-						this->devicecontext->Unmap(t_vertexbuffer->buffer.get(),0);
+					s32 t_size = t_vertexbuffer->stridebyte * t_vertexbuffer->countofvertex;
+					NMemory::Copy(t_mapped_resource.pData,t_size,a_data,a_size);
+					this->devicecontext->Unmap(t_vertexbuffer->buffer.get(),0);
 
-					}
 				}
 			}
 		}
@@ -1792,16 +1865,14 @@ namespace NBsys{namespace ND3d11
 	{
 		if(a_texture_id >= 0){
 			sharedptr<D3d11_Impl_Texture>& t_texture = this->GetTexture(a_texture_id);
-			if(t_texture){
-				if(this->devicecontext){
-					ID3D11ShaderResourceView* t_resourceview_list[] = {
-						t_texture->resourceview.get()
-					};
+			if((t_texture != nullptr)&&(this->devicecontext != nullptr)){
+				ID3D11ShaderResourceView* t_resourceview_list[] = {
+					t_texture->resourceview.get()
+				};
 
-					this->devicecontext->PSSetShaderResources(static_cast<UINT>(a_register_t_index),COUNTOF(t_resourceview_list),t_resourceview_list);
+				this->devicecontext->PSSetShaderResources(static_cast<UINT>(a_register_t_index),COUNTOF(t_resourceview_list),t_resourceview_list);
 
-					return;
-				}
+				return;
 			}
 		}else{
 
@@ -1809,7 +1880,9 @@ namespace NBsys{namespace ND3d11
 				nullptr
 			};
 
-			this->devicecontext->PSSetShaderResources(static_cast<UINT>(a_register_t_index),COUNTOF(t_resourceview_list),t_resourceview_list);
+			if(this->devicecontext != nullptr){
+				this->devicecontext->PSSetShaderResources(static_cast<UINT>(a_register_t_index),COUNTOF(t_resourceview_list),t_resourceview_list);
+			}
 
 			return;
 		}
@@ -1824,19 +1897,17 @@ namespace NBsys{namespace ND3d11
 	{
 		if(a_blendstate_id >= 0){
 			sharedptr<D3d11_Impl_BlendState>& t_blendstate = this->GetBlendState(a_blendstate_id);
-			if(t_blendstate){
-				if(this->devicecontext){
-					FLOAT t_blendfactor[4] = {
-						D3D11_BLEND_ZERO,
-						D3D11_BLEND_ZERO,
-						D3D11_BLEND_ZERO,
-						D3D11_BLEND_ZERO
-					};
+			if((t_blendstate != nullptr)&&(this->devicecontext != nullptr)){
+				FLOAT t_blendfactor[4] = {
+					D3D11_BLEND_ZERO,
+					D3D11_BLEND_ZERO,
+					D3D11_BLEND_ZERO,
+					D3D11_BLEND_ZERO
+				};
 
-					this->devicecontext->OMSetBlendState(t_blendstate->blendstate.get(),t_blendfactor,0xFFFFFFFF);
+				this->devicecontext->OMSetBlendState(t_blendstate->blendstate.get(),t_blendfactor,0xFFFFFFFF);
 
-					return;
-				}
+				return;
 			}
 		}
 
@@ -1850,12 +1921,10 @@ namespace NBsys{namespace ND3d11
 	{
 		if(a_rasterizerstate_id >= 0){
 			sharedptr<D3d11_Impl_RasterizerState>& t_rasterizerstate = this->GetRasterizerState(a_rasterizerstate_id);
-			if(t_rasterizerstate){
-				if(this->devicecontext){
-					this->devicecontext->RSSetState(t_rasterizerstate->rasterizerstate.get());
+			if((t_rasterizerstate != nullptr)&&(this->devicecontext != nullptr)){
+				this->devicecontext->RSSetState(t_rasterizerstate->rasterizerstate.get());
 
-					return;
-				}
+				return;
 			}
 		}
 
@@ -1869,12 +1938,10 @@ namespace NBsys{namespace ND3d11
 	{
 		if(a_depthstencilstate_id >= 0){
 			sharedptr<D3d11_Impl_DepthStencilState>& t_depthstencilstate = this->GetDepthStencilState(a_depthstencilstate_id);
-			if(t_depthstencilstate){
-				if(this->devicecontext){
-					this->devicecontext->OMSetDepthStencilState(t_depthstencilstate->depthstencilstate.get(),0);
+			if((t_depthstencilstate != nullptr)&&(this->devicecontext != nullptr)){
+				this->devicecontext->OMSetDepthStencilState(t_depthstencilstate->depthstencilstate.get(),0);
 
-					return;
-				}
+				return;
 			}
 		}
 
@@ -1888,16 +1955,14 @@ namespace NBsys{namespace ND3d11
 	{
 		if(a_samplerstate_id >= 0){
 			sharedptr<D3d11_Impl_SamplerState>& t_samplerstate = this->GetSamplerState(a_samplerstate_id);
-			if(t_samplerstate){
-				if(this->devicecontext){
-					ID3D11SamplerState* t_samplerstate_list[] = {
-						t_samplerstate->samplerstate.get()
-					};
+			if((t_samplerstate != nullptr)&&(this->devicecontext != nullptr)){
+				ID3D11SamplerState* t_samplerstate_list[] = {
+					t_samplerstate->samplerstate.get()
+				};
 
-					this->devicecontext->PSSetSamplers(static_cast<UINT>(a_register_t_index),1,t_samplerstate_list);
+				this->devicecontext->PSSetSamplers(static_cast<UINT>(a_register_t_index),1,t_samplerstate_list);
 
-					return;
-				}
+				return;
 			}
 		}
 
