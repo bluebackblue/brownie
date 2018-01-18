@@ -329,27 +329,33 @@ namespace NBsys{namespace NWindowMenu
 	{
 		//固定。
 
+		#if(0)
 		if(this->parent){
 			if(this->parent->mode == WindowMenu_Mode::Horizontal){
 				//自分が累積メンバー。
-				if(this->parent->size.type_w != WindowMenu_SizeType::StretchChild){
+				/*if(this->parent->size.type_w != WindowMenu_SizeType::StretchChild)*/{
 					//自分のサイズが親のサイズに影響しない。
+
+					//位置を最小で仮計算。
+					f32 t_min_calc_xx = 0.0f;
 				
-					bool t_have_streach = false;
+					//bool t_have_streach = false;
 					auto t_it_end = this->parent->child_list.end();
-					for(auto t_it = this->parent->child_list.begin();((t_it != t_it_end)&&(t_have_streach == false));++t_it){
+					for(auto t_it = this->parent->child_list.begin();((t_it != t_it_end)/*&&(t_have_streach == false)*/);++t_it){
 						WindowMenu_Window_Base* t_parent_child = t_it->get();
 						if(t_parent_child->size.type_w == WindowMenu_SizeType::StretchParent){
-							t_have_streach = true;
+							//最小の場合サイズ０。
+						}else{
+							t_min_calc_xx += t_parent_child->offset.xx + t_parent_child->size.size.ww;
 						}
 					}
 
-					if(t_have_streach == true){
+					/*if(t_have_streach == true){
 						//自分の所属する累積メンバーにストレッチが存在する場合ははみ出ない。
-					}else{
+					}else*/{
 						//はみ出た分をクリッピング。
-						if((this->parent->calc_x_fix == true)&&(this->parent->calc_w_fix = true)&&(this->calc_x_fix == true)){
-							f32 t_max = this->parent->calc_rect.xx + this->parent->calc_rect.ww - this->calc_rect.xx;
+						if((this->parent->calc_x_fix == true)&&(this->parent->calc_w_fix = true)/*&&(this->calc_x_fix == true)*/){
+							f32 t_max = this->parent->calc_rect.xx + this->parent->calc_rect.ww - t_min_calc_xx;
 							if(t_max <= 0.0f){
 								t_max = 0.0f;
 							}
@@ -360,15 +366,16 @@ namespace NBsys{namespace NWindowMenu
 								this->calc_rect.ww = this->size.size.ww;
 								this->calc_w_fix = true;
 							}
-							return;
 						}else{
 							//親の計算待ち。
-							return;
 						}
 					}
+
+					return;
 				}
 			}
 		}
+		#endif
 
 		this->calc_rect.ww = this->size.size.ww;
 		this->calc_w_fix = true;
@@ -381,27 +388,34 @@ namespace NBsys{namespace NWindowMenu
 	{
 		//固定。
 
+		#if(0)
 		if(this->parent){
 			if(this->parent->mode == WindowMenu_Mode::Vertical){
 				//自分が累積メンバー。
-				if(this->parent->size.type_h != WindowMenu_SizeType::StretchChild){
+				/*if(this->parent->size.type_h != WindowMenu_SizeType::StretchChild)*/{
 					//自分のサイズが親のサイズに影響しない。
 
-					bool t_have_streach = false;
+					//位置を最小で仮計算。
+					f32 t_min_calc_yy = 0.0f;
+
+					//bool t_have_streach = false;
 					auto t_it_end = this->parent->child_list.end();
-					for(auto t_it = this->parent->child_list.begin();((t_it != t_it_end)&&(t_have_streach == false));++t_it){
+					for(auto t_it = this->parent->child_list.begin();((t_it != t_it_end)/*&&(t_have_streach == false)*/);++t_it){
 						WindowMenu_Window_Base* t_parent_child = t_it->get();
 						if(t_parent_child->size.type_h == WindowMenu_SizeType::StretchParent){
-							t_have_streach = true;
+							//最小の場合サイズ０。
+						}else{
+							//TODO:加算は自分の手前まで
+							t_min_calc_yy += t_parent_child->offset.yy + t_parent_child->size.size.hh;
 						}
 					}
 
-					if(t_have_streach == true){
+					/*if(t_have_streach == true){
 						//自分の所属する累積メンバーにストレッチが存在する場合ははみ出ない。
-					}else{
+					}else*/{
 						//はみ出た分をクリッピング。
-						if((this->parent->calc_y_fix == true)&&(this->parent->calc_h_fix = true)&&(this->calc_y_fix == true)){
-							f32 t_max = this->parent->calc_rect.yy + this->parent->calc_rect.hh - this->calc_rect.yy;
+						if((this->parent->calc_y_fix == true)&&(this->parent->calc_h_fix = true)/*&&(this->calc_y_fix == true)*/){
+							f32 t_max = this->parent->calc_rect.yy + this->parent->calc_rect.hh - t_min_calc_yy;
 							if(t_max <= 0.0f){
 								t_max = 0.0f;
 							}
@@ -421,6 +435,7 @@ namespace NBsys{namespace NWindowMenu
 				}
 			}
 		}
+		#endif
 
 		this->calc_rect.hh = this->size.size.hh;
 		this->calc_h_fix = true;
