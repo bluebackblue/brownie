@@ -123,12 +123,17 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		bool draw_enable;
 
+		/** 子をクリップする。
+		*/
+		bool clip_enable;
+
 		/** 計算結果。
 		*/
 		bool calc_x_fix;
 		bool calc_y_fix;
 		bool calc_w_fix;
 		bool calc_h_fix;
+		bool calc_clip_fix;
 		Rect2DType_R<f32> calc_rect;
 
 		/** 計算に必要な親が所持している自分のインデックス。
@@ -217,6 +222,10 @@ namespace NBsys{namespace NWindowMenu
 		/** サイズ計算。
 		*/
 		void CalcH_StretchParent();
+
+		/** サイズ計算。
+		*/
+		void CalcClip();
 
 	public:
 

@@ -59,10 +59,12 @@ namespace NBsys{namespace NWindowMenu
 		offset(),
 		size(),
 		draw_enable(true),
+		clip_enable(true),
 		calc_x_fix(false),
 		calc_y_fix(false),
 		calc_w_fix(false),
 		calc_h_fix(false),
+		calc_clip_fix(false),
 		calc_rect(0.0f),
 		calc_child_index(-1),
 		calc_it(STLList<sharedptr<WindowMenu_Window_Base>>::iterator())
@@ -87,10 +89,12 @@ namespace NBsys{namespace NWindowMenu
 		this->offset = a_inititem.offset;
 		this->size = a_inititem.size;
 		this->draw_enable = true;
+		this->clip_enable = true;
 		this->calc_x_fix = false;
 		this->calc_y_fix = false;
 		this->calc_w_fix = false;
 		this->calc_h_fix = false;
+		this->calc_clip_fix = false;
 		this->calc_rect.Set(0.0f);
 
 		this->calc_child_index = -1;
@@ -177,6 +181,8 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	void WindowMenu_Window_Base::Calc(STLList<WindowMenu_Window_Base*>::Type& a_work)
 	{
+		STLList<WindowMenu_Window_Base*>::Type t_work_clip;
+
 		while(a_work.size() > 0){
 			auto t_it = a_work.begin();
 			while(t_it != a_work.end()){
@@ -217,7 +223,25 @@ namespace NBsys{namespace NWindowMenu
 				}
 
 				if((t_target->calc_x_fix == true)&&(t_target->calc_y_fix == true)&&(t_target->calc_w_fix == true)&&(t_target->calc_h_fix == true)){
+					t_work_clip.push_back(*t_it);
 					t_it = a_work.erase(t_it);
+				}else{
+					++t_it;
+				}
+			}
+		}
+
+		while(t_work_clip.size() > 0){
+			auto t_it = t_work_clip.begin();
+			while(t_it != t_work_clip.end()){
+				WindowMenu_Window_Base* t_target = *t_it;
+
+				if(t_target->calc_clip_fix == false){
+					t_target->CalcClip();
+				}
+
+				if(t_target->calc_clip_fix == true){
+					t_it = t_work_clip.erase(t_it);
 				}else{
 					++t_it;
 				}
@@ -328,55 +352,6 @@ namespace NBsys{namespace NWindowMenu
 	void WindowMenu_Window_Base::CalcW_Fix()
 	{
 		//固定。
-
-		#if(0)
-		if(this->parent){
-			if(this->parent->mode == WindowMenu_Mode::Horizontal){
-				//自分が累積メンバー。
-				/*if(this->parent->size.type_w != WindowMenu_SizeType::StretchChild)*/{
-					//自分のサイズが親のサイズに影響しない。
-
-					//位置を最小で仮計算。
-					f32 t_min_calc_xx = 0.0f;
-				
-					//bool t_have_streach = false;
-					auto t_it_end = this->parent->child_list.end();
-					for(auto t_it = this->parent->child_list.begin();((t_it != t_it_end)/*&&(t_have_streach == false)*/);++t_it){
-						WindowMenu_Window_Base* t_parent_child = t_it->get();
-						if(t_parent_child->size.type_w == WindowMenu_SizeType::StretchParent){
-							//最小の場合サイズ０。
-						}else{
-							t_min_calc_xx += t_parent_child->offset.xx + t_parent_child->size.size.ww;
-						}
-					}
-
-					/*if(t_have_streach == true){
-						//自分の所属する累積メンバーにストレッチが存在する場合ははみ出ない。
-					}else*/{
-						//はみ出た分をクリッピング。
-						if((this->parent->calc_x_fix == true)&&(this->parent->calc_w_fix = true)/*&&(this->calc_x_fix == true)*/){
-							f32 t_max = this->parent->calc_rect.xx + this->parent->calc_rect.ww - t_min_calc_xx;
-							if(t_max <= 0.0f){
-								t_max = 0.0f;
-							}
-							if(this->size.size.ww > t_max){
-								this->calc_rect.ww = t_max;
-								this->calc_w_fix = true;
-							}else{
-								this->calc_rect.ww = this->size.size.ww;
-								this->calc_w_fix = true;
-							}
-						}else{
-							//親の計算待ち。
-						}
-					}
-
-					return;
-				}
-			}
-		}
-		#endif
-
 		this->calc_rect.ww = this->size.size.ww;
 		this->calc_w_fix = true;
 	}
@@ -387,56 +362,6 @@ namespace NBsys{namespace NWindowMenu
 	void WindowMenu_Window_Base::CalcH_Fix()
 	{
 		//固定。
-
-		#if(0)
-		if(this->parent){
-			if(this->parent->mode == WindowMenu_Mode::Vertical){
-				//自分が累積メンバー。
-				/*if(this->parent->size.type_h != WindowMenu_SizeType::StretchChild)*/{
-					//自分のサイズが親のサイズに影響しない。
-
-					//位置を最小で仮計算。
-					f32 t_min_calc_yy = 0.0f;
-
-					//bool t_have_streach = false;
-					auto t_it_end = this->parent->child_list.end();
-					for(auto t_it = this->parent->child_list.begin();((t_it != t_it_end)/*&&(t_have_streach == false)*/);++t_it){
-						WindowMenu_Window_Base* t_parent_child = t_it->get();
-						if(t_parent_child->size.type_h == WindowMenu_SizeType::StretchParent){
-							//最小の場合サイズ０。
-						}else{
-							//TODO:加算は自分の手前まで
-							t_min_calc_yy += t_parent_child->offset.yy + t_parent_child->size.size.hh;
-						}
-					}
-
-					/*if(t_have_streach == true){
-						//自分の所属する累積メンバーにストレッチが存在する場合ははみ出ない。
-					}else*/{
-						//はみ出た分をクリッピング。
-						if((this->parent->calc_y_fix == true)&&(this->parent->calc_h_fix = true)/*&&(this->calc_y_fix == true)*/){
-							f32 t_max = this->parent->calc_rect.yy + this->parent->calc_rect.hh - t_min_calc_yy;
-							if(t_max <= 0.0f){
-								t_max = 0.0f;
-							}
-							if(this->size.size.hh > t_max){
-								this->calc_rect.hh = t_max;
-								this->calc_h_fix = true;
-							}else{
-								this->calc_rect.hh = this->size.size.hh;
-								this->calc_h_fix = true;
-							}
-							return;
-						}else{
-							//親の計算待ち。
-							return;
-						}
-					}
-				}
-			}
-		}
-		#endif
-
 		this->calc_rect.hh = this->size.size.hh;
 		this->calc_h_fix = true;
 	}
@@ -670,6 +595,38 @@ namespace NBsys{namespace NWindowMenu
 	}
 
 
+	/** サイズ計算。
+	*/
+	void WindowMenu_Window_Base::CalcClip()
+	{
+		if(this->parent != nullptr){
+			if(this->parent->clip_enable == true){
+				f32 t_max_ww = this->parent->calc_rect.xx + this->parent->calc_rect.ww - this->calc_rect.xx;
+				f32 t_max_hh = this->parent->calc_rect.yy + this->parent->calc_rect.hh - this->calc_rect.yy;
+
+				if(t_max_ww <= 0.0f){
+					t_max_ww = 0.0f;
+				}
+				if(t_max_hh <= 0.0f){
+					t_max_hh = 0.0f;
+				}
+
+				if(this->calc_rect.ww > t_max_ww){
+					this->calc_rect.ww = t_max_ww;
+				}
+
+				if(this->size.size.hh > t_max_hh){
+					this->calc_rect.hh = t_max_hh;
+				}
+			}
+
+			this->calc_clip_fix = true;
+		}else{
+			this->calc_clip_fix = true;
+		}
+	}
+
+
 	/** システムからのマウス再起処理。
 	*/
 	void WindowMenu_Window_Base::System_MouseUpdate(WindowMenu_Mouse& a_mouse,bool& a_mousefix)
@@ -787,6 +744,9 @@ namespace NBsys{namespace NWindowMenu
 		this->calc_y_fix = false;
 		this->calc_w_fix = false;
 		this->calc_h_fix = false;
+		this->calc_clip_fix = false;
+
+		this->calc_rect.Set(-1.0f);
 
 		/** 計算に必要な親が所持している自分のインデックス。
 		*/

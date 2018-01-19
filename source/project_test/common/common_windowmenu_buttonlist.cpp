@@ -55,6 +55,7 @@ namespace NTest{namespace NCommon
 			t_inititem.size.SetH(0.0f);
 			this->Initialize(t_inititem);
 			{
+				this->clip_enable = false;
 			}
 		}
 
