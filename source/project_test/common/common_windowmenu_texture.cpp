@@ -168,6 +168,7 @@ namespace NTest{namespace NCommon
 			t_nametext->Initialize(t_inititem);
 			{
 				t_nametext->color = NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f);
+				t_nametext->clip = true;
 			}
 			this->name_text = t_nametext;
 		}
@@ -181,6 +182,7 @@ namespace NTest{namespace NCommon
 			t_sizetext->Initialize(t_inititem);
 			{
 				t_sizetext->color = NBsys::NColor::Color_F(1.0f,1.0f,1.0f,1.0f);
+				t_sizetext->clip = true;
 			}
 			this->size_text = t_sizetext;
 		}
@@ -207,6 +209,7 @@ namespace NTest{namespace NCommon
 				t_lbutton->color_ondown = NBsys::NColor::Color_F(0.3f,0.3f,1.0f,1.0f);
 				t_lbutton->string = L"<";
 				t_lbutton->action = std::bind(&WindowMenu_Texture::PushLeftButton,this);
+				t_lbutton->clip = true;
 			}
 		}
 
@@ -223,6 +226,7 @@ namespace NTest{namespace NCommon
 				t_rbutton->color_ondown = NBsys::NColor::Color_F(0.3f,0.3f,1.0f,1.0f);
 				t_rbutton->string = L">";
 				t_rbutton->action = std::bind(&WindowMenu_Texture::PushRightButton,this);
+				t_rbutton->clip = true;
 			}
 		}
 

@@ -50,7 +50,8 @@ namespace NBsys{namespace NWindowMenu
 		WindowMenu_Window_Base(a_name,WindowMenu_WindowType::Drag),
 		drag_flag(false),
 		start_pos(0.0f),
-		old_pos(0.0f)
+		old_pos(0.0f),
+		limit(128,32)
 	{
 	}
 
@@ -113,16 +114,16 @@ namespace NBsys{namespace NWindowMenu
 				//追従。
 				if(this->parent->size.type_w == WindowMenu_SizeType::Fix){
 					f32 t_w = a_mouse.pos.xx - this->parent->offset.xx;
-					if(t_w <= 32.0f){
-						t_w = 32.0f;
+					if(t_w <= this->limit.ww){
+						t_w = this->limit.ww;
 					}
 					this->parent->size.SetW(t_w);
 					GetSystemInstance()->SetChangeRect();
 				}
 				if(this->parent->size.type_h == WindowMenu_SizeType::Fix){
 					f32 t_h = a_mouse.pos.yy - this->parent->offset.yy;
-					if(t_h <= 32.0f){
-						t_h = 32.0f;
+					if(t_h <= this->limit.hh){
+						t_h = this->limit.hh;
 					}
 					this->parent->size.SetH(t_h);
 					GetSystemInstance()->SetChangeRect();

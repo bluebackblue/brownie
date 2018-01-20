@@ -183,7 +183,8 @@ namespace NBsys{namespace NWindowMenu
 					this->to_callback_fonttexture_type,
 					t_font_color,
 					L"×",
-					NBsys::NFont::Font_Alignment::Center_VCenter
+					NBsys::NFont::Font_Alignment::Center_VCenter,
+					this->calc_rect_noclip
 				);
 			}
 		}

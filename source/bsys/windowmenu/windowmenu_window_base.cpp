@@ -66,6 +66,7 @@ namespace NBsys{namespace NWindowMenu
 		calc_h_fix(false),
 		calc_clip_fix(false),
 		calc_rect(0.0f),
+		calc_rect_noclip(0.0f),
 		calc_child_index(-1),
 		calc_it(STLList<sharedptr<WindowMenu_Window_Base>>::iterator())
 	{
@@ -96,6 +97,7 @@ namespace NBsys{namespace NWindowMenu
 		this->calc_h_fix = false;
 		this->calc_clip_fix = false;
 		this->calc_rect.Set(0.0f);
+		this->calc_rect_noclip.Set(0.0f);
 
 		this->calc_child_index = -1;
 		this->calc_it = STLList<sharedptr<WindowMenu_Window_Base>>::iterator();
@@ -599,6 +601,8 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	void WindowMenu_Window_Base::CalcClip()
 	{
+		this->calc_rect_noclip = this->calc_rect;
+
 		if(this->parent != nullptr){
 			if(this->parent->clip_enable == true){
 				//子をクリップする。
@@ -618,7 +622,7 @@ namespace NBsys{namespace NWindowMenu
 						this->calc_rect.ww = t_max_ww;
 					}
 
-					if(this->size.size.hh > t_max_hh){
+					if(this->calc_rect.hh > t_max_hh){
 						this->calc_rect.hh = t_max_hh;
 					}
 

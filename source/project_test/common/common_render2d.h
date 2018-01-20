@@ -121,9 +121,9 @@ namespace NTest{namespace NCommon
 	{
 	public:
 
-		/** rect
+		/** clip_rect
 		*/
-		Rect2DType_R<f32> rect;
+		Rect2DType_R<f32> clip_rect;
 
 		/** clip
 		*/
@@ -145,6 +145,10 @@ namespace NTest{namespace NCommon
 		*/
 		NBsys::NFont::Font_Alignment::Id alignment;
 
+		/** alignment_rect
+		*/
+		Rect2DType_R<f32> alignment_rect;
+
 		/** string
 		*/
 		STLWString string;
@@ -155,12 +159,13 @@ namespace NTest{namespace NCommon
 		Render2D_Item_Font(s32 a_z_sort)
 			:
 			Render2D_Item_Base(a_z_sort,Render2D_ItemType::Font),
-			rect(0.0f),
+			clip_rect(0.0f),
 			clip(false),
 			size(0),
 			fonttexture_type(NBsys::ND3d11::D3d11_FontTextureType::SFont),
 			color(1.0f,1.0f,1.0f,1.0f),
 			alignment(NBsys::NFont::Font_Alignment::Center_VCenter),
+			alignment_rect(0.0f),
 			string(L"")
 		{
 		}

@@ -52,7 +52,8 @@ namespace NBsys{namespace NWindowMenu
 		color_on(1.0f,1.0f,1.0f,1.0f),
 		color_ondown(1.0f,1.0f,1.0f,1.0f),
 		string(L""),
-		action()
+		action(),
+		clip(false)
 	{
 	}
 
@@ -146,7 +147,7 @@ namespace NBsys{namespace NWindowMenu
 	*/
 	bool WindowMenu_Window_Button::CallBack_Draw(s32 a_z_sort)
 	{
-		if((this->calc_rect.ww >= 0.0f)&&(this->calc_rect.hh >= 0.0f)){
+		if((this->calc_rect.ww > 0.0f)&&(this->calc_rect.hh > 0.0f)){
 
 			s32 t_color_index = 0;
 
@@ -179,12 +180,13 @@ namespace NBsys{namespace NWindowMenu
 					GetSystemInstance()->GetCallback()->DrawFont_Callback(
 						a_z_sort + this->z_sort + 1,
 						this->calc_rect,
-						false,
+						this->clip,
 						t_font_size,
 						t_font_texture_index,
 						t_font_color,
 						this->string,
-						NBsys::NFont::Font_Alignment::Center_VCenter
+						NBsys::NFont::Font_Alignment::Center_VCenter,
+						this->calc_rect_noclip
 					);
 				}
 			}

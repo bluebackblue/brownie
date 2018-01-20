@@ -136,6 +136,10 @@ namespace NBsys{namespace NWindowMenu
 		bool calc_clip_fix;
 		Rect2DType_R<f32> calc_rect;
 
+		/** クリップ前のサイズ。
+		*/
+		Rect2DType_R<f32> calc_rect_noclip;
+
 		/** 計算に必要な親が所持している自分のインデックス。
 		*/
 		s32 calc_child_index;

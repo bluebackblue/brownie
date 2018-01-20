@@ -37,12 +37,12 @@ namespace NTest{namespace NCommon
 {
 	/** DrawFontProcType
 	*/
-	void WindowMenu_Callback::DrawFont_Callback(s32 a_z_sort,const Rect2DType_R<f32>& a_rect,bool a_clip,f32 a_size,s32 a_fonttexture_type,const NBsys::NColor::Color_F& a_color,const STLWString& a_string,NBsys::NFont::Font_Alignment::Id a_alignment)
+	void WindowMenu_Callback::DrawFont_Callback(s32 a_z_sort,const Rect2DType_R<f32>& a_clip_rect,bool a_clip,f32 a_size,s32 a_fonttexture_type,const NBsys::NColor::Color_F& a_color,const STLWString& a_string,NBsys::NFont::Font_Alignment::Id a_alignment,const Rect2DType_R<f32>& a_alignment_rect)
 	{
 		sharedptr<Render2D_Item_Font> t_item = new Render2D_Item_Font(a_z_sort);
 
 		{
-			t_item->rect = a_rect;
+			t_item->clip_rect = a_clip_rect;
 
 			t_item->clip = a_clip;
 
@@ -53,6 +53,8 @@ namespace NTest{namespace NCommon
 			t_item->color = a_color;
 
 			t_item->alignment = a_alignment;
+
+			t_item->alignment_rect = a_alignment_rect;
 
 			t_item->string = a_string;
 		}

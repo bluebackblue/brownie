@@ -48,6 +48,10 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		Position2DType<f32> old_pos;
 
+		/** limit
+		*/
+		Size2DType<f32> limit;
+
 	public:
 
 		/** constructor

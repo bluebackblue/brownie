@@ -58,6 +58,10 @@ namespace NBsys{namespace NWindowMenu
 		*/
 		std::function<void(void)> action;
 
+		/** clip
+		*/
+		bool clip;
+
 	public:
 
 		/** constructor

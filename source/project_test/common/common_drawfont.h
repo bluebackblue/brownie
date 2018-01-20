@@ -341,14 +341,14 @@ namespace NTest{namespace NCommon
 				const Render2D_Item_Font* t_instence = dynamic_cast<const Render2D_Item_Font*>(t_it->get());
 				ASSERT(t_instence != nullptr);
 
-				t_current_clip = t_clip_proc(t_instence->clip,t_instence->rect);
+				t_current_clip = t_clip_proc(t_instence->clip,t_instence->clip_rect);
 			}
 
 			while(t_it != a_it_end){
 				const Render2D_Item_Font* t_instence = dynamic_cast<const Render2D_Item_Font*>(t_it->get());
 				ASSERT(t_instence != nullptr);
 
-				Rect2DType_R<f32> t_instance_rect = t_clip_proc(t_instence->clip,t_instence->rect);
+				Rect2DType_R<f32> t_instance_rect = t_clip_proc(t_instence->clip,t_instence->clip_rect);
 
 				if(
 					(t_instance_rect.xx != t_current_clip.xx)||
@@ -382,7 +382,7 @@ namespace NTest{namespace NCommon
 
 			if(t_instence_start->clip == true){
 				//クリップ処理あり。
-				t_viewport = t_instence_start->rect;
+				t_viewport = t_instence_start->clip_rect;
 			}
 
 			//ビューポート。
@@ -405,7 +405,7 @@ namespace NTest{namespace NCommon
 				//フォントテクスチャー更新。
 				this->d3d11->Render_PreUpdateFontTexture(t_fonttexture_type,t_instence->string);
 
-				Rect2DType_R<f32> t_viewrect = t_instence->rect - Rect2DType_R<f32>(t_viewport.xx,t_viewport.yy,0.0f,0.0f);
+				Rect2DType_R<f32> t_viewrect = t_instence->alignment_rect - Rect2DType_R<f32>(t_viewport.xx,t_viewport.yy,0.0f,0.0f);
 
 				//バーテックス作成。
 				this->d3d11->Render_MakeFontVertex(

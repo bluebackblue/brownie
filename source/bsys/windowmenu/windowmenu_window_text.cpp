@@ -94,24 +94,21 @@ namespace NBsys{namespace NWindowMenu
 	{
 		if((this->calc_rect.ww >= 0.0f)&&(this->calc_rect.hh >= 0.0f)){
 
-			f32 t_offset_x = 0.0f;
-			f32 t_offset_y = 0.0f;
 			f32 t_font_size = 16.0f;
 			s32 t_font_texture_index = 0;
 
 			if(this->string.size() > 0){
 
-				Rect2DType_R<f32> t_alignment_rect = this->calc_rect + Rect2DType_R<f32>(t_offset_x,t_offset_y,0.0f,0.0f);;
-
 				GetSystemInstance()->GetCallback()->DrawFont_Callback(
 					a_z_sort + this->z_sort + 1,
-					t_alignment_rect,
+					this->calc_rect,
 					this->clip,
 					t_font_size,
 					t_font_texture_index,
 					this->color,
 					this->string,
-					this->alignment
+					this->alignment,
+					this->calc_rect_noclip
 				);
 			}
 		}

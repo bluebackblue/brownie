@@ -63,8 +63,11 @@ namespace NTest{namespace NCommon
 		*/
 		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Window> t_window = this->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Window>("window");
 
-		//ウィンドウ -> ボディー背景。
-		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Plate> t_bodybg = t_window->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Plate>("bodybg");
+		//ウィンドウ -> サイズ変更。
+		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Resize> t_window_resize = t_window->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Resize>("resize");
+
+		//ウィンドウ -> サイズ変更 -> ボディー背景。
+		sharedptr<NBsys::NWindowMenu::WindowMenu_Window_Plate> t_bodybg = t_window_resize->CreateChild<NBsys::NWindowMenu::WindowMenu_Window_Plate>("bodybg");
 
 		//ウィンドウ。
 		{
@@ -72,7 +75,7 @@ namespace NTest{namespace NCommon
 			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Vertical;	//縦積み。
 			t_inititem.offset.Set(a_offset_x,a_offset_y);
 			t_inititem.size.SetW(400.0f);
-			t_inititem.size.SetH_StretchChild();
+			t_inititem.size.SetH(400.0f);
 			t_window->Initialize(t_inititem);
 			{
 				t_window->window_title_text->string = L"ボタンリスト";
@@ -88,11 +91,22 @@ namespace NTest{namespace NCommon
 			}
 		}
 
-		//ウィンドウ -> ボディー背景。
+		//ウィンドウ -> サイズ変更。
+		{
+			NBsys::NWindowMenu::WindowMenu_Window_Resize::InitItem t_inititem;
+			t_inititem.size.SetW_StretchParent();
+			t_inititem.size.SetH_StretchParent();
+			t_window_resize->Initialize(t_inititem);
+			{
+			}
+		}
+
+		//ウィンドウ -> サイズ変更 -> ボディー背景。
 		{
 			NBsys::NWindowMenu::WindowMenu_Window_Plate::InitItem t_inititem;
 			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Vertical;	//縦積み。
-			t_inititem.size.SetH_StretchChild();
+			t_inititem.size.SetW_StretchParent();
+			t_inititem.size.SetH_StretchParent();
 			t_bodybg->Initialize(t_inititem);
 			{
 				t_bodybg->color = NBsys::NColor::Color_F(0.1f,0.1f,0.1f,1.0f);
@@ -144,6 +158,7 @@ namespace NTest{namespace NCommon
 		{
 			NBsys::NWindowMenu::WindowMenu_Window_Button::InitItem t_inititem;
 			t_inititem.mode = NBsys::NWindowMenu::WindowMenu_Mode::Horizontal;
+			t_inititem.size.SetW_StretchParent();
 			t_inititem.size.SetH(32);
 			t_button->Initialize(t_inititem);
 			{
@@ -152,6 +167,7 @@ namespace NTest{namespace NCommon
 				t_button->color_ondown = NBsys::NColor::Color_F(0.3f,0.3f,1.0f,1.0f);
 				t_button->string = a_string;
 				t_button->action = a_function;
+				t_button->clip = true;
 			}
 		}
 	}

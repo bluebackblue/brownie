@@ -691,7 +691,7 @@ namespace NTest{namespace NCommon
 						//描画登録。
 						{
 							sharedptr<NCommon::Render2D_Item_Font> t_font(new NCommon::Render2D_Item_Font(99999));
-							t_font->rect.Set(0.0f);
+							t_font->clip_rect.Set(0.0f);
 							t_font->clip = false;
 							t_font->size = 16.0f;
 							t_font->fonttexture_type = NBsys::ND3d11::D3d11_FontTextureType::SFont;
