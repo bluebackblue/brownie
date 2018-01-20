@@ -601,26 +601,34 @@ namespace NBsys{namespace NWindowMenu
 	{
 		if(this->parent != nullptr){
 			if(this->parent->clip_enable == true){
-				f32 t_max_ww = this->parent->calc_rect.xx + this->parent->calc_rect.ww - this->calc_rect.xx;
-				f32 t_max_hh = this->parent->calc_rect.yy + this->parent->calc_rect.hh - this->calc_rect.yy;
+				//子をクリップする。
 
-				if(t_max_ww <= 0.0f){
-					t_max_ww = 0.0f;
-				}
-				if(t_max_hh <= 0.0f){
-					t_max_hh = 0.0f;
-				}
+				if(this->parent->calc_clip_fix == true){
+					f32 t_max_ww = this->parent->calc_rect.xx + this->parent->calc_rect.ww - this->calc_rect.xx;
+					f32 t_max_hh = this->parent->calc_rect.yy + this->parent->calc_rect.hh - this->calc_rect.yy;
 
-				if(this->calc_rect.ww > t_max_ww){
-					this->calc_rect.ww = t_max_ww;
-				}
+					if(t_max_ww <= 0.0f){
+						t_max_ww = 0.0f;
+					}
+					if(t_max_hh <= 0.0f){
+						t_max_hh = 0.0f;
+					}
 
-				if(this->size.size.hh > t_max_hh){
-					this->calc_rect.hh = t_max_hh;
+					if(this->calc_rect.ww > t_max_ww){
+						this->calc_rect.ww = t_max_ww;
+					}
+
+					if(this->size.size.hh > t_max_hh){
+						this->calc_rect.hh = t_max_hh;
+					}
+
+					this->calc_clip_fix = true;
+				}else{
+					//親の計算待ち。
 				}
+			}else{
+				this->calc_clip_fix = true;
 			}
-
-			this->calc_clip_fix = true;
 		}else{
 			this->calc_clip_fix = true;
 		}
