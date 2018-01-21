@@ -150,8 +150,8 @@ namespace NTest{namespace NCommon
 			//通信中。
 
 			#if(BSYS_HTTP_ENABLE)
-			 bool t_ret = this->send_http->ConnectUpdate();
-			 if((t_ret == true)||(this->send_recvbuffer->GetUseSize()>0)){
+			bool t_ret = this->send_http->ConnectUpdate();
+			if((t_ret == true)||(this->send_recvbuffer->GetUseSize()>0)){
 
 				//u8* t_recv_data = this->send_recvbuffer->GetItemFromUseList(0);
 				//s32 t_recv_size = this->send_recvbuffer->GetUseSize();

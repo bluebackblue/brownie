@@ -378,14 +378,28 @@ namespace NTest{namespace NCommon
 				NBsys::NWinsock::StartSystem();
 			}
 			#endif
+
+			#if(BSYS_OPENSSL_ENABLE)
+			{
+				NBsys::NOpenSsl::StartSystem();
+			}
+			#endif
 		}
 
 		/** 削除。通信。
 		*/
 		virtual void Finalize_Winsock()
 		{
+			#if(BSYS_OPENSSL_ENABLE)
+			{
+				NBsys::NOpenSsl::EndSystem();
+			}
+			#endif
+
 			#if(BSYS_WINSOCK_ENABLE)
-			NBsys::NWinsock::EndSystem();
+			{
+				NBsys::NWinsock::EndSystem();
+			}
 			#endif
 		}
 
@@ -817,6 +831,53 @@ namespace NTest{namespace NCommon
 
 		}
 
+		/** SendDiscord
+		*/
+		void SendDiscord(const STLWString& a_string)
+		{
+			sharedptr<NBsys::NHttp::Http> t_http(new NBsys::NHttp::Http());
+			t_http->SetHost("bbbproject.sakura.ne.jp");
+			t_http->SetPort(80);
+			t_http->SetMode(NBsys::NHttp::Http_Mode::Post);
+			t_http->SetSsl(false);
+			t_http->SetUrl("/www/project_discord/");
+
+			t_http->AddPostContent("message",WcharToChar(a_string));
+			//t_http->AddPostContent("debug","1");
+
+			sharedptr<RingBufferBase<u8>> t_ringbuffer(new RingBuffer<u8,1*1024*1024,true>());
+			t_http->ConnectStart(t_ringbuffer);
+
+			STLString t_recv_string;
+
+			while(1){
+				bool t_ret = t_http->ConnectUpdate();
+				if((t_ret == true)||(t_ringbuffer->GetUseSize()>0)){
+					if(t_http->IsRecvHeader()){
+						//ヘッダー読み込み済み。
+
+						u8 t_buffer[64] = {0};
+						s32 t_size = t_ringbuffer->GetUseSize();
+						if(t_size >= sizeof(t_buffer) - 1){
+							t_size = sizeof(t_buffer) - 1;
+						}
+						t_ringbuffer->CopyFromBuffer(t_buffer,t_size);
+
+						t_recv_string += reinterpret_cast<char*>(t_buffer);
+					}
+				}else{
+					t_http->ConnectEnd();
+					break;
+				}
+
+				ThreadSleep(0);
+			}
+
+			t_http.reset();
+
+			TAGLOG(L"discord","%s",t_recv_string.c_str());
+		}
+
 		/** キャプチャー。
 		*/
 		void Capture()
@@ -835,7 +896,6 @@ namespace NTest{namespace NCommon
 			t_output.Close();
 
 			#endif
-
 		}
 	};
 

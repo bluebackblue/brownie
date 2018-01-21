@@ -168,6 +168,10 @@
 
 	#define BSYS_TEXTURE_GDIPLUS_ENABLE						(1)
 
+	#define BSYS_HTTP_ENABLE								(1)
+	#define BSYS_WINSOCK_ENABLE								(1)
+	#define BSYS_HTTP_DEBUG_ENABLE							(1)
+
 #elif(DEF_TEST_INDEX == 12)
 
 	#define DEF_TEST_STRING									L"12"

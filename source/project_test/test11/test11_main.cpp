@@ -254,6 +254,13 @@ namespace NTest
 			}
 		}
 
+		/** Discord
+		*/
+		void Discord()
+		{
+			this->SendDiscord(L"テスト\nテスト\n");
+		}
+
 		/** 初期化更新。
 		*/
 		virtual bool Initialize_Update()
@@ -338,6 +345,7 @@ namespace NTest
 					this->wave_se8 = NBsys::NWave::CreateWave_Ogg(this->file_se8->GetLoadData(),static_cast<s32>(this->file_se8->GetLoadSize()),L"se8");
 					this->wave_se9 = NBsys::NWave::CreateWave_Ogg(this->file_se9->GetLoadData(),static_cast<s32>(this->file_se9->GetLoadSize()),L"se9");
 
+					this->windowmenu_buttonlist->AddButton(L"Discord",std::bind(&App::Discord,this));
 					this->windowmenu_buttonlist->AddButton(L"Capture",std::bind(&App::Capture,this));
 					this->windowmenu_buttonlist->AddButton(L"Load",std::bind(&App::Load,this));
 					this->windowmenu_buttonlist->AddButton(L"UnLoad",std::bind(&App::UnLoad,this));
@@ -366,7 +374,7 @@ namespace NTest
 					}
 				}
 
-				this->Play();
+				//this->Play();
 
 			}
 		}
