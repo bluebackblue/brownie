@@ -100,6 +100,14 @@ namespace NBsys{namespace ND3d11
 	}
 
 
+	/** ディスプレイモードリスト作成。
+	*/
+	sharedptr<STLVector<D3d11_DisplayMode>::Type> D3d11::CreateDisplayModeList()
+	{
+		return this->impl->CreateDisplayModeList();
+	}
+
+
 	/** CreateVertexShader
 	*/
 	s32 D3d11::CreateVertexShader(AsyncResult<bool>& a_asyncresult,sharedptr<NBsys::NFile::File_Object>& a_fileobject,sharedptr<STLVector<NBsys::ND3d11::D3d11_Layout>::Type>& a_layout)
@@ -174,9 +182,9 @@ namespace NBsys{namespace ND3d11
 
 	/** Render_Create
 	*/
-	void D3d11::Render_Create(sharedptr<NWindow::Window>& a_window,const Size2DType<f32>& a_size)
+	void D3d11::Render_Create(sharedptr<NWindow::Window>& a_window,s32 a_displaymode_index)
 	{
-		return this->impl->Render_Create(a_window,a_size);
+		return this->impl->Render_Create(a_window,a_displaymode_index);
 	}
 
 

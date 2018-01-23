@@ -48,6 +48,7 @@
 */
 #include "./d3d11_impl_font_decl.h"
 #include "./d3d11_impl_type.h"
+#include "./d3d11_displaymode.h"
 
 
 /** include
@@ -64,9 +65,6 @@
 #pragma warning(disable:4710 4820)
 namespace NBsys{namespace ND3d11
 {
-
-
-
 	/** D3d11_Impl
 
 	デバイスへのアクセスを行う関数は「Render_」で始まります。
@@ -135,6 +133,10 @@ namespace NBsys{namespace ND3d11
 		/** depthbuffer_depthstencilstate
 		*/
 		sharedptr<ID3D11DepthStencilState> depthbuffer_depthstencilstate;
+
+		/** dxgi_mode_desc_list
+		*/
+		STLVector<DXGI_MODE_DESC>::Type dxgi_mode_desc_list;
 
 		/** font
 		*/
@@ -218,9 +220,13 @@ namespace NBsys{namespace ND3d11
 		*/
 		sharedptr<NBsys::NTexture::Texture>& GetTextureState(s32 a_texture_id);
 
+		/** ディスプレイモードリスト作成。
+		*/
+		sharedptr<STLVector<D3d11_DisplayMode>::Type> CreateDisplayModeList();
+
 		/** Render_Create
 		*/
-		void Render_Create(sharedptr<NWindow::Window>& a_window,const Size2DType<f32>& a_size);
+		void Render_Create(sharedptr<NWindow::Window>& a_window,s32 a_displaymode_index);
 
 		/** Render_Delete
 		*/

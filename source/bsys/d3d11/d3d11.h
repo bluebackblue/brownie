@@ -34,6 +34,7 @@
 */
 #include "./d3d11_layout.h"
 #include "./d3d11_sampler.h"
+#include "./d3d11_displaymode.h"
 
 
 /** NBsys::ND3d11
@@ -89,6 +90,10 @@ namespace NBsys{namespace ND3d11
 		*/
 		sharedptr<NBsys::NTexture::Texture>& GetTextureState(s32 a_texture_id);
 
+		/** ディスプレイモードリスト作成。
+		*/
+		sharedptr<STLVector<D3d11_DisplayMode>::Type> CreateDisplayModeList();
+
 	public:
 
 		/** CreateVertexShader
@@ -131,7 +136,7 @@ namespace NBsys{namespace ND3d11
 
 		/** 作成。
 		*/
-		void Render_Create(sharedptr<NWindow::Window>& a_window,const Size2DType<f32>& a_size);
+		void Render_Create(sharedptr<NWindow::Window>& a_window,s32 a_displaymode_index);
 
 		/** 削除。
 		*/

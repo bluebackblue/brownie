@@ -154,13 +154,10 @@ namespace NBsys{namespace ND3d11
 	}
 
 
-	/** Render_Create
+	/** ディスプレイモードリスト作成。
 	*/
-	void D3d11_Impl::Render_Create(sharedptr<NWindow::Window>& a_window,const Size2DType<f32>& a_size)
+	sharedptr<STLVector<D3d11_DisplayMode>::Type> D3d11_Impl::CreateDisplayModeList()
 	{
-		this->size = a_size;
-
-		STLVector<DXGI_MODE_DESC>::Type t_list;
 		sharedptr<IDXGIAdapter> t_adapter;
 		sharedptr<IDXGIFactory> t_factory;
 		sharedptr<IDXGIOutput> t_output;
@@ -210,26 +207,48 @@ namespace NBsys{namespace ND3d11
 			}
 			
 			if((t_max > 0)&&(t_output != nullptr)){
-				t_list.resize(t_max);
-				HRESULT t_ret = t_output->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM,0,&t_max,&t_list.at(0));
+				this->dxgi_mode_desc_list.resize(t_max);
+				HRESULT t_ret = t_output->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM,0,&t_max,&this->dxgi_mode_desc_list.at(0));
 				if(FAILED(t_ret)){
 					t_max = 0;
-					t_list.clear();
+					this->dxgi_mode_desc_list.clear();
 				}
 			}
 		}
 
-		DXGI_MODE_DESC t_select_desc = {0};
-		t_select_desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-		t_select_desc.Height = static_cast<UINT>(this->size.hh);
-		t_select_desc.RefreshRate.Denominator = 60;
-		t_select_desc.RefreshRate.Numerator = 1;
-		t_select_desc.Scaling;
-		t_select_desc.ScanlineOrdering;
-		t_select_desc.Width = static_cast<UINT>(this->size.ww);
-		if(t_list.size() > 0){
-			t_select_desc = t_list[t_list.size() - 1];
+		sharedptr<STLVector<D3d11_DisplayMode>::Type> t_ret(new STLVector<D3d11_DisplayMode>::Type());
+
+		s32 ii_max = static_cast<s32>(this->dxgi_mode_desc_list.size());
+		for(s32 ii=0;ii<ii_max;ii++){
+			t_ret->push_back(D3d11_DisplayMode(ii,static_cast<f32>(this->dxgi_mode_desc_list[ii].Width),static_cast<f32>(this->dxgi_mode_desc_list[ii].Height),static_cast<f32>(this->dxgi_mode_desc_list[ii].RefreshRate.Numerator)/static_cast<f32>(this->dxgi_mode_desc_list[ii].RefreshRate.Denominator)));
 		}
+
+		return t_ret;
+	}
+
+
+	/** Render_Create
+	*/
+	void D3d11_Impl::Render_Create(sharedptr<NWindow::Window>& a_window,s32 a_displaymode_index)
+	{
+		// = a_size;
+
+		DXGI_MODE_DESC t_select_desc = {0};
+		{
+			t_select_desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+			t_select_desc.Height = 640;
+			t_select_desc.RefreshRate.Denominator = 60;
+			t_select_desc.RefreshRate.Numerator = 1;
+			t_select_desc.Scaling;
+			t_select_desc.ScanlineOrdering;
+			t_select_desc.Width = 480;
+
+			if((0 <= a_displaymode_index)&&(a_displaymode_index < this->dxgi_mode_desc_list.size())){
+				t_select_desc = this->dxgi_mode_desc_list.at(a_displaymode_index);
+			}
+		}
+
+		this->size.Set(static_cast<f32>(t_select_desc.Width),static_cast<f32>(t_select_desc.Height));
 
 		D3D_FEATURE_LEVEL t_featurelevel_list[] = {D3D_FEATURE_LEVEL_11_0};
 
