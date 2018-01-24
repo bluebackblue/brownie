@@ -93,19 +93,6 @@ namespace NBsys{namespace NDsound
 	}
 
 
-	/** 更新。
-	*/
-	void Update()
-	{
-		AutoLock t_autolock(s_lockobject);
-
-		if(s_thread){
-			s_thread->get()->Update();
-		}else{
-			DEEPDEBUG_ASSERT(BSYS_DSOUND_DEBUG_ENABLE,0);
-		}
-	}
-
 
 	/** サウンドバッファ作成。
 	*/

@@ -51,7 +51,7 @@ namespace NBsys{namespace NDsound
 
 		/** [リクエスト]イベント。
 		*/
-		SimpleEvent request_event;
+		//SimpleEvent request_event;
 
 		/** dsound_impl
 		*/
@@ -126,10 +126,6 @@ namespace NBsys{namespace NDsound
 		void EndRequest();
 
 	public:
-
-		/** 更新。
-		*/
-		void Update();
 
 		/** サウンドバッファ作成。
 		*/

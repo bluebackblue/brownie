@@ -53,11 +53,6 @@ namespace NBsys{namespace NDsound
 	void EndSystem();
 
 
-	/** 更新。
-	*/
-	void Update();
-
-
 	/** サウンドバッファ作成。
 	*/
 	s32 CreateSoundBuffer(const sharedptr<NBsys::NWave::Wave>& a_wave,bool a_is_3d);

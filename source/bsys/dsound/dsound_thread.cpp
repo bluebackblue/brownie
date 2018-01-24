@@ -36,7 +36,7 @@ namespace NBsys{namespace NDsound
 		:
 		endrequest(false),
 		lockobject(),
-		request_event(true),
+		//request_event(true),
 		dsound_impl()
 	{
 	}
@@ -78,7 +78,7 @@ namespace NBsys{namespace NDsound
 			ThreadSleep(1000/120);
 
 			//リクエスト受付開始。
-			this->request_event.Clear();
+			//this->request_event.Clear();
 
 			//リクエスト処理。
 			this->dsound_impl.Player_Main();
@@ -103,15 +103,7 @@ namespace NBsys{namespace NDsound
 	void Dsound_Thread::EndRequest()
 	{
 		this->endrequest.Store(true);
-		this->request_event.Signal();
-	}
-
-
-	/** 更新。
-	*/
-	void Dsound_Thread::Update()
-	{
-		this->request_event.Signal();
+		//this->request_event.Signal();
 	}
 
 

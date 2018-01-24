@@ -245,6 +245,8 @@ namespace NBsys{namespace ND3d11
 
 			if((0 <= a_displaymode_index)&&(a_displaymode_index < this->dxgi_mode_desc_list.size())){
 				t_select_desc = this->dxgi_mode_desc_list.at(a_displaymode_index);
+			}else if(this->dxgi_mode_desc_list.size() > 0){
+				t_select_desc = this->dxgi_mode_desc_list.at(this->dxgi_mode_desc_list.size() - 1);
 			}
 		}
 

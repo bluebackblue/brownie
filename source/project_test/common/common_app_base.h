@@ -407,9 +407,7 @@ namespace NTest{namespace NCommon
 		*/
 		virtual void Initialize_Window()
 		{
-			//
-			this->size = NBsys::NWindow::Window::GetDesktopSize();
-
+			this->size.Set(1600,900);
 			this->window.reset(new NBsys::NWindow::Window());
 			this->window->Create(L"TEST " DEF_TEST_STRING,this->size);
 		}
@@ -427,7 +425,23 @@ namespace NTest{namespace NCommon
 		virtual void Initialize_D3d11()
 		{
 			this->d3d11.reset(new NBsys::ND3d11::D3d11());
-			this->d3d11->Render_Create(this->window,this->size);
+
+			sharedptr<STLVector<NBsys::ND3d11::D3d11_DisplayMode>::Type> t_displaymode_list = this->d3d11->CreateDisplayModeList();
+
+			s32 t_displaymode_index = -1;
+
+			s32 ii_max = static_cast<s32>(t_displaymode_list->size());
+			for(s32 ii=0;(ii < ii_max)&&(t_displaymode_index < 0);ii++){
+				f32 t_width = t_displaymode_list->at(ii).width;
+				f32 t_height = t_displaymode_list->at(ii).height;
+
+				if((this->size.ww == t_width)&&(this->size.hh == t_height)){
+					t_displaymode_index = ii;
+				}
+			}
+
+			this->d3d11->Render_Create(this->window,t_displaymode_index);
+			this->size = this->d3d11->GetSize();
 		}
 
 		/** 削除。d3d11
@@ -743,13 +757,6 @@ namespace NTest{namespace NCommon
 				}
 				#endif
 			}
-
-			//サウンド命令呼び出し開始。
-			#if(BSYS_DSOUND_ENABLE)
-			{
-				NBsys::NDsound::Update();
-			}
-			#endif
 
 			//描画命令呼び出し。
 			{
