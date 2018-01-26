@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 /**
- * Copyright (c) 2016-2018 blueback
+ * Copyright (c) blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -46,7 +46,7 @@ namespace NBsys{namespace NOpenSsl
 
 		/** ctx
 		*/
-		SSL_CTX* ctx;
+		SSL_CTX* ssl_ctx;
 
 		/** id_maker
 		*/
@@ -100,6 +100,10 @@ namespace NBsys{namespace NOpenSsl
 		/** Ssl_Delete
 		*/
 		void Ssl_Delete(s32 a_id);
+
+		/** CalcMD5
+		*/
+		STLString CalcMD5(sharedptr<u8>& a_data,s32 a_size);
 
 	};
 

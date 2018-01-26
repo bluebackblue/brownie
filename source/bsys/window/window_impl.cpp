@@ -1,7 +1,7 @@
 ﻿
 
 /**
- * Copyright (c) 2016-2018 blueback
+ * Copyright (c) blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -123,7 +123,7 @@ namespace NBsys{namespace NWindow
 
 		::AdjustWindowRect(&t_rect,WS_OVERLAPPEDWINDOW,FALSE);
 
-		const wchar* t_classname = L"brownie window class";
+		const wchar* t_classname = BSYS_WINDOW_CLASSNAME;
 
 		WNDCLASSEXW t_wndclass;
 		{
@@ -181,7 +181,7 @@ namespace NBsys{namespace NWindow
 
 			{
 				HINSTANCE t_instance = ::GetModuleHandle(WIN_NULL);
-				const wchar_t* t_classname = L"brownie window class";
+				const wchar* t_classname = BSYS_WINDOW_CLASSNAME;
 				::UnregisterClassW(t_classname,t_instance);
 			}
 		}
@@ -229,6 +229,17 @@ namespace NBsys{namespace NWindow
 	bool Window_Impl::IsActive() const
 	{
 		return this->isactive;
+	}
+
+
+	/** タイトル設定。
+	*/
+	void Window_Impl::SetTitle(const STLWString& a_title)
+	{
+		BOOL t_ret = ::SetWindowTextW(this->handle,a_title.c_str());
+		if(t_ret == FALSE){
+			ASSERT(0);
+		}
 	}
 
 

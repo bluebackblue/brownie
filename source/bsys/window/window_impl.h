@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 /**
- * Copyright (c) 2016-2018 blueback
+ * Copyright (c) blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -110,6 +110,10 @@ namespace NBsys{namespace NWindow
 		/** IsActive
 		*/
 		bool IsActive() const;
+
+		/** タイトル設定。
+		*/
+		void SetTitle(const STLWString& a_title);
 
 		/** CallBackProc
 		*/

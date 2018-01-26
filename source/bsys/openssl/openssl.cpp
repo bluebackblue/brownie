@@ -1,7 +1,7 @@
 ﻿
 
 /**
- * Copyright (c) 2016-2018 blueback
+ * Copyright (c) blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -134,6 +134,17 @@ namespace NBsys{namespace NOpenSsl
 		if(s_openssl){
 			s_openssl->Ssl_Delete(a_id);
 		}
+	}
+
+
+	/** CalcMD5
+	*/
+	STLString CalcMD5(sharedptr<u8>& a_data,s32 a_size)
+	{
+		if(s_openssl){
+			return s_openssl->CalcMD5(a_data,a_size);
+		}
+		return "";
 	}
 
 

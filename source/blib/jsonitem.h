@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 /**
- * Copyright (c) 2016-2017 blueback
+ * Copyright (c) blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -393,7 +393,7 @@ namespace NBlib
 	
 		/** [設定]連想リストにアイテム追加。削除。
 		*/
-		void SetItem(const STLString& a_itemname,sharedptr<JsonItem>& a_item,bool a_deepcopy);
+		void SetItem(const STLString& a_itemname,const sharedptr<JsonItem>& a_item,bool a_deepcopy);
 	
 		/** [設定]インデックスリストにアイテム追加。
 		*/

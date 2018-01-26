@@ -1,7 +1,7 @@
 ﻿
 
 /**
- * Copyright (c) 2016-2017 blueback
+ * Copyright (c) blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -270,6 +270,12 @@ namespace NBsys{namespace NHttp
 		}
 		#endif
 
+		if(this->socket){
+			if(this->socket->IsOpen()){
+				this->socket->Close();
+			}
+		}
+
 		//ソケット作成。
 		this->socket.reset(new SocketHandle());
 
@@ -293,6 +299,12 @@ namespace NBsys{namespace NHttp
 			this->ssl_id = -1;
 		}
 		#endif
+
+		if(this->socket){
+			if(this->socket->IsOpen()){
+				this->socket->Close();
+			}
+		}
 
 		this->step = Step::None;
 		this->socket.reset();

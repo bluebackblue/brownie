@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 /**
- * Copyright (c) 2016-2018 blueback
+ * Copyright (c) blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -50,7 +50,7 @@ namespace NBsys{namespace NOpenSsl
 	*/
 	OpenSsl_Impl::OpenSsl_Impl()
 		:
-		ctx(nullptr),
+		ssl_ctx(nullptr),
 		id_maker(),
 		list()
 	{
@@ -75,7 +75,7 @@ namespace NBsys{namespace NOpenSsl
 		SSL_library_init();
 
 		DEEPDEBUG_TAGLOG(BSYS_OPENSSL_DEBUG_ENABLE,L"openssl_impl","SSL_CTX_new(SSLv23_client_method)");
-		this->ctx = SSL_CTX_new(SSLv23_client_method());
+		this->ssl_ctx = SSL_CTX_new(SSLv23_client_method());
 	}
 
 
@@ -84,8 +84,8 @@ namespace NBsys{namespace NOpenSsl
 	void OpenSsl_Impl::Finalize()
 	{
 		DEEPDEBUG_TAGLOG(BSYS_OPENSSL_DEBUG_ENABLE,L"openssl_impl","SSL_CTX_free");
-		SSL_CTX_free(this->ctx);
-		this->ctx = nullptr;
+		SSL_CTX_free(this->ssl_ctx);
+		this->ssl_ctx = nullptr;
 
 		//エンジン。
 		DEEPDEBUG_TAGLOG(BSYS_OPENSSL_DEBUG_ENABLE,L"openssl_impl","ENGINE_cleanup");
@@ -148,7 +148,7 @@ namespace NBsys{namespace NOpenSsl
 		auto t_it = this->list.find(a_id);
 		if(t_it != this->list.end()){
 
-			SSL* t_ssl = SSL_new(this->ctx);
+			SSL* t_ssl = SSL_new(this->ssl_ctx);
 			if(t_ssl != nullptr){
 				t_it->second->SetSsl(t_ssl);
 			}
@@ -290,6 +290,29 @@ namespace NBsys{namespace NOpenSsl
 		}else{
 			ASSERT(0);
 		}
+	}
+
+
+	/** CalcMD5
+	*/
+	STLString OpenSsl_Impl::CalcMD5(sharedptr<u8>& a_data,s32 a_size)
+	{
+		MD5_CTX t_md5_ctx;
+
+		MD5_Init(&t_md5_ctx);
+		MD5_Update(&t_md5_ctx,a_data.get(),a_size);
+
+		u8 t_buffer[MD5_DIGEST_LENGTH + 1] = {0};
+		MD5_Final(t_buffer,&t_md5_ctx);
+
+		STLString t_ret;
+
+		for(s32 ii=0;ii<MD5_DIGEST_LENGTH;ii++){
+			char t_temp[4] = {0};
+			t_ret += VASTRING(t_temp,sizeof(t_temp),"%02x",t_buffer[ii]);
+		}
+
+		return t_ret;
 	}
 
 

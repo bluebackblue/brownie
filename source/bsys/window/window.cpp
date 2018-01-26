@@ -1,7 +1,7 @@
 ﻿
 
 /**
- * Copyright (c) 2016-2017 blueback
+ * Copyright (c) blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -145,6 +145,15 @@ namespace NBsys{namespace NWindow
 	bool Window::IsActive()
 	{
 		return this->impl->IsActive();
+	}
+
+
+	/** タイトル設定。
+	*/
+	void Window::SetTitle(const STLWString& a_title)
+	{
+		return this->impl->SetTitle(a_title);
+
 	}
 
 

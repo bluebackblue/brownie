@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 /**
- * Copyright (c) 2016-2018 blueback
+ * Copyright (c) blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -397,7 +397,7 @@
 	-------------------
 */
 #if !defined(BLIB_STACKTRACE_ENABLE)
-	#define BLIB_STACKTRACE_ENABLE								(1)
+	#define BLIB_STACKTRACE_ENABLE							(1)
 #endif
 
 
@@ -416,7 +416,7 @@
 	-------------------
 */
 #if !defined(BLIB_STDTHREAD_ENABLE)
-	#define BLIB_STDTHREAD_ENABLE								(1)
+	#define BLIB_STDTHREAD_ENABLE							(1)
 #endif
 
 
@@ -827,9 +827,18 @@
 		0 : オフ
 		1 : オン
 	-------------------
+
+	-------------------
+	BSYS_WINDOW_CLASSNAME
+
+		ウィンドウクラス名を設定します。
+	-------------------
 */
 #if !defined(BSYS_WINDOW_ENABLE)
 	#define BSYS_WINDOW_ENABLE								(0)
+#endif
+#if !defined(BSYS_WINDOW_CLASSNAME)
+	#define BSYS_WINDOW_CLASSNAME							L"Brownie Window Class"
 #endif
 
 
@@ -1139,10 +1148,10 @@
 	-------------------
 */
 #if !defined(BSYS_WAVE_ENABLE)
-	#define BSYS_WAVE_ENABLE							(0)
+	#define BSYS_WAVE_ENABLE								(0)
 #endif
 #if !defined(BSYS_WAVE_DEBUG_ENABLE)
-	#define BSYS_WAVE_DEBUG_ENABLE						(0)
+	#define BSYS_WAVE_DEBUG_ENABLE							(0)
 #endif
 
 
@@ -1170,10 +1179,10 @@
 	-------------------
 */
 #if !defined(BSYS_DSOUND_ENABLE)
-	#define BSYS_DSOUND_ENABLE							(0)
+	#define BSYS_DSOUND_ENABLE								(0)
 #endif
 #if !defined(BSYS_DSOUND_DEBUG_ENABLE)
-	#define BSYS_DSOUND_DEBUG_ENABLE					(0)
+	#define BSYS_DSOUND_DEBUG_ENABLE						(0)
 #endif
 
 

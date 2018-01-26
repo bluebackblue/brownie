@@ -1,7 +1,7 @@
 ﻿
 
 /**
- * Copyright (c) 2016-2017 blueback
+ * Copyright (c) blueback
  * Released under the MIT License
  * https://github.com/bluebackblue/brownie/blob/master/LICENSE.txt
  * http://bbbproject.sakura.ne.jp/wordpress/mitlicense
@@ -243,7 +243,7 @@ namespace NBsys{namespace ND3d11
 			t_select_desc.ScanlineOrdering;
 			t_select_desc.Width = 480;
 
-			if((0 <= a_displaymode_index)&&(a_displaymode_index < this->dxgi_mode_desc_list.size())){
+			if((0 <= a_displaymode_index)&&(a_displaymode_index < static_cast<s32>(this->dxgi_mode_desc_list.size()))){
 				t_select_desc = this->dxgi_mode_desc_list.at(a_displaymode_index);
 			}else if(this->dxgi_mode_desc_list.size() > 0){
 				t_select_desc = this->dxgi_mode_desc_list.at(this->dxgi_mode_desc_list.size() - 1);
