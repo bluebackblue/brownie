@@ -162,6 +162,96 @@ namespace NBlib
 	}
 
 
+	/** ディレクトリ作成。
+	*/
+	ErrorCode::Id DirectoryHandle_Impl::MakeDirectory(const STLWString& a_directoryname)
+	{
+		#if defined(PLATFORM_VCWIN)
+		{
+			ErrorCode::Id t_errorcode = ErrorCode::Success;
+
+			//検索。
+			{
+				HANDLE t_handle = INVALID_HANDLE_VALUE;
+
+				//一つ目。
+				{
+					STLWString t_find_path = Path::DirAndName(this->fullpath,a_directoryname);
+
+					WIN32_FIND_DATAW t_finddata;
+					t_handle = ::FindFirstFileW(t_find_path.c_str(),&t_finddata);
+					if(t_handle == INVALID_HANDLE_VALUE){
+						//存在しない。
+					}else{
+						DirectoryHandle::DirectoryItem t_item;
+						{
+							t_item.name = t_finddata.cFileName;
+							t_item.is_directory = ((t_finddata.dwFileAttributes&FILE_ATTRIBUTE_DIRECTORY)?(true):(false));
+						}
+
+						if(t_item.name == a_directoryname){
+							if(t_item.is_directory == true){
+								//すでに存在する。
+								t_errorcode = ErrorCode::Directory_ExistDirectoryError;
+							}else{
+								//存在するがディレクトリーではない。
+								t_errorcode = ErrorCode::Directory_ExistFileError;
+							}
+						}else{
+							//無関係。
+						}
+					}
+				}
+
+				//二つ目以降。
+				if(t_handle != INVALID_HANDLE_VALUE){
+					while(t_errorcode == ErrorCode::Success){
+						WIN32_FIND_DATAW t_finddata;
+						BOOL t_ret = ::FindNextFileW(this->rawhandle,&t_finddata);
+						if(t_ret != TRUE){
+							//終端。
+							break;
+						}else{
+							DirectoryHandle::DirectoryItem t_item;
+							{
+								t_item.name = t_finddata.cFileName;
+								t_item.is_directory = ((t_finddata.dwFileAttributes&FILE_ATTRIBUTE_DIRECTORY)?(true):(false));
+							}
+
+							if(t_item.name == a_directoryname){
+								if(t_item.is_directory == true){
+									//すでに存在する。
+									t_errorcode = ErrorCode::Directory_ExistDirectoryError;
+								}else{
+									//存在するがディレクトリーではない。
+									t_errorcode = ErrorCode::Directory_ExistFileError;
+								}
+							}else{
+								//無関係。
+							}
+						}
+					}
+
+					::FindClose(t_handle);
+				}
+			}
+
+			if(t_errorcode == ErrorCode::Success){
+				STLWString t_path = Path::DirAndDir(this->fullpath,a_directoryname);
+				BOOL t_ret = ::CreateDirectoryW(t_path.c_str(),WIN_NULL);
+				if(t_ret == 0){
+					return ErrorCode::Directory_Error;
+				}
+			}
+
+			return t_errorcode;
+		}
+		#endif
+
+		return ErrorCode::Directory_Error;
+	}
+
+
 }
 #pragma warning(pop)
 

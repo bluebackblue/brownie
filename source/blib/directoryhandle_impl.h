@@ -98,6 +98,10 @@ namespace NBlib
 		*/
 		STLWString& GetFullPath();
 
+		/** ディレクトリ作成。
+		*/
+		ErrorCode::Id MakeDirectory(const STLWString& a_directoryname);
+
 	};
 
 

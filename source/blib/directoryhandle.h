@@ -19,6 +19,7 @@
 */
 #include "./sharedptr.h"
 #include "./stlstring.h"
+#include "./errorcode.h"
 
 
 /** NBlib
@@ -97,6 +98,10 @@ namespace NBlib
 		/** フルパス取得。
 		*/
 		STLWString& GetFullPath();
+
+		/** ディレクトリ作成。
+		*/
+		ErrorCode::Id MakeDirectory(const STLWString& a_directoryname);
 
 	};
 

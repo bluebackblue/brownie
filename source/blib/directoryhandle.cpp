@@ -104,5 +104,11 @@ namespace NBlib
 	}
 
 
+	/** ディレクトリ作成。
+	*/
+	ErrorCode::Id DirectoryHandle::MakeDirectory(const STLWString& a_directoryname)
+	{
+		return this->impl->MakeDirectory(a_directoryname);
+	}
 }
 
