@@ -171,7 +171,7 @@ namespace NBsys{namespace ND3d11
 		/** Render_SetFont
 		*/
 		#if(BSYS_FONT_ENABLE)
-		void Render_SetFont(D3d11_FontTextureType::Id a_fonttexture_type,sharedptr<NBsys::NFont::Font>& a_font,s32 a_texture_width,const STLWString& a_name);
+		void Render_SetFont(D3d11_FontTextureType::Id a_fonttexture_type,s32 a_drawtypemax,sharedptr<NBsys::NFont::Font>& a_font,s32 a_texture_width,const STLWString& a_name);
 		#endif
 
 		/** Render_DrawFont_ClearLockFlag

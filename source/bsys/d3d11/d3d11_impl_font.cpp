@@ -44,11 +44,12 @@ namespace NBsys{namespace ND3d11
 {
 	/** constructor
 	*/
-	D3d11_Impl_Font::D3d11_Impl_Font(D3d11_Impl& a_opengl_impl,const sharedptr<NBsys::NFont::Font>& a_font,s32 a_texture_width,const STLWString& a_name,D3d11_FontTextureType::Id a_fonttexture_type)
+	D3d11_Impl_Font::D3d11_Impl_Font(D3d11_Impl& a_opengl_impl,const sharedptr<NBsys::NFont::Font>& a_font,s32 a_texture_width,const STLWString& a_name,D3d11_FontTextureType::Id a_fonttexture_type,s32 a_drawtypemax)
 		:
 		d3d11_impl(a_opengl_impl),
 		font(a_font),
 		fonttexture_type(a_fonttexture_type),
+		drawtypemax(a_drawtypemax),
 		//texture_size,
 		//texture,
 		//textureid,
@@ -57,33 +58,7 @@ namespace NBsys{namespace ND3d11
 	{
 		this->texture_size.ww = NTexture::CalcJustSize(a_texture_width);
 
-		s32 t_drawtypemax = 0;
-
-		switch(this->fonttexture_type){
-		case NBsys::ND3d11::D3d11_FontTextureType::SFont:
-			{
-				t_drawtypemax = BSYS_D3D11_FONT_DRAWTYPEMAX_S;
-			}break;
-		case NBsys::ND3d11::D3d11_FontTextureType::MFont:
-			{
-				t_drawtypemax = BSYS_D3D11_FONT_DRAWTYPEMAX_M;
-			}break;
-		case NBsys::ND3d11::D3d11_FontTextureType::LFont:
-			{
-				t_drawtypemax = BSYS_D3D11_FONT_DRAWTYPEMAX_L;
-			}break;
-		case NBsys::ND3d11::D3d11_FontTextureType::ExFont:
-			{
-				t_drawtypemax = BSYS_D3D11_FONT_DRAWTYPEMAX_EX;
-			}break;
-		case NBsys::ND3d11::D3d11_FontTextureType::Max:
-		default:
-			{
-				ASSERT(0);
-			}break;
-		}
-
-		this->texture_size.hh = NTexture::CalcJustSize(this->texture_size.ww * t_drawtypemax);
+		this->texture_size.hh = NTexture::CalcJustSize(this->texture_size.ww * this->drawtypemax);
 
 		sharedptr<u8> t_pixel(new u8[static_cast<u32>(this->texture_size.ww * this->texture_size.hh * 4)]);
 
@@ -98,7 +73,7 @@ namespace NBsys{namespace ND3d11
 
 		this->textureid = this->d3d11_impl.CreateTexture(this->texture,true);
 
-		for(s32 ii=0;ii<t_drawtypemax;ii++){
+		for(s32 ii=0;ii<this->drawtypemax;ii++){
 			this->list.push_back(Item(nullwchar));
 		}
 	}
@@ -212,34 +187,8 @@ namespace NBsys{namespace ND3d11
 	*/
 	void D3d11_Impl_Font::WriteFontTexture()
 	{
-		s32 t_drawtypemax = 0;
-
-		switch(this->fonttexture_type){
-		case NBsys::ND3d11::D3d11_FontTextureType::SFont:
-			{
-				t_drawtypemax = BSYS_D3D11_FONT_DRAWTYPEMAX_S;
-			}break;
-		case NBsys::ND3d11::D3d11_FontTextureType::MFont:
-			{
-				t_drawtypemax = BSYS_D3D11_FONT_DRAWTYPEMAX_M;
-			}break;
-		case NBsys::ND3d11::D3d11_FontTextureType::LFont:
-			{
-				t_drawtypemax = BSYS_D3D11_FONT_DRAWTYPEMAX_L;
-			}break;
-		case NBsys::ND3d11::D3d11_FontTextureType::ExFont:
-			{
-				t_drawtypemax = BSYS_D3D11_FONT_DRAWTYPEMAX_EX;
-			}break;
-		case NBsys::ND3d11::D3d11_FontTextureType::Max:
-		default:
-			{
-				ASSERT(0);
-			}break;
-		}
-
 		s32 t_change_min = 0;
-		s32 t_change_max = t_drawtypemax - 1;
+		s32 t_change_max = this->drawtypemax - 1;
 
 		sharedptr<D3d11_Impl_Texture>& t_texture = this->d3d11_impl.GetTexture(this->textureid);
 		if(t_texture){

@@ -19,56 +19,57 @@
 
 /** include
 */
+#if defined(PLATFORM_VCWIN)
+
+	#include <brownie_config/windows_include.h>
+
+	//[include]
+	#pragma warning(push)
+	#pragma warning(disable:4710 4514)
+	#include <mbstring.h>
+	#pragma warning(pop)
+
+#endif
+
+
+/** include
+*/
 #include "./font_state.h"
-#include "./font_alignment.h"
-#include "./font_file.h"
 
 
 /** NBsys::NFont
 */
 #if(BSYS_FONT_ENABLE)
+#pragma warning(push)
+#pragma warning(disable:4820)
 namespace NBsys{namespace NFont
 {
-	/** Font_Impl
+	/** Font_File_Impl
 	*/
-	class Font_Impl;
-
-
-	/** Font
-	*/
-	class Font
+	class Font_File_Impl
 	{
 	private:
 
-		/** impl
+		/** font_handle
 		*/
-		sharedptr<Font_Impl> impl;
-
-	public:
-
-		/** GetImpl
-		*/
-		sharedptr<Font_Impl>& GetImpl();
+		#if defined(PLATFORM_VCWIN)
+		HANDLE font_file_handle;
+		#endif
 
 	public:
 
 		/** constructor
 		*/
-		Font(const STLWString& a_font_name,s32 a_font_size);
+		Font_File_Impl(const sharedptr<u8>& a_data,s32 a_size);
 
 		/** destructor
 		*/
-		nonvirtual ~Font();
-
-	public:
-
-		/** GetPixel_R8G8B8A8
-		*/
-		Font_State GetPixel_R8G8B8A8(sharedptr<u8>& a_dest_data,s32 a_byte_offset,const Size2DType<s32>& a_dest_size,wchar a_code);
+		nonvirtual ~Font_File_Impl();
 
 	};
 
 
 }}
+#pragma warning(pop)
 #endif
 

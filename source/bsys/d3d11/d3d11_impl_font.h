@@ -93,6 +93,10 @@ namespace NBsys{namespace ND3d11
 		*/
 		D3d11_FontTextureType::Id fonttexture_type;
 
+		/** drawtypemax
+		*/
+		s32 drawtypemax;
+
 		/** texture_size
 		*/
 		Size2DType<s32> texture_size;
@@ -121,7 +125,7 @@ namespace NBsys{namespace ND3d11
 
 		/** constructor
 		*/
-		D3d11_Impl_Font(D3d11_Impl& a_opengl_impl,const sharedptr<NBsys::NFont::Font>& a_font,s32 a_texture_width,const STLWString& a_name,D3d11_FontTextureType::Id a_fonttexture_type);
+		D3d11_Impl_Font(D3d11_Impl& a_opengl_impl,const sharedptr<NBsys::NFont::Font>& a_font,s32 a_texture_width,const STLWString& a_name,D3d11_FontTextureType::Id a_fonttexture_type,s32 a_drawtypemax);
 
 		/** destructor
 		*/

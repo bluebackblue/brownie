@@ -176,17 +176,14 @@ namespace NBsys{namespace ND3d11
 	{
 		enum Id
 		{
-			//小フォント。
-			SFont = 0,
-
-			//中フォント
-			MFont,
-
-			//大フォント。
-			LFont,
-
-			//特大フォント。
-			ExFont,
+			Font_1 = 0,
+			Font_2,
+			Font_3,
+			Font_4,
+			Font_5,
+			Font_6,
+			Font_7,
+			Font_8,
 
 			Max,
 		};

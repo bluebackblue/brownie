@@ -21,7 +21,6 @@
 */
 #include "./font_state.h"
 #include "./font_alignment.h"
-#include "./font_file.h"
 
 
 /** NBsys::NFont
@@ -29,42 +28,36 @@
 #if(BSYS_FONT_ENABLE)
 namespace NBsys{namespace NFont
 {
-	/** Font_Impl
+	/** Font_File_Impl
 	*/
-	class Font_Impl;
+	class Font_File_Impl;
 
 
-	/** Font
+	/** Font_File
 	*/
-	class Font
+	class Font_File
 	{
 	private:
 
 		/** impl
 		*/
-		sharedptr<Font_Impl> impl;
+		sharedptr<Font_File_Impl> impl;
 
 	public:
 
 		/** GetImpl
 		*/
-		sharedptr<Font_Impl>& GetImpl();
+		sharedptr<Font_File_Impl>& GetImpl();
 
 	public:
 
 		/** constructor
 		*/
-		Font(const STLWString& a_font_name,s32 a_font_size);
+		Font_File(const sharedptr<u8>& a_data,s32 a_size);
 
 		/** destructor
 		*/
-		nonvirtual ~Font();
-
-	public:
-
-		/** GetPixel_R8G8B8A8
-		*/
-		Font_State GetPixel_R8G8B8A8(sharedptr<u8>& a_dest_data,s32 a_byte_offset,const Size2DType<s32>& a_dest_size,wchar a_code);
+		nonvirtual ~Font_File();
 
 	};
 
