@@ -77,6 +77,10 @@ namespace NBsys{namespace NWindow
 		*/
 		static Size2DType<f32> GetDesktopSize();
 
+		/** FindFromClassName
+		*/
+		static bool FindFromClassName();
+
 	public:
 
 		/** Create

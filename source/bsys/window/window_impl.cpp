@@ -79,6 +79,17 @@ namespace NBsys{namespace NWindow
 	}
 
 
+	/** [static]FindFromClassName
+	*/
+	bool Window_Impl::FindFromClassName()
+	{
+		HANDLE t_handle = ::FindWindowW(BSYS_WINDOW_CLASSNAME,WIN_NULL);
+		if(t_handle != WIN_NULL){
+			return true;
+		}
+		return false;
+	}
+
 	/** GetClientWidth
 	*/
 	const Size2DType<f32>& Window_Impl::GetClientSize() const

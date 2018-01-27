@@ -84,6 +84,14 @@ namespace NBsys{namespace NWindow
 	}
 
 
+	/** FindFromClassName
+	*/
+	bool Window::FindFromClassName()
+	{
+		return Window_Impl::FindFromClassName();
+	}
+
+
 	/** 作成。
 	*/
 	void Window::Create(const STLWString& a_title,const Size2DType<f32>& a_size)
