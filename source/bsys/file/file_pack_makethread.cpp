@@ -261,6 +261,9 @@ namespace NBsys{namespace NFile
 					DEEPDEBUG_TAGLOG(BSYS_FILE_DEBUG_ENABLE,L"file_pack_makethread","error : %08x",this->errorcode);
 					return false;
 				}
+
+				//終端。
+				t_filehandle_write.SetEOF(t_offset);
 			}
 		}
 	
