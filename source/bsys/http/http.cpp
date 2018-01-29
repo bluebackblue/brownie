@@ -63,7 +63,9 @@ namespace NBsys{namespace NHttp
 		port(80),
 		mode(Http_Mode::Get),
 		ssl(false),
+		#if(BSYS_OPENSSL_ENABLE)
 		ssl_socket(),
+		#endif
 		url(""),
 		boundary_string(NHttp::MakeBoundaryString()),
 		step(Step::None),
@@ -415,7 +417,11 @@ namespace NBsys{namespace NHttp
 
 						//送信バッファ設定。
 						DEEPDEBUG_TAGLOG(BSYS_HTTP_DEBUG_ENABLE,L"http","sendrequest %d",t_buffer_size);
+						#if(BSYS_OPENSSL_ENABLE)
 						this->send->Send(this->socket,this->ssl_socket,this->send_buffer,static_cast<s32>(t_buffer_size));
+						#else
+						this->send->Send(this->socket,this->send_buffer,static_cast<s32>(t_buffer_size));
+						#endif
 					}
 
 					this->step = Step::Connect;

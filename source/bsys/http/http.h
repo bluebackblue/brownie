@@ -95,8 +95,10 @@ namespace NBsys{namespace NHttp
 
 		/** ssl_socket
 		*/
+		#if(BSYS_OPENSSL_ENABLE)
 		sharedptr<NBsys::NOpenSsl::OpenSsl_Socket> ssl_socket;
-		
+		#endif
+
 		/** Url
 		*/
 		STLString url;
