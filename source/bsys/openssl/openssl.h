@@ -17,6 +17,11 @@
 #pragma warning(pop)
 
 
+/** include
+*/
+#include "./openssl_socket.h"
+
+
 /** NBsys::NOpenSsl
 */
 #if(BSYS_OPENSSL_ENABLE)
@@ -39,34 +44,28 @@ namespace NBsys{namespace NOpenSsl
 	void SslDeleteThreadState();
 
 
-	/** SslCreate
+	/** 接続。
 	*/
-	s32 SslCreate();
-
-
-	/** SslConnect
-	*/
-	bool SslConnect(s32 a_id,sharedptr<SocketHandle>& a_sockethandle);
-
-
-	/** SslSend
-	*/
-	bool SslSend(s32 a_id,const u8* a_data,s64 a_size,s64 a_offset);
-
-
-	/** SslRecv
-	*/
-	s64 SslRecv(s32 a_id,u8* a_data,s64 a_size,s64 a_offset,bool a_complete);
-
-
-	/** SslDelete
-	*/
-	void SslDelete(s32 a_id);
+	sharedptr<OpenSsl_Socket> Connect(sharedptr<SocketHandle>& a_sockethandle);
 
 
 	/** CalcMD5
 	*/
 	STLString CalcMD5(sharedptr<u8>& a_data,s32 a_size);
+
+	/** MakeKey
+	*/
+	void MakeKey();
+
+
+	/** Encrypt
+	*/
+	void Encrypt();
+
+
+	/** Decrypt
+	*/
+	void Decrypt();
 
 
 }}

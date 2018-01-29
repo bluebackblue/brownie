@@ -105,7 +105,7 @@ namespace NBsys{namespace NHttp
 
 	/** 更新。
 	*/
-	bool Http_Send::Update(s32& a_ssl_id)
+	bool Http_Send::Update(sharedptr<NBsys::NOpenSsl::OpenSsl_Socket>& a_ssl_socket)
 	{
 		if(this->socket){
 			if(this->socket->IsOpen()){
@@ -114,9 +114,9 @@ namespace NBsys{namespace NHttp
 
 					bool t_ret = false;
 
-					if(a_ssl_id >= 0){
+					if(a_ssl_socket != nullptr){
 						#if(BSYS_OPENSSL_ENABLE)
-						if(NBsys::NOpenSsl::SslSend(a_ssl_id,this->buffer.get(),this->buffer_offset + t_send_size,this->buffer_offset) == true){
+						if(a_ssl_socket->Send(this->buffer.get(),this->buffer_offset + t_send_size,this->buffer_offset) == true){
 							t_ret = true;
 						}
 						#endif
@@ -134,9 +134,9 @@ namespace NBsys{namespace NHttp
 						this->iserror = true;
 
 						#if(BSYS_OPENSSL_ENABLE)
-						if(a_ssl_id >= 0){
-							NBsys::NOpenSsl::SslDelete(a_ssl_id);
-							a_ssl_id = -1;
+						if(a_ssl_socket != nullptr){
+							a_ssl_socket->End();
+							a_ssl_socket.reset();
 						}
 						#endif
 

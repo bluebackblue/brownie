@@ -163,7 +163,7 @@ namespace NBsys{namespace NHttp
 
 	/** 更新。
 	*/
-	bool Http_Recv::Update(s32& a_ssl_id)
+	bool Http_Recv::Update(sharedptr<NBsys::NOpenSsl::OpenSsl_Socket>& a_ssl_socket)
 	{
 		//u8 t_data[64*1024];
 		s32 t_size = 0;
@@ -192,18 +192,18 @@ namespace NBsys{namespace NHttp
 
 				if(t_need_recv_size > 0){
 					if(this->recvbuffer){
-						if(a_ssl_id >= 0){
+						if(a_ssl_socket != nullptr){
 							#if(BSYS_OPENSSL_ENABLE)
-							t_size = static_cast<s32>(NBsys::NOpenSsl::SslRecv(a_ssl_id,this->recvbuffer.get(),t_need_recv_size,0,false));
+							t_size = static_cast<s32>(a_ssl_socket->Recv(this->recvbuffer.get(),t_need_recv_size,0,false));
 							#endif
 						}else{
 							t_size = static_cast<s32>(this->socket->Recv(this->recvbuffer.get(),t_need_recv_size,0,false));
 						}
 						if(t_size < 0){
 							#if(BSYS_OPENSSL_ENABLE)
-							if(a_ssl_id >= 0){
-								NBsys::NOpenSsl::SslDelete(a_ssl_id);
-								a_ssl_id = -1;
+							if(a_ssl_socket != nullptr){
+								a_ssl_socket->End();
+								a_ssl_socket.reset();
 							}
 							#endif
 

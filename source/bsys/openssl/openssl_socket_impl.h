@@ -28,12 +28,7 @@
 
 /** include
 */
-#include "./openssl_socket.h"
-
-
-/** include
-*/
-#include "./openssl_item.h"
+#include "./openssl_impl_decl.h"
 
 
 /** NBsys::NOpenSsl
@@ -43,60 +38,43 @@
 #pragma warning(disable:4710 4820)
 namespace NBsys{namespace NOpenSsl
 {
-	/** OpenSsl_Impl
+	/** OpenSsl_Socket_Impl
 	*/
-	class OpenSsl_Impl
+	class OpenSsl_Socket_Impl
 	{
 	private:
 
-		/** ctx
+		/** ssl
 		*/
-		SSL_CTX* ssl_ctx;
+		SSL* ssl;
 
 	public:
+
 		/** constructor
 		*/
-		OpenSsl_Impl();
+		OpenSsl_Socket_Impl();
 
 		/** destructor
 		*/
-		nonvirtual ~OpenSsl_Impl();
+		nonvirtual ~OpenSsl_Socket_Impl();
 
 	public:
 
-		/** Initialize
+		/** 開始。
 		*/
-		void Initialize();
+		bool Start(sharedptr<SocketHandle>& a_sockethandle,sharedptr<OpenSsl_Impl>& a_openssl_impl);
 
-		/** Finalize
+		/** 終了。
 		*/
-		void Finalize();
+		void End();
 
-		/** DeleteThreadState
+		/** 送信。
 		*/
-		void DeleteThreadState();
+		bool Send(const u8* a_data,s64 a_size,s64 a_offset);
 
-		/** GetSslCtx
+		/** 受信。
 		*/
-		SSL_CTX* GetSslCtx();
-		
-	public:
-
-		/** CalcMD5
-		*/
-		static STLString CalcMD5(sharedptr<u8>& a_data,s32 a_size);
-
-		/** MakeKey
-		*/
-		static void MakeKey();
-
-		/** Encrypt
-		*/
-		static void Encrypt();
-
-		/** Decrypt
-		*/
-		static void Decrypt();
+		s64 Recv(u8* a_data,s64 a_size,s64 a_offset,bool a_complete);
 
 	};
 

@@ -50,9 +50,7 @@ namespace NBsys{namespace NOpenSsl
 	*/
 	OpenSsl_Impl::OpenSsl_Impl()
 		:
-		ssl_ctx(nullptr),
-		id_maker(),
-		list()
+		ssl_ctx(nullptr)
 	{
 	}
 
@@ -127,173 +125,15 @@ namespace NBsys{namespace NOpenSsl
 	}
 
 
-	/** 作成。
+	/** GetSslCtx
 	*/
-	s32 OpenSsl_Impl::Ssl_Create()
+	SSL_CTX* OpenSsl_Impl::GetSslCtx()
 	{
-		s32 t_id = this->id_maker.MakeID();
-
-		this->list.insert(std::make_pair(t_id,new OpenSsl_Item(t_id)));
-
-		return t_id;
+		return this->ssl_ctx;
 	}
 
 
-	/** 接続。
-	*/
-	bool OpenSsl_Impl::Ssl_Connect(s32 a_id,sharedptr<SocketHandle>& a_sockethandle)
-	{
-		DEEPDEBUG_TAGLOG(BSYS_OPENSSL_DEBUG_ENABLE,L"openssl_impl","Connect");
-
-		auto t_it = this->list.find(a_id);
-		if(t_it != this->list.end()){
-
-			SSL* t_ssl = SSL_new(this->ssl_ctx);
-			if(t_ssl != nullptr){
-				t_it->second->SetSsl(t_ssl);
-			}
-
-			if(t_ssl != nullptr){
-
-				//SSL_set_fd
-				s32 t_ret_setfd = SSL_set_fd(t_ssl,static_cast<s32>(a_sockethandle->GetImpl()->GetRawHandle()));
-				if(t_ret_setfd == 0){
-					DEEPDEBUG_TAGLOG(BSYS_OPENSSL_DEBUG_ENABLE,L"openssl_impl","error : SSL_set_fd %d : %s",t_ret_setfd,ERR_reason_error_string(ERR_get_error()));
-					return false;
-				}else{
-					DEEPDEBUG_TAGLOG(BSYS_OPENSSL_DEBUG_ENABLE,L"openssl_impl","SSL_set_fd");
-				}
-
-				//SSL_connect
-				s32 t_ret_connect = SSL_connect(t_ssl);
-				if(t_ret_connect != 1){
-					DEEPDEBUG_TAGLOG(BSYS_OPENSSL_DEBUG_ENABLE,L"openssl_impl","error : SSL_connect %d : %s",t_ret_connect,ERR_reason_error_string(ERR_get_error()));
-					return false;
-				}else{
-					DEEPDEBUG_TAGLOG(BSYS_OPENSSL_DEBUG_ENABLE,L"openssl_impl","SSL_connect");
-				}
-
-				return true;
-			}
-		}else{
-			ASSERT(0);
-		}
-
-		return false;
-	}
-
-
-	/** Send
-	*/
-	bool OpenSsl_Impl::Ssl_Send(s32 a_id,const u8* a_data,s64 a_size,s64 a_offset)
-	{
-		auto t_it = this->list.find(a_id);
-		if(t_it != this->list.end()){
-
-			SSL* t_ssl = (t_it->second)->GetSsl();
-			if(t_ssl != nullptr){
-
-				s64 t_offset = 0LL;
-				while(1){
-					s64 t_size = a_size - t_offset;
-					if(t_size <= 0){
-						//送信完了。
-						return true;
-					}else{
-						s32 t_fix = SSL_write(t_ssl,reinterpret_cast<const char*>(&a_data[t_offset+a_offset]),(int)t_size);
-						if(t_fix > 0){
-							//送信中。
-							t_offset += t_fix;
-						}else{
-							//切断。
-							return false;
-						}
-					}
-				}
-
-			}else{
-				ASSERT(0);
-			}
-		}else{
-			ASSERT(0);
-		}
-
-		return false;
-	}
-
-	/** Recv
-	*/
-	s64 OpenSsl_Impl::Ssl_Recv(s32 a_id,u8* a_data,s64 a_size,s64 a_offset,bool a_complete)
-	{
-		auto t_it = this->list.find(a_id);
-		if(t_it != this->list.end()){
-
-			SSL* t_ssl = (t_it->second)->GetSsl();
-			if(t_ssl != nullptr){
-
-				s64 t_offset = 0LL;
-				while(1){
-					s64 t_size = a_size - t_offset;
-					if(t_size <= 0){
-						//受信完了。
-						return a_size;
-					}else{
-						s32 t_fix = SSL_read(t_ssl,reinterpret_cast<char*>(&a_data[t_offset+a_offset]),(int)t_size);
-						if(a_complete == true){
-							if(t_fix > 0){
-								//受信中。
-								t_offset += t_fix;
-							}else{
-								//切断。
-								return -1;
-							}
-						}else{
-							if(t_fix > 0){
-								//受信完了。
-								return t_fix;
-							}else{
-								//切断。
-								return -1;
-							}
-						}
-					}
-				}
-
-			}else{
-				ASSERT(0);
-			}
-
-		}else{
-			ASSERT(0);
-		}
-
-		return -1;
-	}
-
-	/** Ssl_Delete
-	*/
-	void OpenSsl_Impl::Ssl_Delete(s32 a_id)
-	{
-		auto t_it = this->list.find(a_id);
-		if(t_it != this->list.end()){
-
-			SSL* t_ssl = (t_it->second)->GetSsl();
-			if(t_ssl != nullptr){
-				DEEPDEBUG_TAGLOG(BSYS_OPENSSL_DEBUG_ENABLE,L"openssl_impl","SSL_shutdown");
-				SSL_shutdown(t_ssl);
-
-				SSL_free(t_ssl);
-				DEEPDEBUG_TAGLOG(BSYS_OPENSSL_DEBUG_ENABLE,L"openssl_impl","SSL_free");
-			}
-
-			this->list.erase(t_it);
-		}else{
-			ASSERT(0);
-		}
-	}
-
-
-	/** CalcMD5
+	/** [static]CalcMD5
 	*/
 	STLString OpenSsl_Impl::CalcMD5(sharedptr<u8>& a_data,s32 a_size)
 	{
@@ -313,6 +153,111 @@ namespace NBsys{namespace NOpenSsl
 		}
 
 		return t_ret;
+	}
+
+
+	/** [static]MakeKey
+	*/
+	void OpenSsl_Impl::MakeKey()
+	{
+		//キーペアの作成。
+		s32 t_size = 1024;
+		u32 t_expornent = 65537;
+		void (*t_callback)(int,int,void*) = nullptr;
+		void* t_callback_argument = nullptr;
+		RSA* t_rsakey = RSA_generate_key(t_size,t_expornent,t_callback,t_callback_argument);
+		if(t_rsakey != nullptr){
+
+			{
+				FILE* t_public = nullptr;
+				errno_t t_ret_open = ::fopen_s(&t_public,"./public.key","w");
+				if(t_ret_open == 0){
+					if(t_public != nullptr){
+						s32 t_ret_write = PEM_write_RSAPublicKey(t_public,t_rsakey);
+						if(t_ret_write != 1){
+							ASSERT(0);
+						}
+						::fclose(t_public);
+						t_public = nullptr;
+					}else{
+						ASSERT(0);
+					}
+				}else{
+					ASSERT(0);
+				}
+			}
+
+			{
+				FILE* t_private = nullptr;
+				errno_t t_ret_open = ::fopen_s(&t_private,"./private.key","w");
+				if(t_ret_open == 0){
+					if(t_private != nullptr){
+						s32 t_ret_write = PEM_write_RSAPrivateKey(t_private,t_rsakey,nullptr,nullptr,0,nullptr,nullptr);
+						if(t_ret_write != 1){
+							ASSERT(0);
+						}
+						::fclose(t_private);
+						t_private = nullptr;
+					}else{
+						ASSERT(0);
+					}
+				}else{
+					ASSERT(0);
+				}
+			}
+
+			RSA_free(t_rsakey);
+		}else{
+			ASSERT(0);
+		}
+
+		
+
+		#if(0)
+
+		if(RSA_print_fp(stdout, rsaKey, 0) != 1)
+		{
+		printError("failed to RSA_print_fp",
+		ERR_get_error());
+		exit(-1);
+		}
+
+		// 公開鍵をPEM形式で書き出し
+		if(PEM_write_RSAPublicKey(publicKeyFile, rsaKey) != 1)
+		{
+		printError("failed to PEM_write_RSAPublicKey",
+		ERR_get_error());
+		exit(-1);
+		}
+
+		// 秘密鍵をPEM形式で書き出し
+		if(PEM_write_RSAPrivateKey(privateKeyFile, rsaKey,	NULL,	NULL, 0,		NULL, NULL) != 1)
+		{
+		printError("failed to PEM_write_RSAPrivateKey",
+		ERR_get_error());
+		exit(-1);
+		}
+
+		// 領域の開放
+		RSA_free(rsaKey);
+
+		fclose(privateKeyFile);
+		fclose(publicKeyFile);
+		#endif
+	}
+
+
+	/** [static]Encrypt
+	*/
+	void OpenSsl_Impl::Encrypt()
+	{
+	}
+
+
+	/** [static]Decrypt
+	*/
+	void OpenSsl_Impl::Decrypt()
+	{
 	}
 
 

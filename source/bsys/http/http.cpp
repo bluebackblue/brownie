@@ -63,7 +63,7 @@ namespace NBsys{namespace NHttp
 		port(80),
 		mode(Http_Mode::Get),
 		ssl(false),
-		ssl_id(-1),
+		ssl_socket(),
 		url(""),
 		boundary_string(NHttp::MakeBoundaryString()),
 		step(Step::None),
@@ -264,9 +264,9 @@ namespace NBsys{namespace NHttp
 		this->iserror = false;
 
 		#if(BSYS_OPENSSL_ENABLE)
-		if(this->ssl_id >= 0){
-			NBsys::NOpenSsl::SslDelete(this->ssl_id);
-			this->ssl_id = -1;
+		if(this->ssl_socket != nullptr){
+			ssl_socket->End();
+			ssl_socket.reset();
 		}
 		#endif
 
@@ -294,9 +294,9 @@ namespace NBsys{namespace NHttp
 		DEEPDEBUG_TAGLOG(BSYS_HTTP_DEBUG_ENABLE,L"http","ConnectEnd");
 
 		#if(BSYS_OPENSSL_ENABLE)
-		if(this->ssl_id >= 0){
-			NBsys::NOpenSsl::SslDelete(this->ssl_id);
-			this->ssl_id = -1;
+		if(this->ssl_socket != nullptr){
+			this->ssl_socket->End();
+			this->ssl_socket.reset();
 		}
 		#endif
 
@@ -330,14 +330,14 @@ namespace NBsys{namespace NHttp
 			t_loop = false;
 
 			if(this->send){
-				if(this->send->Update(this->ssl_id) == true){
+				if(this->send->Update(this->ssl_socket) == true){
 					//ループリクエスト。
 					t_loop = true;
 				}
 				this->iserror = this->send->IsError();
 			}
 			if(this->recv){
-				if(this->recv->Update(this->ssl_id) == true){
+				if(this->recv->Update(this->ssl_socket) == true){
 					//ループリクエスト。
 					t_loop = true;
 				}
@@ -425,8 +425,8 @@ namespace NBsys{namespace NHttp
 
 							#if(BSYS_OPENSSL_ENABLE)
 							if(this->ssl == true){
-								this->ssl_id = NBsys::NOpenSsl::SslCreate();
-								if(NBsys::NOpenSsl::SslConnect(this->ssl_id,this->socket) == false){
+								this->ssl_socket = NBsys::NOpenSsl::Connect(this->socket);
+								if(this->ssl_socket == nullptr){
 									//エラー。
 									this->iserror = true;
 								}
@@ -513,9 +513,9 @@ namespace NBsys{namespace NHttp
 
 					if(t_close == true){
 						#if(BSYS_OPENSSL_ENABLE)
-						if(this->ssl_id >= 0){
-							NBsys::NOpenSsl::SslDelete(this->ssl_id);
-							this->ssl_id = -1;
+						if(this->ssl_socket != nullptr){
+							this->ssl_socket->End();
+							this->ssl_socket.reset();
 						}
 						#endif
 

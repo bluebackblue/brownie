@@ -17,6 +17,16 @@
 #pragma warning(pop)
 
 
+#if(BSYS_OPENSSL_ENABLE)
+
+	#pragma warning(push)
+	#pragma warning(disable:4464)
+	#include "../openssl/openssl.h"
+	#pragma warning(pop)
+
+#endif
+
+
 /** include
 */
 #include "./http_recv_decl.h"
@@ -83,9 +93,9 @@ namespace NBsys{namespace NHttp
 		*/
 		bool ssl;
 
-		/** ssl_id
+		/** ssl_socket
 		*/
-		s32 ssl_id;
+		sharedptr<NBsys::NOpenSsl::OpenSsl_Socket> ssl_socket;
 		
 		/** Url
 		*/

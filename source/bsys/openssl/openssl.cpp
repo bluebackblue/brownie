@@ -83,57 +83,19 @@ namespace NBsys{namespace NOpenSsl
 	}
 
 
-	/** SslCreate
+	/** 接続。
 	*/
-	s32 SslCreate()
+	sharedptr<OpenSsl_Socket> Connect(sharedptr<SocketHandle>& a_sockethandle)
 	{
-		if(s_openssl){
-			return s_openssl->Ssl_Create();
+		sharedptr<OpenSsl_Socket> t_socket(new OpenSsl_Socket());
+		
+		bool t_ret = t_socket->Start(a_sockethandle,s_openssl);
+		if(t_ret == false){
+			ASSERT(0);
+			return nullptr;
 		}
-		return -1;
-	}
 
-
-	/** SslConnect
-	*/
-	bool SslConnect(s32 a_id,sharedptr<SocketHandle>& a_sockethandle)
-	{
-		if(s_openssl){
-			return s_openssl->Ssl_Connect(a_id,a_sockethandle);
-		}
-		return false;
-	}
-
-
-	/** SslSend
-	*/
-	bool SslSend(s32 a_id,const u8* a_data,s64 a_size,s64 a_offset)
-	{
-		if(s_openssl){
-			return s_openssl->Ssl_Send(a_id,a_data,a_size,a_offset);
-		}
-		return false;
-	}
-
-
-	/** SslRecv
-	*/
-	s64 SslRecv(s32 a_id,u8* a_data,s64 a_size,s64 a_offset,bool a_complete)
-	{
-		if(s_openssl){
-			return s_openssl->Ssl_Recv(a_id,a_data,a_size,a_offset,a_complete);
-		}
-		return -1;
-	}
-
-
-	/** SslDelete
-	*/
-	void SslDelete(s32 a_id)
-	{
-		if(s_openssl){
-			s_openssl->Ssl_Delete(a_id);
-		}
+		return t_socket;
 	}
 
 
@@ -141,10 +103,31 @@ namespace NBsys{namespace NOpenSsl
 	*/
 	STLString CalcMD5(sharedptr<u8>& a_data,s32 a_size)
 	{
-		if(s_openssl){
-			return s_openssl->CalcMD5(a_data,a_size);
-		}
-		return "";
+		return OpenSsl_Impl::CalcMD5(a_data,a_size);
+	}
+
+
+	/** MakeKey
+	*/
+	void MakeKey()
+	{
+		OpenSsl_Impl::MakeKey();
+	}
+
+
+	/** Encrypt
+	*/
+	void Encrypt()
+	{
+		OpenSsl_Impl::Encrypt();
+	}
+
+
+	/** Decrypt
+	*/
+	void Decrypt()
+	{
+		OpenSsl_Impl::Decrypt();
 	}
 
 

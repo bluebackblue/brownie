@@ -362,7 +362,7 @@ namespace NTest
 							t_font->clip_rect.Set(0.0f,50.0f,0.0f,0.0f);
 							t_font->clip = false;
 							t_font->size = 16.0f;
-							t_font->fonttexture_type = NBsys::ND3d11::D3d11_FontTextureType::SFont;
+							t_font->fonttexture_type = NBsys::ND3d11::D3d11_FontTextureType::Font_1;
 							t_font->color = NBsys::NColor::Color_F(0.0f,1.0f,1.0f,1.0f);
 							t_font->alignment = NBsys::NFont::Font_Alignment::Left_Top;
 							t_font->string = L"Play Now";
