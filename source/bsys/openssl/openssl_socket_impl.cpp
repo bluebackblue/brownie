@@ -62,6 +62,7 @@ namespace NBsys{namespace NOpenSsl
 	*/
 	OpenSsl_Socket_Impl::~OpenSsl_Socket_Impl()
 	{
+		this->End();
 	}
 
 
