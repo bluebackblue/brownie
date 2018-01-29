@@ -65,6 +65,12 @@ namespace NBsys{namespace NHttp
 		*/
 		sharedptr<SocketHandle> socket;
 
+		/** ssl_socket
+		*/
+		#if(BSYS_OPENSSL_ENABLE)
+		sharedptr<NBsys::NOpenSsl::OpenSsl_Socket> ssl_socket;
+		#endif
+
 		/** iserror
 		*/
 		bool iserror;
@@ -133,7 +139,11 @@ namespace NBsys{namespace NHttp
 
 		/** constructor
 		*/
+		#if(BSYS_OPENSSL_ENABLE)
+		Http_Recv(const sharedptr<SocketHandle>& a_socket,const sharedptr<NBsys::NOpenSsl::OpenSsl_Socket>& a_ssl_socket,sharedptr<RingBufferBase<u8>>& a_ringbuffer);
+		#else
 		Http_Recv(const sharedptr<SocketHandle>& a_socket,sharedptr<RingBufferBase<u8>>& a_ringbuffer);
+		#endif
 
 		/** destructor
 		*/
@@ -171,7 +181,7 @@ namespace NBsys{namespace NHttp
 
 		/** 更新。
 		*/
-		bool Update(sharedptr<NBsys::NOpenSsl::OpenSsl_Socket>& a_ssl_socket);
+		bool Update();
 
 	};
 

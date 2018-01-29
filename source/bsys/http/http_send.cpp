@@ -57,6 +57,9 @@ namespace NBsys{namespace NHttp
 	Http_Send::Http_Send()
 		:
 		socket(),
+		#if(BSYS_OPENSSL_ENABLE)
+		ssl_socket(),
+		#endif
 		iserror(false),
 		buffer(),
 		buffer_offset(0),
@@ -74,9 +77,18 @@ namespace NBsys{namespace NHttp
 
 	/** 送信バッファにデータをコピー。
 	*/
+	#if(BSYS_OPENSSL_ENABLE)
+	void Http_Send::Send(const sharedptr<SocketHandle>& a_socket,const sharedptr<NBsys::NOpenSsl::OpenSsl_Socket>& a_ssl_socket,const sharedptr<u8>& a_buffer,s32 a_size)
+	#else
 	void Http_Send::Send(const sharedptr<SocketHandle>& a_socket,const sharedptr<u8>& a_buffer,s32 a_size)
+	#endif
 	{
 		this->socket = a_socket;
+
+		#if(BSYS_OPENSSL_ENABLE)
+		this->ssl_socket = a_ssl_socket;
+		#endif
+
 		this->iserror = false;
 		this->buffer = a_buffer;
 		this->buffer_offset = 0;
@@ -105,7 +117,7 @@ namespace NBsys{namespace NHttp
 
 	/** 更新。
 	*/
-	bool Http_Send::Update(sharedptr<NBsys::NOpenSsl::OpenSsl_Socket>& a_ssl_socket)
+	bool Http_Send::Update()
 	{
 		if(this->socket){
 			if(this->socket->IsOpen()){
@@ -113,14 +125,22 @@ namespace NBsys{namespace NHttp
 					s32 t_send_size = this->buffer_size - this->buffer_offset;
 
 					bool t_ret = false;
+					bool t_do = false;
 
-					if(a_ssl_socket != nullptr){
-						#if(BSYS_OPENSSL_ENABLE)
-						if(a_ssl_socket->Send(this->buffer.get(),this->buffer_offset + t_send_size,this->buffer_offset) == true){
-							t_ret = true;
+					#if(BSYS_OPENSSL_ENABLE)
+					if(this->ssl_socket != nullptr){
+						if(t_do == false){
+							t_do = true;
+							if(this->ssl_socket->Send(this->buffer.get(),this->buffer_offset + t_send_size,this->buffer_offset) == true){
+								t_ret = true;
+							}
 						}
-						#endif
-					}else{
+					}
+					#endif
+
+					if(t_do == false){
+						t_do = true;
+
 						if(this->socket->Send(this->buffer.get(),this->buffer_offset + t_send_size,this->buffer_offset) == true){
 							t_ret = true;
 						}
@@ -134,9 +154,9 @@ namespace NBsys{namespace NHttp
 						this->iserror = true;
 
 						#if(BSYS_OPENSSL_ENABLE)
-						if(a_ssl_socket != nullptr){
-							a_ssl_socket->End();
-							a_ssl_socket.reset();
+						if(this->ssl_socket != nullptr){
+							this->ssl_socket->End();
+							this->ssl_socket.reset();
 						}
 						#endif
 

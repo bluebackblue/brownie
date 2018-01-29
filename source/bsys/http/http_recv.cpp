@@ -24,8 +24,10 @@
 
 /** include
 */
-#include "./http_recv.h"
-#include "./http_find.h"
+#pragma warning(push)
+#pragma warning(disable:4514 4987 4820 4625 4626 4365 5026 5027 4061 4623 4571 4774)
+#include <regex>
+#pragma warning(pop)
 
 
 #if(BSYS_OPENSSL_ENABLE)
@@ -42,10 +44,8 @@
 
 /** include
 */
-#pragma warning(push)
-#pragma warning(disable:4514 4987 4820 4625 4626 4365 5026 5027 4061 4623 4571 4774)
-#include <regex>
-#pragma warning(pop)
+#include "./http_recv.h"
+#include "./http_find.h"
 
 
 /** warning
@@ -63,9 +63,16 @@ namespace NBsys{namespace NHttp
 {
 	/** constructor
 	*/
+	#if(BSYS_OPENSSL_ENABLE)
+	Http_Recv::Http_Recv(const sharedptr<SocketHandle>& a_socket,const sharedptr<NBsys::NOpenSsl::OpenSsl_Socket>& a_ssl_socket,sharedptr<RingBufferBase<u8>>& a_ringbuffer)
+	#else
 	Http_Recv::Http_Recv(const sharedptr<SocketHandle>& a_socket,sharedptr<RingBufferBase<u8>>& a_ringbuffer)
+	#endif
 		:
 		socket(a_socket),
+		#if(BSYS_OPENSSL_ENABLE)
+		ssl_socket(a_ssl_socket),
+		#endif
 		iserror(false),
 		recvbuffer(),
 		recvbuffer_size(64*1024),
@@ -163,10 +170,8 @@ namespace NBsys{namespace NHttp
 
 	/** 更新。
 	*/
-	bool Http_Recv::Update(sharedptr<NBsys::NOpenSsl::OpenSsl_Socket>& a_ssl_socket)
+	bool Http_Recv::Update()
 	{
-		//u8 t_data[64*1024];
-		s32 t_size = 0;
 		s32 t_need_recv_size = 0;
 
 		if(this->need_recv_size < 0){
@@ -192,18 +197,29 @@ namespace NBsys{namespace NHttp
 
 				if(t_need_recv_size > 0){
 					if(this->recvbuffer){
-						if(a_ssl_socket != nullptr){
-							#if(BSYS_OPENSSL_ENABLE)
-							t_size = static_cast<s32>(a_ssl_socket->Recv(this->recvbuffer.get(),t_need_recv_size,0,false));
-							#endif
-						}else{
+
+						s32 t_size = 0;
+						bool t_do = false;
+
+						#if(BSYS_OPENSSL_ENABLE)
+						if(this->ssl_socket != nullptr){
+							if(t_do == false){
+								t_do = true;
+								t_size = static_cast<s32>(this->ssl_socket->Recv(this->recvbuffer.get(),t_need_recv_size,0,false));
+							}
+						}
+						#endif
+
+						if(t_do == false){
+							t_do = true;
 							t_size = static_cast<s32>(this->socket->Recv(this->recvbuffer.get(),t_need_recv_size,0,false));
 						}
+
 						if(t_size < 0){
 							#if(BSYS_OPENSSL_ENABLE)
-							if(a_ssl_socket != nullptr){
-								a_ssl_socket->End();
-								a_ssl_socket.reset();
+							if(this->ssl_socket != nullptr){
+								this->ssl_socket->End();
+								this->ssl_socket.reset();
 							}
 							#endif
 

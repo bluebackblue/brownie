@@ -46,7 +46,7 @@ namespace NBsys{namespace NOpenSsl
 
 	/** 接続。
 	*/
-	sharedptr<OpenSsl_Socket> Connect(sharedptr<SocketHandle>& a_sockethandle);
+	bool Connect(sharedptr<SocketHandle>& a_sockethandle,sharedptr<OpenSsl_Socket>& a_openssl_socket);
 
 
 	/** CalcMD5

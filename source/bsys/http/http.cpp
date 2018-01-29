@@ -265,8 +265,8 @@ namespace NBsys{namespace NHttp
 
 		#if(BSYS_OPENSSL_ENABLE)
 		if(this->ssl_socket != nullptr){
-			ssl_socket->End();
-			ssl_socket.reset();
+			this->ssl_socket->End();
+			this->ssl_socket.reset();
 		}
 		#endif
 
@@ -278,10 +278,19 @@ namespace NBsys{namespace NHttp
 
 		//ソケット作成。
 		this->socket.reset(new SocketHandle());
+		#if(BSYS_OPENSSL_ENABLE)
+		{
+			this->ssl_socket.reset(new NBsys::NOpenSsl::OpenSsl_Socket());
+		}
+		#endif
 
 		//受信設定。
+		#if(BSYS_OPENSSL_ENABLE)
+		this->recv.reset(new Http_Recv(this->socket,this->ssl_socket,this->recv_buffer));
+		#else
 		this->recv.reset(new Http_Recv(this->socket,this->recv_buffer));
-	
+		#endif
+
 		//送信設定。
 		this->send.reset(new Http_Send());
 	}
@@ -330,14 +339,14 @@ namespace NBsys{namespace NHttp
 			t_loop = false;
 
 			if(this->send){
-				if(this->send->Update(this->ssl_socket) == true){
+				if(this->send->Update() == true){
 					//ループリクエスト。
 					t_loop = true;
 				}
 				this->iserror = this->send->IsError();
 			}
 			if(this->recv){
-				if(this->recv->Update(this->ssl_socket) == true){
+				if(this->recv->Update() == true){
 					//ループリクエスト。
 					t_loop = true;
 				}
@@ -406,7 +415,7 @@ namespace NBsys{namespace NHttp
 
 						//送信バッファ設定。
 						DEEPDEBUG_TAGLOG(BSYS_HTTP_DEBUG_ENABLE,L"http","sendrequest %d",t_buffer_size);
-						this->send->Send(this->socket,this->send_buffer,static_cast<s32>(t_buffer_size));
+						this->send->Send(this->socket,this->ssl_socket,this->send_buffer,static_cast<s32>(t_buffer_size));
 					}
 
 					this->step = Step::Connect;
@@ -425,8 +434,8 @@ namespace NBsys{namespace NHttp
 
 							#if(BSYS_OPENSSL_ENABLE)
 							if(this->ssl == true){
-								this->ssl_socket = NBsys::NOpenSsl::Connect(this->socket);
-								if(this->ssl_socket == nullptr){
+								bool t_ret_connect = NBsys::NOpenSsl::Connect(this->socket,this->ssl_socket);
+								if(t_ret_connect == false){
 									//エラー。
 									this->iserror = true;
 								}

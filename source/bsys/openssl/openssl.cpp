@@ -85,17 +85,9 @@ namespace NBsys{namespace NOpenSsl
 
 	/** 接続。
 	*/
-	sharedptr<OpenSsl_Socket> Connect(sharedptr<SocketHandle>& a_sockethandle)
-	{
-		sharedptr<OpenSsl_Socket> t_socket(new OpenSsl_Socket());
-		
-		bool t_ret = t_socket->Start(a_sockethandle,s_openssl);
-		if(t_ret == false){
-			ASSERT(0);
-			return nullptr;
-		}
-
-		return t_socket;
+	bool Connect(sharedptr<SocketHandle>& a_sockethandle,sharedptr<OpenSsl_Socket>& a_openssl_socket)
+	{	
+		return a_openssl_socket->Start(a_sockethandle,s_openssl);
 	}
 
 

@@ -44,6 +44,12 @@ namespace NBsys{namespace NHttp
 		*/
 		sharedptr<SocketHandle> socket;
 
+		/** ssl_socket
+		*/
+		#if(BSYS_OPENSSL_ENABLE)
+		sharedptr<NBsys::NOpenSsl::OpenSsl_Socket> ssl_socket;
+		#endif
+
 		/** iserror
 		*/
 		bool iserror;
@@ -74,7 +80,11 @@ namespace NBsys{namespace NHttp
 
 		/** 送信。
 		*/
+		#if(BSYS_OPENSSL_ENABLE)
+		void Send(const sharedptr<SocketHandle>& a_socket,const sharedptr<NBsys::NOpenSsl::OpenSsl_Socket>& a_ssl_socket,const sharedptr<u8>& a_buffer,s32 a_size);
+		#else
 		void Send(const sharedptr<SocketHandle>& a_socket,const sharedptr<u8>& a_buffer,s32 a_size);
+		#endif
 
 		/** 送信が完了したかどうか。
 		*/
@@ -86,7 +96,7 @@ namespace NBsys{namespace NHttp
 
 		/** 更新。
 		*/
-		bool Update(sharedptr<NBsys::NOpenSsl::OpenSsl_Socket>& a_ssl_socket);
+		bool Update();
 
 	};
 
