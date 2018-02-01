@@ -129,7 +129,7 @@ namespace NBsys{namespace NFont
 					t_buffer_size = static_cast<s32>(::GetGlyphOutlineW(this->hdc,t_code,GGO_GRAY8_BITMAP,&t_glyphmetrics,0,WIN_NULL,&t_mat2));
 					if(t_buffer_size >= this->buffer_size){
 						this->buffer_size = (((t_buffer_size << 8) + 1) >> 8);
-						this->buffer.reset(new u8[this->buffer_size]);
+						this->buffer.reset(new u8[this->buffer_size],default_delete<u8[]>());
 					}
 					ASSERT(t_buffer_size <= this->buffer_size);
 				}

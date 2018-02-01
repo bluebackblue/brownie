@@ -75,7 +75,7 @@ namespace NBsys{namespace NWave
 
 			s32 t_offset = 0;
 			s32 t_size = t_count_of_sample * t_channel * (t_bit / 8);
-			sharedptr<u8> t_data(new u8[t_size]);
+			sharedptr<u8> t_data(new u8[t_size],default_delete<u8[]>());
 
 			NBsys::NWave::WaveType::Id t_wavetype = NBsys::NWave::WaveType::None;
 			if(t_rate == 44100){

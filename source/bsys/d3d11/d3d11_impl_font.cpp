@@ -60,7 +60,7 @@ namespace NBsys{namespace ND3d11
 
 		this->texture_size.hh = NTexture::CalcJustSize(this->texture_size.ww * this->drawtypemax);
 
-		sharedptr<u8> t_pixel(new u8[static_cast<u32>(this->texture_size.ww * this->texture_size.hh * 4)]);
+		sharedptr<u8> t_pixel(new u8[static_cast<u32>(this->texture_size.ww * this->texture_size.hh * 4)],default_delete<u8[]>());
 
 		this->texture.reset(new NBsys::NTexture::Texture(
 			t_pixel,

@@ -135,12 +135,12 @@ namespace NBsys{namespace NOpenSsl
 
 	/** [static]CalcMD5
 	*/
-	STLString OpenSsl_Impl::CalcMD5(sharedptr<u8>& a_data,s32 a_size)
+	STLString OpenSsl_Impl::CalcMD5(const void* a_data,s32 a_size)
 	{
 		MD5_CTX t_md5_ctx;
 
 		MD5_Init(&t_md5_ctx);
-		MD5_Update(&t_md5_ctx,a_data.get(),a_size);
+		MD5_Update(&t_md5_ctx,a_data,a_size);
 
 		u8 t_buffer[MD5_DIGEST_LENGTH + 1] = {0};
 		MD5_Final(t_buffer,&t_md5_ctx);
@@ -169,16 +169,16 @@ namespace NBsys{namespace NOpenSsl
 		if(t_rsakey != nullptr){
 
 			{
-				FILE* t_public = nullptr;
-				errno_t t_ret_open = ::fopen_s(&t_public,"./public.key","w");
+				FILE* t_file_public = nullptr;
+				errno_t t_ret_open = ::fopen_s(&t_file_public,"./public.key","w");
 				if(t_ret_open == 0){
-					if(t_public != nullptr){
-						s32 t_ret_write = PEM_write_RSAPublicKey(t_public,t_rsakey);
+					if(t_file_public != nullptr){
+						s32 t_ret_write = PEM_write_RSAPublicKey(t_file_public,t_rsakey);
 						if(t_ret_write != 1){
 							ASSERT(0);
 						}
-						::fclose(t_public);
-						t_public = nullptr;
+						::fclose(t_file_public);
+						t_file_public = nullptr;
 					}else{
 						ASSERT(0);
 					}
@@ -188,16 +188,16 @@ namespace NBsys{namespace NOpenSsl
 			}
 
 			{
-				FILE* t_private = nullptr;
-				errno_t t_ret_open = ::fopen_s(&t_private,"./private.key","w");
+				FILE* t_file_private = nullptr;
+				errno_t t_ret_open = ::fopen_s(&t_file_private,"./private.key","w");
 				if(t_ret_open == 0){
-					if(t_private != nullptr){
-						s32 t_ret_write = PEM_write_RSAPrivateKey(t_private,t_rsakey,nullptr,nullptr,0,nullptr,nullptr);
+					if(t_file_private != nullptr){
+						s32 t_ret_write = PEM_write_RSAPrivateKey(t_file_private,t_rsakey,nullptr,nullptr,0,nullptr,nullptr);
 						if(t_ret_write != 1){
 							ASSERT(0);
 						}
-						::fclose(t_private);
-						t_private = nullptr;
+						::fclose(t_file_private);
+						t_file_private = nullptr;
 					}else{
 						ASSERT(0);
 					}
@@ -210,54 +210,124 @@ namespace NBsys{namespace NOpenSsl
 		}else{
 			ASSERT(0);
 		}
-
-		
-
-		#if(0)
-
-		if(RSA_print_fp(stdout, rsaKey, 0) != 1)
-		{
-		printError("failed to RSA_print_fp",
-		ERR_get_error());
-		exit(-1);
-		}
-
-		// 公開鍵をPEM形式で書き出し
-		if(PEM_write_RSAPublicKey(publicKeyFile, rsaKey) != 1)
-		{
-		printError("failed to PEM_write_RSAPublicKey",
-		ERR_get_error());
-		exit(-1);
-		}
-
-		// 秘密鍵をPEM形式で書き出し
-		if(PEM_write_RSAPrivateKey(privateKeyFile, rsaKey,	NULL,	NULL, 0,		NULL, NULL) != 1)
-		{
-		printError("failed to PEM_write_RSAPrivateKey",
-		ERR_get_error());
-		exit(-1);
-		}
-
-		// 領域の開放
-		RSA_free(rsaKey);
-
-		fclose(privateKeyFile);
-		fclose(publicKeyFile);
-		#endif
 	}
 
 
 	/** [static]Encrypt
 	*/
-	void OpenSsl_Impl::Encrypt()
+	std::tuple<sharedptr<u8>,s32> OpenSsl_Impl::Encrypt(const void* a_data,s32 a_size)
 	{
+		RSA* t_rsakey = nullptr;
+
+		FILE* t_file_private = nullptr;
+		errno_t t_ret_open = ::fopen_s(&t_file_private,"./private.key","r");
+		if(t_ret_open == 0){
+			if(t_file_private != nullptr){
+				pem_password_cb* t_callback = nullptr;
+				void* t_callback_argument = nullptr;
+
+				RSA* t_ret_rsakey = PEM_read_RSAPrivateKey(t_file_private,&t_rsakey,t_callback,t_callback_argument);
+				if(t_ret_rsakey == nullptr){
+					//失敗。
+					ASSERT(0);
+				}
+				::fclose(t_file_private);
+				t_file_private = nullptr;
+			}else{
+				//失敗。
+				ASSERT(0);
+			}
+		}else{
+			//失敗。
+			ASSERT(0);
+		}
+
+		if(t_rsakey != nullptr){
+
+			s32 t_ret_size_max = 1024;
+			sharedptr<u8> t_ret_data(new u8[t_ret_size_max],default_delete<u8[]>());
+
+			s32 t_ret_size = RSA_private_encrypt(a_size,reinterpret_cast<const u8*>(a_data),t_ret_data.get(),t_rsakey,RSA_PKCS1_PADDING);
+
+			if(t_ret_size < 0){
+				char t_buffer[128];
+				DEEPDEBUG_TAGLOG(BSYS_OPENSSL_DEBUG_ENABLE,L"openssl_impl","RSA_private_encrypt : %s",ERR_error_string(ERR_get_error(),t_buffer));
+
+				//失敗。
+				ASSERT(0);
+				t_ret_size = 0;
+				return std::tuple<sharedptr<u8>,s32>(nullptr,0);
+			}
+
+			RSA_free(t_rsakey);
+			t_rsakey = nullptr;
+
+			ASSERT(t_ret_size <= t_ret_size_max);
+			return std::tuple<sharedptr<u8>,s32>(t_ret_data,t_ret_size);
+		}else{
+			//失敗。
+			ASSERT(0);
+			return std::tuple<sharedptr<u8>,s32>(nullptr,0);
+		}
 	}
 
 
 	/** [static]Decrypt
 	*/
-	void OpenSsl_Impl::Decrypt()
+	std::tuple<sharedptr<u8>,s32> OpenSsl_Impl::Decrypt(const void* a_data,s32 a_size)
 	{
+		RSA* t_rsakey = nullptr;
+
+		FILE* t_file_public = nullptr;
+		errno_t t_ret_open = ::fopen_s(&t_file_public,"./public.key","r");
+		if(t_ret_open == 0){
+			if(t_file_public != nullptr){
+				pem_password_cb* t_callback = nullptr;
+				void* t_callback_argument = nullptr;
+
+				RSA* t_ret_rsakey = PEM_read_RSAPublicKey(t_file_public,&t_rsakey,t_callback,t_callback_argument);
+				if(t_ret_rsakey == nullptr){
+					//失敗。
+					ASSERT(0);
+				}
+				::fclose(t_file_public);
+				t_file_public = nullptr;
+			}else{
+				//失敗。
+				ASSERT(0);
+			}
+		}else{
+			//失敗。
+			ASSERT(0);
+		}
+
+		if(t_rsakey != nullptr){
+
+			s32 t_ret_size_max = 1024;
+			sharedptr<u8> t_ret_data(new u8[t_ret_size_max],default_delete<u8[]>());
+
+			s32 t_ret_size = RSA_public_decrypt(a_size,reinterpret_cast<const u8*>(a_data),t_ret_data.get(),t_rsakey,RSA_PKCS1_PADDING);
+
+			if(t_ret_size < 0){
+				char t_buffer[128];
+				DEEPDEBUG_TAGLOG(BSYS_OPENSSL_DEBUG_ENABLE,L"openssl_impl","RSA_public_encrypt : %s",ERR_error_string(ERR_get_error(),t_buffer));
+
+				//失敗。
+				ASSERT(0);
+				t_ret_size = 0;
+				return std::tuple<sharedptr<u8>,s32>(nullptr,0);
+			}
+
+			RSA_free(t_rsakey);
+			t_rsakey = nullptr;
+
+			ASSERT(t_ret_size <= t_ret_size_max);
+			return std::tuple<sharedptr<u8>,s32>(t_ret_data,t_ret_size);
+		}else{
+			//失敗。
+			ASSERT(0);
+			return std::tuple<sharedptr<u8>,s32>(nullptr,0);
+		}
 	}
 
 

@@ -108,7 +108,7 @@ namespace NBsys{namespace NHttp
 
 		this->need_recv_size = -1;
 		this->step = Step::StateCode;
-		this->recvbuffer.reset(new u8[static_cast<std::size_t>(this->recvbuffer_size)]);
+		this->recvbuffer.reset(new u8[static_cast<std::size_t>(this->recvbuffer_size)],default_delete<u8[]>());
 	}
 
 

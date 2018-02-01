@@ -93,7 +93,7 @@ namespace NBsys{namespace NOpenSsl
 
 	/** CalcMD5
 	*/
-	STLString CalcMD5(sharedptr<u8>& a_data,s32 a_size)
+	STLString CalcMD5(const void* a_data,s32 a_size)
 	{
 		return OpenSsl_Impl::CalcMD5(a_data,a_size);
 	}
@@ -109,17 +109,17 @@ namespace NBsys{namespace NOpenSsl
 
 	/** Encrypt
 	*/
-	void Encrypt()
+	std::tuple<sharedptr<u8>,s32> Encrypt(const void* a_data,s32 a_size)
 	{
-		OpenSsl_Impl::Encrypt();
+		return OpenSsl_Impl::Encrypt(a_data,a_size);
 	}
 
 
 	/** Decrypt
 	*/
-	void Decrypt()
+	std::tuple<sharedptr<u8>,s32> Decrypt(const void* a_data,s32 a_size)
 	{
-		OpenSsl_Impl::Decrypt();
+		return OpenSsl_Impl::Decrypt(a_data,a_size);
 	}
 
 

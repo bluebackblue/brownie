@@ -219,7 +219,7 @@ namespace NBlib
 
 		/** 確保。
 		*/
-		static void* Alloc(size_t a_size);
+		static void* Alloc(std::size_t a_size);
 
 		/** 解放。
 		*/
@@ -227,19 +227,27 @@ namespace NBlib
 
 	public:
 
-		#if defined(new)
-		#undef new
-		#endif
-
 		/** operator new
 		*/
+		#if defined(custom_new)
+
+		#undef new
+
+		static void* operator new(std::size_t a_size,const char* a_file,s32 a_line) noexcept
+		{
+			UNUSED(a_file);
+			UNUSED(a_line);
+
+			return JsonItem::Alloc(a_size);
+		}
+
+		#define new custom_new
+
+		#else
 		static void* operator new(size_t a_size) noexcept
 		{
 			return JsonItem::Alloc(a_size);
 		}
-		
-		#if defined(custom_new)
-		#define new custom_new
 		#endif
 
 		/** operator delete

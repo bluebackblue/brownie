@@ -1568,7 +1568,7 @@ namespace NBsys{namespace ND3d11
 			
 						t_screenshot.reset(
 							new NBsys::NTexture::Texture(
-								new u8[t_size],
+								sharedptr<u8>(new u8[t_size],default_delete<u8[]>()),
 								Size2DType<s32>(static_cast<s32>(t_desc_backbuffer.Width),static_cast<s32>(t_desc_backbuffer.Height)),
 								static_cast<s32>(t_mapped_resource.RowPitch),
 								NBsys::NTexture::TextureType::R8G8B8A8,

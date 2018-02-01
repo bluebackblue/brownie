@@ -258,7 +258,7 @@ namespace NBsys{namespace NTexture
 			void* t_global_buffer = t_globalmemory->Map();
 			if(t_global_buffer){
 
-				t_jpg_data.reset(new u8[static_cast<std::size_t>(t_write_size)]);
+				t_jpg_data.reset(new u8[static_cast<std::size_t>(t_write_size)],default_delete<u8[]>());
 				NMemory::Copy(t_jpg_data.get(),t_write_size,t_global_buffer,t_write_size);
 				t_jpg_size = t_write_size;
 

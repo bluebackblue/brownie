@@ -84,7 +84,7 @@ namespace NBsys{namespace NOpenSsl
 
 		/** CalcMD5
 		*/
-		static STLString CalcMD5(sharedptr<u8>& a_data,s32 a_size);
+		static STLString CalcMD5(const void* a_data,s32 a_size);
 
 		/** MakeKey
 		*/
@@ -92,11 +92,11 @@ namespace NBsys{namespace NOpenSsl
 
 		/** Encrypt
 		*/
-		static void Encrypt();
+		static std::tuple<sharedptr<u8>,s32> Encrypt(const void* a_data,s32 a_size);
 
 		/** Decrypt
 		*/
-		static void Decrypt();
+		static std::tuple<sharedptr<u8>,s32> Decrypt(const void* a_data,s32 a_size);
 
 	};
 
