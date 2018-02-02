@@ -982,6 +982,7 @@ namespace NBsys{namespace ND3d11
 				}
 				TAGLOG(L"compile vertex","FAILED");
 				TAGLOG(L"compile vertex",t_errorstring.c_str());
+				ASSERT(0);
 			}
 
 			t_blob_error.reset();
@@ -1049,52 +1050,57 @@ namespace NBsys{namespace ND3d11
 		char* t_data = reinterpret_cast<char*>(a_pixelshader->fileobject->GetLoadData().get());
 		s32 t_size = static_cast<s32>(a_pixelshader->fileobject->GetLoadSize());
 
-		if(a_pixelshader->fileobject->GetAddAllocateSize() > 0){
-			t_data[t_size] = 0x00;
-		}else{
-			ASSERT(0);
-		}
+		if((t_data != nullptr)&&(t_size != 0)){
+			if(a_pixelshader->fileobject->GetAddAllocateSize() > 0){
+				t_data[t_size] = 0x00;
+			}else{
+				ASSERT(0);
+			}
 
-		sharedptr<ID3DBlob> t_blob;
-		{
-			sharedptr<ID3DBlob> t_blob_error;
-			ID3DBlob* t_raw = nullptr;
-			ID3DBlob* t_raw_error = nullptr;
-			HRESULT t_result = ::D3DCompile(t_data,static_cast<std::size_t>(t_size),nullptr,nullptr,nullptr,"PS","ps_4_0",D3DCOMPILE_ENABLE_STRICTNESS|D3DCOMPILE_DEBUG,0,&t_raw,&t_raw_error);
-			if(t_raw != nullptr){
-				t_blob.reset(t_raw,release_delete<ID3DBlob>());
-			}
-			if(t_raw_error != nullptr){
-				t_blob_error.reset(t_raw_error,release_delete<ID3DBlob>());
-			}
-			if(FAILED(t_result)){
-				t_blob.reset();
+			sharedptr<ID3DBlob> t_blob;
+			{
+				sharedptr<ID3DBlob> t_blob_error;
+				ID3DBlob* t_raw = nullptr;
+				ID3DBlob* t_raw_error = nullptr;
+				HRESULT t_result = ::D3DCompile(t_data,static_cast<std::size_t>(t_size),nullptr,nullptr,nullptr,"PS","ps_4_0",D3DCOMPILE_ENABLE_STRICTNESS|D3DCOMPILE_DEBUG,0,&t_raw,&t_raw_error);
+				if(t_raw != nullptr){
+					t_blob.reset(t_raw,release_delete<ID3DBlob>());
+				}
+				if(t_raw_error != nullptr){
+					t_blob_error.reset(t_raw_error,release_delete<ID3DBlob>());
+				}
+				if(FAILED(t_result)){
+					t_blob.reset();
+				}
+
+				if(t_blob != nullptr){
+				}else{
+					std::string t_errorstring;
+					if(t_blob_error != nullptr){
+						t_errorstring = std::string((const char*)t_blob_error->GetBufferPointer(),t_blob_error->GetBufferSize());
+					}
+					TAGLOG(L"compile vertex","FAILED");
+					TAGLOG(L"compile vertex",t_errorstring.c_str());
+					ASSERT(0);
+				}
+
+				t_blob_error.reset();
 			}
 
 			if(t_blob != nullptr){
-			}else{
-				std::string t_errorstring;
-				if(t_blob_error != nullptr){
-					t_errorstring = std::string((const char*)t_blob_error->GetBufferPointer(),t_blob_error->GetBufferSize());
-				}
-				TAGLOG(L"compile vertex","FAILED");
-				TAGLOG(L"compile vertex",t_errorstring.c_str());
-			}
-
-			t_blob_error.reset();
-		}
-
-		if(t_blob != nullptr){
-			if(this->device != nullptr){
-				ID3D11PixelShader* t_raw = nullptr;
-				HRESULT t_result = this->device->CreatePixelShader(t_blob->GetBufferPointer(),t_blob->GetBufferSize(),nullptr,&t_raw);
-				if(t_raw != nullptr){
-					a_pixelshader->pixelshader.reset(t_raw,release_delete<ID3D11PixelShader>());
-				}
-				if(FAILED(t_result)){
-					a_pixelshader->pixelshader.reset();
+				if(this->device != nullptr){
+					ID3D11PixelShader* t_raw = nullptr;
+					HRESULT t_result = this->device->CreatePixelShader(t_blob->GetBufferPointer(),t_blob->GetBufferSize(),nullptr,&t_raw);
+					if(t_raw != nullptr){
+						a_pixelshader->pixelshader.reset(t_raw,release_delete<ID3D11PixelShader>());
+					}
+					if(FAILED(t_result)){
+						a_pixelshader->pixelshader.reset();
+					}
 				}
 			}
+		}else{
+			ASSERT(0);
 		}
 	}
 
