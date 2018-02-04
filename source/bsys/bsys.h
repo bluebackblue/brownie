@@ -148,3 +148,10 @@
 #include "./dsound/dsound.h"
 #endif
 
+
+/**
+*/
+#if(BSYS_JOY_ENABLE)
+#include "./joy/joy.h"
+#endif
+
