@@ -18,5 +18,7 @@
 #include <openssl/conf.h>
 #include <openssl/engine.h>
 #include <openssl/md5.h>
+#include <openssl/rsa.h>
+#include <openssl/pem.h>
 #pragma warning(pop)
 
