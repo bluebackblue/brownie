@@ -31,11 +31,6 @@
 #include "./openssl_socket.h"
 
 
-/** include
-*/
-#include "./openssl_item.h"
-
-
 /** NBsys::NOpenSsl
 */
 #if(BSYS_OPENSSL_ENABLE)
