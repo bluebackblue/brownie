@@ -107,7 +107,7 @@ namespace NBsys{namespace NOpenSsl
 	}
 
 
-	/** Encrypt
+	/** EncryptFromPrivateKey
 	*/
 	std::tuple<sharedptr<u8>,s32> EncryptFromPrivateKey(const void* a_data,s32 a_size,const STLWString& a_path)
 	{
@@ -115,7 +115,7 @@ namespace NBsys{namespace NOpenSsl
 	}
 
 
-	/** Decrypt
+	/** DecryptFromPublicKey
 	*/
 	std::tuple<sharedptr<u8>,s32> DecryptFromPublicKey(const void* a_data,s32 a_size,const STLWString& a_path)
 	{
