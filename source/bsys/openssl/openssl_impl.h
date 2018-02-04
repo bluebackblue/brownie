@@ -83,7 +83,7 @@ namespace NBsys{namespace NOpenSsl
 
 		/** MakeKey
 		*/
-		static void MakeKey();
+		static void MakeKey(const STLWString& a_path_privatekey,const STLWString& a_path_publickey);
 
 		/** EncryptFromPrivateKey
 		*/

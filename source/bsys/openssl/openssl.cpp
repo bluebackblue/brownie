@@ -101,9 +101,9 @@ namespace NBsys{namespace NOpenSsl
 
 	/** MakeKey
 	*/
-	void MakeKey()
+	void MakeKey(const STLWString& a_path_privatekey,const STLWString& a_path_publickey)
 	{
-		OpenSsl_Impl::MakeKey();
+		OpenSsl_Impl::MakeKey(a_path_privatekey,a_path_publickey);
 	}
 
 

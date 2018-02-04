@@ -158,7 +158,7 @@ namespace NBsys{namespace NOpenSsl
 
 	/** [static]MakeKey
 	*/
-	void OpenSsl_Impl::MakeKey()
+	void OpenSsl_Impl::MakeKey(const STLWString& a_path_privatekey,const STLWString& a_path_publickey)
 	{
 		//キーペアの作成。
 		s32 t_size = 1024;
@@ -167,10 +167,11 @@ namespace NBsys{namespace NOpenSsl
 		void* t_callback_argument = nullptr;
 		RSA* t_rsakey = RSA_generate_key(t_size,t_expornent,t_callback,t_callback_argument);
 		if(t_rsakey != nullptr){
-
 			{
+				STLString t_public_path = WcharToChar(a_path_publickey);
+
 				FILE* t_file_public = nullptr;
-				errno_t t_ret_open = ::fopen_s(&t_file_public,"./public.key","w");
+				errno_t t_ret_open = ::fopen_s(&t_file_public,t_public_path.c_str(),"w");
 				if(t_ret_open == 0){
 					if(t_file_public != nullptr){
 						s32 t_ret_write = PEM_write_RSAPublicKey(t_file_public,t_rsakey);
@@ -188,8 +189,10 @@ namespace NBsys{namespace NOpenSsl
 			}
 
 			{
+				STLString t_private_path = WcharToChar(a_path_privatekey);
+
 				FILE* t_file_private = nullptr;
-				errno_t t_ret_open = ::fopen_s(&t_file_private,"./private.key","w");
+				errno_t t_ret_open = ::fopen_s(&t_file_private,t_private_path.c_str(),"w");
 				if(t_ret_open == 0){
 					if(t_file_private != nullptr){
 						s32 t_ret_write = PEM_write_RSAPrivateKey(t_file_private,t_rsakey,nullptr,nullptr,0,nullptr,nullptr);
@@ -219,8 +222,10 @@ namespace NBsys{namespace NOpenSsl
 	{
 		RSA* t_rsakey = nullptr;
 
+		STLString t_path = WcharToChar(a_path);
+
 		FILE* t_file_private = nullptr;
-		errno_t t_ret_open = ::fopen_s(&t_file_private,"./private.key","r");
+		errno_t t_ret_open = ::fopen_s(&t_file_private,t_path.c_str(),"r");
 		if(t_ret_open == 0){
 			if(t_file_private != nullptr){
 				pem_password_cb* t_callback = nullptr;
@@ -278,8 +283,10 @@ namespace NBsys{namespace NOpenSsl
 	{
 		RSA* t_rsakey = nullptr;
 
+		STLString t_path = WcharToChar(a_path);
+
 		FILE* t_file_public = nullptr;
-		errno_t t_ret_open = ::fopen_s(&t_file_public,"./public.key","r");
+		errno_t t_ret_open = ::fopen_s(&t_file_public,t_path.c_str(),"r");
 		if(t_ret_open == 0){
 			if(t_file_public != nullptr){
 				pem_password_cb* t_callback = nullptr;
