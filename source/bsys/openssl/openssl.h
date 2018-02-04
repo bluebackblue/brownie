@@ -59,14 +59,14 @@ namespace NBsys{namespace NOpenSsl
 	void MakeKey();
 
 
-	/** Encrypt
+	/** EncryptFromPrivateKey
 	*/
-	std::tuple<sharedptr<u8>,s32> Encrypt(const void* a_data,s32 a_size);
+	std::tuple<sharedptr<u8>,s32> EncryptFromPrivateKey(const void* a_data,s32 a_size,const STLWString& a_path);
 
 
-	/** Decrypt
+	/** DecryptFromPublicKey
 	*/
-	std::tuple<sharedptr<u8>,s32> Decrypt(const void* a_data,s32 a_size);
+	std::tuple<sharedptr<u8>,s32> DecryptFromPublicKey(const void* a_data,s32 a_size,const STLWString& a_path);
 
 
 }}

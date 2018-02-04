@@ -215,7 +215,7 @@ namespace NBsys{namespace NOpenSsl
 
 	/** [static]Encrypt
 	*/
-	std::tuple<sharedptr<u8>,s32> OpenSsl_Impl::Encrypt(const void* a_data,s32 a_size)
+	std::tuple<sharedptr<u8>,s32> OpenSsl_Impl::EncryptFromPrivateKey(const void* a_data,s32 a_size,const STLWString& a_path)
 	{
 		RSA* t_rsakey = nullptr;
 
@@ -274,7 +274,7 @@ namespace NBsys{namespace NOpenSsl
 
 	/** [static]Decrypt
 	*/
-	std::tuple<sharedptr<u8>,s32> OpenSsl_Impl::Decrypt(const void* a_data,s32 a_size)
+	std::tuple<sharedptr<u8>,s32> OpenSsl_Impl::DecryptFromPublicKey(const void* a_data,s32 a_size,const STLWString& a_path)
 	{
 		RSA* t_rsakey = nullptr;
 

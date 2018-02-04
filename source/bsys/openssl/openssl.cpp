@@ -109,17 +109,17 @@ namespace NBsys{namespace NOpenSsl
 
 	/** Encrypt
 	*/
-	std::tuple<sharedptr<u8>,s32> Encrypt(const void* a_data,s32 a_size)
+	std::tuple<sharedptr<u8>,s32> EncryptFromPrivateKey(const void* a_data,s32 a_size,const STLWString& a_path)
 	{
-		return OpenSsl_Impl::Encrypt(a_data,a_size);
+		return OpenSsl_Impl::EncryptFromPrivateKey(a_data,a_size,a_path);
 	}
 
 
 	/** Decrypt
 	*/
-	std::tuple<sharedptr<u8>,s32> Decrypt(const void* a_data,s32 a_size)
+	std::tuple<sharedptr<u8>,s32> DecryptFromPublicKey(const void* a_data,s32 a_size,const STLWString& a_path)
 	{
-		return OpenSsl_Impl::Decrypt(a_data,a_size);
+		return OpenSsl_Impl::DecryptFromPublicKey(a_data,a_size,a_path);
 	}
 
 

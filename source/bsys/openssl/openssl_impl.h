@@ -92,11 +92,11 @@ namespace NBsys{namespace NOpenSsl
 
 		/** Encrypt
 		*/
-		static std::tuple<sharedptr<u8>,s32> Encrypt(const void* a_data,s32 a_size);
+		static std::tuple<sharedptr<u8>,s32> EncryptFromPrivateKey(const void* a_data,s32 a_size,const STLWString& a_path);
 
 		/** Decrypt
 		*/
-		static std::tuple<sharedptr<u8>,s32> Decrypt(const void* a_data,s32 a_size);
+		static std::tuple<sharedptr<u8>,s32> DecryptFromPublicKey(const void* a_data,s32 a_size,const STLWString& a_path);
 
 	};
 
