@@ -722,7 +722,7 @@ namespace NTest{namespace NCommon
 							t_font->clip_rect.Set(0.0f);
 							t_font->clip = false;
 							t_font->size = 16.0f;
-							t_font->fonttexture_type = NBsys::ND3d11::D3d11_FontTextureType::SFont;
+							t_font->fonttexture_type = NBsys::ND3d11::D3d11_FontTextureType::Font_1;
 
 							f32 t_red = t_loop_time;
 							if(t_red >= 0.5f){

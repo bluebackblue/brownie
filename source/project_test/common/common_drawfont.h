@@ -190,13 +190,13 @@ namespace NTest{namespace NCommon
 			case 0:
 				{
 					this->font16.reset(new NBsys::NFont::Font(L"Arial",14));
-					this->d3d11->Render_SetFont(NBsys::ND3d11::D3d11_FontTextureType::SFont,this->font16,16,L"font16");
+					this->d3d11->Render_SetFont(NBsys::ND3d11::D3d11_FontTextureType::Font_1,128,this->font16,16,L"font16");
 
 					this->font32.reset(new NBsys::NFont::Font(L"Arial",28));
-					this->d3d11->Render_SetFont(NBsys::ND3d11::D3d11_FontTextureType::MFont,this->font32,32,L"font32");
+					this->d3d11->Render_SetFont(NBsys::ND3d11::D3d11_FontTextureType::Font_2,128,this->font32,32,L"font32");
 
 					this->font64.reset(new NBsys::NFont::Font(L"Arial",60));
-					this->d3d11->Render_SetFont(NBsys::ND3d11::D3d11_FontTextureType::LFont,this->font64,64,L"font64");
+					this->d3d11->Render_SetFont(NBsys::ND3d11::D3d11_FontTextureType::Font_3,128,this->font64,64,L"font64");
 
 					//レイアウト。
 					sharedptr<STLVector<NBsys::ND3d11::D3d11_Layout>::Type> t_layout(new STLVector<NBsys::ND3d11::D3d11_Layout>::Type());
@@ -308,17 +308,17 @@ namespace NTest{namespace NCommon
 			}
 
 			//フォントテクスチャー書き込み。
-			if(t_cahnge_list[NBsys::ND3d11::D3d11_FontTextureType::SFont]){
-				this->d3d11->Render_WriteFontTexture(NBsys::ND3d11::D3d11_FontTextureType::SFont);
+			if(t_cahnge_list[NBsys::ND3d11::D3d11_FontTextureType::Font_1]){
+				this->d3d11->Render_WriteFontTexture(NBsys::ND3d11::D3d11_FontTextureType::Font_1);
 			}
-			if(t_cahnge_list[NBsys::ND3d11::D3d11_FontTextureType::MFont]){
-				this->d3d11->Render_WriteFontTexture(NBsys::ND3d11::D3d11_FontTextureType::MFont);
+			if(t_cahnge_list[NBsys::ND3d11::D3d11_FontTextureType::Font_2]){
+				this->d3d11->Render_WriteFontTexture(NBsys::ND3d11::D3d11_FontTextureType::Font_2);
 			}
-			if(t_cahnge_list[NBsys::ND3d11::D3d11_FontTextureType::LFont]){
-				this->d3d11->Render_WriteFontTexture(NBsys::ND3d11::D3d11_FontTextureType::LFont);
+			if(t_cahnge_list[NBsys::ND3d11::D3d11_FontTextureType::Font_3]){
+				this->d3d11->Render_WriteFontTexture(NBsys::ND3d11::D3d11_FontTextureType::Font_3);
 			}
-			if(t_cahnge_list[NBsys::ND3d11::D3d11_FontTextureType::ExFont]){
-				this->d3d11->Render_WriteFontTexture(NBsys::ND3d11::D3d11_FontTextureType::ExFont);
+			if(t_cahnge_list[NBsys::ND3d11::D3d11_FontTextureType::Font_4]){
+				this->d3d11->Render_WriteFontTexture(NBsys::ND3d11::D3d11_FontTextureType::Font_4);
 			}
 		}
 
@@ -391,10 +391,10 @@ namespace NTest{namespace NCommon
 			//バーテックスクリア。
 			this->vertex->ClearVertex();
 
-			this->d3d11->Render_DrawFont_ClearLockFlag(NBsys::ND3d11::D3d11_FontTextureType::SFont);
-			this->d3d11->Render_DrawFont_ClearLockFlag(NBsys::ND3d11::D3d11_FontTextureType::MFont);
-			this->d3d11->Render_DrawFont_ClearLockFlag(NBsys::ND3d11::D3d11_FontTextureType::LFont);
-			this->d3d11->Render_DrawFont_ClearLockFlag(NBsys::ND3d11::D3d11_FontTextureType::ExFont);
+			this->d3d11->Render_DrawFont_ClearLockFlag(NBsys::ND3d11::D3d11_FontTextureType::Font_1);
+			this->d3d11->Render_DrawFont_ClearLockFlag(NBsys::ND3d11::D3d11_FontTextureType::Font_2);
+			this->d3d11->Render_DrawFont_ClearLockFlag(NBsys::ND3d11::D3d11_FontTextureType::Font_3);
+			this->d3d11->Render_DrawFont_ClearLockFlag(NBsys::ND3d11::D3d11_FontTextureType::Font_4);
 
 			for(auto t_it = a_it_start;t_it != a_it_end;t_it++){
 				const Render2D_Item_Font* t_instence = dynamic_cast<const Render2D_Item_Font*>(t_it->get());
@@ -460,10 +460,10 @@ namespace NTest{namespace NCommon
 				this->d3d11->Render_SetVertexBuffer(this->vertex_buffer_id);
 
 				//テクスチャー設定。
-				this->d3d11->Render_SetTexture(0,this->d3d11->Render_GetFontTexture(NBsys::ND3d11::D3d11_FontTextureType::SFont));
-				this->d3d11->Render_SetTexture(1,this->d3d11->Render_GetFontTexture(NBsys::ND3d11::D3d11_FontTextureType::MFont));
-				this->d3d11->Render_SetTexture(2,this->d3d11->Render_GetFontTexture(NBsys::ND3d11::D3d11_FontTextureType::LFont));
-				this->d3d11->Render_SetTexture(3,this->d3d11->Render_GetFontTexture(NBsys::ND3d11::D3d11_FontTextureType::ExFont));
+				this->d3d11->Render_SetTexture(0,this->d3d11->Render_GetFontTexture(NBsys::ND3d11::D3d11_FontTextureType::Font_1));
+				this->d3d11->Render_SetTexture(1,this->d3d11->Render_GetFontTexture(NBsys::ND3d11::D3d11_FontTextureType::Font_2));
+				this->d3d11->Render_SetTexture(2,this->d3d11->Render_GetFontTexture(NBsys::ND3d11::D3d11_FontTextureType::Font_3));
+				this->d3d11->Render_SetTexture(3,this->d3d11->Render_GetFontTexture(NBsys::ND3d11::D3d11_FontTextureType::Font_4));
 
 				//描画。
 				this->d3d11->Render_Draw(this->vertex->GetVertexCountOf(0),0);

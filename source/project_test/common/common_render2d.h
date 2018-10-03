@@ -162,7 +162,7 @@ namespace NTest{namespace NCommon
 			clip_rect(0.0f),
 			clip(false),
 			size(0),
-			fonttexture_type(NBsys::ND3d11::D3d11_FontTextureType::SFont),
+			fonttexture_type(NBsys::ND3d11::D3d11_FontTextureType::Font_1),
 			color(1.0f,1.0f,1.0f,1.0f),
 			alignment(NBsys::NFont::Font_Alignment::Center_VCenter),
 			alignment_rect(0.0f),
