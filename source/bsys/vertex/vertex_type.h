@@ -54,7 +54,7 @@ namespace NBsys{namespace NVertex
 		}																										\
 		static TTT GetValue(V& a_vertex)																		\
 		{																										\
-			return 0.0f;																						\
+			return a_vertex.XXX;																				\
 		}																										\
 		static constexpr std::size_t GetOffset()																\
 		{																										\
